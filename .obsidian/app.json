@@ -1,0 +1,20 @@
+{
+  "defaultViewMode": "preview",
+  "foldHeading": false,
+  "foldIndent": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "09-Journal",
+  "attachmentFolderPath": "09-Journal/Attachments",
+  "readableLineLength": true,
+  "strictLineBreaks": false,
+  "showFrontmatter": true,
+  "spellcheck": false,
+  "tabSize": 2,
+  "useTab": false,
+  "showLineNumber": false,
+  "livePreview": true,
+  "legacyEditor": false,
+  "vimMode": false,
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": ["*.DS_Store"]
+}

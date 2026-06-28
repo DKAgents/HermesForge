@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Obsidian workspace (local UI state — don't sync)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# Plugin binaries — large, auto-downloaded by Obsidian
+# Keep manifest.json (version pin) but exclude main.js + styles.css
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/obsidian-git/obsidian_askpass.sh
+
+# Sensitive files — never commit
+.env
+*.key
+*.pem
+secrets/
+
+# Large data files
+*.csv
+*.parquet
+*.zip
