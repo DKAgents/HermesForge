@@ -1,27 +1,29 @@
-# macOS
-.DS_Store
-._*
-.Spotlight-V100
-.Trashes
+# ===========================================
+# Obsidian Vault .gitignore
+# ===========================================
 
-# Obsidian workspace (local UI state — don't sync)
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+# Obsidian internal files
+.obsidian/workspace*
 .obsidian/cache
+.obsidian/appearance.json
+.obsidian/core-plugins.json
+.obsidian/community-plugins.json
+.obsidian/graph.json
+.obsidian/backup/
 
-# Plugin binaries — large, auto-downloaded by Obsidian
-# Keep manifest.json (version pin) but exclude main.js + styles.css
-.obsidian/plugins/*/main.js
-.obsidian/plugins/*/styles.css
-.obsidian/plugins/obsidian-git/obsidian_askpass.sh
+# Plugin data (usually user-specific)
+.obsidian/plugins/*/data.json
 
-# Sensitive files — never commit
-.env
-*.key
-*.pem
-secrets/
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# Large data files
-*.csv
-*.parquet
-*.zip
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# Optional: Uncomment if you want to ignore attachments
+# attachments/
