@@ -27,7 +27,7 @@ These rules govern ALL trading activity in HermesForge. They apply in paper mode
 - Rule PS-004: Position size must be calculated BEFORE entry, never estimated.
 - Rule PS-005: When in doubt, size down. Never size up to "make back" losses.
 
-## Section 2: Options-Specific Rules (QQQ/SQQQ)
+## Section 2: Options-Specific Rules
 - Rule OP-001: Only trade liquid options (open interest > 1000, bid-ask spread < 5% of mid)
 - Rule OP-002: No naked short options in paper or live mode without explicit ADR
 - Rule OP-003: Maximum days to expiration for new entries: 30 DTE
@@ -71,6 +71,21 @@ These rules govern ALL trading activity in HermesForge. They apply in paper mode
 - Rule PR-004: No automated live execution without human approval
 - Rule PR-005: No adding to losing positions (no averaging down)
 - Rule PR-006: No holding leveraged ETF positions overnight (3x ETFs etc)
+
+## Section 8: Crypto-Specific Rules
+- Rule CR-001: Crypto positions treated as HIGH volatility — maximum single crypto position risk = 0.5% of total capital (half the standard 1%)
+- Rule CR-002: No crypto leverage trading (no margin, no perpetual futures with leverage)
+- Rule CR-003: Only trade top-20 crypto by market cap unless explicit Research Agent approval
+- Rule CR-004: Crypto positions require wider stops to account for volatility — minimum 2x the stop width vs equivalent stock trade
+- Rule CR-005: Maximum total crypto exposure = 20% of total portfolio
+- Rule CR-006: No holding altcoin positions through major macro risk events without explicit review
+
+## Section 9: Swing vs Position Trade Classification
+- Rule SP-001: Every trade must be classified at entry as Swing (2-10 days) or Position (weeks-months)
+- Rule SP-002: Swing trades have tighter loss limits — exit if thesis not playing out within timeframe
+- Rule SP-003: Position trades require a written thesis in the vault before entry
+- Rule SP-004: Do not convert a losing swing trade into a position trade to avoid taking a loss
+- Rule SP-005: Options used for swing trades: max 30 DTE at entry. Options for position trades: 60-90 DTE minimum
 
 ## Rule Change Process
 1. Any agent may PROPOSE a rule change

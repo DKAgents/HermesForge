@@ -59,5 +59,26 @@ Coder    Backtester  Documenter
 - **Future**: Custom ModelRouter skill that learns from outcomes (cost vs. quality optimization)
 - **MOA**: Reserved for high-value, high-complexity tasks only
 
+## Trading Focus
+
+| Dimension | Scope |
+|---|---|
+| Style | Swing Trading (2-10 days), Position Trading (weeks-months) |
+| Markets | US Stock Market, Cryptocurrency |
+| Stock Approaches | Buy-and-hold (position trades), Options |
+| NOT in scope | Pure intraday, 0DTE, high-frequency trading |
+
+### Swing Trading
+Holds of 2-10 days. Exploiting short-to-medium term momentum, technical setups, or catalyst-driven moves. Both stocks and crypto.
+
+### Position Trading
+Holds of weeks to months. Conviction-based directional trades. Buy-and-hold for stocks with strong fundamentals or technical thesis. Options for defined-risk expression of longer-term views.
+
+### Crypto
+Swing and position trades on major crypto assets. Separate risk rules apply given higher volatility.
+
+### Options Strategy Scope
+Options used as defined-risk vehicles for both swing and position trades — primarily directional (calls/puts, debit spreads). Not focused on premium selling or complex multi-leg income strategies initially.
+
 ## Last Updated By
-Hermes Agent — Bootstrap Mission execution (2026-06-27)
+Hermes Agent — Trading focus revised to swing/position trading across stocks and crypto (2026-06-30)
