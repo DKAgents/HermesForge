@@ -36,3 +36,4 @@ sshfs root@<your-vps-ip>:/root/HermesForge ~/HermesForge
 ⚠️ All trading functionality starts in **paper mode**.  
 ⚠️ Human approval required before any live execution changes.  
 ⚠️ The Risk & Safety Guardian has veto power on capital decisions.
+# Clean PR Test - Tue Jun 30 03:00:35 AM UTC 2026
