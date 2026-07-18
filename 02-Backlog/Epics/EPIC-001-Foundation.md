@@ -25,6 +25,7 @@ Establish the complete foundational infrastructure for HermesForge: the Obsidian
 | **US-004** | Set up git repo for vault version control | ⬜ Backlog |
 | **US-005** | Create ModelRouter skill skeleton | ⬜ Backlog |
 | [[../Stories/US-006-Model-Routing-Strategy\|US-006]] | Implement Model Routing Strategy | 🟡 In Progress |
+| [[../Stories/US-007-Model-Routing-And-Market-Intelligence\|US-007]] | Implement Initial Model Routing & Daily Market Intelligence | 🟡 In Progress |
 
 ---
 
