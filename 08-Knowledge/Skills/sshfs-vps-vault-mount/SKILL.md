@@ -1,16 +1,21 @@
 ---
-id: SKILL-SSHFS-VPS-Vault-Mount
-type: skill-doc
-created: 2026-06-27
-updated: 2026-06-27
-status: active
-tags: [skill, sshfs, mac, vault, obsidian]
+name: sshfs-vps-vault-mount
+description: "Mount the HermesForge Obsidian vault from the VPS onto a Mac via SSHFS so Obsidian reads/writes files directly on the VPS filesystem."
+version: 1.0.0
+author: HermesForge Orchestrator
+license: MIT
+platforms: [macos]
+metadata:
+  hermes:
+    tags: [sshfs, mac, vault, obsidian, vps, mount]
+    related_skills: [obsidian]
 ---
 
 # Skill: Mount HermesForge Vault via SSHFS on Mac
 
-## Trigger
-Use this when you want to access the HermesForge Obsidian vault on the VPS from your Mac — so Obsidian on Mac reads/writes files directly on the VPS filesystem.
+## When to Use
+Use when you want to access the HermesForge Obsidian vault on the VPS from your Mac —
+so Obsidian on Mac reads/writes files directly on the VPS filesystem.
 
 ## VPS Details
 | Item | Value |
@@ -32,7 +37,7 @@ macFUSE is the FUSE kernel extension required by SSHFS on macOS.
 brew install --cask macfuse
 ```
 
-> ⚠️ After installing macFUSE, you **must** go to:
+> ⚠️ After installing macFUSE, go to:
 > **System Settings → Privacy & Security → Security** and click **Allow** for the macFUSE kernel extension.
 > Then **restart your Mac**.
 
@@ -41,7 +46,7 @@ brew install --cask macfuse
 brew install sshfs
 ```
 
-> If `brew install sshfs` fails (it was removed from Homebrew core), install via:
+> If `brew install sshfs` fails (removed from Homebrew core), install via:
 > ```bash
 > brew install gromgit/fuse/sshfs-mac
 > ```
@@ -155,9 +160,3 @@ diskutil unmount ~/HermesForge
 - [ ] Obsidian opens vault and shows all folders
 - [ ] Creating a test note in Obsidian appears on VPS: `ls /root/HermesForge/09-Journal/`
 - [ ] Editing a note on VPS is visible in Obsidian within seconds
-
----
-
-## Related
-- [[02-Backlog/Stories/US-001-SSHFS-Mount]]
-- [[00-Meta/HERMES_CONTEXT]]
