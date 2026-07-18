@@ -1,10 +1,10 @@
 ---
 id: RISK-RULES-V1
 type: risk-framework
-version: 1.0
+version: 1.1
 status: active
 created: 2026-06-30
-updated: 2026-06-30
+updated: 2026-07-17
 owner: risk-guardian
 tags: [risk, rules, framework, trading]
 ---
@@ -87,6 +87,39 @@ These rules govern ALL trading activity in HermesForge. They apply in paper mode
 - Rule SP-004: Do not convert a losing swing trade into a position trade to avoid taking a loss
 - Rule SP-005: Options used for swing trades: max 30 DTE at entry. Options for position trades: 60-90 DTE minimum
 
+## Section 10: AI Model Usage Rules (Non-Negotiable)
+
+These rules govern which AI models may be used for which tasks within HermesForge.
+They exist because model quality directly affects the accuracy of risk analysis and
+trading decisions. Downgrading a model on a high-stakes task is itself a risk event.
+
+- **Rule AI-001 (Hard Floor — Risk Guardian):** The Risk Guardian agent MUST use
+  **Tier 2 (claude-sonnet-4.6) or better** for ALL analysis, decisions, approvals,
+  and veto actions. No exception. Routing the Risk Guardian to Tier 3 or Tier 4
+  models is a prohibited action equivalent to disabling the Risk Guardian.
+
+- **Rule AI-002 (Hard Floor — Strategy Decisions):** Any task that directly informs
+  a trade entry, exit, or position sizing decision must use **Tier 2 or better**.
+  Tier 3/4 models may assist with data gathering, but the decision-making step
+  requires Tier 2.
+
+- **Rule AI-003 (Tier 4 Restriction):** Tier 4 models (lightweight classifiers) may
+  ONLY be used for low-stakes triage tasks: news filtering, watchlist scanning, alert
+  classification, and template filling. Tier 4 output must NEVER feed directly into a
+  trading decision, risk analysis, or strategy development step without Tier 2 review.
+
+- **Rule AI-004 (Audit Trail):** Every cron job and delegated task must explicitly
+  declare its model tier. Undeclared model usage defaults to Tier 2 audit requirements.
+
+- **Rule AI-005 (Escalation):** If a task begins as Tier 3/4 but produces output that
+  will be used in a risk or strategy context, it must be escalated to Tier 2 before
+  that output is acted upon.
+
+> **Reference:** ADR-001 Model Routing Strategy defines the full 4-tier model taxonomy.
+> These rules enforce the non-negotiable constraints within that taxonomy.
+
+---
+
 ## Rule Change Process
 1. Any agent may PROPOSE a rule change
 2. Risk Guardian reviews and recommends
@@ -98,3 +131,4 @@ These rules govern ALL trading activity in HermesForge. They apply in paper mode
 | Version | Date | Changes |
 |---|---|---|
 | 1.0 | 2026-06-30 | Initial rules — bootstrap phase |
+| 1.1 | 2026-07-17 | Added Section 10: AI Model Usage Rules (AI-001 through AI-005) — hard floors for Risk Guardian and strategy decisions, Tier 4 restrictions |

@@ -24,7 +24,7 @@ Establish the complete foundational infrastructure for HermesForge: the Obsidian
 | **US-003** | Configure Obsidian with recommended plugins (Dataview, Templates, Daily Notes) | ⬜ Backlog |
 | **US-004** | Set up git repo for vault version control | ⬜ Backlog |
 | **US-005** | Create ModelRouter skill skeleton | ⬜ Backlog |
-| **US-006** | Document SSHFS mount procedure in vault | ⬜ Backlog |
+| [[../Stories/US-006-Model-Routing-Strategy\|US-006]] | Implement Model Routing Strategy | 🟡 In Progress |
 
 ---
 
