@@ -89,3 +89,35 @@ All changes are infrastructure and documentation only.
 - Begin EPIC-002 research stories now that automation pipeline exists
 
 ---
+
+## 2026-07-18 — AI-004 Full Compliance
+
+**Trigger:** Human (Orchestrator directive)
+**Status:** ✅ Complete
+
+**Summary:**
+All known Hermes cron jobs now have explicit model tiers assigned, achieving full
+compliance with RISK_RULES.md Rule AI-004. This closes the last open compliance gap
+before moving into trading knowledge ingestion.
+
+**Actions Completed:**
+- `LinkedIn Post Generator` (98a07007974b) → T3 `google/gemini-2.0-flash-001` ✅
+- `X Post Generator for DXFoundation` (1509fc837a11) → T3 `google/gemini-2.0-flash-001` ✅
+- US-008 story created: "Build Trading Book & System Ingestion Pipeline"
+
+**Full Cron Job Inventory (AI-004 Audit):**
+| Job | ID | Model Tier | Status |
+|---|---|---|---|
+| CRON-001-Market-Intelligence | 79c465c541f2 | T3 | ✅ Compliant |
+| Headroom Daily Savings Report | ad0e12500771 | T3 | ✅ Compliant |
+| LinkedIn Post Generator | 98a07007974b | T3 | ✅ Compliant |
+| X Post Generator for DXFoundation | 1509fc837a11 | T3 | ✅ Compliant |
+
+**Risk Guardian Review:** N/A — no execution or live trading in this iteration.
+
+**Notes for Next Run:**
+- Begin US-008: Trading Book & System Ingestion Pipeline (EPIC-001)
+- Install PDF/EPUB processing tools on VPS (`pymupdf`, `ebooklib`)
+- Design atomic note schema for `08-Knowledge/Trading-Systems/`
+
+---
