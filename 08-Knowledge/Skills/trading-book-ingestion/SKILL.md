@@ -26,7 +26,9 @@ Follows the US-008 design approved 2026-07-18.
 ## Pipeline Overview
 
 ```
-Stage 1: EXTRACT    [T3 — mechanical]   scripts/extract_book.py
+## Stage 1: EXTRACT    [T3 — mechanical]   scripts/extract_book.py
+##           Auto-detects text layer → pymupdf4llm (fast)
+##           No text layer (scanned) → marker-pdf OCR (~2.5GB models, slow first run)
 Stage 2: SYNTHESIZE [T2 — reasoning]    LLM chunk-by-chunk extraction
 Stage 3: WRITE      [T3 — formatting]   scripts/write_notes.py
 Stage 4: REPORT     [T3]               Discord summary + runlog entry
@@ -38,9 +40,12 @@ Stage 4: REPORT     [T3]               Discord summary + runlog entry
 
 ### Step 0 — Confirm Prerequisites
 ```bash
-python3 -c "import fitz, pymupdf4llm, ebooklib, html2text; print('OK')"
+python3 -c "import fitz, pymupdf4llm, ebooklib, html2text; print('pymupdf/epub OK')"
+python3 -c "from marker.converters.pdf import PdfConverter; print('marker-pdf OK')"
 ```
-If any import fails: `pip install pymupdf pymupdf4llm ebooklib html2text`
+If pymupdf missing: `pip install pymupdf pymupdf4llm ebooklib html2text`
+If marker-pdf missing: `pip install marker-pdf`
+Note: marker-pdf downloads ~2.5GB of models to `~/.cache/huggingface/` on **first run only**.
 
 Confirm the file exists:
 ```bash
@@ -49,7 +54,9 @@ ls -lh /path/to/book.pdf
 
 ### Step 1 — Extract Text (T3 — mechanical)
 
-Run `scripts/extract_book.py` with the file path.
+Run `scripts/extract_book.py` with the file path. The script **auto-detects** whether the PDF has a text layer:
+- **Text layer present** → fast `pymupdf4llm` path (seconds)
+- **Scanned / image-only PDF** → `marker-pdf` OCR path (downloads ~2.5GB models on first run, then ~1-5 min/book)
 
 ```bash
 python3 ~/.hermes/skills/research/trading-book-ingestion/scripts/extract_book.py \
@@ -57,7 +64,14 @@ python3 ~/.hermes/skills/research/trading-book-ingestion/scripts/extract_book.py
   /root/HermesForge/Inbox/book_extracted.json
 ```
 
-This produces a JSON file with structure:
+Force flags (if auto-detection is wrong):
+```bash
+# Force OCR even if text layer detected
+python3 extract_book.py book.pdf out.json --force-ocr
+
+# Force text layer even if thin
+python3 extract_book.py book.pdf out.json --force-text
+```
 ```json
 {
   "metadata": {
@@ -190,9 +204,10 @@ Sections: Summary | Core Thesis | Key Quotes | All Notes Index
 
 ## Pitfalls
 
-- **Scanned PDFs (no text layer):** pymupdf returns empty text. Symptoms: chunks have < 50 chars.
-  Fix: use `marker-pdf` for OCR (see `ocr-and-documents` skill). Warn user before starting if
-  you suspect a scan.
+- **Scanned PDFs (no text layer):** `pymupdf` returns empty text — auto-detected and routed to `marker-pdf`. If auto-detection fails, use `--force-ocr`.
+- **marker-pdf first run is slow:** Downloads ~2.5GB of models to `~/.cache/huggingface/` on first run. Subsequent runs use cached models (~30-60s/book). Do not interrupt the first run.
+- **marker-pdf / Hermes openai version conflict:** marker-pdf requires `openai<2.0.0` but Hermes needs `openai==2.24.0`. After installing marker-pdf, always restore: `pip install "openai==2.24.0" "Pillow==12.2.0"`. marker-pdf still works with warnings.
+- **Scanned PDFs (OCR quality):** marker-pdf handles most printed books well. Handwritten notes, low-resolution scans (<150 DPI), or heavy watermarks will degrade quality. Flag these in the report.
 - **DRM-protected EPUBs:** ebooklib will open the file but chapters will be empty or encrypted.
   User must strip DRM first (Calibre + DeDRM plugin).
 - **Chapter detection on PDFs:** pymupdf4llm detects headers by font size — works on most
