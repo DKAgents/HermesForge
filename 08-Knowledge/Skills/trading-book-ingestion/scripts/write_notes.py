@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""
+Stage 3: Write Obsidian atomic notes from synthesis JSON.
+Model tier: T3 (mechanical formatting — no LLM used here)
+
+Usage:
+    python3 write_notes.py /path/to/synthesis.json /path/to/08-Knowledge/Trading-Systems/
+"""
+
+import sys
+import json
+import re
+from datetime import date
+from pathlib import Path
+
+
+def slugify(text: str) -> str:
+    """Convert a title to a filesystem-safe slug."""
+    text = re.sub(r'[^\w\s-]', '', text.lower())
+    text = re.sub(r'[\s_-]+', '-', text)
+    return text.strip('-')[:60]
+
+
+def concept_prefix(concept_type: str) -> str:
+    return {
+        "rule": "R",
+        "concept": "C",
+        "edge-condition": "E",
+        "risk-guideline": "RG",
+        "entry-criteria": "EN",
+        "exit-criteria": "EX",
+    }.get(concept_type, "N")
+
+
+def subfolder(concept_type: str) -> str:
+    return {
+        "rule": "rules",
+        "concept": "concepts",
+        "edge-condition": "edge-conditions",
+        "risk-guideline": "risk-guidelines",
+        "entry-criteria": "rules",
+        "exit-criteria": "rules",
+    }.get(concept_type, "concepts")
+
+
+def write_atomic_note(note: dict, book_dir: Path, note_number: int,
+                      book_meta: dict, ingestion_date: str) -> Path:
+    """Write a single atomic note to disk."""
+    concept_type = note.get("concept_type", "concept")
+    prefix = concept_prefix(concept_type)
+    folder = book_dir / subfolder(concept_type)
+    folder.mkdir(parents=True, exist_ok=True)
+
+    slug = slugify(note.get("title", f"note-{note_number}"))
+    filename = f"{prefix}{note_number:03d}-{slug}.md"
+    filepath = folder / filename
+
+    # Build wikilinks for related notes
+    related = note.get("related_concepts", [])
+    related_links = "\n".join(f"- [[{r}]]" for r in related) if related else "_None identified_"
+
+    # Format body
+    body = note.get("body", "")
+    quotes = note.get("quotes", [])
+    quote_block = ""
+    if quotes:
+        quote_block = "\n\n## Direct Quotes\n"
+        for q in quotes:
+            page = q.get("page", "")
+            page_ref = f", p. {page}" if page else ""
+            quote_block += f'\n> "{q["text"]}" — {book_meta["author"]}{page_ref}\n'
+
+    content = f"""---
+type: atomic-note
+concept_type: {concept_type}
+source_book: "{book_meta['title']}"
+source_author: "{book_meta['author']}"
+source_file: "{book_meta['source_file']}"
+source_chapter: "{note.get('chapter', 'Unknown')}"
+source_page_range: "{note.get('page_range', 'n/a')}"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+ingested_at: {ingestion_date}
+tags: [trading-system, {slugify(book_meta['title'])}, atomic-note, {concept_type}]
+---
+
+# {note.get('title', 'Untitled')}
+
+{body}
+{quote_block}
+## Related Notes
+{related_links}
+
+---
+_Source: {book_meta['title']} — {note.get('chapter', 'Unknown')}_
+_Ingested: {ingestion_date} | Model: T2 (claude-sonnet-4.6)_
+"""
+    filepath.write_text(content.strip() + "\n")
+    return filepath
+
+
+def write_literature_note(book_dir: Path, book_meta: dict, synthesis: dict,
+                           note_index: list[dict], ingestion_date: str) -> Path:
+    """Write the 00-Literature-Note.md for the book."""
+    filepath = book_dir / "00-Literature-Note.md"
+    slug = slugify(book_meta['title'])
+
+    # Group notes by type
+    by_type: dict[str, list] = {}
+    for entry in note_index:
+        ct = entry["concept_type"]
+        by_type.setdefault(ct, []).append(entry)
+
+    index_sections = ""
+    for ct, entries in sorted(by_type.items()):
+        index_sections += f"\n### {ct.replace('-', ' ').title()}s\n"
+        for e in entries:
+            index_sections += f"- [[{e['rel_path']}|{e['title']}]]\n"
+
+    # Key quotes
+    all_quotes = synthesis.get("key_quotes", [])
+    quotes_section = ""
+    if all_quotes:
+        for q in all_quotes[:10]:  # top 10 quotes
+            page = q.get("page", "")
+            page_ref = f", p. {page}" if page else ""
+            quotes_section += f'\n> "{q["text"]}" — {book_meta["author"]}{page_ref}\n'
+    else:
+        quotes_section = "_No key quotes extracted._"
+
+    content = f"""---
+type: literature-note
+source_book: "{book_meta['title']}"
+source_author: "{book_meta['author']}"
+source_file: "{book_meta['source_file']}"
+format: {book_meta.get('format', 'pdf')}
+pages: {book_meta.get('pages', 'n/a')}
+ingested_at: {ingestion_date}
+total_notes: {len(note_index)}
+model_extraction: T2 (anthropic/claude-sonnet-4.6)
+model_preprocessing: T3 (mechanical extraction)
+tags: [literature-note, trading-system, {slug}]
+---
+
+# {book_meta['title']}
+**Author:** {book_meta['author']}
+**Ingested:** {ingestion_date}
+**Notes generated:** {len(note_index)}
+
+## Summary
+{synthesis.get('summary', '_Summary not available._')}
+
+## Core Thesis
+{synthesis.get('core_thesis', '_Core thesis not extracted._')}
+
+## Key Quotes
+{quotes_section}
+
+## Notes Index
+{index_sections}
+
+---
+_Literature note generated by HermesForge trading-book-ingestion pipeline_
+_Source file: `{book_meta['source_file']}`_
+_Ingested: {ingestion_date} | Extraction model: T2 (claude-sonnet-4.6)_
+"""
+    filepath.write_text(content.strip() + "\n")
+    return filepath
+
+
+def write_metadata_json(book_dir: Path, book_meta: dict, synthesis: dict,
+                         note_index: list[dict], ingestion_date: str) -> Path:
+    """Write metadata.json for Dataview queries."""
+    filepath = book_dir / "metadata.json"
+    meta = {
+        "title": book_meta["title"],
+        "author": book_meta["author"],
+        "source_file": book_meta["source_file"],
+        "format": book_meta.get("format", "pdf"),
+        "pages": book_meta.get("pages"),
+        "ingested_at": ingestion_date,
+        "total_chunks_extracted": book_meta.get("total_chunks", 0),
+        "total_notes_created": len(note_index),
+        "notes_by_type": {
+            ct: len([n for n in note_index if n["concept_type"] == ct])
+            for ct in set(n["concept_type"] for n in note_index)
+        },
+        "pipeline_stages": {
+            "stage_1_extraction": "T3 mechanical (pymupdf/ebooklib)",
+            "stage_2_synthesis": "T2 — anthropic/claude-sonnet-4.6",
+            "stage_3_writing": "T3 mechanical (write_notes.py)",
+        },
+        "hermes_story": "US-008",
+        "vault_path": str(book_dir.relative_to(book_dir.parents[1])),
+    }
+    filepath.write_text(json.dumps(meta, indent=2, ensure_ascii=False))
+    return filepath
+
+
+def main():
+    if len(sys.argv) < 3:
+        print("Usage: write_notes.py <synthesis.json> <Trading-Systems-dir>")
+        sys.exit(1)
+
+    synthesis_path = Path(sys.argv[1])
+    output_base = Path(sys.argv[2])
+
+    if not synthesis_path.exists():
+        print(f"ERROR: Synthesis file not found: {synthesis_path}")
+        sys.exit(1)
+
+    data = json.loads(synthesis_path.read_text())
+    book_meta = data["metadata"]
+    synthesis = data["synthesis"]  # summary, core_thesis, key_quotes
+    concepts = data["concepts"]    # list of extracted atomic note dicts
+
+    # Derive book slug and directory
+    slug = slugify(book_meta["title"])
+    author_slug = slugify(book_meta["author"].split()[-1])  # last name
+    book_slug = f"{slug[:40]}-{author_slug}"
+    book_dir = output_base / book_slug
+    book_dir.mkdir(parents=True, exist_ok=True)
+
+    ingestion_date = date.today().isoformat()
+    note_index = []
+    counters: dict[str, int] = {}
+
+    print(f"Writing notes to: {book_dir}")
+    print(f"Total concepts to write: {len(concepts)}")
+
+    for concept in concepts:
+        ct = concept.get("concept_type", "concept")
+        counters[ct] = counters.get(ct, 0) + 1
+        note_num = counters[ct]
+
+        note_path = write_atomic_note(concept, book_dir, note_num, book_meta, ingestion_date)
+        rel_path = note_path.stem  # filename without extension for wikilink
+        note_index.append({
+            "title": concept.get("title", f"Note {note_num}"),
+            "concept_type": ct,
+            "rel_path": str(note_path.relative_to(book_dir.parent)),
+            "file": note_path.name,
+        })
+
+    # Write literature note and metadata
+    lit_path = write_literature_note(book_dir, book_meta, synthesis, note_index, ingestion_date)
+    meta_path = write_metadata_json(book_dir, book_meta, synthesis, note_index, ingestion_date)
+
+    print(f"\n✅ Notes written to: {book_dir}")
+    print(f"   Literature note: {lit_path.name}")
+    print(f"   Metadata:        {meta_path.name}")
+    print(f"   Atomic notes:    {len(note_index)}")
+    for ct, count in sorted(counters.items()):
+        print(f"     {ct}: {count}")
+
+
+if __name__ == "__main__":
+    main()

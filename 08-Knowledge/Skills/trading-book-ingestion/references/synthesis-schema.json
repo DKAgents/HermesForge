@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BookSynthesis",
+  "description": "Output schema for the full synthesis pass over a trading book",
+  "type": "object",
+  "required": ["metadata", "synthesis", "concepts"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Copied from extract_book.py output",
+      "required": ["title", "author", "source_file"],
+      "properties": {
+        "title": {"type": "string"},
+        "author": {"type": "string"},
+        "source_file": {"type": "string"},
+        "format": {"type": "string", "enum": ["pdf", "epub"]},
+        "pages": {"type": ["integer", "null"]},
+        "total_chunks": {"type": "integer"},
+        "extracted_at": {"type": "string"}
+      }
+    },
+    "synthesis": {
+      "type": "object",
+      "description": "Book-level summary generated after all chunks processed",
+      "properties": {
+        "summary": {"type": "string", "description": "3-5 sentence book summary"},
+        "core_thesis": {"type": "string", "description": "Author's central argument in 2-3 sentences"},
+        "key_quotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {"type": "string"},
+              "page": {"type": "string"},
+              "context": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "description": "All extracted atomic concepts across all chunks",
+      "items": {
+        "type": "object",
+        "required": ["title", "concept_type", "body", "chapter"],
+        "properties": {
+          "title": {"type": "string"},
+          "concept_type": {
+            "type": "string",
+            "enum": ["rule", "concept", "edge-condition", "risk-guideline", "entry-criteria", "exit-criteria"]
+          },
+          "body": {"type": "string"},
+          "chapter": {"type": "string"},
+          "page_range": {"type": "string"},
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {"type": "string"},
+                "page": {"type": "string"}
+              }
+            }
+          },
+          "related_concepts": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}
