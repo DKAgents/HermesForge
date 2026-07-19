@@ -232,7 +232,76 @@ tags: [insight, discovery, knowledge-evolution]
 """
     if not dry_run:
         fname.write_text(content)
+        # AC6: check if any existing strategy should be updated with this insight
+        _check_strategy_updates(insight, str(fname))
     return str(fname)
+
+
+def _check_strategy_updates(insight: dict, insight_path: str):
+    """If insight is semantically close to a strategy thesis, write a pending-update suggestion."""
+    STRATEGIES_DIR = VAULT_ROOT / '06-Strategies'
+    PENDING_DIR    = STRATEGIES_DIR / 'Pending-Updates'
+    STRATEGY_DIRS_LOCAL  = [STRATEGIES_DIR / 'Active', STRATEGIES_DIR / 'Hypotheses']
+    SIMILARITY_THRESHOLD = 0.70
+
+    insight_vec = tokenize(insight['title'] + ' ' + insight['synthesis'])
+
+    for sdir in STRATEGY_DIRS_LOCAL:
+        if not sdir.exists():
+            continue
+        for strat_file in sdir.glob('*.md'):
+            try:
+                text = strat_file.read_text(encoding='utf-8', errors='replace')
+                m = re.search(r'## Thesis\s*\n(.*?)(?=\n## )', text, re.DOTALL)
+                thesis = m.group(1).strip() if m else ''
+                if not thesis:
+                    continue
+                strat_vec = tokenize(thesis)
+                sim = cosine(insight_vec, strat_vec)
+                if sim >= SIMILARITY_THRESHOLD:
+                    PENDING_DIR.mkdir(parents=True, exist_ok=True)
+                    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+                    slug = re.sub(r'[^a-z0-9]+', '-', insight['title'].lower()).strip('-')[:40]
+                    update_file = PENDING_DIR / f'UPDATE-{today}-{strat_file.stem}-{slug}.md'
+                    update_content = f"""---
+type: strategy-update-suggestion
+strategy: {strat_file.stem}
+insight: {Path(insight_path).stem}
+similarity: {sim:.3f}
+date: {today}
+reviewed: false
+tags: [pending-update, strategy, knowledge-evolution]
+---
+
+# Pending Update: {strat_file.stem}
+
+## Triggering Insight
+
+[[{Path(insight_path).stem}]] — *{insight['title']}* (actionability {insight['actionability']}/5)
+
+**Similarity to strategy thesis:** {sim:.1%}
+
+## Insight Summary
+
+{insight['synthesis']}
+
+## Trading Implication
+
+{insight['trading_implication']}
+
+## Suggested Action
+
+Review whether this insight should be incorporated into [[{strat_file.stem}]]:
+- Does it add a new entry/exit condition?
+- Does it strengthen or weaken the supporting evidence?
+- Should it be linked in `## Supporting Evidence`?
+
+Mark `reviewed: true` in this file's frontmatter once you've made a decision.
+"""
+                    update_file.write_text(update_content)
+                    print(f"    → Pending update written for strategy: {strat_file.name} (sim={sim:.2f})")
+            except Exception:
+                continue
 
 
 # ── synthesis prompt ──────────────────────────────────────────────────────────
