@@ -1,0 +1,29 @@
+---
+type: atomic-note
+concept_type: concept
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "388"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+---
+
+# Trend-Following Systems Cannot Anticipate Reversals
+
+A drawback of trend-following systems is that no allowance is generally made for anticipating market reversals. They don't recognize when a market has reached a long-term support or resistance level, when oscillator divergences are being given, or when an Elliott Wave fifth pattern is clearly visible. The system will stay with the position until well after the market has changed direction.
+
+
+## Direct Quotes
+
+> "Trend-following systems ride with the trend until it turns. They don't recognize when a market has reached a long term support or resistance level, when oscillator divergences are being given, or when an Elliott Wave fifth pattern is clearly visible." — John J. Murphy
+
+## Related Notes
+_None identified_
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_

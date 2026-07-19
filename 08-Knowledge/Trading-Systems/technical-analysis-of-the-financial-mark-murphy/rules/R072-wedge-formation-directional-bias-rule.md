@@ -1,0 +1,31 @@
+---
+type: atomic-note
+concept_type: rule
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "146–147"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+---
+
+# Wedge Formation: Directional Bias Rule
+
+Like the flag pattern, the wedge slants against the prevailing trend. Therefore, a falling wedge is considered bullish and a rising wedge is bearish. This rule applies whether the wedge appears as a continuation pattern in the middle of a move or as a reversal pattern at tops and bottoms.
+
+
+## Direct Quotes
+
+> "a falling wedge is considered bullish and a rising wedge is bearish." — John J. Murphy
+
+> "the market analyst should always be guided by the general maxim that a rising wedge is bearish and a falling wedge is bullish." — John J. Murphy
+
+## Related Notes
+_None identified_
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_

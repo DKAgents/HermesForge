@@ -1,0 +1,29 @@
+---
+type: atomic-note
+concept_type: concept
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "396-397"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+---
+
+# Diversification vs. Concentration Tradeoff
+
+While diversification limits risk exposure, it can be overdone. Too many simultaneous market commitments can dilute profitable trades with a larger number of losers. Some successful traders concentrate in a handful of markets, which is acceptable as long as those markets are trending. The more negative correlation between markets, the more true diversification is achieved.
+
+
+## Direct Quotes
+
+> "The more negative correlation between the markets, the more diversification is achieved." — John J. Murphy
+
+## Related Notes
+_None identified_
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_

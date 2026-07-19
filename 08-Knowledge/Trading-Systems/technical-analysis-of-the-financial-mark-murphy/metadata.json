@@ -1,0 +1,27 @@
+{
+  "title": "Technical Analysis of the Financial Markets",
+  "author": "John J. Murphy",
+  "source_file": "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf",
+  "format": "pdf",
+  "pages": null,
+  "ingested_at": "2026-07-19",
+  "total_chunks_extracted": 0,
+  "total_notes_created": 1302,
+  "notes_by_type": {
+    "pattern": 173,
+    "rule": 323,
+    "indicator": 205,
+    "entry-criteria": 90,
+    "concept": 389,
+    "risk-guideline": 53,
+    "edge-condition": 49,
+    "exit-criteria": 20
+  },
+  "pipeline_stages": {
+    "stage_1_extraction": "T3 mechanical (pymupdf/ebooklib)",
+    "stage_2_synthesis": "T2 — anthropic/claude-sonnet-4.6",
+    "stage_3_writing": "T3 mechanical (write_notes.py)"
+  },
+  "hermes_story": "US-008",
+  "vault_path": "Trading-Systems/technical-analysis-of-the-financial-mark-murphy"
+}

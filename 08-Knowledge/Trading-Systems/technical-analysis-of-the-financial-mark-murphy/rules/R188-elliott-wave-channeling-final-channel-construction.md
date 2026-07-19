@@ -1,0 +1,24 @@
+---
+type: atomic-note
+concept_type: rule
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "333"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+---
+
+# Elliott Wave Channeling — Final Channel Construction
+
+The final channel is drawn under the two corrective waves (waves 2 and 4) and usually above the top of wave 3. If wave 3 is unusually strong or extended, the upper channel line is adjusted accordingly. This final channel helps confirm wave counts and project where wave 5 may terminate.
+
+## Related Notes
+_None identified_
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_
