@@ -1,0 +1,122 @@
+# Discovery Seeds for Novel Connection Discovery Engine
+# Each seed is a query designed to find cross-domain connections across the vault.
+# Seeds are grouped by the type of connection they target.
+# Add new seeds here without touching discover_connections.py.
+#
+# Format:
+#   id: unique identifier
+#   query: the search query (used for both FTS and semantic search)
+#   domains: list of vault domains this seed bridges [rules, indicators, patterns, risk, concepts, edge-conditions]
+#   priority: high | medium | low
+#   description: what type of insight this seed is hunting for
+
+seeds:
+
+  # ── Volume + Risk ──────────────────────────────────────────────────────────
+  - id: vol_confirm_risk
+    query: "volume confirmation before entry position sizing"
+    domains: [indicators, risk]
+    priority: high
+    description: "Does volume confirmation before entry reduce risk? Does Murphy's volume rule interact with position sizing limits?"
+
+  - id: vol_diverge_stop
+    query: "volume divergence declining trend stop loss placement"
+    domains: [indicators, risk]
+    priority: high
+    description: "When volume diverges from price in a trend, how should stops be adjusted?"
+
+  # ── Patterns + Volatility / Market Regime ──────────────────────────────────
+  - id: pattern_regime
+    query: "chart pattern failure high volatility market environment"
+    domains: [patterns, edge-conditions]
+    priority: high
+    description: "Which patterns fail more often in volatile or ranging markets? Links to edge conditions about regime."
+
+  - id: breakout_volume_risk
+    query: "breakout false signal filter volume confirmation stop placement"
+    domains: [patterns, indicators, risk]
+    priority: high
+    description: "Three-way connection: breakout patterns + volume filter + how to place stops on false breakout."
+
+  - id: reversal_pattern_oscillator
+    query: "reversal pattern confirmation oscillator divergence RSI stochastics"
+    domains: [patterns, indicators]
+    priority: high
+    description: "Which oscillator readings best confirm reversal patterns? Non-obvious because patterns and indicators are usually treated separately."
+
+  # ── Trend Filters + Entry Timing ───────────────────────────────────────────
+  - id: trend_filter_entry
+    query: "weekly chart trend filter daily entry timing moving average"
+    domains: [concepts, rules, indicators]
+    priority: high
+    description: "Multi-timeframe trend filtering: what does Murphy say about using weekly trend to filter daily entries?"
+
+  - id: oscillator_trending_market
+    query: "oscillator overbought oversold trending market danger counter-trend"
+    domains: [indicators, edge-conditions, risk]
+    priority: high
+    description: "Edge condition: oscillators lie in strong trends. How does this interact with risk rules about counter-trend trades?"
+
+  - id: ma_crossover_adx_regime
+    query: "moving average crossover ADX trending ranging market regime selection"
+    domains: [indicators, edge-conditions]
+    priority: medium
+    description: "ADX regime detection + MA crossover: non-obvious that ADX tells you when MAs are reliable."
+
+  # ── Support/Resistance + Position Sizing ──────────────────────────────────
+  - id: support_stop_sizing
+    query: "support resistance role reversal stop placement maximum risk per trade"
+    domains: [concepts, rules, risk]
+    priority: high
+    description: "Support/resistance determines stop distance, which determines position size. Murphy rules on both sides."
+
+  - id: prior_swing_low_stop
+    query: "prior swing low high stop loss reward risk ratio 3 to 1"
+    domains: [rules, risk]
+    priority: high
+    description: "Connecting stop placement rules to 3:1 reward/risk requirement — when do they conflict?"
+
+  # ── Intermarket + Stock Selection ──────────────────────────────────────────
+  - id: intermarket_sector_rotation
+    query: "intermarket analysis sector rotation relative strength stocks bonds"
+    domains: [concepts, indicators]
+    priority: medium
+    description: "Combining intermarket signals with relative strength for stock sector rotation."
+
+  - id: commodity_inflation_stock
+    query: "commodity prices inflation leading indicator stock market impact"
+    domains: [concepts, indicators]
+    priority: medium
+    description: "Murphy's intermarket chain: commodities → bonds → stocks. Actionable for position trading timeframes."
+
+  # ── Risk Management Cross-Domain ──────────────────────────────────────────
+  - id: drawdown_system_shutdown
+    query: "losing streak drawdown maximum daily loss trading system shutdown rule"
+    domains: [risk]
+    priority: high
+    description: "When does Murphy say to stop trading a system? Cross-reference with HermesForge RISK_RULES daily loss limits."
+
+  - id: diversification_position_limit
+    query: "diversification 10 percent limit single market correlated positions"
+    domains: [risk, concepts]
+    priority: high
+    description: "Murphy's 10-15% per market limit vs HermesForge 1% position sizing — do they interact or conflict?"
+
+  - id: system_exit_design
+    query: "exit design more important than entry protective stop trailing stop"
+    domains: [rules, risk]
+    priority: high
+    description: "Murphy's insight that exits matter more than entries. How does this connect to stop placement rules?"
+
+  # ── Swing Trading Specific ──────────────────────────────────────────────────
+  - id: swing_low_entry_filter
+    query: "swing low pullback entry uptrend retracement Fibonacci percentage"
+    domains: [rules, concepts, indicators]
+    priority: high
+    description: "Entry on pullbacks in uptrends — Fibonacci levels, retracement limits, what Murphy says is the ideal entry point."
+
+  - id: gap_continuation_volume
+    query: "runaway gap continuation signal volume breakaway gap exhaustion"
+    domains: [patterns, indicators]
+    priority: medium
+    description: "Different gap types have different implications — when is a gap a signal to chase vs fade?"
