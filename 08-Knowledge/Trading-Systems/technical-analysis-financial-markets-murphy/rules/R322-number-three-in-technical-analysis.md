@@ -1,0 +1,25 @@
+---
+type: atomic-note
+concept_type: rule
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "76"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+confidence: high
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+---
+
+# Number Three in Technical Analysis
+
+The number three appears repeatedly in technical analysis: three types of trends, three phases of major trends, three parts of head and shoulders patterns, three-box reversals, and the fan principle requiring three trendline breaks. This recurring significance makes three a key number in technical methodology.
+
+## Related Notes
+_None identified_
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_
