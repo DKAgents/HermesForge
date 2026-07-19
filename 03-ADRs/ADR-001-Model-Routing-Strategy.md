@@ -3,7 +3,7 @@ id: ADR-001
 type: adr
 status: accepted
 created: 2026-06-27
-updated: 2026-07-17
+updated: 2026-07-20
 deciders: [human, orchestrator]
 tags: [adr, model-routing, cost-optimization, llm-strategy]
 ---
@@ -72,46 +72,30 @@ points as automation volume increases.
 4. **Synthesize with strong models** — final strategy write-ups, thesis construction, ADR decisions
 5. **Fallback to Sonnet** — when task complexity is ambiguous, default up not down
 
-### Task Categories & Routing Table
+### Model Tier Reference (updated 2026-07-20)
 
-| Category | Task Examples | Complexity | Recommended Model | Rationale |
-|---|---|---|---|---|
-| **Deep Reasoning** | Strategy architecture, complex thesis construction, multi-variable scenario analysis, ADR decisions | Very High | `anthropic/claude-opus-4-5` or `anthropic/claude-sonnet-4.6` | Needs best available reasoning depth |
-| **Risk Analysis** | Risk Guardian decisions, position sizing review, incident escalation, options Greeks analysis | High | `anthropic/claude-sonnet-4.6` (**hard floor**) | Never route down; errors here are costly |
-| **Market Synthesis** | Daily/weekly market summaries, sector analysis, macro synthesis, trade thesis writing | High | `anthropic/claude-sonnet-4.6` | Quality matters; these inform real decisions |
-| **Research & Ingestion** | Trading book synthesis, paper analysis, news triaging, watchlist building | Medium-High | `anthropic/claude-sonnet-4.6` or `google/gemini-2.0-flash-001` | Gemini Flash for bulk; Sonnet for final synthesis |
-| **Coding & Skills** | Hermes skill creation, backtesting scripts, data pipeline code, indicator implementations | Medium-High | `anthropic/claude-sonnet-4.6` | Code quality matters; Sonnet reliable here |
-| **Backtesting Analysis** | Interpreting backtest results, identifying strategy weaknesses, statistical summaries | Medium | `anthropic/claude-sonnet-4.6` or `google/gemini-2.0-flash-001` | Flash sufficient for structured numeric analysis |
-| **Daily Automation** | ForgeLoop tick execution, journal auto-fill, cron job summaries, routine health checks | Low-Medium | `google/gemini-2.0-flash-001` | Fast, cheap, reliable for structured tasks |
-| **High-Volume Triage** | News feed filtering, watchlist scanning, alert classification, Twitter/X monitoring | Low | `google/gemini-2.5-flash-preview` or `meta-llama/llama-3.1-8b-instruct` | Maximum throughput, minimal cost |
-| **Documentation** | Docstrings, README updates, story formatting, backlog grooming, template filling | Low | `google/gemini-2.0-flash-001` or `meta-llama/llama-3.1-8b-instruct` | No creativity required; fast is fine |
+| Tier | Model (OpenRouter) | Approx Cost (in/out per 1M) | Used For |
+|------|--------------------|-----------------------------|----------|
+| **T1** | `anthropic/claude-opus-4.8` | $5 / $25 | Novel strategy design, major architecture decisions, critical risk incidents only. Use sparingly. |
+| **T2** | `anthropic/claude-sonnet-5` | $2/$10 until Aug 31 2026 → then $3/$15 | Build work (coder, architect, orchestrator), high-quality research synthesis, hard floor for risk-guardian. |
+| **T3** | `deepseek/deepseek-v4-flash` (primary)<br>`z-ai/glm-5.2` (secondary) | DeepSeek ~$0.05–0.14 / $0.15–0.28<br>GLM ~$0.4–1.4 / $1.3–4.4 | Most operational trading, backtesting, daily research, product-owner, most automation. |
+| **T4** | Gemini Flash variants / MiniMax M3 / cheaper open models | <$0.50 blended | News triage, alert classification, bulk scanning, documenter, simple structured tasks. |
 
-### Model Profiles
+### Agent Routing Rules
 
-#### Tier 1 — Deep Reasoning (Use Sparingly)
-**`anthropic/claude-opus-4-5`** via OpenRouter
-- Cost: ~$15/$75 per 1M tokens
-- Use: Architecture decisions, genuinely novel strategy design, complex multi-step derivations
-- Trigger: When Sonnet returns uncertain/conflicting output on a high-stakes question
+| Agent | Default Tier | Hard Floor | Notes |
+|-------|-------------|------------|-------|
+| **risk-guardian** | T2 | T2 | Never route below Sonnet 5. Errors here are costly. |
+| **orchestrator** | T2 | T2 | Active platform-build phase — force T2 |
+| **architect** | T2 | T2 | Active platform-build phase — force T2 |
+| **coder** | T2 | T2 | Active platform-build phase — force T2 |
+| **researcher** | T3 | T3 | Escalate to T2 only if quality insufficient |
+| **backtester** | T3 | T3 | Escalate to T2 for final synthesis only |
+| **trading** | T3 | T3 | Escalate to T2 for complex analysis |
+| **product-owner** | T3 | T4 | T3 default, T4 acceptable for formatting |
+| **documenter** | T4 | T4 | Mechanical work only — T4 sufficient |
 
-#### Tier 2 — Core Intelligence (Default for Quality Work)
-**`anthropic/claude-sonnet-4.6`** via OpenRouter (current default)
-- Cost: $3/$15 per 1M tokens
-- Use: Risk Guardian (hard floor), market synthesis, strategy development, coding, complex research
-- This is the workhorse. Do not route below this for anything risk-sensitive.
-
-#### Tier 3 — Fast & Capable (Automation Workhorse)
-**`google/gemini-2.0-flash-001`** via OpenRouter
-- Cost: ~$0.075/$0.30 per 1M tokens (~10-40x cheaper than Sonnet)
-- Use: ForgeLoop ticks, daily summaries, backtesting result parsing, structured data tasks
-- Strengths: Fast TTFT, good tool use, large context (1M tokens), structured output reliable
-- Weakness: Less reliable on open-ended complex reasoning
-
-#### Tier 4 — Bulk / Triage (High Volume Only)
-**`google/gemini-2.5-flash-preview`** or **`meta-llama/llama-3.1-8b-instruct`**
-- Cost: <$0.10 per 1M tokens
-- Use: News triage, alert classification, watchlist scanning, simple text extraction
-- Only use when task is truly mechanical with clear pass/fail criteria
+> **Note:** Sonnet 5 introductory pricing ($2/$10) ends August 31, 2026. A pricing review reminder is scheduled for August 25–28, 2026 (cron job 27a6aa851a96). Review ADR-001 at that time.
 
 ---
 
