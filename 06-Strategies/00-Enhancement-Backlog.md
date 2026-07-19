@@ -43,10 +43,12 @@ Running log of ideas, future tests, and potential improvements surfaced during s
 | B-002 | **15-bar threshold calibration** — is 15 the right maturity threshold, or does 10 or 20 produce better signal-to-noise? | `idea` | Open Question on strategy note |
 | B-003 | **Stage 1 as partial entry** — take a smaller position on histogram narrowing alone, add full size on MACD line divergence. Does this improve average entry price without increasing loss rate? | `idea` | Interesting but adds complexity — v2 candidate |
 | B-004 | **Time stop calibration** — is 8 bars the right exit window? Test 5 vs. 8 vs. 12 bars across paper trades. | `idea` | Open Question on strategy note |
-| B-005 | **Bidirectional symmetry** — do bullish divergence setups in downtrends perform comparably to bearish setups in uptrends? One direction may be structurally stronger. | `idea` | Open Question on strategy note |
-| B-006 | **Three-tier quality sizing** — v1 uses two levels (0.5% and 1.0%). A third tier for highest-conviction setups (MACD + RSI diverging + Stochastics overbought) could be added in v2. | `idea` | Deliberately simplified for v1 testability |
-| B-007 | **Continuous weekly scaling matrix** — v1 uses a 3-level weekly modifier. A continuous scaling function (e.g. based on % of gates passing) could be more precise. | `idea` | Complexity vs. testability tradeoff — v2 |
-| B-008 | **Divergence invalidation automation** — if price makes a new extreme with a higher MACD reading after Stage 1, the setup is void. Could be surfaced by a screener alert. | `idea` | Important edge case — worth scripting eventually |
+| B-005 | **Bidirectional symmetry** — do bullish divergence setups in downtrends perform comparably to bearish setups in uptrends? One direction may be structurally stronger. | `done` | Phase 1B finding: bullish long in uptrends outperforms shorts in current bull market. Regime-aware filter now required rule. |
+| B-006 | **Three-tier quality sizing** — v1 uses two levels (0.5% and 1.0%). A third tier for highest-conviction setups (MACD + RSI diverging + Stochastics overbought) could be added in v2. | `idea` | Deliberately simplified for v1. Phase 1B showed Level 2 (RSI≥70) counterintuitively weaker — investigate before adding third tier. |
+| B-007 | **Continuous weekly scaling matrix** — v1 uses a 3-level weekly modifier. A continuous scaling function could be more precise. | `idea` | Complexity vs. testability tradeoff — v2 |
+| B-008 | **Divergence invalidation automation** — screener alert when Stage 1 is voided by new extreme with matching MACD. | `idea` | Important edge case — worth scripting eventually |
+| B-009 | **Maturity cap at 40 bars** — Phase 1B showed 30-40 bar bucket strongest (0.95R avg). Cap at 40 bars adds +0.08R with minor frequency reduction. | `queued` | Pre-registered perturbation showed improvement. Add as optional filter in v1.2. |
+| B-010 | **Level 2 confirmation paradox** — RSI≥70 confirmation produced LOWER R (0.14) than Level 1 (0.73). Investigate why — possible that overbought RSI means trend too strong to reverse. | `queued` | Unexpected Phase 1B finding. Test removing Level 2 sizing penalty entirely. |
 
 ---
 
