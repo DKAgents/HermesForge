@@ -9,6 +9,7 @@ source_page_range: "pp. 1–2"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
 ---

@@ -9,6 +9,7 @@ source_page_range: "109–110"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [trend, support-resistance, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
 ---

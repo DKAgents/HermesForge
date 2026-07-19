@@ -9,6 +9,7 @@ source_page_range: "489"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [trend, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
 ---

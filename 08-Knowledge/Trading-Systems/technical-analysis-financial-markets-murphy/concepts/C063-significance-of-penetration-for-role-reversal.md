@@ -9,6 +9,7 @@ source_page_range: "pp. 83–84"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
 ---

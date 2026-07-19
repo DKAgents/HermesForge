@@ -9,6 +9,7 @@ source_page_range: "448–449"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [volume, candlesticks, market-breadth, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
 ---

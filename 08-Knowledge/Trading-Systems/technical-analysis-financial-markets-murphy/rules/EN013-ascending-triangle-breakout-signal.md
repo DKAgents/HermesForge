@@ -9,6 +9,7 @@ source_page_range: "137–138"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+topic: [trend, support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
 ---

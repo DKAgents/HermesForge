@@ -9,6 +9,7 @@ source_page_range: "pp. xviii, xxi (Contents)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: low
+topic: [trend, oscillators, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
 ---
