@@ -100,15 +100,16 @@ def _simulate_exit(
     stop_price: float,
     target_price: float,
     direction: str,          # 'long' or 'short'
+    max_bars: int = MAX_BARS_HELD,
 ) -> tuple:
     """
-    Scan forward from bar after entry_idx for up to MAX_BARS_HELD bars.
+    Scan forward from bar after entry_idx for up to max_bars bars.
     For 'long'  : target = close >= target_price ; stop = close <= stop_price
     For 'short' : target = close <= target_price ; stop = close >= stop_price
     Returns (exit_price, exit_reason, bars_held).
     """
     n = len(closes)
-    for offset in range(1, MAX_BARS_HELD + 1):
+    for offset in range(1, max_bars + 1):
         idx = entry_idx + offset
         if idx >= n:
             last = min(entry_idx + offset - 1, n - 1)
@@ -125,8 +126,8 @@ def _simulate_exit(
             if c >= stop_price:
                 return c, "stop", offset
 
-    exit_idx = min(entry_idx + MAX_BARS_HELD, n - 1)
-    return closes[exit_idx], "time", MAX_BARS_HELD
+    exit_idx = min(entry_idx + max_bars, n - 1)
+    return closes[exit_idx], "time", max_bars
 
 
 # ---------------------------------------------------------------------------
