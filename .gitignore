@@ -27,3 +27,10 @@ desktop.ini
 
 # Optional: Uncomment if you want to ignore attachments
 # attachments/
+
+# Inbox processing files (large, temporary)
+Inbox/*.json
+Inbox/*.py
+Inbox/*.log
+._*
+.trash/
