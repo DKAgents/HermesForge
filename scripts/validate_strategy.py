@@ -30,7 +30,7 @@ STRATEGY_DIRS   = [
 
 REQUIRED_FM_FIELDS = [
     'id', 'type', 'status', 'asset_class', 'trade_style',
-    'timeframe', 'confidence', 'last_reviewed',
+    'timeframe', 'market_regime', 'core_idea', 'confidence', 'last_reviewed',
 ]
 
 REQUIRED_SECTIONS = [
@@ -48,6 +48,8 @@ VALID_STYLES    = {'swing', 'position', 'day', 'scalp'}
 VALID_CLASSES   = {'stocks', 'crypto', 'options', 'futures', 'forex', 'mixed'}
 VALID_TF        = {'1m', '5m', '15m', '1h', '4h', 'daily', 'weekly', 'monthly', 'multi'}
 VALID_CONF      = {'low', 'medium', 'high', 'validated'}
+VALID_REGIMES   = {'trending', 'ranging', 'volatile', 'any'}
+VALID_IDEAS     = {'breakout', 'pullback', 'mean-reversion', 'trend-continuation', 'reversal', 'other'}
 
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
@@ -138,6 +140,14 @@ def validate_file(path: Path, vault_stems: set[str]) -> dict:
         confidence = fm.get('confidence', '')
         if confidence and confidence not in VALID_CONF:
             warnings.append(f"Unusual confidence '{confidence}'. Expected: {VALID_CONF}")
+
+        market_regime = fm.get('market_regime', '')
+        if market_regime and market_regime not in VALID_REGIMES:
+            errors.append(f"Invalid market_regime '{market_regime}'. Must be one of: {VALID_REGIMES}")
+
+        core_idea = fm.get('core_idea', '')
+        if core_idea and core_idea not in VALID_IDEAS:
+            errors.append(f"Invalid core_idea '{core_idea}'. Must be one of: {VALID_IDEAS}")
 
         # last_reviewed — must be a valid date
         lr = fm.get('last_reviewed', '')

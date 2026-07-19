@@ -46,6 +46,8 @@ All strategies live under `06-Strategies/` with sub-folders:
 | `trade_style` | enum | ✅ | `swing` \| `position` \| `day` \| `scalp` |
 | `timeframe` | enum | ✅ | `daily` \| `weekly` \| `4h` \| `1h` \| `multi` |
 | `confidence` | enum | ✅ | `low` \| `medium` \| `high` \| `validated` |
+| `market_regime` | enum | ✅ | `trending` \| `ranging` \| `volatile` \| `any` |
+| `core_idea` | enum | ✅ | `breakout` \| `pullback` \| `mean-reversion` \| `trend-continuation` \| `reversal` \| `other` |
 | `evidence_links` | list | ✅ | List of vault note stems (informational; wikilinks in body are the enforced source) |
 | `last_reviewed` | date | ✅ | ISO 8601 `YYYY-MM-DD` |
 

@@ -14,6 +14,8 @@ All active, hypothesis, and deprecated strategies. Maintained automatically by D
 
 ```dataview
 TABLE
+  core_idea AS "Idea",
+  market_regime AS "Regime",
   trade_style AS "Style",
   asset_class AS "Asset",
   timeframe AS "TF",
@@ -30,6 +32,8 @@ SORT last_reviewed DESC
 
 ```dataview
 TABLE
+  core_idea AS "Idea",
+  market_regime AS "Regime",
   trade_style AS "Style",
   asset_class AS "Asset",
   timeframe AS "TF",

@@ -5,6 +5,8 @@ status: hypothesis
 asset_class: stocks
 trade_style: swing
 timeframe: daily
+market_regime: trending
+core_idea: breakout
 confidence: medium
 evidence_links:
   - EN008-volume-confirmation-at-pattern-completion
@@ -18,8 +20,8 @@ last_reviewed: 2026-07-19
 created: 2026-07-19
 updated: 2026-07-19
 tags: [strategy, hypothesis, breakout, volume, swing]
+confirmation_count: 1
 ---
-
 # Trend-Following Breakout with Volume Confirmation
 
 ## Thesis

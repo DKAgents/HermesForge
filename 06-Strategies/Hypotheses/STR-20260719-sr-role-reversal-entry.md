@@ -5,6 +5,8 @@ status: hypothesis
 asset_class: stocks
 trade_style: swing
 timeframe: daily
+market_regime: ranging
+core_idea: reversal
 confidence: medium
 evidence_links:
   - C065-previous-support-as-future-resistance-in-downtrend

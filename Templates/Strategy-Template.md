@@ -5,6 +5,8 @@ status: hypothesis
 asset_class: stocks
 trade_style: swing
 timeframe: daily
+market_regime: trending
+core_idea: breakout
 confidence: low
 evidence_links: []
 last_reviewed: {{date:YYYY-MM-DD}}
