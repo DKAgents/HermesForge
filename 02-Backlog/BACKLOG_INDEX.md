@@ -15,7 +15,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 
 | Epic | Status | Description | Stories |
 |------|--------|-------------|---------|
-| [[Epics/EPIC-001-Foundation\|EPIC-001]] | 🟡 In Progress | Setting up vault, Hermes profiles, and core infrastructure | US-001 → US-006 |
+| [[Epics/EPIC-001-Foundation\|EPIC-001]] | 🟡 In Progress | Setting up vault, Hermes profiles, and core infrastructure | US-001 → US-006, US-063 |
 | [[Epics/EPIC-002-Research\|EPIC-002]] | ⬜ Backlog | Research swing/position trading strategies for US stocks and crypto | US-010 → US-017 |
 | [[Epics/EPIC-003-PaperTrading\|EPIC-003]] | ⬜ Backlog | Building and validating strategies in paper mode (stocks + crypto) | US-020 → US-026 |
 | [[Epics/EPIC-004-Risk\|EPIC-004]] | ⬜ Backlog | Implementing risk rules, position sizing, and guardian workflow | US-030 → US-034 |
