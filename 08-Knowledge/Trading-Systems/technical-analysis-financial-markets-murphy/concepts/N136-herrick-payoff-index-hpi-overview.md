@@ -5,7 +5,7 @@ source_book: "Technical Analysis of the Financial Markets"
 source_author: "John J. Murphy"
 source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
 source_chapter: "Unknown"
-source_page_range: "None"
+source_page_range: "~pp. 463–468 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
