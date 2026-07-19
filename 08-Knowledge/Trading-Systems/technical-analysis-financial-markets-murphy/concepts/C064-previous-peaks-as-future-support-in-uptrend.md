@@ -9,6 +9,7 @@ source_page_range: "pp. 82–84"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: low
+has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,6 +25,8 @@ In an uptrend, once a prior resistance peak is decisively broken, that level tra
 > "In an uptrend, resistance levels that have been broken by a significant margin become support levels. Notice that once resistance at point 1 is exceeded, it provides support at point 4. Previous peaks function as support on subsequent corrections." — John J. Murphy, p. 82
 
 ## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 - [[Support and Resistance Role Reversal]]
 - [[Significance of Penetration for Role Reversal]]
 

@@ -9,6 +9,7 @@ source_page_range: "257-263"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,7 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Contrary Opinion theory, associated with Humphrey B. Neill, suggests that when the majority of market participants hold the same opinion, the market is likely to move in the opposite direction. Investor Sentiment Readings and Investors Intelligence numbers are used to quantify sentiment extremes.
 
 ## Related Notes
-_None identified_
+- [[N181-investor-sentiment-readings-and-investors-intelligence|Investor Sentiment Readings and Investors Intelligence]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

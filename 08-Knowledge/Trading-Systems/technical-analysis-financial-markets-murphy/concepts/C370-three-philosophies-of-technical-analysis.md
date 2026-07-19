@@ -9,6 +9,7 @@ source_page_range: "1-22"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,7 +20,8 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Technical analysis rests on three core premises: market action discounts everything, prices move in trends, and history repeats itself. These philosophical foundations justify the use of price charts and technical indicators for forecasting.
 
 ## Related Notes
-_None identified_
+- [[C030-market-action-discounts-everything|Market Action Discounts Everything]]
+- [[C032-history-repeats-itself|History Repeats Itself]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

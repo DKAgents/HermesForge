@@ -9,6 +9,7 @@ source_page_range: "p. xxii (Contents)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: low
+has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,6 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 The book addresses the construction of continuous futures contracts, covering several methods: nearest contract, next contract, Gann contract, continuous contracts, and constant forward continuous contracts. These methods are used to create unbroken price histories for futures markets to enable technical analysis across contract expirations.
 
 ## Related Notes
+- [[C006-technical-analysis-across-markets-and-time-frames|Technical Analysis Across Markets and Time Frames]]
 - [[Definition of Technical Analysis]]
 
 ---

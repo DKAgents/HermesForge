@@ -9,6 +9,7 @@ source_page_range: "109–110"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
@@ -26,7 +27,8 @@ Price objectives from pattern measurements should be adjusted based on other tec
 > "The most skillful technical analysts are those who learn to blend all of those tools together properly." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

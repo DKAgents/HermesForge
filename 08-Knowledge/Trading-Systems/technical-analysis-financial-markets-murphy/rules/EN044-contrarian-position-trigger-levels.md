@@ -9,6 +9,7 @@ source_page_range: "260"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ A contrarian position can usually be considered when Bullish Consensus numbers a
 > "A contrarian position can usually be considered when the bullish consensus numbers are above 90% or under 20%." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N068-bullish-consensus-numbers-and-sentiment-services|Bullish Consensus Numbers and Sentiment Services]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

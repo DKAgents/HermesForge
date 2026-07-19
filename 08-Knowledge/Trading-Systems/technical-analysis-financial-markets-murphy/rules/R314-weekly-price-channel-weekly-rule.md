@@ -9,6 +9,7 @@ source_page_range: "215-220"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [trend, moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -19,7 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 The weekly rule uses weekly price channels to generate trading signals, with the 4-week rule being the most common application. Adjustments can be made to the channel length, and the rule has a relationship with market cycles.
 
 ## Related Notes
-_None identified_
+- [[N185-price-channels|Price Channels]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

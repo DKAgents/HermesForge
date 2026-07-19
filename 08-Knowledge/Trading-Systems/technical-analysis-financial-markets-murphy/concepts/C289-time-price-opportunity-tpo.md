@@ -9,6 +9,7 @@ source_page_range: "479"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ Each letter in a Market Profile graphic represents a Time Price Opportunity (TPO
 > "each TPO is an opportunity created by the market at a certain time and certain price" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N142-market-profile-graphic-construction|Market Profile Graphic Construction]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

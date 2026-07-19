@@ -9,6 +9,7 @@ source_page_range: "341"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ The Elliott Wave Theory is comprised of three elements in order of importance: w
 > "The Elliott Wave Theory is comprised of wave forms, ratios, and time, in that order of importance." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N084-key-fibonacci-ratios-618-1618-2618-382|Key Fibonacci Ratios: .618, 1.618, 2.618, .382]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

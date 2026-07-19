@@ -9,6 +9,7 @@ source_page_range: "105–106"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
@@ -24,7 +25,7 @@ Several warning signs precede the neckline break: lighter volume on the rally to
 > "despite all of these warnings, all that we know at this point is that the trend has shifted from up to sideways. This might be sufficient cause to liquidate long positions, but not necessarily enough to justify new short sales." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R046-right-shoulder-rally-retracement-range|Right Shoulder Rally Retracement Range]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "pp. 81–82"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,6 +27,7 @@ Chart patterns are not merely technical pictures; they reflect the actual behavi
 > "There are sound psychological reasons why support and resistance levels can be identified on price charts and why they can be used to help predict market movements." — John J. Murphy, p. 81
 
 ## Related Notes
+- [[C334-resistance-level|Resistance Level]]
 - [[Support and Resistance Role Reversal]]
 - [[Psychological Basis of Support and Resistance]]
 

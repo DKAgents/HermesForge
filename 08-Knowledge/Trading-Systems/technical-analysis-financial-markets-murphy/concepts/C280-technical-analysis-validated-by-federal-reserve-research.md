@@ -9,6 +9,7 @@ source_page_range: "459–460"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,7 +27,7 @@ The Federal Reserve Bank of New York published a 1995 Staff Report titled 'Head 
 > "The success of technical trading rules shown in the previous section is typical of a number of later studies showing that the simple efficient market hypothesis fails in important ways to describe how the foreign exchange market actually functions." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C039-efficient-market-hypothesis-vs-technical-premise|Efficient Market Hypothesis vs. Technical Premise]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

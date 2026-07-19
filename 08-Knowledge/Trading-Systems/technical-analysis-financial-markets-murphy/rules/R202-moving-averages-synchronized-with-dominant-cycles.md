@@ -9,6 +9,7 @@ source_page_range: "358"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Moving averages can be made more useful if their lengths are synchronized with d
 > "moving averages can be made more useful if their lengths are synchronized with dominant cycle lengths" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C212-nominal-cycle-model|Nominal Cycle Model]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

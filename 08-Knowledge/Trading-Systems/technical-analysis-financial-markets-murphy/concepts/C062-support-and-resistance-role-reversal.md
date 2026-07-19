@@ -9,6 +9,7 @@ source_page_range: "pp. 82–84"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,6 +27,8 @@ Once a support level is decisively penetrated to the downside, it reverses roles
 > "All of the previous selling near the top of wave 1 (creating the resistance level) has now become buying under the market." — John J. Murphy, p. 83
 
 ## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 - [[Significance of Penetration]]
 - [[Chart Patterns as Human Psychology]]
 

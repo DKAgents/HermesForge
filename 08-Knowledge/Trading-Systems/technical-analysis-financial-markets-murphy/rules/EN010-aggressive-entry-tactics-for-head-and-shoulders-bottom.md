@@ -9,6 +9,7 @@ source_page_range: "Pages 141–160"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ More aggressive traders will begin probing the long side during the formation of
 > "More aggressive traders, believing that they have correctly identified a head and shoulders bottom, will begin to probe the long side during the formation of the right shoulder." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R046-right-shoulder-rally-retracement-range|Right Shoulder Rally Retracement Range]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

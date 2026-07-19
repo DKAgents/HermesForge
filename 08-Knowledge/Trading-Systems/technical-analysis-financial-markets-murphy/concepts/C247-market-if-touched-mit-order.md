@@ -9,6 +9,7 @@ source_page_range: "~pp. 398–407 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ An M.I.T. order is similar to a limit order but becomes a market order when the 
 > "The market-if-touched order is particularly useful, but is not allowed on some exchanges." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C243-market-order|Market Order]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

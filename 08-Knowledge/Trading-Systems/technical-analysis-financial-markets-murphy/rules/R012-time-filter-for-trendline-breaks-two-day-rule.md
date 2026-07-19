@@ -9,6 +9,7 @@ source_page_range: "72"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ A valid trendline break requires prices to close beyond the trendline for two su
 > "to have a valid breaking of a trendline, prices must close beyond the trendline for two successive days" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

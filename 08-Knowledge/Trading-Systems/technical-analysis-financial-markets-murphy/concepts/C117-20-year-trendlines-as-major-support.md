@@ -9,6 +9,7 @@ source_page_range: "193"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ Trendlines spanning 20 years on monthly charts represent extremely significant s
 > "The 1994 bottom in the Dow Utilities bounced off a trendline lasting 20 years." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

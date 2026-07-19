@@ -9,6 +9,7 @@ source_page_range: "182"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ The principles of technical analysis—including trend analysis, support and res
 > "Anyone who is not consulting these longer range charts is missing an enormous amount of valuable price information." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

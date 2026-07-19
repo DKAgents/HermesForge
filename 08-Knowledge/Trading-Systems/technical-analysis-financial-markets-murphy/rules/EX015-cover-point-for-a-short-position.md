@@ -9,6 +9,7 @@ source_page_range: "279"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
@@ -24,7 +25,7 @@ The cover point for a short position is exactly the same point as the buy signal
 > "COVER POINT FOR A SHORT - Exactly the same point as the buy signal. Since this point can be determined in advance, a stop order to Cover should be in the market." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C245-stop-order|Stop Order]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "56-59, 72-73"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -19,7 +20,8 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Once a support level is broken, it becomes a new resistance level, and once a resistance level is broken, it becomes new support. This principle is fundamental to understanding price behavior and setting price targets.
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

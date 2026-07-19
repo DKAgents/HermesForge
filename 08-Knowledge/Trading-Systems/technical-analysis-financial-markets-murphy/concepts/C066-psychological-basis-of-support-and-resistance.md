@@ -9,6 +9,7 @@ source_page_range: "pp. 81–83"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,6 +25,7 @@ Support and resistance levels exist on charts because of the collective psycholo
 > "There are sound psychological reasons why support and resistance levels can be identified on price charts and why they can be used to help predict market movements." — John J. Murphy, p. 81
 
 ## Related Notes
+- [[C334-resistance-level|Resistance Level]]
 - [[Chart Patterns as Human Psychology]]
 - [[Support and Resistance Role Reversal]]
 

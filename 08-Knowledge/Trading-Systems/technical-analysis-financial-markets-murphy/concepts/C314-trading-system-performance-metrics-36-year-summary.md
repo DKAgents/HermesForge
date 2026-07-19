@@ -9,6 +9,7 @@ source_page_range: "503"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ A 36-year performance summary of a model trading system on the Value Line Geomet
 > "The Profit factor, Avg trade (win and loss) and Max intraday drawdown are all excellent." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[RG047-max-intraday-drawdown-as-risk-metric|Max Intraday Drawdown as Risk Metric]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

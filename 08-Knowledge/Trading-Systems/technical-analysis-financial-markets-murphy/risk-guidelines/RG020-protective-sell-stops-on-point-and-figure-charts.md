@@ -9,6 +9,7 @@ source_page_range: "270"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
@@ -24,7 +25,7 @@ On a more sensitive (smaller box size) point and figure chart, traders can place
 > "It also allows the trader to raise protective sell stops below the latest columns of o's." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R146-smaller-box-size-for-short-term-trading-and-re-entry|Smaller Box Size for Short-Term Trading and Re-Entry]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "301-302"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -28,7 +29,7 @@ Before applying Japanese candle reversal patterns, the preceding trend of the ma
 > "Once the short term (ten periods or so) trend has been determined, Japanese candle patterns will significantly assist in identifying the reversal of that trend." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N084-bearish-reversal-candle-pattern-library|Bearish Reversal Candle Pattern Library]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

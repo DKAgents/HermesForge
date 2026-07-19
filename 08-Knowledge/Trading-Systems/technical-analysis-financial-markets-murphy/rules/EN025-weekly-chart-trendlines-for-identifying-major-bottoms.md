@@ -9,6 +9,7 @@ source_page_range: "189"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ Long-term up trendlines drawn on weekly charts connecting multi-year lows serve 
 > "The early 1998 bottom in General Motors began right at the trendline drawn along the 1995-1996 lows. That's why it's a good idea to track weekly charts." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

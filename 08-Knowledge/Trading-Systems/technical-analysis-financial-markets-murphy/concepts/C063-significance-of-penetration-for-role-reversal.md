@@ -9,6 +9,7 @@ source_page_range: "pp. 83–84"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,6 +27,7 @@ Role reversal of support and resistance only occurs after a significant penetrat
 > "the distance prices traveled away from support or resistance increased the significance of that support or resistance." — John J. Murphy, p. 83
 
 ## Related Notes
+- [[C334-resistance-level|Resistance Level]]
 - [[Support and Resistance Role Reversal]]
 
 ---

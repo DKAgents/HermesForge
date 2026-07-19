@@ -9,6 +9,7 @@ source_page_range: "186–187"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [intermarket, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,7 +27,8 @@ Long-term charts do not require adjustment for inflation because markets themsel
 > "Many markets fail at historic resistance levels set several years earlier and then bounce off support levels not seen in several years." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

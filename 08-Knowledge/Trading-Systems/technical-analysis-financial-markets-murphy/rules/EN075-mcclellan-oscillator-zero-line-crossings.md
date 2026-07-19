@@ -9,6 +9,7 @@ source_page_range: "439"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ Crossings of the McClellan Oscillator above the zero line are interpreted as sho
 > "Crossings above and below the zero line are also interpreted as short to intermediate term buying and selling signals respectively." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R126-zero-line-crossing-as-buysell-signal|Zero Line Crossing as Buy/Sell Signal]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

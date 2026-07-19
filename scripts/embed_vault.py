@@ -20,6 +20,13 @@ from datetime import datetime
 
 VAULT_ROOT  = Path('/root/HermesForge')
 BOOKS_DIR   = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems'
+VAULT_DIRS  = [
+    VAULT_ROOT / '00-Meta',
+    VAULT_ROOT / '03-ADRs',
+    VAULT_ROOT / '07-Risk',
+    VAULT_ROOT / '08-Knowledge' / 'Learnings',
+    VAULT_ROOT / '08-Knowledge' / 'Skills',
+]
 CHROMA_DIR  = Path('/root/.hermes/vault_index/chroma')
 MODEL_NAME  = 'all-MiniLM-L6-v2'
 COLLECTION  = 'vault_notes'
@@ -62,7 +69,19 @@ def parse_note(filepath: Path) -> dict | None:
 
     ct = extract('concept_type')
     if not ct:
-        return None
+        # For vault docs without concept_type, infer from type: field
+        type_m = re.search(r'^type:\s*(.+)$', raw_fm, re.MULTILINE)
+        if type_m:
+            raw_t = type_m.group(1).strip().strip('"\'')
+            type_map = {
+                'risk-framework': 'risk-rule', 'risk-guide': 'risk-rule',
+                'risk-escalation': 'risk-rule', 'meta': 'meta',
+                'dashboard': 'meta', 'adr': 'decision',
+                'user-story': 'story', 'story': 'story',
+            }
+            ct = type_map.get(raw_t, raw_t)
+        if not ct:
+            ct = 'vault-note'
 
     title_m = re.search(r'^#\s+(.+)$', body, re.MULTILINE)
     title = title_m.group(1).strip() if title_m else ''
@@ -183,6 +202,7 @@ def main():
 
     book_dirs = ([BOOKS_DIR / args.book] if args.book
                  else [d for d in BOOKS_DIR.iterdir() if d.is_dir()])
+    vault_extra = [] if args.book else [d for d in VAULT_DIRS if d.exists()]
 
     t0 = datetime.utcnow()
     total = 0
@@ -190,6 +210,12 @@ def main():
         if not bd.exists():
             print(f"WARNING: {bd} not found"); continue
         n = embed_book(col, model, bd, force=args.force)
+        total += n
+
+    # Embed extra vault sections
+    for vdir in vault_extra:
+        slug = f"vault-{vdir.name.lower()}"
+        n = embed_book(col, model, vdir, force=args.force)
         total += n
 
     elapsed = (datetime.utcnow() - t0).total_seconds()

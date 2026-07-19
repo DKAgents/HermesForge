@@ -9,6 +9,7 @@ source_page_range: "429"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [moving-averages, intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,8 @@ A moving-average crossover system in the bond market can be used as a filter for
 > "He demonstrates, for example, how a moving-average crossover system in the bond market can be used as a filter for stock index trading." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C314-trading-system-performance-metrics-36-year-summary|Trading System Performance Metrics — 36-Year Summary]]
+- [[R211-moving-average-crossover-system-tied-to-cycles|Moving Average Crossover System Tied to Cycles]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

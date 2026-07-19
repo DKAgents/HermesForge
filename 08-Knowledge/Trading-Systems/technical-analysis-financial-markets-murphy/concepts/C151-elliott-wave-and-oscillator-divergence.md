@@ -9,6 +9,7 @@ source_page_range: "252"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, oscillators, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ In Elliott Wave analysis, the fifth and final wave is often confirmed by bearish
 > "The fifth and final wave in Elliott Wave analysis is often confirmed by bearish oscillator divergences." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C327-elliott-wave-analysis|Elliott Wave Analysis]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

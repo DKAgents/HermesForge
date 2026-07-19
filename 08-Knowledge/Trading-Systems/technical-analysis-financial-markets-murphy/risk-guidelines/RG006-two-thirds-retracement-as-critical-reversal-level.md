@@ -9,6 +9,7 @@ source_page_range: "86"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, fibonacci, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
@@ -26,7 +27,7 @@ The maximum retracement parameter of 66% is an especially critical area. If the 
 > "If prices move beyond the two-thirds point, the odds then favor a trend reversal rather than just a retracement." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R307-maximum-retracement-parameter|Maximum Retracement Parameter]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

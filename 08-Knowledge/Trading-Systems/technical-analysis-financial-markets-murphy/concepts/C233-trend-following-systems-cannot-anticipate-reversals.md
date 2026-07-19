@@ -9,6 +9,7 @@ source_page_range: "388"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, oscillators, elliott-wave, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,8 @@ A drawback of trend-following systems is that no allowance is generally made for
 > "Trend-following systems ride with the trend until it turns. They don't recognize when a market has reached a long term support or resistance level, when oscillator divergences are being given, or when an Elliott Wave fifth pattern is clearly visible." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
+- [[C116-long-term-support-and-resistance-levels-remain-valid-across-|Long-Term Support and Resistance Levels Remain Valid Across Decades]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

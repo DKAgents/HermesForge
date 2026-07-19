@@ -9,6 +9,7 @@ source_page_range: "55-65, 401"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [support-resistance, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,7 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Support is a price level where buying interest is strong enough to halt a decline, while resistance is a level where selling pressure stops an advance. When broken, support becomes resistance and vice versa (reversal of roles), and round numbers often act as natural support/resistance levels.
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

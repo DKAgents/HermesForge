@@ -9,6 +9,7 @@ source_page_range: "174"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Increasing open interest at the completion of a price pattern is viewed as added
 > "Increasing open interest at the completion of a price pattern is viewed as added confirmation of a reliable trend signal" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R076-how-open-interest-changes-occur|How Open Interest Changes Occur]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "162-163"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ A price breakout through a significant resistance level should be accompanied by
 > "The upside price breakout by McDonalds through the November 1997 peak was accompanied by a noticeable burst of trading activity. That's bullish." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

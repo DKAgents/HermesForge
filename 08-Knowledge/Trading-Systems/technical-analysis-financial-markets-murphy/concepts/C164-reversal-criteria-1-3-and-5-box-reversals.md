@@ -9,6 +9,7 @@ source_page_range: "273"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ The three traditional reversal criteria for point and figure charts are 1-box, 3
 > "The 1 box reversal is generally used for very short term activity and the 3 box for the study of the intermediate trend. The 5 box reversal, because of its severe condensation, is generally used for the study of long term trends." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C114-long-term-trends-as-evidence-against-random-walk|Long-Term Trends as Evidence Against Random Walk]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

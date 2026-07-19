@@ -9,6 +9,7 @@ source_page_range: "480"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ The purpose of the marketplace is to facilitate or promote trade, and all market
 > "the market continues to auction up, advertising for sellers to appear in order to shut off buying" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C291-dual-auction-process|Dual Auction Process]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

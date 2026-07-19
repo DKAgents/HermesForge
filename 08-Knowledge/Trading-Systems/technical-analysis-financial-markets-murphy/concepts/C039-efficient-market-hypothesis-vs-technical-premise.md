@@ -9,6 +9,7 @@ source_page_range: "pp. 41–42"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,6 +25,7 @@ The Efficient Market Hypothesis (EMH) holds that markets quickly discount all in
 > "Far from disproving the validity of the technical approach, the efficient market hypothesis is very close to the technical premise that markets discount everything." — John J. Murphy, p. unknown
 
 ## Related Notes
+- [[C040-markets-discount-everything|Markets Discount Everything]]
 - [[Markets Discount Everything]]
 - [[Random Walk Theory Rejection by Technicians]]
 

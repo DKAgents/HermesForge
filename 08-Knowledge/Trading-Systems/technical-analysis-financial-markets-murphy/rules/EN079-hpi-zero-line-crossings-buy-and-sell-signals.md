@@ -9,6 +9,7 @@ source_page_range: "~pp. 465–469 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -26,7 +27,7 @@ Crossings of the HPI above the zero line are interpreted as buy signals, while c
 > "This is characteristic of the HPI when used on the daily data as it will cross above and below the zero line several times before a longer lasting buy or sell signal is given." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R126-zero-line-crossing-as-buysell-signal|Zero Line Crossing as Buy/Sell Signal]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

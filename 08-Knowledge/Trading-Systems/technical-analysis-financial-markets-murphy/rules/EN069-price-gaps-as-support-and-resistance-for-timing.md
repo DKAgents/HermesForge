@@ -9,6 +9,7 @@ source_page_range: "~pp. 386–408 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, chart-patterns, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,8 @@ Price gaps on bar charts function as support or resistance levels for timing ent
 > "After an upmove, for example, underlying gaps usually function as support levels." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

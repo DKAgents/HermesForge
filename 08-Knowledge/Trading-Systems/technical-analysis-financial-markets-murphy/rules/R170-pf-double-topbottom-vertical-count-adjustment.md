@@ -9,6 +9,7 @@ source_page_range: "286"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ When a double top or double bottom pattern occurs on a point and figure chart, t
 > "If a double top or bottom occurs on the chart, use the second column of o's or x's for the vertical count." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N024-double-bottom-pattern|Double Bottom Pattern]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "~pp. 219–231 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Channel breakout systems work extremely well in trending markets and can be appl
 > "Channel breakout systems work extremely well in trending markets and can be used on daily, weekly, and monthly charts." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R211-moving-average-crossover-system-tied-to-cycles|Moving Average Crossover System Tied to Cycles]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "174"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, volume, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
@@ -24,7 +25,7 @@ Because the impetus following the initial trend signal is often caused by those 
 > "sometimes the open interest dips slightly at the beginning of a new trend" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R076-how-open-interest-changes-occur|How Open Interest Changes Occur]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

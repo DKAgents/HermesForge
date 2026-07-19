@@ -9,6 +9,7 @@ source_page_range: "pp. 82–83"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: low
+has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,6 +25,8 @@ In a downtrend, once a prior support level is violated to the downside, it rever
 > "In a downtrend, violated Support levels become resistance levels on subsequent bounces. Notice how previous support at point 1 became resistance at point 4." — John J. Murphy, p. 83
 
 ## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 - [[Support and Resistance Role Reversal]]
 - [[Significance of Penetration for Role Reversal]]
 

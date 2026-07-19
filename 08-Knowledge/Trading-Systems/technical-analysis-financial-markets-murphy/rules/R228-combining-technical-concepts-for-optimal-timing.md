@@ -9,6 +9,7 @@ source_page_range: "~pp. 398–407 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ The most effective timing approach combines multiple technical factors simultane
 > "The idea is to buy near support, but to exit quickly if that support is broken." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

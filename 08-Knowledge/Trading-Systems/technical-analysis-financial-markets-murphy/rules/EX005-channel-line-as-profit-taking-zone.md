@@ -9,6 +9,7 @@ source_page_range: "82-83"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
@@ -24,7 +25,7 @@ The upper channel line in an uptrend can be used for short-term profit taking on
 > "The channel line can be used for short term profit taking." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R224-holding-long-positions-in-correlated-markets-is-not-diversif|Holding Long Positions in Correlated Markets is Not Diversification]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

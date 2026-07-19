@@ -9,6 +9,7 @@ source_page_range: "215–216"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,7 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 The weekly price channel (weekly rule) is one of the best known and most successful alternatives to the moving average as a trend-following device. It has many of the benefits of the moving average but is less time consuming and simpler to use. Research has consistently shown channel breakout systems to produce superior results.
 
 ## Related Notes
-_None identified_
+- [[R314-weekly-price-channel-weekly-rule|Weekly Price Channel (Weekly Rule)]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

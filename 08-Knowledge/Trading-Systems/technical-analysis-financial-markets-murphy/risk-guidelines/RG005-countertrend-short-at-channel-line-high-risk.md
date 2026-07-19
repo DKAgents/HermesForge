@@ -9,6 +9,7 @@ source_page_range: "82"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
@@ -24,7 +25,7 @@ More aggressive traders might use the upper channel line to initiate a countertr
 > "trading in the opposite direction of the prevailing trend can be a dangerous and usually costly tactic." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

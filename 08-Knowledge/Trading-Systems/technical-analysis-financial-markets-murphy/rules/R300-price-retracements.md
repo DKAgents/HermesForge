@@ -9,6 +9,7 @@ source_page_range: "513"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Prices normally retrace the prior trend by a percentage amount before resuming t
 > "Prices normally retrace the prior trend by a percentage amount before resuming the original trend. The best known example is the 50% retracement. Minimum and maximum retracements are normally one third and two thirds, respectively." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C327-elliott-wave-analysis|Elliott Wave Analysis]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

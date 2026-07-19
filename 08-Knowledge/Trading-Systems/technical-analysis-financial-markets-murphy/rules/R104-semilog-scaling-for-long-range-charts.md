@@ -9,6 +9,7 @@ source_page_range: "188, 193–194"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -26,7 +27,7 @@ Semilog (logarithmic) chart scaling becomes more valuable when studying long-ran
 > "Up trendlines on log charts are broken sooner than linear up trendlines." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C387-semilog-chart-scaling|Semilog Chart Scaling]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

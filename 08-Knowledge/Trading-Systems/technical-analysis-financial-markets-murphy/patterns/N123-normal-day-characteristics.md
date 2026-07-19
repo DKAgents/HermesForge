@@ -1,0 +1,27 @@
+---
+type: atomic-note
+concept_type: pattern
+source_book: "Technical Analysis of the Financial Markets"
+source_author: "John J. Murphy"
+source_file: "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf"
+source_chapter: "Unknown"
+source_page_range: "486"
+model_tier: T2
+model: anthropic/claude-sonnet-4.6
+confidence: high
+has_quotes: false
+topic: [general]
+ingested_at: 2026-07-19
+tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+---
+
+# Normal Day Characteristics
+
+A normal day features an initial balance established by short term traders in the first two periods, with longer term traders remaining inactive. The result is a symmetrical or balanced price distribution. The range does not extend significantly beyond the initial balance.
+
+## Related Notes
+- [[C295-initial-balance-established-in-first-hour|Initial Balance Established in First Hour]]
+
+---
+_Source: Technical Analysis of the Financial Markets — Unknown_
+_Ingested: 2026-07-19 | Model: T2 (claude-sonnet-4.6)_

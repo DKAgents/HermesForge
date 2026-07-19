@@ -9,6 +9,7 @@ source_page_range: "186"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Step 1: Analyze the 20-year monthly chart for major patterns, trendlines, and su
 > "The first chart to be considered is the 20 year monthly chart... He or she then consults the most recent five years on the weekly chart... the analyst narrows his or her focus to the last six to nine months of market action on the daily bar chart." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R238-use-intraday-charts-to-fine-tune-entry-and-exit|Use Intraday Charts to Fine-Tune Entry and Exit]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

@@ -9,6 +9,7 @@ source_page_range: "341"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Bear markets should not fall below the bottom of the previous fourth wave. This 
 > "Bear markets should not fall below the bottom of the previous fourth wave." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

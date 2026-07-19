@@ -9,6 +9,7 @@ source_page_range: "489"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, oscillators, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
@@ -24,7 +25,7 @@ TPO buying and selling analysis in the value area is not applicable on trend day
 > "TPO buying and selling in the value area is not applicable on trend days, as the market is still in search of a fair value area." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R280-tpo-imbalance-detection-procedure|TPO Imbalance Detection Procedure]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

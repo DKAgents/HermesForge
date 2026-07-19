@@ -9,6 +9,7 @@ source_page_range: "75–76"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ At a market bottom, three successive down trendlines are drawn as prices make lo
 > "the breaking of the third down trendline (line 3) constitutes a new uptrend signal." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C336-support-level|Support Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

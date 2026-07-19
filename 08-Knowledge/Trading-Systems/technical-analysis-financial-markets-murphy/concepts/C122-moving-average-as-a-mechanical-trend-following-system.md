@@ -9,6 +9,7 @@ source_page_range: "195"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ Moving average rules can easily be programmed into a computer, which then genera
 > "While two technicians may disagree as to whether a given price pattern is a triangle or a wedge, or whether the volume pattern favors the bull or bear side, moving average trend signals are precise and not open to debate." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C119-moving-average-as-a-trend-follower-not-a-predictor|Moving Average as a Trend Follower, Not a Predictor]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

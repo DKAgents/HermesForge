@@ -9,6 +9,7 @@ source_page_range: "503"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
@@ -19,7 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Maximum intraday drawdown represents the largest peak-to-trough equity decline experienced during the testing period and is used to determine the account size required to trade the system. In the example, a max intraday drawdown of $45.01 equals the account size required, meaning traders must be capitalized to withstand the worst historical drawdown. This metric is critical for position sizing and risk management.
 
 ## Related Notes
-_None identified_
+- [[RG045-maximum-intraday-drawdown|Maximum Intraday Drawdown]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

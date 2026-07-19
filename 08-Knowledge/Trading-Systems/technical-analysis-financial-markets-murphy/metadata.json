@@ -1,27 +1,36 @@
 {
   "title": "Technical Analysis of the Financial Markets",
   "author": "John J. Murphy",
+  "slug": "technical-analysis-financial-markets-murphy",
   "source_file": "John_J._Murphy_-_Technical_Analysis_Of_The_Financial_Markets.pdf",
   "format": "pdf",
-  "pages": null,
+  "pages": 596,
   "ingested_at": "2026-07-19",
-  "total_chunks_extracted": 0,
-  "total_notes_created": 1302,
+  "last_updated": "2026-07-19",
+  "total_chunks_extracted": 85,
+  "total_notes_created": 1257,
   "notes_by_type": {
-    "pattern": 173,
-    "rule": 323,
-    "indicator": 205,
-    "entry-criteria": 90,
-    "concept": 389,
-    "risk-guideline": 53,
+    "risk-guideline": 51,
     "edge-condition": 49,
+    "indicator": 187,
+    "concept": 378,
+    "pattern": 162,
+    "entry-criteria": 89,
+    "rule": 321,
     "exit-criteria": 20
   },
   "pipeline_stages": {
-    "stage_1_extraction": "T3 mechanical (pymupdf/ebooklib)",
-    "stage_2_synthesis": "T2 — anthropic/claude-sonnet-4.6",
-    "stage_3_writing": "T3 mechanical (write_notes.py)"
+    "stage_1_extraction": "T3 \u2014 tesseract OCR (DPI=150, 4 workers)",
+    "stage_2_synthesis": "T2 \u2014 anthropic/claude-sonnet-4.6 (1 chunk/call, max_tokens=8000)",
+    "stage_3_writing": "T3 \u2014 write_notes.py v2",
+    "stage_3b_dedup": "T3 \u2014 dedup_notes.py (45 dupes removed)",
+    "stage_3c_tagging": "T3 \u2014 tag_vault_topics.py (23 topics)",
+    "stage_3d_page_repair": "T3 \u2014 93 page refs repaired (3 exact, 90 estimated)"
   },
+  "vault_path": "08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy",
   "hermes_story": "US-008",
-  "vault_path": "Trading-Systems/technical-analysis-of-the-financial-mark-murphy"
+  "rag_indexed": true,
+  "fts_index": "/root/.hermes/vault_index/vault.db",
+  "embedding_store": "/root/.hermes/vault_index/chroma",
+  "embedding_model": "all-MiniLM-L6-v2"
 }

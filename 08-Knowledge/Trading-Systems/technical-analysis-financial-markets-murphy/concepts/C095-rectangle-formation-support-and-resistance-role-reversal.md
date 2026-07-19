@@ -9,6 +9,7 @@ source_page_range: "151"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,7 +27,7 @@ Because the upper and lower boundaries of a rectangle are horizontal and well de
 > "After a downside breakout in downtrends, the bottom of the trading range (the previous support area) should now provide a solid ceiling over the market on any rally attempts." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

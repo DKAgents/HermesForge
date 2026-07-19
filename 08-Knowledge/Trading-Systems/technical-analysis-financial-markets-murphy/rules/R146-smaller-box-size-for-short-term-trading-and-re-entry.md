@@ -9,6 +9,7 @@ source_page_range: "270"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Reducing the box size increases the number of corrections recorded during an upt
 > "By increasing the number of corrections during the uptrend (by increasing the number of o columns), more repeat buy signals are given either for later entry or for adding to winning positions. It also allows the trader to raise protective sell stops below the latest columns of o's." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[RG020-protective-sell-stops-on-point-and-figure-charts|Protective Sell Stops on Point and Figure Charts]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

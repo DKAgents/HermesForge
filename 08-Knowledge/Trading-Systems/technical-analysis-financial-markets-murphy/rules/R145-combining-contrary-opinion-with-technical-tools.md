@@ -9,6 +9,7 @@ source_page_range: "261"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, support-resistance, oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -26,7 +27,8 @@ Trade in the same direction as the trend of the consensus numbers until an extre
 > "Divergences on oscillator charts are especially useful when the Bullish Consensus numbers are overbought or oversold." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N068-bullish-consensus-numbers-and-sentiment-services|Bullish Consensus Numbers and Sentiment Services]]
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

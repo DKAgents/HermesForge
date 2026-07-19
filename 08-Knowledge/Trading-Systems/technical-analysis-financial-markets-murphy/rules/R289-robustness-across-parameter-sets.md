@@ -9,6 +9,7 @@ source_page_range: "498–499"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ A trading system must perform reasonably well across different sets of parameter
 > "If I were considering using a 5/20 moving average crossover system, then I would expect 6/18, 6/23, 4/21, and 5/19 to also perform reasonably well. If not, I immediately become skeptical of the 5/20 results." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R211-moving-average-crossover-system-tied-to-cycles|Moving Average Crossover System Tied to Cycles]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

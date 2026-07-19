@@ -19,6 +19,13 @@ from datetime import datetime
 
 VAULT_ROOT  = Path('/root/HermesForge')
 BOOKS_DIR   = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems'
+VAULT_DIRS  = [                          # additional vault sections to index
+    VAULT_ROOT / '00-Meta',
+    VAULT_ROOT / '03-ADRs',
+    VAULT_ROOT / '07-Risk',
+    VAULT_ROOT / '08-Knowledge' / 'Learnings',
+    VAULT_ROOT / '08-Knowledge' / 'Skills',
+]
 INDEX_DIR   = Path('/root/.hermes/vault_index')
 INDEX_PATH  = INDEX_DIR / 'vault.db'
 
@@ -146,8 +153,34 @@ def index_note(conn: sqlite3.Connection, filepath: Path, book_slug: str, force: 
         return False  # unchanged
 
     fm = parse_frontmatter(content)
-    if not fm.get('concept_type'):  # skip non-atomic notes
-        return False
+    # For non-atomic notes (risk docs, ADRs, meta), synthesize fields from type/heading
+    if not fm.get('concept_type'):
+        fm_type_m = re.search(r'^type:\s*(.+)$', content, re.MULTILINE)
+        if fm_type_m:
+            raw_type = fm_type_m.group(1).strip().strip('"\'')
+            type_map = {
+                'risk-framework': 'risk-rule', 'risk-guide': 'risk-rule',
+                'risk-escalation': 'risk-rule', 'meta': 'meta',
+                'dashboard': 'meta', 'adr': 'decision',
+                'user-story': 'story', 'story': 'story',
+                'literature-note': 'literature',
+            }
+            fm['concept_type'] = type_map.get(raw_type, raw_type)
+        if not fm.get('concept_type'):
+            fm['concept_type'] = 'vault-note'
+    # Ensure title is always set — fall back to filename
+    if not fm.get('title'):
+        heading_m = re.search(r'^# (.+)$', content, re.MULTILINE)
+        fm['title'] = heading_m.group(1).strip() if heading_m else filepath.stem
+    # Ensure other fields have defaults
+    fm.setdefault('topic', '')
+    fm.setdefault('confidence', 'high')
+    fm.setdefault('source_book', 'HermesForge Vault')
+    fm.setdefault('source_author', 'HermesForge')
+    fm.setdefault('source_chapter', '')
+    fm.setdefault('source_page', '')
+    fm.setdefault('ingested_at', '')
+    fm.setdefault('body', '')
 
     now = datetime.utcnow().isoformat()
     if row:
@@ -219,8 +252,10 @@ def main():
 
     if args.book:
         book_dirs = [BOOKS_DIR / args.book]
+        vault_extra = []
     else:
         book_dirs = [d for d in BOOKS_DIR.iterdir() if d.is_dir()]
+        vault_extra = [d for d in VAULT_DIRS if d.exists()]
 
     total_indexed = 0
     for book_dir in book_dirs:
@@ -230,6 +265,18 @@ def main():
         n = index_book(conn, book_dir, force=args.force)
         print(f"  {book_dir.name}: {n} notes indexed/updated")
         total_indexed += n
+
+    # Index extra vault sections (risk, meta, ADRs, etc.)
+    for vdir in vault_extra:
+        notes = list(vdir.rglob('*.md'))
+        indexed = 0
+        slug = f"vault-{vdir.name.lower().replace(' ','-')}"
+        for note in notes:
+            if index_note(conn, note, slug, force=args.force):
+                indexed += 1
+        if indexed:
+            print(f"  vault/{vdir.name}: {indexed} notes indexed/updated")
+        total_indexed += indexed
 
     # Update meta
     conn.execute("INSERT OR REPLACE INTO index_meta VALUES ('last_indexed', ?)",

@@ -9,6 +9,7 @@ source_page_range: "219"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -24,7 +25,7 @@ A 20 day (4 week) price channel can be applied to charts to spot channel breakou
 > "A buy signal was given when prices closed above the upper channel. Prices have to close beneath the lower channel to reverse the signal." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N185-price-channels|Price Channels]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

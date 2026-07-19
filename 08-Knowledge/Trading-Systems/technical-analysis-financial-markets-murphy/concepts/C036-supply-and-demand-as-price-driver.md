@@ -9,6 +9,7 @@ source_page_range: "pp. 21–40"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,6 +27,7 @@ The technical premise that market action discounts everything is grounded in sup
 > "The charts do not in themselves cause markets to move up or down. They simply reflect the bullish or bearish psychology of the marketplace." — John J. Murphy, p. unknown
 
 ## Related Notes
+- [[C030-market-action-discounts-everything|Market Action Discounts Everything]]
 - [[Market Action Discounts Everything]]
 - [[Technical Analysis vs Fundamental Analysis]]
 

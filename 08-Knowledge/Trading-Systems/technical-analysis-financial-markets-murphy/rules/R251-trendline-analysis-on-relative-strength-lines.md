@@ -9,6 +9,7 @@ source_page_range: "425"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ Simple trendline analysis applied to relative strength ratio lines can help iden
 > "Simple trendline analysis helped spot the downturn in technology stocks during October 1997 and the upturn at year-end." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[EN074-relative-strength-ratio-line-breakout|Relative Strength Ratio Line Breakout]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

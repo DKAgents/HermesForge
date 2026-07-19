@@ -9,6 +9,7 @@ source_page_range: "p. xxi (Contents)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: low
+has_quotes: false
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -19,6 +20,7 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Market Profile is introduced as a method for organizing and interpreting market activity, covering the Market Profile graphic, market structure, organizing principles, range development and profile patterns, and tracking longer-term market activity. It is presented as a distinct analytical framework within technical analysis.
 
 ## Related Notes
+- [[N142-market-profile-graphic-construction|Market Profile Graphic Construction]]
 - [[Definition of Technical Analysis]]
 
 ---

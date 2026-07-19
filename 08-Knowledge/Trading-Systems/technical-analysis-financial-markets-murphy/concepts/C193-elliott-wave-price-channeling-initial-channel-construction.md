@@ -9,6 +9,7 @@ source_page_range: "332–333"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [trend, moving-averages, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -24,7 +25,7 @@ Elliott used price channels to arrive at price objectives and to help confirm th
 > "Elliott used price channels as a method of arriving at price objectives and also to help confirm the completion of wave counts." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N185-price-channels|Price Channels]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

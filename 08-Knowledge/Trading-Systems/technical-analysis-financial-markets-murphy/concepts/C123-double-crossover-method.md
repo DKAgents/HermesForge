@@ -9,6 +9,7 @@ source_page_range: "221–240"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,7 +27,7 @@ The double crossover method uses two moving averages of different lengths to gen
 > "This technique of using two averages together lags the market a bit more than the use of a single average but produces fewer whipsaws" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[EN026-single-moving-average-buy-and-sell-signals|Single Moving Average Buy and Sell Signals]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

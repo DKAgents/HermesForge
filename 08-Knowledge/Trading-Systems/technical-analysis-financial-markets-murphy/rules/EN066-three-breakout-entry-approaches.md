@@ -9,6 +9,7 @@ source_page_range: "~pp. 386–408 (est.)"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
@@ -26,7 +27,7 @@ A trader faces three choices when entering on a breakout: anticipating the break
 > "Unfortunately, many dynamic markets (usually the most profitable ones) don't always give the patient trader a second chance." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C242-trading-multiple-units-trending-vs-trading-positions|Trading Multiple Units: Trending vs. Trading Positions]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

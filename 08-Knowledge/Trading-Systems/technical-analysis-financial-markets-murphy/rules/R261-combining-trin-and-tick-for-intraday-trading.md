@@ -9,6 +9,7 @@ source_page_range: "444"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ The Arms Index (TRIN) and TICK indicator can be used together for intraday tradi
 > "a rising TICK indicator and a falling Arms Index (TRIN) are positive, while a falling TICK indicator and a rising Arms Index (TRIN) are negative." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[N127-tick-indicator|TICK Indicator]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

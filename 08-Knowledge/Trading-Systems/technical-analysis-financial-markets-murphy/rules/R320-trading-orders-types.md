@@ -9,6 +9,7 @@ source_page_range: "403-405"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -19,7 +20,8 @@ tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note,
 Key order types include market orders, limit orders (buy/sell), stop orders (buy/sell), and stop-limit orders. Each order type serves a specific purpose in trade execution, risk management, and position entry/exit.
 
 ## Related Notes
-_None identified_
+- [[C243-market-order|Market Order]]
+- [[C245-stop-order|Stop Order]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

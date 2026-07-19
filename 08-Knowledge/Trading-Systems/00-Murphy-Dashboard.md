@@ -26,6 +26,27 @@ SORT length(rows) DESC
 
 ---
 
+## 📈 Indicators
+
+```dataview
+TABLE concept_type AS "Type", source_page_range AS "Page", topic AS "Topic"
+FROM "08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators"
+SORT file.name ASC
+```
+
+---
+
+## 🕯️ Chart Patterns
+
+```dataview
+TABLE concept_type AS "Type", source_page_range AS "Page", topic AS "Topic"
+FROM "08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns"
+SORT file.name ASC
+```
+
+
+---
+
 ## 📋 All Trading Rules (high confidence)
 
 ```dataview

@@ -9,6 +9,7 @@ source_page_range: "452"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
@@ -24,7 +25,7 @@ A Dow Theory buy signal is present when both the Dow Industrials and the Dow Tra
 > "A Dow Theory buy signal is present when both averages hit new highs. When one diverges from the other, a caution signal is given" — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[R298-dow-theory-buy-and-sell-signals|Dow Theory Buy and Sell Signals]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

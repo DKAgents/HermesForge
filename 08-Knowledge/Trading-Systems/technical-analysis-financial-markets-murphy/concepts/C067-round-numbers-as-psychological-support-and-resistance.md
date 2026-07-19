@@ -9,6 +9,7 @@ source_page_range: "64–65"
 model_tier: T2
 model: anthropic/claude-sonnet-4.6
 confidence: high
+has_quotes: true
 topic: [support-resistance, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
@@ -26,7 +27,7 @@ Markets tend to stall at round numbers such as 10, 20, 25, 50, 75, 100, and mult
 > "These round numbers, therefore, will often act as 'psychological' support or resistance levels." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[C334-resistance-level|Resistance Level]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_
