@@ -236,6 +236,11 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
         if risk <= 0:
             continue  # degenerate case
 
+        # Minimum risk filter: stop must be at least 0.5% of entry price away
+        # Prevents degenerate trades where price is right at the 62% level
+        if risk / entry_price < 0.005:
+            continue
+
         r_multiple = reward / risk
 
         # ---------------------------------------------------------------
@@ -257,6 +262,12 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
         )
 
         # ---------------------------------------------------------------
+        # Realised R-multiple based on actual exit price (not theoretical)
+        # Positive = profit, negative = loss
+        # ---------------------------------------------------------------
+        realised_r = (exit_price - entry_price) / risk
+
+        # ---------------------------------------------------------------
         # Build output record
         # ---------------------------------------------------------------
         signal = {
@@ -267,7 +278,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             "target_price": round(target_price, 4),
             "exit_price":   round(exit_price,   4),
             "exit_reason":  exit_reason,
-            "r_multiple":   round(r_multiple,   4),
+            "r_multiple":   round(realised_r,  4),
             "bars_held":    bars_held,
             "subperiod":    subperiod_arr[i],
             "strategy_id":  STRATEGY_ID,

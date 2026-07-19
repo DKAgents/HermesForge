@@ -39,7 +39,7 @@ RSI_PERIOD       = 14
 MATURITY_BARS    = 15    # consecutive bars MACD must stay same side of zero
 NARROWING_BARS   = 2     # consecutive bars of narrowing histogram required
 SWING_LOOKBACK   = 10    # bars for "new N-bar high/low" check
-PRIOR_SWING_RANGE = (10, 20)  # bar range to look back for Stage 2 prior swing
+PRIOR_SWING_RANGE = (5, 60)  # wider lookback for Stage 2 prior swing (was 10-20, too narrow)
 TARGET_LOOKBACK  = 20    # bars to find target (lowest low / highest high)
 MIN_RR           = 3.0
 MAX_BARS_HELD    = 8
@@ -278,6 +278,8 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                 ep, er, bh = _simulate_exit(
                     close_arr, i, entry_price, stop_price, target_price, "short"
                 )
+                # Realised R: for short, profit when price falls (ep < entry)
+                realised_r = (entry_price - ep) / (stop_price - entry_price)
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
@@ -287,7 +289,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "target_price":         round(target_price, 4),
                     "exit_price":           round(ep,           4),
                     "exit_reason":          er,
-                    "r_multiple":           round(rr,           4),
+                    "r_multiple":           round(realised_r,   4),
                     "bars_held":            bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
@@ -310,6 +312,8 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                 ep, er, bh = _simulate_exit(
                     close_arr, i, entry_price, stop_price, target_price, "long"
                 )
+                # Realised R: for long, profit when price rises (ep > entry)
+                realised_r = (ep - entry_price) / (entry_price - stop_price)
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
@@ -319,7 +323,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "target_price":         round(target_price, 4),
                     "exit_price":           round(ep,           4),
                     "exit_reason":          er,
-                    "r_multiple":           round(rr,           4),
+                    "r_multiple":           round(realised_r,   4),
                     "bars_held":            bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
@@ -366,20 +370,23 @@ def _check_signal(
         return None
 
     # -------------------------------------------------------------------
-    # Stage 1: Price makes new N-bar extreme AND histogram is narrowing
-    # bearish: price makes new 10-bar HIGH, hist > 0 and narrowing
-    # bullish: price makes new 10-bar LOW,  hist < 0 and narrowing
+    # Stage 1: Histogram is narrowing AND price has made a new extreme
+    # recently (within SWING_LOOKBACK bars). These don't need to be
+    # on the exact same bar — divergence forms over several bars.
+    # bearish: price made new 10-bar HIGH in last SWING_LOOKBACK bars,
+    #          and histogram has been narrowing for NARROWING_BARS bars
+    # bullish: mirror
     # -------------------------------------------------------------------
     if direction == "bearish":
-        window_prices = high_arr[i - SWING_LOOKBACK: i]
-        is_new_extreme = high_arr[i] >= np.max(window_prices)
+        # Price at new high OR made new high within last SWING_LOOKBACK bars
+        window_prices = high_arr[max(0, i - SWING_LOOKBACK): i + 1]
+        is_near_extreme = high_arr[i] >= np.max(window_prices) * 0.99  # within 1% of recent high
         narrowing_count = _histogram_narrowing_count(hist_arr, i, "bearish")
     else:
-        window_prices = low_arr[i - SWING_LOOKBACK: i]
-        is_new_extreme = low_arr[i] <= np.min(window_prices)
+        window_prices = low_arr[max(0, i - SWING_LOOKBACK): i + 1]
+        is_near_extreme = low_arr[i] <= np.min(window_prices) * 1.01   # within 1% of recent low
         narrowing_count = _histogram_narrowing_count(hist_arr, i, "bullish")
-
-    if not is_new_extreme:
+    if not is_near_extreme:
         return None
     if narrowing_count < NARROWING_BARS:
         return None
@@ -414,13 +421,25 @@ def _check_signal(
 
     # -------------------------------------------------------------------
     # Entry trigger: MACD line crosses the signal line
-    # bearish: macd crosses BELOW signal (macd[i] < signal[i] AND macd[i-1] >= signal[i-1])
-    # bullish: macd crosses ABOVE signal (macd[i] > signal[i] AND macd[i-1] <= signal[i-1])
+    # Allow trigger on current bar OR within next 2 bars (divergence
+    # confirmation and crossover rarely land on same bar — crossover
+    # typically follows 1-2 bars after divergence peak forms).
+    # bearish: macd crosses BELOW signal
+    # bullish: macd crosses ABOVE signal
     # -------------------------------------------------------------------
-    if direction == "bearish":
-        crossover = (macd_arr[i] < signal_arr[i]) and (macd_arr[i - 1] >= signal_arr[i - 1])
-    else:
-        crossover = (macd_arr[i] > signal_arr[i]) and (macd_arr[i - 1] <= signal_arr[i - 1])
+    crossover = False
+    for offset in range(0, 3):
+        j = i + offset
+        if j <= 0 or j >= len(macd_arr):
+            break
+        if direction == "bearish":
+            if macd_arr[j] < signal_arr[j] and macd_arr[j - 1] >= signal_arr[j - 1]:
+                crossover = True
+                break
+        else:
+            if macd_arr[j] > signal_arr[j] and macd_arr[j - 1] <= signal_arr[j - 1]:
+                crossover = True
+                break
 
     if not crossover:
         return None
