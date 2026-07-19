@@ -1,0 +1,1 @@
+trade_id,strategy_id,ticker,direction,entry_date,entry_price,stop_price,target_price,exit_date,exit_price,exit_reason,r_multiple,bars_held,subperiod,confirmation_level,weekly_gates_passing,trigger_type,notes
