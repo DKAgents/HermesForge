@@ -348,6 +348,21 @@ def main():
         print(f"\nStep 6/6 — Dedup skipped (--skip-dedup)")
         steps.append({'step': 'dedup_scan', 'status': 'skipped', 'output': 'skipped'})
 
+    # ── Step 7: Lesson extraction (optional — fires when new paper trade logs appear) ──
+    # Checks for any new files in 09-Journal/ that look like trade logs (JSON)
+    new_trade_logs = [f for f in changed_files
+                      if '09-Journal' in str(f) and f.suffix == '.json'
+                      and 'trade' in f.name.lower()]
+    if new_trade_logs:
+        print(f"\nStep 7 — Auto-extracting lessons from {len(new_trade_logs)} new trade log(s)...")
+        for log_file in new_trade_logs[:3]:  # cap at 3 per run
+            cmd = [sys.executable, str(SCRIPTS_DIR / 'extract_lessons.py'),
+                   '--input', str(log_file)]
+            r = run(cmd, f'lesson_extract:{log_file.name}', args.dry_run)
+            steps.append(r)
+    else:
+        steps.append({'step': 'lesson_extract', 'status': 'skipped', 'output': 'no new trade logs'})
+
     # ── Checkpoint + summary ──────────────────────────────────────────────────
     end = datetime.now(timezone.utc)
     duration = (end - start).total_seconds()

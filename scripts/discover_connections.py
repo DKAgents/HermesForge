@@ -527,6 +527,18 @@ def main():
     seeds_data = yaml.safe_load(SEEDS_FILE.read_text())
     all_seeds = seeds_data.get('seeds', [])
 
+    # AC9: also load lesson-derived seeds from extract_lessons.py
+    LESSON_SEEDS = SCRIPTS_DIR / 'lesson_seeds.yaml'
+    if LESSON_SEEDS.exists() and not args.seed:
+        try:
+            lesson_seed_data = yaml.safe_load(LESSON_SEEDS.read_text()) or {}
+            lesson_seeds = lesson_seed_data.get('lesson_seeds', [])
+            if lesson_seeds:
+                print(f"  Loading {len(lesson_seeds)} lesson-derived seed(s) from {LESSON_SEEDS.name}")
+                all_seeds = all_seeds + lesson_seeds
+        except Exception as e:
+            print(f"  Warning: could not load lesson seeds: {e}")
+
     if args.seed:
         all_seeds = [s for s in all_seeds if s['id'] == args.seed]
         if not all_seeds:

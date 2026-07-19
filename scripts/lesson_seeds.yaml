@@ -1,0 +1,12 @@
+lesson_seeds:
+- description: 'Lesson-derived seed (refines): A pre-trade earnings calendar check
+    must be added as a mandatory binary filter to the role-reversal entry criteria
+    — if earnings are within 7 days, th'
+  domains:
+  - rules
+  - risk
+  id: lesson-a-c8b706
+  priority: medium
+  query: 'Earnings Catalyst Overrides Technical Role-Reversal Setup A pre-trade earnings
+    calendar check must be added as a mandatory binary filter to the role-reversal '
+  source_lesson: LSN-2026-07-19-earnings-catalyst-overrides-technical-role-reversa-c8b706

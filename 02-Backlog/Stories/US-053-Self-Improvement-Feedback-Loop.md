@@ -2,7 +2,7 @@
 id: US-053
 type: user-story
 epic: EPIC-006
-status: backlog
+status: done
 priority: medium
 effort: L
 created: 2026-06-30
