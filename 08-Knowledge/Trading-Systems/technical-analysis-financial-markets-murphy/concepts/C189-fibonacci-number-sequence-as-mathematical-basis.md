@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Number Sequence as Mathematical Basis
 
 The numbers 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144 are part of the Fibonacci number sequence, which forms the mathematical basis for the Elliott Wave Theory. These numbers correspond to the wave counts at successive degrees of subdivision.

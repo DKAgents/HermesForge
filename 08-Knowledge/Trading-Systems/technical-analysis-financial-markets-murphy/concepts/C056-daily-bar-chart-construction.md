@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Daily Bar Chart Construction
 
 A daily bar chart plots price on the vertical (y) axis and time on the horizontal (x) axis. Each day is represented by a vertical bar spanning the day's high to low (the range). The closing price is marked by a small horizontal tic to the right of the bar, and the opening price is marked by a tic to the left. Volume is plotted as vertical bars along the bottom of the chart.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Line as a Leading Indicator
 
 Because of its construction, the momentum line is always a step ahead of price movement. It leads the advance or decline in prices, then levels off while the current price trend is still in effect, and begins to move in the opposite direction as prices begin to level off.

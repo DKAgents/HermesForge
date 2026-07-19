@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Daily Bar Chart Limitations
 
 The daily bar chart is the most popular charting tool but typically covers only six to nine months of price action. Relying solely on daily charts causes traders to overlook longer-range trend structures. A thorough trend analysis requires understanding how current price action relates to its long-range trend.

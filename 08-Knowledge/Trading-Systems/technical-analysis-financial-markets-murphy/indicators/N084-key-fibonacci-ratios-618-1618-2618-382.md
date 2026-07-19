@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Key Fibonacci Ratios: .618, 1.618, 2.618, .382
 
 The ratio of any Fibonacci number to its next higher number approaches .618; to its next lower number approaches 1.618. The ratio of alternate numbers approaches 2.618 or its inverse .382. These four ratios (.382, .618, 1.618, 2.618) are the core multipliers used in Elliott Wave price target calculations.

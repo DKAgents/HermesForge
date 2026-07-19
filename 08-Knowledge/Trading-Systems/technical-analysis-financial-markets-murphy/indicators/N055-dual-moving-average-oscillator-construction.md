@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dual Moving Average Oscillator Construction
 
 An oscillator can be constructed using two moving averages by plotting the difference between them as a histogram around a zero line. The shorter average oscillates around the longer average, which acts as the zero line. A positive reading occurs when the shorter average is above the longer; a negative reading when it is below.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 9 and 18 Day Moving Average Combination for Futures
 
 Futures traders commonly use the 9 and 18 day moving average combination as a double crossover system. A sell signal is given when the 9 day falls below the 18 day, and a buy signal is given when the 9 day crosses back above the 18 day. This combination provides clear trend-following signals for futures markets.

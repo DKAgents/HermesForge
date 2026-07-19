@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Left and Right Translation
 
 Translation refers to the shifting of cycle peaks either to the left or right of the ideal cycle midpoint. For a 20-day trading cycle measured low to low, the ideal peak should occur at day 10 (the halfway point). Most variations in cycles occur at the peaks rather than the troughs, which is why cycle troughs are considered more reliable and are used to measure cycle lengths.

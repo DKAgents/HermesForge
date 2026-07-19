@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Responsive vs. Initiating Longer Term Activity
 
 When a longer term trader responds to an advertised price in the expected manner (buying after prices fall, selling after prices rise), this behavior is referred to as responsive. If the longer term trader does the opposite (buys after prices rose or sells after prices declined), this unexpected activity is referred to as initiating. Classifying longer term activity as responsive or initiating relative to yesterday's or today's evolving value area provides anecdotal evidence of longer term trader confidence — the more confident the trader, the more likely he is to take initiating action.

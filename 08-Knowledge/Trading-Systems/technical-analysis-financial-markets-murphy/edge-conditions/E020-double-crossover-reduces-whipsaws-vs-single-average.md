@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Crossover Reduces Whipsaws vs. Single Average
 
 Using two moving averages together in the double crossover method produces fewer whipsaws compared to using a single moving average. The trade-off is that the double crossover method lags the market slightly more than a single average, meaning entries and exits are less timely but more reliable.

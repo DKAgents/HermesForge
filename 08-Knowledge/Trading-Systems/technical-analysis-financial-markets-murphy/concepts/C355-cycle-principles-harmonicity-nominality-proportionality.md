@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Principles: Harmonicity, Nominality, Proportionality
 
 Three key principles govern cycle analysis: Harmonicity (cycles are related by small whole numbers), Nominality (a nominal set of cycles exists for all markets), and Proportionality (cycle amplitude is proportional to cycle period). These principles, associated with J.M. Hurst, form the foundation of cycle analysis.

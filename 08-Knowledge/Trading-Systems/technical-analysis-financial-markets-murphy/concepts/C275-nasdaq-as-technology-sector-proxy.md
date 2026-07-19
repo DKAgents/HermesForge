@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nasdaq as Technology Sector Proxy
 
 The Nasdaq Composite, though containing the largest number of stocks, is capitalization-weighted and dominated by the largest technology stocks, making it more a measure of the technology sector's direction than the broader market. The Russell 2000 is a truer measure of the smaller stock universe.

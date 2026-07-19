@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Money Management in Trading Systems
 
 Money management is presented as a distinct component of trading system development, addressed after the 5-step plan for building a system. Topics covered include reward-to-risk ratios, trading multiple positions (trending vs. trading units), position sizing, and guidelines for what to do after periods of success and adversity.

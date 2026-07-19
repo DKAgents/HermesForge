@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # ADX Line — Measuring Directional Movement
 
 Wilder's ADX line rates the directional movement of markets on a scale of 0 to 100. A rising ADX line means the market is trending and is a better candidate for a trend-following system. A falling ADX line indicates a nontrending environment, which would not be suitable for a trend-following approach. The ADX line is essentially a smoothed difference between the +DI and -DI lines.

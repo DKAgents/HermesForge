@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Divergence as Warning Signal
 
 Divergence occurs if the penetration of a previous high by the price trend takes place on declining volume, alerting the chartist to diminishing buying pressure. If volume also shows a tendency to pick up on price dips, the analyst should be concerned that the uptrend is in trouble. This is an early warning signal of a potential trend reversal.

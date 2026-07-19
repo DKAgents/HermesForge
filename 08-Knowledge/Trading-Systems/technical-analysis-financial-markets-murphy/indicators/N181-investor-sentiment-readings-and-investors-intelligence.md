@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Investor Sentiment Readings and Investors Intelligence
 
 Investor Sentiment Readings and Investors Intelligence numbers measure the percentage of bullish and bearish advisors. Extreme readings (high bullishness or bearishness) are used as contrary indicators to identify potential market turning points.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Reaction to Fundamental News as Contrarian Signal
 
 The failure of prices to react to bullish news in an overbought area (above 75%) is a clear warning that a turn may be near, and the first adverse news will likely push prices lower. Conversely, failure of prices in an oversold area (under 25%) to react to bearish news signals that all bad news has been discounted and any bullish news will push prices higher.

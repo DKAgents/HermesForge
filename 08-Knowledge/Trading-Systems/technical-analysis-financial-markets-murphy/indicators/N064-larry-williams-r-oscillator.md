@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Larry Williams %R Oscillator
 
 Larry Williams %R measures the latest close in relation to its price range over a given number of days. Today's close is subtracted from the price high of the range for a given number of days, and that difference is divided by the total range for the same period. Because it is subtracted from the high, it appears as an upside-down stochastics; charting packages typically plot an inverted version. Readings over 80 or under 20 identify market extremes.

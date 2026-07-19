@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Day
 
 A trend day is a session in which price moves strongly in one direction from open to close with little retracement, as defined in Market Profile analysis. Recognizing trend days early allows traders to hold positions through the session.

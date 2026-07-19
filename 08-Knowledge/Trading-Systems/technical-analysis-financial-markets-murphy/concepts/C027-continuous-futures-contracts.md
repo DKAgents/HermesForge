@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuous Futures Contracts
 
 The book addresses the construction of continuous futures contracts, covering several methods: nearest contract, next contract, Gann contract, continuous contracts, and constant forward continuous contracts. These methods are used to create unbroken price histories for futures markets to enable technical analysis across contract expirations.

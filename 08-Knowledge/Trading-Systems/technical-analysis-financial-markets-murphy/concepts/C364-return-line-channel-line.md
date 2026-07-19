@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Return Line (Channel Line)
 
 The return line, also called the channel line, is drawn parallel to the main trendline to form a price channel. It is used to measure the implications of price moves and identify potential reversal zones at channel extremes.

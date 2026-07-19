@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Number Sequence
 
 The Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...) forms the mathematical basis of Elliott's Wave Principle. The sum of any two consecutive numbers equals the next higher number. After the first four numbers, the ratio of any number to its next higher number approaches .618, and to its next lower number approaches 1.618.

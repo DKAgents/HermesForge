@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Support and Resistance
 
 Support is a price level where buying interest is strong enough to halt a decline, while resistance is a level where selling pressure stops an advance. When broken, support becomes resistance and vice versa (reversal of roles), and round numbers often act as natural support/resistance levels.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Best Elliott Patterns in Commodities Arise from Long-Term Base Breakouts
 
 The clearest and most reliable Elliott Wave patterns in commodity markets tend to arise from breakouts out of long-term extended bases. Continuation charts in commodity futures can produce distortions that affect long-term Elliott patterns, so cash market charts may sometimes provide clearer patterns.

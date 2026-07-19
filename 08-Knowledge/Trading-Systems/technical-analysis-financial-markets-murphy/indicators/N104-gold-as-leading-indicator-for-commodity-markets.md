@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gold as Leading Indicator for Commodity Markets
 
 The gold market usually acts as a leading indicator for other commodity markets. When studying the general commodity price trend, it is necessary to know what the gold market is doing. Gold's movements tend to precede broader commodity price moves.

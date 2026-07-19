@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reward-Risk Tradeoff in Topping vs. Bottoming Patterns
 
 Trading topping patterns carries greater risk due to their volatility and shorter duration, but this is compensated by greater reward potential since prices decline faster than they rise. The principle that greater risks are compensated by greater rewards applies directly to the decision to trade tops versus bottoms.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CBOT Half-Hour Letter Assignment
 
 The Chicago Board of Trade (CBOT) assigns a letter to each half-hour trading period on a 24-hour basis. Uppercase letters A through X represent the half-hour periods from midnight to noon, while lowercase letters from a through x represent the half-hour periods from noon to midnight. Letter assignments can vary between vendors.

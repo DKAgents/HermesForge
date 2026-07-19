@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sentiment Indicators as Contrary Indicators
 
 Sentiment indicators are psychological indicators that attempt to measure the degree of bullishness or bearishness in a market. These are contrary indicators and are used in much the same fashion as overbought or oversold oscillators. Their greatest value is when they reach upper or lower extremes.

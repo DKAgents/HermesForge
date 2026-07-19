@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Using System Signals as Screening Alerts
 
 System signals can be used as an excellent screening device to alert the trader to recent trend changes. The trader can glance at the trend signals and instantly identify several trading candidates. The ability of the computer to automate system signals and alert the trader when signals are triggered is an enormous asset, especially given the large universe of financial markets.

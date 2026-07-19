@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Mechanical Trading Systems — Benefits and Applications
 
 Mechanical trading systems remove human emotion from the trading process and can be very helpful in the right market climate. They can also serve as technical alerts and be used in conjunction with fundamental analysis. Their objectivity is a key advantage over discretionary approaches.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Closing Arms (TRIN) as Breadth Indicator
 
 The closing Arms index (also known as TRIN) is a breadth indicator that can offset other negative signals when it reads at a mildly positive level (e.g., .96). It is reported daily in The Wall Street Journal's Stock Market Data Bank alongside other breadth data. Its interpretation is explained in detail later in the chapter.

@@ -1,3 +1,11 @@
+---
+topic: knowledge
+confidence: high
+has_quotes: false
+tags: []
+source: unknown
+created: 2026-07-19
+---
 # Book Slug & Folder Naming Convention
 
 ## Rule

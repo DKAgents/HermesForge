@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Technical Factors with Money Management for Stop Placement
 
 Protective stops must satisfy both technical and money management criteria. Using a 10% maximum commitment rule on a $100,000 account limits the trade to $10,000, with a maximum 5% risk ($5,000) on the total position. A closer protective stop permits larger positions while a looser stop reduces position size; critically, stops must always be placed at valid technical levels — below support for longs and above resistance for shorts.

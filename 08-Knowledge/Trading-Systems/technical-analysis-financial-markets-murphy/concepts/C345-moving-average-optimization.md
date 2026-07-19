@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Optimization
 
 Optimization involves testing different moving average lengths to find the best-performing parameters for a given market. While useful, over-optimization can lead to curve-fitting and poor out-of-sample performance.

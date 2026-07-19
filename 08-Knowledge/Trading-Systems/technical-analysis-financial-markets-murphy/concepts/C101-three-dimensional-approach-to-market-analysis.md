@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three-Dimensional Approach to Market Analysis
 
 Most technicians use a multidimensional approach by tracking three sets of figures: price, volume, and open interest. Volume analysis applies to all markets, while open interest applies primarily to futures markets. For futures, total figures (rather than individual delivery month figures) are generally used for forecasting purposes.

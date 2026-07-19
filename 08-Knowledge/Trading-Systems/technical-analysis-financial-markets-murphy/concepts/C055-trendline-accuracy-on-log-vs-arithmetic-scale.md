@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Accuracy on Log vs. Arithmetic Scale
 
 The author notes that for longer-term charts, the logarithmic scale can produce more accurate trendlines. The example given is Intel's three-year up trendline, which worked better on the log chart than on the arithmetic chart.

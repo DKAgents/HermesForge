@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Line
 
 Channel lines are straight lines drawn parallel to the basic trendline. In an uptrend, the channel line slants up to the right and is drawn above rally peaks; in a downtrend, it is drawn below price troughs. Prices will often meet resistance at rising channel lines and support at falling channel lines.

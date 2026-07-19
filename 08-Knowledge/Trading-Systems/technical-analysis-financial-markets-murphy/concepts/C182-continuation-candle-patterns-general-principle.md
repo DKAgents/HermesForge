@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Candle Patterns — General Principle
 
 Continuation candle patterns help identify that the current trend is going to continue, answering whether a trader should remain in a trade. Japanese literature references 16 continuation candle patterns. A bullish continuation pattern can only occur in an uptrend, and a bearish continuation pattern can only occur in a downtrend.

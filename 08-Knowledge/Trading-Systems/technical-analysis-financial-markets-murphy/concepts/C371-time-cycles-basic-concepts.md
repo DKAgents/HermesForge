@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Cycles — Basic Concepts
 
 Time cycles have crests, troughs, and specific qualities including amplitude, period, and phase. Dominant cycles drive the most significant price movements, and cyclic principles such as summation, synchronicity, and variation govern how cycles interact.

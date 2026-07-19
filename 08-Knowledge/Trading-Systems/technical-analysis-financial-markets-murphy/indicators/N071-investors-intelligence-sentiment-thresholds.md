@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Investors Intelligence Sentiment Thresholds
 
 Investors Intelligence polls investment advisors weekly, producing bullish, bearish, and correction percentages. Bullish readings over 55% warn of too much optimism and are potentially negative for the market. Bullish readings below 35% reflect too much pessimism and are considered positive for the market.

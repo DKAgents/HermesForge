@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Pattern in Head and Shoulders Top
 
 Volume should be heaviest on the left shoulder, lighter on the head, and noticeably lightest on the right shoulder. Volume should expand on the breaking of the neckline, decline during the return move, and expand again once the return move is over. Volume is less critical at market tops than at bottoms.

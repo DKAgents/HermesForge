@@ -9,8 +9,12 @@ metadata:
   hermes:
     tags: [trading, knowledge, ingestion, pdf, epub, obsidian, atomic-notes, US-008]
     related_skills: [ocr-and-documents, obsidian]
+topic: knowledge
+confidence: high
+has_quotes: false
+tags: []
+source: unknown
 ---
-
 # Trading Book & System Ingestion
 
 Use this skill to ingest trading books (PDF or EPUB) into structured Obsidian knowledge notes.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Windows for Filtering Price Movement
 
 By the use of 'time windows,' price movement can be filtered so that extraneous action can be ignored and primary emphasis placed only on times when important cycle tops and bottoms are due to occur. This focuses analytical attention on the highest-probability turning points.

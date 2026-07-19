@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles, market-breadth, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Variation
 
 The Principle of Variation acknowledges that all other cyclic principles—summation, harmonicity, synchronicity, and proportionality—are strong tendencies rather than hard and fast rules. Real-world price data will exhibit some variation from these idealized principles, and analysts must account for this flexibility when applying cycle theory.

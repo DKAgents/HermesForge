@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Analysis as Key Ingredient in Market Direction
 
 Most technicians agree that volume analysis is an important ingredient in determining a market's direction. Indicators like the Demand Index incorporate both price and volume to provide a more complete picture of market dynamics than price alone.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Larry Williams %R
 
 Larry Williams %R is a momentum oscillator similar to the Stochastic that measures the relationship between the current close and the high-low range over a lookback period. It oscillates between 0 and -100, with readings near 0 indicating overbought and near -100 indicating oversold.

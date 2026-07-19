@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, oscillators, system-design, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile as Decision Support Tool
 
 Market Profile is not a trading system and does not provide trade recommendations. Its aim is to allow the user to witness a market's developing value on price reoccurrence over time. It is a decision support tool requiring the user to exercise personal judgment in the trading process.

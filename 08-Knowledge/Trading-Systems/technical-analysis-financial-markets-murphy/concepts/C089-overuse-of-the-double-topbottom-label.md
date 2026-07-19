@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Overuse of the Double Top/Bottom Label
 
 The terms 'double top' and 'double bottom' are greatly overused in financial markets. Most potential double tops or bottoms wind up being something else because prices naturally tend to back off from previous peaks or bounce off previous lows. These natural reactions do not constitute reversal patterns; at a top, prices must actually violate the previous reaction low before a double top is confirmed.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Line Measures Rate of Ascent or Descent
 
 By plotting price differences over a set period, the momentum indicator measures the rate of ascent or descent of prices. If prices are rising and the momentum line is above zero and rising, the uptrend is accelerating. If the momentum line flattens, the rate of ascent has leveled off even though prices may still be advancing. When the momentum line drops toward zero, the uptrend is decelerating.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Elements of Successful Trading
 
 Murphy identifies three core elements required for successful trading, which are addressed in the Money Management and Trading Tactics chapter. While the full elaboration appears later in the book, the table of contents signals that trading success is multi-dimensional and not reducible to signal generation alone.

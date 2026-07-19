@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Swing Measurement
 
 Swing measurement is a technique used to project price targets based on the size of prior price swings. It is applied to rectangle formations and other continuation patterns to estimate the extent of the next price move.

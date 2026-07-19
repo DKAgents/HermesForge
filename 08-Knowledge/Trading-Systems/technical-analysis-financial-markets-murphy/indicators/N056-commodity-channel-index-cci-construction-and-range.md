@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commodity Channel Index (CCI) Construction and Range
 
 The CCI, developed by Donald R. Lambert, compares the current price with a moving average over a selected time span (usually 20 days) and normalizes the oscillator values using a divisor based on mean deviation. As a result, the CCI fluctuates in a constant range from +100 on the upside to -100 on the downside.

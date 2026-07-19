@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Crossover Method: 10 and 50 Day Combination for Stocks
 
 Stock traders commonly use 10 and 50 day moving averages for the double crossover method. A sell signal is generated when the 10 day falls below the 50 day, and a buy signal is generated when the 10 day crosses back above the 50 day. This combination provides timely signals for intermediate-term stock trends.

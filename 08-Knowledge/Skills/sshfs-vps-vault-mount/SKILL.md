@@ -9,8 +9,12 @@ metadata:
   hermes:
     tags: [sshfs, mac, vault, obsidian, vps, mount]
     related_skills: [obsidian]
+topic: knowledge
+confidence: high
+has_quotes: true
+tags: []
+source: unknown
 ---
-
 # Skill: Mount HermesForge Vault via SSHFS on Mac
 
 ## When to Use

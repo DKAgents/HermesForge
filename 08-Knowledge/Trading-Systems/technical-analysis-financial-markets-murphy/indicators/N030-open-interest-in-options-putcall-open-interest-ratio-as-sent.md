@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest in Options: Put/Call Open Interest Ratio as Sentiment Measure
 
 Open interest figures are published daily for put and call options on futures, stock averages, industry indexes, and individual stocks. Some option traders compare call open interest (bulls) to put open interest (bears) to measure market sentiment, while others use option volume for the same purpose.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Moving Averages (10-Column and 20-Column)
 
 Moving averages can be applied to point and figure charts using column-based averaging. Kenneth Tower uses a 10-column and a 20-column moving average on his P&F charts. Each column's average price is calculated by adding up all prices in the column and dividing by the number of X's or O's in that column, then averaging those values over 10 or 20 columns.

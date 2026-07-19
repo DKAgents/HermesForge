@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Logarithmic P&F Charting with Percentage-Based Box Sizes
 
 Kenneth Tower's logarithmic method of P&F charting uses a screening process that measures a stock's volatility over the last 3 years to determine the appropriate percentage box size for each stock. For example, America Online used a 3.6% box size and Intel used a 3.2% box size. This percentage-based approach adjusts the chart sensitivity to each stock's individual volatility characteristics.

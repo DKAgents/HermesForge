@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # On Balance Volume (OBV) Construction
 
 OBV was developed and popularized by Joseph Granville in his 1963 book. The total volume for each day is assigned a plus or minus value depending on whether prices close higher or lower for that day. A higher close causes the volume to be given a plus value, while a lower close counts as negative volume. A running cumulative total is maintained by adding or subtracting each day's volume based on the direction of the market close.

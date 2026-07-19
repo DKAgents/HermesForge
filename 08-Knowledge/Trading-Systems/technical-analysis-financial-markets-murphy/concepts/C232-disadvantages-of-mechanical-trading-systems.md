@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Disadvantages of Mechanical Trading Systems
 
 Most mechanical systems are trend-following and rely on major trends to be profitable. They are generally nonprofitable when markets are not trending, and there are long periods when markets are not trending. The major problem is the failure of the system to recognize when the market is not trending and its inability to turn itself off.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Oscillator Concept
 
 The Stochastic oscillator is based on the observation that as prices increase, closing prices tend to be closer to the upper end of the price range, and in downtrends, the closing price tends to be near the lower end of the range. Two lines are used: the %K line (faster, more sensitive) and the %D line (slower, more important, provides major signals). Fourteen is the most common period used.

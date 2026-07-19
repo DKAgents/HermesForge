@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Subjectivity in Defining Significant Penetration
 
 The rule that support and resistance reverse roles only after a significant penetration has an inherent limitation: determining what is 'significant' is subjective. The author acknowledges this openly, noting that some benchmark is needed but that there is no universally precise definition. This subjectivity is a known weakness in applying the role-reversal principle.

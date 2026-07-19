@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Tradeoff in Filter Size for Trendline Signals
 
 There is a tradeoff in the use of any type of filter for trendline penetrations. If the filter is too small, it will not effectively reduce whipsaws. If the filter is too large, much of the initial move will be missed before a valid signal is given. The trader must determine the appropriate filter based on the degree of trend being followed and the characteristics of the individual market.

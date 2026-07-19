@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price vs. Value Distinction
 
 There are two kinds of prices: those that are accepted (a price area where the market trades over time) and those that are rejected (a price area where the market spends very little time). A rejected price is considered excessive — an unfair high or unfair low. Price is observable and objective while value is perceived and subjective, depending upon the particular needs of longer term traders.

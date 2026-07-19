@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Usage in Conjunction with Trend
 
 Murphy establishes that oscillators are most effective when used in conjunction with the prevailing trend rather than in isolation. This is a foundational rule for applying momentum and overbought/oversold indicators.

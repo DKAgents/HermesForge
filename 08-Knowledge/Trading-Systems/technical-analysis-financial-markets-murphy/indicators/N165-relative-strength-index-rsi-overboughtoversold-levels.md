@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Index (RSI) Overbought/Oversold Levels
 
 RSI, developed by Welles Wilder Jr., is plotted on a vertical scale from 0 to 100. Values above 70 are considered overbought and values below 30 are oversold. When prices are over 70 or below 30 and diverge from price action, a warning is given of a possible trend reversal. RSI usually employs 9 or 14 time periods.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Parabolic SAR Works Best in Trending Markets
 
 The Parabolic system works extremely well in trending markets, capturing the trending portions well. However, the system whipsaws constantly during sideways, nontrending periods. This demonstrates both the strength and weakness of most trend-following systems.

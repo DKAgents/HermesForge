@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Vertical Measuring Technique
 
 The vertical count measures the number of boxes in the first column of the new trend (first up column of x's in an uptrend, first down column of o's in a downtrend), multiplies that value by 3, and adds or subtracts the result from the bottom or top of that column. This effectively triples the size of the first leg to project the price target. If a double top or bottom occurs, use the second column for the vertical count.

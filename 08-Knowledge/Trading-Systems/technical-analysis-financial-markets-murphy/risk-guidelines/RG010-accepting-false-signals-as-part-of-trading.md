@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Accepting False Signals as Part of Trading
 
 Filters reduce but do not eliminate false signals. The analyst must accept that trading involves percentages and probabilities, and that bad signals will occur. This is a fundamental reality of trading that cannot be entirely avoided through technical analysis.

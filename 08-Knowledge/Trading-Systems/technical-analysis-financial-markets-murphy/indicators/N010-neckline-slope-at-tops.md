@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Neckline Slope at Tops
 
 The neckline at a head and shoulders top usually slopes slightly upward or is horizontal. A downward-sloping neckline at the top is a sign of market weakness and is usually accompanied by a weak right shoulder. However, a down-sloping neckline gives a later signal because the breakdown occurs after much of the move has already taken place.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, volume, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Protective Stop Placement Relative to Round Numbers
 
 As a general rule, protective stops should never be placed at obvious round numbers. Protective stops on long positions should be placed below round numbers, and stops on short positions should be placed above round numbers. This avoids the common mistake of placing stops at levels where many other traders also have orders, increasing the risk of being stopped out prematurely.

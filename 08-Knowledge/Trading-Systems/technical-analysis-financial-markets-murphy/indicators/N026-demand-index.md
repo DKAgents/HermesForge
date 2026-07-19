@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index
 
 James Sibbet's Demand Index combines price and volume into a leading market indicator. It is one of the more sophisticated formulas that blend volume and open interest with price action, going beyond the simple OBV approach.

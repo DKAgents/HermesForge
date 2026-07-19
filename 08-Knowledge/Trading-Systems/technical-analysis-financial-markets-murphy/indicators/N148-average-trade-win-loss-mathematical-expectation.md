@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Average Trade (Win & Loss) — Mathematical Expectation
 
 The average trade statistic represents the system's mathematical expectation per trade. It should at minimum be high enough to cover transaction costs including slippage and commissions; otherwise the system will lose money in practice.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages for Trend Determination with Candlestick Patterns
 
 A short-term moving average of approximately ten periods is recommended for determining the trend before applying Japanese candle patterns. Once the short-term trend has been determined using a moving average, Japanese candle patterns can significantly assist in identifying the reversal of that trend. Moving averages provide an objective method for resolving the age-old problem of trend identification.

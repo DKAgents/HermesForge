@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Linearly Weighted Moving Average
 
 The linearly weighted moving average assigns greater weight to more recent closing prices. In a 10-day calculation, the 10th day's close is multiplied by 10, the 9th by 9, the 8th by 8, and so on. The total is divided by the sum of the multipliers (55 for a 10-day average). However, it still does not address the problem of including only the price action covered by the length of the average itself.

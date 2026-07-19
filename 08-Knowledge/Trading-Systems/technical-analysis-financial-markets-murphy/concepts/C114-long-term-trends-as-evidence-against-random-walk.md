@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Trends as Evidence Against Random Walk
 
 The persistence of long-range trends over many years is a compelling argument against the Random Walk Theory, which claims prices are serially independent and past price action has no effect on future price action. Whatever randomness exists in price action is likely a short-term phenomenon. Long-term charts clearly show trends lasting for years, supporting the technical analyst's view that markets are not random.

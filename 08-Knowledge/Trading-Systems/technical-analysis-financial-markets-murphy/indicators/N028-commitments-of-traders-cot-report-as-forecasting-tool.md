@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, intermarket, system-design, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commitments of Traders (COT) Report as Forecasting Tool
 
 The COT Report, released by the CFTC twice a month, breaks down open interest into three categories: large hedgers (commercials), large speculators (commodity funds using trend-following systems), and small traders (general public). It is used by futures technicians as a forecasting tool by analyzing the relative positioning of these three groups.

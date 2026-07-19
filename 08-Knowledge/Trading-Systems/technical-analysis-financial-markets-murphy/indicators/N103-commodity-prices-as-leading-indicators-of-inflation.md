@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commodity Prices as Leading Indicators of Inflation
 
 Commodity prices are considered leading indicators of inflationary trends. Sudden upturns in commodity markets signal higher price inflation and have usually been associated with corresponding declines in Treasury Bond prices. Conversely, strong Treasury Bond gains normally correspond with falling commodity prices.

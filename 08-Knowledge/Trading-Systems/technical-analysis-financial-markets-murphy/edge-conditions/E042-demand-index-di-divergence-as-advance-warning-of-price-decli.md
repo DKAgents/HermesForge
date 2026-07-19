@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Divergence as Advance Warning of Price Decline
 
 When the DI forms lower highs while price makes new highs, this bearish divergence can provide advance warning of a serious price decline well before the decline actually occurs. In the GM example, the DI warning came well ahead of a serious price decline in June and July, giving traders time to act.

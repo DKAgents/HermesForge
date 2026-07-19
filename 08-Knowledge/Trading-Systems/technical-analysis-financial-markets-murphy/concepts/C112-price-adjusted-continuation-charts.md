@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price-Adjusted Continuation Charts
 
 Some chartists construct continuation charts by averaging the prices of several contracts or by building indices that smooth the changeover between contracts by adjusting for price premiums or discounts. These methods attempt to eliminate the artificial price gaps that can appear when switching from one contract to another.

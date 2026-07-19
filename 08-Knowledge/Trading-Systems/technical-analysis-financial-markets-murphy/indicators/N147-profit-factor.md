@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Profit Factor
 
 Profit factor equals gross profit on winning trades divided by gross loss on losing trades. It measures how many dollars the system made for every $1 it lost and serves as a measure of risk. Long-term traders should aim for profit factors of 2.00 or higher, while short-term traders can accept slightly lower numbers.

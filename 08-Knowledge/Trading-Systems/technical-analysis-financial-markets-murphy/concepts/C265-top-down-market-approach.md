@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Top-Down Market Approach
 
 The top-down approach begins by studying major market averages to determine the overall market trend, then selects market sectors or industry groups showing the best relative strength, and finally selects individual stocks within those groups also showing the best relative strength. Intermarket principles are incorporated to determine whether the current climate favors bonds, commodities, or stocks for asset allocation. The same principles apply to international investing by comparing relative strength of global stock markets.

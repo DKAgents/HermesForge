@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Lunar Cycle Influence on 28-Day Trading Cycle
 
 Burton Pugh studied the 28-day cycle in the wheat market in the 1930s and concluded that the moon had some influence on market turning points, suggesting wheat should be bought on a full moon and sold on a new moon. However, Pugh acknowledged that lunar effects were mild and could be overridden by longer cycles or important news events.

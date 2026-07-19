@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Wave Properties: Amplitude, Period, and Phase
 
 Every price cycle wave has three measurable properties: amplitude (height from trough to crest), period (length of one full cycle, measured trough to trough), and phase (the timing or date of the last cycle low). Once all three are known, the cycle can theoretically be extrapolated into the future to estimate future peaks and troughs. Wave troughs are used as reference points because they are more clearly defined than wave crests in price data.

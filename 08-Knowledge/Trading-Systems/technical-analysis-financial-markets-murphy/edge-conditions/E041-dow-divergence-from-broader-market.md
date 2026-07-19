@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Divergence from Broader Market
 
 When the Dow Jones Industrial Average rises but broader averages (S&P 500, Nasdaq, Russell 2000) decline, it signals that the overall market is actually losing ground despite the headline index being up. The broader the average (more stocks included), the more accurately it reflects true market conditions. This divergence is a warning sign that market breadth is negative.

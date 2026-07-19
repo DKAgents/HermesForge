@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Distinguishing Correction from New Trend
 
 The most difficult challenge for a Dow theorist or any trend-follower is distinguishing between a normal secondary correction within an existing trend and the first leg of a new trend in the opposite direction. Dow theorists frequently disagree on when an actual reversal signal has been given, as illustrated by the difference between failure and nonfailure swing interpretations.

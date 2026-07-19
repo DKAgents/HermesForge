@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Consensus Norm and Extreme Levels
 
 The norm or equilibrium point for Bullish Consensus numbers is 55%, reflecting a built-in bullish bias in the general public. The upper extreme is 90% and the lower extreme is 20%, also shifted upward to account for the bullish bias. Readings over 75% or under 25% are considered warning zones suggesting a turn may be near.

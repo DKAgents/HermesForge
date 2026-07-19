@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Minimum 3-to-1 Reward-to-Risk Ratio
 
 Traders should employ at least a 3-to-1 reward-to-risk ratio on every trade. This means the potential profit target should be at least three times the size of the potential loss before entering a trade.

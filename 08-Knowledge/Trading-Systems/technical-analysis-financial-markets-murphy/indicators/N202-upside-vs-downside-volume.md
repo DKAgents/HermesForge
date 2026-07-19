@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Upside vs. Downside Volume
 
 Comparing upside volume (volume in advancing stocks) to downside volume (volume in declining stocks) provides insight into the internal strength or weakness of a market move. It is one of several stock market breadth indicators.

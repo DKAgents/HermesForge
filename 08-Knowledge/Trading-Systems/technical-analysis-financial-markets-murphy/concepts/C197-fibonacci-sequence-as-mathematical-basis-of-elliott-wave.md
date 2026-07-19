@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Sequence as Mathematical Basis of Elliott Wave
 
 The Fibonacci sequence is the mathematical basis of the Elliott Wave Theory. The number of waves follows the Fibonacci sequence, and Fibonacci ratios and retracements are used to determine price objectives.

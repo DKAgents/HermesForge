@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Independent Testing Requirement for Technical Methods
 
 Before applying any technical approach in actual investing, it is always recommended that investors conduct their own independent testing and research. This applies to advanced technical indicators as well as standard methods.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Herrick Payoff Index (HPI) Divergence Signals
 
 The HPI incorporates open interest analysis to help determine a commodity market's direction. Bearish divergences occur when prices make higher highs while HPI makes lower highs; bullish divergences occur when prices make lower lows while HPI forms higher lows. A cross of the HPI zero line from below is a bullish signal, and from above is bearish. The HPI bottoming well ahead of prices (positive divergence) signals an impending price reversal upward.

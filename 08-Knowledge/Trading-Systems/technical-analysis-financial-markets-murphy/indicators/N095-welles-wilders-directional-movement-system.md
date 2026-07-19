@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Welles Wilder's Directional Movement System
 
 The Directional Movement System is one of Welles Wilder's popular mechanical trading systems available in charting software. It is used to assess trend strength and direction and can serve as either a standalone trading system or a confirming technical indicator.

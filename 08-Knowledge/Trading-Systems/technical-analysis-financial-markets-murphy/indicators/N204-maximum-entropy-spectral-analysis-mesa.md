@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Maximum Entropy Spectral Analysis (MESA)
 
 Maximum Entropy Spectral Analysis (MESA) is an advanced mathematical technique used to identify dominant cycles in price data. It provides more precise cycle identification than traditional methods and is used in conjunction with other technical tools.

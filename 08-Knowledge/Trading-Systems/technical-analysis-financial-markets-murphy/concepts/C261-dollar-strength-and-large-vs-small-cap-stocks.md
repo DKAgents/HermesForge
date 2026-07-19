@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dollar Strength and Large vs. Small Cap Stocks
 
 A strong U.S. dollar can negatively impact large multinational stocks by making their products too expensive in foreign markets. Domestically oriented small cap stocks are less affected by dollar movements and may outperform large caps in a strong dollar environment. Conversely, a weaker dollar tends to benefit large multinationals like those in the Dow Industrial Average, while a stronger dollar may favor smaller stocks like those in the Russell 2000.

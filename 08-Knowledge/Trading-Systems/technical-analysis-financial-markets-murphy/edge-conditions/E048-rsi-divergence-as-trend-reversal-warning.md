@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Divergence as Trend Reversal Warning
 
 When RSI readings are above 70 or below 30 and diverge from price action, this divergence serves as a warning of a possible trend reversal. This divergence signal is considered more significant than the overbought/oversold reading alone.

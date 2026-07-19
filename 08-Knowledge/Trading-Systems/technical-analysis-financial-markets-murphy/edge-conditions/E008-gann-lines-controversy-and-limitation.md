@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gann Lines — Controversy and Limitation
 
 Gann lines are somewhat controversial. Even if one of them works, you cannot be sure in advance which one it will be. Some chartists question the validity of drawing geometric trendlines at all.

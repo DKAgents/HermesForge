@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Money Management Guidelines
 
 Money management guidelines include diversification vs. concentration tradeoffs, maintaining appropriate reward-to-risk ratios, using protective stops, trading multiple positions strategically, and combining money management with technical factors. Asset allocation and use of managed accounts or mutual funds are also components.

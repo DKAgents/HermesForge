@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dominant Cycles Definition
 
 Dominant cycles are those that consistently affect prices and can be clearly identified. Most futures markets have at least five dominant cycles. Only dominant cycles are of real value for forecasting purposes; cycles that do not consistently appear in price data should be disregarded.

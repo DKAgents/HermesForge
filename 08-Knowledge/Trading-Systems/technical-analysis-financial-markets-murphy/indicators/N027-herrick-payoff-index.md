@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Herrick Payoff Index
 
 The Herrick Payoff Index uses open interest to measure money flow. It is a more sophisticated alternative to OBV that incorporates open interest data along with price and volume to provide a more complete picture of market participation.

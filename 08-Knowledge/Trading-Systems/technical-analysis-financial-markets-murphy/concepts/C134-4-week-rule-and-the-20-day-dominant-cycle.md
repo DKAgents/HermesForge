@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule and the 20-Day Dominant Cycle
 
 The 4 week (20 day) trading cycle is a dominant cycle that influences all markets, which may explain the success of the 4 week rule. The principle of harmonics in cyclic analysis holds that each cycle is related to its neighboring cycles by a factor of 2, linking the 1, 2, 4, and 8 week time periods.

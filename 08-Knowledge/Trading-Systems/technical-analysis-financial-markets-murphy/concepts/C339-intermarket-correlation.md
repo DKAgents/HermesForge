@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Correlation
 
 Intermarket correlation involves measuring the statistical relationship between different markets such as stocks, bonds, commodities, and currencies. Intermarket neural network software can be used to identify and exploit these correlations for trading decisions.

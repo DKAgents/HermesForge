@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis Validated by Federal Reserve Research
 
 The Federal Reserve Bank of New York published a 1995 Staff Report titled 'Head and Shoulders: Not Just a Flaky Pattern,' which found that technical analysis generates statistically significant profits despite being incompatible with the Efficient Market Hypothesis. A 1997 Federal Reserve Bank of St. Louis report further supported the failure of the simple efficient market hypothesis to describe how foreign exchange markets actually function.

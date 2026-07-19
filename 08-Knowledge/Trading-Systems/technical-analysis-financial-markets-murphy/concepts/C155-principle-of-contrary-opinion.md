@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Contrary Opinion
 
 The Principle of Contrary Opinion holds that when the vast majority of people agree on anything, they are generally wrong. A true contrarian first determines what the majority are doing and then acts in the opposite direction. It is considered a form of psychological analysis that adds a third dimension to market analysis beyond fundamental and technical analysis by measuring the degree of bullishness or bearishness among market participants.

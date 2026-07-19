@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Asset Allocation Using Intermarket Analysis
 
 By incorporating intermarket principles, traders and investors can determine whether the current market climate favors bonds, commodities, or stocks, which directly informs asset allocation decisions. The same framework applies to international investing by comparing relative strength of various global stock markets.

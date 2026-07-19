@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Use of Advance Stop Orders in Point and Figure Trading
 
 Since all buy and stop-loss points can be determined in advance with the 3-box reversal method, buy and stop-loss orders should be placed in the market ahead of time. Stop-loss points should be periodically reviewed and adhered to as the chart progresses.

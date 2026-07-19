@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Harmonically Related Moving Average Lengths
 
 The 5, 10, 20, and 40 day moving averages are harmonically related, each being twice the length of the next shorter one. The 4, 9, and 18 day moving averages are derivatives of the 5, 10, and 20 day numbers. Weekly rule breakouts use the same numbers translated into 2, 4, and 8 weeks.

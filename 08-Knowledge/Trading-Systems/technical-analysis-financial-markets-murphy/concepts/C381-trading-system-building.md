@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading System Building
 
 Building a trading system involves concept design, objective rules, testing code, evaluating results, and incorporating money management. Trading signals should be checked on a computer, and the system must be evaluated for robustness before live trading.

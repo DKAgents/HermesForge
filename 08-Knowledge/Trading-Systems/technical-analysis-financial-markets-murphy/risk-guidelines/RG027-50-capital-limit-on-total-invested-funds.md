@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 50% Capital Limit on Total Invested Funds
 
 Total invested funds should be limited to 50% of total capital, with the balance placed in Treasury Bills. At any one time, no more than half of the trader's capital should be committed to the markets. The other half acts as a reserve during periods of adversity and drawdown. For example, in a $100,000 account, only $50,000 would be available for trading.

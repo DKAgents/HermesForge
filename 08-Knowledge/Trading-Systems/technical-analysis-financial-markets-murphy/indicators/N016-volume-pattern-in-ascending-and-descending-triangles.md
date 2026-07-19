@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Pattern in Ascending and Descending Triangles
 
 Volume diminishes as both ascending and descending triangles develop, then increases on the breakout. During formation, volume in the ascending pattern tends to be slightly heavier on bounces and lighter on dips; in the descending pattern, volume should be heavier on the downside and lighter during bounces.

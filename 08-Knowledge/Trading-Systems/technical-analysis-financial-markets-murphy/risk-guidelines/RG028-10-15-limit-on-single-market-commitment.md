@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 10-15% Limit on Single Market Commitment
 
 Total commitment in any one market should be limited to 10-15% of total equity. In a $100,000 account, only $10,000 to $15,000 would be available for margin deposit in any one market. This prevents the trader from placing too much capital in any one trade.

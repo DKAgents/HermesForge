@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bond-Stock Decoupling Under Deflation
 
 During deflationary periods, investors switch out of stocks and into bonds and rate-sensitive stock groups like utilities, causing bonds and stocks to decouple. The 1997–1998 Asian crisis spreading to Russia and Latin America demonstrated this global intermarket linkage, where falling commodity and stock prices boosted Treasury bond prices to record highs.

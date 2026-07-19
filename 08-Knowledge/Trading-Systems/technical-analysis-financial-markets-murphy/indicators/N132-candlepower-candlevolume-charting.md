@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, candlesticks, market-breadth, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CandlePower (Candlevolume) Charting
 
 CandlePower charting, proposed by Greg Morris, combines candlestick charts with Equivolume charting so that the width of each candlestick is determined by volume — the greater the volume, the wider the candlestick. This hybrid technique is also called Candlevolume and is available in Metastock software.

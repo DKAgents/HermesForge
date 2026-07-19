@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Herrick Payoff Index (HPI)
 
 The Herrick Payoff Index (HPI), developed by John Herrick, is an indicator used in technical analysis, referenced on page 466-468. It incorporates volume and open interest data to measure money flow into and out of a futures contract.

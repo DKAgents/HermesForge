@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Auction Setting Principle
 
 The purpose of the marketplace is to facilitate or promote trade, and all market activity occurs within an auction setting. As price moves higher, more buying comes in; as price moves lower, more selling comes in. The market moves up to shut off buying (auctioning up until the last buyer buys) and moves down to shut off selling (auctioning down until the last seller sells), operating through a dual auction process.

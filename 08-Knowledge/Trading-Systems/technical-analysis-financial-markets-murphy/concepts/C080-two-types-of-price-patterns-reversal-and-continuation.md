@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Two Types of Price Patterns: Reversal and Continuation
 
 There are two major categories of price patterns: reversal and continuation. Reversal patterns indicate that an important reversal in trend is taking place. Continuation patterns suggest the market is only pausing, possibly to correct a near-term overbought or oversold condition, after which the existing trend will be resumed. Distinguishing between the two as early as possible is critical.

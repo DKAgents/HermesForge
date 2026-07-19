@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Number of Reversal Candle Patterns in Japanese Literature
 
 Japanese literature consistently refers to approximately forty reversal candle patterns. These vary from single candlestick lines to more complex patterns of up to five candlestick lines. This breadth of patterns provides analysts with a comprehensive toolkit for identifying potential trend reversals across different market conditions.

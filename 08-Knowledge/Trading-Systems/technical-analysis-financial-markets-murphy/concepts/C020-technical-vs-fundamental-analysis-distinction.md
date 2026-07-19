@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical vs. Fundamental Analysis Distinction
 
 Murphy states that one of the goals of the introductory chapter is to draw clear distinctions between technical and fundamental analysis, and to address criticisms frequently raised against the technical approach. This framing positions technical analysis as a distinct discipline with its own philosophical underpinnings separate from fundamental analysis.

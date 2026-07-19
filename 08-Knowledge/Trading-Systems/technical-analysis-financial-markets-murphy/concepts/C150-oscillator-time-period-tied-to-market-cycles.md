@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Time Period Tied to Market Cycles
 
 Oscillator lengths can be tied to underlying market cycles using a time period of one-half the cycle length. Popular time inputs are 5, 10, and 20 days based on calendar day periods of 14, 28, and 56 days. The 28 calendar day (20 trading day) cycle represents an important dominant monthly trading cycle, and Wilder's 14-day RSI measures half of this cycle.

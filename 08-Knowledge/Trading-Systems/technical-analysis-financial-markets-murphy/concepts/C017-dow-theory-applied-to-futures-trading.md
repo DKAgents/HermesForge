@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Theory Applied to Futures Trading
 
 Murphy extends Dow Theory — originally developed for stock market analysis — to futures trading, suggesting its basic tenets about trend identification and confirmation are broadly applicable across asset classes.

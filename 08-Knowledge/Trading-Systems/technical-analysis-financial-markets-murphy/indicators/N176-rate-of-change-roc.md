@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rate of Change (ROC)
 
 The Rate of Change (ROC) measures the percentage change in price over a specified period. It is a momentum oscillator used to identify overbought/oversold conditions and trend strength.

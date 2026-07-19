@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Welles Wilder's Parabolic System
 
 The Parabolic System is another of Welles Wilder's popular mechanical trading systems. Like the Directional Movement System, it is a trend-following tool that works best in trending market environments and can be used as a confirming indicator.

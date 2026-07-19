@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic %D Line Calculation
 
 The %D line is a 3-period moving average of the %K line, producing fast stochastics. By taking another 3-period average of %D, a smoother version called slow stochastics is computed. Most traders use slow stochastics because of its more reliable signals.

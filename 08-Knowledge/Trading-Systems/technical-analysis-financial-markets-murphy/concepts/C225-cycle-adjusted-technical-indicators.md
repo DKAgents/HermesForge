@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle-Adjusted Technical Indicators
 
 The usefulness of moving averages and oscillators can be enhanced by tying their time periods to each market's dominant cycles. Walt Bressert's work describes how cycles can be used to adjust time spans for the Commodity Channel Index, RSI, Stochastics, and MACD.

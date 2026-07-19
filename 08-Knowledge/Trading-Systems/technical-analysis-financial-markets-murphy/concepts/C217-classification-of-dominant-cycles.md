@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Classification of Dominant Cycles
 
 The general cycle categories are: long-term cycles (2 or more years), the seasonal cycle (1 year), the primary or intermediate cycle (9 to 26 weeks), and the trading cycle (4 weeks). The trading cycle breaks down into two shorter alpha and beta cycles averaging 2 weeks each. These labels (Primary, Trading, Alpha, Beta) are used by Walt Bressert.

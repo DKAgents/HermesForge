@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nearest Contract — Definition and Rollover
 
 A Nearest Contract is a continuous data series made up of actual trading prices that automatically rolls over to the next contract upon expiration. Traders typically roll over 15 to 30 days before expiration because liquidity erodes rapidly in the final days of a contract. The appropriate rollover timing depends on the commodity being traded and the individual's trading style.

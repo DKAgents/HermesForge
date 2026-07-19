@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly and Monthly Charts for Long-Range Perspective
 
 Weekly and monthly charts compress price action so that much longer time periods can be studied. On a weekly chart each bar represents one week's price action; on a monthly chart each bar represents one month's price action. These charts provide a perspective on market trend that is impossible to achieve with daily charts alone.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Phasing: Identifying the Next Cycle Low
 
 Phasing is used to identify the date of the last cycle low and thereby project the next cycle low. For example, if a 20-day cycle bottomed 10 days ago, the next cycle low is expected approximately 10 days from now. Phasing also allows the cyclic analyst to study relationships between different cycle lengths occurring simultaneously.

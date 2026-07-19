@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Uses of the Dual Moving Average Oscillator
 
 The dual moving average oscillator has three primary uses: (1) to help spot divergences, (2) to identify short-term variations from the long-term trend when the shorter average moves too far above or below the longer average, and (3) to pinpoint crossings of the two moving averages, which occur when the oscillator crosses the zero line.

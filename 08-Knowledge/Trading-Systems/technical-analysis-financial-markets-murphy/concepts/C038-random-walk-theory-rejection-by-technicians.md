@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Random Walk Theory Rejection by Technicians
 
 The technical community wholly rejects the idea that markets are random. The author argues that if markets were truly random, no forecasting technique would work, and the very existence of successful technical analysis contradicts the random walk premise.

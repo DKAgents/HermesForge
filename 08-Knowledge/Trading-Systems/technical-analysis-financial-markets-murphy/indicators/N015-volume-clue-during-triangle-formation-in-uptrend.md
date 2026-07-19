@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Clue During Triangle Formation in Uptrend
 
 Even though trading activity diminishes during triangle formation, close inspection of volume reveals whether heavier volume occurs on upmoves or downmoves. In an uptrend, volume should be slightly heavier during bounces and lighter on price dips, confirming the bullish bias.

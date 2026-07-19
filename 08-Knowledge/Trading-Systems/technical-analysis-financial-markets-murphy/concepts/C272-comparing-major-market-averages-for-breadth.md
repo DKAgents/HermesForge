@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Comparing Major Market Averages for Breadth
 
 Comparing the performance of major stock averages (Dow, S&P 500, Nasdaq Composite, Russell 2000) is a method for studying market breadth. When the Dow outperforms broader indices, it suggests internal market weakness. The more stocks included in an average, the more representative it is of the overall market.

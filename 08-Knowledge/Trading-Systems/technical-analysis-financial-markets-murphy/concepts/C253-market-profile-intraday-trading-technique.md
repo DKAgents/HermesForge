@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Intraday Trading Technique
 
 Market Profile is an innovative approach to intraday trading developed by J. Peter Steidlmayer, a former floor trader on the Chicago Board of Trade. It has gained an enthusiastic following in the futures markets and can also be applied to common stocks. It is considered a complex but highly regarded technique among those who have mastered it.

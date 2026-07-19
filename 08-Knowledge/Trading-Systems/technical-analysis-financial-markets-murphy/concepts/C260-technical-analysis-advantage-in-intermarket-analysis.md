@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis Advantage in Intermarket Analysis
 
 Because financial markets are now so intertwined, the technical analyst has an enormous advantage since technical tools can be applied to all markets. The ability to follow charts of many markets simultaneously greatly facilitates the application of intermarket analysis in today's complex marketplace.

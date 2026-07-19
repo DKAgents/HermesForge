@@ -13,8 +13,8 @@ has_quotes: true
 topic: [program-trading]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Program Trading Mechanics
 
 S&P 500 futures normally trade at a premium to the cash index, with the premium determined by short-term interest rates, the S&P 500 yield, and days until expiration. Each day institutions calculate 'fair value' for this premium. When the futures premium moves above fair value by a predetermined amount, program buying is automatically activated; when it falls too far below fair value, program selling is activated.

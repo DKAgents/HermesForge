@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Less Reliance on Market Averages in Futures
 
 Unlike stock market technical analysis, futures technical analysis places less emphasis on broad market averages and sentiment indicators. Each futures market is analyzed more on its own technical merits.

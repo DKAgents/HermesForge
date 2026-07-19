@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flexibility and Adaptability of Technical Analysis
 
 Technical analysis is presented as a flexible methodology that can be adapted across different markets and time frames. This adaptability is a core advantage over more market-specific fundamental approaches.

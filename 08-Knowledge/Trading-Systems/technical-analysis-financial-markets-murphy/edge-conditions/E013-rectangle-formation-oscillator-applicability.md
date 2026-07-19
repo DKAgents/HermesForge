@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Oscillator Applicability
 
 Oscillators are especially useful in sideways trading markets such as rectangles, but become less useful once a breakout has occurred. This reflects the general principle that oscillators work best in trendless, range-bound conditions.

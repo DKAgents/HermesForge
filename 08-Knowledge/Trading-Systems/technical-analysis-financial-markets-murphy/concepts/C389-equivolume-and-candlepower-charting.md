@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, candlesticks, market-breadth, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Equivolume and CandlePower Charting
 
 Equivolume charting incorporates volume directly into the price bar by making bar width proportional to volume, while CandlePower combines candlestick charting with volume analysis. Both methods integrate price and volume into a single visual representation.

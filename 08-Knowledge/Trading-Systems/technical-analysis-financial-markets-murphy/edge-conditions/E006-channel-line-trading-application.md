@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Line Trading Application
 
 When a price channel is identified, the channel line serves as a profit target for trades initiated at the basic trendline. Prices will often remain within such a trend channel, making the channel boundaries actionable levels for entries and exits.

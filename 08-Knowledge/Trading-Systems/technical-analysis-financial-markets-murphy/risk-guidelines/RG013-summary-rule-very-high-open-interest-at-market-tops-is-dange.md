@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Very High Open Interest at Market Tops is Dangerous (Futures)
 
 Very high open interest at market tops is dangerous and can intensify downside pressure. This applies only to futures markets, as the forced liquidation of longs can accelerate a price decline.

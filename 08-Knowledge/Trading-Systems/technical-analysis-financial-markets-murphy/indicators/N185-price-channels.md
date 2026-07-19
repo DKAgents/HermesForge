@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Channels
 
 Price channels are constructed by drawing parallel lines above and below a trendline. They define the upper and lower boundaries of a trend and can be used to identify overbought/oversold conditions within the trend and set price targets.

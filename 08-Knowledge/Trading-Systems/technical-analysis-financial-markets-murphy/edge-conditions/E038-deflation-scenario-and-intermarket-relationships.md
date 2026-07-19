@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Deflation Scenario and Intermarket Relationships
 
 Under deflation, the inverse relationship between bond prices and commodities is maintained (commodities fall, bond prices rise), but the stock market can react negatively — unlike in a disinflationary environment where both bonds and stocks benefit. Deflation is good for bonds but bad for commodities and potentially bad for stocks, causing bonds and stocks to decouple. This is a critical distinction from the normal disinflationary regime where bonds and stocks trend together.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI 50 Level as Support and Resistance
 
 The 50 level is the RSI midpoint value and will often act as support during pullbacks and resistance during bounces. Some traders treat RSI crossings above and below the 50 level as buying and selling signals respectively.

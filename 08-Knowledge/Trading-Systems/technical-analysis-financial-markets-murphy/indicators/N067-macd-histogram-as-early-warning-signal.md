@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Histogram as Early Warning Signal
 
 The MACD histogram plots the difference between the two MACD lines and gives signals on zero line crossings. Crucially, the histogram turns earlier than the crossover signals themselves, providing the trader with advanced warning of potential trend changes. On weekly charts, the histogram has been observed to turn down as many as 10 weeks before a sell signal and turn up 2–4 weeks before buy signals.

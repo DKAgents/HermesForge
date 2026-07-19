@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillators Most Useful in Sideways/Choppy Markets
 
 During choppy market periods when prices move sideways for several weeks or months, oscillators track price movement very closely and peaks and troughs on the price chart coincide almost exactly with oscillator peaks and troughs. Oscillators are most effective in these ranging conditions.

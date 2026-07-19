@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Structure
 
 Market Profile organizes price and time data into a graphic display showing where the market spent the most time trading. Key concepts include the auction setting, continuous negotiation, market balance/imbalance, price vs. value distinction, and the roles of short-term and long-term traders.

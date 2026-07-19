@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical versus Fundamental Forecasting
 
 Murphy distinguishes technical forecasting (based on price and volume data) from fundamental forecasting (based on economic supply/demand factors). The table of contents treats these as distinct but potentially complementary approaches, with technical analysis offering superior timing capability.

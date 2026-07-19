@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Distortions in Nearest Contract Continuation Charts
 
 The nearest-contract continuation method can produce distortions when the expiring contract trades at a significant premium or discount to the next contract, causing sudden price jumps or drops on the chart at the changeover point. Extreme volatility in spot contracts just before expiration is another source of distortion.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Stop Placement Rule
 
 For stop protection in point and figure trading, stops in an uptrend should always be placed below the last column of o's, and stops in a downtrend should be placed above the last column of x's. This ensures stops are logically placed at the most recent reversal point.

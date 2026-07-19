@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Runaway Gap as Measuring Tool
 
 The runaway gap is also called a measuring gap because it usually occurs at about the halfway point in a trend. By measuring the distance the trend has already traveled from the original breakout, an estimate of the probable extent of the remaining move can be determined by doubling the amount already achieved.

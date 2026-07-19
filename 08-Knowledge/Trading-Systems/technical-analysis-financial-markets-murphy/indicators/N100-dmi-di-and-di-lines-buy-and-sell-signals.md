@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # DMI +DI and -DI Lines — Buy and Sell Signals
 
 The Directional Movement Index (DMI) generates two lines: +DI measuring positive (upward) movement and -DI measuring negative (downward) movement. A buy signal is given when the +DI line crosses over the -DI line, and a sell signal is given when it crosses below the -DI line. DMI can be used either as a standalone system or as a filter on the Parabolic or any other trend-following system.

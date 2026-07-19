@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # ADX Line — Trending vs. Trading Market Identification
 
 The ADX line, part of the DMI system, provides a method to determine whether the market is trending or trading. A rising ADX line suggests a trend is present and favors the use of moving averages. A falling ADX line suggests a trading range environment and favors the use of oscillators.

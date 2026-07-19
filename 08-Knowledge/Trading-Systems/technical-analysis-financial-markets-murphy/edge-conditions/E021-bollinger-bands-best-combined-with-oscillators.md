@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Bands: Best Combined with Oscillators
 
 Bollinger Bands work best when combined with overbought/oversold oscillators. They can also be applied to weekly and monthly price charts by using 20 weeks and 20 months instead of 20 days. This multi-timeframe applicability makes them versatile across different trading horizons.

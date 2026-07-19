@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confirmation Principle
 
 Confirmation refers to the comparison of all technical signals and indicators to ensure that most are pointing in the same direction and confirming one another. It is a common theme throughout all of market analysis and applies to virtually every aspect of technical analysis, not just chart patterns.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Standard Deviation and Bollinger Bands
 
 Standard deviation is used as the basis for Bollinger Bands, which expand and contract based on market volatility. Bands set at two standard deviations above and below a moving average contain approximately 95% of price action.

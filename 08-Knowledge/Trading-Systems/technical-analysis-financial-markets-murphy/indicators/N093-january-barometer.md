@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # January Barometer
 
 The January Barometer holds that what the S&P 500 does during January will determine what kind of year the market as a whole will have. A variation is that the direction of the S&P 500 during the first 5 trading days of the year gives a hint of what's ahead for the full year.

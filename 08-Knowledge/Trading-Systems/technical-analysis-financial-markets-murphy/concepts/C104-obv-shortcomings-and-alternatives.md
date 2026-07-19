@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # OBV Shortcomings and Alternatives
 
 OBV assigns an entire day's volume a plus or minus value, which may be misleading when a market closes up or down by only a minimal amount. One variation gives greater weight to days where the trend is strongest by multiplying volume by the amount of the price gain. More sophisticated formulas blend volume and open interest with price action, such as James Sibbet's Demand Index and the Herrick Payoff Index.

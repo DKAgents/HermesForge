@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis Framework
 
 Intermarket analysis examines the relationships between bonds, commodities, stocks, and the dollar. Key relationships include: commodities linked to bonds, stocks linked to bonds, the dollar linked to commodities, and the dollar linked to large-cap stocks. A top-down market approach is recommended, and relative strength analysis is used to evaluate sectors and individual stocks.

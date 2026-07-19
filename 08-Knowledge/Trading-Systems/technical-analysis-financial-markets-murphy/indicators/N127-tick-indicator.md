@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # TICK Indicator
 
 The TICK indicator measures the difference between the number of stocks trading on an uptick versus the number trading on a downtick. It is a minute-by-minute version of the daily advance-decline line and is used for the same purpose of gauging market breadth on an intraday basis.

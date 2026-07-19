@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Secondary Trends
 
 Secondary trends are intermediate-term price movements that run counter to the primary trend, typically lasting from three weeks to several months. They represent corrections or rallies within the larger primary trend.

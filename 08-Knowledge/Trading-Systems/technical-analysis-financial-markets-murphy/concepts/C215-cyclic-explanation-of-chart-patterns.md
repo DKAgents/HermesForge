@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, cycles, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cyclic Explanation of Chart Patterns
 
 Standard charting techniques—trendlines, channels, head and shoulders patterns, double tops, triangles, flags, and pennants—can be explained through the summation of cycle waves. A rising price channel forms when a flat cycle wave is summed with a rising long-term uptrend line. A head and shoulders topping pattern is formed by combining two cycle lengths with a rising line representing the sum of all longer duration components.

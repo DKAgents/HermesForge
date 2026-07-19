@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Histogram Construction
 
 The MACD histogram consists of vertical bars that show the difference between the two MACD lines. The histogram has its own zero line; when the MACD lines are in positive alignment (faster line over slower), the histogram is above its zero line. Crossings by the histogram above and below its zero line coincide with actual MACD crossover buy and sell signals.

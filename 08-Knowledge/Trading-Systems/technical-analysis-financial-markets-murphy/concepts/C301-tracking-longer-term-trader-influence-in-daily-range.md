@@ -13,8 +13,8 @@ has_quotes: true
 topic: [fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Tracking Longer Term Trader Influence in Daily Range
 
 The profile graphic helps identify longer term trader behavior during daily range development. By monitoring longer term activity throughout the range — particularly at the extremes, at range extension, and after value area completion — traders can determine whether longer term buyers or sellers are more active and hence control market direction.

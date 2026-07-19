@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume and Open Interest as Secondary Indicators
 
 Murphy classifies volume and open interest as secondary indicators — important confirmatory tools but subordinate to price action as the primary signal. They are used to validate or question the strength of price moves.

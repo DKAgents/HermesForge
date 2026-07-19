@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # New Highs vs. New Lows as Market Health Indicator
 
 The number of stocks hitting new 52-week highs versus new lows is a breadth indicator used to assess the market environment. When new highs exceed new lows, it suggests a positive market environment. This data is reported daily in The Wall Street Journal.

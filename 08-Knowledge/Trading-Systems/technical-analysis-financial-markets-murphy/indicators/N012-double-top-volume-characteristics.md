@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top Volume Characteristics
 
 Volume tends to be heavier during the first peak of a double top and lighter on the second peak. A decisive close under the middle trough at point B on heavier volume completes the pattern and signals a reversal of trend to the downside. Volume divergence between the two peaks is a key confirming signal.

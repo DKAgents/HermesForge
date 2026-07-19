@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume as a Filter for False Breakouts
 
 Watching volume on breakouts helps avoid some false breakouts. A valid upside breakout should be accompanied by heavy volume, while a false breakout (bull trap) typically occurs on light volume. A subsequent decline on heavy volume after a light-volume breakout is a negative chart combination signaling the breakout is likely false.

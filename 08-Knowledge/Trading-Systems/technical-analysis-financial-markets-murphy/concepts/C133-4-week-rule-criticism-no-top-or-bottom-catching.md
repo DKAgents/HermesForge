@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule Criticism: No Top or Bottom Catching
 
 The main criticism of the 4 week rule, shared by all trend-following approaches, is that it does not catch tops or bottoms. However, this is a limitation of all trend-following systems, and the 4 week rule compensates with its simplicity and reliable performance relative to other systems.

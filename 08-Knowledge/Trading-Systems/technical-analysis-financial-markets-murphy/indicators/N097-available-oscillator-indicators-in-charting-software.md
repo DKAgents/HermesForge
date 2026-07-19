@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Available Oscillator Indicators in Charting Software
 
 Modern charting software provides a wide range of oscillator-type indicators including the Commodity Channel Index, momentum, rate of change, MACD, Stochastic, Williams %R, and RSI. Traders should select one or two they are most comfortable with rather than attempting to use all of them simultaneously.

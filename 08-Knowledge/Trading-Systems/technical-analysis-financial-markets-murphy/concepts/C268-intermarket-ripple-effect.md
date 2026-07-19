@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Ripple Effect
 
 Intermarket analysis recognizes a ripple effect that flows from the dollar to commodities to bonds to stocks. This sequential pattern tracks the business cycle and has implications for economic forecasting. Global linkages mean that events in Asia, Europe, and Latin America impact U.S. markets and vice versa.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Mode vs. Trend Mode Market Classification
 
 Markets can be in either a cycle mode or a trend mode, and the appropriate technical indicator depends on which mode the market is in. When in a trend mode, a trend-following indicator like a moving average is needed. When in a cycle mode, oscillator-type indicators are more appropriate. Cycle measurement tools like MESA can help determine which mode the market is currently in.

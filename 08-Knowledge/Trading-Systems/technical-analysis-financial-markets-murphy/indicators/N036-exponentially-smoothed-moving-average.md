@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Exponentially Smoothed Moving Average
 
 The exponentially smoothed moving average assigns greater weight to more recent data while including all historical data in its calculation. The user assigns a percentage value to the last day's price and adds it to a percentage of the previous day's value, with both percentages summing to 100. A 10% weighting on the last day is equivalent to a 20-day average; a 5% weighting is equivalent to a 40-day average. The exponential average is more sensitive than the equivalent simple moving average.

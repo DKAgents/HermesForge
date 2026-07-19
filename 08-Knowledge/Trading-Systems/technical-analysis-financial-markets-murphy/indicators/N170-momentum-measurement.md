@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Measurement
 
 Momentum measures the rate of ascent or descent of prices. The momentum line is compared to price action, and crossing of the zero line generates signals. Upper and lower boundaries are needed to identify overbought and oversold conditions.

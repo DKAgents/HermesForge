@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Definition of a Down Trendline
 
 A down trendline is drawn downward to the right along successive rally peaks. It requires at least two successively lower rally highs to be drawn. The same rules for confirmation apply as with an up trendline.

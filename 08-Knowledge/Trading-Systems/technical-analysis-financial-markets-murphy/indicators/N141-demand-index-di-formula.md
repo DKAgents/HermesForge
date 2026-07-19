@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) Formula
 
 The Demand Index calculates Buying Pressure (BP) and Selling Pressure (SP) and takes their ratio (DI = BP/SP). When prices rise, BP = Volume and SP = V/P; when prices decline, BP = V/P and SP = Volume, where P is the percentage change in price modified by constant K = (3×C)/VA, with VA being the 10-day average of a two-day price range. If BP > SP, then DI = SP/BP.

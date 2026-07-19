@@ -13,8 +13,8 @@ has_quotes: false
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Three-Phase Parallel
 
 The author notes that Elliott Wave Theory's structure of three major upward movements in a bull market closely mirrors Dow's three phases. R.N. Elliott elaborated on Rhea's Dow Theory work to identify five-wave sequences, with the three upward waves corresponding to Dow's accumulation, public participation, and distribution phases.

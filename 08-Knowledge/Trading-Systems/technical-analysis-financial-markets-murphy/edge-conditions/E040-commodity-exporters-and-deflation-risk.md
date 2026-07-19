@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commodity Exporters and Deflation Risk
 
 A plunge in commodity prices has an especially damaging impact on commodity-exporting countries such as Australia, Canada, Mexico, and Russia. Traders should monitor commodity price trends as a leading indicator of economic stress in these nations and their equity markets.

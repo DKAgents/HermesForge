@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Specific Calendar Month Continuation Charts
 
 Continuation charts can be constructed by linking only the same calendar delivery month across successive years, for example combining each year's November soybean contract into a single chart. This technique was favored by W.D. Gann and avoids cross-month premium/discount distortions by keeping the seasonal delivery month consistent.

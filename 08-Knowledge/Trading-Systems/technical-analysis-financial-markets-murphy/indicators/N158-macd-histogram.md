@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Histogram
 
 The MACD histogram is a variation of the MACD system that plots the difference between the signal line and the MACD line. Changes in the spread between the two lines can be spotted faster than with the standard MACD, leading to earlier trading signals.

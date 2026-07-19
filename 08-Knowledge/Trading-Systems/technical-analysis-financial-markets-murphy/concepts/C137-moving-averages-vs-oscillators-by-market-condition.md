@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages vs. Oscillators by Market Condition
 
 Moving averages perform best when the market is in a trending phase and are not very helpful during trendless, sideways periods. Oscillators perform much better than moving averages during trading ranges and are the preferred tool for non-trending market environments.

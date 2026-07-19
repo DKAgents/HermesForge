@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Application to Stocks vs. Commodities
 
 The Elliott Wave Theory was originally applied to stock market averages and does not work as well on individual stocks. The theory works best in commodity markets with the largest public following, such as gold. The principal difference in commodities is the existence of contained bull markets.

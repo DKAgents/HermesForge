@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Histogram Momentum Warning Signals
 
 The real value of the MACD histogram is spotting when the spread between the two MACD lines is widening or narrowing. When the histogram is above its zero line but starts to fall toward it, the uptrend is weakening. When the histogram is below its zero line and starts to move upward, the downtrend is losing momentum. Histogram turns always precede actual crossover signals, providing earlier warnings.

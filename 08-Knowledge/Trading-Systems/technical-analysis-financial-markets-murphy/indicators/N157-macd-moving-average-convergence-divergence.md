@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD (Moving Average Convergence Divergence)
 
 Developed by Gerald Appel, MACD shows two lines. The first (MACD) line is the difference between two exponential moving averages (usually 12 and 26 periods) of closing prices. The second (signal) line is usually a 9-period EMA of the MACD line. Signals are given when the two lines cross.

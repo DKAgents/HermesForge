@@ -13,8 +13,9 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
+confirmation_count: 1
 ---
-
 # Let Profits Run, Cut Losses Short
 
 One of the most fundamental trading principles is to allow winning trades to continue running while exiting losing trades quickly. This asymmetry in trade management is essential to long-term profitability.

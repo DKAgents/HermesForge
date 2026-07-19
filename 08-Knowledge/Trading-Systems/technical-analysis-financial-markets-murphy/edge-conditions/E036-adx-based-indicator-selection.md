@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # ADX-Based Indicator Selection
 
 The ADX line can be used to determine which class of indicators is most appropriate for current market conditions. When ADX is rising (trending market), moving average-based indicators are preferred. When ADX is falling (ranging market), oscillators are preferred. This adaptive approach improves indicator effectiveness.

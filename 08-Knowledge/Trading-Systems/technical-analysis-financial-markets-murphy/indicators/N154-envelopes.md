@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Envelopes
 
 Envelopes are lines placed at fixed percentages above and below a moving average line. They help determine when a market has traveled too far from its moving average and is overextended.

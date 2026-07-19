@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Average True Range (ATR) Definition
 
 Average True Range is the average of true price ranges over x periods. True Range is the greatest of: today's high to low, yesterday's close to today's high, or yesterday's close to today's low. It was developed by Welles Wilder.

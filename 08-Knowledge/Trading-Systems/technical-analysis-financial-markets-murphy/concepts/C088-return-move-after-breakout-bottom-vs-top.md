@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Return Move After Breakout: Bottom vs. Top
 
 Return moves back to the neckline or breakout level are more common at bottoms than at tops. When a return move occurs after a bullish breakout, it should happen on light volume. Following the return move, the new uptrend should resume on heavier volume.

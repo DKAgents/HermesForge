@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Deflation Scenario in Intermarket Analysis
 
 A deflation scenario represents a special case in intermarket analysis where the normal relationships between asset classes may shift. Traders must adjust their intermarket models to account for deflationary environments.

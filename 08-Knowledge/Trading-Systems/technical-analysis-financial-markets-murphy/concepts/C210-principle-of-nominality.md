@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Nominality
 
 The Principle of Nominality holds that despite differences across markets and allowable variation, there exists a nominal set of harmonically related cycles that affect all markets. This nominal model serves as a starting point for cycle analysis in any market. The model begins with an 18-year cycle and proceeds to successively shorter cycles, each half the length of the previous, with the exception of the 54-to-18-month relationship which is a ratio of one-third.

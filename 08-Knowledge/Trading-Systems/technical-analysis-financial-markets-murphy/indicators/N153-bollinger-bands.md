@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Bands
 
 Developed by John Bollinger, Bollinger Bands plot trading bands two standard deviations above and below a 20-period moving average. Prices will often meet resistance at the upper band and support at the lower band.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advance-Decline (AD) Line Construction
 
 The advance-decline line is constructed by taking the daily difference between the number of advancing issues and declining issues on the NYSE. If advances exceed declines, the daily AD number is positive; if declines exceed advances, it is negative. This daily number is added to a cumulative AD line that displays its own trend.

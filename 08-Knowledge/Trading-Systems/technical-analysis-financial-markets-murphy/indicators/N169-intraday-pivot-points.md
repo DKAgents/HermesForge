@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intraday Pivot Points
 
 Intraday pivot points are calculated support and resistance levels used for short-term trading decisions within the trading day. They are derived from the previous day's high, low, and close.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders as Consolidation Pattern
 
 Although the head and shoulders is primarily a reversal pattern, it can on occasion act as a consolidation pattern rather than a reversal. This is the exception rather than the rule and traders should be aware of this possibility when analyzing the pattern.

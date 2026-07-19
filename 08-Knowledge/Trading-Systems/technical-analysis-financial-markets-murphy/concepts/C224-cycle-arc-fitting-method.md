@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Arc Fitting Method
 
 To identify cycles using computer tools, a user places a price chart on screen, picks a prominent bottom as a starting point, and vertical lines or arcs appear at a default spacing (e.g., every 10 days). The cycle periods can be lengthened, shortened, or moved left or right until the arc lows coincide with a number of reaction lows on the price chart, confirming the cycle.

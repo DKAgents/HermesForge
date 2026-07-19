@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Channel Validity — Historical Example
 
 A monthly line chart example demonstrates that prices can fluctuate between upper and lower parallel channel lines over a period of 25 years, with major tops in 1987, 1989, and 1993 occurring right at the upper channel line and the 1994 bottom bouncing off the lower trendline. This illustrates that channel lines can remain valid across very long time horizons. Long-term channels on monthly charts carry especially high significance for major turning points.

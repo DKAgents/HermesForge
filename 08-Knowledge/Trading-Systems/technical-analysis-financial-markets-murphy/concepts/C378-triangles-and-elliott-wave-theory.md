@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangles and Elliott Wave Theory
 
 Triangles in Elliott Wave Theory appear in wave four positions and as wave B of corrective patterns. Symmetrical, ascending, and descending triangles all have specific roles within the Elliott Wave framework.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Divergence as Market Extreme Signal
 
 When two moving averages move too far apart, a market extreme is created calling for a pause in the trend. The trend often remains stalled until the shorter average moves back to the longer. In an uptrend, the shorter average dipping back to the longer average represents an ideal buying area, similar to testing an up trendline.

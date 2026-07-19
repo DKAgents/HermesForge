@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, volume, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI and Open Interest – Trend Confirmation
 
 Changes in open interest provide important clues as to whether a market trend is well supported. The HPI incorporates open interest data to help determine whether money is flowing into or out of a commodity, thereby confirming or questioning the sustainability of a price trend. Rising open interest alongside rising prices (positive HPI) confirms bullish trend support.

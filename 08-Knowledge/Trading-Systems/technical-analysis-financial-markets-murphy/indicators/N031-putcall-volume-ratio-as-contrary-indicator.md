@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Put/Call Volume Ratio as Contrary Indicator
 
 The put/call volume ratio is constructed by dividing put volume by call volume. When options traders are bullish, call volume exceeds put volume and the ratio falls; bearishness is reflected in heavier put volume and a higher ratio. The put/call ratio is viewed as a contrary indicator: a very high ratio signals an oversold market (buy signal), while a very low ratio warns of an overbought market (sell signal).

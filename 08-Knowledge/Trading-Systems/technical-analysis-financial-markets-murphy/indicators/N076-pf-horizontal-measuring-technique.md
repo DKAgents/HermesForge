@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Horizontal Measuring Technique
 
 The horizontal count measures the number of columns across a base or topping pattern, then multiplies that count by the reversal value (box size times number of boxes in reversal). For example, with a $1.00 box and 3-box reversal, 10 columns across a base yields a $30 price objective (10 × $3). This target is added to the bottom of a base or subtracted from the top of a topping pattern.

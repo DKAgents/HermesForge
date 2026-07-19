@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Index (RSI)
 
 The RSI, developed by Welles Wilder, measures the speed and change of price movements on a scale of 0-100. The 70 and 30 lines are used to generate overbought and oversold signals respectively. Divergence between RSI and price is a key signal.

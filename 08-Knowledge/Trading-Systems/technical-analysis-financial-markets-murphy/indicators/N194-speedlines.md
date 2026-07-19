@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Speedlines
 
 Speedlines (speed resistance lines) are trendline tools drawn at one-third and two-thirds of a price move to identify potential support and resistance levels during corrections. They are related to the concept of percentage retracements.

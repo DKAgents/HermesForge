@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ehrlich Cycle Finder Tool
 
 The Ehrlich Cycle Finder (ECF) is an accordion-like device placed on price charts for visual cycle inspection. The distance between its points is always equidistant and can be expanded or contracted to fit any cycle length. By plotting the distance between two obvious cycle lows, it can quickly determine if other cycle lows of the same length exist.

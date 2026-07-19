@@ -13,8 +13,9 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
+confirmation_count: 1
 ---
-
 # 3-to-1 Reward-to-Risk Ratio
 
 For each potential trade, a profit objective (reward) is determined and balanced against the potential loss if the trade goes wrong (risk). A commonly used standard is a 3-to-1 reward-to-risk ratio, meaning the profit potential must be at least three times the possible loss before a trade is considered. This ensures that winning trades more than compensate for losing trades.

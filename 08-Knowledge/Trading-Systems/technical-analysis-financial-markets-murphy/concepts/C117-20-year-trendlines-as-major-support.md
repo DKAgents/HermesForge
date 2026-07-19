@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 20-Year Trendlines as Major Support
 
 Trendlines spanning 20 years on monthly charts represent extremely significant support levels. A bounce off such a trendline, as seen with the 1994 Dow Utilities bottom, confirms the enduring relevance of long-term technical levels and the non-random nature of price action.

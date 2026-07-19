@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Graphic Construction
 
 The Market Profile format organizes price and time into a visual representation of a single session. It is constructed by assigning a letter to each price within each period's price range (A for the 1st period, B for the 2nd, etc.) and then collapsing each price range into the leftmost column. The completed profile reflects prices on the left and period frequency of price occurrence on the right.

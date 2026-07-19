@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Whipsaw Risk with Short-Term Moving Averages
 
 Using a very short-term average (5 or 10 day) causes the average to track prices very closely, resulting in many crossings and potentially many false signals (whipsaws). A very sensitive average produces more trades with higher commission costs and activates bad trend signals from short-term random price movement or 'noise'. The trick is to find an average sensitive enough to generate early signals but insensitive enough to avoid most random noise.

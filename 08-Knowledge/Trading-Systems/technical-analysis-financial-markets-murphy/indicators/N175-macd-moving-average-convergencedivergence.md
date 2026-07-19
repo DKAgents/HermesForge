@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD (Moving Average Convergence/Divergence)
 
 MACD is constructed from the difference between two exponential moving averages, with a signal line and histogram. The MACD histogram measures the distance between MACD and its signal line. Crossovers and divergences from price are key signals.

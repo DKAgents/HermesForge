@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading System Performance Metrics — 36-Year Summary
 
 A 36-year performance summary of a model trading system on the Value Line Geometric index showed total net profit of $718.01, a profit factor of 2.79, 49% profitable trades, and a max intraday drawdown of $45.01. The ratio of average win to average loss was 2.82, meaning winners were nearly three times larger than losers despite a sub-50% win rate. Return on account was 155%, and performance over the last 12 years was consistent with overall results.

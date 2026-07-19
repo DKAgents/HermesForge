@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bond Futures as Leading Indicator for Stocks
 
 Bond prices move in the opposite direction of interest rates or yields. Rising bond prices (falling yields) are normally positive for stocks; falling bond prices (rising yields) are negative for stocks. On a longer-range basis, changes in the trend of the Treasury Bond contract often warn of similar turns in the S&P 500 cash index, making bond futures a leading indicator for the stock market.

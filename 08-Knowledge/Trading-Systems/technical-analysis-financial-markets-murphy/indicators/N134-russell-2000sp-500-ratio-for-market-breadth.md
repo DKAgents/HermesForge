@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Russell 2000/S&P 500 Ratio for Market Breadth
 
 Comparing the Russell 2000 to the S&P 500 reveals whether small-cap 'troops' are following large-cap 'generals.' When small stocks show poor relative strength or lag too far behind large stocks, it is often a warning that market breadth is weakening.

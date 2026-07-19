@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Definition of an Up Trendline
 
 An up trendline is a straight line drawn upward to the right along successive reaction lows. It requires at least two reaction lows with the second low higher than the first to be drawn. The trendline is projected up and to the right once two ascending lows have been identified.

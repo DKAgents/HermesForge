@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Harmonicity in Cycles
 
 Harmonicity refers to the property where cycle lengths are related by simple multiples (typically 2x). When cycles display harmonicity, shorter cycles are exact fractions of longer cycles, making them more predictable and analytically useful. Cycles lacking harmonicity are harder to coordinate and less reliable for forecasting.

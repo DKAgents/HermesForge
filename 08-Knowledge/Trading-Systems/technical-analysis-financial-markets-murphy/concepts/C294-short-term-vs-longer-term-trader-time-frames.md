@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Short Term vs. Longer Term Trader Time Frames
 
 Market activity is divided into two timeframe categories: short term (day timeframe — locals, day traders, options traders on expiration) who are forced to trade today and seek a fair price, and longer term (commercials, swing traders, position traders) who are not forced to trade today and seek an advantageous price. Longer term buyers seek lower prices while longer term sellers seek higher prices, so they generally do not trade with each other at the same price and time.

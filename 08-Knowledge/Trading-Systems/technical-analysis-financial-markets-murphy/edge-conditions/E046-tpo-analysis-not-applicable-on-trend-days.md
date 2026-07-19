@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # TPO Analysis Not Applicable on Trend Days
 
 TPO buying and selling analysis in the value area is not applicable on trend days, as the market is still in search of a fair value area. This is an important exception to the standard TPO imbalance detection procedure.

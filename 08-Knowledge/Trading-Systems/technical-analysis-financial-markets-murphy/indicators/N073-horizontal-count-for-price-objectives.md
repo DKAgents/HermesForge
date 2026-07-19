@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Horizontal Count for Price Objectives
 
 The horizontal count is a method unique to intraday 1-box reversal point and figure charts for deriving price objectives. It is based on the premise that there is a direct relationship between the width of a congestion area and the subsequent price move after a breakout. The wider the congestion area, the greater the projected price objective.

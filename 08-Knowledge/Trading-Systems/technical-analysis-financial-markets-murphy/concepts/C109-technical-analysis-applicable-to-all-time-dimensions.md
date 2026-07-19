@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis Applicable to All Time Dimensions
 
 The principles of technical analysis—including trend analysis, support and resistance levels, trendlines, percentage retracements, and price patterns—apply equally well to long-range price movements as to short-term ones. It is a fallacy to limit technical analysis to short-term timing and leave long-range forecasting solely to fundamental analysts.

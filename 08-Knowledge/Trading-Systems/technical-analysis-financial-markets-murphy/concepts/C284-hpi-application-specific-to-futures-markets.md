@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI – Application Specific to Futures Markets
 
 The HPI is designed specifically for use in futures markets because it incorporates open interest, which is a data series unique to futures and options markets. It is not applicable to equity markets where open interest data is not available in the same form.

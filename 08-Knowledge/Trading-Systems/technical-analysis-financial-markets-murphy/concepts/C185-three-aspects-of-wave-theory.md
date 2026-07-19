@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Aspects of Wave Theory
 
 There are three important aspects of wave theory in order of importance: pattern, ratio, and time. Pattern refers to wave formations and is the most important element. Ratio analysis determines retracement points and price objectives. Time relationships can confirm wave patterns and ratios but are considered less reliable by some Elliotticians.

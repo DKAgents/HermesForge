@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Percent Investment Advisors Bullish Sentiment Indicator
 
 Published weekly by Investor's Intelligence of New Rochelle, New York, this measure of stock market bullish sentiment acts as a contrary indicator. When only 35% of professionals are bullish, the market is considered oversold. A reading of 55% is considered to be overbought.

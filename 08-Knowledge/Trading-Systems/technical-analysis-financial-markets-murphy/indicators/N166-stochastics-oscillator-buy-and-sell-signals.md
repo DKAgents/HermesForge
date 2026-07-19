@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastics Oscillator Buy and Sell Signals
 
 Stochastics, popularized by George Lane, uses two lines—%K and its 3-period moving average %D—that fluctuate between 0 and 100. Readings above 80 are overbought and below 20 are oversold. A buy signal is given when the faster %K line crosses above the slower %D line while both lines are below 20. A sell signal is given when %K crosses below %D while both lines are over 80.

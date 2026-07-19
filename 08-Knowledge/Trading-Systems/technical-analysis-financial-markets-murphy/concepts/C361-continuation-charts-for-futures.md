@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Charts for Futures
 
 Continuation charts for futures are constructed by linking successive contract prices to create a continuous price history. The Perpetual Contract is one method of constructing continuous futures data for long-term analysis.

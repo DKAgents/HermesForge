@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Futility of Short-Term Fundamental Trading
 
 The author argues, drawing on the academics' own EMH logic, that trying to profit from fundamental information is futile, at least over the short term, because that information is already embedded in price. This represents a stated limitation of fundamental analysis relative to technical analysis in short-term trading.

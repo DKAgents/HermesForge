@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Retracement Levels
 
 The most common Fibonacci retracements used in Elliott Wave analysis are 62%, 50%, and 38%. These levels are applied to determine price objectives following impulse moves.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic %K Formula
 
 %K = 100 [(C - L14) / (H14 - L14)], where C is the latest close, L14 is the lowest low for the last 14 periods, and H14 is the highest high for the same 14 periods. The formula measures on a percentage basis of 0 to 100 where the closing price is in relation to the total price range for a selected time period.

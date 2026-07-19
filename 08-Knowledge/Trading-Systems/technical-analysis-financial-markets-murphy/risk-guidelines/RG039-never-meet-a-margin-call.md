@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Never Meet a Margin Call
 
 Traders should never meet a margin call or throw good money after bad. A margin call is a signal that the position is losing and adding more capital to it compounds the loss rather than solving the problem.

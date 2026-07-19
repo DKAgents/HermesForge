@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Analysis
 
 Elliott wave analysis is an approach to market analysis based on repetitive wave patterns and the Fibonacci number sequence. An ideal Elliott wave pattern shows a five-wave advance followed by a three-wave decline.

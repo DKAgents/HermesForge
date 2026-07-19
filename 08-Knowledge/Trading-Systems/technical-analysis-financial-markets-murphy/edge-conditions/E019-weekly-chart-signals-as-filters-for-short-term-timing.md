@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Chart Signals as Filters for Short-Term Timing
 
 Signals generated on weekly charts serve as valuable filters for shorter-term timing decisions. Technical indicators applied to weekly and monthly charts provide a higher-level confirmation layer before acting on daily or intraday signals. This multi-timeframe filtering improves the quality of trade entries.

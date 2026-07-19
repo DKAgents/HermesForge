@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Phases of a Major Bull Market
 
 Dow identified three phases in a primary bull market: (1) the accumulation phase, where informed investors buy while bad news is still prevalent; (2) the public participation phase, where prices advance rapidly and business news improves; and (3) the distribution phase, where bullish sentiment is widespread, speculative volume peaks, and informed investors begin selling to the public.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Utility Stocks as Leading Indicators for Treasury Bonds
 
 Utility stocks are closely linked to interest rates and can be used as leading indicators for Treasury Bond prices. Because related stock groups often tend to lead their respective futures markets, movements in utility stocks can foreshadow moves in the bond market.

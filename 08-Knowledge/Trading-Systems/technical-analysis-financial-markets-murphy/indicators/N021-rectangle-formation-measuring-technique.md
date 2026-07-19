@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Measuring Technique
 
 The most common measuring technique for rectangles is based on the height of the price range. Measure the height of the trading range from top to bottom, then project that vertical distance from the breakout point. This is similar to other vertical measuring techniques and is based on market volatility.

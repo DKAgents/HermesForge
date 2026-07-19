@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reward-to-Risk Ratios
 
 Reward-to-risk ratios are a fundamental component of trading tactics and money management. Evaluating the potential reward relative to the risk on any trade helps traders make disciplined entry and exit decisions.

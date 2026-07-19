@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Semilog Chart Scaling
 
 Semilog (ratio) chart scaling plots equal percentage changes as equal vertical distances, making it more appropriate than arithmetic scaling for long-term charts or markets with large price ranges. It provides a more accurate visual representation of proportional price moves.

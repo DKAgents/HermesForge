@@ -13,8 +13,8 @@ has_quotes: true
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Price Opportunity (TPO)
 
 Each letter in a Market Profile graphic represents a Time Price Opportunity (TPO), identifying a specific price at which the market traded during a specific time period. TPOs are the basic units of analysis for the day's activity. Each TPO is an opportunity created by the market at a certain time and certain price, and Market Profile distributions are constructed of TPOs.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nonfailure Swing (Dow Theory)
 
 A nonfailure swing in Dow Theory occurs when a secondary reaction does not retrace to the previous secondary low before the primary trend resumes. This is a bullish sign in an uptrend, confirming the strength of the primary trend.

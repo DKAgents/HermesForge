@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators, fibonacci, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Numbers Applied to Arms Index
 
 Richard Arms himself expresses a preference for Fibonacci numbers when applying moving averages to the Arms Index. He suggests using a 21-day Arms Index in addition to the standard 10-day version. He also utilizes 21-day and 55-day moving-average crossovers of the Arms Index to generate good intermediate-term trades.

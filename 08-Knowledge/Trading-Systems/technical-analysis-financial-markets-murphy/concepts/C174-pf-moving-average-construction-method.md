@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Moving Average Construction Method
 
 To construct a P&F moving average, first find an average price for each column by adding up all prices in the column and dividing by the number of X's or O's in that column. The resulting per-column averages are then averaged over 10 or 20 columns. These moving averages are used in the same way as on bar charts.

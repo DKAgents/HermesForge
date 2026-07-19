@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Consensus Overbought/Oversold Thresholds
 
 When Bullish Consensus numbers are above 75%, the market is considered overbought and a top may be near. A reading below 25% warns of an oversold condition and increased likelihood that a market bottom is near. These thresholds are the most commonly used method for interpreting the weekly sentiment numbers.

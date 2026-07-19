@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # McClellan Summation Index
 
 The McClellan Summation Index is a cumulative version of the McClellan Oscillator. It provides a longer-term view of market breadth and is used to identify major market turning points.

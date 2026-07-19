@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # McClellan Oscillator
 
 The McClellan Oscillator, developed by Sherman McClellan, measures market breadth by calculating the difference between exponential moving averages of advancing and declining issues. It is used to identify overbought/oversold conditions in the broad market.

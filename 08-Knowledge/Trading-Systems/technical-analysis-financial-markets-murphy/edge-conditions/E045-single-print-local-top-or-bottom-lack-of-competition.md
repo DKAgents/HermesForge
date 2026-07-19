@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Single Print Local Top or Bottom — Lack of Competition
 
 A local top or bottom is formed when only one single print defines the top or bottom of the range. This condition implies that the market offered a price opportunity which no one really wanted, indicating no evidence of competition. Anything less than two prints suggests that the longer term trader is not very interested in competing at that price.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time as a Critical Dimension in Technical Analysis
 
 All phases of technical analysis depend to some extent on time considerations, yet these are not consistently applied. Cyclic analysts hold that time cycles are the determining factor in bull and bear markets, and that all other technical tools can be improved by incorporating cycles.

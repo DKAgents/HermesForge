@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Percentage Retracements
 
 Percentage retracements measure how much of a prior move has been retraced. The one-third and two-thirds retracement levels are key, with the 50% level being most commonly watched. Fibonacci retracements (38.2%, 50%, 61.8%) are also widely used.

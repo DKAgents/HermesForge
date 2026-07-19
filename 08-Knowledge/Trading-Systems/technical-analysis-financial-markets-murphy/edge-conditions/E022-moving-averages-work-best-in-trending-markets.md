@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages Work Best in Trending Markets
 
 Moving averages are trend-following in nature and work best when markets are in a trending period. They perform very poorly when markets get choppy and trade sideways, which can occur a third to a half of the time. This limitation is a compelling reason not to rely too heavily on moving average techniques alone.

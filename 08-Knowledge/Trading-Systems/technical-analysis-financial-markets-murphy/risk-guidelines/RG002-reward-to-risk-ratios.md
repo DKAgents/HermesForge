@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reward to Risk Ratios
 
 Reward-to-risk ratios are listed as a key money management concept, implying that trades should be evaluated based on the potential reward relative to the risk taken. This is part of the broader money management framework discussed in the trading tactics chapter.

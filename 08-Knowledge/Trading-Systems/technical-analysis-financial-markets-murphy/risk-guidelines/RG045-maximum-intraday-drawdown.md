@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, intermarket, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Maximum Intraday Drawdown
 
 Maximum intraday drawdown is the largest drop in dollar terms from an equity peak to an equity trough. The author prefers to calculate this on a percentage basis. A distinction is made between drawdowns from a standing start (losing one's own capital) versus drawdowns from an equity peak (giving back market profits), with the latter being treated more leniently.

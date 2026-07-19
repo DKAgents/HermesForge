@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advance-Decline Line
 
 The advance-decline line measures the breadth of a stock market advance or decline by comparing the number of advancing issues to declining issues each day or week. The net difference is added to or subtracted from a cumulative total. It should trend in the same direction as a major stock average like the DJIA; divergence between the two signals a possible trend reversal.

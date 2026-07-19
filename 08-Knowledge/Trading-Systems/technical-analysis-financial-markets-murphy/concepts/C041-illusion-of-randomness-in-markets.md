@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Illusion of Randomness in Markets
 
 The author argues that markets only appear random to those who have not studied the rules of market behavior. Just as an electrocardiogram appears as random noise to a layperson but is meaningful to a trained physician, price charts become interpretable with skill development. The illusion of randomness diminishes as chart-reading skill improves.

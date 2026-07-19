@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Handling Drawdowns and Losing Streaks
 
 After a 50% drawdown in trading equity, the trader must double remaining capital just to return to breakeven, making recovery extremely difficult. Becoming more conservative after losses makes it even harder to recover. Traders must carefully consider whether to become more selective or maintain their existing approach, as neither choice is straightforward.

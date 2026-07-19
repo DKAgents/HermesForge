@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis in Stocks versus Futures
 
 Murphy provides a brief comparison of how technical analysis differs when applied to stocks versus futures markets, noting that futures analysis relies less on broad market averages and indicators. This distinction is important for practitioners moving between asset classes.

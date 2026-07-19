@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Indicator Construction
 
 MACD was developed by Gerald Appel and combines oscillator principles with a dual moving average crossover approach. The faster MACD line is the difference between two exponentially smoothed moving averages of closing prices (usually the last 12 and 26 days or weeks). The slower signal line is usually a 9-period exponentially smoothed average of the MACD line. Default values of 12, 26, and 9 are used for both daily and weekly values.

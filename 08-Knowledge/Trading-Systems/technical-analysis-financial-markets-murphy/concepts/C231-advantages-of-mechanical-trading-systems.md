@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advantages of Mechanical Trading Systems
 
 Mechanical systems eliminate human emotion, achieve greater discipline, and provide more consistency. They ensure trades are taken in the direction of the trend, virtually guarantee participation in every important trend, allow profits to run, and minimize losses.

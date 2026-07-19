@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Prices Move in Trends
 
 The premise that markets trend is absolutely essential to the technical approach. The entire purpose of charting is to identify trends in their early stages and trade in the direction of those trends. Most technical techniques are trend-following in nature, designed to identify and follow existing trends rather than predict reversals.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Leveling Off of Open Interest as Early Trend Change Warning
 
 Toward the end of major market moves where open interest has been increasing throughout the price trend, a leveling off or decline in open interest is often an early warning of a change in trend. Traders should monitor open interest for this flattening signal near potential trend exhaustion points.

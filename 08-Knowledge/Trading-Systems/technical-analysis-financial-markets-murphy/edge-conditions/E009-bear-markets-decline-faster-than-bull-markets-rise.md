@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bear Markets Decline Faster Than Bull Markets Rise
 
 Prices tend to decline faster than they go up, meaning traders can often make more money faster by catching the short side of a bear market than by trading the long side of a bull market. Although topping patterns are harder to catch and more treacherous, the speed of the decline compensates for the added difficulty and risk.

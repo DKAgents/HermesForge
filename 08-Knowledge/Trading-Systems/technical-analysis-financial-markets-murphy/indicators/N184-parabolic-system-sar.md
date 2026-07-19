@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Parabolic System (SAR)
 
 The Parabolic System, developed by Welles Wilder, is a stop-and-reverse (SAR) system that places trailing stops that accelerate as the trend develops. It is designed to keep traders in trending markets and reverse positions when the trend changes.

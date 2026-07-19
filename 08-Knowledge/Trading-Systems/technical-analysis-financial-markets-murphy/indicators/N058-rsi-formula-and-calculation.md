@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Formula and Calculation
 
 RSI is calculated as: RSI = 100 - (100 / (1 + RS)), where RS = Average of x days' up closes divided by Average of x days' down closes. To find the average up value, add total points gained on up days during 14 days and divide by 14; similarly for down days. The formula provides smoothing and creates a constant vertical range of 0 to 100.

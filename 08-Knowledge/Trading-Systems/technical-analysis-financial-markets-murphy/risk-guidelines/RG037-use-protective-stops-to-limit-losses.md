@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Use Protective Stops to Limit Losses
 
 Protective stops should always be used to limit losses on every trade. Stops provide a predefined exit point that removes emotion from the decision to exit a losing position.

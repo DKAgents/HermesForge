@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Arms Index (TRIN) Overview
 
 The Arms Index (also called TRIN) trends in the opposite direction of the market, making it a contrary indicator. Exceptionally high spikes in the Arms Index usually signal market bottoms. It is quoted throughout the trading day and has short-term forecasting value.

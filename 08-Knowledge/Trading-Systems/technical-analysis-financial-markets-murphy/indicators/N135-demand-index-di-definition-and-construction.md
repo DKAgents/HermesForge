@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Definition and Construction
 
 The Demand Index (DI) is an early volume indicator developed in the 1970s by James Sibbett. It is the ratio of buying pressure to selling pressure, incorporating both price and volume. When buying pressure exceeds selling pressure, the DI is above zero (positive/bullish); when selling pressure dominates, the DI is below zero (negative/bearish).

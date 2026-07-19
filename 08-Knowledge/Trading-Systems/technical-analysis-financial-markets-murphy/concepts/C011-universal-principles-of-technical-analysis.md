@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Universal Principles of Technical Analysis
 
 Murphy introduces the idea that certain technical principles are universal — applicable across all markets and time frames. This universality is a key philosophical claim that justifies the broad application of the techniques described throughout the book.

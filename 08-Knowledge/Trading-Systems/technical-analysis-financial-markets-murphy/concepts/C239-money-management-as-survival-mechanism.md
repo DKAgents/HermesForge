@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Money Management as Survival Mechanism
 
 Money management deals with the question of survival and tells the trader how to handle their money. It covers portfolio makeup, diversification, position sizing, stop usage, reward-to-risk ratios, and how to behave after winning or losing streaks. Any good trader should win in the long run, and money management increases the odds of surviving to reach that long run.

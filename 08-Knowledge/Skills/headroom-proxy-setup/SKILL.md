@@ -9,8 +9,12 @@ metadata:
   hermes:
     tags: [headroom, proxy, token-compression, cost-optimization, openrouter, systemd]
     related_skills: [llm-proxy-integration]
+topic: knowledge
+confidence: high
+has_quotes: true
+tags: []
+source: unknown
 ---
-
 # Skill: Headroom AI Proxy Setup
 
 ## When to Use

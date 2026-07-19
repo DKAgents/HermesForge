@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Value Area in Market Profile
 
 The Value Area in Market Profile represents the price range where approximately 70% of trading activity occurred during a session. It is used to identify fair value and potential support/resistance for subsequent sessions.

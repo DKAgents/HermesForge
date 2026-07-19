@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Correlation Measurement
 
 Charting software can measure the degree of correlation between different markets. A high positive reading indicates strong positive correlation (markets trend together), a high negative reading indicates strong negative correlation (markets trend opposite), and a reading near zero suggests little or no correlation. Traders should place more weight on intermarket relationships with higher correlations and less weight on those near zero.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Highest Open Interest Contract Method
 
 An alternative continuation chart method uses the contract with the highest open interest rather than the nearest expiring contract. The rationale is that the delivery month with the highest open interest represents the truest reflection of current market value.

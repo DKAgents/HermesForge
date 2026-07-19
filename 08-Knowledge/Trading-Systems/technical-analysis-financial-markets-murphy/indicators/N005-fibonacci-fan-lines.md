@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Fan Lines
 
 Fibonacci fan lines are drawn in the same fashion as speedlines, except that they are drawn at 38% and 62% angles. They are used in the same way as speedlines — to provide support during downward corrections. When one line is broken, prices will usually fall to the next lower line.

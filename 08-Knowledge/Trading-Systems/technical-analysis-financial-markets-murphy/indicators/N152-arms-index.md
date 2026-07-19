@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Arms Index
 
 Developed by Richard Arms, the Arms Index is a contrary indicator calculated as the ratio of the average volume of declining stocks divided by the average volume of advancing stocks. A reading below 1.0 indicates more volume in rising stocks; above 1.0 reflects more volume in declining issues. A 10-day average above 1.20 is oversold, while a 10-day average below 0.70 is overbought.

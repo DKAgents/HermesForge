@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advance-Decline (AD) Line
 
 The AD line measures whether the broader universe of approximately 3500 NYSE stocks is advancing in line with narrower averages like the Dow 30 or S&P 500. It is calculated by subtracting the number of declining issues from the number of advancing issues on a cumulative basis. As long as the AD line advances with the Dow, market breadth is considered healthy. Historically, the AD line peaks well ahead of the major market averages, making it a leading indicator.

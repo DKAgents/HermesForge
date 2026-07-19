@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # STARC Bands — Multi-Timeframe Applicability
 
 STARC bands work well in all time frames, even as short as 5 to 10 minute bar charts, making them versatile tools for both short-term and longer-term traders.

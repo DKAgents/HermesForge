@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting Price Objectives Using Additional Technical Factors
 
 Price objectives from pattern measurements should be adjusted based on other technical factors including prior support levels, percentage retracements (50% and 66%), prominent gaps, and long-term trendlines. If a projected target is slightly below a prominent support level, it is generally safe to adjust the target to that support level. Blending multiple technical tools improves the accuracy of price targets.

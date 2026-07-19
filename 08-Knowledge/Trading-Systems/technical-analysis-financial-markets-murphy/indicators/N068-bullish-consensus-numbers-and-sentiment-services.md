@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Consensus Numbers and Sentiment Services
 
 The Market Vane advisory service, created by James H. Sibbet in 1964, polls market letters weekly to quantify market sentiment into Bullish Consensus numbers. A similar service, the Consensus Index of Bullish Market Opinion, is published weekly by Consensus Inc. and uses 75% as an overbought threshold and 25% as an oversold threshold. These numbers are used to gauge the attitudes of the trading public by monitoring professional market letter views.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Wave Form, Ratio, and Time for High-Confidence Signals
 
 The ideal trading situation occurs when all three aspects of wave theory—wave form, ratio analysis, and time targets—converge simultaneously. For example, if a fifth wave completes, wave 5 has traveled 1.618 times the distance from wave 1 bottom to wave 3 top, and the time elapsed equals Fibonacci numbers from prior pivots, the probability of an important turning point is very high.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Reporting Differences: Stocks vs. Futures
 
 Volume reporting in the stock market is more useful than in futures markets. Stock trading volume is reported immediately, while futures volume is reported a day late. Levels of upside and downside volume are available for stocks but not for futures. Limit days in futures can distort OBV numbers because light volume on limit-up days is actually a sign of strength, violating the traditional rule that light volume on a rally is bearish.

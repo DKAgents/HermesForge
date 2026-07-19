@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Responding to Failed Patterns: Exit Losing Trades Quickly
 
 Chart patterns are not infallible and technical traders must always be alert for signs that their analysis is incorrect. One of the keys to survival in financial markets is to keep trading losses small and exit a losing trade as quickly as possible. The ability and willingness to quickly recognize trading errors and take defensive action immediately are critical qualities.

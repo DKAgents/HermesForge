@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Computerized P&F Charting with Variable Box and Reversal Sizes
 
 Modern charting software automates the construction of point and figure charts, eliminating manual plotting of X's and O's. Box and reversal sizes can be varied with a keystroke to adjust the chart for shorter or longer term analysis. P&F charts can be constructed from real-time (intraday) and end-of-day data and applied to any market.

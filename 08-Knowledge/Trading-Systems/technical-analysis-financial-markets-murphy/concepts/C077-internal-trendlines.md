@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Internal Trendlines
 
 Internal trendlines are variations of the trendline that don't rely on extreme highs or lows. Instead, they are drawn through the price action and connect as many internal peaks or troughs as possible. The problem with internal trendlines is that their drawing is very subjective, whereas traditional trendlines drawn along extreme highs and lows are more exact.

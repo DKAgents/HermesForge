@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Handling Winning Streaks and Position Sizing
 
 After doubling trading equity during a winning streak, doubling position sizes to maximize use of winnings is dangerous because the inevitable losing period that follows will give back all gains. Traders must carefully manage position sizing after winning streaks to avoid surrendering all accumulated profits during the subsequent drawdown.

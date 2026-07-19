@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 20-25% Limit on Total Margin Per Market Group
 
 Total margin in any market group should be limited to 20-25% of total equity. This protects against getting too heavily involved in any one market group, since markets within groups tend to move together. For example, gold and silver are part of the precious metals group and usually trend in the same direction, so full positions in each would undermine diversification.

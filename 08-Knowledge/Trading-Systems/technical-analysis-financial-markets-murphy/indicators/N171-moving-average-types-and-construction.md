@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Types and Construction
 
 Moving averages include simple, linearly weighted, and exponentially smoothed types. The choice of which prices to average (close, open, high/low midpoint) affects the result. Adaptive moving averages (AMA) adjust to market volatility. The 4-9-18 day combination is a classic multi-average system.

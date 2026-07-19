@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, candlesticks, market-breadth, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Candlestick Chart Construction
 
 Candlestick charts use the same data as standard bar charts: open, high, low, and close prices. The rectangle (body) represents the difference between the open and close price. A white (open/unfilled) body means the close was higher than the open; a black (filled) body means the close was lower than the open. The lines above and below the body are called wicks, hairs, or shadows and represent the high and low prices.

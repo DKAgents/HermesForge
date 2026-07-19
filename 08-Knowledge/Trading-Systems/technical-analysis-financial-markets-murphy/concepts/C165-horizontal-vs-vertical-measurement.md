@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Horizontal vs. Vertical Measurement
 
 Bar chart price objectives are derived from vertical measurements (measuring the height/volatility of a pattern and projecting it). Point and figure charts uniquely allow horizontal measurement, where the width of a congestion area is used to project the subsequent price move. This is a key advantage of point and figure charting.

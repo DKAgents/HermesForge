@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # On-Balance Volume (OBV)
 
 On-balance volume (OBV) is a cumulative volume indicator that adds volume on up days and subtracts volume on down days to measure buying and selling pressure. It is used to confirm price trends and identify divergences.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Patterns — Definition
 
 Price patterns are pictures or formations that appear on price charts of stocks or commodities, can be classified into different categories, and have predictive value. They arise during transition periods in a trend and help forecast whether the trend will reverse or continue.

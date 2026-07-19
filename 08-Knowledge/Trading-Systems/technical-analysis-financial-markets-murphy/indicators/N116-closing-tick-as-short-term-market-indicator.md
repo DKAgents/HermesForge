@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Closing Tick as Short-Term Market Indicator
 
 The closing tick measures the number of stocks that closed on an uptick versus a downtick. A negative closing tick means more stocks closed on a downtick than an uptick, which is a short-term negative factor. It is reported daily in The Wall Street Journal's Stock Market Data Bank.

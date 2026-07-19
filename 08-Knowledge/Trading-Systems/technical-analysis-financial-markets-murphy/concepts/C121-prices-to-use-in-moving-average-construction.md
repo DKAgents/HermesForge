@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Prices to Use in Moving Average Construction
 
 The closing price is considered the most important price of the trading day and is the price most commonly used in moving average construction. Some technicians prefer a midpoint value arrived at by dividing the day's range by two. Others add the high, low, and closing prices together and divide by three. Some construct price bands by averaging the high and low prices separately, creating two lines that act as a volatility buffer or neutral zone.

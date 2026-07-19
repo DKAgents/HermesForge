@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cyclic Forecasting Methodology
 
 The basis of the cyclic approach is to identify, isolate, and measure individual cycles in price data, then extrapolate them into the future. Assuming each cycle remains fairly constant, summing the projected cycles together produces an estimate of future price trends, including the timing of future peaks and troughs. This provides a degree of predictability for equity and commodity price action.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Role of Longer Term Trader in Range Development
 
 Longer term traders, by entering the market with large enough volume, can upset the initial balance and extend the price range higher or lower. The longer term trader is responsible for the way the day's range develops and for the duration of the longer term auction. In other words, the role of the longer term trader is to move the market directionally.

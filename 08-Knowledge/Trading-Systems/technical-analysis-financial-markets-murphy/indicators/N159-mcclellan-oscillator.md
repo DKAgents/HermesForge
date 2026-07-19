@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # McClellan Oscillator
 
 Developed by Sherman McClellan, this oscillator is the difference between the 19-day (10% trend) and 39-day (5% trend) exponentially smoothed averages of daily net advance-decline figures. Crossings above the zero line are positive signals and below zero are negative. Readings above +100 are overbought while readings below -100 are oversold.

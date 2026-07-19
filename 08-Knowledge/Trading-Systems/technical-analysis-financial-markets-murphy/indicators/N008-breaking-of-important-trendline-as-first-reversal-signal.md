@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breaking of Important Trendline as First Reversal Signal
 
 The first sign of an impending trend reversal is often the breaking of an important trendline. However, a violation of a major trendline does not necessarily signal a full trend reversal — it signals a change in trend, which could lead to a sideways consolidation or a reversal pattern. Sometimes the breaking of the major trendline coincides with the completion of the price pattern.

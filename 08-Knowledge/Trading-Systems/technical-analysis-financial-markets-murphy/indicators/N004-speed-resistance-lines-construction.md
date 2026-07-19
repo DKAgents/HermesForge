@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Speed Resistance Lines — Construction
 
 Speed resistance lines (speedlines), developed by Edson Gould, measure the rate of ascent or descent of a trend. To construct a bullish speedline, find the highest point in the current uptrend, draw a vertical line from that high to where the trend began, divide that vertical line into thirds, and draw trendlines from the beginning of the trend through the one-third and two-thirds points. In a downtrend, reverse the process using the lowest point.

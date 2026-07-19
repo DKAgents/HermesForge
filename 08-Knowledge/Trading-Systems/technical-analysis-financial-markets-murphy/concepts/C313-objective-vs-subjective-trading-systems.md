@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Objective vs. Subjective Trading Systems
 
 Objective trading systems are superior to subjective ones because they force the trader to do homework before making a trade, provide a disciplined framework that makes it easier to follow rules, and enable increased diversification. Computerized systems remove emotional decision-making and enforce consistency.

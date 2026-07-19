@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Analysis on Point and Figure Charts
 
 Trendline analysis on intraday point and figure charts is the same as that applied to bar charts, with up trendlines drawn under successive lows and down trendlines drawn over successive peaks. However, the simplified 3-box reversal point and figure chart uses 45-degree lines and plots them differently from standard trendlines.

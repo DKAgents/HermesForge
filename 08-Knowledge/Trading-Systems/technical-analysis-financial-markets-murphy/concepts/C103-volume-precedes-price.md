@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Precedes Price
 
 Technicians believe that volume precedes price, meaning that the loss of upside pressure in an uptrend or downside pressure in a downtrend shows up in the volume figures before it is manifested in a reversal of the price trend. By monitoring price and volume together, traders are using two different tools to measure the same thing—pressure.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # McClellan Oscillator and Summation Index
 
 The McClellan Oscillator is a breadth indicator derived from the difference between two exponential moving averages of advancing minus declining issues. The McClellan Summation Index is the cumulative total of the oscillator values and provides longer-term breadth signals.

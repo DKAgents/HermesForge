@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI vs. Stochastics Volatility Comparison
 
 The RSI line is less volatile than stochastics and reaches extremes less frequently. The best signals occur when both oscillators are simultaneously in overbought or oversold territory, providing confirmation.

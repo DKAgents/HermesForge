@@ -13,11 +13,11 @@ tags: [insight, discovery, knowledge-evolution]
 
 ## Discovery Summary
 
-EN008 establishes that pattern completion requires noticeable volume increase, while N013 extends this to a two-stage filter: light-volume breakout followed by heavy-volume decline is a 'negative chart combination.' C324 defines confirmation as multiple factors agreeing, implying volume is not merely a secondary indicator but a co-equal signal. Together, these three notes suggest a binary gate: if volume does not confirm at breakout, the trade should not be entered regardless of how clean the pattern looks — and if entered speculatively, a subsequent heavy-volume reversal is an immediate exit trigger.
+EN008 establishes that pattern completion requires noticeable volume expansion, while N013 operationalizes this further by specifying that a subsequent heavy-volume decline after a light-volume breakout is a 'negative chart combination' — meaning volume provides a two-stage confirmation signal. C324's definition of confirmation as 'having as many market factors as possible agreeing' suggests volume confirmation is not merely a binary pass/fail but a scalar input. Together, these notes imply that a breakout with strong volume confirmation reduces false-entry probability, which directly interacts with position sizing: a confirmed breakout (pattern completion + volume expansion per EN008) could justify a full position, while a light-volume breakout signals elevated false-breakout risk and warrants either no entry or a reduced initial position pending re-confirmation.
 
 ## Trading Implication
 
-A trader should withhold entry on any pattern breakout lacking heavy volume confirmation, and if already positioned on a light-volume breakout, treat any subsequent heavy-volume reversal bar as a mandatory stop-and-reverse exit signal — not just a warning.
+Before entering on any pattern breakout, require measurable above-average volume at the breakout candle; if volume is below average, either skip the trade entirely or size the position at 50% of normal until a subsequent session confirms with heavy volume — using the two-stage signal from N013 as the escalation trigger.
 
 ## Supporting Notes
 

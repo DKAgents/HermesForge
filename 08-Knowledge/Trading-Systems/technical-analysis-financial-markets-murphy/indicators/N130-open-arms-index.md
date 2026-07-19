@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Arms Index
 
 The Open Arms Index is an alternative calculation of the Arms Index where each of the four components in the formula is averaged separately over a period of 10 days, and then the Arms Index is calculated from those four different averages. This produces a much smoother version of the indicator compared to the standard method of smoothing the final daily value. Many analysts prefer the Open Arms version, and different moving average lengths such as 21 and 55 days can also be applied to it.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # High Open Interest in Bull Market as Danger Signal
 
 An unusually high open interest in a bull market is a danger signal. When prices drop sharply below the lowest price set during the period of open interest buildup, every new long established during that period shows a loss. Forced liquidation of those longs keeps prices under pressure, and their forced selling feeds on itself, causing additional margin selling and intensifying the price decline.

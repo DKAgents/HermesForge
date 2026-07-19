@@ -13,8 +13,8 @@ has_quotes: true
 topic: [dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Theory as Foundation of Technical Analysis
 
 Dow Theory, originating from Charles Dow's editorials in the Wall Street Journal around the turn of the century, forms the cornerstone of technical analysis. Most technicians today recognize and assimilate Dow's basic ideas, and the theory remains foundational even amid modern computer technology and newer technical indicators.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume, intermarket, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI – Identification of Buying and Selling Panics
 
 The HPI is particularly useful for identifying buying or selling panics in commodity markets through analysis of open interest behavior. Extreme or rapid changes in the HPI relative to price can signal panic-driven market moves, giving traders an early warning of potential reversals or exhaustion points.

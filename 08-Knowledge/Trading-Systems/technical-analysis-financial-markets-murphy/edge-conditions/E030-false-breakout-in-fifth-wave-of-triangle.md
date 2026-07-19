@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # False Breakout in Fifth Wave of Triangle
 
 Elliott Wave Theory holds that the fifth and last wave within a triangle sometimes breaks its trendline, giving a false signal, before beginning its thrust in the original direction. Traders should be aware of this false breakout risk when trading triangle patterns near their apex.

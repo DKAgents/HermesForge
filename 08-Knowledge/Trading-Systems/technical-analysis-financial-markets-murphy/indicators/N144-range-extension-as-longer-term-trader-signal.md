@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Range Extension as Longer Term Trader Signal
 
 Range extension occurs when longer term traders upset the initial balance by pushing prices beyond the range established in the first two periods. Spirited range extension in multiple periods (e.g., periods C, H, and I) reveals active competition between short term and longer term traders. Range extension is the second clearest indication of longer term trader influence after extremes.

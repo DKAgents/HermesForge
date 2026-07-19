@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Multiple Units: Trending vs. Trading Positions
 
 Trading in multiple units allows positions to be divided into trending and trading components. The trending portion is held for the long pull with loose protective stops, giving the market room to consolidate or correct, and produces the largest profits over time. The trading portion is used for shorter-term in-and-out trading, allowing partial profit-taking at resistance or overbought conditions while maintaining the core trending position.

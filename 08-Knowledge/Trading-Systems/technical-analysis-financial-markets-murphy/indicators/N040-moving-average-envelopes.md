@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Envelopes
 
 Percentage envelopes are placed at fixed percentages above and below a moving average to help determine when a market has become overextended in either direction. When prices reach one of the envelopes, the short-term trend is considered overextended. Shorter term traders often use 3% envelopes around a simple 21 day moving average.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Framework
 
 Market Profile is introduced as a method for organizing and interpreting market activity, covering the Market Profile graphic, market structure, organizing principles, range development and profile patterns, and tracking longer-term market activity. It is presented as a distinct analytical framework within technical analysis.

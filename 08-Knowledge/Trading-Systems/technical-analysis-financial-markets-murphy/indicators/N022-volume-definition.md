@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Definition
 
 Volume is the number of entities (contracts or shares) traded during the time period under study. On daily bar charts, daily volume is plotted as a vertical bar at the bottom of the chart under the day's price action. Volume can also be plotted for weekly bar charts but is usually not used on monthly bar charts.

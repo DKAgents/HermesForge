@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Down Trendline
 
 A down trendline is a straight line drawn down and to the right above successive rally peaks. A violation of the down trendline usually signals a reversal of the downtrend.

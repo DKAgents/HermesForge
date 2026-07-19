@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gold Mining Shares as Leading Indicators for Gold Prices
 
 Gold mining shares are closely linked to the price of gold and often lead the gold futures market. Traders and investors can monitor gold mining stocks as a forward-looking signal for the direction of gold prices.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # STARC Bands Construction
 
 STARC Bands (Stoller Average Range Channels) are constructed by doubling the 15-period Average True Range and adding/subtracting it from a 6-period moving average. The upper band is starc+ and the lower band is starc-. Movement outside these bands is uncommon and indicates an extreme situation.

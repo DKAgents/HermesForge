@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekend and Holiday Gaps on Bar Charts
 
 Most chart services use five-day trading weeks and do not show weekends on the chart. When an exchange is closed during the trading week (e.g., a holiday), that day's space is left blank on the chart.

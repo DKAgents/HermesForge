@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, relative-strength]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Analysis on Stock Market Sectors
 
 Sector index options can be analyzed using relative strength by dividing their price by a benchmark such as the S&P 500. A rising RS line indicates the sector is outperforming the overall market, while a falling RS line indicates underperformance. Applying trendlines and moving averages to the RS lines helps identify important trend changes in sector performance.

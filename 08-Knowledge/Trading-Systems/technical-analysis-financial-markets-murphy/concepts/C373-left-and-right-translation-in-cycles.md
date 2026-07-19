@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Left and Right Translation in Cycles
 
 In an uptrend, cycle peaks tend to occur in the right half of the cycle (right translation), while in a downtrend, peaks occur in the left half (left translation). This concept helps identify the dominant trend direction using cycle analysis.

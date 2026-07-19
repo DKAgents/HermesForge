@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Presidential Cycle
 
 The Presidential Cycle is a four-year seasonal pattern in U.S. stock markets tied to the U.S. presidential election cycle. Markets tend to perform differently in each year of the four-year cycle.

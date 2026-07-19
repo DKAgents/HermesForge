@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nasdaq/S&P 500 Ratio for Technology Leadership
 
 A ratio of the Nasdaq to the S&P 500 reveals whether technology stocks are leading or lagging the broader market. A rising ratio line indicates technology leadership, which is generally a positive sign for the overall market.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Order
 
 A market order instructs the broker to buy or sell at the current market price. It is preferable in fast market conditions or when the trader wants to ensure a position is taken and protect against missing a dynamic market move. The drawback is that it may result in 'chasing' the market at an unfavorable price.

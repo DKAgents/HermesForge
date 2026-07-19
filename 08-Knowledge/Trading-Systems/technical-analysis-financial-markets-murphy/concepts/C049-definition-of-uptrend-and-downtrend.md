@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Definition of Uptrend and Downtrend
 
 Dow defined an uptrend as a series of successively higher rally highs and higher rally lows — a pattern of rising peaks and troughs. A downtrend is the opposite: successively lower peaks and troughs. This definition remains the cornerstone of trend analysis in modern technical work.

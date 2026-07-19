@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Danger of Counter-Trend Oscillator Trades
 
 Using oscillator divergence as an excuse to initiate trades contrary to the general trend is generally a costly and painful exercise. The oscillator is just one tool among many and must always be used as an aid, not a substitute, for basic trend analysis.

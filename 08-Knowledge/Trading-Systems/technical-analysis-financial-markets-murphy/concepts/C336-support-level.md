@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Support Level
 
 Support is a price or price zone beneath the current market price where buying power is sufficient to halt a price decline. A previous reaction low usually forms a support level, representing a zone where demand has historically exceeded supply.

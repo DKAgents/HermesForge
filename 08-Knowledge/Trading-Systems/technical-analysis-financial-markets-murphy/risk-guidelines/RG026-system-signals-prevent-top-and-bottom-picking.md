@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # System Signals Prevent Top and Bottom Picking
 
 Computer trend signals relieve the trader of some degree of uncertainty and can prevent him or her from falling into the trap of top and bottom picking. This is a simple way for fundamentally oriented traders to use a technical device as a filter or trigger on their own trading ideas.

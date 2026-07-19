@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule Core Logic and Benefits
 
 The 4 week rule is a trend-following system with mechanical and clearcut signals. It virtually guarantees participation on the right side of every important trend and follows the maxim of letting profits run while cutting losses short. It trades less frequently, resulting in lower commissions, and can be implemented with or without a computer.

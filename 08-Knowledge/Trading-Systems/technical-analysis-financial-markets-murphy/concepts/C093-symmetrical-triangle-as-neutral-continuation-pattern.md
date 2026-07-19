@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle as Neutral Continuation Pattern
 
 The symmetrical triangle is inherently a neutral pattern, unlike the ascending or descending triangles. Its forecasting value comes from the direction of the prior trend; the analyst assumes the previous trend will continue after the breakout.

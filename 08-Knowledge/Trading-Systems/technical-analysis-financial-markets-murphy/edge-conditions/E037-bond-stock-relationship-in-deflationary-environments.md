@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bond-Stock Relationship in Deflationary Environments
 
 In a deflationary environment, bonds and stocks usually decouple. Bond prices rise while stock prices fall, reversing the normal positive correlation between the two asset classes.

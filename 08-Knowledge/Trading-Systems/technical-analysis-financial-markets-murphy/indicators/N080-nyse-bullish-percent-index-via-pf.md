@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # NYSE Bullish Percent Index via P&F
 
 The NYSE Bullish Percent Index can be constructed using point and figure charting techniques. This indicator, along with P&F-based NYSE advance-decline line and NYSE High-Low Index charts, provides market breadth analysis tools. These innovative P&F indicators were developed by Michael Burke of Chartcraft.

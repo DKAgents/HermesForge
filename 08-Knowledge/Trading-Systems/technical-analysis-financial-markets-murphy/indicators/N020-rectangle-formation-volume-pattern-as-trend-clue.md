@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Volume Pattern as Trend Clue
 
 Within a rectangle, the volume pattern provides important clues about the likely direction of the breakout. If rallies occur on heavier volume and setbacks on lighter volume, the formation is probably a continuation in the uptrend. If heavier volume occurs on the downside, it is a warning of a possible trend reversal.

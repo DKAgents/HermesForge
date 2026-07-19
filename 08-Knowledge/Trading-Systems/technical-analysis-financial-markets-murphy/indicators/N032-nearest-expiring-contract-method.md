@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nearest Expiring Contract Method
 
 The simplest and most widely used continuation chart method plots the price of the nearest expiring futures contract at all times. When the nearest contract stops trading, the next contract in line becomes the new nearest and is plotted. This method is used by most chart services.

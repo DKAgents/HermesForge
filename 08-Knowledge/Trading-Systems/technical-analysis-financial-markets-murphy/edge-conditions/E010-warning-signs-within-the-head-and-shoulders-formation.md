@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Warning Signs Within the Head and Shoulders Formation
 
 Several warning signs precede the neckline break: lighter volume on the rally to the head compared to the left shoulder; a decline that carries below the top of the previous peak (left shoulder); the right shoulder rally failing to reach the head; and the breaking of the major up trendline (usually at point D). These signals suggest the trend has shifted from up to sideways, sufficient to liquidate longs but not necessarily to initiate shorts.

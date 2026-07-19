@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flags and Pennants as Continuation Patterns
 
 Flags and pennants are among the most reliable continuation patterns and only rarely produce a trend reversal. They represent brief pauses in a dynamic market move and must be preceded by a sharp, almost straight-line move on heavy volume.

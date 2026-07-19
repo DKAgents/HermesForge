@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Range Extension in Market Profile
 
 Range extension occurs when price moves beyond the initial balance range established in the first hour of trading. It indicates that one side (buyers or sellers) is in control and provides directional information for the trading day.

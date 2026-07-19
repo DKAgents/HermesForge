@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Point and Figure Chart: Origin and Purpose
 
 The 3-box reversal method was developed as a condensation of the original 1-box reversal method and was intended for intermediate trend analysis. Cohen reasoned that because so few 3-box reversals occurred in stocks during the day, it was not necessary to use intraday prices, allowing the use of only daily high and low prices available in financial newspapers. This simplified approach made point and figure charting accessible to the average trader.

@@ -10,8 +10,11 @@ total_notes: 1302
 model_extraction: T2 (anthropic/claude-sonnet-4.6)
 model_preprocessing: T3 (mechanical extraction)
 tags: [literature-note, trading-system, technical-analysis-of-the-financial-markets]
+topic: literature note.md
+confidence: high
+has_quotes: true
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis of the Financial Markets
 **Author:** John J. Murphy
 **Ingested:** 2026-07-19

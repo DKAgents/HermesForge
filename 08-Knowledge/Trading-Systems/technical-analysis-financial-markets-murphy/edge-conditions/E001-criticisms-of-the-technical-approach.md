@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Criticisms of the Technical Approach
 
 Murphy acknowledges that technical analysis faces criticisms, which he addresses directly. These criticisms represent known limitations or challenges to the technical approach that practitioners should be aware of.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels vs. STARC Bands — Contrasting Use
 
 STARC bands are used as mean-reversion filters (prices at extremes signal high-risk continuation and low-risk reversal), while Keltner channels are used as breakout signals (prices closing outside the band signal continuation in the breakout direction). Despite both being ATR-based, their trading interpretations are opposite.

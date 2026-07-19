@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Period Length and Sensitivity
 
 A shorter time period (such as 5 days) for momentum produces a more sensitive line with more pronounced oscillations. A longer number of days (such as 40 days) results in a much smoother line with less volatile oscillator swings. The 10-day momentum is a commonly used time period. Longer momentum periods are more helpful in catching major market turns.

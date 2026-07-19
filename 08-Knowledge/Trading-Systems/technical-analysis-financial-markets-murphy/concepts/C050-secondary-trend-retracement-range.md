@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, fibonacci, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Secondary Trend Retracement Range
 
 Secondary or intermediate trends represent corrections within the primary trend. According to Dow, these corrections generally retrace between one-third and two-thirds of the previous trend movement, with the most common retracement being approximately 50% of the prior move.

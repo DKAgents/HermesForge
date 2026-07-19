@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Modal or Fairest Price
 
 The modal or fairest price represents the price level with the most TPO activity within the value area, indicating where the market has spent the most time and considers price most fair. It serves as a reference point for assessing value area buying and selling imbalances.

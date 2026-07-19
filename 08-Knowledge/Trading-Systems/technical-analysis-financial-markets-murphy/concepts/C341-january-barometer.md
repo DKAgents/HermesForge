@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # January Barometer
 
 The January Barometer is a seasonal indicator suggesting that the performance of the stock market in January predicts the direction of the market for the rest of the year.

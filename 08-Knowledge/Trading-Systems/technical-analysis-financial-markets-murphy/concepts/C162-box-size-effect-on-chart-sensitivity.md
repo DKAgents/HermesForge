@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Box Size Effect on Chart Sensitivity
 
 Increasing the box size on a point and figure chart reduces sensitivity, producing fewer signals and fewer columns. This allows investors to focus on the major trend by filtering out short-term noise. Decreasing the box size increases sensitivity, making the chart more suitable for shorter-term trading.

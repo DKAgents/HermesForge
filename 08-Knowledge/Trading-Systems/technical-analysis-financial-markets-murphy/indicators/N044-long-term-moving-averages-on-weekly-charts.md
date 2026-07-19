@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, moving-averages, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Moving Averages on Weekly Charts
 
 Longer-range moving averages such as 10 or 13 weeks in conjunction with the 30 or 40 week average have long been used in stock market analysis. The 10 and 40 week moving averages can be used to track the primary trend on weekly charts for both futures and stocks. The 40-week moving average should provide support during bull market corrections.

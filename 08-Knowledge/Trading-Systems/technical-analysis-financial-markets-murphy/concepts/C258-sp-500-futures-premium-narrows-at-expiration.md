@@ -13,8 +13,8 @@ has_quotes: true
 topic: [program-trading]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # S&P 500 Futures Premium Narrows at Expiration
 
 The premium (or spread) between S&P 500 futures over the cash index diminishes as the futures contract approaches expiration. This is a normal and predictable behavior that institutions account for when calculating fair value.

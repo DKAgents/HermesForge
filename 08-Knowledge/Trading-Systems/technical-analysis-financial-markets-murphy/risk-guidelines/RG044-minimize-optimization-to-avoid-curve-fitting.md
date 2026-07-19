@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Minimize Optimization to Avoid Curve Fitting
 
 Traders should try to optimize as little as possible, as optimization using historical data often leads to expectations of unrealistic returns that cannot be replicated in real trading. Using few parameters and applying the same technique across a number of different markets will improve chances of long run success by reducing the pitfalls of over-optimization.

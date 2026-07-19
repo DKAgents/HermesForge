@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Donchian's Weekly Rule
 
 Donchian's weekly rule is cited as a popular trend-following methodology used by money managers. It is grouped alongside moving averages as a core tool for systematic trend-following trading.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Efficiency Ratio for AMA
 
 The Efficiency Ratio compares price direction with the level of volatility. When the ratio is high, there is more direction than volatility, favoring a faster moving average. When the ratio is low, there is more volatility than direction, favoring a slower moving average. The AMA incorporates this ratio to automatically select the most suitable speed.

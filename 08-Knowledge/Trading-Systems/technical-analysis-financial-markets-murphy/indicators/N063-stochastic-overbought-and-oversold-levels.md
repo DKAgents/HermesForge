@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Overbought and Oversold Levels
 
 The Stochastic oscillator oscillates between 0 and 100. A very high reading over 80 puts the closing price near the top of the range and is considered overbought. A low reading under 20 is near the bottom of the range and is considered oversold.

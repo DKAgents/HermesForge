@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intraday Pivot Points for Entry Timing
 
 Pivot points combine seven key price levels with four time periods to anticipate where a market will close and achieve earlier entry with tighter protective stops. The seven pivot points are the previous day's high, low, and close plus the current day's open, high, low, and close. The four time periods are the open, 30 minutes after the open, midday (~12:30 NY time), and 35 minutes before the close. Pivot points are used only as a timing device when the trader believes a market is topping or bottoming.

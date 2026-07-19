@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Chart Construction: Box Scaling
 
 The 3-box reversal chart must be scaled the same way as the intraday chart, with a value assigned to each box. The chart shows alternating columns with X's representing rising prices and O columns showing falling prices. The entire value of a box must be filled; fractions or partial filling of a box do not count.

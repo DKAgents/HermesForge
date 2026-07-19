@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave and Oscillator Divergence
 
 In Elliott Wave analysis, the fifth and final wave is often confirmed by bearish oscillator divergences. Many dynamic bull moves have been missed by traders who waited for oscillators to move into oversold conditions before buying after a major trend signal.

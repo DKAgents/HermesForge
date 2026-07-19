@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Multiple Positions
 
 Trading multiple positions simultaneously requires careful management of total portfolio risk. Positions should be sized and correlated appropriately to avoid excessive exposure to a single market move.

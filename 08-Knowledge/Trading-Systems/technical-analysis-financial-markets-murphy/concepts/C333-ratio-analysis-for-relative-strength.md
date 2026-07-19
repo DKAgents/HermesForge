@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ratio Analysis for Relative Strength
 
 Ratio analysis uses a ratio to compare the relative strength between two entities, such as an individual stock or industry group divided by the S&P 500 index, to determine outperformance or underperformance. A rising ratio indicates that the numerator is outperforming the denominator. Trend analysis can be applied to the ratio line itself to determine important turning points.

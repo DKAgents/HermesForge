@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators, fibonacci, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Numbers as Moving Average Lengths
 
 Fibonacci numbers (such as 5, 8, 13, 21, 34, 55, 89) can be used as moving average lengths. This approach aligns moving average analysis with Fibonacci-based cycle and retracement analysis.

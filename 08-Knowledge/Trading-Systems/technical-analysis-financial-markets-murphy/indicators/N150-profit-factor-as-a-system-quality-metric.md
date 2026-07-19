@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Profit Factor as a System Quality Metric
 
 The profit factor (gross profit divided by gross loss) is highlighted as a key measure of system quality. In the example system, a profit factor of 2.79 is described as excellent, meaning the system generates $2.79 in gross profit for every $1.00 in gross loss. A high profit factor combined with a favorable average win/loss ratio can produce profitability even with a win rate below 50%.

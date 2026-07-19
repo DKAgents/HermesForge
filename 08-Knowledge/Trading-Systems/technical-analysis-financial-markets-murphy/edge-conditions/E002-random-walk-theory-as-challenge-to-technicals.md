@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Random Walk Theory as Challenge to Technicals
 
 The Random Walk Theory — which holds that price changes are random and therefore unpredictable — is presented as a major academic criticism of technical analysis. Murphy addresses this theory, implying that long-term chart trends dispute the randomness hypothesis.

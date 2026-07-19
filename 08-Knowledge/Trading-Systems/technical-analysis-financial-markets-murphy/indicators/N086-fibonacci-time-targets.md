@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Time Targets
 
 Fibonacci time targets are found by counting forward from significant tops and bottoms. On a daily chart, future tops or bottoms are expected on Fibonacci days (13th, 21st, 34th, 55th, or 89th trading day). The same technique applies to weekly, monthly, or yearly charts. Time targets can be measured from top to top, top to bottom, bottom to bottom, or bottom to top.

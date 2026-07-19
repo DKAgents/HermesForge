@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels Construction
 
 Keltner Channels use a 10-period Average True Range (ATR) doubled and added to/subtracted from a 20-period exponential moving average (EMA). The plus band equals the 20-period EMA plus 2×ATR(10), and the minus band equals the 20-period EMA minus 2×ATR(10). This modification was popularized by Linda Raschke.

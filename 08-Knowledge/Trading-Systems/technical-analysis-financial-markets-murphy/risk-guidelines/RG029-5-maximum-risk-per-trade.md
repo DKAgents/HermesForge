@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 5% Maximum Risk Per Trade
 
 The total amount risked in any one market should be limited to 5% of total equity. This 5% refers to the maximum the trader is willing to lose if the trade doesn't work. This is a critical consideration in deciding how many contracts to trade and how far away a protective stop should be placed. A $100,000 account should not risk more than $5,000 on a single trade.

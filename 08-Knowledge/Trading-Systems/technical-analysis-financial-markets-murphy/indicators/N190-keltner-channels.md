@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels
 
 Keltner Channels are volatility-based envelopes placed above and below an exponential moving average, using the Average True Range to set the band width. They are used to identify trend direction and potential breakout points.

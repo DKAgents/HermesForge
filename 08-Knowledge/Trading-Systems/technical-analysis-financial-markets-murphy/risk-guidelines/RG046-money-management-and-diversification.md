@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Money Management and Diversification
 
 Money management is described as the key to profitable trading, equally as important as a good trading system. Losses must be accepted as part of trading, and controlling the downside allows profits to take care of themselves. Diversification should be practiced across markets, systems, parameters, and time frames to increase returns while holding risk constant, or decrease risk while holding returns constant.

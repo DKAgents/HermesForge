@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Forecasting vs. Money Management
 
 Price forecasting and money management are distinct but complementary activities. Price forecasting determines direction and targets, while money management determines position sizing, stop placement, and risk control. Both are necessary for trading success.

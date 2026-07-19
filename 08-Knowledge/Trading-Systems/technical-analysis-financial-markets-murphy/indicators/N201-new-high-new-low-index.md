@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # New High-New Low Index
 
 The New High-New Low Index tracks the number of stocks making new 52-week highs versus new 52-week lows to measure underlying market strength or weakness. It is a key stock market breadth indicator.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advance/Decline Ratio Variation
 
 Because the number of NYSE-listed stocks has grown over time, some analysts prefer dividing the number of advancing issues by the number of declining issues (an advance/decline ratio) rather than subtracting them. This prevents giving greater weight to more recent data due to the larger number of listed stocks. Some analysts also include unchanged issues in the calculation.

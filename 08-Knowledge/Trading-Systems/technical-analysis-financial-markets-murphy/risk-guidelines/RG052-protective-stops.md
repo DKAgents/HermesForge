@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Protective Stops
 
 Protective stops are used to limit losses on open positions. They should be placed at technically significant levels and are a fundamental component of money management strategy.

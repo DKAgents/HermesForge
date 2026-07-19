@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume, market-breadth, market-psychology, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Arms Index (TRIN)
 
 The Arms Index (TRIN) measures the relationship between advancing/declining issues and their associated volume to gauge market sentiment. It can be smoothed for trend analysis, and the Open Arms variation provides additional interpretive flexibility.

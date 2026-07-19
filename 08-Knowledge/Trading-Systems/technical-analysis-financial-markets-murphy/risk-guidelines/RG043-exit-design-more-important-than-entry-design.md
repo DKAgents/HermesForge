@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Exit Design More Important Than Entry Design
 
 Designing entries is hard, but designing exits is harder and more important. Entry logic is fairly straightforward, but exits have to take various contingencies into account, such as how fast to cut losses or what to do with accumulated profits. Working hard to improve exits will improve returns relative to risk.

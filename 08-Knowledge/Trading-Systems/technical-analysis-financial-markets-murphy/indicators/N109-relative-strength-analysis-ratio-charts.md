@@ -13,8 +13,8 @@ has_quotes: true
 topic: [relative-strength]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Analysis (Ratio Charts)
 
 Relative strength analysis involves dividing one market entity by another to plot a ratio of two market prices. When the ratio line is rising, the numerator market is outperforming the denominator; when falling, the denominator is stronger. This simple but effective charting tool can be applied to any two markets or sectors to determine relative performance.

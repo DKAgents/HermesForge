@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Bands: Construction
 
 Developed by John Bollinger, two trading bands are placed two standard deviations above and below a moving average, which is usually 20 days. Using two standard deviations ensures that 95% of the price data will fall between the two trading bands. Unlike fixed-percentage envelopes, Bollinger Bands expand and contract based on the last 20 days' volatility.

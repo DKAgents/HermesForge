@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Multiple Technical Techniques
 
 Technical analysis is a blend of many approaches, each adding to the analyst's knowledge. The key is knowing which tools to emphasize in the current market situation, as each works better in certain conditions. The more factors an analyst considers, the better the chances of finding the right clue to future market movement.

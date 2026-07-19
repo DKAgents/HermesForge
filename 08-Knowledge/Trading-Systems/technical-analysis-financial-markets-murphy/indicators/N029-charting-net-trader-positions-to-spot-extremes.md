@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Charting Net Trader Positions to Spot Extremes
 
 It is possible to chart the trends of the three COT market groups and use those trends to spot extremes in their positions. Looking for situations where the commercials are at one extreme and the two categories of traders are at the other provides buying and selling opportunities. Four years of historical data allows for meaningful comparisons.

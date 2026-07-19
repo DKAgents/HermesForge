@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Countertrend Short at Channel Line — High Risk
 
 More aggressive traders might use the upper channel line to initiate a countertrend short position, but this is explicitly flagged as dangerous and usually costly. Trading against the prevailing trend is a high-risk tactic even when price is at a logical resistance level. This warning applies broadly to any attempt to fade a strong trend at channel extremes.

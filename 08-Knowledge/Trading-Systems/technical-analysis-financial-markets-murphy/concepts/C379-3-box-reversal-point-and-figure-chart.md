@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Point and Figure Chart
 
 The 3-box reversal point and figure chart requires a price move of three boxes in the opposite direction to record a reversal column. Chart patterns, trendlines, and measuring techniques are all applied to this chart type for trading signals.

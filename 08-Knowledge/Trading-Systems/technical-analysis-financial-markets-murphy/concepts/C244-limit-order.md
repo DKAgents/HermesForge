@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Limit Order
 
 A limit order specifies the price the trader is willing to pay or accept. A buy limit is placed below the current market price (highest price willing to pay), and a sell limit is placed above the current market price (lowest price willing to accept). This type of resting order is useful after a bullish breakout when the buyer wants to buy a downside reaction closer to support, but risks missing the market if prices don't reach the limit.

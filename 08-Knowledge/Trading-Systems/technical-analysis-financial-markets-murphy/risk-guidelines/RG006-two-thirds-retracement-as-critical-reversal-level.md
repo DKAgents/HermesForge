@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Two-Thirds Retracement as Critical Reversal Level
 
 The maximum retracement parameter of 66% is an especially critical area. If the prior trend is to be maintained, the correction must stop at the two-thirds point. This becomes a relatively low-risk buying area in an uptrend or selling area in a downtrend. If prices move beyond the two-thirds point, the odds favor a trend reversal rather than just a retracement, and the move usually retraces the entire 100% of the prior trend.

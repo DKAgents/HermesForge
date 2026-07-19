@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Equivolume Charting
 
 Equivolume charting is a form of charting pioneered by Richard Arms that combines price and volume analysis into a single visual element. Each price bar is shown as a rectangle where the height measures the day's trading range and the width is determined by that day's volume. Heavier volume days produce wider rectangles, while lighter volume days produce narrower rectangles, allowing traders to assess the relationship between price movement and volume at a glance.

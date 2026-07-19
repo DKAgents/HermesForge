@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangle Apex as Timing Indicator
 
 According to Prechter, the apex of the triangle — the point where the two converging trendlines meet — often marks the timing for the completion of the final fifth wave. This provides a time-based projection tool in addition to the price measurement derived from the triangle's width.

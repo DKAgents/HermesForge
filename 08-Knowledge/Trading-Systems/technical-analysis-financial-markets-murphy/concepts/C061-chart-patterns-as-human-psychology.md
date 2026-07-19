@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Chart Patterns as Human Psychology
 
 Chart patterns are not merely technical pictures; they reflect the actual behavior and psychology of market participants. Chart analysis is fundamentally a study of human psychology and how traders react to changing market conditions. The author warns that reliance on shorthand terminology can obscure the underlying human forces that create chart patterns.

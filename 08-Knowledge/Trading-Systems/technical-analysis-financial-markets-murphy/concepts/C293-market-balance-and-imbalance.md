@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Balance and Imbalance
 
 The market is either in equilibrium or working toward equilibrium between buyers and sellers. To facilitate trade, the market moves from a state of balance (equilibrium) to one of imbalance (disequilibrium) and back to balance again. This pattern of market behavior occurs at all time frames, from intraday to longer-term consolidated sessions.

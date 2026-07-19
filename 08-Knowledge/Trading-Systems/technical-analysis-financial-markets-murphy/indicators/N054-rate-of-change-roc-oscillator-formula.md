@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rate of Change (ROC) Oscillator Formula
 
 The Rate of Change oscillator is constructed by dividing the most recent closing price by the closing price a set number of days ago, multiplied by 100. The formula is: Rate of Change = 100 (V/Vx), where V is the latest close and Vx is the close x days ago. The 100 line serves as the midpoint; values above 100 indicate rising prices and values below 100 indicate falling prices.

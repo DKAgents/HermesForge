@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Premises of Technical Analysis
 
 Technical analysis rests on three core premises: (1) market action discounts everything, (2) prices move in trends, and (3) history repeats itself. These premises form the philosophical foundation upon which all technical tools and methods are built. Accepting all three is a prerequisite for the technical approach to be meaningful.

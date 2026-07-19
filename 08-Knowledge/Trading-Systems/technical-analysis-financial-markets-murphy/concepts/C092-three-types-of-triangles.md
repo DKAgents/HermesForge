@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Types of Triangles
 
 There are three main types of triangles: symmetrical (two converging trendlines, upper descending and lower ascending), ascending (rising lower line with flat upper line), and descending (declining upper line with flat bottom line). A fourth type, the expanding triangle or broadening formation, is treated as a separate pattern. Each type has a slightly different shape and different forecasting implications.

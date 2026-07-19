@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Low Success Rate of Trading Ideas
 
 Very few trading ideas will test out profitably when formally tested, typically less than 5%. Furthermore, most of those 'successful' ideas will not even be tradable in practice for various reasons. This underscores the importance of rigorous testing before committing capital.

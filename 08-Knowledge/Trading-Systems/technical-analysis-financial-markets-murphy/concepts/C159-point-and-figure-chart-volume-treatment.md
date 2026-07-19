@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, volume, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Chart: Volume Treatment
 
 Point and figure charts ignore volume numbers as a separate entity, but trading activity is still reflected indirectly through the amount of price changes recorded. Because volume determines the potency of support and resistance levels, point and figure charts are especially useful in identifying price levels where most trading activity occurred and hence where important support and resistance numbers are.

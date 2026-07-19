@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Five-Wave Move Implication
 
 A completed five-wave move usually means that only part of a larger wave has been completed and that there is more to come, unless it is a fifth of a fifth. This information tells the analyst what to expect next in the wave sequence.

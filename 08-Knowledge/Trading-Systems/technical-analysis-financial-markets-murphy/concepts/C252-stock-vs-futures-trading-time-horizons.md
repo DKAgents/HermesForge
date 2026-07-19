@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stock vs. Futures Trading Time Horizons
 
 While futures traders focus on short to intermediate trends, stock investors are more concerned with intermediate to longer-term trends. Stock trading places less emphasis on the very short term and makes less use of intraday charts, but the general principles of technical analysis remain the same across both markets.

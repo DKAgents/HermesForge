@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Five-Wave Rally in Bear Market as Warning Signal
 
 In a bear market, a five-wave rally warns of a more substantial move to the upside and might possibly even be the first wave of a new bull trend. This distinguishes it from a normal three-wave bear market rally which should be followed by resumption of the downtrend.

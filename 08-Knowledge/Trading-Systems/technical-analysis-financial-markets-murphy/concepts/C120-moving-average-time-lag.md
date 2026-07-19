@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Time Lag
 
 By averaging price data, a smoother line is produced that makes it easier to view the underlying trend, but the moving average line also lags the market action. A shorter moving average such as a 20-day average hugs price action more closely than a 200-day average. The time lag is reduced with shorter averages but can never be completely eliminated.

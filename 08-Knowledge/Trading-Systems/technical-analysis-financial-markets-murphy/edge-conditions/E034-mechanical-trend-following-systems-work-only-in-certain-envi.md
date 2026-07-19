@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Mechanical Trend-Following Systems Work Only in Certain Environments
 
 Mechanical trend-following systems, such as Wilder's Directional Movement and Parabolic systems, only work well in certain types of market environments. They can also be used not as standalone systems but as confirming technical indicators within a broader market analysis framework.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Definition of Technical Analysis
 
 Technical analysis is formally defined by Murphy as the study of market action, primarily through the use of charts, for the purpose of forecasting future price trends. The term 'market action' encompasses the three principal sources of information available to the technician. This definition establishes the scope and purpose of the entire discipline.

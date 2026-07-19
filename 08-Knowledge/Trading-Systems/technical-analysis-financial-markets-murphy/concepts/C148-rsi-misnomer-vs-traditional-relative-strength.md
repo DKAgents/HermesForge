@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Misnomer vs. Traditional Relative Strength
 
 The term 'relative strength' in RSI is a misnomer and causes confusion. Traditional relative strength generally means a ratio line comparing two different entities, such as a stock versus the S&P 500. Wilder's RSI does not measure relative strength between different entities but instead solves the problem of erratic movement and the need for a constant upper and lower boundary.

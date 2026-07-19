@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Theory Order of Importance
 
 The Elliott Wave Theory is comprised of three elements in order of importance: wave forms, ratios, and time. Wave forms are the most important, followed by Fibonacci ratios, and then time considerations.

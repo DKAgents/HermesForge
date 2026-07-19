@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Overbought/Oversold Readings in Strong Trends
 
 Any strong trend, either up or down, usually produces an extreme oscillator reading before too long. Claims that a market is overbought or oversold are usually premature in strong trends and can lead to an early exit from a profitable trend. In strong uptrends, overbought markets can stay overbought for some time, and just because the oscillator has moved into the upper region is not reason enough to liquidate a long position or short into the strong uptrend.

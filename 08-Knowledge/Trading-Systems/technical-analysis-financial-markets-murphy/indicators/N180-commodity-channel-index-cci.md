@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, candlesticks, intermarket, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commodity Channel Index (CCI)
 
 The Commodity Channel Index (CCI), developed by Donald Lambert, measures the deviation of price from its statistical mean. Readings above +100 indicate overbought conditions and below -100 indicate oversold conditions. It can also be used with Japanese candlestick analysis.

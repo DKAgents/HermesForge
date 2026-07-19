@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Significance of Open and Close Prices in Candlesticks
 
 In Japanese candlestick analysis, the open and close prices are given much greater significance than the high and low prices. The shadows (wicks) representing the high and low are normally not considered vital in the analysis by the Japanese. This contrasts with Western bar chart analysis where the high and low are equally emphasized.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Trailing Stop Adjustment
 
 As a trend continues and repeat buy or sell signals appear, the protective stop should be trailed: raised to just below the latest o column in an uptrend, or lowered to just above the latest x column in a downtrend. This trailing stop technique allows the trader to stay with the position while protecting accumulated profits.

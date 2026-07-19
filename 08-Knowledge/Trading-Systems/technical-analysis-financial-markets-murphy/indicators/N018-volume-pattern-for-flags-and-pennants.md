@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Pattern for Flags and Pennants
 
 Both flags and pennants require a dramatic drop-off in volume during the consolidation phase, followed by a sudden burst of activity on the upside breakout. The sharp move preceding the pattern should occur on heavy volume.

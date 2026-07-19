@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket, relative-strength]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Analysis
 
 Relative strength analysis is listed as a key component of intermarket analysis, applied to sectors and individual stocks. It is used to compare the performance of one asset against another or against a benchmark, helping identify which sectors or stocks are outperforming or underperforming.

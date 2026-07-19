@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis Applied to Mutual Fund Selection
 
 Understanding intermarket relationships can significantly improve mutual fund investing decisions. The direction of the U.S. dollar can influence allocation between small cap and large cap funds, as well as commitment to gold or natural resource funds. Comparing relative performance of futures markets and stock market sectors helps determine which sector funds to emphasize at any given time.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Broadening Formation Volume Behavior
 
 Unlike other triangular patterns where volume diminishes as price swings narrow, volume in the broadening formation tends to expand along with the wider price swings. This reflects unusual public participation and emotional market behavior.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Universal Applicability of Technical Principles
 
 Technical principles discussed in the book can be applied universally to all markets, including futures, stocks, mutual funds, and sector indices. Originally developed primarily for futures markets, these tools have been widely adopted in stock market analysis over the past decade.

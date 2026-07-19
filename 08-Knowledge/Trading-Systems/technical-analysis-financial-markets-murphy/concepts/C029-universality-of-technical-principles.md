@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Universality of Technical Principles
 
 Murphy states that the principles of technical analysis are universal, making it straightforward to broaden their application from futures markets to all financial markets including stocks. This universality is a foundational claim of the technical approach.

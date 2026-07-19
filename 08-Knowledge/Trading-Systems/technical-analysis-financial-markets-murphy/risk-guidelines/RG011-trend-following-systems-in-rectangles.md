@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend-Following Systems in Rectangles
 
 Most trend-following systems perform very poorly during periods of sideways and trendless market action such as rectangles. Traders using trend-following approaches should be aware of this limitation and consider avoiding or reducing exposure during such consolidation phases.

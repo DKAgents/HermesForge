@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Diversification Without Overdoing It
 
 Traders should diversify their positions across markets but should not over-diversify to the point where positions cannot be properly monitored. Proper diversification spreads risk without diluting focus.

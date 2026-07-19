@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, relative-strength]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Analysis for Sector Rotation
 
 Relative strength analysis is used to identify asset classes, market sectors, or individual stocks likely to outperform the general market. It is a key tool within intermarket analysis for sector rotation. This approach helps traders focus capital on the strongest-performing areas of the market.

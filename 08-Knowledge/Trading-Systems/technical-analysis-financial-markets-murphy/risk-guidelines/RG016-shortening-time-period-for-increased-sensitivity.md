@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Shortening Time Period for Increased Sensitivity
 
 The time period of the 4 week rule can be shortened to make the system more sensitive, which is useful in high-priced markets trending sharply higher. For example, a long position taken on a 4 week upside breakout could use a 2 week protective stop, and if the market rallies sharply and a closer trailing stop is desired, a 1 week stopout point could be used.

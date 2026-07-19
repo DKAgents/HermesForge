@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measure of a Good System — Capital Preservation
 
 The measure of a good system is not only its ability to make money in trending markets, but its ability to preserve capital during nontrending periods. The inability of the system to monitor itself is its greatest weakness, making an overriding filtering device such as the ADX or DMI especially useful.

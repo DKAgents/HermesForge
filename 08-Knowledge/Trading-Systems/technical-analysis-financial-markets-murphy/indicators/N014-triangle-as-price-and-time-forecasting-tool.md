@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangle as Price and Time Forecasting Tool
 
 The triangle provides a combination of both price and time forecasting. The converging trendlines give the price boundaries of the pattern and indicate at what point the pattern has been completed. The width of the pattern also provides a time target: if the width is 20 weeks, the breakout should take place between the 13th and 15th week (two-thirds to three-quarters of the width).

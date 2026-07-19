@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Neckline Slope at Bottoms
 
 For basing (bottom) patterns, most necklines have a slight downward tilt. A rising neckline at a bottom is a sign of greater market strength, but carries the same drawback of giving a later signal since the breakout occurs after more of the move has already happened.

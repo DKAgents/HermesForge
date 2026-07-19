@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, candlesticks, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Parabolic SAR (Stop and Reverse) System
 
 Wilder's Parabolic SAR is a time/price reversal system that is always in the market. The letters SAR stand for 'stop and reverse,' meaning the position is reversed when the protective stop is hit. The trailing stops curve like a parabola, starting slowly and accelerating as the trend develops. SAR numbers are calculated and available to the user for the following day.

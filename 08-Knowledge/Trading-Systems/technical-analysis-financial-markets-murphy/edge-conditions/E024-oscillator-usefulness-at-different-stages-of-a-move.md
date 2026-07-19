@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Usefulness at Different Stages of a Move
 
 Near the beginning of important price moves, oscillator analysis is not very helpful and can even be misleading. Toward the end of market moves, oscillators become extremely valuable for identifying exhaustion and potential reversals.

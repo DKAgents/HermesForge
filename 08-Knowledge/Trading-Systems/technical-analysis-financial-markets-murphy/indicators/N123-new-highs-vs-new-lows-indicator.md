@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # New Highs vs New Lows Indicator
 
 The number of stocks hitting new 52-week highs versus new 52-week lows is a breadth indicator available on a daily and weekly basis. In a strong market, new highs should significantly outnumber new lows. When new highs start to decline or new lows start to expand, a caution signal is given. A 10-day moving average is typically applied to smooth the erratic daily values.

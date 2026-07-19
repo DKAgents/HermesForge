@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Simple Moving Average
 
 A simple moving average (SMA) calculates the arithmetic mean of prices over a specified number of periods. It is the most basic form of moving average and serves as the foundation for more complex moving average systems.

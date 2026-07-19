@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Pole and Stop Placement for Prolonged Moves
 
 When a prolonged move occurs without any 3-box reversals, it creates a 'pole'—a long uninterrupted column of x's or o's. After an uninterrupted move of 10 or more boxes, a protective stop should be placed at the point where a 3-box reversal would occur. If stopped out, reentry can be made on another 3-box reversal in the direction of the original trend.

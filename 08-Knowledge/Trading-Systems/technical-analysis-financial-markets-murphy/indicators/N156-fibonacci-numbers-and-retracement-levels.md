@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Numbers and Retracement Levels
 
 The Fibonacci number sequence (1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...) is constructed by adding the first two numbers to arrive at the third. The ratio of any number to the next larger number is 62%, a popular retracement level. The inverse, 38%, is also used as a retracement level. The ratio of any number to the next smaller number is 1.62, used to arrive at Fibonacci price targets.

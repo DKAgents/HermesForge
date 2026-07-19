@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume, intermarket, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Herrick Payoff Index (HPI) – Overview
 
 The Herrick Payoff Index was developed by John Herrick to analyze commodity futures through changes in open interest. It uses price, volume, and open interest to determine money flow into or out of a given commodity. It helps traders spot divergences between price action and open interest, and can identify buying or selling panics.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Computer Identification of Candle Patterns — Pixel Distortion Warning
 
 When viewing candlestick charts on a computer screen, large price ranges compressed into limited screen pixels can make candles appear to be Doji days (open equals close) when they are not. A software program that identifies patterns based on mathematical relationships rather than visual appearance will overcome this visual anomaly.

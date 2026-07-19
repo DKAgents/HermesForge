@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CRB Index / Treasury Bond Ratio as Asset Class Signal
 
 Dividing the CRB Futures Price Index by Treasury Bond futures prices creates a ratio that signals which asset class is stronger. When the ratio is rising, commodity prices are outperforming bonds, signaling futures traders to buy commodities and sell bonds, while stock traders should buy inflation-sensitive stocks and sell interest-rate-sensitive stocks. When the ratio is falling, the opposite trades are favored.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Breakout Systems Show Superior Results
 
 Research by Lukac et al. testing 12 systems from 1975–84 found only 4 generated significant profits, of which 2 were channel breakout systems and 1 was a dual moving average crossover. A later study of 23 systems from 1976–86 again found channel breakouts and moving average systems on top. Lukac concluded that a channel breakout system was the best starting point for all technical trading system testing and development.

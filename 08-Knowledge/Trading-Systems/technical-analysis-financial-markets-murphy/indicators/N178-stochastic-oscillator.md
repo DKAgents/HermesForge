@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Oscillator
 
 The Stochastic oscillator, developed by George Lane, measures the position of the close relative to the high-low range over a set period. It generates overbought/oversold signals and crossover signals between the %K and %D lines.

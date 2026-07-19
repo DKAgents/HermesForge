@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Danger of Over-Reliance on Moving Averages
 
 Because moving averages do not work well for significant periods of time (sideways/choppy markets), it is dangerous to rely too heavily on the moving average technique. In trending markets, moving averages are highly effective, but in non-trending markets, an overbought-oversold oscillator approach is more appropriate.

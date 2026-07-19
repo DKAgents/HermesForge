@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Resistance Level
 
 Resistance is marked by a previous price peak and provides enough of a barrier above the market to halt a price advance. It is the opposite of support and represents a zone where selling pressure is sufficient to stop upward price movement.

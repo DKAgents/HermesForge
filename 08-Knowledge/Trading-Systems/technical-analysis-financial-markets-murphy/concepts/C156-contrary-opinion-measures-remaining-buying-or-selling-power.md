@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Contrary Opinion Measures Remaining Buying or Selling Power
 
 When 80–90% of market traders are bullish and have already committed their funds to long positions, there is insufficient buying power remaining to push the market higher. This is a key mechanism behind Contrary Opinion: overwhelming sentiment on one side of the market means there is not enough residual buying or selling pressure to continue the present trend. The market becomes vulnerable to reversal when the majority are fully committed.

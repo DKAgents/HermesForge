@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Applied to Other Technical Data
 
 The moving average can be applied to virtually any technical data or indicator, including open interest, volume figures, on-balance volume, various indicators and ratios, and even oscillators themselves. This versatility makes it a broadly applicable analytical tool.

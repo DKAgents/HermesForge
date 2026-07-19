@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Index (RSI) Introduction
 
 The RSI was developed by J. Welles Wilder, Jr. and presented in his 1978 book, New Concepts in Technical Trading Systems. It is one of the most popular oscillators among traders and is used to demonstrate most principles of oscillator analysis.

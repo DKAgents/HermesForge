@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave and Dow Theory Connection
 
 Elliott's idea of three up waves with two intervening corrections fits with Dow Theory's three advancing phases of a bull market. Elliott believed he had gone beyond and improved on Dow's theory. Both men used ocean metaphors: Dow compared trends to tides, waves, and ripples, while Elliott referred to 'ebbs and flows.'

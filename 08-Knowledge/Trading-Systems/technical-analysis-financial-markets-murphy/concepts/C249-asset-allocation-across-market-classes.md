@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Asset Allocation Across Market Classes
 
 Asset allocation refers to how a portfolio is divided among stocks, bonds, cash, foreign markets, market sectors, and commodities. Proper diversification requires spreading assets among market groups or classes that have a low correlation to each other, meaning they don't always trend in the same direction. Commodities often trend in opposite directions to bonds and stocks, making them an excellent diversification vehicle.

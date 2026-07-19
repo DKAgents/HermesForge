@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Support Line Construction
 
 In an uptrend, the bullish support line is drawn at a 45-degree angle upward to the right from under the lowest column of O's. As long as prices remain above this line, the major trend is considered bullish. If a correction breaks below the line and the uptrend resumes, a new support line must be drawn from the bottom of that reaction low.

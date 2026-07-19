@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fan Principle
 
 The fan principle involves drawing a series of successively steeper or shallower trendlines as each prior trendline is broken. The breaking of the third trendline in the fan is considered a signal of a major trend reversal.

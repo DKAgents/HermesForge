@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weighted Moving Average
 
 A weighted moving average uses a selected time span but gives greater weight to more recent price data, unlike a simple moving average which gives equal weight to all data points. This makes it more responsive to recent price changes.

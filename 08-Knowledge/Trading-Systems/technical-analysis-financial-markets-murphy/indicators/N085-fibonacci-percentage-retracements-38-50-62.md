@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Percentage Retracements: 38%, 50%, 62%
 
 The most commonly used Fibonacci retracement levels are 61.8% (rounded to 62%), 38%, and 50%. In a strong trend, the minimum retracement is usually around 38%. In a weaker trend, the maximum percentage retracement is usually 62%. The 50% retracement and the two-thirds (66%) retracement are also Fibonacci-derived ratios.

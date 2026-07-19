@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adaptive Moving Average (AMA)
 
 The Adaptive Moving Average, developed by Perry Kaufman, automatically adjusts its speed based on the level of noise (volatility) in a market. It moves more slowly during sideways markets to avoid whipsaws and more swiftly during trending markets to keep pace with price. This is achieved through an Efficiency Ratio that compares price direction with volatility.

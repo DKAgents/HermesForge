@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # High Open Interest at Market Tops is Bearish
 
 A high open interest figure at market tops can be considered bearish if the price drop is very sudden. This means that all of the new longs established near the end of the uptrend now have losing positions. Their forced liquidation will keep prices under pressure until the open interest has declined sufficiently.

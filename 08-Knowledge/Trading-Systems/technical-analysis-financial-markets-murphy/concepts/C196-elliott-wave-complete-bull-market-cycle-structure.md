@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave: Complete Bull Market Cycle Structure
 
 A complete bull market cycle is made up of eight waves: five up waves followed by three down waves. A trend divides into five waves in the direction of the next longer trend, while corrections always take place in three waves.

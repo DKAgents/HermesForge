@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Diversification vs. Concentration
 
 Traders must balance diversification across markets and instruments against concentration in their best ideas. Over-diversification can dilute returns while over-concentration increases risk. Guidelines for appropriate balance are provided.

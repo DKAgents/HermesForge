@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis as Evolution of Technical Analysis
 
 The introduction of intermarket analysis has shifted the focus of technical analysis from single-market analysis to a more interdependent view of financial markets. All global markets are considered linked, making technical analysis a universal language especially useful in an increasingly intertwined global financial system.

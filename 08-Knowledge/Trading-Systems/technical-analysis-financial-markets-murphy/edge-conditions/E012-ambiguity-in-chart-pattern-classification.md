@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, edge-condition]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ambiguity in Chart Pattern Classification
 
 Chart patterns do not always behave as expected. Triangles are usually continuation patterns but sometimes act as reversal patterns. Even the head and shoulders pattern, the best known major reversal pattern, will on occasion be seen as a consolidation pattern. The treatment of all chart patterns deals with general tendencies as opposed to rigid rules, and there are always exceptions.

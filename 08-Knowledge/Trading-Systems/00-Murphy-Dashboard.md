@@ -5,8 +5,11 @@ source_author: "John J. Murphy"
 book_slug: technical-analysis-financial-markets-murphy
 created: 2026-07-19
 tags: [dashboard, trading-system, technical-analysis-of-the-financial-markets]
+topic: murphy dashboard.md
+confidence: high
+has_quotes: true
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Murphy — Technical Analysis Dashboard
 
 > **1,257 atomic notes** extracted from *Technical Analysis of the Financial Markets* by John J. Murphy.

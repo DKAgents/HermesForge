@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Put/Call Ratios
 
 Put/call ratios measure the volume of put options relative to call options. High put/call ratios indicate bearish sentiment and can be used as a contrary bullish indicator, while low ratios indicate bullish sentiment and can signal a contrary bearish outlook.

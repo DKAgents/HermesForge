@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Simple vs. Exponential Moving Averages
 
 Most technicians use a combination of two simple moving averages. Although exponential averages have become popular, there is no real evidence to prove that they work any better than the simple average.

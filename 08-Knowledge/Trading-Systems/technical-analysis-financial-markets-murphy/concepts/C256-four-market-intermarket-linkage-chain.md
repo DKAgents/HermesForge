@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Four-Market Intermarket Linkage Chain
 
 The four key asset classes are linked in a chain: the dollar influences commodities, which influence bonds, which influence stocks. To fully comprehend what is happening in any one asset class, it is necessary to know what is happening in the other three. This chain can be monitored by simply looking at their respective price charts.

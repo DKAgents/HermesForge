@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # ADX Indicator for Trend vs. Non-Trend Environment
 
 The ADX indicator (covered in Chapter 15) tells the trader when a market is trending and when it is not, helping determine whether a trending moving average technique or a non-trending oscillator approach is more appropriate for the current market climate.

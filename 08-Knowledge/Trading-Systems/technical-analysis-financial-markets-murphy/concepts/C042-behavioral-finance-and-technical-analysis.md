@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Behavioral Finance and Technical Analysis
 
 Behavioral Finance, increasingly explored by leading universities, maintains that human psychology and securities pricing are intertwined. The author notes this is the primary basis of technical analysis, suggesting academic finance is converging toward the technical analyst's worldview.

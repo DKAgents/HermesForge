@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Retracement Levels (38% and 62%)
 
 Followers of Elliott Wave Theory and Fibonacci ratios use percentage retracements of 38% and 62%. These levels are popular with chartists and most corrections will find support in the 38% to 50% retracement zones. The 38% and 62% lines are Fibonacci retracements.

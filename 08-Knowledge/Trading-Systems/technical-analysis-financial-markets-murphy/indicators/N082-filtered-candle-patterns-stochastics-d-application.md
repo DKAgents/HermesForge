@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Filtered Candle Patterns — Stochastics %D Application
 
 Stochastics %D oscillates between 0 and 100, with 20 being oversold and 80 being overbought. A sell signal is generated when %D rises above 80 and then falls back below 80; a buy signal is generated when %D drops below 20 and then rises back above 20. The area above 80 and below 20 is called the 'presignal area,' and candle patterns are only considered valid when %D is within this presignal area.

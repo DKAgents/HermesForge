@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Developing Trading Concepts Through Chart Study
 
 Traders should develop their own concepts of how markets work by looking at as many charts as possible, trying to identify moving average crossovers, oscillator configurations, price patterns or other pieces of objective evidence which precede major market moves. Traders should also attempt to recognize clues that provide advance warning on moves that are likely to fail. The most profitable ideas are rarely original, but frequently our own.

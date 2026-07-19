@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Upside vs Downside Volume
 
 The NYSE provides volume data for both advancing and declining issues, allowing comparison of upside versus downside volume to measure which is dominant. When upside volume is dominant, the market is strong; when downside volume is greater, the market is weak. The data can be shown as two separate lines or as a single difference line, and a 10-day moving average is typically applied.

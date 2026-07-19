@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Transitions — Periods of Sideways Movement
 
 Important changes in trend usually require a period of transition rather than being abrupt affairs. These sideways transition periods do not always signal a trend reversal; sometimes they indicate only a pause or consolidation after which the original trend resumes.

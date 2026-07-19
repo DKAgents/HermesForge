@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Erratic Momentum Line Movement from Dropped Values
 
 One of the two major problems in constructing a momentum line using price differences is the erratic movement caused by sharp changes in the values being dropped off the lookback period. For example, in a 10-day momentum line, a sharp advance or decline that occurred 10 days ago can cause sudden, misleading shifts in the momentum reading when that value is dropped from the calculation. This distortion is not reflective of current price action but is an artifact of the calculation method.

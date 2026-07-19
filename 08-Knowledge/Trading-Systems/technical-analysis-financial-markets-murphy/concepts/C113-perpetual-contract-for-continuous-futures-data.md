@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Perpetual Contract for Continuous Futures Data
 
 The Perpetual Contract, developed by Robert Pelletier of CSI, provides years of futures price history in one continuous time series by constructing a weighted average of two futures contracts surrounding a constant forward time period (e.g., 3 or 6 months). It eliminates distortions during delivery month transitions and smoothes the price series. It is most useful for back-testing trading systems and indicators rather than for chart analysis, where nearest-month continuation charts are adequate.

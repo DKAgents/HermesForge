@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # TPO Buying and Selling Count for Value Area Assessment
 
 TPO (Time Price Opportunity) buying and selling counts within the value area are used to assess whether longer term buyers or sellers control the current session. An imbalance in TPO counts signals directional bias; for example, a TPO buying count of 100 versus a selling count of 59 implies imbalance to the buy side, suggesting prices need to go higher for market balance.

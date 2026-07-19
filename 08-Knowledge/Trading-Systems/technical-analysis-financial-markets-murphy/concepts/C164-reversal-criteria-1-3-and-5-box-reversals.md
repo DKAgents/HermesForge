@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Criteria: 1, 3, and 5 Box Reversals
 
 The three traditional reversal criteria for point and figure charts are 1-box, 3-box, and 5-box reversals. The 1-box reversal is used for very short-term activity, the 3-box for intermediate trend analysis, and the 5-box for long-term trend study due to its severe data compression.

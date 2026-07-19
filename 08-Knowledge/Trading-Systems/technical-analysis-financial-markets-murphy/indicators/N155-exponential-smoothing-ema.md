@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Exponential Smoothing (EMA)
 
 Exponential smoothing is a type of moving average that uses all data points but gives greater weight to more recent price data.

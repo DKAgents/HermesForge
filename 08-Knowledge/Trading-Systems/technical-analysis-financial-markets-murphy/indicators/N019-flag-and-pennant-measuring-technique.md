@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag and Pennant: Measuring Technique
 
 To measure the price target for flags and pennants, measure the vertical distance of the preceding move from the original breakout point — where the original trend signal was given by penetration of a support/resistance level or trendline. That distance is then projected from the breakout point of the flag or pennant (upper line break in uptrend, lower line break in downtrend).

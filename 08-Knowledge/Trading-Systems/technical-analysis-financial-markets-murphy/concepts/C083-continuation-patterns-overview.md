@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Patterns — Overview
 
 Continuation patterns include triangles, flags, pennants, wedges, and rectangles. These patterns usually reflect pauses in the existing trend rather than trend reversals and are generally classified as intermediate and minor patterns as opposed to major reversal patterns.

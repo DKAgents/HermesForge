@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, risk-guideline]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # STARC Bands as Trading Filters — High/Low Risk Zones
 
 When prices are near or above the starc+ band, it is a high-risk time to buy and a low-risk time to sell. When prices are at or below the starc- band, it is a high-risk selling zone and a more favorable point to buy. These bands help traders avoid chasing the market, which almost always results in a poor entry price.

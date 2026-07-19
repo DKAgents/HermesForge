@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, indicator]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Starc Bands
 
 Starc bands are volatility-based envelope bands developed by Manning Stoller, placed above and below a moving average using the Average True Range rather than standard deviation. They define high and low risk zones for trading.

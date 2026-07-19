@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Action vs Price Action Terminology
 
 The author distinguishes 'price action' from 'market action,' noting that most technicians include volume and open interest — not just price — as integral parts of market analysis. 'Price action' is considered too narrow a term. Open interest is relevant only in futures and options markets.
