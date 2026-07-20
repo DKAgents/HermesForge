@@ -49,6 +49,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import trade_log  # noqa: E402
 
 MARKET_DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data"
+CRYPTO_DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "crypto"
 
 MAX_BARS_HELD = {
     "STR-A-ma-pullback-fibonacci": 8,
@@ -57,11 +58,12 @@ MAX_BARS_HELD = {
 }
 
 
-def _load_bars_since(ticker: str, entry_date: str) -> pd.DataFrame:
+def _load_bars_since(ticker: str, entry_date: str, asset_class: str = "stock") -> pd.DataFrame:
     """Load cached OHLC bars for ticker strictly after entry_date, chronological order."""
-    path = MARKET_DATA_DIR / f"{ticker}.parquet"
+    data_dir = CRYPTO_DATA_DIR if asset_class == "crypto" else MARKET_DATA_DIR
+    path = data_dir / f"{ticker}.parquet"
     if not path.exists():
-        raise FileNotFoundError(f"No cached data for {ticker}")
+        raise FileNotFoundError(f"No cached data for {ticker} (asset_class={asset_class})")
     df = pd.read_parquet(path)
     df.index = pd.to_datetime(df.index)
     df = df.sort_index()
@@ -103,7 +105,7 @@ def track_trade(trade: dict) -> dict:
     max_bars = MAX_BARS_HELD.get(strategy_id, 8)
 
     try:
-        bars = _load_bars_since(ticker, trade["entry_date"])
+        bars = _load_bars_since(ticker, trade["entry_date"], trade.get("asset_class", "stock"))
     except FileNotFoundError as e:
         return {"trade_id": trade_id, "action": "error", "error": str(e)}
 
