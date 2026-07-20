@@ -166,6 +166,15 @@ def run_pipeline(dry_run: bool = False) -> dict:
                 "confirmation_level": latest.get("confirmation_level", "Level 1"),
                 "subperiod": latest.get("subperiod", "n/a"),
             }
+            # Pass through any additional scanner-specific fields used by the
+            # chart profile / quality-tier logic (e.g. macd_bars_above_zero,
+            # narrowing_bars, rsi_at_signal, prior_swing_bar_offset for
+            # Strategy B; volume_ratio for C; swing_high/low for A;
+            # resistance_level for D) without hardcoding a strategy-specific
+            # allowlist here — new scanner fields flow through automatically.
+            for key, value in latest.items():
+                if key not in signal_dict:
+                    signal_dict[key] = value
 
             try:
                 chart_dir = CHART_OUTPUT_DIR

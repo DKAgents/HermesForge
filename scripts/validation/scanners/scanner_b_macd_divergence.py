@@ -273,7 +273,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             direction="bearish",
         )
         if bearish is not None:
-            entry_price, stop_price, target_price, conf_level, macd_bars = bearish
+            entry_price, stop_price, target_price, conf_level, macd_bars, extra_b = bearish
             rr = (entry_price - target_price) / (stop_price - entry_price)
             if rr >= MIN_RR and target_price < entry_price:
                 ep, er, bh = _simulate_exit(
@@ -296,6 +296,10 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "strategy_id":          STRATEGY_ID,
                     "confirmation_level":   conf_level,
                     "macd_bars_above_zero": macd_bars,
+                    "signal_bar_index":     i,
+                    "narrowing_bars":       extra_b["narrowing_bars"],
+                    "rsi_at_signal":        extra_b["rsi_at_signal"],
+                    "prior_swing_bar_offset": extra_b["prior_swing_bar_offset"],
                 })
 
         # ===================================================================
@@ -307,7 +311,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             direction="bullish",
         )
         if bullish is not None:
-            entry_price, stop_price, target_price, conf_level, macd_bars = bullish
+            entry_price, stop_price, target_price, conf_level, macd_bars, extra_l = bullish
             rr = (target_price - entry_price) / (entry_price - stop_price)
             if rr >= MIN_RR and target_price > entry_price:
                 ep, er, bh = _simulate_exit(
@@ -330,6 +334,10 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "strategy_id":          STRATEGY_ID,
                     "confirmation_level":   conf_level,
                     "macd_bars_above_zero": macd_bars,
+                    "signal_bar_index":     i,
+                    "narrowing_bars":       extra_l["narrowing_bars"],
+                    "rsi_at_signal":        extra_l["rsi_at_signal"],
+                    "prior_swing_bar_offset": extra_l["prior_swing_bar_offset"],
                 })
 
     return signals
@@ -480,7 +488,22 @@ def _check_signal(
     else:
         conf_level = "Level 2" if rsi_arr[i] <= 30 else "Level 1"
 
-    return entry_price, stop_price, target_price, conf_level, macd_bars
+    # Extra fields surfaced for Discord alert / chart context (US-064).
+    # narrowing_count and prior_swing_bar were computed above for the gate
+    # checks; recompute the small ones here since they're cheap and this
+    # keeps _check_signal's control flow unchanged above.
+    if direction == "bearish":
+        narrowing_count = _histogram_narrowing_count(hist_arr, i, "bearish")
+    else:
+        narrowing_count = _histogram_narrowing_count(hist_arr, i, "bullish")
+
+    extra = {
+        "narrowing_bars": narrowing_count,
+        "rsi_at_signal": round(float(rsi_arr[i]), 1),
+        "prior_swing_bar_offset": i - prior_swing_bar,
+    }
+
+    return entry_price, stop_price, target_price, conf_level, macd_bars, extra
 
 
 # ---------------------------------------------------------------------------
