@@ -1,17 +1,17 @@
 ---
 id: EPIC-003
 type: epic
-status: backlog
+status: superseded
+superseded_by: EPIC-010
 created: 2026-06-27
-updated: 2026-06-30
+updated: 2026-07-20
 tags: [epic, paper-trading, engine, alpaca, crypto, swing-trading, position-trading]
 ---
 
-# EPIC-003: Paper Trading Engine
+# EPIC-003: Paper Trading Engine (SUPERSEDED)
 
-## Goal
+> **Superseded 2026-07-20 by [[EPIC-010-Automatic-Paper-Trading-Engine]]**, [[EPIC-011-Hyperliquid-Testnet-Integration]], and [[EPIC-012-Alpaca-Paper-Trading-Integration]]. This draft pre-dated the scanner/signal architecture (EPIC-009) and assumed manual trade entry. The new epics build automatic signal capture on top of the existing daily scanner pipeline instead. Kept here for historical reference only — do not build against this epic.
 
-Build a fully functional paper trading engine that executes swing and position trading strategies from EPIC-002 across US stocks and cryptocurrency in a risk-free simulated environment. The engine enforces asset-specific position sizing rules (1% stocks, 0.5% crypto), classifies trades by style (swing vs. position), tracks performance, and produces automated daily reports. Strategies must demonstrate positive risk-adjusted returns in paper mode before any live trading is considered.
 
 ---
 
