@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """
-capture_signals.py — HermesForge EPIC-010 (US-066)
+capture_signals.py — HermesForge EPIC-010 (US-066, extended in US-069)
 
 Runs the daily scanners for strategies A, B, D (independent of Discord
-publish_enabled flags -- paper trading has its own, lower bar) and
-automatically opens a paper trade for every qualifying fresh signal.
-
-Position sizing is currently a flat-1% stub pending US-067 (real sizing
-matrix); the TODO below marks exactly what to swap in.
+publish_enabled flags -- paper trading has its own, lower bar) against
+BOTH stock data (yfinance cache) and crypto data (Hyperliquid cache,
+BTC/ETH/SOL) and automatically opens a paper trade for every qualifying
+fresh signal.
 
 Usage:
     python3 capture_signals.py --dry-run     # show what would be opened
     python3 capture_signals.py               # actually opens trades
+    python3 capture_signals.py --stocks-only
+    python3 capture_signals.py --crypto-only
 """
 
 import sys
@@ -23,15 +24,16 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 
-from fetch_data import load_all  # noqa: E402
+from fetch_data import load_all as load_all_stocks  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
 from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
 
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
+from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
-# Strategy note frontmatter id -> (scanner internal STRATEGY_ID, scan fn)
+# Strategy note frontmatter id -> scan fn
 # Paper trading covers A, B, D (C is a confirmed Phase 1A kill -- excluded).
 PAPER_STRATEGIES = {
     "STR-A-ma-pullback-fibonacci":     scan_a,
@@ -47,31 +49,17 @@ def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
     return position_sizing.get_risk_pct(strategy_id, signal_dict)
 
 
-def capture(dry_run: bool = False) -> dict:
-    summary = {
-        "signals_found": 0,
-        "opened": 0,
-        "skipped_already_open": 0,
-        "errors": 0,
-        "opened_trades": [],
-        "error_details": [],
-    }
-
-    print("Loading cached market data...")
-    data = load_all()
-    if not data:
-        summary["note"] = "No cached market data found. Run fetch_data.py first."
-        return summary
-    print(f"Loaded {len(data)} tickers.")
-
+def _scan_and_capture(data: dict, asset_class: str, data_source: str,
+                       dry_run: bool, summary: dict) -> None:
+    """Shared scan+capture loop, used for both stock and crypto data sources."""
     for strategy_id, scan_fn in PAPER_STRATEGIES.items():
-        print(f"\nScanning {strategy_id}...")
+        print(f"\nScanning {strategy_id} ({asset_class})...")
         for ticker, df in data.items():
             try:
                 signals = scan_fn(df, ticker)
             except Exception as e:
                 summary["errors"] += 1
-                summary["error_details"].append(f"{strategy_id}/{ticker} scan error: {e}")
+                summary["error_details"].append(f"{strategy_id}/{ticker} ({asset_class}) scan error: {e}")
                 continue
 
             if not signals:
@@ -94,7 +82,6 @@ def capture(dry_run: bool = False) -> dict:
 
             allowed, heat_reason = position_sizing.check_portfolio_heat(risk_pct)
             if not allowed:
-                summary["errors"] += 0  # not an error -- a risk-managed skip
                 summary.setdefault("skipped_heat_limit", 0)
                 summary["skipped_heat_limit"] += 1
                 print(f"  SKIP (heat limit): {strategy_id}/{ticker} -- {heat_reason}")
@@ -111,8 +98,8 @@ def capture(dry_run: bool = False) -> dict:
             trade_dict = {
                 "strategy_id": strategy_id,
                 "ticker": ticker,
-                "asset_class": "stock",
-                "data_source": "yfinance",
+                "asset_class": asset_class,
+                "data_source": data_source,
                 "direction": latest["direction"],
                 "signal_id": f"{strategy_id}_{ticker}_{entry_date}",
                 "entry_date": entry_date,
@@ -143,23 +130,56 @@ def capture(dry_run: bool = False) -> dict:
                     summary["errors"] += 1
                     summary["error_details"].append(str(e))
 
+
+def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True) -> dict:
+    summary = {
+        "signals_found": 0,
+        "opened": 0,
+        "skipped_already_open": 0,
+        "errors": 0,
+        "opened_trades": [],
+        "error_details": [],
+    }
+
+    if include_stocks:
+        print("Loading cached stock market data...")
+        stock_data = load_all_stocks()
+        if stock_data:
+            print(f"Loaded {len(stock_data)} stock tickers.")
+            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary)
+        else:
+            print("No cached stock data found (run fetch_data.py first) -- skipping stocks.")
+
+    if include_crypto:
+        print("\nLoading cached crypto market data...")
+        crypto_data = load_all_crypto()
+        if crypto_data:
+            print(f"Loaded {len(crypto_data)} crypto symbols.")
+            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary)
+        else:
+            print("No cached crypto data found (run fetch_crypto_data.py first) -- skipping crypto.")
+
     return summary
 
 
 def main():
     ap = argparse.ArgumentParser(description="HermesForge automatic paper trade signal capture")
     ap.add_argument("--dry-run", action="store_true", help="Show what would be opened without writing to trades.csv")
+    ap.add_argument("--stocks-only", action="store_true")
+    ap.add_argument("--crypto-only", action="store_true")
     args = ap.parse_args()
 
-    summary = capture(dry_run=args.dry_run)
+    include_stocks = not args.crypto_only
+    include_crypto = not args.stocks_only
+
+    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto)
 
     print(f"\n{'='*60}")
     print(f"SUMMARY: {summary['signals_found']} signals found, "
           f"{summary['opened']} {'would open' if args.dry_run else 'opened'}, "
           f"{summary['skipped_already_open']} skipped (already open), "
+          f"{summary.get('skipped_heat_limit', 0)} skipped (heat limit), "
           f"{summary['errors']} errors")
-    if summary.get("note"):
-        print(summary["note"])
     for err in summary.get("error_details", []):
         print(f"  ERROR: {err}")
 
