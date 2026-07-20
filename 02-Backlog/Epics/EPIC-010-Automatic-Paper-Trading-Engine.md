@@ -34,7 +34,7 @@ Automatically capture every signal produced by the daily scanners (EPIC-009) as 
 | US-067 | Position Sizing & Portfolio Heat Enforcement | ✅ Done |
 | US-068 | Outcome Tracking Engine (stocks, intraday H/L) | ✅ Done |
 | US-069 | Crypto Data Source Integration (BTC/ETH/SOL) | ✅ Done |
-| US-070 | Self-Improvement Loop Wiring (extract_lessons.py) | ⬜ Backlog |
+| US-070 | Self-Improvement Loop Wiring (extract_lessons.py) | ✅ Done |
 | US-071 | Paper Trading Performance Report (Discord) | ⬜ Backlog |
 
 ## Definition of Done

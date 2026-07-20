@@ -47,6 +47,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 
 import trade_log  # noqa: E402
+import extract_lessons  # noqa: E402
 
 MARKET_DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data"
 CRYPTO_DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "crypto"
@@ -169,6 +170,14 @@ def run(dry_run: bool = False) -> dict:
                 result["trade_id"], result["exit_date"], result["exit_price"],
                 result["exit_reason"], bars_held=result["bars_held"],
             )
+            # US-070: automatically feed the closed trade into the
+            # self-improvement loop -- no manual triggering needed.
+            try:
+                lesson_result = extract_lessons.extract_from_trade_id(result["trade_id"])
+                print(f"    Lesson extracted: {lesson_result['outcome']} -> {lesson_result['lesson_path']}")
+            except Exception as e:
+                summary["errors"] += 1
+                summary["error_details"].append(f"{result['trade_id']} lesson extraction failed: {e}")
 
     return summary
 
