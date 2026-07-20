@@ -29,6 +29,7 @@ from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
 
 import trade_log  # noqa: E402
+import position_sizing  # noqa: E402
 
 # Strategy note frontmatter id -> (scanner internal STRATEGY_ID, scan fn)
 # Paper trading covers A, B, D (C is a confirmed Phase 1A kill -- excluded).
@@ -41,14 +42,9 @@ PAPER_STRATEGIES = {
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
 
 
-def _flat_one_pct_stub(signal_dict: dict) -> float:
-    """
-    TODO(US-067): replace with real per-strategy sizing:
-      - Strategy B: Level x Weekly-gate matrix (0.25%-1.0%)
-      - Strategy A, D: flat 1% (PS-001) -- these are already correct as-is
-    Until US-067 lands, ALL strategies (including B) use flat 1% here.
-    """
-    return 1.0
+def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
+    """Real per-strategy sizing (US-067): B's Level x Weekly-gate matrix, A/D flat 1%."""
+    return position_sizing.get_risk_pct(strategy_id, signal_dict)
 
 
 def capture(dry_run: bool = False) -> dict:
@@ -94,7 +90,15 @@ def capture(dry_run: bool = False) -> dict:
                 continue
 
             entry_date = str(latest["date"])[:10]
-            risk_pct = _flat_one_pct_stub(latest)
+            risk_pct = _get_risk_pct(strategy_id, latest)
+
+            allowed, heat_reason = position_sizing.check_portfolio_heat(risk_pct)
+            if not allowed:
+                summary["errors"] += 0  # not an error -- a risk-managed skip
+                summary.setdefault("skipped_heat_limit", 0)
+                summary["skipped_heat_limit"] += 1
+                print(f"  SKIP (heat limit): {strategy_id}/{ticker} -- {heat_reason}")
+                continue
 
             entry_price = latest["entry_price"]
             stop_price = latest["stop_price"]
@@ -120,8 +124,8 @@ def capture(dry_run: bool = False) -> dict:
                 "quality_tier": "",  # filled in by alert_publisher's tier logic if available
                 "subperiod": latest.get("subperiod", "n/a"),
                 "confirmation_level": latest.get("confirmation_level", ""),
-                "weekly_gate_scaling": "",  # TODO(US-067)
-                "notes": "position_size_pct is a flat-1% stub pending US-067",
+                "weekly_gate_scaling": latest.get("weekly_gates_passing", ""),
+                "notes": "",
             }
 
             if dry_run:

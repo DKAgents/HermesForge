@@ -31,7 +31,7 @@ Automatically capture every signal produced by the daily scanners (EPIC-009) as 
 |---|---|---|
 | US-065 | Unified Trade Log Schema (stocks + crypto) | ✅ Done |
 | US-066 | Automatic Signal Capture Hook | ✅ Done |
-| US-067 | Position Sizing & Portfolio Heat Enforcement | ⬜ Backlog |
+| US-067 | Position Sizing & Portfolio Heat Enforcement | ✅ Done |
 | US-068 | Outcome Tracking Engine (stocks, intraday H/L) | ⬜ Backlog |
 | US-069 | Crypto Data Source Integration (BTC/ETH/SOL) | ⬜ Backlog |
 | US-070 | Self-Improvement Loop Wiring (extract_lessons.py) | ⬜ Backlog |
