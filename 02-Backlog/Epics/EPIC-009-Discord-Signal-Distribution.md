@@ -1,7 +1,7 @@
 ---
 id: EPIC-009
 type: epic
-status: in-progress
+status: done
 created: 2026-07-20
 updated: 2026-07-20
 tags: [epic, discord, signals, publishing, charts]
@@ -25,7 +25,7 @@ Signal distribution to Discord serves as the human review layer between scanner 
 | US-059 | Chart Image Generator | ✅ Done |
 | US-060 | Discord Alert Formatter and Publisher | ✅ Done |
 | US-061 | Signal Deduplication Log | ✅ Done |
-| US-062 | Daily Scanner → Discord Publishing Cron | ⬜ Backlog |
+| US-062 | Daily Scanner → Discord Publishing Cron | ✅ Done |
 
 ## Definition of Done
 - Scanner runs daily, identifies signals, posts rich alerts to correct Discord channel
