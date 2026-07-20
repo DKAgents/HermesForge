@@ -50,6 +50,8 @@ All strategies live under `06-Strategies/` with sub-folders:
 | `core_idea` | enum | ✅ | `breakout` \| `pullback` \| `mean-reversion` \| `trend-continuation` \| `reversal` \| `other` |
 | `evidence_links` | list | ✅ | List of vault note stems (informational; wikilinks in body are the enforced source) |
 | `last_reviewed` | date | ✅ | ISO 8601 `YYYY-MM-DD` |
+| `publish_enabled` | bool | optional | `true` \| `false` — whether this strategy posts alerts to Discord (default: not published if absent) |
+| `publish_channel` | enum | optional (required if `publish_enabled: true`) | `stocks` \| `crypto` — which Discord channel to publish alerts to |
 
 ### Required Sections (body)
 All strategy notes must contain these H2 sections:
@@ -66,6 +68,13 @@ All strategy notes must contain these H2 sections:
 - `## Supporting Evidence` must contain ≥1 `[[wikilink]]` pointing to an existing vault note
 - All wikilinks are verified to resolve to actual files at validation time
 - Strategies failing validation cannot be promoted from `hypothesis` to `tested`
+
+### Publish Control (EPIC-009)
+Two optional frontmatter fields gate Discord signal distribution per-strategy, independent of code changes:
+- `publish_enabled: true | false` — whether the strategy's scanner output posts alerts to Discord. Absent or `false` = no publishing.
+- `publish_channel: stocks | crypto` — target Discord channel category. Required when `publish_enabled: true`; validator warns (does not error) if missing or set to an unrecognized value.
+
+This keeps publish/no-publish decisions in the vault (auditable, versioned) rather than in a separate config file, consistent with the vault-first philosophy.
 
 ### Auto-Update Mechanism
 When the Discovery Engine (US-051) finds an insight with similarity > 0.7 to a strategy's thesis, it writes a suggestion note to `06-Strategies/Pending-Updates/`. The strategy author reviews and applies changes to the strategy `## Change Log`.

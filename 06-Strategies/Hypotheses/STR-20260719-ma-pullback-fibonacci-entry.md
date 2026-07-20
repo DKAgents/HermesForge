@@ -8,6 +8,8 @@ timeframe: daily
 market_regime: trending
 core_idea: pullback
 confidence: medium
+publish_enabled: false
+publish_channel: stocks
 evidence_links:
   - C050-secondary-trend-retracement-range
   - N085-fibonacci-percentage-retracements-38-50-62

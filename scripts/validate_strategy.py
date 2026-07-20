@@ -50,6 +50,7 @@ VALID_TF        = {'1m', '5m', '15m', '1h', '4h', 'daily', 'weekly', 'monthly', 
 VALID_CONF      = {'low', 'medium', 'high', 'validated'}
 VALID_REGIMES   = {'trending', 'ranging', 'volatile', 'any'}
 VALID_IDEAS     = {'breakout', 'pullback', 'mean-reversion', 'trend-continuation', 'reversal', 'other'}
+VALID_PUBLISH_CHANNELS = {'stocks', 'crypto'}
 
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
@@ -148,6 +149,14 @@ def validate_file(path: Path, vault_stems: set[str]) -> dict:
         core_idea = fm.get('core_idea', '')
         if core_idea and core_idea not in VALID_IDEAS:
             errors.append(f"Invalid core_idea '{core_idea}'. Must be one of: {VALID_IDEAS}")
+
+        # publish_enabled / publish_channel — optional, accepted but validated if present
+        publish_enabled = fm.get('publish_enabled', '')
+        publish_channel = fm.get('publish_channel', '')
+        if publish_enabled == 'true' and not publish_channel:
+            warnings.append("publish_enabled: true but publish_channel is missing")
+        if publish_channel and publish_channel not in VALID_PUBLISH_CHANNELS:
+            warnings.append(f"Unusual publish_channel '{publish_channel}'. Expected: {VALID_PUBLISH_CHANNELS}")
 
         # last_reviewed — must be a valid date
         lr = fm.get('last_reviewed', '')

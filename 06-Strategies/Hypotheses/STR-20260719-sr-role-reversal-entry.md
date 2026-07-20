@@ -8,6 +8,8 @@ timeframe: daily
 market_regime: ranging
 core_idea: reversal
 confidence: medium
+publish_enabled: false
+publish_channel: stocks
 evidence_links:
   - C065-previous-support-as-future-resistance-in-downtrend
   - C368-support-and-resistance

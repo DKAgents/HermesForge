@@ -15,6 +15,8 @@ timeframe: daily
 direction: bidirectional
 confidence: medium
 tags: [strategy, hypothesis, macd, divergence, reversal, oscillator, swing]
+publish_enabled: true
+publish_channel: stocks
 evidence_links:
   - N062-macd-divergence-analysis
   - C154-macd-histogram-momentum-warning-signals

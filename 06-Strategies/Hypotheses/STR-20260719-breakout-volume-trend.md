@@ -8,6 +8,8 @@ timeframe: daily
 market_regime: trending
 core_idea: breakout
 confidence: medium
+publish_enabled: false
+publish_channel: stocks
 evidence_links:
   - EN008-volume-confirmation-at-pattern-completion
   - R052-filters-for-confirming-breakouts
