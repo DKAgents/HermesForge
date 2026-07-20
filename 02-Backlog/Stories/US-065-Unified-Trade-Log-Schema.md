@@ -2,7 +2,7 @@
 id: US-065
 epic: EPIC-010
 type: story
-status: backlog
+status: done
 created: 2026-07-20
 points: 3
 tags: [paper-trading, schema, infrastructure]

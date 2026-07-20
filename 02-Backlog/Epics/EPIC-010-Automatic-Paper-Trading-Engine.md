@@ -29,7 +29,7 @@ Automatically capture every signal produced by the daily scanners (EPIC-009) as 
 
 | Story | Title | Status |
 |---|---|---|
-| US-065 | Unified Trade Log Schema (stocks + crypto) | ⬜ Backlog |
+| US-065 | Unified Trade Log Schema (stocks + crypto) | ✅ Done |
 | US-066 | Automatic Signal Capture Hook | ⬜ Backlog |
 | US-067 | Position Sizing & Portfolio Heat Enforcement | ⬜ Backlog |
 | US-068 | Outcome Tracking Engine (stocks, intraday H/L) | ⬜ Backlog |
