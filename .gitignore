@@ -34,3 +34,4 @@ Inbox/*.py
 Inbox/*.log
 ._*
 .trash/
+__pycache__/
