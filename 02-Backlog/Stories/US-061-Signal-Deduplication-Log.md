@@ -2,7 +2,7 @@
 id: US-061
 epic: EPIC-009
 type: story
-status: backlog
+status: done
 created: 2026-07-20
 points: 2
 tags: [discord, deduplication, signals, logging]

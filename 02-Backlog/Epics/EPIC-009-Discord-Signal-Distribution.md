@@ -23,8 +23,8 @@ Signal distribution to Discord serves as the human review layer between scanner 
 |-------|-------|--------|
 | US-058 | Strategy Frontmatter — Publish Control Fields | ✅ Done |
 | US-059 | Chart Image Generator | ✅ Done |
-| US-060 | Discord Alert Formatter and Publisher | ⬜ Backlog |
-| US-061 | Signal Deduplication Log | ⬜ Backlog |
+| US-060 | Discord Alert Formatter and Publisher | ✅ Done |
+| US-061 | Signal Deduplication Log | ✅ Done |
 | US-062 | Daily Scanner → Discord Publishing Cron | ⬜ Backlog |
 
 ## Definition of Done
