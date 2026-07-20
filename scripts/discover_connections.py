@@ -45,7 +45,7 @@ INDEX_DIR    = Path('/root/.hermes/vault_index')
 SEEDS_FILE   = SCRIPTS_DIR / 'discovery_seeds.yaml'
 STATE_FILE   = INDEX_DIR / 'discovery_state.json'
 
-OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+OPENROUTER_URL = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
 LLM_MODEL    = 'anthropic/claude-sonnet-4.6'
 MAX_TOKENS   = 1200
 DEDUP_SIMILARITY_THRESHOLD = 0.85  # skip if existing insight is this similar to new one

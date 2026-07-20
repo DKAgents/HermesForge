@@ -43,7 +43,7 @@ PENDING_DIR     = STRATEGIES_DIR / 'Pending-Updates'
 KNOWLEDGE_DIR   = VAULT_ROOT / '08-Knowledge'
 LESSON_SEEDS    = SCRIPTS_DIR / 'lesson_seeds.yaml'
 
-OPENROUTER_URL  = 'https://openrouter.ai/api/v1/chat/completions'
+OPENROUTER_URL  = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
 LLM_MODEL       = 'anthropic/claude-sonnet-4.6'
 MAX_TOKENS      = 1500
 VALID_SOURCES   = {'backtest', 'paper-trade', 'analysis', 'live-trade', 'observation'}
