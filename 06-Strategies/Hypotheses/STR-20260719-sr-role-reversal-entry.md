@@ -22,8 +22,10 @@ last_reviewed: 2026-07-19
 created: 2026-07-19
 updated: 2026-07-19
 tags: [strategy, hypothesis, support-resistance, role-reversal, swing]
+topic: strategies
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Support/Resistance Role-Reversal Entry
 
 ## Thesis

@@ -9,8 +9,9 @@ date: 2026-07-19
 confidence: high
 confirmation_count: 0
 tags: [lesson, feedback-loop, refines]
+topic: journal
+has_quotes: false
 ---
-
 # Earnings Catalyst Overrides Technical Role-Reversal Setup
 
 ## What Happened

@@ -2,8 +2,11 @@
 type: index
 updated: 2026-07-19
 tags: [strategy, index]
+topic: strategy index.md
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Strategy Index
 
 All active, hypothesis, and deprecated strategies. Maintained automatically by Dataview.

@@ -47,7 +47,7 @@ STATE_FILE   = INDEX_DIR / 'discovery_state.json'
 
 OPENROUTER_URL = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
 LLM_MODEL    = 'anthropic/claude-sonnet-4.6'
-MAX_TOKENS   = 1200
+MAX_TOKENS   = 2000
 DEDUP_SIMILARITY_THRESHOLD = 0.85  # skip if existing insight is this similar to new one
 ACTIONABILITY_MIN = 3              # write to vault only if score >= this
 
@@ -330,7 +330,10 @@ Please evaluate this set and respond in STRICT JSON format (no markdown, no comm
 Key rules:
 - Score actionability 1-2 if it's just theory. Score 3+ only if it produces a specific decision rule.
 - Set is_trivial=true if notes are from the same subfolder or make the same point.
-- Do NOT invent information not present in the notes."""
+- Do NOT invent information not present in the notes.
+- If the notes lack enough information to answer confidently, still return the JSON object with is_trivial=true and a low actionability score — do NOT explain your reasoning in prose instead of the JSON.
+
+Respond with ONLY the JSON object above. No preamble, no explanation, no commentary before or after it, no markdown code fences."""
 
 
 # ── main discovery loop ───────────────────────────────────────────────────────
@@ -417,9 +420,21 @@ def synthesize_group(notes: list[dict], seed: dict, state: dict, dry_run: bool) 
         raw = re.sub(r'\s*```$', '', raw.strip(), flags=re.MULTILINE)
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"    ✗ JSON parse error: {e}")
-        print(f"    Response preview: {response[:200]}")
-        return None
+        # Fallback: model may have added prose before/after the JSON object.
+        # Try extracting from the first '{' to the matching last '}'.
+        start = raw.find('{')
+        end = raw.rfind('}')
+        if start != -1 and end != -1 and end > start:
+            try:
+                data = json.loads(raw[start:end + 1])
+            except json.JSONDecodeError:
+                print(f"    ✗ JSON parse error (fallback also failed): {e}")
+                print(f"    Response preview: {response[:200]}")
+                return None
+        else:
+            print(f"    ✗ JSON parse error: {e}")
+            print(f"    Response preview: {response[:200]}")
+            return None
 
     if data.get('is_trivial', False):
         print(f"    → Trivial connection, skipping")

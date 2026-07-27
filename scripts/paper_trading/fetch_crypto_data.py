@@ -27,7 +27,13 @@ import pandas as pd
 
 CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "crypto"
 HYPERLIQUID_INFO_URL = "https://api.hyperliquid.xyz/info"
-CRYPTO_UNIVERSE = ["BTC", "ETH", "SOL"]
+CRYPTO_UNIVERSE = [
+    "BTC", "ETH", "SOL",
+    # --- Expansion batch (2026-07-23): Phase 1A option-5 decision --
+    # widen the crypto pool for more paper-trading opportunities.
+    # All are liquid, well-established Hyperliquid perp markets.
+    "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
+]
 CACHE_MAX_AGE_DAYS = 1  # crypto trades 24/7, refresh more often than stocks
 
 

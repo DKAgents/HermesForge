@@ -25,3 +25,6 @@ Document all risk rule violations, near-misses, circuit breaker triggers, and Ri
 
 ## Log
 *No incidents recorded yet. System in bootstrap phase.*
+
+## Related Notes
+- [[ESCALATION_CRITERIA|Risk Guardian Escalation Criteria]]

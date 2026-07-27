@@ -28,8 +28,10 @@ last_reviewed: 2026-07-19
 created: 2026-07-19
 updated: 2026-07-19
 tags: [strategy, hypothesis, pullback, fibonacci, moving-average, swing, trending]
+topic: strategies
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Moving Average Pullback with Fibonacci Precision Entry
 
 ## Thesis

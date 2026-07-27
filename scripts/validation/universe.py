@@ -27,6 +27,34 @@ UNIVERSE = [
     "CRM", "ADBE", "NOW", "SNOW", "PANW", "CRWD", "ZS", "TEAM", "WDAY", "DDOG",
     # ETFs (liquid benchmarks useful for regime context)
     "SPY", "QQQ", "IWM", "XLK", "XLF", "XLE", "XLV", "XLI", "GLD", "TLT",
+
+    # --- Expansion batch (2026-07-23): broaden universe for more signal
+    # opportunities per Phase 1A option-5 decision (do not touch strategy
+    # thresholds; widen the pool of candidates instead). Static list of
+    # additional well-known, highly liquid S&P 500 constituents across
+    # sectors that were thin above. Same survivorship-bias caveat applies.
+
+    # More mega/large-cap tech, communications, internet
+    "NFLX", "CSCO", "IBM", "UBER", "ABNB", "SHOP", "PYPL", "XYZ", "SPOT", "BKNG",
+    "CMCSA", "TMUS", "VZ", "T", "DIS", "WBD", "EA", "TTWO", "PLTR", "SNPS",
+    # More financials + insurance + payments
+    "V", "MA", "C", "COF", "TFC", "STT", "MET", "PRU", "AIG",
+    "TRV", "ALL", "PGR", "CB", "ICE", "CME", "SPGI", "MCO", "AON", "MRSH",
+    # More healthcare + biotech + medtech
+    "PFE", "CVS", "CI", "HUM", "ELV", "MDT", "SYK", "BSX", "ISRG", "VRTX",
+    "REGN", "ZTS", "DHR", "BDX", "IDXX", "IQV", "MRNA", "BIIB",
+    # More consumer discretionary + staples
+    "LOW", "TJX", "ROST", "YUM", "CMG", "DPZ", "MAR", "HLT", "LULU", "DECK",
+    "PEP", "MDLZ", "CL", "KMB", "GIS", "STZ", "MNST", "KDP", "HSY", "SYY",
+    # More industrials + materials + transport
+    "UNP", "CSX", "NSC", "WM", "EMR", "ETN", "PH", "ITW", "ROK", "CMI",
+    "LIN", "APD", "SHW", "ECL", "NUE", "FCX", "NEM", "DOW", "DD", "PPG",
+    # More energy + utilities
+    "KMI", "WMB", "OKE", "BKR", "DVN", "FANG", "NEE", "DUK", "SO", "D",
+    # More semis + hardware + industrial tech
+    "ASML", "TSM", "ARM", "SMCI", "HPE", "DELL", "NXPI", "MCHP", "STX", "WDC",
+    # Additional broad/sector ETFs (regime + breadth context)
+    "DIA", "VTI", "XLY", "XLP", "XLU", "XLC", "XLB", "XBI", "SMH", "ARKK",
 ]
 
 # Deduplicate (AMZN appears twice above intentionally as placeholder — clean it)

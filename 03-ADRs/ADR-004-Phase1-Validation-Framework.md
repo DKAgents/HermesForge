@@ -5,8 +5,11 @@ status: accepted
 date: 2026-07-20
 deciders: [HermesForge Orchestrator, User]
 tags: [adr, validation, backtesting, phase1, swing-trading]
+topic: adrs
+confidence: high
+has_quotes: false
+source: HermesForge ADR
 ---
-
 # ADR-004: Phase 1 Strategy Validation Framework
 
 ## Status

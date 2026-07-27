@@ -42,13 +42,19 @@ COLOR_SR_ZONE = "#a371f7"
 
 
 def _load_ohlcv(ticker: str) -> pd.DataFrame:
-    """Load cached OHLCV parquet for a ticker. Raises if not cached."""
+    """Load cached OHLCV parquet for a ticker. Checks the flat cache dir
+    first, then falls back to the crypto/ subfolder (BTC/ETH/SOL etc. are
+    cached there, not flat). Raises if not found in either location."""
     path = CACHE_DIR / f"{ticker}.parquet"
     if not path.exists():
-        raise FileNotFoundError(
-            f"No cached data for {ticker} at {path}. "
-            f"Run scripts/validation/fetch_data.py first."
-        )
+        crypto_path = CACHE_DIR / "crypto" / f"{ticker}.parquet"
+        if crypto_path.exists():
+            path = crypto_path
+        else:
+            raise FileNotFoundError(
+                f"No cached data for {ticker} at {path} or {crypto_path}. "
+                f"Run scripts/validation/fetch_data.py first."
+            )
     df = pd.read_parquet(path)
     df.index = pd.to_datetime(df.index)
     df = df.rename(columns={

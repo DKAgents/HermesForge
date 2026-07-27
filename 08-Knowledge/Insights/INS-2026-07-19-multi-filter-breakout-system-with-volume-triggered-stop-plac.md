@@ -8,6 +8,10 @@ sources: ["N013-volume-as-a-filter-for-false-breakouts", "R052-filters-for-confi
 seed_id: breakout_volume_risk
 tags: [insight, discovery, knowledge-evolution]
 confirmation_count: 1
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
 # Multi-Filter Breakout System with Volume-Triggered Stop Placement
 

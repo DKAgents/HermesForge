@@ -81,6 +81,12 @@ def check_quality(ticker: str, df: pd.DataFrame | None) -> bool:
     years = (df.index[-1] - df.index[0]).days / 365.25
     expected = int(years * 252)
     actual = len(df)
+    # Guard against tiny/degenerate history (e.g. delisted/renamed ticker
+    # returning a single stale row) -- avoid ZeroDivisionError and treat
+    # as a quality failure instead of crashing the whole batch fetch.
+    if expected <= 0 or actual < 100:
+        print(f"  WARN {ticker}: insufficient history ({actual} bars, expected~{expected}) — flagged")
+        return False
     missing_pct = max(0, (expected - actual) / expected)
     if missing_pct > 0.05:
         print(f"  WARN {ticker}: {missing_pct:.1%} missing bars ({actual}/{expected}) — flagged")
@@ -102,8 +108,12 @@ def fetch_all(force: bool = False) -> dict[str, bool]:
             continue
 
         print(f"[{i:3d}/{len(tickers)}] Fetching {ticker}...")
-        df = fetch_ticker(ticker)
-        ok = check_quality(ticker, df)
+        try:
+            df = fetch_ticker(ticker)
+            ok = check_quality(ticker, df)
+        except Exception as e:
+            print(f"  ERROR {ticker}: unexpected failure during fetch/quality-check: {e}")
+            df, ok = None, False
         quality[ticker] = ok
 
         if df is not None and ok:

@@ -32,8 +32,10 @@ evidence_links:
   - RG035-combining-technical-factors-with-money-management-for-stop-p
   - R305-oscillators-and-trend-importance
   - E034-mechanical-trend-following-systems-work-only-in-certain-envi
+topic: strategies
+has_quotes: true
+source: HermesForge Strategies
 ---
-
 # MACD Histogram Divergence with Weekly Trend Assessment
 
 ## Thesis

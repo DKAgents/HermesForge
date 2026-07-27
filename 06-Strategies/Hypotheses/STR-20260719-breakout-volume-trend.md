@@ -23,6 +23,9 @@ created: 2026-07-19
 updated: 2026-07-19
 tags: [strategy, hypothesis, breakout, volume, swing]
 confirmation_count: 1
+topic: strategies
+has_quotes: false
+source: HermesForge Strategies
 ---
 # Trend-Following Breakout with Volume Confirmation
 

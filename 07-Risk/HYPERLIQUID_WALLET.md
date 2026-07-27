@@ -4,8 +4,11 @@ epic: EPIC-011
 story: US-072
 created: 2026-07-20
 tags: [hyperliquid, wallet, testnet, security]
+topic: risk
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Hyperliquid Testnet Agent Wallet
 
 ## Purpose

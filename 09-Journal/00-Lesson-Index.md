@@ -2,8 +2,11 @@
 type: index
 updated: 2026-07-19
 tags: [lessons, feedback-loop, index]
+topic: lesson index.md
+confidence: high
+has_quotes: false
+source: HermesForge Journal
 ---
-
 # Lesson Index
 
 All lessons extracted from backtest results, paper trades, and analysis sessions.

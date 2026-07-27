@@ -5,8 +5,11 @@ status: accepted
 date: 2026-07-19
 deciders: [HermesForge Orchestrator]
 tags: [adr, strategy, schema, knowledge-evolution]
+topic: adrs
+confidence: high
+has_quotes: false
+source: HermesForge ADR
 ---
-
 # ADR-003: Strategy Note Schema and Living Strategy Layer
 
 ## Status

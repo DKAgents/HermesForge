@@ -1,0 +1,4 @@
+ticker,date,direction,entry_price,stop_price,target_price,exit_price,exit_reason,r_multiple,bars_held,subperiod,strategy_id,adx,rsi,vix_size_reduction
+AIG,2025-10-13,long,80.3819,79.1236,84.1567,75.6663,stop,-3.7477,3,period3_current,STR-20260726-first-pullback-trend-swing,27.9,57.64,False
+GOOGL,2024-10-03,long,164.8093,162.2309,172.5446,161.9475,stop,-1.1099,2,period3_current,STR-20260726-first-pullback-trend-swing,22.71,59.09,False
+PRU,2022-07-18,short,75.9367,77.8612,70.163,77.9937,stop,-1.0688,1,period2_bear,STR-20260726-first-pullback-trend-swing,26.32,40.55,True

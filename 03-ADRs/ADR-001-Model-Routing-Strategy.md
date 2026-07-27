@@ -6,8 +6,11 @@ created: 2026-06-27
 updated: 2026-07-20
 deciders: [human, orchestrator]
 tags: [adr, model-routing, cost-optimization, llm-strategy]
+topic: adrs
+confidence: high
+has_quotes: true
+source: HermesForge ADR
 ---
-
 # ADR-001: Model Routing Strategy
 
 ## Status
@@ -70,14 +73,14 @@ points as automation volume increases.
 2. **Route by task complexity, not agent identity** — the same agent may do simple OR complex work
 3. **Use fast/cheap models for high-frequency loops** — ForgeLoop, daily summaries, news triage
 4. **Synthesize with strong models** — final strategy write-ups, thesis construction, ADR decisions
-5. **Fallback to Sonnet** — when task complexity is ambiguous, default up not down
+5. **Fallback to GLM-5.2** — when task complexity is ambiguous, default up not down
 
 ### Model Tier Reference (updated 2026-07-20)
 
 | Tier | Model (OpenRouter) | Approx Cost (in/out per 1M) | Used For |
 |------|--------------------|-----------------------------|----------|
 | **T1** | `anthropic/claude-opus-4.8` | $5 / $25 | Novel strategy design, major architecture decisions, critical risk incidents only. Use sparingly. |
-| **T2** | `anthropic/claude-sonnet-5` | $2/$10 until Aug 31 2026 → then $3/$15 | Build work (coder, architect, orchestrator), high-quality research synthesis, hard floor for risk-guardian. |
+| **T2** | `z-ai/glm-5.2` | ~$0.67/$2.10 (OpenRouter, 2026-07-26) | Build work (coder, architect, orchestrator), high-quality research synthesis, hard floor for risk-guardian. Switched from `anthropic/claude-sonnet-5` on 2026-07-26 per user request — see Change Log. |
 | **T3** | `deepseek/deepseek-v4-flash` (primary)<br>`z-ai/glm-5.2` (secondary) | DeepSeek ~$0.05–0.14 / $0.15–0.28<br>GLM ~$0.4–1.4 / $1.3–4.4 | Most operational trading, backtesting, daily research, product-owner, most automation. |
 | **T4** | Gemini Flash variants / MiniMax M3 / cheaper open models | <$0.50 blended | News triage, alert classification, bulk scanning, documenter, simple structured tasks. |
 
@@ -85,7 +88,7 @@ points as automation volume increases.
 
 | Agent | Default Tier | Hard Floor | Notes |
 |-------|-------------|------------|-------|
-| **risk-guardian** | T2 | T2 | Never route below Sonnet 5. Errors here are costly. |
+| **risk-guardian** | T2 | T2 | Never route below GLM-5.2 (T2). Errors here are costly. |
 | **orchestrator** | T2 | T2 | Active platform-build phase — force T2 |
 | **architect** | T2 | T2 | Active platform-build phase — force T2 |
 | **coder** | T2 | T2 | Active platform-build phase — force T2 |
@@ -95,7 +98,7 @@ points as automation volume increases.
 | **product-owner** | T3 | T4 | T3 default, T4 acceptable for formatting |
 | **documenter** | T4 | T4 | Mechanical work only — T4 sufficient |
 
-> **Note:** Sonnet 5 introductory pricing ($2/$10) ends August 31, 2026. A pricing review reminder is scheduled for August 25–28, 2026 (cron job 27a6aa851a96). Review ADR-001 at that time.
+> **Note:** T2 was switched from `anthropic/claude-sonnet-5` to `z-ai/glm-5.2` on 2026-07-26 (user-directed). The Sonnet-5 introductory-pricing reminder (cron job 27a6aa851a96, scheduled Aug 25–28 2026) is now stale/no-op for T2 pricing purposes but has been left in place — see Change Log for follow-up note.
 
 ---
 
@@ -201,6 +204,12 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 **Risks:**
 - Accidentally routing a risk task to Flash — mitigated by Risk Guardian hard floor rule
 - Flash behavior drift on OpenRouter — mitigate by pinning model version where possible
+
+---
+
+## Change Log
+
+- **2026-07-26**: T2 tier and hard floor switched from `anthropic/claude-sonnet-5` to `z-ai/glm-5.2` per explicit user (Dan Keseloff) instruction. Rationale given: cost (GLM-5.2 ~$0.67/$2.10 vs Sonnet-5 $2-3/$10-15 per 1M tokens) and consolidating on OpenRouter. User explicitly approved relaxing the risk-guardian/orchestrator/architect/coder hard floor to allow this. Follow-up: monitor risk-guardian/orchestrator/architect/coder output quality on GLM-5.2 for regressions vs. the Sonnet-5 baseline; escalate back to T1/Sonnet-class model if quality issues surface. Cron job `27a6aa851a96` (Sonnet-5 pricing reminder, Aug 25-28 2026) is now stale for T2 purposes but left in place — revisit at that date.
 
 ---
 

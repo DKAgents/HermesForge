@@ -9,8 +9,9 @@ date: 2026-07-19
 confidence: high
 confirmation_count: 0
 tags: [lesson, feedback-loop, confirms]
+topic: journal
+has_quotes: false
 ---
-
 # Volume and Weekly Trend Filter Confirm Breakout Edge
 
 ## What Happened

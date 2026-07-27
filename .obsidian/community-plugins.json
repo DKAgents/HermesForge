@@ -2,5 +2,6 @@
   "dataview",
   "templater-obsidian",
   "obsidian-tasks-plugin",
-  "obsidian-git"
+  "obsidian-git",
+  "smart-connections"
 ]

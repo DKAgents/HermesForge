@@ -2,8 +2,11 @@
 type: enhancement-backlog
 updated: 2026-07-20
 tags: [strategy, backlog, enhancements, research]
+topic: enhancement backlog.md
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Strategy Enhancement Backlog
 
 Running log of ideas, future tests, and potential improvements surfaced during strategy development and review. Captured here so nothing is lost between sessions.
@@ -72,3 +75,6 @@ Running log of ideas, future tests, and potential improvements surfaced during s
 | R-001 | ADX as hard maturity gate for Strategy B | Rejected for v1 — too noisy and lagging. Moved to Open Questions (B-001). | 2026-07-20 |
 | R-002 | Three-tier quality sizing for Strategy B | Simplified to two levels for v1 testability. Preserved as B-006 for v2. | 2026-07-20 |
 | R-003 | Continuous weekly scaling matrix for Strategy B | Simplified to 3-level modifier for v1. Preserved as B-007 for v2. | 2026-07-20 |
+
+## Related Notes
+- [[STR-20260719-macd-histogram-divergence-weekly-assessment|MACD Histogram Divergence with Weekly Trend Assessment]]

@@ -29,12 +29,20 @@ from scanners.scanner_a_ma_pullback import scan as scan_a
 from scanners.scanner_b_macd_divergence import scan as scan_b
 from scanners.scanner_c_breakout_volume import scan as scan_c
 from scanners.scanner_d_sr_reversal import scan as scan_d
+from scanners.scanner_e_rsi_mean_reversion import scan as scan_e
+from scanners.scanner_g_relative_strength import scan as scan_g
+from scanners.scanner_f_bollinger_squeeze import scan as scan_f
+from scanners.scanner_h_first_pullback_trend_swing import scan as scan_h
 
 STRATEGY_MAP = {
     "a": ("STR-A-ma-pullback-fibonacci",        scan_a),
     "b": ("STR-B-macd-histogram-divergence",    scan_b),
     "c": ("STR-C-breakout-volume",              scan_c),
     "d": ("STR-D-sr-role-reversal",             scan_d),
+    "e": ("STR-E-rsi-mean-reversion",           scan_e),
+    "g": ("STR-G-relative-strength-rotation",   scan_g),
+    "f": ("STR-F-bollinger-squeeze-breakout",   scan_f),
+    "h": ("STR-20260726-first-pullback-trend-swing", scan_h),
 }
 
 # ADR-004 thresholds
@@ -183,7 +191,7 @@ def write_report(summaries: list[dict]):
 def main():
     parser = argparse.ArgumentParser(description="Run HermesForge Phase 1A signal scanners")
     parser.add_argument("--fetch", action="store_true", help="Fetch/refresh market data first")
-    parser.add_argument("--strategy", choices=["a","b","c","d"], help="Run only one strategy")
+    parser.add_argument("--strategy", choices=["a","b","c","d","e","g","f","h"], help="Run only one strategy")
     args = parser.parse_args()
 
     if args.fetch:

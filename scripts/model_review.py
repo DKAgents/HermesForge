@@ -28,7 +28,7 @@ ADR_PATH = pathlib.Path.home() / "HermesForge" / "03-ADRs" / "ADR-001-Model-Rout
 # Tier reference from ADR-001 (2026-07-20) — kept in sync manually
 TIER_MODELS = {
     "T1": "anthropic/claude-opus-4.8",
-    "T2": "anthropic/claude-sonnet-5",
+    "T2": "z-ai/glm-5.2",
     "T3": "deepseek/deepseek-v4-flash",
     "T4": "google/gemini-2.0-flash-001",
 }
