@@ -26,9 +26,11 @@ import time
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 
-from fetch_data import load_all  # noqa: E402
+from fetch_data import load_all as load_all_stocks  # noqa: E402
+from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
 from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_c_breakout_volume import scan as scan_c   # noqa: E402
@@ -109,24 +111,53 @@ def run_pipeline(dry_run: bool = False) -> dict:
         summary["note"] = "No strategies have publish_enabled: true — nothing to scan."
         return summary
 
-    print(f"Loading cached market data...")
-    data = load_all()
-    if not data:
-        summary["note"] = "No cached market data found. Run fetch_data.py first."
+    # --- Load stock + crypto data ---
+    print("Loading cached stock data...")
+    stock_data = load_all_stocks()
+    print(f"Loaded {len(stock_data)} stock tickers.")
+
+    print("Loading cached crypto data...")
+    crypto_data = load_all_crypto()
+    print(f"Loaded {len(crypto_data)} crypto symbols.")
+
+    if not stock_data and not crypto_data:
+        summary["note"] = "No cached market data found. Run fetch_data.py and fetch_crypto_data.py first."
         return summary
-    print(f"Loaded {len(data)} tickers.")
+
+    # --- Scan stocks (route to strategy's publish_channel, typically "stocks") ---
+    _scan_and_publish(stock_data, "stock", enabled_scanners, publish_flags,
+                      dry_run, summary)
+
+    # --- Scan crypto (override publish_channel to "crypto" regardless of strategy setting) ---
+    _scan_and_publish(crypto_data, "crypto", enabled_scanners, publish_flags,
+                      dry_run, summary, channel_override="crypto")
+
+    return summary
+
+
+def _scan_and_publish(data: dict, asset_class: str, enabled_scanners: dict,
+                       publish_flags: dict, dry_run: bool, summary: dict,
+                       channel_override: str | None = None) -> None:
+    """Scan a data dict with each enabled scanner and build publish payloads.
+
+    channel_override: if set (e.g. "crypto"), overrides the strategy's
+    publish_channel for routing signals to the correct Discord channel.
+    """
+    if not data:
+        return
 
     for scanner_id, scan_fn in enabled_scanners.items():
         note_id = SCANNER_TO_NOTE_ID[scanner_id]
         flags = publish_flags[note_id]
-        print(f"\nScanning {scanner_id} ({flags['name']})...")
+        publish_channel = channel_override or flags["publish_channel"]
+        print(f"\nScanning {scanner_id} ({flags['name']}, {asset_class})...")
 
         for ticker, df in data.items():
             try:
                 signals = scan_fn(df, ticker)
             except Exception as e:
                 summary["errors"] += 1
-                summary["error_details"].append(f"{scanner_id}/{ticker} scan error: {e}")
+                summary["error_details"].append(f"{scanner_id}/{ticker} ({asset_class}) scan error: {e}")
                 continue
 
             if not signals:
@@ -187,7 +218,7 @@ def run_pipeline(dry_run: bool = False) -> dict:
 
             result = publish_signal(
                 signal_dict, str(chart_path),
-                publish_channel=flags["publish_channel"],
+                publish_channel=publish_channel,
                 dry_run=dry_run,
             )
 
@@ -201,19 +232,18 @@ def run_pipeline(dry_run: bool = False) -> dict:
                 "strategy_id": scanner_id,
                 "ticker": ticker,
                 "entry_date": entry_date,
-                "channel": flags["publish_channel"],
+                "channel": publish_channel,
+                "asset_class": asset_class,
                 "target": result["target"],
                 "message": result["message"],
             })
 
             if not dry_run:
-                dedup.record_published(signal_id, scanner_id, ticker, entry_date, flags["publish_channel"])
+                dedup.record_published(signal_id, scanner_id, ticker, entry_date, publish_channel)
                 summary["posted"] += 1
                 time.sleep(2)  # rate limit between posts (US-062 spec)
             else:
                 summary["posted"] += 1  # counted as "would post" in dry-run
-
-    return summary
 
 
 def main():

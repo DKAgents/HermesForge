@@ -55,6 +55,42 @@ UNIVERSE = [
     "ASML", "TSM", "ARM", "SMCI", "HPE", "DELL", "NXPI", "MCHP", "STX", "WDC",
     # Additional broad/sector ETFs (regime + breadth context)
     "DIA", "VTI", "XLY", "XLP", "XLU", "XLC", "XLB", "XBI", "SMH", "ARKK",
+
+    # --- Expansion batch (2026-07-27): full S&P 500 coverage
+    # Added all remaining S&P 500 constituents not already in the universe.
+    # Survivorship bias caveat still applies (ADR-004).
+    "A", "ACGL", "ACN", "ADM", "ADP", "ADSK", "AEE", "AEP", "AES", "AFL",
+    "AIZ", "AJG", "AKAM", "ALB", "ALGN", "ALLE", "AMCR", "AME", "AMP", "AMT",
+    "ANET", "AOS", "APA", "APH", "APO", "APP", "APTV", "ARE", "ARES", "ATO",
+    "AVB", "AVY", "AWK", "AXON", "AZO", "BALL", "BAX", "BBY", "BEN", "BF-B",
+    "BG", "BLDR", "BNY", "BR", "BRK-B", "BRO", "BX", "BXP", "CAH", "CARR",
+    "CASY", "CBOE", "CBRE", "CCI", "CCL", "CDNS", "CDW", "CEG", "CF", "CFG",
+    "CHD", "CHRW", "CHTR", "CIEN", "CINF", "CLX", "CMS", "CNC", "CNP", "COHR",
+    "COIN", "COO", "COR", "CPAY", "CPRT", "CPT", "CRH", "CRL", "CSGP", "CTAS",
+    "CTSH", "CTVA", "CVNA", "DAL", "DASH", "DG", "DGX", "DHI", "DLR", "DLTR",
+    "DOC", "DOV", "DRI", "DTE", "DVA", "DXCM", "EBAY", "ECHO", "ED", "EFX",
+    "EG", "EIX", "EL", "EME", "EQIX", "EQR", "EQT", "ERIE", "ES", "ESS",
+    "ETR", "EVRG", "EW", "EXC", "EXE", "EXPD", "EXPE", "EXR", "F", "FAST",
+    "FDS", "FDXF", "FE", "FFIV", "FICO", "FIS", "FISV", "FITB", "FIX", "FLEX",
+    "FOX", "FOXA", "FRT", "FSLR", "FTNT", "FTV", "GD", "GDDY", "GEHC", "GEN",
+    "GEV", "GL", "GLW", "GM", "GNRC", "GOOG", "GPC", "GPN", "GRMN", "GWW",
+    "HAS", "HBAN", "HCA", "HIG", "HII", "HONA", "HOOD", "HPQ", "HRL", "HSIC",
+    "HST", "HUBB", "HWM", "IBKR", "IEX", "IFF", "INCY", "INTU", "INVH", "IP",
+    "IR", "IRM", "IT", "IVZ", "J", "JBHT", "JBL", "JCI", "JKHY", "KEY",
+    "KEYS", "KHC", "KIM", "KKR", "KR", "KVUE", "L", "LDOS", "LEN", "LH",
+    "LHX", "LII", "LITE", "LNT", "LUV", "LVS", "LYB", "LYV", "MAA", "MAS",
+    "MCK", "MGM", "MKC", "MLM", "MO", "MOS", "MPWR", "MSCI", "MSI", "MTB",
+    "MTD", "NCLH", "NDAQ", "NDSN", "NI", "NOC", "NRG", "NTAP", "NTRS", "NVR",
+    "NWS", "NWSA", "O", "ODFL", "OMC", "ORLY", "OTIS", "PAYX", "PCAR", "PCG",
+    "PEG", "PFG", "PHM", "PKG", "PLD", "PM", "PNR", "PNW", "PODD", "PPL",
+    "PSA", "PSKY", "PTC", "PWR", "Q", "RCL", "REG", "RF", "RJF", "RL",
+    "RMD", "ROL", "ROP", "RSG", "RVTY", "SBAC", "SJM", "SNA", "SNDK", "SOLV",
+    "SPG", "SRE", "STE", "STLD", "SW", "SWK", "SWKS", "SYF", "TAP", "TDG",
+    "TDY", "TECH", "TEL", "TER", "TKO", "TPL", "TPR", "TRGP", "TRMB", "TROW",
+    "TSCO", "TSN", "TT", "TTD", "TXT", "TYL", "UAL", "UDR", "UHS", "ULTA",
+    "URI", "VEEV", "VICI", "VLTO", "VMC", "VRSK", "VRSN", "VRT", "VST", "VTR",
+    "VTRS", "WAB", "WAT", "WEC", "WELL", "WRB", "WSM", "WST", "WTW", "WY",
+    "WYNN", "XEL", "XYL", "ZBH", "ZBRA",
 ]
 
 # Deduplicate (AMZN appears twice above intentionally as placeholder — clean it)

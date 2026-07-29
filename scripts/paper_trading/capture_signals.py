@@ -28,17 +28,19 @@ from fetch_data import load_all as load_all_stocks  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
 from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
+from scanners.scanner_i_adaptive_trend import scan as scan_i    # noqa: E402
 
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
 # Strategy note frontmatter id -> scan fn
-# Paper trading covers A, B, D (C is a confirmed Phase 1A kill -- excluded).
+# Paper trading covers A, B, D, I (C is a confirmed Phase 1A kill -- excluded).
 PAPER_STRATEGIES = {
     "STR-A-ma-pullback-fibonacci":     scan_a,
     "STR-B-macd-histogram-divergence": scan_b,
     "STR-D-sr-role-reversal":          scan_d,
+    "STR-I-adaptive-trend":            scan_i,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention

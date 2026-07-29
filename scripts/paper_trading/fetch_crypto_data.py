@@ -33,6 +33,16 @@ CRYPTO_UNIVERSE = [
     # widen the crypto pool for more paper-trading opportunities.
     # All are liquid, well-established Hyperliquid perp markets.
     "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
+
+    # --- Expansion batch (2026-07-27): full high-liquidity coverage
+    # All Hyperliquid perpetual markets with max leverage >= 10.
+    # These are the deepest, most established markets with longest
+    # price history (most go back to 2020-2021). Same free public API.
+    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
+    "FARTCOIN", "FTM", "HYPE", "JUP", "LOOM", "LTC", "MATIC",
+    "MKR", "NEAR", "ONDO", "PAXG", "PUMP", "RNDR", "STRAX", "TON",
+    "TRUMP", "TRX", "UNI", "WLD", "XPL", "XRP", "ZEC",
+    "kBONK", "kPEPE", "kSHIB",
 ]
 CACHE_MAX_AGE_DAYS = 1  # crypto trades 24/7, refresh more often than stocks
 

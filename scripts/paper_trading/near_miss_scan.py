@@ -17,6 +17,11 @@ divergence, resistance touch/break, ATR-based stop) is enforced
 exactly as in the real scanners, because those are the module-level
 functions imported directly -- only the MIN_RR constant is patched.
 
+Parallelized (2026-07-28): uses ProcessPoolExecutor to scan all
+(strategy × asset_class) combinations in parallel across CPU cores.
+Each worker loads its own data from parquet cache (avoids pickling
+large DataFrames). Scales to 1000+ instruments within 300s cron limit.
+
 Usage:
     python3 near_miss_scan.py                  # top 3 stocks+crypto
     python3 near_miss_scan.py --top 5
@@ -27,6 +32,8 @@ Usage:
 import sys
 import argparse
 import pathlib
+import os
+import concurrent.futures
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
@@ -34,17 +41,23 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 
 from fetch_data import load_all as load_all_stocks           # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto     # noqa: E402
-import scanners.scanner_a_ma_pullback as scanner_a            # noqa: E402
-import scanners.scanner_b_macd_divergence as scanner_b        # noqa: E402
-import scanners.scanner_d_sr_reversal as scanner_d            # noqa: E402
 
-STRATEGIES = {
-    "STR-A-ma-pullback-fibonacci":     scanner_a,
-    "STR-B-macd-histogram-divergence": scanner_b,
-    "STR-D-sr-role-reversal":          scanner_d,
-}
+STRATEGY_NAMES = [
+    "STR-A-ma-pullback-fibonacci",
+    "STR-B-macd-histogram-divergence",
+    "STR-D-sr-role-reversal",
+]
 
 NEAR_ZERO_RR = 0.01  # effectively disables the RR gate so we see raw candidates
+
+# Cache paths (workers load their own data to avoid pickling DataFrames)
+STOCK_CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data"
+CRYPTO_CACHE_DIR = STOCK_CACHE_DIR / "crypto"
+VALID_SIGNAL_START = "2019-04-01"
+
+# How many chunks to split each (strategy × asset_class) batch into.
+# More chunks = better load balancing, more overhead. 3 is good for 3 CPUs.
+CHUNKS_PER_BATCH = 3
 
 
 def _rr_from_signal(sig: dict) -> float | None:
@@ -66,46 +79,165 @@ def _rr_from_signal(sig: dict) -> float | None:
     return reward / risk
 
 
-def _scan_near_misses(data: dict, asset_class: str) -> list[dict]:
+# ── Worker function (runs in separate process) ──────────────────────────────
+
+def _scan_chunk(task: dict) -> list[dict]:
+    """
+    Worker process: scan a chunk of tickers for one strategy.
+
+    Loads data from parquet cache (avoids pickling DataFrames across
+    process boundaries). Patches MIN_RR, scans, returns near-misses.
+
+    task keys: strategy_name, tickers (list[str]), asset_class,
+               cache_dir (str), original_rr (float)
+    """
+    import pandas as pd
+
+    strategy_name = task["strategy_name"]
+    tickers = task["tickers"]
+    asset_class = task["asset_class"]
+    cache_dir = pathlib.Path(task["cache_dir"])
+    original_rr = task["original_rr"]
+
+    # Import the scanner module by strategy name
+    if strategy_name == "STR-A-ma-pullback-fibonacci":
+        import scanners.scanner_a_ma_pullback as scanner
+    elif strategy_name == "STR-B-macd-histogram-divergence":
+        import scanners.scanner_b_macd_divergence as scanner
+    elif strategy_name == "STR-D-sr-role-reversal":
+        import scanners.scanner_d_sr_reversal as scanner
+    else:
+        return []
+
+    # Patch MIN_RR to loosen the RR gate (this is per-process, no race)
+    scanner.MIN_RR = NEAR_ZERO_RR
+
     results = []
-    for strategy_id, module in STRATEGIES.items():
-        original_rr = module.MIN_RR
-        module.MIN_RR = NEAR_ZERO_RR  # loosen ONLY the RR gate
+    for ticker in tickers:
+        # Load from parquet cache
+        parquet_path = cache_dir / f"{ticker}.parquet"
+        if not parquet_path.exists():
+            continue
         try:
-            for ticker, df in data.items():
-                try:
-                    signals = module.scan(df, ticker)
-                except Exception:
-                    continue
-                if not signals:
-                    continue
-                latest = signals[-1]
-                most_recent_bar_date = str(df.index[-1])[:10]
-                if str(latest["date"])[:10] != most_recent_bar_date:
-                    continue  # not today's bar -- not relevant to "today's near misses"
+            df = pd.read_parquet(parquet_path)
+            if asset_class == "stock":
+                df = df[df.index >= VALID_SIGNAL_START]
+        except Exception:
+            continue
+        if len(df) < 100:
+            continue
 
-                rr = _rr_from_signal(latest)
-                if rr is None:
-                    continue
-                if rr >= original_rr:
-                    continue  # this one actually qualifies for real -- not a "near miss"
+        try:
+            signals = scanner.scan(df, ticker)
+        except Exception:
+            continue
+        if not signals:
+            continue
 
-                results.append({
-                    "strategy_id": strategy_id,
-                    "ticker": ticker,
-                    "asset_class": asset_class,
-                    "direction": latest.get("direction", "long"),
-                    "date": str(latest["date"])[:10],
-                    "entry_price": latest["entry_price"],
-                    "stop_price": latest["stop_price"],
-                    "target_price": latest["target_price"],
-                    "achieved_rr": round(rr, 2),
-                    "required_rr": original_rr,
-                    "rr_gap": round(original_rr - rr, 2),
-                })
-        finally:
-            module.MIN_RR = original_rr  # always restore, even on error
+        latest = signals[-1]
+        most_recent_bar_date = str(df.index[-1])[:10]
+        if str(latest["date"])[:10] != most_recent_bar_date:
+            continue  # not today's bar
+
+        rr = _rr_from_signal(latest)
+        if rr is None:
+            continue
+        if rr >= original_rr:
+            continue  # actually qualifies — not a near miss
+
+        results.append({
+            "strategy_id": strategy_name,
+            "ticker": ticker,
+            "asset_class": asset_class,
+            "direction": latest.get("direction", "long"),
+            "date": str(latest["date"])[:10],
+            "entry_price": latest["entry_price"],
+            "stop_price": latest["stop_price"],
+            "target_price": latest["target_price"],
+            "achieved_rr": round(rr, 2),
+            "required_rr": original_rr,
+            "rr_gap": round(original_rr - rr, 2),
+        })
+
     return results
+
+
+# ── Orchestration ───────────────────────────────────────────────────────────
+
+def _get_original_rr(strategy_name: str) -> float:
+    """Get the original MIN_RR for a strategy (before patching)."""
+    if strategy_name == "STR-A-ma-pullback-fibonacci":
+        import scanners.scanner_a_ma_pullback as s
+    elif strategy_name == "STR-B-macd-histogram-divergence":
+        import scanners.scanner_b_macd_divergence as s
+    elif strategy_name == "STR-D-sr-role-reversal":
+        import scanners.scanner_d_sr_reversal as s
+    else:
+        return 3.0
+    return s.MIN_RR
+
+
+def _build_tasks(stock_tickers: list[str], crypto_tickers: list[str],
+                  include_stocks: bool, include_crypto: bool) -> list[dict]:
+    """Build task list: one task per (strategy × asset_class × chunk)."""
+    tasks = []
+
+    for strategy_name in STRATEGY_NAMES:
+        original_rr = _get_original_rr(strategy_name)
+
+        if include_stocks and stock_tickers:
+            # Split stock tickers into chunks for load balancing
+            chunk_size = max(1, len(stock_tickers) // CHUNKS_PER_BATCH)
+            for i in range(0, len(stock_tickers), chunk_size):
+                chunk = stock_tickers[i:i + chunk_size]
+                tasks.append({
+                    "strategy_name": strategy_name,
+                    "tickers": chunk,
+                    "asset_class": "stock",
+                    "cache_dir": str(STOCK_CACHE_DIR),
+                    "original_rr": original_rr,
+                })
+
+        if include_crypto and crypto_tickers:
+            chunk_size = max(1, len(crypto_tickers) // CHUNKS_PER_BATCH)
+            for i in range(0, len(crypto_tickers), chunk_size):
+                chunk = crypto_tickers[i:i + chunk_size]
+                tasks.append({
+                    "strategy_name": strategy_name,
+                    "tickers": chunk,
+                    "asset_class": "crypto",
+                    "cache_dir": str(CRYPTO_CACHE_DIR),
+                    "original_rr": original_rr,
+                })
+
+    return tasks
+
+
+def scan_near_misses_parallel(include_stocks: bool = True,
+                               include_crypto: bool = True) -> list[dict]:
+    """Run near-miss scan in parallel across CPU cores."""
+    stock_tickers = list(load_all_stocks().keys()) if include_stocks else []
+    crypto_tickers = list(load_all_crypto().keys()) if include_crypto else []
+
+    tasks = _build_tasks(stock_tickers, crypto_tickers, include_stocks, include_crypto)
+
+    if not tasks:
+        return []
+
+    n_workers = min(os.cpu_count() or 2, len(tasks))
+    all_results = []
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=n_workers) as executor:
+        futures = [executor.submit(_scan_chunk, task) for task in tasks]
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                results = future.result()
+                all_results.extend(results)
+            except Exception as e:
+                print(f"  Worker error: {e}", file=sys.stderr)
+
+    all_results.sort(key=lambda r: r["rr_gap"])
+    return all_results
 
 
 def main():
@@ -122,21 +254,10 @@ def main():
     include_stocks = not args.crypto_only
     include_crypto = not args.stocks_only
 
-    all_results = []
-
-    if include_stocks:
-        if not args.json:
-            print("Loading cached stock data...")
-        stock_data = load_all_stocks()
-        all_results += _scan_near_misses(stock_data, "stock")
-
-    if include_crypto:
-        if not args.json:
-            print("Loading cached crypto data...")
-        crypto_data = load_all_crypto()
-        all_results += _scan_near_misses(crypto_data, "crypto")
-
-    all_results.sort(key=lambda r: r["rr_gap"])
+    all_results = scan_near_misses_parallel(
+        include_stocks=include_stocks,
+        include_crypto=include_crypto,
+    )
 
     if args.json:
         import json as _json
