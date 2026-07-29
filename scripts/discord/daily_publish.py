@@ -33,8 +33,9 @@ from fetch_data import load_all as load_all_stocks  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
 from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
-from scanners.scanner_c_breakout_volume import scan as scan_c   # noqa: E402
+from scanners.scanner_c_breakout_volume import scan as scan_c  # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
+from scanners.scanner_i_adaptive_trend import scan as scan_i   # noqa: E402
 
 import config as discord_config  # noqa: E402
 import dedup                      # noqa: E402
@@ -48,6 +49,7 @@ SCANNER_MAP = {
     "STR-B-macd-histogram-divergence": scan_b,
     "STR-C-breakout-volume": scan_c,
     "STR-D-sr-role-reversal": scan_d,
+    "STR-I-adaptive-trend": scan_i,
 }
 
 # Maps scanner_id prefix (used inside scanner output / STRATEGY_ID consts)
@@ -57,6 +59,7 @@ SCANNER_TO_NOTE_ID = {
     "STR-B-macd-histogram-divergence": "STR-20260719-macd-histogram-divergence-weekly-assessment",
     "STR-C-breakout-volume": "STR-20260719-breakout-volume-trend",
     "STR-D-sr-role-reversal": "STR-20260719-sr-role-reversal-entry",
+    "STR-I-adaptive-trend": "STR-20260728-adaptive-trend",
 }
 
 CHART_OUTPUT_DIR = pathlib.Path.home() / ".hermes" / "signal_charts"
@@ -152,9 +155,15 @@ def _scan_and_publish(data: dict, asset_class: str, enabled_scanners: dict,
         publish_channel = channel_override or flags["publish_channel"]
         print(f"\nScanning {scanner_id} ({flags['name']}, {asset_class})...")
 
+        # Scanner I (AdaptiveTrend) is long-only for stocks, bidirectional for crypto.
+        # Other scanners don't accept this kwarg.
+        scanner_kwargs = {}
+        if scanner_id == "STR-I-adaptive-trend":
+            scanner_kwargs["long_only"] = (asset_class == "stock")
+
         for ticker, df in data.items():
             try:
-                signals = scan_fn(df, ticker)
+                signals = scan_fn(df, ticker, **scanner_kwargs)
             except Exception as e:
                 summary["errors"] += 1
                 summary["error_details"].append(f"{scanner_id}/{ticker} ({asset_class}) scan error: {e}")

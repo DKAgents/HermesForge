@@ -9,7 +9,7 @@ market_regime: trending
 core_idea: momentum
 direction: bidirectional
 confidence: high
-publish_enabled: false
+publish_enabled: true
 publish_channel: crypto
 source: arxiv_2602.11708
 source_authors: Duc Bui, Thanh Nguyen

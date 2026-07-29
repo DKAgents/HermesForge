@@ -126,7 +126,7 @@ def _simulate_trailing_exit(
 
 # ── Main scan function ──────────────────────────────────────────────────────
 
-def scan(df: pd.DataFrame, ticker: str = "") -> list[dict]:
+def scan(df: pd.DataFrame, ticker: str = "", long_only: bool = LONG_ONLY) -> list[dict]:
     """
     Scan OHLCV data for AdaptiveTrend momentum + ATR trailing stop signals.
 
@@ -144,6 +144,11 @@ def scan(df: pd.DataFrame, ticker: str = "") -> list[dict]:
     price above SMA(period), short entries require price below SMA(period).
     This eliminates counter-trend signals that dominated the original
     fixed-parameter version (shorts were avg R = -0.149 without filter).
+
+    long_only: if True, skip short entries entirely (used for stocks
+    where structural positive drift + borrow costs make shorting
+    unprofitable). Default is the module-level LONG_ONLY constant.
+    Crypto callers can pass long_only=False to enable bidirectional.
     """
     min_len = LOOKBACK + ATR_PERIOD + 1
     if TREND_FILTER_PERIOD > 0:
@@ -186,8 +191,8 @@ def scan(df: pd.DataFrame, ticker: str = "") -> list[dict]:
                 continue
             direction = "long"
         elif mom_val < -ENTRY_THRESHOLD:
-            if LONG_ONLY:
-                continue  # skip shorts on stocks (structural positive drift)
+            if long_only:
+                continue  # skip shorts (stocks: structural positive drift)
             if sma_trend is not None and price_above_trend:
                 continue
             direction = "short"

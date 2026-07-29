@@ -56,9 +56,15 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
     """Shared scan+capture loop, used for both stock and crypto data sources."""
     for strategy_id, scan_fn in PAPER_STRATEGIES.items():
         print(f"\nScanning {strategy_id} ({asset_class})...")
+
+        # Scanner I (AdaptiveTrend) is long-only for stocks, bidirectional for crypto.
+        scanner_kwargs = {}
+        if strategy_id == "STR-I-adaptive-trend":
+            scanner_kwargs["long_only"] = (asset_class == "stock")
+
         for ticker, df in data.items():
             try:
-                signals = scan_fn(df, ticker)
+                signals = scan_fn(df, ticker, **scanner_kwargs)
             except Exception as e:
                 summary["errors"] += 1
                 summary["error_details"].append(f"{strategy_id}/{ticker} ({asset_class}) scan error: {e}")
