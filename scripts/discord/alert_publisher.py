@@ -88,6 +88,40 @@ def _tier_and_conditions_sr_reversal(s: dict) -> tuple[str, str, list[str]]:
     return tag, ratio, conditions
 
 
+def _tier_and_conditions_adaptive_trend(s: dict) -> tuple[str, str, list[str]]:
+    """Strategy I — AdaptiveTrend (Momentum + ATR Trailing Stop)."""
+    momentum = s.get("momentum", 0)
+    atr_mult = s.get("atr_multiplier", 2.0)
+    lookback = s.get("lookback", 10)
+    direction = s.get("direction", "long")
+
+    if direction == "short":
+        trend_filter_text = "Price below SMA200 (trend filter confirmed)"
+    else:
+        trend_filter_text = "Price above SMA200 (trend filter confirmed)"
+
+    conditions = [
+        f"Momentum: {momentum:+.1%} over {lookback} bars (threshold: ±20%)",
+        trend_filter_text,
+        f"ATR trailing stop: {atr_mult:.1f}x ATR (alpha={atr_mult:.1f})",
+        "Trailing stop exit (no fixed target — trend follows until stop hit)",
+    ]
+
+    # Tier based on momentum strength
+    if abs(momentum) >= 0.40:
+        tier, label = "A", "High"
+        conditions.append(f"Strong momentum: {abs(momentum):.1%} >> 20% threshold — Level A full size")
+    elif abs(momentum) >= 0.25:
+        tier, label = "B", "Medium"
+        conditions.append(f"Moderate momentum: {abs(momentum):.1%} — Level B standard size")
+    else:
+        tier, label = "C", "Low"
+        conditions.append(f"Marginal momentum: {abs(momentum):.1%} — Level C reduced size")
+
+    tag = f"{tier} ({label})"
+    return tag, "4/4", conditions
+
+
 def _tier_and_conditions_generic(s: dict) -> tuple[str, str, list[str]]:
     return "B (Medium)", "n/a", [s.get("key_conditions", "See strategy note for full criteria")]
 
@@ -97,6 +131,7 @@ TIER_PROFILES = {
     "STR-A-ma-pullback-fibonacci":     _tier_and_conditions_ma_pullback,
     "STR-C-breakout-volume":           _tier_and_conditions_breakout_volume,
     "STR-D-sr-role-reversal":          _tier_and_conditions_sr_reversal,
+    "STR-I-adaptive-trend":           _tier_and_conditions_adaptive_trend,
 }
 
 
@@ -136,12 +171,25 @@ def format_alert(signal_dict: dict) -> str:
 
     now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M")
 
+    # Format prices adaptively: small crypto prices need more decimals
+    def _fmt_price(p):
+        if abs(p) < 1.0:
+            return f"${p:.6f}"
+        elif abs(p) < 100.0:
+            return f"${p:.4f}"
+        else:
+            return f"${p:.2f}"
+
+    entry_str = _fmt_price(entry)
+    stop_str = _fmt_price(stop)
+    target_str = _fmt_price(target)
+
     return (
         f"📊 **{strategy_name} v{version}** — Confidence: {tier_tag}\n\n"
         f"**{ticker}** · {direction} · Daily\n\n"
-        f"📍 Entry:  ${entry:.2f}\n"
-        f"🛑 Stop:   ${stop:.2f}  ({stop_pct:.1f}% risk)\n"
-        f"🎯 Target: ${target:.2f}  (R:R {rr:.1f}:1)\n\n"
+        f"📍 Entry:  {entry_str}\n"
+        f"🛑 Stop:   {stop_str}  ({stop_pct:.1f}% risk)\n"
+        f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n\n"
         f"**Quality Tier: {tier_tag}**  ({met_ratio} confirmatory conditions met)\n\n"
         f"**Key Conditions Passed:**\n{conditions_block}\n\n"
         f"**Regime:** {subperiod}\n\n"
