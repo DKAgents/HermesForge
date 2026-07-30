@@ -259,9 +259,74 @@ Standard CCI uses SMA for the mean and mean deviation. EUFEARIA uses EMA, which 
 
 ---
 
+## Phase 1B/2 Validation Results (2026-07-26)
+
+### Implementation
+
+- **Portfolio backtest:** Monthly rebalance with Sharpe-ratio asset selection (≥0.3) + dollar-volume ranking, top 15 selected
+- **Long-only:** Shorts proven negative in Phase 1A (avg R -0.071, 29.3% win rate)
+- **Risk management:** 1% risk per trade, 15% max portfolio heat, ATR stop (1.0× ATR)
+- **Transaction costs:** Stocks 0.15% per side
+- **Exit logic:** Stop (1 ATR below entry), Target (mean reversion toward zero line, capped at 15%), Time stop (10 bars)
+- **Backtest engine:** `scripts/validation/run_phase1b2_j.py`
+
+### Stocks Performance (2020-01 to 2026-07, 6.56 years)
+
+| Metric | Phase 1B/2 Result |
+|--------|-------------------|
+| Annual return | +1.5% |
+| Annual volatility | 3.1% |
+| Sharpe ratio | 0.491 |
+| Sortino ratio | 0.379 |
+| Max drawdown | -3.5% |
+| Calmar ratio | 0.428 |
+| Win rate | 40.3% |
+| Total trades | 159 (24/year) |
+| Avg hold | 8.4 days |
+| Avg winner | $508.60 |
+| Avg loser | $-218.49 |
+| Best trade | $1,072.55 (PLTR, target exit) |
+| Worst trade | $-498.87 |
+| Final equity | $110,164 |
+
+### Exit Reason Breakdown
+
+| Exit Reason | Count | % | Description |
+|-------------|-------|---|-------------|
+| Stop | 85 | 53.5% | ATR stop hit — mean reversion failed |
+| Time | 61 | 38.4% | 10-bar time stop — stalled trade |
+| Target | 13 | 8.2% | Mean reversion target hit — the big winners |
+
+### Phase 1B/2 Decision
+
+**⚠️ WATCH** — The edge survives portfolio construction + transaction costs. Sharpe 0.491 with only -3.5% max drawdown over 6.5 years. The strategy is modestly profitable with exceptionally low risk. The avg winner ($509) is 2.3× the avg loser ($218), producing a positive expectancy despite the 40.3% win rate.
+
+**Comparison with STR-I AdaptiveTrend (Phase 1B/2):**
+
+| Metric | STR-J EUFEARIA | STR-I AdaptiveTrend |
+|--------|----------------|---------------------|
+| Sharpe | 0.491 | 0.815 |
+| Annual return | +1.5% | +5.8% |
+| Max drawdown | -3.5% | -10.2% |
+| Calmar | 0.428 | 0.564 |
+| Win rate | 40.3% | 44.5% |
+| Trades/year | 24 | 36 |
+
+STR-I is the stronger strategy (higher Sharpe and return), but STR-J has a significantly lower drawdown (-3.5% vs -10.2%). The two strategies are structurally uncorrelated — STR-I is trend-following momentum, STR-J is mean-reversion at extremes. Combined in a portfolio, they could provide diversification benefits.
+
+### Key Findings
+
+1. **Edge survives costs** — Phase 1A friction flag (avg R 0.222 < 0.5) was a valid caution, but the edge persists at the portfolio level with proper risk management. The +1.5% annual return is modest but positive after 0.15%/side transaction costs.
+2. **Extremely low drawdown** — -3.5% max drawdown over 6.5 years is exceptional. Mean-reversion strategies with tight ATR stops and short holding periods (8.4 days avg) naturally limit drawdowns.
+3. **Low trade frequency** — Only 24 trades/year (vs 1,046 signals/year in Phase 1A). The portfolio-level approach with Sharpe gate + top-15 selection filters out ~97% of signals. This is by design — we only trade high-quality signals from high-Sharpe assets.
+4. **Target exits drive returns** — Only 8.2% of trades hit the target, but those trades average +$1,000+ PnL. This is the classic mean-reversion profile: many small losses, few large wins. The 2.3:1 win/loss size ratio compensates for the 40.3% win rate.
+5. **Correlation with STR-I** — STR-J (mean-reversion) and STR-I (trend-following) are structurally uncorrelated. STR-J wins in ranging/bear markets (period2_bear had best avg R), STR-I wins in trending markets. A combined portfolio could benefit from this diversification.
+
+---
+
 ## Backtest / Paper Trade Log
 
-*Not started — requires Phase 1B completion first.*
+*Not started — requires Phase 3 robustness testing first.*
 
 ---
 
