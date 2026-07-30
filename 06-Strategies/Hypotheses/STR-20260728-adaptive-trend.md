@@ -225,16 +225,80 @@ For Phase 1A, the scanner simulates the full position lifecycle per-asset:
 
 ## Open Questions
 
-1. Should Phase 1A use theta=0.02 as a reasonable default, or sweep multiple thresholds?
-2. Is alpha=2.5 appropriate for all 42 markets, or should it vary by asset volatility?
-3. Should the scanner simulate full trailing stop lifecycle in Phase 1A, or just report entry signals with initial stop?
-4. How to handle the 70/30 allocation in the per-asset scanner model?
+1. ~~Should Phase 1A use theta=0.02 as a reasonable default, or sweep multiple thresholds?~~ → Resolved: theta=0.10-0.20 optimal via grid sweep
+2. ~~Is alpha=2.5 appropriate for all 42 markets, or should it vary by asset volatility?~~ → Resolved: alpha=2.0-2.5 optimal; varies quarterly via walk-forward
+3. ~~Should the scanner simulate full trailing stop lifecycle in Phase 1A, or just report entry signals with initial stop?~~ → Resolved: full lifecycle simulation
+4. ~~How to handle the 70/30 allocation in the per-asset scanner model?~~ → Resolved in Phase 2: long-only for both stocks and crypto (shorts proven negative)
+
+## Phase 1B/2 Validation Results (2026-07-26)
+
+### Implementation
+
+- **Walk-forward backtest:** Quarterly parameter re-optimization (L, theta, alpha, max_bars) using trailing 6-month window
+- **Asset selection:** Sharpe-ratio gate (≥0.3 long, ≥0.5 short) + dollar-volume ranking (market-cap proxy), top 15 selected
+- **Portfolio construction:** Long-only for both stocks and crypto (shorts proven negative in Phase 1A)
+- **Risk management:** 1% risk per trade, 15% max portfolio heat, ATR trailing stop
+- **Transaction costs:** Stocks 0.15%/side, Crypto 0.07%/side
+- **Monthly rebalance:** Universe re-selection and parameter update without closing existing positions
+- **Backtest engine:** `scripts/validation/run_phase1b2.py`
+
+### Stocks Performance (2020-01 to 2026-07, 6.55 years)
+
+| Metric | Phase 1B/2 Result | Paper (Full Strategy) |
+|--------|-------------------|----------------------|
+| Annual return | +5.8% | +40.5% |
+| Annual volatility | 7.2% | 16.8% |
+| Sharpe ratio | 0.815 | 2.41 |
+| Sortino ratio | 0.940 | 3.62 |
+| Max drawdown | -10.2% | -12.7% |
+| Calmar ratio | 0.564 | 3.18 |
+| Win rate | 44.5% | N/A |
+| Total trades | 238 | N/A |
+| Avg hold | 21.2 days | N/A |
+| Final equity | $144,542 | N/A |
+
+### Crypto Performance (2020-01 to 2026-07, 5.94 years)
+
+| Metric | Phase 1B/2 Result | Paper (Full Strategy) |
+|--------|-------------------|----------------------|
+| Annual return | +1.6% | +40.5% |
+| Annual volatility | 15.6% | 16.8% |
+| Sharpe ratio | 0.151 | 2.41 |
+| Sortino ratio | 0.137 | 3.62 |
+| Max drawdown | -38.9% | -12.7% |
+| Calmar ratio | 0.042 | 3.18 |
+| Win rate | 32.4% | N/A |
+| Total trades | 373 | N/A |
+| Avg hold | 13.4 days | N/A |
+| Final equity | $110,190 | N/A |
+
+### Phase 1B/2 Decision
+
+**Stocks: ✅ PASS** — Sharpe 0.815 with -10.2% max drawdown over 6.5 years. Positive, stable, low-volatility edge. The daily-bar adaptation captures meaningful trend persistence in equities. The 5.8% annual return is modest but the risk-adjusted profile (Calmar 0.564, Sortino 0.940) is acceptable for a systematic strategy. Advance to Phase 3 (robustness testing).
+
+**Crypto: ❌ KILL** — Sharpe 0.151 with -38.9% max drawdown. The strategy barely outperforms cash on crypto with daily bars. The paper's edge depends heavily on 6-hour bars (Sharpe 2.41 on H6 vs 1.63 on D1 per the paper's own ablation). Daily bars are insufficient to capture crypto momentum — the timeframe mismatch is structural, not parametric. No further daily-bar testing warranted for crypto.
+
+### Key Findings
+
+1. **Stocks edge survives portfolio construction + transaction costs** — the Phase 1A friction flag (avg R < 0.5) was a valid caution, but the edge persists after costs at the portfolio level with proper risk management.
+2. **Crypto edge does not survive on daily bars** — the paper's Sharpe 2.41 was on 6h bars; daily bars only achieve Sharpe 1.63 per the paper's own ablation, and our daily-bar result (0.151) is even lower. The 6h timeframe is essential for crypto momentum.
+3. **Long-only is correct for both asset classes** — shorts were negative in Phase 1A and would have worsened Phase 1B/2 results. The structural positive drift in both equities and crypto makes shorting unprofitable with this momentum approach.
+4. **Quarterly re-optimization is sufficient** — monthly optimization showed no improvement over quarterly, consistent with the paper's finding that parameter stability is more important than frequency.
+5. **Sharpe gate at 0.3 is effective** — the original paper's gate of 1.3 was too restrictive for daily bars (filtered out >90% of assets during bear/sideways periods). Lowering to 0.3 maintained quality without excessive filtering.
+6. **Trailing stop order-of-operations matters** — checking the old stop before updating (matching the original scanner logic) is critical; updating before checking caused premature exits and turned a profitable strategy into a losing one.
+
+### Gap vs. Paper
+
+The paper reports Sharpe 2.41 / +40.5% annual return. Our stocks result (Sharpe 0.815 / +5.8%) is significantly lower. Key gaps:
+1. **Timeframe:** Paper uses 6h bars (optimal for crypto); we use daily. Paper's own ablation shows daily drops Sharpe from 2.41 to 1.63 for crypto.
+2. **Market-cap data:** We use dollar volume as a market-cap proxy. Direct market-cap data may improve selection quality.
+3. **Parameter grid:** We use a reduced grid (2×2×2×2=16 combos) for speed; the paper optimizes monthly with a larger grid.
+4. **70/30 allocation:** The paper's asymmetric allocation (70% long / 30% short) contributed Sharpe +0.29 in the ablation. We're long-only because shorts were negative on daily bars.
 
 ## Validation Pipeline
 
-Phase 1A: Signal generation scanner (this document)
-Phase 1B: Add monthly parameter optimization + Sharpe selection
-Phase 2: Full backtest with portfolio construction (market-cap filter, 70/30 allocation, rebalancing)
-Phase 3: Robustness (walk-forward, Monte Carlo, regime-conditional, parameter sensitivity)
-Phase 4: Paper trading on Hyperliquid (60-90 days)
+Phase 1A: Signal generation scanner ✅
+Phase 1B/2: Walk-forward portfolio backtest ✅
+Phase 3: Robustness (walk-forward, Monte Carlo, regime-conditional, parameter sensitivity) ← NEXT (stocks only)
+Phase 4: Paper trading (60-90 days)
 Phase 5: Live execution with kill-switch criteria

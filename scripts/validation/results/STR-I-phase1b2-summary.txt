@@ -1,0 +1,41 @@
+PHASE 1B/2 RESULTS — STR-I AdaptiveTrend
+Generated: 2026-07-30 01:25
+
+=== STOCKS ===
+  asset_class: stocks
+  start: 2020-01-02
+  end: 2026-07-24
+  years: 6.56
+  final_equity: nan
+  total_return_pct: nan
+  annual_return_pct: nan
+  annual_vol_pct: 7.24
+  sharpe: 0.815
+  sortino: 0.94
+  max_drawdown_pct: -10.24
+  calmar: nan
+  n_trades: 238
+  win_rate_pct: 44.5
+  avg_pnl: nan
+  avg_hold_days: 21.2
+  n_rebalances: 79
+
+=== CRYPTO ===
+  asset_class: crypto
+  start: 2020-08-19
+  end: 2026-07-29
+  years: 5.94
+  final_equity: 110190.49
+  total_return_pct: 10.19
+  annual_return_pct: 1.65
+  annual_vol_pct: 15.62
+  sharpe: 0.151
+  sortino: 0.137
+  max_drawdown_pct: -38.91
+  calmar: 0.042
+  n_trades: 373
+  win_rate_pct: 32.4
+  avg_pnl: 32.06
+  avg_hold_days: 13.4
+  n_rebalances: 72
+
