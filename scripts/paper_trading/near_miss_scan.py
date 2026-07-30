@@ -41,6 +41,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 
 from fetch_data import load_all as load_all_stocks           # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto     # noqa: E402
+from near_miss_tracker import filter_near_misses                            # noqa: E402
 
 STRATEGY_NAMES = [
     "STR-A-ma-pullback-fibonacci",
@@ -237,6 +238,11 @@ def scan_near_misses_parallel(include_stocks: bool = True,
                 print(f"  Worker error: {e}", file=sys.stderr)
 
     all_results.sort(key=lambda r: r["rr_gap"])
+
+    # Filter out tickers whose previously-posted near-miss already stopped out
+    # (the trade already played out — no point showing it again)
+    all_results = filter_near_misses(all_results, STOCK_CACHE_DIR)
+
     return all_results
 
 

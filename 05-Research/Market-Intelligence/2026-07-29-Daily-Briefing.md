@@ -6,8 +6,11 @@ model: google/gemini-2.0-flash-001
 sources:
   - web_search
 tags: [market-intelligence, daily-briefing, automated]
+topic: research
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Daily Market Intelligence Briefing — July 29, 2026 (Wednesday)
 
 ---
