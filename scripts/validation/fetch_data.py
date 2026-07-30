@@ -4,7 +4,7 @@ Downloads and caches daily OHLCV data for the universe via yfinance.
 
 - Pulls from Oct 1 2018 to present (allows 90-day warm-up before Apr 2019)
 - Caches as parquet at ~/.hermes/market_data/<TICKER>.parquet
-- Re-fetches if cache is >7 days old
+- Re-fetches if cache is >1 day old
 - Flags tickers with >5% missing bars
 - Prints universe size and date range on completion
 """
@@ -24,7 +24,7 @@ from universe import get_universe
 CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data"
 START_DATE = "2018-10-01"
 VALID_SIGNAL_START = "2019-04-01"   # after 90-day warm-up
-CACHE_MAX_AGE_DAYS = 7
+CACHE_MAX_AGE_DAYS = 1
 
 # Sub-period labels (per ADR-004)
 SUBPERIODS = [
