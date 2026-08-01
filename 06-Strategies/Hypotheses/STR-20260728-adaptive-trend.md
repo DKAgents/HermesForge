@@ -1,7 +1,7 @@
 ---
 id: STR-20260728-adaptive-trend
 type: strategy
-status: hypothesis
+status: live
 asset_class: multi
 trade_style: trend
 timeframe: 6h_crypto_daily_stocks

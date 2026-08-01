@@ -1,7 +1,7 @@
 ---
 id: STR-20260726-eufearia-cci-reversal
 type: strategy
-status: hypothesis
+status: watch
 asset_class: stocks
 trade_style: swing
 timeframe: daily

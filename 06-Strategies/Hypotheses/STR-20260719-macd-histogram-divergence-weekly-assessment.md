@@ -1,7 +1,7 @@
 ---
 id: STR-20260719-macd-histogram-divergence-weekly-assessment
 type: strategy
-status: hypothesis
+status: live
 created: 2026-07-19
 last_reviewed: 2026-07-20
 version: "1.1"

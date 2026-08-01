@@ -35,3 +35,10 @@ This regime is under-explored. A strategy that detects regime transition early (
 - [[REGIME-trending]]
 - [[REGIME-ranging]]
 - [[STRATEGIES-MOC]]
+
+## Active Strategy Mapping (Regime-Aware Pipeline)
+
+No strategies currently mapped to transitional regime (STR-K killed).
+Near-miss scanner (STR-D) runs regardless of regime.
+
+Detection: ADX falling from >25 toward <20, ATR ratio > 1.2x, BB width expanding.

@@ -32,3 +32,11 @@ Price oscillates between support and resistance levels without establishing a su
 - [[REGIME-trending]]
 - [[REGIME-transitional]]
 - [[STRATEGIES-MOC]]
+
+## Active Strategy Mapping (Regime-Aware Pipeline)
+
+Strategies activated when this regime is detected:
+- [[STR-20260719-macd-histogram-divergence-weekly-assessment|STR-B MACD Divergence]] (live)
+- [[STR-20260726-eufearia-cci-reversal|STR-J EUFEARIA CCI]] (watch)
+
+Detection: ADX(14) < 20 on SPY/BTC benchmark.

@@ -1,7 +1,7 @@
 ---
 id: STR-20260730-atr-contraction-breakout
 type: strategy
-status: hypothesis
+status: watch
 created: 2026-07-30
 updated: 2026-07-30
 asset_class: stocks

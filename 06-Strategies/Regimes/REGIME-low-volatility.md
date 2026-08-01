@@ -25,3 +25,11 @@ Suppressed market volatility with small daily price ranges. Mean-reversion strat
 ## Related
 - [[REGIME-high-volatility]]
 - [[STRATEGIES-MOC]]
+
+## Active Strategy Mapping (Regime-Aware Pipeline)
+
+Strategies activated when this regime is detected:
+- [[STR-20260726-eufearia-cci-reversal|STR-J EUFEARIA CCI]] (watch)
+- [[STR-20260730-atr-contraction-breakout|STR-L ATR Contraction]] (watch)
+
+Detection: ATR(14)/Close < 0.5x its 50-day average on SPY/BTC benchmark.

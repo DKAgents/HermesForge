@@ -37,3 +37,10 @@ High-volatility regime remains the hardest to crack. Two reversal-based strategi
 - [[REGIME-low-volatility]]
 - [[RISK_RULES]]
 - [[STRATEGIES-MOC]]
+
+## Active Strategy Mapping (Regime-Aware Pipeline)
+
+No strategies currently mapped to high-volatility regime (STR-M and STR-N both killed).
+Near-miss scanner (STR-D) runs regardless of regime.
+
+Detection: ATR(14)/Close > 2.0x its 50-day average on SPY/BTC benchmark.
