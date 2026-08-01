@@ -3,7 +3,7 @@ type: regime
 regime_type: high-volatility
 description: "Elevated volatility with large daily ranges, VIX > 25 or ATR > 2x average"
 indicators: [VIX > 25, ATR > 2x 50-day average, wide Bollinger Bands]
-applicable_strategies: []
+applicable_strategies: [STR-M, STR-N]
 tags: [regime, high-volatility]
 ---
 
@@ -13,7 +13,10 @@ Elevated market volatility with large daily price ranges. Risk management become
 
 ## Strategies That Work Here
 
-No strategies currently target this regime. High volatility increases option-like payoffs for breakout strategies but also increases false signal rates.
+None currently pass. Two strategies tested and killed in W32:
+
+- [[STR-20260726-selling-climax-reversal|STR-M Selling Climax]] — killed, -1.000 avg R. Selling climax is a market-level pattern, not per-stock.
+- [[STR-20260726-outside-day-key-reversal|STR-N Outside Day]] — killed, -0.037 avg R overall but +0.332 in period3_current. Regime-dependent edge, future research path.
 
 ## Key Indicators
 
@@ -24,7 +27,11 @@ No strategies currently target this regime. High volatility increases option-lik
 
 ## Research Opportunity
 
-High-volatility regimes may benefit from volatility-breakout strategies (STR-C was killed but the idea may work with better filtering). Also a candidate for reduced position sizing across all live strategies.
+High-volatility regime remains the hardest to crack. Two reversal-based strategies (STR-M, STR-N) both failed overall, though STR-N shows a promising regime-dependent edge in 2024+. Future approaches:
+- Volatility-breakout (not reversal) in high-vol — different from STR-F (which was low-vol squeeze breakout)
+- Mean-reversion with wider stops and longer hold time
+- Regime-gated version of STR-N that only activates in post-2024 conditions
+- Selling climax at the index/ETF level (SPY/QQQ) rather than per-stock
 
 ## Related
 - [[REGIME-low-volatility]]
