@@ -39,6 +39,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 
 from fetch_data import load_all as load_all_stocks
 from fetch_crypto_data import load_all as load_all_crypto
+from intraday_confirm import confirm_signals as confirm_intraday
 from scanners.scanner_b_macd_divergence import scan as scan_b
 from scanners.scanner_d_sr_reversal import scan as scan_d
 from scanners.scanner_i_adaptive_trend import scan as scan_i
