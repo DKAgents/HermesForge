@@ -11,8 +11,11 @@ sources:
   - benzinga
   - cnbc
 tags: [market-intelligence, daily-briefing, automated, post-fed]
+topic: research
+confidence: high
+has_quotes: true
+source: unknown
 ---
-
 # Daily Market Intelligence Briefing — July 30, 2026 (Thursday)
 
 ---

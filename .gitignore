@@ -35,3 +35,9 @@ Inbox/*.log
 ._*
 .trash/
 __pycache__/
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env

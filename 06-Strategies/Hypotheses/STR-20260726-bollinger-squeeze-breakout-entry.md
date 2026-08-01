@@ -48,6 +48,14 @@ Volatility contracts and expands in cycles. When Bollinger Band width (the norma
 - [ ] RG037: Protective stop is mandatory and derived directly from band geometry, not discretionary
 - [ ] PT-001: N/A — strategy killed at Phase 1A, does not advance to paper trading
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+regime_node:: [[REGIME-transitional]]
+killed_by:: [[FAIL-STR-F-bollinger-squeeze]]
+tested_in:: [[STR-F-phase1a]]
+
 ## Supporting Evidence
 
 - Bollinger Band squeeze-to-breakout is a well-documented technical pattern (volatility contraction preceding expansion) in classical TA literature; volume confirmation mirrors the same filter used successfully in Strategy C (breakout + volume).

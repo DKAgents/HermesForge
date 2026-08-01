@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C366-secondary-trends", "EN041-oscillator-entry-strategy-in-trending-markets", "N186-mcclellan-oscillator"]
 seed_id: oscillator_trending_market
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # McClellan Oscillator Filters Counter-Trend Entries During Secondary Corrections
 
 ## Discovery Summary

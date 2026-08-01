@@ -31,3 +31,6 @@ Before taking a daily MACD or Stochastics crossover signal, a trader should chec
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas|Weekly Trend Confirmation Required Before Daily MACD/Stochastics Entry]]

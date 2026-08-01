@@ -51,6 +51,14 @@ RSI(14) readings above 70 or below 30 identify statistical price extremes. Rathe
 - [ ] RG037: Protective stop is mandatory on every signal (ATR-buffered beyond signal bar extreme)
 - [ ] PT-001: Paper mode minimum 30 days before live consideration — **N/A, strategy killed in Phase 1A, will not advance to paper trading**
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+regime_node:: [[REGIME-trending]]
+killed_by:: [[FAIL-STR-E-rsi-mean-reversion]]
+tested_in:: [[STR-E-phase1a]]
+
 ## Supporting Evidence
 
 - [[RG032-3-to-1-reward-to-risk-ratio]] — General principle that adequate R:R must be enforced before entry (this strategy used a relaxed 2:1 floor per spec, contributing to the weak realised edge)

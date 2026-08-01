@@ -205,6 +205,16 @@ Standard CCI uses SMA for the mean and mean deviation. EUFEARIA uses EMA, which 
 
 ---
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+governed_by:: [[RISK_RULES]]
+regime_node:: [[REGIME-ranging]]
+correlates_with:: [[STR-20260728-adaptive-trend|STR-I (uncorrelated diversifier)]]
+improves_upon:: [[STR-20260726-rsi-mean-reversion-entry|STR-E (killed, same category)]]
+tested_in:: [[STR-J-phase1a]], [[STR-J-phase1b2-stocks]]
+
 ## Phase 1A Validation Results (2026-07-26)
 
 ### Baseline (bidirectional, strict extreme, ±50 thresholds)

@@ -75,6 +75,14 @@ reward:risk target.
 - [ ] RG037: Use protective stops to limit losses — swing-low stop is mandatory, computed before entry.
 - [ ] PT-001: Not applicable — strategy killed at Phase 1A, will not advance to paper trading.
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+regime_node:: [[REGIME-trending]]
+killed_by:: [[FAIL-STR-G-relative-strength]]
+tested_in:: [[STR-G-phase1a]]
+
 ## Supporting Evidence
 
 - [[RG032-3-to-1-reward-to-risk-ratio]] — General R:R discipline principle informing the 2.5:1 target design, even though realized R fell far short in backtest.

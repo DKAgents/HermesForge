@@ -246,6 +246,15 @@ Earnings, macro data, or a news event causes a gap open beyond the stop level. N
 
 ---
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+governed_by:: [[RISK_RULES]], [[ADR-001-Model-Routing-Strategy]]
+regime_node:: [[REGIME-trending]]
+correlates_with:: [[STR-20260726-eufearia-cci-reversal|STR-J (uncorrelated)]]
+tested_in:: [[STR-B-phase1a]]
+
 ## Phase 1A/1B Validation Results
 
 ### Phase 1A Summary (fast reality check)

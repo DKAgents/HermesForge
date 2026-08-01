@@ -152,6 +152,14 @@ The swing-segmented leg definition is more complex than the original cross-ancho
 - Backtest results: **Phase 1A scanner complete (2026-07-26)** — see results below
 - Target sample size before evaluation: ≥ 30–50 completed trades (per user's stated evaluation threshold for this strategy), covering at least one full market cycle where possible
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+regime_node:: [[REGIME-trending]]
+killed_by:: [[FAIL-STR-H-first-pullback]]
+tested_in:: [[STR-H-phase1a]]
+
 ## Phase 1A Scanner Results (2026-07-26)
 
 Scanner implemented at `scripts/validation/scanners/scanner_h_first_pullback_trend_swing.py`, registered in `run_phase1a.py` as strategy `h`, run against the full 216-ticker cached universe (2019-04-01 onward valid signal period).

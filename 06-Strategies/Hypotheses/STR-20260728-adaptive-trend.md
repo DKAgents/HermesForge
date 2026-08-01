@@ -190,6 +190,15 @@ For Phase 1A, the scanner simulates the full position lifecycle per-asset:
 | w/o Asymmetric Allocation | 2.12 | -14.3% |
 | Fixed Parameters (no opt.) | 1.34 | -28.6% |
 
+## Graph Properties
+
+produced_by:: [[Backtester]]
+validated_by:: [[ADR-004-Phase1-Validation-Framework]]
+governed_by:: [[RISK_RULES]], [[ADR-001-Model-Routing-Strategy]]
+regime_node:: [[REGIME-trending]]
+correlates_with:: [[STR-20260726-eufearia-cci-reversal|STR-J (uncorrelated diversifier)]]
+tested_in:: [[STR-I-phase1a]], [[STR-I-phase1b2-stocks]], [[STR-I-phase1b2-crypto]]
+
 ## Phase 1A Validation Results (2026-07-26)
 
 | Metric | Stocks (529 tickers, daily) |
