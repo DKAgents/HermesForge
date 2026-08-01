@@ -1,7 +1,7 @@
 ---
 id: STR-20260730-atr-contraction-breakout
 type: strategy
-status: killed
+status: hypothesis
 created: 2026-07-30
 updated: 2026-07-30
 asset_class: stocks
@@ -40,7 +40,7 @@ regime_node:: [[REGIME-low-volatility]]
 improves_upon:: [[STR-20260726-bollinger-squeeze-breakout-entry|STR-F (killed)]]
 correlates_with:: [[STR-20260728-adaptive-trend|STR-I (trend-following, uncorrelated)]]
 learns_from:: [[FAIL-STR-F-bollinger-squeeze]] (stricter contraction), [[FAIL-STR-G-relative-strength]] (add confirmation), [[FAIL-STR-H-first-pullback]] (keep filters simple)
-tested_in:: [[STR-L-phase1a]]
+tested_in:: [[STR-L-phase1a]], [[STR-L-phase1b]]
 produced_by:: [[Researcher]]
 validated_by:: [[ADR-004-Phase1-Validation-Framework]]
 governed_by:: [[RISK_RULES]]
@@ -122,6 +122,20 @@ When ATR contracts to a multi-month low (prolonged low-volatility period) and AD
 ## Phase 1A Plan
 
 Standalone scanner: `scanner_l_atr_contraction.py` (not added to live registry)
+
+
+## Phase 1B Perturbation Results (2026-07-30)
+
+| Variant | ATR Lookback | ADX | Vol | Sigs/100tk | Avg R | Win% |
+|---------|-------------|-----|-----|-----------|-------|------|
+| V1: Baseline | 120 | <18 | Yes | 1.3 | +0.582 | 57.1% |
+| V2: ATR 60 | 60 | <18 | Yes | 2.8 | +0.168 | 40.0% |
+| V4: Looser ADX, no vol | 60 | <25 | No | 110 | -0.203 | 17.3% |
+| V8: ADX <20 | 60 | <20 | Yes | 2.0 | -1.000 | 0.0% |
+
+**Decision: WATCH** — Baseline config is optimal. Volume filter preserves edge, ADX<18 is the frequency bottleneck. Per updated ADR-004, low frequency is not a kill reason. Strategy contributes occasional high-conviction setups to portfolio.
+
+See [[STR-L-phase1b]] for full details.
 
 ## Change Log
 

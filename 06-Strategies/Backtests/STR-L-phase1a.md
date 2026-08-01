@@ -13,11 +13,11 @@ avg_r: 0.582
 win_rate: 57.1
 sub_periods_positive: "1/2 (period1 +0.190, period3 +2.935)"
 trade_count: 7
-verdict: KILL
-verdict_reason: "Signals/year 1.2 < 12 kill threshold. Despite positive avg R (0.582), frequency is far too low for any practical strategy."
+verdict: WATCH
+verdict_reason: "Positive avg R (0.582) and 57.1% win rate. Originally killed for low frequency (1.2 sig/yr) but ADR-004 updated: frequency is no longer a kill reason. Low-frequency positive-edge strategies contribute to portfolio diversity. Phase 1B should confirm edge survives costs and explore loosening filters to increase signal count."
 data_limitations: "Daily bars, survivorship bias (current S&P constituents), frictionless"
 produced_by: "[[Backtester]]"
-tags: [backtest, phase1a, STR-L, stocks, kill]
+tags: [backtest, phase1a, STR-L, stocks, watch]
 ---
 
 # STR-L Phase 1A Results

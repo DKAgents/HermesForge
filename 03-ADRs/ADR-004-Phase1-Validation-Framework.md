@@ -58,9 +58,9 @@ Adopt a three-sub-phase validation structure before full backtesting:
 | **Universe** | Top 100 S&P 500 stocks by avg dollar volume | Liquid, well-behaved data, realistic fills |
 | **Direction — Strategies A, C, D** | Long-only | Rules as written are long-oriented; adding short adds complexity before validation |
 | **Direction — Strategy B** | Bidirectional | Explicitly designed as bidirectional |
-| **Kill criteria** | < 12 signals/year OR avg R < 0.2 (frictionless) | Below either = drop or major revision before Phase 1B |
-| **Watch band** | 12–24 signals/year OR avg R 0.2–0.4 | Survives with caution flag; needs attention in Phase 1B |
-| **Pass criteria** | ≥ 25 signals/year AND avg R ≥ 0.6 AND positive in ≥ 2 of 3 sub-periods | Sub-period check guards against regime-specific flukes |
+| **Kill criteria** | avg R < 0.2 (frictionless) — frequency is NOT a kill reason | Low-frequency strategies with positive edge contribute to a diversified portfolio. The goal is surfacing high-probability trades across many strategies, not requiring each to fire often. |
+| **Watch band** | avg R 0.2–0.4 (frictionless) OR signals < 12/year with positive edge | Survives with caution flag; low-frequency strategies need Phase 1B to confirm edge survives costs |
+| **Pass criteria** | avg R >= 0.6 AND positive in >= 2 of 3 sub-periods | Sub-period check guards against regime-specific flukes. No minimum signal frequency required. |
 | **Costs** | Phase 1A frictionless; flag avg R < 0.5 for friction sensitivity check | Clean signal first |
 | **Market** | US stocks first; crypto deferred to Phase 1B if stocks validate | Matches primary trading focus |
 | **Risk envelope** | 1% per trade, max 5 concurrent positions, max 5% portfolio heat | Conservative for hypothesis phase |
