@@ -22,6 +22,7 @@ Usage:
 import sys
 import os
 import json
+import time
 import argparse
 import pathlib
 import datetime
@@ -205,28 +206,40 @@ def check_exit(trade: dict, bars: pd.DataFrame) -> dict:
 # ── Discord alert posting ─────────────────────────────────────────────────────
 
 def _post_alert(channel_id: str, content: str, dry_run: bool = False) -> dict:
-    """Post a brief alert message to a Discord channel."""
+    """Post a brief alert message to a Discord channel.
+    Includes rate-limit handling: retries on 429 with retry_after delay.
+    """
     if dry_run:
         print(f"  [dry-run] {content}")
         return {"status": "dry_run"}
 
     url = f"{API_BASE}/channels/{channel_id}/messages"
-    cmd = [
-        "curl", "-s", "-X", "POST",
-        "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
-        "-H", "Content-Type: application/json",
-        "-d", json.dumps({"content": content}),
-        url,
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
-    try:
-        response = json.loads(result.stdout)
-        if "id" in response:
-            return {"status": "ok", "message_id": response["id"]}
-        else:
+
+    for attempt in range(3):
+        cmd = [
+            "curl", "-s", "-X", "POST",
+            "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
+            "-H", "Content-Type: application/json",
+            "-d", json.dumps({"content": content}),
+            url,
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        try:
+            response = json.loads(result.stdout)
+            if "id" in response:
+                time.sleep(1)  # rate limit safety
+                return {"status": "ok", "message_id": response["id"]}
+            elif "retry_after" in response:
+                retry_after = response.get("retry_after", 1.0)
+                print(f"    ⏳ Rate limited, retrying in {retry_after}s...")
+                time.sleep(float(retry_after) + 0.5)
+                continue
+            else:
+                return {"status": "error", "response": result.stdout[:300]}
+        except (json.JSONDecodeError, KeyError):
             return {"status": "error", "response": result.stdout[:300]}
-    except (json.JSONDecodeError, KeyError):
-        return {"status": "error", "response": result.stdout[:300]}
+
+    return {"status": "error", "response": "max retries exceeded"}
 
 
 def _format_alert(event_type: str, trade: dict, exit_info: dict = None) -> str:
