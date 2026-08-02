@@ -59,6 +59,20 @@ Advance to Phase 1B/2 portfolio backtest to confirm:
 - Performance in a multi-strategy portfolio context
 - Whether universe expansion (beyond S&P 500) increases signal frequency
 
+## STR-L Walk-Forward Validation Decision (2026-08-03)
+
+**Status:** Cannot be walk-forward validated — **INSUFFICIENT DATA**
+
+STR-L produces approximately 6 signals across 7 years (2019-2026) on 529 stock tickers. The walk-forward framework requires at least 3 signals per training window to optimize parameters, and 5 rolling windows of 1 year each. This yields approximately 0-1 signals per window, making optimization impossible.
+
+**Per ADR-004 Amendment 1 (Insufficient Data clause):** STR-L retains its Phase 1A/1B WATCH status with explicit note. It cannot be promoted to LIVE (PASS) without walk-forward confirmation, but it is not killed because:
+- Phase 1A avg R = 0.582 (above 0.4 watch threshold, well above 0.2 kill threshold)
+- Phase 1B confirmed the baseline configuration is optimal (no perturbation improved on V1)
+- Win rate 57.1% with positive edge
+- ADR-004: "frequency is NOT a kill reason"
+
+**Restriction:** Stocks only (never tested on crypto, and the scanner's low signal count makes crypto testing impractical).
+
 ## Related
 - [[STR-L-phase1a]]
 - [[STR-20260730-atr-contraction-breakout|STR-L Strategy]]
