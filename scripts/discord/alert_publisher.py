@@ -256,7 +256,8 @@ def format_alert(signal_dict: dict) -> str:
 
     return (
         f"📊 **{strategy_name} v{version}** | Confidence: {tier_tag}\n\n"
-        f"**[{ticker}]({tv_url})** | {direction_label} | Daily\n\n"
+        f"**{ticker}** | {direction_label} | Daily | "
+        f"Chart: <{tv_url}>\n\n"
         f"📍 Entry:  {entry_str}\n"
         f"🛑 Stop:   {stop_str}  ({stop_pct:.1f}% risk)\n"
         f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n\n"
@@ -325,6 +326,7 @@ def _smoke_test():
     assert "Entry:  $875.00" in result["message"]
     assert "tradingview.com" in result["message"]
     assert "Short" in result["message"]
+    assert "<https://www.tradingview.com" in result["message"]
     print("✅ Smoke test passed — formatted message:\n")
     print(result["message"])
 
