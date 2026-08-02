@@ -169,6 +169,33 @@ def score_signal(signal: dict, strategy_id: str, strategy_meta: dict) -> float:
     return round(score, 2)
 
 
+def apply_liquidity_filter(signals: list, max_pct: float = 0.80) -> list:
+    """
+    Filter signals by liquidity — keep only those below max_pct percentile
+    of dollar_volume_60d. Less liquid signals perform better (p=0.0025).
+
+    If dollar_volume_60d is missing from any signal, skip filtering.
+    """
+    if not signals:
+        return signals
+
+    # Extract dollar volumes
+    dv_values = [s.get('dollar_volume_60d', 0) for s in signals]
+    if all(v == 0 for v in dv_values):
+        return signals  # No volume data — don't filter
+
+    import numpy as np
+    threshold = np.percentile(dv_values, max_pct * 100)
+
+    kept = [s for s in signals if s.get('dollar_volume_60d', 0) <= threshold]
+    removed = len(signals) - len(kept)
+
+    if removed > 0:
+        print(f'  Liquidity filter: removed {removed} signal(s) above {max_pct:.0%} percentile')
+
+    return kept
+
+
 def run_portfolio_pipeline(dry_run: bool = True) -> dict:
     """
     Main pipeline: detect regime → run active scanners → dedup → score → publish.

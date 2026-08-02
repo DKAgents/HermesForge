@@ -44,6 +44,9 @@ TARGET_LOOKBACK  = 20    # bars to find target (lowest low / highest high)
 MIN_RR           = 3.0
 MAX_BARS_HELD    = 8
 ATR_STOP_MULT    = 0.5   # stop = entry +/- ATR_STOP_MULT * ATR
+LIQUIDITY_FILTER_ENABLED = False  # Factor decomposition: less liquid = better signals (p=0.0025)
+LIQUIDITY_MAX_DV_RANK    = 0.80   # Skip tickers above this percentile of 60d dollar volume
+DV_LOOKBACK              = 60     # Dollar volume lookback period
 
 
 # ---------------------------------------------------------------------------
@@ -300,6 +303,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "narrowing_bars":       extra_b["narrowing_bars"],
                     "rsi_at_signal":        extra_b["rsi_at_signal"],
                     "prior_swing_bar_offset": extra_b["prior_swing_bar_offset"],
+                    "dollar_volume_60d": float(np.mean(close_arr[max(0,i-DV_LOOKBACK):i+1] * df["volume"].values.astype(float)[max(0,i-DV_LOOKBACK):i+1])) if "volume" in df.columns else 0,
                 })
 
         # ===================================================================
@@ -338,6 +342,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                     "narrowing_bars":       extra_l["narrowing_bars"],
                     "rsi_at_signal":        extra_l["rsi_at_signal"],
                     "prior_swing_bar_offset": extra_l["prior_swing_bar_offset"],
+                    "dollar_volume_60d": float(np.mean(close_arr[max(0,i-DV_LOOKBACK):i+1] * df["volume"].values.astype(float)[max(0,i-DV_LOOKBACK):i+1])) if "volume" in df.columns else 0,
                 })
 
     return signals
