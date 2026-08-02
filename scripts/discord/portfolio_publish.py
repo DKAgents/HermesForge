@@ -85,6 +85,7 @@ SCANNER_REGISTRY = {
         "name": "AdaptiveTrend",
         "default_confidence": "high",
         "scanner_kwargs": {},  # long_only set dynamically per asset_class
+        "disabled_asset_classes": ["crypto"],  # KILLED on crypto per ADR-004 Amendment 1
     },
     "STR-L-atr-contraction": {
         "scan_fn": scan_l_ticker,
@@ -321,6 +322,12 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
     all_signals = []
     
     for scanner_id, cfg in scanners.items():
+        # Check if this scanner is disabled for the current asset class
+        disabled = cfg.get("disabled_asset_classes", [])
+        if asset_class in disabled:
+            print(f"\n  [{scanner_id}] DISABLED for {asset_class} (ADR-004 Amendment 1) — skipping")
+            continue
+
         scan_fn = cfg["scan_fn"]
         call_mode = cfg["call_mode"]
         note_id = cfg["note_id"]

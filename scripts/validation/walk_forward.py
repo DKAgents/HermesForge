@@ -95,6 +95,31 @@ STRATEGY_CONFIGS = {
         "asset_class": "stock",
         "long_only_stocks": True,
     },
+    "D": {
+        "module": "scanner_d_sr_reversal",
+        "scan_fn": "scan",
+        "name": "S/R Role Reversal",
+        "params": {
+            "ATR_STOP_MULT": [0.8, 1.0, 1.5],
+            "MIN_RR": [2.0, 3.0, 4.0],
+            "MAX_HOLD": [5, 8, 12],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": True,
+    },
+    "P": {
+        "module": "scanner_p_crosssectional",
+        "scan_fn": "scan",
+        "name": "Cross-Sectional Factor",
+        "params": {
+            "ATR_STOP_MULT": [1.0, 1.5, 2.0],
+            "QUINTILE": [3, 5, 7],
+            "MAX_BARS_HELD": [14, 21, 28],
+        },
+        "asset_class": "crypto",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -103,6 +128,8 @@ QUICK_PARAMS = {
     "I": {"LOOKBACK": [10, 20], "ENTRY_THRESHOLD": [0.15, 0.20], "ATR_MULTIPLIER": [2.0, 2.5]},
     "J": {"CHANNEL_LENGTH": [10], "ATR_STOP_MULTIPLIER": [1.0, 1.5], "MAX_BARS_HELD": [10]},
     "L": {"ATR_LOOKBACK": [120], "ADX_THRESHOLD": [18], "TRAILING_ATR_MULT": [2.0]},
+    "D": {"ATR_STOP_MULT": [1.0], "MIN_RR": [3.0], "MAX_HOLD": [8]},
+    "P": {"ATR_STOP_MULT": [1.5], "QUINTILE": [5], "MAX_BARS_HELD": [21]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────
@@ -312,10 +339,14 @@ def compute_significance(r_values: list) -> dict:
 def scan_with_params(module, scan_fn_name: str, data_dict: dict,
                      params: dict, start_date: str, end_date: str,
                      asset_class: str = "stock", long_only: bool = False,
-                     apply_cost: bool = True) -> list:
+                     apply_cost: bool = True, call_mode: str = "per_ticker") -> list:
     """
     Scan a data dict with specific parameters applied via monkey-patching.
     Returns list of signals with R-multiples, filtered to the date range.
+
+    call_mode:
+      "per_ticker" — scan_fn(df, ticker) called per ticker
+      "batch"      — scan_fn(data_dict) called once for all tickers
     """
     # Save original values
     originals = {}
@@ -328,6 +359,47 @@ def scan_with_params(module, scan_fn_name: str, data_dict: dict,
         scan_fn = getattr(module, scan_fn_name)
         signals = []
 
+        if call_mode == "batch":
+            # Batch mode: pass the full sliced data dict to the scanner
+            lookback_start = pd.Timestamp(start_date) - pd.Timedelta(days=400)
+            sliced_data = {}
+            for ticker, df in data_dict.items():
+                if len(df) < 250:
+                    continue
+                mask = df.index >= lookback_start
+                df_slice = df[mask].copy()
+                if len(df_slice) >= 50:
+                    sliced_data[ticker] = df_slice
+
+            if not sliced_data:
+                return []
+
+            try:
+                sigs = scan_fn(sliced_data)
+                if not sigs:
+                    return []
+
+                for sig in sigs:
+                    sig_date = str(sig.get("date", ""))[:10]
+                    if start_date <= sig_date <= end_date:
+                        sig["asset_class"] = asset_class
+
+                        # Apply gap risk adjustment using the ticker's data
+                        ticker = sig.get("ticker", "")
+                        if ticker in sliced_data:
+                            sig = apply_gap_risk(sig, sliced_data[ticker])
+
+                        # Apply transaction costs
+                        if apply_cost:
+                            sig = apply_costs(sig, asset_class)
+
+                        signals.append(sig)
+            except Exception as e:
+                print(f"  [batch] scan error: {e}")
+
+            return signals
+
+        # Per-ticker mode
         for ticker, df in data_dict.items():
             if len(df) < 250:
                 continue
@@ -378,7 +450,8 @@ def scan_with_params(module, scan_fn_name: str, data_dict: dict,
 
 def optimize_parameters(module, scan_fn_name: str, data_dict: dict,
                          param_grid: dict, train_start: str, train_end: str,
-                         asset_class: str, long_only: bool) -> tuple:
+                         asset_class: str, long_only: bool,
+                         call_mode: str = "per_ticker") -> tuple:
     """
     Grid search over parameter combinations on the training window.
     Returns (best_params, best_avg_r, all_results).
@@ -396,7 +469,8 @@ def optimize_parameters(module, scan_fn_name: str, data_dict: dict,
         signals = scan_with_params(
             module, scan_fn_name, data_dict, params,
             train_start, train_end, asset_class, long_only,
-            apply_cost=True  # optimize with costs to find robust params
+            apply_cost=True,  # optimize with costs to find robust params
+            call_mode=call_mode,
         )
 
         if len(signals) < 3:
@@ -434,7 +508,8 @@ def run_walk_forward(strategy_id: str, stock_data: dict, crypto_data: dict,
     module_name = config["module"]
     scan_fn_name = config["scan_fn"]
     param_grid = QUICK_PARAMS[strategy_id] if quick else config["params"]
-    asset_classes = ["stock", "crypto"] if config["asset_class"] == "both" else ["stock"]
+    asset_classes = ["stock", "crypto"] if config["asset_class"] == "both" else [config["asset_class"]]
+    call_mode = config.get("call_mode", "per_ticker")
 
     # Import the scanner module
     module = importlib.import_module(module_name)
@@ -474,7 +549,7 @@ def run_walk_forward(strategy_id: str, stock_data: dict, crypto_data: dict,
         is_signals = scan_with_params(
             module, scan_fn_name, data, default_flat,
             "2019-01-01", "2026-12-31", asset_class, long_only,
-            apply_cost=True
+            apply_cost=True, call_mode=call_mode
         )
 
         for sig in is_signals:
@@ -496,7 +571,8 @@ def run_walk_forward(strategy_id: str, stock_data: dict, crypto_data: dict,
             t0 = time.time()
             best_params, best_train_r, all_combos = optimize_parameters(
                 module, scan_fn_name, opt_sample, param_grid,
-                train_start, train_end, asset_class, long_only
+                train_start, train_end, asset_class, long_only,
+                call_mode=call_mode
             )
             opt_time = time.time() - t0
 
@@ -508,7 +584,7 @@ def run_walk_forward(strategy_id: str, stock_data: dict, crypto_data: dict,
             oos_signals = scan_with_params(
                 module, scan_fn_name, data, best_params,
                 test_start, test_end, asset_class, long_only,
-                apply_cost=True
+                apply_cost=True, call_mode=call_mode
             )
 
             oos_avg_r = np.mean([s.get("r_multiple", 0) for s in oos_signals]) if oos_signals else 0
@@ -518,7 +594,7 @@ def run_walk_forward(strategy_id: str, stock_data: dict, crypto_data: dict,
             train_signals = scan_with_params(
                 module, scan_fn_name, opt_sample, best_params,
                 train_start, train_end, asset_class, long_only,
-                apply_cost=True
+                apply_cost=True, call_mode=call_mode
             )
             train_avg_r = np.mean([s.get("r_multiple", 0) for s in train_signals]) if train_signals else 0
 
@@ -601,7 +677,7 @@ def run_all_strategies(quick: bool = False, verbose: bool = True) -> dict:
     print("-" * 70)
 
     all_results = {}
-    for strategy_id in ["B", "I", "J", "L"]:
+    for strategy_id in ["B", "I", "J", "L", "D", "P"]:
         print(f"\n{'='*70}")
         print(f"Strategy {strategy_id}: {STRATEGY_CONFIGS[strategy_id]['name']}")
         print(f"{'='*70}")
@@ -656,7 +732,7 @@ def main():
         description="HermesForge walk-forward validation framework"
     )
     ap.add_argument("--strategy", type=str, default=None,
-                    help="Single strategy to test (B, I, J, L)")
+                    help="Single strategy to test (B, I, J, L, D, P)")
     ap.add_argument("--quick", action="store_true",
                     help="Smaller parameter grid for faster runs")
     ap.add_argument("--json", action="store_true",

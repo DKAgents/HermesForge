@@ -77,6 +77,31 @@ Adopt a three-sub-phase validation structure before full backtesting:
 - Strategies in the watch band (not killed, not passing cleanly) require judgment call before Phase 1B
 - DCA layer is explicitly out of scope until Phase 1 is complete
 
+## Amendment 1 — Asset-Class Independence Rule (2026-08-03)
+
+### Context
+The original framework was stocks-first with crypto deferred. As strategies were deployed on both stocks and crypto in the live pipeline, an implicit rule emerged: a strategy survives if it passes on **either** asset class, and is restricted to the passing class when it fails on the other. This amendment makes that rule explicit.
+
+### Decision
+
+| Rule | Definition |
+|---|---|
+| **Per-asset-class evaluation** | Each strategy is validated independently on stocks and crypto. Results on one asset class do not influence the verdict on the other. |
+| **Survival criterion** | A strategy SURVIVES (LIVE or WATCH) if it passes validation on **at least one** asset class. It is KILLED only if it fails the kill criteria on **all** tested asset classes. |
+| **Asset-class restriction** | If a strategy passes on one asset class but fails on another, it is **restricted** to the passing asset class only. The failing asset class is disabled in the pipeline. |
+| **Kill criteria (per asset class)** | avg R < 0.2 (frictionless) on that asset class. A strategy is killed globally only if this is true for ALL tested asset classes. |
+| **Watch criteria (per asset class)** | avg R 0.2-0.4 OR signals < 12/year with positive edge on that asset class. |
+| **Pass criteria (per asset class)** | avg R >= 0.6 AND positive in >= 2 of 3 sub-periods on that asset class. |
+| **Cross-sectional strategies** | Strategies that require multiple assets by design (e.g., STR-P) are evaluated only on the asset class they are built for. |
+| **Insufficient data** | If a strategy cannot be walk-forward validated due to insufficient signals (< 10 across the test period), it retains its Phase 1A status (WATCH if positive edge, KILL if not) with an explicit note. |
+
+### Consequences
+- STR-I is KILLED on crypto (Sharpe 0.151, Phase 1B/2) but PASSED on stocks → **restricted to stocks only**.
+- STR-B must be validated on crypto to determine if it remains active there.
+- STR-P is crypto-only by design → evaluated on crypto only.
+- STR-D was tested in Phase 1A on stocks (WATCH) but never walk-forward validated → must be validated.
+- STR-L has insufficient signals for walk-forward → retains WATCH status with explicit note.
+
 ## Related Decisions
 - ADR-002: Paper Trading First (superseded by this more structured framework)
 - ADR-003: Strategy Schema (strategies being validated)
