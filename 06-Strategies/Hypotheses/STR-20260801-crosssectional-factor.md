@@ -12,8 +12,10 @@ publish_enabled: false
 publish_channel: crypto
 source: "Factor timing analysis: MOM12_1 Sharpe 1.32, LIQUID Sharpe 2.67, PRICEMOM Sharpe 2.56 in ranging crypto"
 source_date: 2026-08-01
+topic: strategies
+has_quotes: false
+tags: []
 ---
-
 # STR-P: Cross-Sectional Factor Ranking (Crypto)
 
 ## Hypothesis

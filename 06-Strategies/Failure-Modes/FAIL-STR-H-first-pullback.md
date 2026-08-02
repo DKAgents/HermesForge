@@ -13,8 +13,11 @@ metrics:
 lesson: "Confirmation-candle + EMA-zone + volume-contraction + ADX + RSI filter stack compounds too severely. Discretionary-style multi-filter approaches don't work as mechanical scanners."
 data_limitations: "Daily bars, survivorship bias"
 tags: [failure-mode, killed, pullback, trend-swing, filter-stack]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-H First Pullback
 
 ## What Failed

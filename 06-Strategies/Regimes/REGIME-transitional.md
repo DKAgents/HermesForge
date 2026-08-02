@@ -5,8 +5,11 @@ description: "Market transitioning between trend and range, high uncertainty"
 indicators: [ADX falling from >25 to <20, volatility expanding, Bollinger Bands widening]
 applicable_strategies: []
 tags: [regime, transitional]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Regime: Transitional
 
 Market is transitioning between trending and ranging states. This is the hardest regime for systematic strategies — trend signals are failing but mean-reversion hasn't yet become reliable.

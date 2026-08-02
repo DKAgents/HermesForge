@@ -18,8 +18,11 @@ verdict_reason: "Positive avg R (0.582) and 57.1% win rate. Originally killed fo
 data_limitations: "Daily bars, survivorship bias (current S&P constituents), frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-L, stocks, watch]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-L Phase 1A Results
 
 ## Summary

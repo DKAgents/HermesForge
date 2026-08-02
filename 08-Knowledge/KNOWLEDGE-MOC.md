@@ -4,8 +4,10 @@ topic: knowledge
 created: 2026-07-30
 updated: 2026-07-30
 tags: [moc, knowledge, navigation]
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Knowledge MOC
 
 Navigation hub for the HermesForge knowledge base.

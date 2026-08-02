@@ -13,8 +13,11 @@ verdict_reason: "Baseline (V1) has strong positive edge (+0.582R) but very low f
 data_limitations: "Daily bars, survivorship bias, frictionless, ADX computation is slow on full universe"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1b, STR-L, stocks, watch]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-L Phase 1B Results
 
 ## Perturbation Summary

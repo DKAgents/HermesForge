@@ -4,8 +4,10 @@ topic: decisions
 created: 2026-07-30
 updated: 2026-07-30
 tags: [moc, adr, decisions, navigation]
+confidence: high
+has_quotes: false
+source: HermesForge ADR
 ---
-
 # Decisions MOC
 
 Navigation hub for all Architecture Decision Records.

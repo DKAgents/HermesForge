@@ -5,8 +5,11 @@ updated: 2026-07-30
 status: proposed
 tags: [meta, ontology, graph-engineering, elevation-plan]
 related: [[GRAPH-INVENTORY-AND-ONTOLOGY]]
+topic: meta
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Second-Brain Elevation Plan
 
 ## Overview

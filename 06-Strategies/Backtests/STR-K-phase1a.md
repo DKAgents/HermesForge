@@ -17,8 +17,11 @@ verdict_reason: "0 signals across 529 tickers over 7 years. Breadth filter (McCl
 data_limitations: "Daily bars, survivorship bias, breadth computed from 529-stock universe (not full NYSE/NASDAQ)"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-K, stocks, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-K Phase 1A Results
 
 ## Summary

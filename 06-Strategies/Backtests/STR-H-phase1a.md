@@ -18,8 +18,11 @@ verdict_reason: "Only 3 signals in 7 years (0.9/yr). All 3 stopped out. Filter s
 data_limitations: "Daily bars, survivorship bias, frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-H, stocks, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-H Phase 1A Results
 
 ## Key Finding

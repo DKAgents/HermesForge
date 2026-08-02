@@ -13,8 +13,11 @@ metrics:
 lesson: "Selling climax reversal pattern does not work as a per-stock mechanical scanner. The reversal-day low is too tight as a stop and ATR-based stops don't fix it. Murphy's selling climax describes market-wide capitulation, not per-stock dynamics. Per-stock reversals after multi-day declines in high-vol continue lower."
 data_limitations: "Daily bars, survivorship bias"
 tags: [failure-mode, killed, selling-climax, reversal, high-volatility]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-M Selling Climax
 
 ## What Failed
@@ -42,3 +45,6 @@ Selling climax reversal — buying after a multi-day decline when price makes a 
 - [[STR-20260726-selling-climax-reversal|STR-M Strategy]]
 - [[REGIME-high-volatility]]
 - [[N006-selling-climax-bottom-reversal-day]]
+
+## Related Notes
+- [[STR-20260726-selling-climax-reversal|STR-M: Selling Climax Reversal]]

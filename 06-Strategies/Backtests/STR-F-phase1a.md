@@ -17,8 +17,11 @@ verdict_reason: "Negative avg R (-0.048). Target hit rate only 2.0%. 80% exit at
 data_limitations: "Daily bars, survivorship bias, frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-F, stocks, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-F Phase 1A Results
 
 ## Key Finding

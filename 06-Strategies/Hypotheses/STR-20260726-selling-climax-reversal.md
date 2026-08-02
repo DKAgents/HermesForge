@@ -26,8 +26,9 @@ evidence_links:
   - C084-differences-between-tops-and-bottoms
   - RG032-3-to-1-reward-to-risk-ratio
 tags: [strategy, hypothesis, reversal, selling-climax, high-volatility, swing, long-only]
+topic: strategies
+has_quotes: false
 ---
-
 # STR-M: Selling Climax Reversal
 
 ## Graph Properties

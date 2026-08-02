@@ -17,8 +17,11 @@ verdict_reason: "Positive edge but decaying across periods (1.07R -> 0.42R -> 0.
 data_limitations: "Daily bars, survivorship bias (current S&P constituents), frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-B, stocks]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-B Phase 1A Results
 
 ## Key Findings

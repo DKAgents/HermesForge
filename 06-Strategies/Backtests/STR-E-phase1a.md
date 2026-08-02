@@ -17,8 +17,11 @@ verdict_reason: "Negative avg R (-0.056), 0/3 sub-periods positive. No edge exis
 data_limitations: "Daily bars, survivorship bias, frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-E, stocks, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-E Phase 1A Results
 
 ## Exit Breakdown

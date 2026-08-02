@@ -22,8 +22,11 @@ verdict_reason: "Sharpe 0.151, MDD -38.9%. Daily bars insufficient for crypto mo
 data_limitations: "Daily bars (paper uses 6h), Hyperliquid perp markets, quarterly re-optimization"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1b2, STR-I, crypto, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-I Phase 1B/2 Results (Crypto)
 
 ## Decision: KILL

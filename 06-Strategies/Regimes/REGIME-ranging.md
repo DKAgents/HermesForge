@@ -5,8 +5,11 @@ description: "Price oscillates between support and resistance without sustained 
 indicators: [ADX < 20, price near 200 SMA, Bollinger Bands contracting]
 applicable_strategies: [STR-D, STR-J, STR-E]
 tags: [regime, ranging]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Regime: Ranging
 
 Price oscillates between support and resistance levels without establishing a sustained trend. Mean-reversion and support/resistance strategies tend to outperform here.

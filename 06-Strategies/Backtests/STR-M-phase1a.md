@@ -15,8 +15,11 @@ metrics:
     stop: 6
 data_limitations: "Daily bars, survivorship bias, 529-ticker universe"
 tags: [backtest-result, phase1a, killed, selling-climax, reversal]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Backtest Result: STR-M Phase 1A
 
 ## Summary
@@ -57,3 +60,6 @@ The fundamental problem: buying a reversal after a multi-day decline in high-vol
 - [[REGIME-high-volatility]]
 - [[Discoveries-2026-W32-high-vol]]
 - [[ADR-004-Phase1-Validation-Framework]]
+
+## Related Notes
+- [[STR-20260726-selling-climax-reversal|STR-M: Selling Climax Reversal]]

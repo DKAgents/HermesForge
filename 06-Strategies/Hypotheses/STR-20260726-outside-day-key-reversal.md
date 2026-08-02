@@ -26,8 +26,9 @@ evidence_links:
   - RG032-3-to-1-reward-to-risk-ratio
   - C084-differences-between-tops-and-bottoms
 tags: [strategy, hypothesis, reversal, outside-day, key-reversal, high-volatility, swing, long-only]
+topic: strategies
+has_quotes: false
 ---
-
 # STR-N: Outside Day Key Reversal
 
 ## Graph Properties

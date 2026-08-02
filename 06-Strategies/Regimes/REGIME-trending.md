@@ -5,8 +5,11 @@ description: "Sustained directional price movement with higher highs/lower lows"
 indicators: [ADX > 25, price above/below 200 SMA, MACD histogram expanding]
 applicable_strategies: [STR-I, STR-B, STR-A, STR-H]
 tags: [regime, trending]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Regime: Trending
 
 Sustained directional price movement where trend-following and pullback strategies tend to outperform. Characterized by expanding MACD histogram, price persistently above (bull) or below (bear) the 200-day SMA, and ADX above 25.

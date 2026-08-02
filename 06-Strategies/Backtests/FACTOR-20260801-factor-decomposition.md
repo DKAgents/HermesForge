@@ -6,8 +6,12 @@ method: factor_decomposition
 date: 2026-08-01
 factors: [MOM12_1, REV1, LOWVOL, LIQUID, PRICEMOM]
 transaction_costs: true
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # Factor Construction & Decomposition — August 1, 2026
 
 First factor-based analysis of HermesForge strategies.

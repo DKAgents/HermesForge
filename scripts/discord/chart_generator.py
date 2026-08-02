@@ -267,11 +267,70 @@ def _chart_generic(df_full, df, signal_dict, entry, stop, target, title):
     return _chart_macd_divergence(df_full, df, signal_dict, entry, stop, target, title)
 
 
+# ---------------------------------------------------------------------------
+# Strategy I — Adaptive Trend: SMA200 overlay + momentum annotation
+# ---------------------------------------------------------------------------
+
+def _chart_adaptive_trend(df_full, df, signal_dict, entry, stop, target, title):
+    close_full = df_full["Close"]
+    sma200 = _sma(close_full, 200).tail(LOOKBACK_BARS)
+    rsi = _rsi(close_full).tail(LOOKBACK_BARS)
+
+    apds = [
+        mpf.make_addplot(sma200, color=COLOR_MA200, width=1.2),
+        mpf.make_addplot(rsi, panel=1, color="#a371f7", width=1.0, ylabel="RSI"),
+    ]
+
+    fig, axes = _base_plot(
+        df, _dark_style(), entry, stop, target, apds,
+        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title,
+    )
+
+    # Annotate momentum if available
+    momentum = signal_dict.get("momentum", 0)
+    if momentum:
+        axes[0].text(0.02, 0.95, f"Momentum: {momentum:+.1%}",
+                     color="#3fb950", fontsize=9, transform=axes[0].transAxes,
+                     fontweight="bold")
+
+    return fig
+
+
+# ---------------------------------------------------------------------------
+# Strategy P — Cross-Sectional Factor: SMA200 overlay + z-score annotation
+# ---------------------------------------------------------------------------
+
+def _chart_crosssectional(df_full, df, signal_dict, entry, stop, target, title):
+    close_full = df_full["Close"]
+    sma200 = _sma(close_full, 200).tail(LOOKBACK_BARS)
+
+    apds = [
+        mpf.make_addplot(sma200, color=COLOR_MA200, width=1.2),
+    ]
+
+    fig, axes = _base_plot(
+        df, _dark_style(), entry, stop, target, apds,
+        panel_ratios=(4, 2), volume=True, volume_panel=1, title=title,
+    )
+
+    # Annotate factor z-score if available
+    zscore = signal_dict.get("composite_zscore", 0)
+    rank = signal_dict.get("rank", 0)
+    if zscore or rank:
+        axes[0].text(0.02, 0.95, f"Z-score: {zscore:+.2f} | Rank #{rank}/42",
+                     color="#58a6ff", fontsize=9, transform=axes[0].transAxes,
+                     fontweight="bold")
+
+    return fig
+
+
 CHART_PROFILES = {
     "STR-B-macd-histogram-divergence": _chart_macd_divergence,
     "STR-A-ma-pullback-fibonacci":     _chart_ma_pullback,
     "STR-C-breakout-volume":           _chart_breakout_volume,
     "STR-D-sr-role-reversal":          _chart_sr_reversal,
+    "STR-I-adaptive-trend":           _chart_adaptive_trend,
+    "STR-P-crosssectional":           _chart_crosssectional,
 }
 
 

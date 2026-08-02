@@ -17,8 +17,11 @@ verdict_reason: "Positive in all sub-periods but avg R < 0.5 friction flag"
 data_limitations: "Daily bars (paper uses 6h), survivorship bias, no transaction costs"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-I, stocks]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-I Phase 1A Results
 
 ## Key Findings

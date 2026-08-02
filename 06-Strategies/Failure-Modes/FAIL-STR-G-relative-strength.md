@@ -13,8 +13,11 @@ metrics:
 lesson: "RS-crossover alone is too easily triggered by short-term noise. Needs stricter/slower breakout definition (longer SMA, RS at N-bar high, or minimum RS_ROC magnitude)."
 data_limitations: "Daily bars, survivorship bias"
 tags: [failure-mode, killed, relative-strength, sector-rotation]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-G Relative Strength
 
 ## What Failed

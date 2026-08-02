@@ -30,8 +30,9 @@ evidence_links:
   - C024-market-breadth-indicators
   - R034-myth-gaps-are-always-filled
 tags: [strategy, hypothesis, gap, breadth, reversal, transitional, swing, long-only]
+topic: strategies
+has_quotes: false
 ---
-
 # STR-K: Breadth-Gated Gap Reversal
 
 ## Graph Properties

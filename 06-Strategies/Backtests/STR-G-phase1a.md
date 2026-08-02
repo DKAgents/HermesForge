@@ -17,8 +17,11 @@ verdict_reason: "Avg R 0.105 < 0.2 kill threshold. Extremely high signal count b
 data_limitations: "Daily bars, survivorship bias, frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-G, stocks, kill]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-G Phase 1A Results
 
 ## Exit Breakdown

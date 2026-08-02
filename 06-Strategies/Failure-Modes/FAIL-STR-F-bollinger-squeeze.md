@@ -13,8 +13,11 @@ metrics:
 lesson: "Bollinger Band squeeze as a breakout trigger produces too many false signals. The squeeze condition (lowest band-width in trailing 60 bars) is too common. Target rarely achieved (2.0% hit rate)."
 data_limitations: "Daily bars, survivorship bias"
 tags: [failure-mode, killed, bollinger, squeeze, breakout]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-F Bollinger Squeeze
 
 ## What Failed
@@ -38,3 +41,6 @@ Volatility contraction (Bollinger Band squeeze) preceding expansion breakout. Th
 - [[STR-F-phase1a]]
 - [[STR-20260726-bollinger-squeeze-breakout-entry|STR-F Strategy]]
 - [[REGIME-transitional]]
+
+## Related Notes
+- [[STR-20260726-bollinger-squeeze-breakout-entry|Bollinger Band Squeeze Breakout Entry]]

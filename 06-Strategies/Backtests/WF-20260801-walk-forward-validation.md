@@ -9,8 +9,12 @@ train_period: 2y
 test_period: 1y
 transaction_costs: true
 gap_risk: true
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # Walk-Forward Validation — August 1, 2026
 
 First rigorous out-of-sample validation of all active strategies.

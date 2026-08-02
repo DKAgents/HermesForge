@@ -4,8 +4,10 @@ topic: strategies
 created: 2026-07-30
 updated: 2026-07-30
 tags: [moc, strategies, navigation]
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Strategies MOC
 
 Navigation hub for all HermesForge trading strategies.

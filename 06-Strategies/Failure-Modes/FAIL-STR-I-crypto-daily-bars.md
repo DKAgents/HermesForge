@@ -14,8 +14,11 @@ metrics:
 lesson: "Timeframe mismatch is structural, not parametric. The paper's Sharpe 2.41 was on 6h bars; daily bars (Sharpe 1.63 per paper ablation) lose the intraday momentum signal. No parameter tuning can fix this."
 data_limitations: "Daily bars only. 6h data available but only ~13 months deep, insufficient for backtesting."
 tags: [failure-mode, killed, crypto, timeframe-mismatch, STR-I]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-I Crypto on Daily Bars
 
 ## What Failed

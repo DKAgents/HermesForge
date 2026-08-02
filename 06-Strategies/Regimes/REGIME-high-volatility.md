@@ -5,8 +5,11 @@ description: "Elevated volatility with large daily ranges, VIX > 25 or ATR > 2x 
 indicators: [VIX > 25, ATR > 2x 50-day average, wide Bollinger Bands]
 applicable_strategies: [STR-M, STR-N]
 tags: [regime, high-volatility]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Regime: High Volatility
 
 Elevated market volatility with large daily price ranges. Risk management becomes paramount — position sizing must account for wider stops.

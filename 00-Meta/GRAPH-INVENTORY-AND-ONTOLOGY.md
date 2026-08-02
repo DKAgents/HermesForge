@@ -4,8 +4,11 @@ created: 2026-07-30
 updated: 2026-07-30
 status: active
 tags: [meta, ontology, graph-engineering, knowledge-graph]
+topic: meta
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Graph Inventory & Ontology — HermesForge Knowledge Graph
 
 ## 1. Current Vault Inventory

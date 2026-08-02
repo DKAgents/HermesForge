@@ -22,8 +22,11 @@ verdict_reason: "Sharpe 0.491, exceptionally low MDD -3.5%. Edge survives costs.
 data_limitations: "Daily bars, survivorship bias, quarterly re-optimization"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1b2, STR-J, stocks, watch]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-J Phase 1B/2 Results (Stocks)
 
 ## Exit Breakdown

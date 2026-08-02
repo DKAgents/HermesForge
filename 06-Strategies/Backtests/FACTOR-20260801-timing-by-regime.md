@@ -6,8 +6,12 @@ method: factor_timing
 date: 2026-08-01
 factors: [MOM12_1, REV1, LOWVOL, LIQUID, PRICEMOM]
 regimes: [trending, ranging, transitional, high-volatility, low-volatility]
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # Factor Timing by Regime — August 1, 2026
 
 First test of whether factor premia vary by market regime.

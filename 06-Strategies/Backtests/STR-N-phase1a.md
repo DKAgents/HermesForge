@@ -21,8 +21,11 @@ metrics:
     target: 0
 data_limitations: "Daily bars, survivorship bias, 529-ticker universe"
 tags: [backtest-result, phase1a, killed, outside-day, reversal]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Backtest Result: STR-N Phase 1A
 
 ## Summary

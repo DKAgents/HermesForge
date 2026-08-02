@@ -22,8 +22,11 @@ verdict_reason: "Sharpe > 0.5, acceptable MDD, edge survives transaction costs"
 data_limitations: "Daily bars (paper uses 6h), survivorship bias, quarterly re-optimization"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1b2, STR-I, stocks, pass]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-I Phase 1B/2 Results (Stocks)
 
 ## Implementation

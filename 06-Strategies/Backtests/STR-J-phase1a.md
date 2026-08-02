@@ -17,8 +17,11 @@ verdict_reason: "Avg R 0.017 < 0.2 kill threshold. Baseline bidirectional fails.
 data_limitations: "Daily bars, survivorship bias, frictionless"
 produced_by: "[[Backtester]]"
 tags: [backtest, phase1a, STR-J, stocks, kill-baseline]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # STR-J Phase 1A Results (Baseline)
 
 ## Variants Tested

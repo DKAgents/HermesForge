@@ -13,8 +13,11 @@ metrics:
 lesson: "RSI mean-reversion on daily bars without regime filter produces too many false signals in trending markets. Short signals dominate (65% of signals) and fight the dominant uptrend. CCI with crossover-at-extreme (STR-J) is structurally better."
 data_limitations: "Daily bars, survivorship bias"
 tags: [failure-mode, killed, rsi, mean-reversion]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-E RSI Mean-Reversion
 
 ## What Failed

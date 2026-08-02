@@ -12,8 +12,10 @@ publish_enabled: false
 kill_reason: "Phase 1A: avg R=-0.05 (crypto), all perturbations negative. PRICEMOM factor works as relative quintile ranking, not absolute per-ticker threshold. Scanner architecture cannot capture cross-sectional factor edge."
 kill_date: 2026-08-01
 source: "Factor decomposition: PRICEMOM +40% annualized, p=0.04 in crypto"
+topic: strategies
+has_quotes: false
+tags: []
 ---
-
 # STR-O: Price Momentum Factor Strategy
 
 ## Hypothesis

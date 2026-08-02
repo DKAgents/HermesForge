@@ -4,8 +4,10 @@ topic: risk
 created: 2026-07-30
 updated: 2026-07-30
 tags: [moc, risk, navigation]
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Risk MOC
 
 Navigation hub for all risk management artifacts.

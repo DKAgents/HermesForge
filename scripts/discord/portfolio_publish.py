@@ -205,17 +205,23 @@ def apply_liquidity_filter(signals: list, max_pct: float = 0.80) -> list:
     return kept
 
 
-def run_portfolio_pipeline(dry_run: bool = True) -> dict:
+def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False) -> dict:
     """
     Main pipeline: detect regime → run active scanners → dedup → score → publish.
+    
+    If crypto_only=True, skips stock scanning entirely (weekend mode).
     """
     # ── Load strategy metadata ──────────────────────────────────────────────
     strategy_meta = load_strategy_metadata()
     
     # ── Load data ───────────────────────────────────────────────────────────
-    print("Loading cached stock data...")
-    stock_data = load_all_stocks()
-    print(f"Loaded {len(stock_data)} stock tickers.")
+    if crypto_only:
+        stock_data = {}
+        print("[--crypto-only] Skipping stock data load")
+    else:
+        print("Loading cached stock data...")
+        stock_data = load_all_stocks()
+        print(f"Loaded {len(stock_data)} stock tickers.")
     
     print("Loading cached crypto data...")
     crypto_data = load_all_crypto()
@@ -225,7 +231,11 @@ def run_portfolio_pipeline(dry_run: bool = True) -> dict:
         return {"error": "No cached market data found. Run fetch_data.py first."}
     
     # ── Detect regime (separately for stocks and crypto) ────────────────────
-    stock_regime = detect_regime_for_asset_class(stock_data, crypto_data, "stock")
+    if crypto_only:
+        stock_regime = {"regime": "skipped", "benchmark": "n/a",
+                        "active_strategies": [], "description": "skipped (weekend mode)"}
+    else:
+        stock_regime = detect_regime_for_asset_class(stock_data, crypto_data, "stock")
     crypto_regime = detect_regime_for_asset_class(stock_data, crypto_data, "crypto") if crypto_data else None
     
     summary = {
@@ -246,23 +256,28 @@ def run_portfolio_pipeline(dry_run: bool = True) -> dict:
         print(f"Crypto  ({crypto_regime.get('benchmark', 'BTC')}):  {crypto_regime['description']}")
     
     # ── Scan stocks (using stock regime) ────────────────────────────────────
-    stock_active = stock_regime["active_strategies"]
-    print(f"\nStock active strategies: {stock_active}")
-    
-    stock_scanners = {
-        sid: cfg for sid, cfg in SCANNER_REGISTRY.items()
-        if sid in stock_active
-    }
-    # Always include publish_enabled strategies
-    for sid, cfg in SCANNER_REGISTRY.items():
-        if sid not in stock_scanners:
-            note_id = cfg["note_id"]
-            meta = strategy_meta.get(note_id, {})
-            if meta.get("publish_enabled"):
-                stock_scanners[sid] = cfg
-    
-    _scan_asset_class(stock_data, "stock", stock_scanners, strategy_meta,
-                      stock_regime, dry_run, summary)
+    if crypto_only:
+        print("\n[--crypto-only] Skipping stock scan (weekend mode)")
+        stock_regime = {"regime": "skipped", "benchmark": "n/a", "active_strategies": [],
+                        "description": "Stocks skipped — weekend crypto-only mode"}
+    else:
+        stock_active = stock_regime["active_strategies"]
+        print(f"\nStock active strategies: {stock_active}")
+        
+        stock_scanners = {
+            sid: cfg for sid, cfg in SCANNER_REGISTRY.items()
+            if sid in stock_active
+        }
+        # Always include publish_enabled strategies
+        for sid, cfg in SCANNER_REGISTRY.items():
+            if sid not in stock_scanners:
+                note_id = cfg["note_id"]
+                meta = strategy_meta.get(note_id, {})
+                if meta.get("publish_enabled"):
+                    stock_scanners[sid] = cfg
+
+        _scan_asset_class(stock_data, "stock", stock_scanners, strategy_meta,
+                          stock_regime, dry_run, summary)
     
     # ── Scan crypto (using crypto regime) ───────────────────────────────────
     if crypto_data and crypto_regime:
@@ -427,6 +442,8 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
             "confirmation_level": sig.get("confirmation_level", "Level 1"),
             "subperiod": sig.get("subperiod", "n/a"),
             "regime": sig.get("regime", "unknown"),
+            "regime_benchmark": regime_data.get("benchmark", ""),
+            "regime_adx": regime_data.get("adx", ""),
             "score": sig["score"],
         }
         for key, value in sig.items():
@@ -496,9 +513,11 @@ def main():
     )
     ap.add_argument("--dry-run", action="store_true",
                     help="Run full pipeline without posting")
+    ap.add_argument("--crypto-only", action="store_true",
+                    help="Skip stock scanning, run crypto only (weekend mode)")
     args = ap.parse_args()
     
-    summary = run_portfolio_pipeline(dry_run=args.dry_run)
+    summary = run_portfolio_pipeline(dry_run=args.dry_run, crypto_only=args.crypto_only)
     
     if "error" in summary:
         print(f"\nERROR: {summary['error']}")

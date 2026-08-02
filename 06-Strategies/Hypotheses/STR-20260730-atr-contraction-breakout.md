@@ -29,8 +29,9 @@ evidence_links:
   - N044-long-term-moving-averages-on-weekly-charts
   - R082-breakouts-must-be-accompanied-by-heavy-volume
 tags: [strategy, hypothesis, volatility, atr, breakout, low-volatility, swing, long-only]
+topic: strategies
+has_quotes: false
 ---
-
 # STR-L: ATR Contraction Breakout
 
 ## Graph Properties

@@ -13,8 +13,11 @@ metrics:
 lesson: "Outside day key reversal has regime-dependent edge that only works in 2024+ period. Pre-2024 the reversal pattern fails in both bull and bear markets. Longer time stop (20 bars) helps but can't overcome pre-2024 drag. Pattern may become viable if current regime persists."
 data_limitations: "Daily bars, survivorship bias, small period3 sample (15 signals)"
 tags: [failure-mode, killed, outside-day, key-reversal, high-volatility, regime-dependent]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Failure Mode: STR-N Outside Day Key Reversal
 
 ## What Failed

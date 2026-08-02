@@ -5,8 +5,11 @@ description: "Suppressed volatility with small daily ranges, VIX < 15 or ATR < 0
 indicators: [VIX < 15, ATR < 0.5x 50-day average, Bollinger Bands narrow]
 applicable_strategies: [STR-J]
 tags: [regime, low-volatility]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Regime: Low Volatility
 
 Suppressed market volatility with small daily price ranges. Mean-reversion strategies tend to perform well as prices stay within narrow bands.
