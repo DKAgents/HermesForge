@@ -260,10 +260,9 @@ def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
 
 
 def post_separator(channel_id: str, color: int, dry_run: bool = False) -> dict:
-    """Post a colored separator between signals. Uses the embed's left
-    border bar as the visual divider — no text needed."""
+    """Post a horizontal rule separator between signals."""
     embed = {
-        "description": "\u200b",  # zero-width space (Discord requires content)
+        "description": HR,
         "color": color,
     }
     payload = {"embeds": [embed]}
