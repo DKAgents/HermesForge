@@ -45,6 +45,7 @@ from scanners.scanner_d_sr_reversal import scan as scan_d
 from scanners.scanner_i_adaptive_trend import scan as scan_i
 from scanners.scanner_j_eufearia_cci import scan as scan_j
 from scanners.scanner_l_atr_contraction import scan_ticker as scan_l_ticker
+from scanners.scanner_p_crosssectional import scan as scan_p
 
 from regime_detector import (
     detect_regime, detect_regime_for_asset_class,
@@ -90,6 +91,14 @@ SCANNER_REGISTRY = {
         "note_id": "STR-20260730-atr-contraction-breakout",
         "name": "ATR Contraction",
         "default_confidence": "medium",
+        "scanner_kwargs": {},
+    },
+    "STR-P-crosssectional": {
+        "scan_fn": scan_p,
+        "call_mode": "batch",
+        "note_id": "STR-20260801-crosssectional-factor",
+        "name": "Cross-Sectional Factor",
+        "default_confidence": "low",
         "scanner_kwargs": {},
     },
 }
