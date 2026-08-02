@@ -6,7 +6,7 @@ Each day of the week gets a distinct left-border color:
   Mon=Blue  Tue=Green  Wed=Orange  Thu=Purple  Fri=Red  Sat=Teal  Sun=Gold
 
 Posts directly via Discord Bot API (multipart for chart attachments).
-Includes daily header and horizontal rule separators between signals.
+Includes daily header embed.
 
 Usage (programmatic):
     from embed_publisher import post_daily_batch, post_embed_signal
@@ -49,9 +49,6 @@ MONTH_NAMES = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
 ]
-
-# Visual separator for horizontal rules between trades
-HR = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -340,20 +337,6 @@ def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
     return _post_to_discord(channel_id, payload)
 
 
-def post_separator(channel_id: str, color: int, dry_run: bool = False) -> dict:
-    """Post a horizontal rule separator between signals."""
-    embed = {
-        "description": HR,
-        "color": color,
-    }
-    payload = {"embeds": [embed]}
-
-    if dry_run:
-        return {"status": "dry_run"}
-
-    return _post_to_discord(channel_id, payload)
-
-
 # ── Batch posting ─────────────────────────────────────────────────────────────
 
 def post_daily_batch(signals: list, channel_id: str, asset_class: str,
@@ -400,13 +383,8 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         print(f"  ❌ Header failed: {header_result.get('response', '')}")
         return result
 
-    # Post each signal with separators
+    # Post each signal
     for i, sig in enumerate(signals):
-        # Horizontal rule before each signal (except the first)
-        if i > 0 and not dry_run:
-            post_separator(channel_id, color, dry_run=False)
-            time.sleep(0.5)
-
         chart_path = sig.get("_chart_path")
         sig_result = post_embed_signal(sig, chart_path, channel_id, color, dry_run)
 
