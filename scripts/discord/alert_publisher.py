@@ -130,11 +130,22 @@ def _tier_and_conditions_crosssectional(s: dict) -> tuple[str, str, list[str]]:
     """Strategy P — Cross-Sectional Factor Ranking."""
     direction = s.get("direction", "long")
     rank = s.get("rank", 0)
-    composite_score = s.get("composite_zscore", 0)
+    composite_score = s.get("composite_score", s.get("composite_zscore", 0))
+    factor_mom = s.get("factor_mom12_1", 0)
+    factor_liq = s.get("factor_liquid", 0)
+    factor_pm = s.get("factor_pricemom", 0)
+
+    # Format LIQUID in millions if it's a large raw value
+    if abs(factor_liq) > 1_000_000:
+        liq_str = f"${factor_liq / 1_000_000:.0f}M"
+    elif abs(factor_liq) > 1_000:
+        liq_str = f"${factor_liq / 1000:.1f}K"
+    else:
+        liq_str = f"{factor_liq:+.2f}"
 
     conditions = [
-        f"Cross-sectional rank: {'top' if direction == 'long' else 'bottom'} quintile (#{rank} of 42)",
-        f"Composite z-score: {composite_score:+.2f} (MOM12_1 + LIQUID + PRICEMOM)",
+        f"Cross-sectional rank: {'top' if direction == 'long' else 'bottom'} quintile of 42 cryptos",
+        f"Composite score: {composite_score:+.2f} (MOM12_1={factor_mom:+.1f}, LIQUID={liq_str}, PRICEMOM={factor_pm:+.2f})",
         "Monthly rebalance (21-bar cycle)",
         "1.5x ATR trailing stop",
     ]
