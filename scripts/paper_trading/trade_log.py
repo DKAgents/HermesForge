@@ -20,12 +20,15 @@ from typing import Optional
 LOG_PATH = pathlib.Path(__file__).parent / "trades.csv"
 
 FIELDS = [
-    "trade_id", "strategy_id", "ticker", "asset_class", "data_source",
+    "trade_id", "short_id", "strategy_id", "ticker", "asset_class", "data_source",
     "direction", "signal_id", "entry_date", "entry_price", "stop_price", "target_price",
     "position_size_pct", "position_size_units", "quality_tier",
-    "status", "exit_date", "exit_price", "exit_reason",
+    "entry_status",  # "pending" (waiting for entry fill) or "entered" (filled)
+    "status",  # "open" or "closed"
+    "exit_date", "exit_price", "exit_reason",
     "r_multiple", "bars_held", "subperiod", "confirmation_level", "weekly_gate_scaling",
     "chart_path", "notes",
+    "discord_message_id", "discord_channel_id", "discord_post_url",
 ]
 
 
@@ -71,6 +74,52 @@ def get_open_trades(strategy_id: Optional[str] = None, ticker: Optional[str] = N
     return rows
 
 
+def get_pending_trades() -> list[dict]:
+    """Trades waiting for entry fill (entry_status == 'pending')."""
+    return [r for r in _read_all_rows()
+            if r["status"] == "open" and r.get("entry_status", "") == "pending"]
+
+
+def get_entered_trades() -> list[dict]:
+    """Trades that have been entered but not yet closed."""
+    return [r for r in _read_all_rows()
+            if r["status"] == "open" and r.get("entry_status", "") == "entered"]
+
+
+def get_trade_by_short_id(short_id: str) -> Optional[dict]:
+    """Find a trade by its terse short_id."""
+    for row in _read_all_rows():
+        if row.get("short_id", "") == short_id:
+            return row
+    return None
+
+
+def register_discord_info(trade_id: str, message_id: str, channel_id: str,
+                          post_url: str = "") -> None:
+    """Update a trade's Discord message info after the setup embed is posted."""
+    rows = _read_all_rows()
+    for row in rows:
+        if row["trade_id"] == trade_id:
+            row["discord_message_id"] = message_id
+            row["discord_channel_id"] = channel_id
+            if post_url:
+                row["discord_post_url"] = post_url
+            _write_all_rows(rows)
+            return
+    raise ValueError(f"trade_id not found: {trade_id}")
+
+
+def update_entry_status(trade_id: str, entry_status: str) -> None:
+    """Update a trade's entry_status ('pending' -> 'entered')."""
+    rows = _read_all_rows()
+    for row in rows:
+        if row["trade_id"] == trade_id:
+            row["entry_status"] = entry_status
+            _write_all_rows(rows)
+            return
+    raise ValueError(f"trade_id not found: {trade_id}")
+
+
 def open_trade(trade_dict: dict) -> str:
     """
     Append a new open trade row. trade_dict should contain at least:
@@ -96,6 +145,7 @@ def open_trade(trade_dict: dict) -> str:
     row = {field: trade_dict.get(field, "") for field in FIELDS}
     row["trade_id"] = trade_id
     row["status"] = "open"
+    row["entry_status"] = trade_dict.get("entry_status", "pending")
 
     with open(LOG_PATH, "a", newline="") as f:
         csv.DictWriter(f, fieldnames=FIELDS).writerow(row)

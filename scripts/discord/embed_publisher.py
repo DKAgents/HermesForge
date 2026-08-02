@@ -24,6 +24,11 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from alert_publisher import get_quality_tier, _tradingview_link
 
+# Trade tracking
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "paper_trading"))
+from trade_id import generate_short_id, make_discord_url, get_strategy_code
+import trade_log
+
 # ── Config ────────────────────────────────────────────────────────────────────
 
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
@@ -49,6 +54,87 @@ MONTH_NAMES = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
 ]
+
+
+# ── Trade ID generation ───────────────────────────────────────────────────────
+
+def _generate_short_id_for_signal(signal_dict: dict, used_ids: set) -> str:
+    """
+    Generate a unique terse trade ID for a signal.
+    Handles sequence letters for duplicate ticker/strategy/date combos.
+
+    Args:
+        signal_dict: Signal dict with ticker, strategy_id, date
+        used_ids: Set of already-generated short_ids in this batch
+
+    Returns:
+        Terse ID like "BTC-P-0727A"
+    """
+    ticker = signal_dict.get("ticker", "?")
+    strategy_id = signal_dict.get("strategy_id", "")
+    signal_date = str(signal_dict.get("date", signal_dict.get("entry_date", "")))[:10]
+
+    seq = 0
+    while True:
+        short_id = generate_short_id(ticker, strategy_id, signal_date, sequence=seq)
+        if short_id not in used_ids:
+            used_ids.add(short_id)
+            return short_id
+        seq += 1
+
+
+def _register_trade_after_post(signal_dict: dict, short_id: str,
+                                message_id: str, channel_id: str) -> str | None:
+    """
+    Register or update a trade in the trade log after posting the setup embed.
+
+    If the trade already exists (from capture_signals.py), update it with
+    Discord message info. Otherwise, create a new trade entry.
+
+    Returns the trade_id, or None on failure.
+    """
+    try:
+        strategy_id = signal_dict.get("strategy_id", "")
+        ticker = signal_dict["ticker"]
+        asset_class = "crypto" if signal_dict.get("publish_channel") == "crypto" else "stock"
+        signal_date = str(signal_dict.get("date", signal_dict.get("entry_date", "")))[:10]
+
+        post_url = make_discord_url(channel_id, message_id)
+
+        trade_dict = {
+            "strategy_id": strategy_id,
+            "short_id": short_id,
+            "ticker": ticker,
+            "asset_class": asset_class,
+            "data_source": "hyperliquid" if asset_class == "crypto" else "yfinance",
+            "direction": signal_dict.get("direction", "long"),
+            "signal_id": f"{strategy_id}_{ticker}_{signal_date}",
+            "entry_date": signal_date,
+            "entry_price": signal_dict["entry_price"],
+            "stop_price": signal_dict["stop_price"],
+            "target_price": signal_dict["target_price"],
+            "discord_message_id": message_id,
+            "discord_channel_id": channel_id,
+            "discord_post_url": post_url,
+        }
+
+        try:
+            trade_id = trade_log.open_trade(trade_dict)
+            print(f"  📝 Trade registered: {short_id} ({trade_id})")
+        except ValueError:
+            # Trade already exists — update Discord info
+            trade_id = trade_log.make_trade_id(strategy_id, ticker, signal_date)
+            try:
+                trade_log.register_discord_info(trade_id, message_id, channel_id, post_url)
+                print(f"  📝 Trade updated: {short_id} ({trade_id})")
+            except ValueError:
+                print(f"  ⚠️ Could not register Discord info for {trade_id}")
+                return None
+
+        return trade_id
+    except Exception as e:
+        print(f"  ⚠️ Trade registration failed: {e}")
+        return None
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -156,7 +242,7 @@ def _get_confluence(signal_dict: dict) -> str:
 
 # ── Embed formatting ──────────────────────────────────────────────────────────
 
-def format_signal_embed(signal_dict: dict, color: int) -> dict:
+def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> dict:
     """Format a signal as a Discord embed JSON object."""
     ticker = signal_dict["ticker"]
     direction = signal_dict.get("direction", "long")
@@ -200,6 +286,9 @@ def format_signal_embed(signal_dict: dict, color: int) -> dict:
     is_live = signal_dict.get("is_live", False)
     status_str = "LIVE" if is_live else "WATCH"
 
+    # Trade ID line
+    id_line = f" | `{short_id}`" if short_id else ""
+
     # Build embed fields
     fields = [
         {"name": "📍 Entry", "value": entry_str, "inline": True},
@@ -214,7 +303,7 @@ def format_signal_embed(signal_dict: dict, color: int) -> dict:
 
     embed = {
         "title": f"📊 {strategy_name} v{version}",
-        "description": f"**{ticker}** | {direction_label} | Daily | [TradingView Chart]({tv_url})",
+        "description": f"**{ticker}** | {direction_label} | Daily | [TradingView Chart]({tv_url}){id_line}",
         "color": color,
         "fields": fields,
         "footer": {"text": "HermesForge Signal Pipeline"},
@@ -280,9 +369,13 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
 
 
 def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
-                      color: int, dry_run: bool = False) -> dict:
-    """Post a single signal as a Discord embed with chart attachment."""
-    embed = format_signal_embed(signal_dict, color)
+                      color: int, dry_run: bool = False,
+                      short_id: str = "") -> dict:
+    """Post a single signal as a Discord embed with chart attachment.
+    If short_id is provided, it's included in the embed and the trade is
+    registered in the trade log after successful posting.
+    """
+    embed = format_signal_embed(signal_dict, color, short_id=short_id)
 
     # Add image reference if chart exists
     has_chart = chart_path and os.path.exists(chart_path)
@@ -296,9 +389,18 @@ def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
             "status": "dry_run",
             "embed": embed,
             "chart_path": chart_path if has_chart else None,
+            "short_id": short_id,
         }
 
-    return _post_to_discord(channel_id, payload, chart_path if has_chart else None)
+    result = _post_to_discord(channel_id, payload, chart_path if has_chart else None)
+
+    # Register trade after successful post
+    if result["status"] == "ok" and short_id:
+        _register_trade_after_post(
+            signal_dict, short_id, result["message_id"], channel_id,
+        )
+
+    return result
 
 
 def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
@@ -429,15 +531,18 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         return result
 
     # Post each signal
+    used_short_ids: set = set()
     for i, sig in enumerate(signals):
         chart_path = sig.get("_chart_path")
-        sig_result = post_embed_signal(sig, chart_path, channel_id, color, dry_run)
+        short_id = _generate_short_id_for_signal(sig, used_short_ids)
+        sig_result = post_embed_signal(sig, chart_path, channel_id, color, dry_run,
+                                       short_id=short_id)
 
         if sig_result["status"] in ("ok", "dry_run"):
             result["posted"] += 1
             if not dry_run:
                 result["message_ids"].append(sig_result.get("message_id"))
-                print(f"  ✅ {sig['ticker']} ({sig.get('direction', '?')}) posted")
+                print(f"  ✅ {sig['ticker']} ({sig.get('direction', '?')}) posted [{short_id}]")
                 time.sleep(1)
         else:
             result["errors"] += 1
