@@ -332,8 +332,11 @@ def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
 
 # ── Discord API posting ───────────────────────────────────────────────────────
 
-def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = None) -> dict:
-    """Post a message to Discord via Bot API. Returns {status, message_id}."""
+def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = None,
+                     crosspost: bool = False) -> dict:
+    """Post a message to Discord via Bot API. Returns {status, message_id}.
+    If crosspost=True, publishes the message (announcement channels only).
+    """
     url = f"{API_BASE}/channels/{channel_id}/messages"
 
     if chart_path and os.path.exists(chart_path):
@@ -361,19 +364,42 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
     try:
         response = json.loads(result.stdout)
         if "id" in response:
-            return {"status": "ok", "message_id": response["id"]}
+            msg_id = response["id"]
+            if crosspost:
+                _crosspost_message(channel_id, msg_id)
+            return {"status": "ok", "message_id": msg_id}
         else:
             return {"status": "error", "response": result.stdout[:500]}
     except (json.JSONDecodeError, KeyError):
         return {"status": "error", "response": result.stdout[:500]}
 
 
+def _crosspost_message(channel_id: str, message_id: str) -> dict:
+    """Crosspost (publish) a message from an announcement channel."""
+    url = f"{API_BASE}/channels/{channel_id}/messages/{message_id}/crosspost"
+    cmd = [
+        "curl", "-s", "-X", "POST",
+        "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
+        url,
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+    try:
+        response = json.loads(result.stdout)
+        if "id" in response:
+            return {"status": "ok", "message_id": response["id"]}
+        else:
+            return {"status": "error", "response": result.stdout[:200]}
+    except (json.JSONDecodeError, KeyError):
+        return {"status": "error", "response": result.stdout[:200]}
+
+
 def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
                       color: int, dry_run: bool = False,
-                      short_id: str = "") -> dict:
+                      short_id: str = "", crosspost: bool = False) -> dict:
     """Post a single signal as a Discord embed with chart attachment.
     If short_id is provided, it's included in the embed and the trade is
     registered in the trade log after successful posting.
+    If crosspost=True, publishes the message to following servers.
     """
     embed = format_signal_embed(signal_dict, color, short_id=short_id)
 
@@ -392,7 +418,8 @@ def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
             "short_id": short_id,
         }
 
-    result = _post_to_discord(channel_id, payload, chart_path if has_chart else None)
+    result = _post_to_discord(channel_id, payload, chart_path if has_chart else None,
+                              crosspost=crosspost)
 
     # Register trade after successful post
     if result["status"] == "ok" and short_id:
@@ -405,7 +432,8 @@ def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
 
 def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
                       live_count: int, watch_count: int, strategies: list,
-                      channel_id: str, color: int, dry_run: bool = False) -> dict:
+                      channel_id: str, color: int, dry_run: bool = False,
+                      crosspost: bool = False) -> dict:
     """Post the daily header embed."""
     embed = format_daily_header(asset_class, regime_data, signal_count,
                                 live_count, watch_count, strategies, color)
@@ -414,7 +442,7 @@ def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
     if dry_run:
         return {"status": "dry_run", "embed": embed}
 
-    return _post_to_discord(channel_id, payload)
+    return _post_to_discord(channel_id, payload, crosspost=crosspost)
 
 
 def format_trade_summary(signals: list) -> str:
@@ -487,7 +515,8 @@ def post_trade_summary(signals: list, channel_id: str, dry_run: bool = False) ->
 
 def post_daily_batch(signals: list, channel_id: str, asset_class: str,
                      regime_data: dict, dry_run: bool = False,
-                     summary_channel_id: str = None) -> dict:
+                     summary_channel_id: str = None,
+                     crosspost: bool = True) -> dict:
     """
     Post a full daily batch: header → signal embeds.
 
@@ -497,6 +526,7 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         asset_class: "stock" or "crypto"
         regime_data: regime dict from regime_detector
         dry_run: if True, format only (no posting)
+        crosspost: if True, publish each message (announcement channels)
 
     Returns:
         {posted, errors, message_ids, header_id}
@@ -519,6 +549,7 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
     header_result = post_daily_header(
         asset_class, regime_data, len(signals), live_count, watch_count,
         strategy_names, channel_id, color, dry_run,
+        crosspost=crosspost,
     )
     if header_result["status"] in ("ok", "dry_run"):
         result["header_id"] = header_result.get("message_id")
@@ -536,7 +567,7 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         chart_path = sig.get("_chart_path")
         short_id = _generate_short_id_for_signal(sig, used_short_ids)
         sig_result = post_embed_signal(sig, chart_path, channel_id, color, dry_run,
-                                       short_id=short_id)
+                                       short_id=short_id, crosspost=crosspost)
 
         if sig_result["status"] in ("ok", "dry_run"):
             result["posted"] += 1
