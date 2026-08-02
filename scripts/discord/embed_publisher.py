@@ -192,12 +192,13 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
     url = f"{API_BASE}/channels/{channel_id}/messages"
 
     if chart_path and os.path.exists(chart_path):
-        # Multipart: upload chart + embed
+        # Multipart: upload chart + embed. Use filename=chart.png to match
+        # the embed's attachment://chart.png reference.
         cmd = [
             "curl", "-s", "-X", "POST",
             "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
             "-F", f"payload_json={json.dumps(payload)}",
-            "-F", f"files[0]=@{chart_path};type=image/png",
+            "-F", f"files[0]=@{chart_path};filename=chart.png;type=image/png",
             url,
         ]
     else:
