@@ -24,6 +24,7 @@ Usage:
 """
 
 import sys
+import os
 import json
 import argparse
 import pathlib
@@ -475,9 +476,13 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         watch_count = len(deduped) - live_count
         strategy_names = sorted(set(s.get("strategy_name", "?") for s in deduped))
 
+        # Secondary channel for trade summary (e.g. #trade-setups-summary)
+        summary_channel_id = os.environ.get("DISCORD_SUMMARY_CHANNEL_ID", "1529670754357219359")
+
         batch_result = post_daily_batch(
             [s for s in summary["all_signals"][-len(deduped):]],
             channel_id, asset_class, regime_data, dry_run=False,
+            summary_channel_id=summary_channel_id,
         )
         summary["posted"] = batch_result["posted"]
         summary["errors"] += batch_result["errors"]

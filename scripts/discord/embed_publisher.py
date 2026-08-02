@@ -337,19 +337,87 @@ def post_daily_header(asset_class: str, regime_data: dict, signal_count: int,
     return _post_to_discord(channel_id, payload)
 
 
+def format_trade_summary(signals: list) -> str:
+    """Format a concise trade summary list.
+    Example line: BTC | SHORT | Confidence: Low | Entry: $63,000 | SL: $63,100 | TP: $62,000 | RR: 3:1
+    """
+    lines = []
+    for sig in signals:
+        ticker = sig.get("ticker", "?")
+        direction = sig.get("direction", "long").upper()
+        entry = sig.get("entry_price", 0)
+        stop = sig.get("stop_price", 0)
+        target = sig.get("target_price", 0)
+        risk = abs(entry - stop)
+        reward = abs(target - entry)
+        rr = reward / risk if risk else 0
+
+        # Confidence tier
+        tier_tag, _, _ = get_quality_tier(sig)
+        # Map tier tags to simple labels
+        conf_map = {"A": "High", "B": "Medium", "C": "Low"}
+        conf_label = conf_map.get(tier_tag, "Low")
+
+        # Format prices
+        def _p(v):
+            if abs(v) < 1.0:
+                return f"${v:.6f}"
+            elif abs(v) < 100.0:
+                return f"${v:.4f}"
+            else:
+                return f"${v:,.2f}"
+
+        lines.append(
+            f"{ticker} | {direction} | Confidence: {conf_label} | "
+            f"Entry: {_p(entry)} | SL: {_p(stop)} | TP: {_p(target)} | RR: {rr:.0f}:1"
+        )
+    return "\n".join(lines)
+
+
+def post_trade_summary(signals: list, channel_id: str, dry_run: bool = False) -> dict:
+    """Post a concise trade summary list as a plain text message."""
+    text = format_trade_summary(signals)
+    # Discord message limit is 2000 chars; split if needed
+    chunks = []
+    while len(text) > 1900:
+        split_at = text.rfind("\n", 0, 1900)
+        if split_at == -1:
+            split_at = 1900
+        chunks.append(text[:split_at])
+        text = text[split_at:].lstrip("\n")
+    chunks.append(text)
+
+    last_id = None
+    for chunk in chunks:
+        payload = {"content": chunk}
+        if dry_run:
+            print(f"  [dry-run] Summary chunk: {chunk[:100]}...")
+            last_id = "dry_run"
+            continue
+        result = _post_to_discord(channel_id, payload)
+        if result["status"] == "ok":
+            last_id = result["message_id"]
+            time.sleep(0.5)
+        else:
+            return result
+    return {"status": "ok", "message_id": last_id}
+
+
 # ── Batch posting ─────────────────────────────────────────────────────────────
 
 def post_daily_batch(signals: list, channel_id: str, asset_class: str,
-                     regime_data: dict, dry_run: bool = False) -> dict:
+                     regime_data: dict, dry_run: bool = False,
+                     summary_channel_id: str = None) -> dict:
     """
-    Post a full daily batch: header → signals (with separators) → done.
+    Post a full daily batch: header → trade summary list → signal embeds.
 
     Args:
         signals: list of signal dicts (sorted by score, enriched with metadata)
-        channel_id: Discord channel ID string
+        channel_id: Discord channel ID string for embeds
         asset_class: "stock" or "crypto"
         regime_data: regime dict from regime_detector
         dry_run: if True, format only (no posting)
+        summary_channel_id: optional additional channel for the trade summary
 
     Returns:
         {posted, errors, message_ids, header_id}
@@ -382,6 +450,25 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         result["errors"] += 1
         print(f"  ❌ Header failed: {header_result.get('response', '')}")
         return result
+
+    # Post trade summary list (before the embeds)
+    if signals:
+        summary_result = post_trade_summary(signals, channel_id, dry_run)
+        if summary_result["status"] in ("ok", "dry_run"):
+            if not dry_run:
+                print(f"  ✅ Trade summary posted")
+                time.sleep(1)
+        else:
+            result["errors"] += 1
+            print(f"  ❌ Trade summary failed: {summary_result.get('response', '')}")
+
+        # Also post summary to the secondary channel if specified
+        if summary_channel_id and not dry_run:
+            summary_result2 = post_trade_summary(signals, summary_channel_id, dry_run)
+            if summary_result2["status"] == "ok":
+                print(f"  ✅ Trade summary posted to secondary channel")
+            else:
+                print(f"  ❌ Secondary summary failed: {summary_result2.get('response', '')}")
 
     # Post each signal
     for i, sig in enumerate(signals):
