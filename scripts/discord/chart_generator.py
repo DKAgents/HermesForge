@@ -103,6 +103,18 @@ def _atr_for_chart(df: pd.DataFrame, period: int = 14):
     return tr.ewm(alpha=1.0 / period, adjust=False).mean()
 
 
+
+
+def _add_legend(ax, items, loc="upper left"):
+    """Add a labeled indicator legend box to an axes.
+    items: list of (color, label) tuples.
+    """
+    from matplotlib.patches import Patch
+    handles = [Patch(facecolor=c, edgecolor=c, label=l, alpha=0.8) for c, l in items]
+    leg = ax.legend(handles=handles, loc=loc, fontsize=6, framealpha=0.7,
+                   facecolor="#161b22", edgecolor="#30363d", labelcolor="#c9d1d9")
+    return leg
+
 # ---------------------------------------------------------------------------
 # Shared setup: base plot with entry/stop/target lines + labels + marker
 # ---------------------------------------------------------------------------
@@ -214,6 +226,21 @@ def _chart_macd_divergence(df_full, df, signal_dict, entry, stop, target, title)
             rsi_ax.text(0.02, 0.95, f"RSI: {rsi_val:.1f}",
                         color="#a371f7", fontsize=8, transform=rsi_ax.transAxes,
                         fontweight="bold")
+        # Label the RSI threshold lines
+        rsi_ax.text(len(df) - 1, 70.5, " 70 OB", color="#f85149", fontsize=6, va="bottom")
+        rsi_ax.text(len(df) - 1, 30.5, " 30 OS", color="#3fb950", fontsize=6, va="bottom")
+
+    # Add indicator legend on MACD panel
+    if macd_ax is not None:
+        _add_legend(macd_ax, [
+            ("#58a6ff", "MACD line"),
+            ("#f0883e", "Signal line"),
+            ("#484f58", "Histogram"),
+            ("#e3b341", "Divergence"),
+        ], loc="upper left")
+    # Label zero line
+    if macd_ax is not None:
+        macd_ax.text(len(df) - 1, 0.5, " Zero", color="#484f58", fontsize=6, va="bottom")
 
     # Mark the two swing points being compared for divergence
     signal_idx_in_window = len(df) - 1
@@ -281,6 +308,15 @@ def _chart_ma_pullback(df_full, df, signal_dict, entry, stop, target, title):
         # 50% mid-line
         fib_50 = swing_high - 0.5 * rng
         price_ax.axhline(fib_50, color="#484f58", linewidth=0.5, linestyle=":", alpha=0.5)
+        price_ax.text(0, fib_50, " 50%", color="#484f58", fontsize=6, va="bottom")
+
+    # Add indicator legend on price panel
+    _add_legend(price_ax, [
+        (COLOR_MA50, "MA50"),
+        (COLOR_MA200, "MA200"),
+        (COLOR_FIB_ZONE, "Fib 38-62% zone"),
+        ("#484f58", "Volume Profile"),
+    ], loc="upper left")
 
     # ── Volume profile (horizontal bars on price panel) ──
     # Build a simple volume-at-price histogram from the visible window
@@ -307,6 +343,8 @@ def _chart_ma_pullback(df_full, df, signal_dict, entry, stop, target, title):
             y_high = bin_edges[i + 1]
             price_ax.barh((y_low + y_high) / 2, w, height=(y_high - y_low) * 0.8,
                          left=x_start, color="#484f58", alpha=0.3, edgecolor="none")
+        price_ax.text(x_start, price_range[1] * 0.98, " Vol Profile",
+                     color="#8b949e", fontsize=6, va="top")
 
     # ── RSI panel: 70/30 lines ──
     rsi_ax = axes[2] if len(axes) > 2 else None
@@ -314,6 +352,8 @@ def _chart_ma_pullback(df_full, df, signal_dict, entry, stop, target, title):
         rsi_ax.axhline(70, color="#f85149", linewidth=0.8, linestyle="--", alpha=0.5)
         rsi_ax.axhline(30, color="#3fb950", linewidth=0.8, linestyle="--", alpha=0.5)
         rsi_ax.axhline(50, color="#484f58", linewidth=0.5, linestyle=":", alpha=0.4)
+        rsi_ax.text(len(df) - 1, 70.5, " 70", color="#f85149", fontsize=6, va="bottom")
+        rsi_ax.text(len(df) - 1, 30.5, " 30", color="#3fb950", fontsize=6, va="bottom")
 
     return fig
 
@@ -340,6 +380,17 @@ def _chart_breakout_volume(df_full, df, signal_dict, entry, stop, target, title)
     # Shade the channel
     price_ax.fill_between(range(len(df)), highs.values, lows.values,
                          color="#30363d", alpha=0.1)
+    # Label the channel
+    price_ax.text(0, highs.values[-1], " 20-bar High", color="#3fb950", fontsize=6, va="bottom")
+    price_ax.text(0, lows.values[-1], " 20-bar Low", color="#f85149", fontsize=6, va="top")
+
+    # Add indicator legend
+    _add_legend(price_ax, [
+        ("#3fb950", "20-bar High channel"),
+        ("#f85149", "20-bar Low channel"),
+        ("#8b949e", "Breakout level"),
+        ("#e3b341", "Breakout candle"),
+    ], loc="upper left")
 
     # Draw the prior breakout level (20-bar high before the signal bar) as
     # an extra reference line if the scanner supplied it.
@@ -431,6 +482,17 @@ def _chart_sr_reversal(df_full, df, signal_dict, entry, stop, target, title):
                 price_ax.plot(i, resistance_level, marker="_",
                              color="#e3b341", markersize=8, markeredgewidth=1.5,
                              zorder=5, alpha=0.7)
+        # Label touch points
+        price_ax.text(len(df) - 1, resistance_level + band * 2, " Touch points",
+                     color="#e3b341", fontsize=6, va="bottom", alpha=0.7)
+
+    # Add indicator legend
+    _add_legend(price_ax, [
+        (COLOR_SR_ZONE, "S/R zone (1% band)"),
+        ("#e3b341", "Touch points"),
+        ("#f85149", "ATR stop zone"),
+        ("#58a6ff", "Target (next resistance)"),
+    ], loc="upper left")
 
     # ── Next resistance target line ──
     # Target is already drawn by _base_plot as a blue hline, but let's label it
@@ -543,6 +605,26 @@ def _chart_adaptive_trend(df_full, df, signal_dict, entry, stop, target, title):
         rsi_ax.axhline(70, color="#f85149", linewidth=0.8, linestyle="--", alpha=0.5)
         rsi_ax.axhline(30, color="#3fb950", linewidth=0.8, linestyle="--", alpha=0.5)
 
+    # Label SMA200 and trailing stop on price panel
+    _add_legend(axes[0], [
+        (COLOR_MA200, "SMA200 (trend filter)"),
+        ("#f85149", "ATR trailing stop"),
+        ("#3fb950", "Momentum"),
+        ("#a371f7", "RSI"),
+    ], loc="upper left")
+    axes[0].text(len(df) - 1, sma200.iloc[-1], " SMA200", color=COLOR_MA200, fontsize=6, va="center")
+
+    # Label RSI 70/30
+    if rsi_ax is not None:
+        rsi_ax.text(len(df) - 1, 70.5, " 70", color="#f85149", fontsize=6, va="bottom")
+        rsi_ax.text(len(df) - 1, 30.5, " 30", color="#3fb950", fontsize=6, va="bottom")
+
+    # Label momentum threshold lines
+    if mom_ax is not None:
+        mom_ax.text(len(df) - 1, threshold + 0.01, f" +{threshold:.0%}", color="#3fb950", fontsize=6, va="bottom")
+        mom_ax.text(len(df) - 1, -threshold - 0.01, f" -{threshold:.0%}", color="#f85149", fontsize=6, va="top")
+        mom_ax.text(len(df) - 1, 0.01, " 0", color="#484f58", fontsize=6, va="bottom")
+
     # Annotate momentum + ATR on price panel
     momentum = signal_dict.get("momentum", 0)
     if momentum:
@@ -626,6 +708,15 @@ def _chart_crosssectional(df_full, df, signal_dict, entry, stop, target, title):
             for bar, val in zip(bars, values):
                 inset.text(bar.get_width() + 0.05, bar.get_y() + bar.get_height()/2,
                           f"{val:.2f}", fontsize=5, color="#c9d1d9", va="center")
+
+    # Add indicator legend on price panel
+    _add_legend(price_ax, [
+        (COLOR_MA200, "SMA200 (trend ref)"),
+        ("#f0883e", "ATR(14)"),
+        ("#f85149", "ATR stop zone (1.5x)"),
+        ("#58a6ff", "Factor composite"),
+    ], loc="upper left")
+    price_ax.text(len(df) - 1, sma200.iloc[-1], " SMA200", color=COLOR_MA200, fontsize=6, va="center")
 
     # Annotate composite score and rank
     zscore_text = f"Composite: {composite:+.4f}"

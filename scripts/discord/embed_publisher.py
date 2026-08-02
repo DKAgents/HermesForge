@@ -77,6 +77,86 @@ def _fmt_price(p):
         return f"${p:.2f}"
 
 
+# ── Per-strategy confluence explanation ─────────────────────────────────────
+
+def _get_confluence(signal_dict: dict) -> str:
+    """Return a human-readable explanation of how the strategy's indicators
+    confluence to support this trade setup."""
+    sid = signal_dict.get("strategy_id", "")
+    direction = signal_dict.get("direction", "long")
+
+    if "STR-B" in sid:
+        return (
+            "**MACD Divergence confluence:**\n"
+            "\u2022 Price makes a new swing high but MACD makes a lower high \u2192 momentum is waning (the divergence)\n"
+            "\u2022 MACD line crosses below signal line \u2192 entry trigger confirms the reversal\n"
+            "\u2022 Maturity gate: MACD stayed above zero for 15+ bars \u2192 trend is mature, ripe for reversal\n"
+            f"\u2022 RSI {'near 70 (overbought)' if direction == 'short' else 'near 30 (oversold)'} \u2192 confirms exhausted sentiment\n"
+            "\u2022 ATR-based stop \u2192 volatility-adjusted risk, not a fixed percentage"
+        )
+    elif "STR-P" in sid:
+        mom = signal_dict.get("factor_mom12_1", 0)
+        liq = signal_dict.get("factor_liquid", 0)
+        pm = signal_dict.get("factor_pricemom", 0)
+        composite = signal_dict.get("composite_score", 0)
+        rank = signal_dict.get("rank", "?")
+        return (
+            "**Cross-Sectional Factor confluence:**\n"
+            f"\u2022 MOM12_1 = {mom:+.2f} \u2192 12-month momentum ranking, persistent trend signal\n"
+            f"\u2022 LIQUID = ${liq/1e6:.0f}M \u2192 high dollar volume = institutional interest & liquidity\n"
+            f"\u2022 PRICEMOM = {pm:+.2f} \u2192 price relative to SMA200, trend confirmation\n"
+            f"\u2022 Composite score = {composite:+.2f}, ranked #{rank}/42 \u2192 top/bottom quintile selection\n"
+            "\u2022 ATR(14)-based stop (1.5x) \u2192 volatility-adjusted risk for ranging regime"
+        )
+    elif "STR-I" in sid:
+        mom = signal_dict.get("momentum", 0)
+        threshold = signal_dict.get("entry_threshold", 0.20)
+        atr_mult = signal_dict.get("atr_multiplier", 2.0)
+        lookback = signal_dict.get("lookback", 10)
+        return (
+            "**AdaptiveTrend confluence:**\n"
+            f"\u2022 Momentum ({lookback}-bar) = {mom:+.1%} \u2192 exceeds +/-{threshold:.0%} entry threshold\n"
+            "\u2022 Price above/below SMA200 \u2192 trend filter confirms direction\n"
+            f"\u2022 ATR(14) trailing stop at {atr_mult:.1f}x \u2192 adaptive risk that ratchets with the trend\n"
+            "\u2022 RSI context \u2192 identifies overbought/oversold conditions at entry\n"
+            "\u2022 Time stop at 120 bars \u2192 prevents capital lockup in sideways drift"
+        )
+    elif "STR-A" in sid:
+        return (
+            "**MA Pullback + Fibonacci confluence:**\n"
+            "\u2022 Price pulls back to MA50 \u2192 mean reversion within an established trend\n"
+            "\u2022 MA50 above MA200 \u2192 trend alignment confirms bullish bias\n"
+            "\u2022 Price enters Fibonacci 38-62% retracement zone \u2192 natural support area\n"
+            "\u2022 Fibonacci extensions (127.2%, 161.8%) \u2192 projected target levels\n"
+            "\u2022 RSI near 30/50 \u2192 oversold or neutral, room to bounce\n"
+            "\u2022 Volume profile \u2192 high-volume nodes act as support/resistance"
+        )
+    elif "STR-C" in sid:
+        vr = signal_dict.get("volume_ratio", 0)
+        return (
+            "**Breakout + Volume confluence:**\n"
+            "\u2022 Price breaks above 20-bar high \u2192 breakout from established range\n"
+            f"\u2022 Volume = {vr:.1f}x average \u2192 institutional participation confirms the breakout\n"
+            "\u2022 20-bar high/low channel \u2192 defines the volatility range that was broken\n"
+            "\u2022 Prior 20-bar high becomes new support \u2192 role reversal for stop placement\n"
+            "\u2022 Breakout candle highlighted \u2192 the specific bar that triggered the signal"
+        )
+    elif "STR-D" in sid:
+        age = signal_dict.get("level_age_bars", 0)
+        depth = signal_dict.get("touch_depth_pct", 0)
+        return (
+            "**S/R Role Reversal confluence:**\n"
+            "\u2022 Prior resistance level (max high 60 bars back, excluding recent 20) \u2192 established ceiling\n"
+            "\u2022 Price pulls back to the level \u2192 tests whether old resistance holds as new support\n"
+            "\u2022 Close above the level \u2192 two-bar reclaim confirms support\n"
+            f"\u2022 Level age: {age} bars \u2192 older levels carry more structural weight\n"
+            f"\u2022 Touch depth: {depth:.2f}% \u2192 precision of the pullback to the level\n"
+            "\u2022 ATR(14) stop below support \u2192 gives the level one ATR of breathing room\n"
+            "\u2022 Target = next resistance above \u2192 the next ceiling from prior 100 bars"
+        )
+    return ""
+
+
 # ── Embed formatting ──────────────────────────────────────────────────────────
 
 def format_signal_embed(signal_dict: dict, color: int) -> dict:
@@ -132,6 +212,7 @@ def format_signal_embed(signal_dict: dict, color: int) -> dict:
         {"name": "Confidence", "value": f"{tier_tag} ({met_ratio})", "inline": True},
         {"name": "Status", "value": status_str, "inline": True},
         {"name": "Key Conditions", "value": conditions_text, "inline": False},
+        {"name": "Indicator Confluence", "value": _get_confluence(signal_dict), "inline": False},
     ]
 
     embed = {
