@@ -120,7 +120,7 @@ def _add_legend(ax, items, loc="upper left"):
 # ---------------------------------------------------------------------------
 
 def _base_plot(df: pd.DataFrame, dark_style, entry, stop, target, apds, hlines_extra_colors=None,
-                panel_ratios=(4, 2), volume=True, volume_panel=None, title=""):
+                panel_ratios=(4, 2), volume=True, volume_panel=None, title="", signal_dict=None):
     hline_prices = [entry, stop, target]
     hline_colors = [COLOR_ENTRY, COLOR_STOP, COLOR_TARGET]
     if hlines_extra_colors:
@@ -147,10 +147,12 @@ def _base_plot(df: pd.DataFrame, dark_style, entry, stop, target, apds, hlines_e
 
     fig, axes = mpf.plot(df, **kwargs)
     ax = axes[0]
+    # Signal bar index: use stored value or default to last bar
+    sig_idx = signal_dict.get("_signal_bar_idx", len(df) - 1) if isinstance(signal_dict, dict) else len(df) - 1
     ax.text(len(df) - 1, entry, f" Entry ${entry:.2f}", color=COLOR_ENTRY, fontsize=8, va="center", fontweight="bold")
     ax.text(len(df) - 1, stop, f" Stop ${stop:.2f}", color=COLOR_STOP, fontsize=8, va="center", fontweight="bold")
     ax.text(len(df) - 1, target, f" Target ${target:.2f}", color=COLOR_TARGET, fontsize=8, va="center", fontweight="bold")
-    ax.axvline(x=len(df) - 1, color=COLOR_MARKER, linestyle=":", linewidth=1.2, alpha=0.8)
+    ax.axvline(x=sig_idx, color=COLOR_MARKER, linestyle=":", linewidth=1.2, alpha=0.8)
     return fig, axes
 
 
@@ -181,7 +183,7 @@ def _chart_macd_divergence(df_full, df, signal_dict, entry, stop, target, title)
 
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds,
-        panel_ratios=(4, 2, 2, 1.5), volume=True, volume_panel=3, title=title,
+        panel_ratios=(4, 2, 2, 1.5), volume=True, volume_panel=3, title=title, signal_dict=signal_dict,
     )
 
     # ── MACD panel: zero-line + maturity gate shading ──
@@ -281,7 +283,7 @@ def _chart_ma_pullback(df_full, df, signal_dict, entry, stop, target, title):
 
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds,
-        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title,
+        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title, signal_dict=signal_dict,
     )
 
     price_ax = axes[0]
@@ -365,7 +367,7 @@ def _chart_ma_pullback(df_full, df, signal_dict, entry, stop, target, title):
 def _chart_breakout_volume(df_full, df, signal_dict, entry, stop, target, title):
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds=None,
-        panel_ratios=(4, 1.5), volume=True, volume_panel=1, title=title,
+        panel_ratios=(4, 1.5), volume=True, volume_panel=1, title=title, signal_dict=signal_dict,
     )
 
     price_ax = axes[0]
@@ -446,7 +448,7 @@ def _chart_breakout_volume(df_full, df, signal_dict, entry, stop, target, title)
 def _chart_sr_reversal(df_full, df, signal_dict, entry, stop, target, title):
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds=None,
-        panel_ratios=(4, 1.5), volume=True, volume_panel=1, title=title,
+        panel_ratios=(4, 1.5), volume=True, volume_panel=1, title=title, signal_dict=signal_dict,
     )
 
     price_ax = axes[0]
@@ -573,7 +575,7 @@ def _chart_adaptive_trend(df_full, df, signal_dict, entry, stop, target, title):
 
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds,
-        panel_ratios=(4, 2, 2, 1.5), volume=True, volume_panel=3, title=title,
+        panel_ratios=(4, 2, 2, 1.5), volume=True, volume_panel=3, title=title, signal_dict=signal_dict,
     )
 
     # ── Momentum panel: threshold lines + zero line ──
@@ -660,7 +662,7 @@ def _chart_crosssectional(df_full, df, signal_dict, entry, stop, target, title):
 
     fig, axes = _base_plot(
         df, _dark_style(), entry, stop, target, apds,
-        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title,
+        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title, signal_dict=signal_dict,
     )
 
     # ── ATR stop zone: shade between entry and stop ──
@@ -744,21 +746,42 @@ def generate_setup_chart(ticker: str, signal_dict: dict, output_path: str) -> st
     Generate an annotated setup chart PNG, using the chart profile matched
     to signal_dict['strategy_id'] (falls back to the generic MACD+RSI
     profile for unrecognized strategy IDs).
+
+    Charts always show the most recent data available, not just up to the
+    signal date. The signal bar is marked with a vertical line at its
+    position within the visible window. The title shows the latest data date.
     """
     df_full = _load_ohlcv(ticker)
 
     signal_date = pd.to_datetime(signal_dict["date"])
-    df_full = df_full[df_full.index <= signal_date]
+
+    # Use ALL available data (not filtered to signal_date) so charts show
+    # the most recent bars. Indicators are computed on the full dataset.
     if len(df_full) < 2:
-        raise ValueError(f"Not enough bars for {ticker} up to {signal_date.date()}")
+        raise ValueError(f"Not enough bars for {ticker}")
 
     df = df_full.tail(LOOKBACK_BARS).copy()
+
+    # Find the signal bar position within the visible window
+    signal_dates_in_window = df.index[df.index <= signal_date]
+    if len(signal_dates_in_window) > 0:
+        # Count bars from signal date to end of window
+        bars_after_signal = (df.index > signal_date).sum()
+        signal_bar_idx = len(df) - 1 - int(bars_after_signal)
+        signal_bar_idx = max(0, min(signal_bar_idx, len(df) - 1))
+    else:
+        signal_bar_idx = len(df) - 1  # fallback: signal at right edge
+
+    # Store signal bar index for chart functions
+    signal_dict["_signal_bar_idx"] = signal_bar_idx
 
     entry = signal_dict["entry_price"]
     stop = signal_dict["stop_price"]
     target = signal_dict["target_price"]
     strategy_name = signal_dict.get("strategy_name", signal_dict.get("strategy_id", "Strategy"))
-    date_str = signal_date.strftime("%Y-%m-%d")
+    # Title shows the latest data date (when analysis was run)
+    latest_date = pd.Timestamp(df.index[-1])
+    date_str = latest_date.strftime("%Y-%m-%d")
     title = f"\n{ticker} — {strategy_name} — {date_str}"
 
     strategy_id = signal_dict.get("strategy_id", "")
