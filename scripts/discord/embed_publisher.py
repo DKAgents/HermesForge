@@ -204,10 +204,10 @@ def format_signal_embed(signal_dict: dict, color: int) -> dict:
     fields = [
         {"name": "📍 Entry", "value": entry_str, "inline": True},
         {"name": "🛑 Stop", "value": f"{stop_str} ({stop_pct:.1f}% risk)", "inline": True},
-        {"name": "🎯 Target", "value": f"{target_str} (R:R {rr:.1f}:1)", "inline": True},
+        {"name": "🎯 Target", "value": target_str, "inline": True},
+        {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
         {"name": "Regime", "value": regime_str, "inline": True},
         {"name": "Confidence", "value": f"{tier_tag} ({met_ratio})", "inline": True},
-        {"name": "Status", "value": status_str, "inline": True},
         {"name": "Key Conditions", "value": conditions_text, "inline": False},
         {"name": "Indicator Confluence", "value": _get_confluence(signal_dict), "inline": False},
     ]
@@ -227,35 +227,13 @@ def format_signal_embed(signal_dict: dict, color: int) -> dict:
 def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
                         live_count: int, watch_count: int, strategies: list,
                         color: int) -> dict:
-    """Format the daily header as a Discord embed."""
+    """Format the daily header as a Discord embed — icon + day/date only."""
     dt = datetime.datetime.utcnow()
     day_name = get_day_name(dt)
     date_str = f"{day_name.upper()}, {MONTH_NAMES[dt.month - 1].upper()} {dt.day}, {dt.year}"
 
-    regime = regime_data.get("regime", "unknown")
-    regime_label = regime.capitalize() if regime != "unknown" else "Unknown"
-    benchmark = regime_data.get("benchmark", "")
-    adx = regime_data.get("adx", "")
-    regime_str = regime_label
-    if benchmark:
-        regime_str += f" ({benchmark}"
-        if adx:
-            regime_str += f", ADX {adx}"
-        regime_str += ")"
-
-    asset_emoji = "📈" if asset_class == "stock" else "₿"
-    asset_label = "Stock Setups" if asset_class == "stock" else "Crypto Setups"
-
-    description = (
-        f"{asset_emoji} **{asset_label}**\n"
-        f"Regime: **{regime_str}**\n"
-        f"Signals: **{signal_count}** ({live_count} live, {watch_count} watch)\n"
-        f"Strategies: {', '.join(strategies) if strategies else 'none active'}"
-    )
-
     embed = {
         "title": f"📅 {date_str}",
-        "description": description,
         "color": color,
         "footer": {"text": f"HermesForge Daily Pipeline — {dt.strftime('%H:%M')} UTC"},
     }
@@ -409,7 +387,7 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
                      regime_data: dict, dry_run: bool = False,
                      summary_channel_id: str = None) -> dict:
     """
-    Post a full daily batch: header → trade summary list → signal embeds.
+    Post a full daily batch: header → signal embeds.
 
     Args:
         signals: list of signal dicts (sorted by score, enriched with metadata)
@@ -417,7 +395,6 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         asset_class: "stock" or "crypto"
         regime_data: regime dict from regime_detector
         dry_run: if True, format only (no posting)
-        summary_channel_id: optional additional channel for the trade summary
 
     Returns:
         {posted, errors, message_ids, header_id}
@@ -450,25 +427,6 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         result["errors"] += 1
         print(f"  ❌ Header failed: {header_result.get('response', '')}")
         return result
-
-    # Post trade summary list (before the embeds)
-    if signals:
-        summary_result = post_trade_summary(signals, channel_id, dry_run)
-        if summary_result["status"] in ("ok", "dry_run"):
-            if not dry_run:
-                print(f"  ✅ Trade summary posted")
-                time.sleep(1)
-        else:
-            result["errors"] += 1
-            print(f"  ❌ Trade summary failed: {summary_result.get('response', '')}")
-
-        # Also post summary to the secondary channel if specified
-        if summary_channel_id and not dry_run:
-            summary_result2 = post_trade_summary(signals, summary_channel_id, dry_run)
-            if summary_result2["status"] == "ok":
-                print(f"  ✅ Trade summary posted to secondary channel")
-            else:
-                print(f"  ❌ Secondary summary failed: {summary_result2.get('response', '')}")
 
     # Post each signal
     for i, sig in enumerate(signals):
