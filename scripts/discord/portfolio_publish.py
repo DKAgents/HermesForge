@@ -205,11 +205,13 @@ def apply_liquidity_filter(signals: list, max_pct: float = 0.80) -> list:
     return kept
 
 
-def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False) -> dict:
+def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False,
+                          post_embeds: bool = False) -> dict:
     """
     Main pipeline: detect regime → run active scanners → dedup → score → publish.
     
     If crypto_only=True, skips stock scanning entirely (weekend mode).
+    If post_embeds=True, posts signals as Discord embeds via Bot API.
     """
     # ── Load strategy metadata ──────────────────────────────────────────────
     strategy_meta = load_strategy_metadata()
@@ -277,7 +279,7 @@ def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False) -> d
                     stock_scanners[sid] = cfg
 
         _scan_asset_class(stock_data, "stock", stock_scanners, strategy_meta,
-                          stock_regime, dry_run, summary)
+                          stock_regime, dry_run, summary, post_embeds=post_embeds)
     
     # ── Scan crypto (using crypto regime) ───────────────────────────────────
     if crypto_data and crypto_regime:
@@ -296,7 +298,8 @@ def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False) -> d
                     crypto_scanners[sid] = cfg
         
         _scan_asset_class(crypto_data, "crypto", crypto_scanners, strategy_meta,
-                          crypto_regime, dry_run, summary, channel_override="crypto")
+                          crypto_regime, dry_run, summary, channel_override="crypto",
+                          post_embeds=post_embeds)
     
     summary["stock_regime"] = stock_regime
     summary["crypto_regime"] = crypto_regime
@@ -307,7 +310,8 @@ def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False) -> d
 def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                       strategy_meta: dict, regime_data: dict,
                       dry_run: bool, summary: dict,
-                      channel_override: str = None) -> None:
+                      channel_override: str = None,
+                      post_embeds: bool = False) -> None:
     """Scan all tickers in data dict with each active scanner."""
     if not data:
         return
@@ -411,6 +415,78 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         print(f"\nCross-strategy dedup: {removed} duplicate(s) removed")
     
     # ── Publish signals ─────────────────────────────────────────────────────
+    
+    if post_embeds and not dry_run:
+        # Embed posting path: post daily header + all signals as embeds
+        from embed_publisher import post_daily_batch
+        import config as discord_config
+
+        channel_id = (channel_override or "stocks")
+        channel_id = discord_config.PUBLISH_CHANNEL_MAP.get(channel_id, channel_id)
+
+        # Generate charts for all signals
+        for sig in deduped:
+            ticker = sig["ticker"]
+            entry_date = str(sig.get("date", ""))[:10]
+            scanner_id = sig["strategy_id"]
+            signal_id = dedup.make_signal_id(scanner_id, ticker, entry_date)
+
+            # Build signal dict (same as text path)
+            signal_dict = {
+                "ticker": ticker,
+                "date": entry_date,
+                "direction": sig.get("direction", "long"),
+                "entry_price": sig.get("entry_price", 0),
+                "stop_price": sig.get("stop_price", 0),
+                "target_price": sig.get("target_price", 0),
+                "r_multiple": sig.get("r_multiple", 0),
+                "strategy_id": scanner_id,
+                "strategy_name": sig["strategy_name"],
+                "strategy_version": "1.0",
+                "confidence": strategy_meta.get(
+                    SCANNER_REGISTRY[scanner_id]["note_id"], {}
+                ).get("confidence", "medium"),
+                "confirmation_level": sig.get("confirmation_level", "Level 1"),
+                "subperiod": sig.get("subperiod", "n/a"),
+                "regime": sig.get("regime", "unknown"),
+                "regime_benchmark": regime_data.get("benchmark", ""),
+                "regime_adx": regime_data.get("adx", ""),
+                "score": sig["score"],
+                "is_live": sig.get("is_live", False),
+                "publish_channel": sig.get("publish_channel", channel_override or "stocks"),
+            }
+            for key, value in sig.items():
+                if key not in signal_dict:
+                    signal_dict[key] = value
+
+            # Generate chart
+            chart_path = CHART_OUTPUT_DIR / f"{signal_id}.png"
+            try:
+                generate_setup_chart(ticker, signal_dict, str(chart_path))
+                signal_dict["_chart_path"] = str(chart_path)
+            except Exception as e:
+                signal_dict["_chart_path"] = None
+                print(f"  Chart error for {ticker}: {e}")
+
+            summary["all_signals"].append(signal_dict)
+
+        # Post the batch
+        live_count = sum(1 for s in deduped if s.get("is_live", False))
+        watch_count = len(deduped) - live_count
+        strategy_names = sorted(set(s.get("strategy_name", "?") for s in deduped))
+
+        batch_result = post_daily_batch(
+            [s for s in summary["all_signals"][-len(deduped):]],
+            channel_id, asset_class, regime_data, dry_run=False,
+        )
+        summary["posted"] = batch_result["posted"]
+        summary["errors"] += batch_result["errors"]
+
+        print(f"\n  {asset_class.upper()}: {batch_result['posted']} embeds posted "
+              f"({live_count} live, {watch_count} watch)")
+        return
+
+    # Text posting path (original)
     for sig in deduped:
         ticker = sig["ticker"]
         entry_date = str(sig.get("date", ""))[:10]
@@ -515,9 +591,13 @@ def main():
                     help="Run full pipeline without posting")
     ap.add_argument("--crypto-only", action="store_true",
                     help="Skip stock scanning, run crypto only (weekend mode)")
+    ap.add_argument("--post-embeds", action="store_true",
+                    help="Post signals as Discord embeds (colored borders, charts, "
+                         "daily header, horizontal rules). Requires DISCORD_BOT_TOKEN.")
     args = ap.parse_args()
     
-    summary = run_portfolio_pipeline(dry_run=args.dry_run, crypto_only=args.crypto_only)
+    summary = run_portfolio_pipeline(dry_run=args.dry_run, crypto_only=args.crypto_only,
+                                     post_embeds=args.post_embeds)
     
     if "error" in summary:
         print(f"\nERROR: {summary['error']}")
