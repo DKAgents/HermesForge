@@ -39,10 +39,14 @@ CRYPTO_UNIVERSE = [
     # These are the deepest, most established markets with longest
     # price history (most go back to 2020-2021). Same free public API.
     "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
-    "FARTCOIN", "FTM", "HYPE", "JUP", "LOOM", "LTC", "MATIC",
-    "MKR", "NEAR", "ONDO", "PAXG", "PUMP", "RNDR", "STRAX", "TON",
-    "TRUMP", "TRX", "UNI", "WLD", "XPL", "XRP", "ZEC",
+    "FARTCOIN", "HYPE", "JUP", "LTC",
+    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
+    "XPL", "XRP", "ZEC",
     "kBONK", "kPEPE", "kSHIB",
+    # NOTE: Removed 7 delisted tickers (2026-08-02): STRAX (Mar 2024),
+    # RNDR (Jul 2024), MATIC (Sep 2024), LOOM (Dec 2024), FTM (Jan 2025),
+    # MKR (Sep 2025), TON (Jun 2026). These have stale last-bar dates that
+    # pollute the cross-sectional rebalance schedule and batch signal filter.
 ]
 CACHE_MAX_AGE_DAYS = 1  # crypto trades 24/7, refresh more often than stocks
 
@@ -124,12 +128,24 @@ def load_symbol(symbol: str) -> pd.DataFrame:
 
 
 def load_all() -> dict:
+    """Load all cached crypto data. Filters out stale tickers (last bar > 14 days old)
+    to prevent delisted coins from polluting cross-sectional scanners."""
+    import pandas as pd
     result = {}
+    staleness_cutoff = pd.Timestamp.now(tz=None) - pd.Timedelta(days=14)
+    skipped = []
     for symbol in CRYPTO_UNIVERSE:
         try:
-            result[symbol] = load_symbol(symbol)
+            df = load_symbol(symbol)
+            if df.index[-1] < staleness_cutoff:
+                skipped.append((symbol, str(df.index[-1])[:10]))
+                continue
+            result[symbol] = df
         except FileNotFoundError:
             continue
+    if skipped:
+        print(f"  [load_all] Skipped {len(skipped)} stale ticker(s): "
+              + ", ".join(f"{t} ({d})" for t, d in skipped))
     return result
 
 

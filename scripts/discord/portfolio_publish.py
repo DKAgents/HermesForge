@@ -384,13 +384,20 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                         f"{scanner_id}/{ticker} ({asset_class}) scan error: {e}"
                     )
         else:
-            # Batch mode
+            # Batch mode (STR-P cross-sectional)
             try:
                 signals = scan_fn(data, **kwargs)
+                # Find the most recent signal date (last rebalance date)
+                # This is NOT the same as the most recent data date, because
+                # the scanner rebalances every N bars (e.g., 21 days).
+                if signals:
+                    most_recent_signal_date = max(str(s.get("date", ""))[:10] for s in signals)
+                else:
+                    most_recent_signal_date = None
+                
                 for sig in signals:
-                    # Only keep most recent bar signals
-                    most_recent_dates = {str(df.index[-1])[:10] for df in data.values() if len(df) > 0}
-                    if str(sig.get("date", ""))[:10] not in most_recent_dates:
+                    # Only keep signals from the most recent rebalance date
+                    if most_recent_signal_date and str(sig.get("date", ""))[:10] != most_recent_signal_date:
                         continue
                     sig["strategy_id"] = scanner_id
                     sig["strategy_name"] = cfg["name"]
