@@ -84,14 +84,6 @@ SCANNER_REGISTRY = {
         "default_confidence": "high",
         "scanner_kwargs": {},  # long_only set dynamically per asset_class
     },
-    "STR-J-eufearia-cci": {
-        "scan_fn": scan_j,
-        "call_mode": "per_ticker",
-        "note_id": "STR-20260726-eufearia-cci-reversal",
-        "name": "EUFEARIA CCI",
-        "default_confidence": "medium",
-        "scanner_kwargs": {},
-    },
     "STR-L-atr-contraction": {
         "scan_fn": scan_l_ticker,
         "call_mode": "per_ticker",

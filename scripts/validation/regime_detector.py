@@ -38,7 +38,6 @@ STRATEGY_REGIME_MAP = {
     "STR-I-adaptive-trend":            ["trending"],
     
     # WATCH strategies (publish_enabled: false, but active in portfolio pipeline)
-    "STR-J-eufearia-cci":              ["ranging", "low-volatility"],
     "STR-L-atr-contraction":           ["low-volatility"],
     
     # Near-miss scanner (always runs — near-misses are informational)

@@ -1,7 +1,7 @@
 ---
 id: STR-20260726-eufearia-cci-reversal
 type: strategy
-status: watch
+status: killed
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -9,6 +9,8 @@ market_regime: ranging
 core_idea: reversal
 confidence: low
 publish_enabled: false
+kill_reason: "Walk-forward validation: NO EDGE. OOS R=0.002, t=0.15, p=0.88, CI [-0.02, 0.03]. 25,150 signals with avg R ≈ 0."
+kill_date: 2026-08-01
 publish_channel: stocks
 source: EUFEARIA_PRO_7_PineScript
 source_authors: Philip Paul
