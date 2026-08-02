@@ -63,10 +63,10 @@ STRATEGIES = [
     {
         "id": "STR-D",
         "name": "S/R Role Reversal",
-        "status": "WATCH",
-        "description": "Prior resistance (max high 60 bars back, excluding recent 20) tested as new support. Two-bar reclaim confirms. ATR stop below level. Target = next resistance above.",
+        "status": "KILLED",
+        "description": "Prior resistance tested as new support. Two-bar reclaim confirms. Walk-forward: NO EDGE (p=0.435, OOS R=0.033). Phase 1A edge (0.227R) didn't survive costs.",
         "regimes": ["trending", "ranging", "transitional", "high-vol", "low-vol"],
-        "edge": "Structural level role reversal",
+        "edge": "Structural level role reversal (FAILED walk-forward)",
     },
     {
         "id": "STR-E",
@@ -104,9 +104,9 @@ STRATEGIES = [
         "id": "STR-I",
         "name": "AdaptiveTrend (Momentum + ATR Trailing Stop)",
         "status": "LIVE",
-        "description": "Momentum (10-bar) exceeds +/-20% threshold with SMA200 trend filter. ATR(14) trailing stop at 2.0x ratchets with trend. 120-bar time stop. Based on Bui & Nguyen (arXiv:2602.11708).",
+        "description": "Momentum (10-bar) exceeds +/-20% threshold with SMA200 trend filter. ATR(14) trailing stop at 2.0x ratchets with trend. 120-bar time stop. RESTRICTED to stocks (killed on crypto: Sharpe 0.151 per ADR-004 Amendment 1).",
         "regimes": ["trending"],
-        "edge": "Adaptive trend-following with ratcheting stop",
+        "edge": "Adaptive trend-following with ratcheting stop (stocks only)",
     },
     {
         "id": "STR-J",
@@ -160,9 +160,9 @@ STRATEGIES = [
         "id": "STR-P",
         "name": "Cross-Sectional Factor Ranking",
         "status": "WATCH",
-        "description": "Multi-factor cross-sectional ranking combining MOM12_1 (12-month momentum, 0.33 weight), LIQUID (dollar volume, 0.33), PRICEMOM (price vs SMA200, 0.34). Long top quintile, short bottom quintile. ATR(14) stop at 1.5x.",
+        "description": "Multi-factor cross-sectional ranking combining MOM12_1 (12-month momentum, 0.33 weight), LIQUID (dollar volume, 0.33), PRICEMOM (price vs SMA200, 0.34). Walk-forward: ROBUST EDGE (p=0.03, OOS R=0.12, 4/5 windows positive). Edge is thin but statistically significant.",
         "regimes": ["ranging", "trending"],
-        "edge": "Multi-factor cross-sectional selection (Sharpe 2.56-2.67 per factor)",
+        "edge": "Multi-factor cross-sectional (crypto only, walk-forward validated)",
     },
 ]
 

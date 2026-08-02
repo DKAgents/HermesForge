@@ -105,8 +105,9 @@ SCANNER_REGISTRY = {
     },
 }
 
-# Near-miss scanner (always runs, separate output)
-NEAR_MISS_SCANNER = "STR-D-sr-role-reversal"
+# Near-miss scanner (disabled — STR-D killed in walk-forward, ADR-004 Amendment 1)
+# NEAR_MISS_SCANNER = "STR-D-sr-role-reversal"
+NEAR_MISS_SCANNER = None
 
 
 def _parse_frontmatter(text: str) -> dict:
