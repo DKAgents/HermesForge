@@ -150,7 +150,24 @@ def _tier_and_conditions_crosssectional(s: dict) -> tuple[str, str, list[str]]:
         "1.5x ATR trailing stop",
     ]
 
-    tier, label = "C", "Low"
+    # Dynamic tiering based on composite_score (factor convergence strength)
+    if composite_score >= 2.0:
+        tier, label = "A", "High"
+        rationale = "strong factor convergence"
+        threshold = ">= 2.0"
+    elif composite_score >= 1.0:
+        tier, label = "B", "Medium"
+        rationale = "moderate factor convergence"
+        threshold = ">= 1.0"
+    else:
+        tier, label = "C", "Low"
+        rationale = "marginal factor convergence"
+        threshold = "< 1.0"
+
+    conditions.append(
+        f"Tier {tier}: composite score {threshold} ({rationale})"
+    )
+
     tag = f"{tier} ({label})"
     return tag, "4/4", conditions
 

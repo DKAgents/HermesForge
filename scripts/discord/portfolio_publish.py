@@ -310,6 +310,93 @@ def run_portfolio_pipeline(dry_run: bool = True, crypto_only: bool = False,
     return summary
 
 
+def apply_confirmation_filters(signals: list, data: dict, asset_class: str) -> list:
+    """Apply confirmation filters to improve signal quality.
+    Only filters STR-P cross-sectional signals. Other strategies pass through."""
+
+    if not signals:
+        return signals
+
+    filtered = []
+    rejected = 0
+
+    for sig in signals:
+        strategy_id = sig.get("strategy_id", "")
+
+        # Only filter STR-P signals
+        if "STR-P" not in strategy_id and "P_CROSSSECTIONAL" not in strategy_id:
+            filtered.append(sig)
+            continue
+
+        ticker = sig.get("ticker", "")
+        direction = sig.get("direction", "long")
+
+        # ── Filter 1: Multi-factor agreement ──
+        # MOM12_1 and PRICEMOM must agree in direction
+        mom = sig.get("factor_mom12_1", 0)
+        pricemom = sig.get("factor_pricemom", 0)
+
+        if direction == "long":
+            # For longs: both momentum and pricemom should be positive (or at least not strongly negative)
+            if mom < -0.05 and pricemom < -0.05:
+                rejected += 1
+                print(f"  ❌ {ticker} rejected: factor disagreement (MOM={mom:+.2f}, PM={pricemom:+.2f} both negative for long)")
+                continue
+        else:  # short
+            # For shorts: both should be negative (or at least not strongly positive)
+            if mom > 0.05 and pricemom > 0.05:
+                rejected += 1
+                print(f"  ❌ {ticker} rejected: factor disagreement (MOM={mom:+.2f}, PM={pricemom:+.2f} both positive for short)")
+                continue
+
+        # ── Filter 2: Composite score minimum ──
+        # Reject signals with very low composite scores (near-zero edge)
+        composite = abs(sig.get("composite_score", 0))
+        if composite < 0.3:
+            rejected += 1
+            print(f"  ❌ {ticker} rejected: composite score too low ({composite:.2f} < 0.3)")
+            continue
+
+        # ── Filter 3: Trend alignment with benchmark ──
+        # For crypto: check if BTC is above/below its 50-day SMA
+        # Longs only taken when BTC trend is neutral-to-up, shorts when neutral-to-down
+        if asset_class == "crypto" and "BTC" in data:
+            btc_df = data["BTC"]
+            if len(btc_df) >= 50:
+                btc_close = btc_df["close"]
+                btc_sma50 = btc_close.iloc[-50:].mean()
+                btc_current = btc_close.iloc[-1]
+                btc_above_sma = btc_current > btc_sma50
+
+                if direction == "short" and btc_above_sma and (btc_current / btc_sma50 - 1) > 0.05:
+                    # BTC is 5%+ above SMA50 — don't short
+                    rejected += 1
+                    print(f"  ❌ {ticker} rejected: trend misalignment (BTC {((btc_current/btc_sma50-1)*100):.1f}% above SMA50, shorting against uptrend)")
+                    continue
+
+        # ── Filter 4: Volume confirmation ──
+        # Check if signal bar volume is above 20-bar average
+        df = data.get(ticker)
+        if df is not None and len(df) >= 21:
+            vol_20 = df["volume"].iloc[-20:].mean()
+            vol_latest = df["volume"].iloc[-1]
+            if vol_20 > 0 and vol_latest < vol_20 * 0.5:
+                rejected += 1
+                print(f"  ❌ {ticker} rejected: low volume ({vol_latest/vol_20:.1f}x 20-bar avg)")
+                continue
+
+        # Add confirmation flags to signal
+        sig["factor_agreement"] = True
+        sig["volume_confirmed"] = True
+        sig["trend_aligned"] = True
+        filtered.append(sig)
+
+    if rejected > 0:
+        print(f"\n  Confirmation filters: {rejected} signal(s) rejected, {len(filtered)} passed")
+
+    return filtered
+
+
 def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                       strategy_meta: dict, regime_data: dict,
                       dry_run: bool, summary: dict,
@@ -422,7 +509,13 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         if scanner_signals:
             print(f"  Found {len(scanner_signals)} current-bar signals")
         all_signals.extend(scanner_signals)
-    
+
+    # After collecting all_signals, check if any are live
+    live_signals = [s for s in all_signals if s.get("is_live", False)]
+    if all_signals and not live_signals:
+        print(f"\n  ⚠️ No LIVE strategy signals — all {len(all_signals)} signals are WATCH status")
+        print(f"  ⚠️ STR-B needs MACD divergence (fires in trending markets), STR-I is stocks-only")
+
     # ── Cross-strategy dedup ────────────────────────────────────────────────
     # If same ticker appears in multiple strategies, keep the highest score
     ticker_best = {}
@@ -430,14 +523,42 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         ticker = sig.get("ticker", "")
         if ticker not in ticker_best or sig["score"] > ticker_best[ticker]["score"]:
             ticker_best[ticker] = sig
-    
+
     deduped = list(ticker_best.values())
     deduped.sort(key=lambda x: x["score"], reverse=True)
-    
+
     removed = len(all_signals) - len(deduped)
     if removed > 0:
         print(f"\nCross-strategy dedup: {removed} duplicate(s) removed")
-    
+
+    # ── Confirmation filters ────────────────────────────────────────────────
+    # Apply multi-factor, composite-score, trend, and volume confirmation gates
+    # to STR-P cross-sectional signals. Other strategies pass through unchanged.
+    deduped = apply_confirmation_filters(deduped, data, asset_class)
+
+    # ── Top-N filter: only publish the strongest signals ───────────────────
+    MAX_PUBLISH_SIGNALS = 5
+    if len(deduped) > MAX_PUBLISH_SIGNALS:
+        # Keep top N by score (already sorted by score descending)
+        # But ensure we keep at least 1 long and 1 short if available
+        top_n = deduped[:MAX_PUBLISH_SIGNALS]
+        # Check if we have both directions in top N
+        has_long = any(s.get("direction") == "long" for s in top_n)
+        has_short = any(s.get("direction") == "short" for s in top_n)
+        if not has_long or not has_short:
+            # Find best missing direction from remaining signals
+            for sig in deduped[MAX_PUBLISH_SIGNALS:]:
+                if not has_long and sig.get("direction") == "long":
+                    top_n.append(sig)
+                    has_long = True
+                elif not has_short and sig.get("direction") == "short":
+                    top_n.append(sig)
+                    has_short = True
+                if has_long and has_short:
+                    break
+        print(f"\n  Top-N filter: publishing {len(top_n)} of {len(deduped)} signals (max {MAX_PUBLISH_SIGNALS})")
+        deduped = top_n
+
     # ── Publish signals ─────────────────────────────────────────────────────
     
     if post_embeds and not dry_run:
