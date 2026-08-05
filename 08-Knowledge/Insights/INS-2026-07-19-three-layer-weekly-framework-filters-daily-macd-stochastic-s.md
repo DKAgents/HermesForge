@@ -33,4 +33,5 @@ Before taking a daily MACD or Stochastics crossover signal, a trader should chec
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-08-04-three-layer-weekly-filter-system-for-daily-trade-entries|Three-Layer Weekly Filter System for Daily Trade Entries]]
 - [[INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas|Weekly Trend Confirmation Required Before Daily MACD/Stochastics Entry]]

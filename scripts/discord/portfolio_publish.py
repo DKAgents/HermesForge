@@ -322,6 +322,14 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
     # Collect all signals across strategies for cross-strategy dedup
     all_signals = []
     
+    # Infer asset class per signal, not from channel override
+    # STR-P cross-sectional can produce both stock and crypto signals
+    # when run in non-crypto-only mode
+    if asset_class == "stock":
+        signal_publish_channel = "stocks"
+    else:
+        signal_publish_channel = "crypto"
+
     for scanner_id, cfg in scanners.items():
         # Check if this scanner is disabled for the current asset class
         disabled = cfg.get("disabled_asset_classes", [])
@@ -334,11 +342,11 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         note_id = cfg["note_id"]
         meta = strategy_meta.get(note_id, {})
         publish_channel = channel_override or meta.get("publish_channel", "stocks")
-        
+
         # Determine if this strategy is publish_enabled (live) or WATCH
         is_live = meta.get("publish_enabled", False)
         strategy_status = meta.get("status", "unknown")
-        
+
         print(f"\nScanning {scanner_id} ({cfg['name']}, {asset_class}, {strategy_status})...")
         
         # Scanner-specific kwargs
@@ -469,7 +477,8 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 "regime_adx": regime_data.get("adx", ""),
                 "score": sig["score"],
                 "is_live": sig.get("is_live", False),
-                "publish_channel": sig.get("publish_channel", channel_override or "stocks"),
+                "publish_channel": sig.get("publish_channel", signal_publish_channel),
+                "asset_class": asset_class,
             }
             for key, value in sig.items():
                 if key not in signal_dict:

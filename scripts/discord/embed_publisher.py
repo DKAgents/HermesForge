@@ -83,6 +83,36 @@ def _generate_short_id_for_signal(signal_dict: dict, used_ids: set) -> str:
         seq += 1
 
 
+def _infer_asset_class(ticker: str, signal_dict: dict) -> str:
+    """Infer asset class from signal metadata or ticker, not channel override.
+    Channel override (publish_channel) is checked LAST to prevent
+    cross-sectional scanners from mislabeling stock signals as crypto."""
+    # Priority 1: explicit asset_class in signal dict
+    ac = signal_dict.get("asset_class", "")
+    if ac:
+        return ac
+    # Priority 2: known crypto ticker (case-insensitive)
+    ticker_upper = ticker.upper()
+    crypto_set = {
+        'BTC','ETH','SOL','XRP','ADA','DOT','AVAX','LINK','UNI','ATOM',
+        'LTC','BCH','TRX','ETC','FIL','APT','NEAR','ARB','OP','AAVE',
+        'MKR','SNX','CRV','RUNE','INJ','SUI','SEI','TIA','RNDR','FTM',
+        'ALGO','EGLD','FLOW','SAND','MANA','AXS','SUSHI','COMP','YFI',
+        '1INCH','ZRX','BAL','KAVA','BAND','LRC','RENDER','HYPE','ZEC',
+        'TRUMP','PAXG','KBONK','BONK','FARTCOIN','ENA','JUP','WIF','PYTH',
+        'STX','ORDI','SATS','TON','STRAX','LOOM','BLUR','GALA','CHZ','LDO',
+        'WLD','DYDX','PEPE','DOGE','SHIB','MATIC','KNEAR',
+    }
+    if ticker_upper in crypto_set:
+        return "crypto"
+    # Priority 3: if not a known crypto ticker, it's a stock
+    # (even if publish_channel says crypto — could be channel override)
+    # Priority 4: publish_channel as final fallback
+    pc = signal_dict.get("publish_channel", "")
+    if pc == "crypto":
+        return "crypto"
+    return "stock"
+
 def _register_trade_after_post(signal_dict: dict, short_id: str,
                                 message_id: str, channel_id: str) -> str | None:
     """
@@ -96,7 +126,7 @@ def _register_trade_after_post(signal_dict: dict, short_id: str,
     try:
         strategy_id = signal_dict.get("strategy_id", "")
         ticker = signal_dict["ticker"]
-        asset_class = "crypto" if signal_dict.get("publish_channel") == "crypto" else "stock"
+        asset_class = _infer_asset_class(ticker, signal_dict)
         signal_date = str(signal_dict.get("date", signal_dict.get("entry_date", "")))[:10]
 
         post_url = make_discord_url(channel_id, message_id)

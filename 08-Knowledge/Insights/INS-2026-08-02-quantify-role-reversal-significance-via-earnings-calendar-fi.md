@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, event-risk-filters, rules]
 sources: ["E005-subjectivity-in-defining-significant-penetration", "C065-previous-support-as-future-resistance-in-downtrend", "R029-speed-resistance-lines-role-reversal"]
 seed_id: lesson-a-c8b706
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Quantify Role-Reversal Significance via Earnings Calendar Filter
 
 ## Discovery Summary

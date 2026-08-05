@@ -31,3 +31,6 @@ When the CRB/Bond ratio is rising, screen for the strongest relative strength pe
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-03-crb-bond-ratio-as-trigger-for-relative-strength-sector-rotat|CRB/Bond Ratio as Trigger for Relative Strength Sector Rotation]]
