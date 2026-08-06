@@ -66,14 +66,198 @@ def _load_latest_research() -> dict:
         return json.load(f)
 
 
+# ── Layman Narratives ─────────────────────────────────────────────────────────
+# Plain-English explanations of each factor and strategy for non-quant readers.
+
+FACTOR_NARRATIVES = {
+    "MOM12_1": {
+        "what": "12-month price momentum (skipping the most recent month)",
+        "why": "Classic academic discovery: assets that went up the most over the past year tend to keep outperforming. We skip the recent month to avoid short-term bounce effects.",
+        "inverted_means": "Momentum is NOT working — assets that went up most are now underperforming. This suggests a regime shift where trend-following is failing.",
+    },
+    "REV1": {
+        "what": "1-month price reversal",
+        "why": "The idea that assets that dropped the most in the past month tend to bounce back (mean reversion). Short-term losers recover.",
+        "inverted_means": "Reversal is NOT working — assets that dropped keep dropping. This confirms a momentum-dominant regime where trend-following beats mean-reversion.",
+    },
+    "LOWVOL": {
+        "what": "Low-volatility anomaly (60-day price volatility)",
+        "why": "Academic research shows less volatile assets tend to outperform over time, contradicting the textbook idea that higher risk always means higher reward.",
+        "inverted_means": "Low-volatility is NOT working — volatile assets are outperforming calm ones. This happens during speculative or momentum-driven markets where risk-taking is rewarded.",
+    },
+    "LIQUID": {
+        "what": "Liquidity factor (average trading volume over 60 days)",
+        "why": "More liquid assets (heavily traded) behave differently from illiquid ones. The liquidity premium is a well-known market anomaly.",
+        "inverted_means": "Less liquid assets are outperforming — smaller/illiquid assets are leading, which can happen during speculative rallies.",
+    },
+    "PRICEMOM": {
+        "what": "Price level relative to 200-day moving average",
+        "why": "If price is above its 200-day average, the asset is in a long-term uptrend. This is one of the simplest trend filters used by traders.",
+        "inverted_means": "Assets below their 200-day average are outperforming those above it — a sign that mean reversion is dominating over trend following.",
+    },
+    "RSI14": {
+        "what": "Relative Strength Index (14-period, 0-100 scale)",
+        "why": "RSI measures the speed and size of price moves. Traditionally, RSI below 30 means 'oversold' (a buy signal) and above 70 means 'overbought' (a sell signal). This is the classic mean-reversion interpretation.",
+        "inverted_means": "The traditional interpretation is BACKWARDS right now. Buying 'overbought' assets (RSI > 70) outperforms buying 'oversold' ones. This strongly confirms a momentum-dominant regime where strong assets keep going strong. A strategy that flips RSI logic — buying strength instead of buying weakness — could capture this edge.",
+    },
+    "BB_WIDTH": {
+        "what": "Bollinger Band width (volatility squeeze/expansion measure)",
+        "why": "When Bollinger Bands squeeze tight (low volatility), it often precedes a major move. The question is: does buying low-volatility periods predict future outperformance?",
+        "inverted_means": "High-volatility periods are outperforming low-volatility ones — the market is rewarding risk-taking over calm periods.",
+    },
+    "ATR_PCT": {
+        "what": "Average True Range as a percentage of price",
+        "why": "Measures how much an asset typically moves per day relative to its price. Higher ATR% = more volatile asset. Tests whether low-volatility assets outperform.",
+        "inverted_means": "Volatile assets are outperforming — the market is rewarding higher-risk, higher-movement assets. Consistent with a momentum/speculative regime.",
+    },
+    "VOL_ROC": {
+        "what": "Volume rate of change (10-day)",
+        "why": "Measures whether trading volume is increasing or decreasing. Rising volume can confirm a price move is real (more participation = stronger signal).",
+        "inverted_means": "Falling volume assets are outperforming — price moves on low volume may be more sustainable than volume-driven spikes.",
+    },
+    "ADX_TREND": {
+        "what": "Average Directional Index (trend strength, not direction)",
+        "why": "ADX above 25 means a strong trend, below 20 means no clear trend. Tests whether trending assets outperform non-trending ones.",
+        "inverted_means": "Non-trending (ranging) assets are outperforming — choppy markets are producing better returns than directional trends.",
+    },
+}
+
+STRATEGY_HISTORIES = {
+    "STR-A": {
+        "name": "MA Pullback + Fibonacci",
+        "hypothesis": "When price pulls back to the 50-day moving average within an established trend, entering at the Fibonacci 38-62% retracement zone should catch the next leg up. Targets via Fibonacci extensions.",
+        "what_happened": "Walk-forward validation showed no statistical edge. The pullback entries didn't reliably predict which trends would continue versus reverse.",
+    },
+    "STR-B": {
+        "name": "MACD Histogram Divergence",
+        "hypothesis": "When price makes a new swing high but the MACD momentum indicator makes a lower high (or vice versa), it signals momentum exhaustion — the trend is running out of steam. Enter on the MACD line/signal cross with an ATR-based stop.",
+        "what_happened": "This is one of our two LIVE strategies. It works because divergence genuinely captures momentum shifts. Current stats: Mean R=1.003, 50 signals, Sharpe 0.61. The edge is real but not statistically significant on its own (p=0.21) — it works best in combination with regime filtering.",
+    },
+    "STR-C": {
+        "name": "Breakout + Volume",
+        "hypothesis": "Breakouts above 20-day highs with 1.5x average volume are 'real' breakouts (institutional participation), not fakeouts. Prior high becomes new support.",
+        "what_happened": "Walk-forward showed volume didn't distinguish real breakouts from fake ones. 241 signals but mean R=0.53 with p=0.19 — possible but unconfirmed edge.",
+    },
+    "STR-D": {
+        "name": "S/R Role Reversal",
+        "hypothesis": "Prior resistance tested as new support (role reversal) creates high-probability entries. Two-bar reclaim confirms the level holds.",
+        "what_happened": "Walk-forward showed NO EDGE (p=0.435, R=0.033). The pattern looks great on charts but is statistically random. Killed in Phase 1B.",
+    },
+    "STR-E": {
+        "name": "RSI Mean Reversion",
+        "hypothesis": "RSI extremes (below 30 = oversold, above 70 = overbought) signal mean-reversion entries. Buy oversold, sell overbought, expecting return to RSI 50.",
+        "what_happened": "Walk-forward showed no edge. In trending markets, RSI extremes persist rather than revert. Interestingly, the factor screener now confirms this — RSI is inverted, meaning the traditional mean-reversion interpretation is backwards in the current regime.",
+    },
+    "STR-F": {
+        "name": "Bollinger Squeeze",
+        "hypothesis": "When Bollinger Bands squeeze tight (low volatility), the subsequent expansion creates a tradeable breakout. Direction determined by candle close outside bands.",
+        "what_happened": "Failed walk-forward — the direction of breakout was not predictable from the squeeze alone. 58 signals, mean R=-0.07. The squeeze predicts volatility expansion but not direction.",
+    },
+    "STR-G": {
+        "name": "Relative Strength / Sector Rotation",
+        "hypothesis": "Ranking sectors by relative strength and rotating into the strongest sectors captures sector rotation alpha. Long strongest, short weakest.",
+        "what_happened": "Failed walk-forward — 417 signals but mean R=0.45 with p=0.30. Transaction costs from frequent rotation ate the edge. Possible but not robust enough.",
+    },
+    "STR-H": {
+        "name": "First Pullback Trend Swing",
+        "hypothesis": "The first pullback in a newly established trend offers the highest risk-reward entry. Swing-segmented leg definition identifies these pullbacks.",
+        "what_happened": "Only 1 signal in recent data — the pattern is too rare to be practical as a standalone strategy. Killed for insufficient signal frequency.",
+    },
+    "STR-I": {
+        "name": "Adaptive Trend (Momentum + ATR Trailing Stop)",
+        "hypothesis": "When 10-bar price momentum exceeds +/-20%, enter in the direction of the trend. Use an ATR(14) trailing stop at 2.0x that ratchets (only moves in the favorable direction) with the trend. 120-bar time stop. Restricted to stocks (killed on crypto where Sharpe was only 0.151).",
+        "what_happened": "LIVE and our strongest performer. Walk-forward confirmed robust edge: Sharpe 1.19, p=0.01, 56 signals, mean R=0.54. The key insight: momentum triggers + ratcheting ATR stops capture trends efficiently. Restricted to stocks per ADR-004 (asset-class independence rule).",
+    },
+    "STR-J": {
+        "name": "EUFEARIA CCI Reversal",
+        "hypothesis": "CCI (Commodity Channel Index) extremes as reversal signals. Based on EUFEARIA PRO 7 Pine Script. Multi-oscillator confirmation.",
+        "what_happened": "Walk-forward showed no edge — 485 signals, mean R=-0.008, p=0.92. The indicator was curve-fit to historical data and didn't generalize.",
+    },
+    "STR-K": {
+        "name": "Breadth Gap",
+        "hypothesis": "When market breadth (advance/decline ratio) diverges from price, it signals an upcoming reversal. Extremes in breadth mark turning points.",
+        "what_happened": "Failed — 0 signals in recent data. The breadth conditions were too restrictive and the pattern didn't appear.",
+    },
+    "STR-L": {
+        "name": "ATR Contraction",
+        "hypothesis": "When ATR contracts significantly (volatility compression), an expansion is imminent. Enter on the breakout from the contraction.",
+        "what_happened": "WATCH status — only 6 signals in 7 years. Too rare to validate with walk-forward, but the concept (low volatility precedes expansion) is sound. Retained as WATCH pending more data.",
+    },
+    "STR-M": {
+        "name": "Selling Climax",
+        "hypothesis": "High-volume capitulation bars mark the end of selling pressure and the start of a reversal. Counter-trend entry after extreme selling.",
+        "what_happened": "Only 1 signal — too rare. The pattern (capitulation volume) happens infrequently and didn't produce enough signals to validate.",
+    },
+    "STR-N": {
+        "name": "Outside Day Key Reversal",
+        "hypothesis": "An outside day (price makes both a higher high AND a lower low than the previous day, then closes in the direction of the reversal) signals a shift in supply/demand balance. The engulfing pattern suggests the opposing side has taken control.",
+        "what_happened": "Originally KILLED — insufficient edge in the initial test. But the latest revival scan found 14 signals with a 71% hit rate and mean R=0.41 (p=0.064). This is a FRAGILE but interesting edge. The market may have shifted in a way that makes this pattern more reliable. Recommended for full walk-forward revalidation.",
+    },
+    "STR-O": {
+        "name": "Price Momentum Factor",
+        "hypothesis": "Single-factor price momentum for crypto: price relative to SMA200 as the sole signal. If price is above SMA200, go long; below, go short.",
+        "what_happened": "Walk-forward showed no standalone edge — 384 signals, mean R=-0.07, p=0.16. Single-factor approaches don't work well for crypto; the cross-sectional approach (STR-P) is superior.",
+    },
+    "STR-P": {
+        "name": "Cross-Sectional Factor Ranking",
+        "hypothesis": "Rank all cryptos by a composite of 3 factors (12-month momentum, dollar volume liquidity, price vs SMA200). Long the top quintile (highest composite), short the bottom quintile. The edge is in RELATIVE ranking, not absolute thresholds — which cryptos are strongest vs which are weakest, not whether any individual crypto is 'high' or 'low'.",
+        "what_happened": "WATCH status — walk-forward confirmed a thin but statistically significant edge: OOS R=0.12, p=0.032, 4 out of 5 test windows positive. The edge is small but real. Currently the only strategy producing crypto signals (14 setups). 358 recent signals but mean R=-0.055 — the edge has weakened in the current ranging regime.",
+    },
+}
+
+
 # ── Format Embed ──────────────────────────────────────────────────────────────
 
+def _format_factor_narrative(factor_name: str, sharpe: float, p_val: float,
+                              ann_ret: float, asset_label: str) -> str:
+    """Format a factor candidate with layman narrative."""
+    narrative = FACTOR_NARRATIVES.get(factor_name, {})
+    what = narrative.get("what", factor_name)
+    why = narrative.get("why", "")
+    direction = "inverted" if sharpe < 0 else "normal"
+    inverted_text = narrative.get("inverted_means", "") if direction == "inverted" else ""
+
+    lines = [
+        f"★ **{factor_name} ({asset_label})**",
+        f"  *What it measures:* {what}",
+        f"  *The hypothesis:* {why}",
+        f"  *Finding:* Sharpe {sharpe:.2f}, p={p_val:.4f}, annual {ann_ret*100:.1f}% ({direction})",
+    ]
+    if inverted_text:
+        lines.append(f"  *What this means:* {inverted_text}")
+    return "\n".join(lines)
+
+
+def _format_strategy_narrative(strat_id: str, mean_r: float, p_val: float,
+                                n_sig: int, hit_rate: float, context: str = "") -> str:
+    """Format a strategy with its history and hypothesis."""
+    history = STRATEGY_HISTORIES.get(strat_id, {})
+    name = history.get("name", strat_id)
+    hypothesis = history.get("hypothesis", "No hypothesis recorded.")
+    what_happened = history.get("what_happened", "")
+
+    lines = [
+        f"★ **{strat_id} — {name}**",
+        f"  *The hypothesis:* {hypothesis}",
+    ]
+    if context == "revival":
+        lines.append(f"  *Why it was killed:* {what_happened}")
+        lines.append(f"  *What's new:* {n_sig} recent signals, {hit_rate*100:.0f}% hit rate, mean R={mean_r:.4f}, p={p_val:.4f}")
+        lines.append(f"  *What this means:* The market may have shifted in a way that makes this pattern work again. Worth a full revalidation.")
+    elif context == "decay":
+        lines.append(f"  *Current status:* {what_happened}")
+    else:
+        lines.append(f"  *What happened:* {what_happened}")
+    return "\n".join(lines)
+
+
 def _format_factor_summary(fs_data: dict, asset_label: str) -> list:
-    """Format factor screener findings for one asset class. Returns lines."""
+    """Format factor screener findings for one asset class with narratives. Returns lines."""
     lines = []
     n_cands = fs_data.get("n_candidates", 0)
     n_tested = fs_data.get("n_factors_tested", 0)
-    lines.append(f"**{n_tested} factors tested | {n_cands} candidate(s) flagged**")
+    lines.append(f"**{n_tested} factors tested | {n_cands} flagged as potential edges**")
+    lines.append("")
 
     candidates = fs_data.get("candidates", [])
     if candidates:
@@ -82,22 +266,21 @@ def _format_factor_summary(fs_data: dict, asset_label: str) -> list:
             sharpe = c.get("sharpe", 0)
             p_val = c.get("p_value", 1)
             ann_ret = c.get("annualized_return", 0)
-            direction = "inverted" if sharpe < 0 else "normal"
-            lines.append(
-                f"  ★ **{factor}**: Sharpe {sharpe:.2f}, p={p_val:.4f}, "
-                f"annual {ann_ret*100:.1f}% ({direction})"
-            )
+            lines.append(_format_factor_narrative(factor, sharpe, p_val, ann_ret, asset_label))
+            lines.append("")
     else:
-        lines.append("  *No candidates this run.*")
+        lines.append("*No factor candidates this run.*")
     return lines
 
 
 def _format_revival(rt_data: dict) -> list:
-    """Format revival tester findings. Returns lines."""
+    """Format revival tester findings with strategy histories. Returns lines."""
     lines = []
     n_tested = rt_data.get("strategies_tested", 0)
     n_cands = rt_data.get("n_candidates", 0)
-    lines.append(f"**{n_tested} killed strategies re-tested | {n_cands} revival candidate(s)**")
+    lines.append(f"**{n_tested} killed strategies re-tested on recent data**")
+    lines.append(f"**{n_cands} showing signs of life**")
+    lines.append("")
 
     candidates = rt_data.get("candidates", [])
     if candidates:
@@ -108,21 +291,21 @@ def _format_revival(rt_data: dict) -> list:
             p_val = c.get("p_value", 1)
             n_sig = c.get("n_signals", 0)
             hit_rate = c.get("hit_rate", 0)
-            lines.append(
-                f"  ★ **{strat} ({name})**: Mean R={mean_r:.4f}, p={p_val:.4f}, "
-                f"{n_sig} signals, {hit_rate*100:.0f}% hit rate"
-            )
+            lines.append(_format_strategy_narrative(strat, mean_r, p_val, n_sig, hit_rate, context="revival"))
+            lines.append("")
     else:
-        lines.append("  *No revival candidates — all killed strategies remain dead.*")
+        lines.append("*No revival candidates — all 12 killed strategies remain dead in the current regime.*")
     return lines
 
 
 def _format_decay(dm_data: dict) -> list:
-    """Format decay monitor findings. Returns lines."""
+    """Format decay monitor findings with strategy context. Returns lines."""
     lines = []
     n_monitored = dm_data.get("strategies_monitored", 0)
     n_decayed = dm_data.get("n_decayed", 0)
-    lines.append(f"**{n_monitored} strategies monitored | {n_decayed} decay flag(s)**")
+    lines.append(f"**{n_monitored} active strategies checked for edge erosion**")
+    lines.append(f"**{n_decayed} showing significant decay**")
+    lines.append("")
 
     decayed = dm_data.get("decayed", [])
     if decayed:
@@ -132,42 +315,59 @@ def _format_decay(dm_data: dict) -> list:
             decay_pct = d.get("decay_pct", 0)
             first_sharpe = d.get("first_sharpe", 0)
             curr_sharpe = d.get("sharpe_proxy", 0)
-            lines.append(
-                f"  ⚠️ **{strat} ({name})**: Sharpe dropped from "
-                f"{first_sharpe:.2f} to {curr_sharpe:.2f} ({decay_pct*100:.0f}%)"
-            )
+            history = STRATEGY_HISTORIES.get(strat, {})
+            lines.append(f"⚠️ **{strat} ({history.get('name', name)})**")
+            lines.append(f"  *Hypothesis:* {history.get('hypothesis', '?')}")
+            lines.append(f"  *Decay:* Sharpe dropped from {first_sharpe:.2f} to {curr_sharpe:.2f} ({decay_pct*100:.0f}%)")
+            lines.append(f"  *What this means:* The strategy's edge is eroding. May need parameter adjustment or retirement.")
+            lines.append("")
     else:
-        lines.append("  ✓ All monitored strategies stable — no edge decay detected.")
+        lines.append("✓ All monitored strategies stable — no edge decay detected.")
+        lines.append("")
 
-    # Show current stats for monitored strategies
+    # Show current health for each monitored strategy
     results = dm_data.get("results", [])
     if results:
-        lines.append("")
-        lines.append("  *Current strategy health:*")
+        lines.append("*Current strategy health:*")
         for r in results:
             if "error" in r:
                 continue
             strat = r.get("strategy", "?")
+            name = r.get("name", "?")
             mean_r = r.get("mean_r", 0)
             sharpe = r.get("sharpe_proxy", 0)
             p_val = r.get("p_value", 1)
             n_sig = r.get("n_signals", 0)
-            lines.append(
-                f"  {strat}: R={mean_r:.3f}, Sharpe={sharpe:.2f}, "
-                f"p={p_val:.3f}, {n_sig} signals"
-            )
+            status = r.get("status", "?")
+            history = STRATEGY_HISTORIES.get(strat, {})
+            lines.append(f"  **{strat}** ({status}): R={mean_r:.3f}, Sharpe={sharpe:.2f}, p={p_val:.3f}, {n_sig} signals")
+            if n_sig == 0:
+                lines.append(f"    _{history.get('what_happened', 'No signals in current regime.')}_")
+            elif p_val < 0.05:
+                lines.append(f"    _Statistically significant edge confirmed._")
+            elif p_val < 0.20 and mean_r > 0:
+                lines.append(f"    _Possible edge, not yet statistically significant._")
+            else:
+                lines.append(f"    _Edge is thin or absent in current regime._")
     return lines
 
 
 def _format_hypotheses(hg_data: dict, asset_label: str) -> list:
-    """Format hypothesis generator findings. Returns lines."""
+    """Format hypothesis generator findings with context. Returns lines."""
     lines = []
     n_tested = hg_data.get("n_hypotheses_tested", 0)
     n_cands = hg_data.get("n_candidates", 0)
     top_factors = hg_data.get("top_factors", [])
-    lines.append(f"**{n_tested} hypotheses tested | {n_cands} candidate(s)**")
+    lines.append(f"**{n_tested} combinations tested | {n_cands} candidate(s)**")
     if top_factors:
-        lines.append(f"  Top factors: {', '.join(top_factors)}")
+        # Add brief factor explanations
+        factor_blurbs = []
+        for f in top_factors[:3]:
+            narr = FACTOR_NARRATIVES.get(f, {})
+            blurb = narr.get("what", f)
+            factor_blurbs.append(f"{f} ({blurb})")
+        lines.append(f"  Top factors: {', '.join(factor_blurbs)}")
+    lines.append("")
 
     candidates = hg_data.get("candidates", [])
     if candidates:
@@ -175,14 +375,22 @@ def _format_hypotheses(hg_data: dict, asset_label: str) -> list:
             hyp = c.get("hypothesis", "?")
             sharpe = c.get("sharpe", 0)
             p_val = c.get("p_value", 1)
+            desc = c.get("description", "")
             lines.append(f"  ★ **{hyp}**: Sharpe {sharpe:.2f}, p={p_val:.4f}")
+            lines.append(f"    {desc}")
+            lines.append("")
     else:
-        lines.append("  *No new strategy candidates this run.*")
+        lines.append(f"  *No new strategy candidates this run. The top factors individually show edges but combining them didn't improve results — the momentum regime is so dominant that diversification across factors doesn't add value right now.*")
     return lines
 
 
-def format_research_embed() -> dict:
-    """Format the research pipeline results as a Discord embed."""
+def format_research_embeds() -> list:
+    """Format the research pipeline results as a list of Discord embeds.
+    
+    Uses multiple embeds to accommodate layman-friendly narratives
+    while staying under Discord's 1024-char per-field and 6000-char per-embed limits.
+    All embeds share the same day-of-week color (left border).
+    """
     dt = datetime.datetime.utcnow()
     dow = dt.weekday()
     color = DAY_COLORS[dow]
@@ -190,24 +398,16 @@ def format_research_embed() -> dict:
 
     research = _load_latest_research()
     if not research:
-        return {
+        return [{
             "title": "📊 HermesForge Weekly Research Report",
             "description": "No research data found. Pipeline may not have run yet.",
             "color": color,
             "timestamp": dt.isoformat() + "Z",
-        }
+        }]
 
-    ts = research.get("timestamp", "unknown")[:16].replace("T", " ")
     runtime = research.get("runtime_seconds", 0)
     total_items = research.get("total_action_items", 0)
 
-    # ── Build description ──
-    desc_lines = [
-        f"**{day_name}, {dt.strftime('%Y-%m-%d %H:%M')} UTC**",
-        f"Pipeline runtime: {runtime:.0f}s | Action items: {total_items}",
-    ]
-
-    # Executive summary
     fs = research.get("factor_screener", {})
     rt = research.get("revival_tester", {})
     dm = research.get("decay_monitor", {})
@@ -218,53 +418,135 @@ def format_research_embed() -> dict:
     stock_hg = hg.get("stock", {})
     crypto_hg = hg.get("crypto", {})
 
-    desc_lines.append("")
-    desc_lines.append(f"🔬 Factor anomalies: {stock_fs.get('n_candidates',0)} stocks, {crypto_fs.get('n_candidates',0)} crypto")
-    desc_lines.append(f"♻️ Revival candidates: {rt.get('n_candidates',0)}")
-    desc_lines.append(f"📉 Edge decay: {dm.get('n_decayed',0)}")
-    desc_lines.append(f"💡 New strategy candidates: {stock_hg.get('n_candidates',0)} stocks, {crypto_hg.get('n_candidates',0)} crypto")
+    embeds = []
 
-    # ── Build fields ──
-    fields = []
+    # ── Embed 1: Executive Summary + Factor Screener ──
+    desc_lines = [
+        f"**{day_name}, {dt.strftime('%Y-%m-%d %H:%M')} UTC**",
+        f"Pipeline runtime: {runtime:.0f}s | Action items: {total_items}",
+        "",
+        f"🔬 Factor anomalies: {stock_fs.get('n_candidates',0)} stocks, {crypto_fs.get('n_candidates',0)} crypto",
+        f"♻️ Revival candidates: {rt.get('n_candidates',0)}",
+        f"📉 Edge decay: {dm.get('n_decayed',0)}",
+        f"💡 New strategy candidates: {stock_hg.get('n_candidates',0)} stocks, {crypto_hg.get('n_candidates',0)} crypto",
+    ]
 
-    # Factor screener
-    field_lines = []
-    field_lines.append("**Stocks:**")
-    field_lines.extend(_format_factor_summary(stock_fs, "Stocks"))
-    field_lines.append("")
-    field_lines.append("**Crypto:**")
-    field_lines.extend(_format_factor_summary(crypto_fs, "Crypto"))
-    fields.append({
-        "name": "🔬 Factor Screener",
-        "value": "\n".join(field_lines)[:1024],
-        "inline": False,
+    fields1 = []
+
+    # Factor screener — stocks (may need multiple fields for narratives)
+    stock_lines = _format_factor_summary(stock_fs, "Stocks")
+    stock_text = "\n".join(stock_lines)
+    if len(stock_text) > 1024:
+        # Split into individual candidate entries
+        entries = stock_text.split("\n\n")
+        chunk, chunk_len = [], 0
+        part = 1
+        for entry in entries:
+            if chunk_len + len(entry) + 2 > 1000 and chunk:
+                label = "🔬 Factor Screener — Stocks" if part == 1 else "🔬 Factor Screener — Stocks (cont.)"
+                fields1.append({"name": label, "value": "\n\n".join(chunk)[:1024], "inline": False})
+                chunk, chunk_len = [], 0
+                part += 1
+            chunk.append(entry)
+            chunk_len += len(entry) + 2
+        if chunk:
+            label = "🔬 Factor Screener — Stocks" if part == 1 else "🔬 Factor Screener — Stocks (cont.)"
+            fields1.append({"name": label, "value": "\n\n".join(chunk)[:1024], "inline": False})
+    else:
+        fields1.append({"name": "🔬 Factor Screener — Stocks", "value": stock_text[:1024], "inline": False})
+
+    # Factor screener — crypto
+    crypto_lines = _format_factor_summary(crypto_fs, "Crypto")
+    crypto_text = "\n".join(crypto_lines)
+    if len(crypto_text) > 1024:
+        entries = crypto_text.split("\n\n")
+        chunk, chunk_len = [], 0
+        part = 1
+        for entry in entries:
+            if chunk_len + len(entry) + 2 > 1000 and chunk:
+                label = "🔬 Factor Screener — Crypto" if part == 1 else "🔬 Factor Screener — Crypto (cont.)"
+                fields1.append({"name": label, "value": "\n\n".join(chunk)[:1024], "inline": False})
+                chunk, chunk_len = [], 0
+                part += 1
+            chunk.append(entry)
+            chunk_len += len(entry) + 2
+        if chunk:
+            label = "🔬 Factor Screener — Crypto" if part == 1 else "🔬 Factor Screener — Crypto (cont.)"
+            fields1.append({"name": label, "value": "\n\n".join(chunk)[:1024], "inline": False})
+    else:
+        fields1.append({"name": "🔬 Factor Screener — Crypto", "value": crypto_text[:1024], "inline": False})
+
+    embeds.append({
+        "title": "📊 HermesForge Weekly Research Report",
+        "description": "\n".join(desc_lines),
+        "color": color,
+        "fields": fields1,
+        "footer": {"text": f"Research Pipeline (1/3) | {day_name} #{color:06x}"},
+        "timestamp": dt.isoformat() + "Z",
     })
 
-    # Revival tester
-    fields.append({
+    # ── Embed 2: Revival Tester + Decay Monitor ──
+    fields2 = []
+
+    revival_lines = _format_revival(rt)
+    fields2.append({
         "name": "♻️ Killed Strategy Revival",
-        "value": "\n".join(_format_revival(rt))[:1024],
+        "value": "\n".join(revival_lines)[:1024],
         "inline": False,
     })
 
-    # Decay monitor
     decay_lines = _format_decay(dm)
-    fields.append({
-        "name": "📉 Edge Decay Monitor",
-        "value": "\n".join(decay_lines)[:1024],
+    # Split decay if too long
+    decay_text = "\n".join(decay_lines)
+    if len(decay_text) > 1024:
+        # Split at a reasonable point
+        mid = decay_text[:1000].rfind("\n\n")
+        if mid < 500:
+            mid = 1024
+        fields2.append({
+            "name": "📉 Edge Decay Monitor",
+            "value": decay_text[:mid][:1024],
+            "inline": False,
+        })
+        fields2.append({
+            "name": "📉 Edge Decay (cont.)",
+            "value": decay_text[mid:].strip()[:1024],
+            "inline": False,
+        })
+    else:
+        fields2.append({
+            "name": "📉 Edge Decay Monitor",
+            "value": decay_text,
+            "inline": False,
+        })
+
+    embeds.append({
+        "title": "📊 Research Report (continued)",
+        "description": "Strategy revival and edge decay monitoring.",
+        "color": color,
+        "fields": fields2,
+        "footer": {"text": f"Research Pipeline (2/3) | {day_name} #{color:06x}"},
+        "timestamp": dt.isoformat() + "Z",
+    })
+
+    # ── Embed 3: Hypothesis Generator + Action Items ──
+    fields3 = []
+
+    # Hypothesis generator — stocks
+    stock_hyp_lines = ["**Stocks:**"]
+    stock_hyp_lines.extend(_format_hypotheses(stock_hg, "Stocks"))
+    fields3.append({
+        "name": "💡 Hypothesis Generator — Stocks",
+        "value": "\n".join(stock_hyp_lines)[:1024],
         "inline": False,
     })
 
-    # Hypothesis generator
-    hyp_lines = []
-    hyp_lines.append("**Stocks:**")
-    hyp_lines.extend(_format_hypotheses(stock_hg, "Stocks"))
-    hyp_lines.append("")
-    hyp_lines.append("**Crypto:**")
-    hyp_lines.extend(_format_hypotheses(crypto_hg, "Crypto"))
-    fields.append({
-        "name": "💡 Hypothesis Generator",
-        "value": "\n".join(hyp_lines)[:1024],
+    # Hypothesis generator — crypto
+    crypto_hyp_lines = ["**Crypto:**"]
+    crypto_hyp_lines.extend(_format_hypotheses(crypto_hg, "Crypto"))
+    fields3.append({
+        "name": "💡 Hypothesis Generator — Crypto",
+        "value": "\n".join(crypto_hyp_lines)[:1024],
         "inline": False,
     })
 
@@ -275,34 +557,38 @@ def format_research_embed() -> dict:
     else:
         action_lines.append(f"**{total_items} item(s) require investigation:**")
         if stock_fs.get("n_candidates",0) + crypto_fs.get("n_candidates",0) > 0:
-            action_lines.append(f"  • Factor anomalies: design strategies around inverted factors")
+            action_lines.append("  • Factor anomalies: design strategies around inverted factors")
         if rt.get("n_candidates",0) > 0:
-            action_lines.append(f"  • Revival candidates: re-run full walk-forward validation")
+            action_lines.append("  • Revival candidates: re-run full walk-forward validation")
         if dm.get("n_decayed",0) > 0:
-            action_lines.append(f"  • Decay flags: investigate and consider strategy retirement")
+            action_lines.append("  • Decay flags: investigate and consider strategy retirement")
         if stock_hg.get("n_candidates",0) + crypto_hg.get("n_candidates",0) > 0:
-            action_lines.append(f"  • New hypotheses: full walk-forward validation needed")
+            action_lines.append("  • New hypotheses: full walk-forward validation needed")
     action_lines.append("")
     action_lines.append(f"Full report: `vault/research/research-{dt.strftime('%Y-%m-%d')}.md`")
 
-    fields.append({
+    fields3.append({
         "name": "🎯 Action Items",
         "value": "\n".join(action_lines)[:1024],
         "inline": False,
     })
 
-    embed = {
-        "title": "📊 HermesForge Weekly Research Report",
-        "description": "\n".join(desc_lines),
+    embeds.append({
+        "title": "📊 Research Report (continued)",
+        "description": "New strategy hypotheses and action items.",
         "color": color,
-        "fields": fields,
-        "footer": {
-            "text": f"Research Pipeline | {day_name} border color: #{color:06x}"
-        },
+        "fields": fields3,
+        "footer": {"text": f"Research Pipeline (3/3) | {day_name} #{color:06x}"},
         "timestamp": dt.isoformat() + "Z",
-    }
+    })
 
-    return embed
+    return embeds
+
+
+def format_research_embed() -> dict:
+    """Legacy: return first embed only. Use format_research_embeds() for full report."""
+    embeds = format_research_embeds()
+    return embeds[0] if embeds else {}
 
 
 # ── Discord API helpers ──────────────────────────────────────────────────────
@@ -357,13 +643,22 @@ def _delete_all_bot_messages(channel_id: str) -> int:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def post_research_report(channel_id: str = CHANNEL_ID, dry_run: bool = False) -> dict:
-    """Post the research report embed, replacing all previous posts, then crosspost."""
-    embed = format_research_embed()
+    """Post the research report as multiple messages (one embed each), replacing all previous posts, then crosspost the first."""
+    embeds = format_research_embeds()
 
     if dry_run:
         print("=== DRY RUN ===")
-        print(json.dumps(embed, indent=2))
-        return {"status": "dry_run", "embed": embed}
+        for i, emb in enumerate(embeds):
+            print(f"\n--- Embed {i+1}/{len(embeds)} ---")
+            print(f"Title: {emb.get('title','')}")
+            print(f"Color: #{emb.get('color',0):06x}")
+            print(f"Description ({len(emb.get('description',''))} chars):")
+            print(emb.get('description','')[:200])
+            for j, f in enumerate(emb.get('fields',[])):
+                print(f"  Field {j}: {f['name']} -> {len(f['value'])} chars")
+            total = len(emb.get('description','')) + sum(len(f['value']) for f in emb.get('fields',[]))
+            print(f"Total embed chars: {total}")
+        return {"status": "dry_run", "n_embeds": len(embeds)}
 
     if not DISCORD_BOT_TOKEN:
         return {"error": "DISCORD_BOT_TOKEN not set"}
@@ -377,24 +672,32 @@ def post_research_report(channel_id: str = CHANNEL_ID, dry_run: bool = False) ->
         print("  ℹ️ No previous messages to delete")
     time.sleep(1)
 
-    # 2. Post new embed
-    payload = {"embeds": [embed]}
-    result = _api_request("POST", f"{API_BASE}/channels/{channel_id}/messages", payload)
-    if "id" not in result:
-        return {"error": "Failed to post", "response": result}
+    # 2. Post each embed as a separate message (Discord 6000-char total limit per message)
+    msg_ids = []
+    for i, embed in enumerate(embeds):
+        payload = {"embeds": [embed]}
+        result = _api_request("POST", f"{API_BASE}/channels/{channel_id}/messages", payload)
+        if "id" not in result:
+            return {"error": f"Failed to post embed {i+1}", "response": result}
+        msg_ids.append(result["id"])
+        print(f"  ✅ Embed {i+1}/{len(embeds)} posted (msg {result['id']})")
+        if i < len(embeds) - 1:
+            time.sleep(0.8)  # Rate limit safety
 
-    msg_id = result["id"]
-    print(f"  ✅ Report posted (msg {msg_id})")
-
-    # 3. Crosspost
+    # 3. Crosspost the first message (the main report)
     time.sleep(1)
-    crosspost_result = _crosspost_message(channel_id, msg_id)
+    crosspost_result = _crosspost_message(channel_id, msg_ids[0])
     if "id" in crosspost_result:
         print(f"  ✅ Crossposted to followers")
     else:
         print(f"  ℹ️ Not crossposted ({crosspost_result.get('message', 'unknown')})")
 
-    return {"status": "ok", "message_id": msg_id}
+    # Crosspost remaining messages too
+    for mid in msg_ids[1:]:
+        time.sleep(0.8)
+        _crosspost_message(channel_id, mid)
+
+    return {"status": "ok", "message_ids": msg_ids, "n_embeds": len(embeds)}
 
 
 if __name__ == "__main__":
