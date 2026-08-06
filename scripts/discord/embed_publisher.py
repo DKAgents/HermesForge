@@ -362,10 +362,41 @@ def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
 
 # ── Discord API posting ───────────────────────────────────────────────────────
 
+# Import webhook utilities for cross-server posting
+try:
+    sys.path.insert(0, str(pathlib.Path(__file__).parent))
+    from webhook_utils import create_crossposter, WebhookCrossposter
+    WEBHOOK_AVAILABLE = True
+except ImportError:
+    WEBHOOK_AVAILABLE = False
+
+
+def _get_crossposter(channel_id: str):
+    """Get a webhook crossposter for the channel, or None if not configured."""
+    if not WEBHOOK_AVAILABLE:
+        return None
+    return create_crossposter(str(channel_id), webhook_name="HermesForge Bot")
+
+
+def delete_crossposted_messages(channel_id: str) -> int:
+    """
+    Delete all previously crossposted webhook messages for a channel.
+    Call this before posting a new batch to clean up the follower server.
+
+    Returns number of messages deleted.
+    """
+    wx = _get_crossposter(channel_id)
+    if wx:
+        return wx.delete_all()
+    return 0
+
+
 def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = None,
                      crosspost: bool = False) -> dict:
     """Post a message to Discord via Bot API. Returns {status, message_id}.
-    If crosspost=True, publishes the message (announcement channels only).
+    If crosspost=True and a webhook is configured for this channel, posts
+    a copy via webhook to the follower server. If no webhook is configured,
+    falls back to native announcement channel crosspost.
     """
     url = f"{API_BASE}/channels/{channel_id}/messages"
 
@@ -396,7 +427,17 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
         if "id" in response:
             msg_id = response["id"]
             if crosspost:
-                _crosspost_message(channel_id, msg_id)
+                # Try webhook crosspost first (no tombstones in follower server)
+                wx = _get_crossposter(channel_id)
+                if wx:
+                    # Post copy via webhook (without chart — webhooks can't upload files this way)
+                    webhook_payload = dict(payload)
+                    # Remove image attachment reference if present (webhook can't access bot's uploaded file)
+                    # The chart image won't appear in the webhook copy — this is a known limitation
+                    wx.post(webhook_payload)
+                else:
+                    # Fall back to native crosspost (may leave tombstones when deleted)
+                    _crosspost_message(channel_id, msg_id)
             return {"status": "ok", "message_id": msg_id}
         else:
             return {"status": "error", "response": result.stdout[:500]}
@@ -574,6 +615,12 @@ def post_daily_batch(signals: list, channel_id: str, asset_class: str,
         "message_ids": [],
         "header_id": None,
     }
+
+    # Clean up old crossposted webhook messages in follower server
+    if crosspost and not dry_run:
+        n_cleaned = delete_crossposted_messages(channel_id)
+        if n_cleaned > 0:
+            print(f"  🧹 Cleaned {n_cleaned} old webhook messages in follower server")
 
     # Post daily header
     header_result = post_daily_header(

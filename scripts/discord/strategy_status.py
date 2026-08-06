@@ -502,13 +502,30 @@ def post_strategy_dashboard(channel_id: str, dry_run: bool = False) -> dict:
     new_msg_id = post_result["id"]
     print(f"  ✅ Dashboard posted (msg {new_msg_id})")
 
-    # 4. Try to crosspost (works if announcement channel, fails silently if not)
+    # 4. Crosspost via webhook (no tombstones) or native (fallback)
     time.sleep(1)
-    crosspost_result = _crosspost_message(channel_id, new_msg_id)
-    if "id" in crosspost_result:
-        print(f"  ✅ Crossposted to followers")
-    else:
-        print(f"  ℹ️ Not crossposted (not an announcement channel or no followers)")
+    try:
+        sys.path.insert(0, str(pathlib.Path(__file__).parent))
+        from webhook_utils import create_crossposter
+        wx = create_crossposter(str(channel_id), webhook_name="HermesForge Bot")
+        if wx:
+            # Delete old webhook messages first
+            wx.delete_all()
+            time.sleep(0.5)
+            # Post new dashboard via webhook
+            wx.post(payload)
+            print(f"  ✅ Crossposted via webhook to follower server")
+        else:
+            crosspost_result = _crosspost_message(channel_id, new_msg_id)
+            if "id" in crosspost_result:
+                print(f"  ✅ Crossposted to followers")
+            else:
+                print(f"  ℹ️ Not crossposted (not an announcement channel or no followers)")
+    except Exception as e:
+        print(f"  ℹ️ Webhook crosspost skipped: {e}")
+        crosspost_result = _crosspost_message(channel_id, new_msg_id)
+        if "id" in crosspost_result:
+            print(f"  ✅ Crossposted to followers (native)")
 
     # 5. Save state
     state = _load_state()

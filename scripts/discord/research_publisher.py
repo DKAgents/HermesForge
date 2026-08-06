@@ -663,13 +663,25 @@ def post_research_report(channel_id: str = CHANNEL_ID, dry_run: bool = False) ->
     if not DISCORD_BOT_TOKEN:
         return {"error": "DISCORD_BOT_TOKEN not set"}
 
-    # 1. Delete all previous bot messages
+    # 1. Delete all previous bot messages AND webhook messages
     print("  Deleting all previous bot messages...")
     n_deleted = _delete_all_bot_messages(channel_id)
     if n_deleted > 0:
         print(f"  ✅ Deleted {n_deleted} previous message(s)")
     else:
         print("  ℹ️ No previous messages to delete")
+
+    # Also delete old webhook crossposted messages in follower server
+    try:
+        sys.path.insert(0, str(pathlib.Path(__file__).parent))
+        from webhook_utils import create_crossposter
+        wx = create_crossposter(str(channel_id), webhook_name="HermesForge Bot")
+        if wx:
+            n_wx = wx.delete_all()
+            if n_wx > 0:
+                print(f"  🧹 Deleted {n_wx} webhook messages in follower server")
+    except Exception as e:
+        print(f"  ℹ️ Webhook cleanup skipped: {e}")
     time.sleep(1)
 
     # 2. Post each embed as a separate message (Discord 6000-char total limit per message)
@@ -681,21 +693,16 @@ def post_research_report(channel_id: str = CHANNEL_ID, dry_run: bool = False) ->
             return {"error": f"Failed to post embed {i+1}", "response": result}
         msg_ids.append(result["id"])
         print(f"  ✅ Embed {i+1}/{len(embeds)} posted (msg {result['id']})")
+
+        # Crosspost via webhook (no tombstones) or native (fallback)
+        wx = create_crossposter(str(channel_id), webhook_name="HermesForge Bot") if i == 0 else wx if 'wx' in dir() else None
+        if wx:
+            wx.post(payload)
+        else:
+            _crosspost_message(channel_id, result["id"])
+
         if i < len(embeds) - 1:
             time.sleep(0.8)  # Rate limit safety
-
-    # 3. Crosspost the first message (the main report)
-    time.sleep(1)
-    crosspost_result = _crosspost_message(channel_id, msg_ids[0])
-    if "id" in crosspost_result:
-        print(f"  ✅ Crossposted to followers")
-    else:
-        print(f"  ℹ️ Not crossposted ({crosspost_result.get('message', 'unknown')})")
-
-    # Crosspost remaining messages too
-    for mid in msg_ids[1:]:
-        time.sleep(0.8)
-        _crosspost_message(channel_id, mid)
 
     return {"status": "ok", "message_ids": msg_ids, "n_embeds": len(embeds)}
 
