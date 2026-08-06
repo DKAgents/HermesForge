@@ -74,6 +74,9 @@ class WebhookCrossposter:
             cmd += ["-H", "Content-Type: application/json", "-d", json.dumps(data)]
         cmd += [url]
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        if not result.stdout.strip():
+            # Empty response (204 No Content) — success for DELETE, failure for POST without wait
+            return {"success": True}
         try:
             return json.loads(result.stdout)
         except (json.JSONDecodeError, ValueError):
@@ -130,7 +133,7 @@ class WebhookCrossposter:
         if self.webhook_avatar:
             payload["avatar_url"] = self.webhook_avatar
 
-        url = f"{API_BASE}/webhooks/{self.webhook_id}/{self.webhook_token}"
+        url = f"{API_BASE}/webhooks/{self.webhook_id}/{self.webhook_token}?wait=true"
         result = self._api_request("POST", url, payload)
 
         msg_id = result.get("id")
@@ -150,9 +153,11 @@ class WebhookCrossposter:
         url = f"{API_BASE}/webhooks/{self.webhook_id}/{self.webhook_token}/messages/{message_id}"
         result = self._api_request("DELETE", url)
 
-        # Success: empty response or 204
-        # Already deleted: code 10008 (Unknown Message)
-        if not result or result.get("code") == 10008 or "id" in result:
+        # Success cases:
+        # - Empty response (204 No Content) = deleted successfully
+        # - code 10008 (Unknown Message) = already deleted
+        # - {"success": True} from our _api_request wrapper for empty responses
+        if not result or result.get("success") or result.get("code") == 10008:
             self._untrack_id(message_id)
             return True
         return False
