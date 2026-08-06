@@ -21,6 +21,7 @@ import subprocess
 import pathlib
 import datetime
 import time
+import glob
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 
@@ -32,6 +33,10 @@ CHANNEL_ID = os.environ.get("STRATEGY_STATUS_CHANNEL_ID", "")
 
 # File to track the previous message ID for delete-and-replace
 STATE_FILE = pathlib.Path.home() / ".hermes" / "strategy_status_state.json"
+
+# Path to research pipeline JSON output
+REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
+RESEARCH_DATA_DIR = REPO_ROOT / "data"
 
 # ── Strategy definitions ────────────────────────────────────────────────────
 
@@ -166,76 +171,210 @@ STRATEGIES = [
     },
 ]
 
+# ── Research Pipeline Strategies ──────────────────────────────────────────────
+
+def _load_latest_research() -> dict:
+    """Load the most recent research pipeline JSON output."""
+    pattern = str(RESEARCH_DATA_DIR / "research-*.json")
+    files = sorted(glob.glob(pattern))
+    if not files:
+        return {}
+    with open(files[-1]) as f:
+        return json.load(f)
+
+
+def _build_research_strategies() -> list:
+    """
+    Build strategy entries from the latest research pipeline run.
+    Returns list of strategy dicts matching the manual strategy format.
+    """
+    research = _load_latest_research()
+    if not research:
+        return []
+
+    strategies = []
+    ts = research.get("timestamp", "unknown")[:10]
+
+    # Factor screener candidates
+    fs = research.get("factor_screener", {})
+    for asset_key, asset_label in [("stock", "Stocks"), ("crypto", "Crypto")]:
+        asset_data = fs.get(asset_key, {})
+        for cand in asset_data.get("candidates", []):
+            factor = cand.get("factor", "?")
+            sharpe = cand.get("sharpe", 0)
+            p_val = cand.get("p_value", 1)
+            ann_ret = cand.get("annualized_return", 0)
+            direction = "inverted" if sharpe < 0 else "normal"
+            strategies.append({
+                "id": f"RP-F-{factor}",
+                "name": f"Factor: {factor} ({asset_label})",
+                "status": "CANDIDATE",
+                "description": f"Factor screener candidate. Sharpe {sharpe:.3f}, p={p_val:.4f}, annual return {ann_ret*100:.1f}%. Direction: {direction}. Discovered {ts}.",
+                "regimes": ["various"],
+                "edge": f"Factor anomaly ({direction})",
+            })
+
+    # Revival candidates
+    rt = research.get("revival_tester", {})
+    for cand in rt.get("candidates", []):
+        strat = cand.get("strategy", "?")
+        name = cand.get("name", "?")
+        mean_r = cand.get("mean_r", 0)
+        p_val = cand.get("p_value", 1)
+        n_sig = cand.get("n_signals", 0)
+        hit_rate = cand.get("hit_rate", 0)
+        strategies.append({
+            "id": f"RP-R-{strat.replace('STR-','')}",
+            "name": f"Revival: {name}",
+            "status": "CANDIDATE",
+            "description": f"Killed strategy showing revival. Mean R={mean_r:.4f}, p={p_val:.4f}, {n_sig} signals, {hit_rate*100:.0f}% hit rate. Discovered {ts}.",
+            "regimes": ["various"],
+            "edge": "Revival candidate — needs full walk-forward",
+        })
+
+    # Hypothesis candidates
+    hg = research.get("hypothesis_generator", {})
+    for asset_key, asset_label in [("stock", "Stocks"), ("crypto", "Crypto")]:
+        asset_data = hg.get(asset_key, {})
+        for cand in asset_data.get("candidates", []):
+            hyp = cand.get("hypothesis", "?")
+            sharpe = cand.get("sharpe", 0)
+            p_val = cand.get("p_value", 1)
+            desc = cand.get("description", "")
+            strategies.append({
+                "id": f"RP-H-{asset_key[:3]}",
+                "name": f"Hypothesis: {hyp}",
+                "status": "CANDIDATE",
+                "description": f"Factor combination hypothesis. Sharpe {sharpe:.3f}, p={p_val:.4f}. {desc}. Discovered {ts}.",
+                "regimes": ["various"],
+                "edge": "Factor combination candidate",
+            })
+
+    return strategies
+
+
 # ── Status formatting ────────────────────────────────────────────────────────
 
 STATUS_EMOJI = {
     "LIVE": "🟢",
     "WATCH": "🟡",
     "KILLED": "🔴",
+    "CANDIDATE": "🔬",
 }
 
 STATUS_COLOR = {
     "LIVE": 0x3fb950,     # green
     "WATCH": 0xe3b341,    # yellow/gold
     "KILLED": 0xf85149,   # red
+    "CANDIDATE": 0xa371f7, # purple
 }
+
+
+def _format_group(strategies: list, status: str, label: str) -> dict | None:
+    """Format a group of strategies into an embed field."""
+    group = [s for s in strategies if s["status"] == status]
+    if not group:
+        return None
+
+    lines = []
+    if status == "KILLED":
+        # Compact format for killed strategies
+        for s in group:
+            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']}** — {s['name']}")
+    elif status == "CANDIDATE":
+        # Semi-compact for research candidates — one line each with key stats
+        for s in group:
+            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']}** — {s['name']}")
+            lines.append(f"  {s['description'][:120]}")
+    else:
+        for s in group:
+            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']} — {s['name']}**")
+            lines.append(f"  {s['description']}")
+            lines.append(f"  Regimes: {', '.join(s['regimes'])} | Edge: {s['edge']}")
+            lines.append("")
+
+    emoji = STATUS_EMOJI[status]
+    return {
+        "name": f"{emoji} {label} ({len(group)})",
+        "value": "\n".join(lines).strip(),
+        "inline": False,
+    }
 
 
 def format_strategy_dashboard() -> dict:
     """Format the strategy status dashboard as a Discord embed."""
     dt = datetime.datetime.utcnow()
 
-    live = [s for s in STRATEGIES if s["status"] == "LIVE"]
-    watch = [s for s in STRATEGIES if s["status"] == "WATCH"]
-    killed = [s for s in STRATEGIES if s["status"] == "KILLED"]
+    # Load research pipeline strategies
+    research_strategies = _build_research_strategies()
 
-    # Build fields — one per strategy, grouped by status
+    # Manual strategies
+    manual = STRATEGIES
+    manual_live = [s for s in manual if s["status"] == "LIVE"]
+    manual_watch = [s for s in manual if s["status"] == "WATCH"]
+    manual_killed = [s for s in manual if s["status"] == "KILLED"]
+
+    # Research strategies
+    research_candidates = [s for s in research_strategies if s["status"] == "CANDIDATE"]
+
+    total_strategies = len(manual) + len(research_strategies)
+
     fields = []
 
-    # Live strategies
-    if live:
-        lines = []
-        for s in live:
-            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']} — {s['name']}**")
-            lines.append(f"  {s['description']}")
-            lines.append(f"  Regimes: {', '.join(s['regimes'])} | Edge: {s['edge']}")
-            lines.append("")
-        fields.append({
-            "name": f"🟢 LIVE ({len(live)})",
-            "value": "\n".join(lines).strip(),
-            "inline": False,
-        })
+    # ── Manually Defined Strategies ──
+    fields.append({
+        "name": "━━━━━━━━━━━━━━━━━━━━━━━",
+        "value": "**Manual Strategies** (hand-designed and validated)",
+        "inline": False,
+    })
 
-    # Watch strategies
-    if watch:
-        lines = []
-        for s in watch:
-            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']} — {s['name']}**")
-            lines.append(f"  {s['description']}")
-            lines.append(f"  Regimes: {', '.join(s['regimes'])} | Edge: {s['edge']}")
-            lines.append("")
-        fields.append({
-            "name": f"🟡 WATCH ({len(watch)})",
-            "value": "\n".join(lines).strip(),
-            "inline": False,
-        })
+    for status, label in [("LIVE", "LIVE"), ("WATCH", "WATCH"), ("KILLED", "KILLED")]:
+        field = _format_group(manual, status, label)
+        if field:
+            fields.append(field)
 
-    # Killed strategies (compact)
-    if killed:
-        lines = []
-        for s in killed:
-            lines.append(f"{STATUS_EMOJI[s['status']]} **{s['id']}** — {s['name']}")
+    # ── Research Pipeline Strategies ──
+    if research_strategies:
         fields.append({
-            "name": f"🔴 KILLED ({len(killed)})",
-            "value": "\n".join(lines),
+            "name": "━━━━━━━━━━━━━━━━━━━━━━━",
+            "value": "**Research Pipeline** (discovered by automated weekly scans)",
             "inline": False,
         })
+        # Split candidates into chunks to stay under Discord 1024-char field limit
+        candidate_lines = []
+        for s in research_strategies:
+            candidate_lines.append(f"🔬 **{s['id']}** — {s['name']}")
+            candidate_lines.append(f"  {s['description'][:100]}")
+
+        # Chunk into fields of ~900 chars to stay safe
+        current_chunk = []
+        current_len = 0
+        chunk_num = 1
+        for line in candidate_lines:
+            if current_len + len(line) + 1 > 900 and current_chunk:
+                fields.append({
+                    "name": f"🔬 CANDIDATE ({len(research_candidates)})" if chunk_num == 1 else f"🔬 CANDIDATE (cont.)",
+                    "value": "\n".join(current_chunk).strip(),
+                    "inline": False,
+                })
+                current_chunk = []
+                current_len = 0
+                chunk_num += 1
+            current_chunk.append(line)
+            current_len += len(line) + 1
+        if current_chunk:
+            fields.append({
+                "name": f"🔬 CANDIDATE ({len(research_candidates)})" if chunk_num == 1 else "🔬 CANDIDATE (cont.)",
+                "value": "\n".join(current_chunk).strip(),
+                "inline": False,
+            })
 
     embed = {
         "title": "📊 HermesForge Strategy Dashboard",
         "description": (
-            f"**{len(STRATEGIES)} strategies tested** | "
-            f"🟢 {len(live)} live | 🟡 {len(watch)} watch | 🔴 {len(killed)} killed\n"
+            f"**{total_strategies} strategies** ({len(manual)} manual + {len(research_strategies)} research) | "
+            f"🟢 {len(manual_live)} live | 🟡 {len(manual_watch)} watch | "
+            f"🔴 {len(manual_killed)} killed | 🔬 {len(research_candidates)} candidates\n"
             f"Last updated: {dt.strftime('%Y-%m-%d %H:%M')} UTC"
         ),
         "color": 0x58a6ff,
@@ -295,15 +434,40 @@ def _save_state(state: dict) -> None:
     STATE_FILE.write_text(json.dumps(state, indent=2))
 
 
+def _get_all_messages(channel_id: str) -> list:
+    """Fetch all bot messages from the channel (up to 100)."""
+    url = f"{API_BASE}/channels/{channel_id}/messages?limit=100"
+    result = _api_request("GET", url)
+    if isinstance(result, list):
+        return result
+    return []
+
+
+def _delete_all_bot_messages(channel_id: str) -> int:
+    """Delete all messages posted by the bot in the channel. Returns count deleted."""
+    messages = _get_all_messages(channel_id)
+    bot_id = None
+    deleted = 0
+    for msg in messages:
+        author = msg.get("author", {})
+        # Only delete messages from our bot
+        if author.get("bot") and author.get("username", "").startswith("Trading Swarm"):
+            msg_id = msg.get("id")
+            if msg_id:
+                _delete_message(channel_id, msg_id)
+                deleted += 1
+                time.sleep(0.6)  # Rate limit safety (5 deletes per 3 seconds)
+    return deleted
+
+
 def post_strategy_dashboard(channel_id: str, dry_run: bool = False) -> dict:
     """
-    Post the strategy dashboard to a channel, replacing the previous post.
+    Post the strategy dashboard to a channel, replacing ALL previous posts.
 
-    1. Load previous message ID from state file
-    2. Delete the previous message (if it exists)
-    3. Post the new dashboard embed
-    4. If announcement channel, crosspost the new message
-    5. Save the new message ID to state file
+    1. Delete ALL previous bot messages in the channel
+    2. Post the new dashboard embed
+    3. If announcement channel, crosspost the new message
+    4. Save the new message ID to state file
     """
     if not channel_id:
         return {"error": "No channel ID provided. Set STRATEGY_STATUS_CHANNEL_ID env var."}
@@ -315,20 +479,14 @@ def post_strategy_dashboard(channel_id: str, dry_run: bool = False) -> dict:
         print(json.dumps(embed, indent=2))
         return {"status": "dry_run", "embed": embed}
 
-    # 1. Load previous state
-    state = _load_state()
-    prev_msg_id = state.get(channel_id, {}).get("message_id")
-
-    # 2. Delete previous message
-    if prev_msg_id:
-        print(f"  Deleting previous dashboard (msg {prev_msg_id})...")
-        del_result = _delete_message(channel_id, prev_msg_id)
-        if "id" in del_result or del_result.get("code") == 10008:
-            # 10008 = Unknown Message (already deleted)
-            print(f"  ✅ Previous message deleted (or already gone)")
-        else:
-            print(f"  ⚠️ Delete result: {del_result}")
-        time.sleep(1)
+    # 1. Delete ALL previous bot messages in the channel
+    print(f"  Deleting all previous bot messages in channel...")
+    n_deleted = _delete_all_bot_messages(channel_id)
+    if n_deleted > 0:
+        print(f"  ✅ Deleted {n_deleted} previous message(s)")
+    else:
+        print(f"  ℹ️ No previous messages to delete")
+    time.sleep(1)
 
     # 3. Post new dashboard
     payload = {"embeds": [embed]}
@@ -353,6 +511,7 @@ def post_strategy_dashboard(channel_id: str, dry_run: bool = False) -> dict:
         print(f"  ℹ️ Not crossposted (not an announcement channel or no followers)")
 
     # 5. Save state
+    state = _load_state()
     state[channel_id] = {
         "message_id": new_msg_id,
         "posted_at": datetime.datetime.utcnow().isoformat() + "Z",
