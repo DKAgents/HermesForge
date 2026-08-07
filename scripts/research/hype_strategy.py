@@ -3,18 +3,22 @@
 hype_strategy.py — HermesForge Strategy H: Hype / Momentum Ignition (STR-H)
 ============================================================================
 
-A long-only "hype" strategy that proxies social-media attention spikes with
+A long-only crypto "hype" strategy that proxies social-media attention spikes with
 on-chart *volume acceleration*. Because we have no social-volume data (Twitter/X
 mentions, Reddit, LunarCrush) under the free-data constraint, we substitute a
-structurally similar proxy: a 3× volume spike over the 7-bar baseline combined
+structurally similar proxy: a 3x volume spike over the 7-bar baseline combined
 with a strong-close momentum-ignition candle. This is an honest limitation
 documented in the validation report.
 
+CRYPTO-ONLY. Hype is a crypto-native phenomenon. Stocks were tested and
+discarded (negative out-of-sample edge). This strategy runs on the Hyperliquid
+perpetual markets universe only.
+
 Signal (ignition candle, bar i):
-  - volume[i] > 3.0 × mean(volume[i-7 .. i-1])         # 7-bar baseline spike
+  - volume[i] > 3.0 x mean(volume[i-7 .. i-1])         # 7-bar baseline spike
   - (close[i] - low[i]) / (high[i] - low[i]) >= 0.75  # close in top 25% of range
-  - volume[i] >= 2.0 × mean(volume[i-20 .. i-1])      # 20-bar volume expansion
-  - Regime filter passes (SPY > SMA20 for stocks, BTC > SMA50 for crypto)
+  - volume[i] >= 2.0 x mean(volume[i-20 .. i-1])      # 20-bar volume expansion
+  - Regime filter passes (BTC > SMA50)
 
 Entry (scale-in, 2 tranches):
   - 50% at ignition close (bar i close).
@@ -27,26 +31,22 @@ Entry (scale-in, 2 tranches):
 Stop (long): swing low of the 5 bars preceding the ignition candle.
 
 Exits (scanned bar-by-bar after entry completion):
-  1. Stop loss (intrabar, gap-aware): low <= stop → exit at stop (or open if gap).
+  1. Stop loss (intrabar, gap-aware): low <= stop -> exit at stop (or open if gap).
   2. Hard exit: daily close < 21-EMA.
   3. Trailing exit: daily close < 8-EMA.
-  4. Time stop: after TIME_STOP_BARS bars (3 crypto / 5 stocks) if the trade
-     has NOT moved >= 2R in favor → exit at that bar's close. Trades that have
-     moved 2R keep trailing.
+  4. Time stop: after 3 bars if the trade has NOT moved >= 2R in favor
+     -> exit at that bar's close. Trades that have moved 2R keep trailing.
   5. Max-hold cap: 40 bars (backtest boundedness; exit at close).
 
 Risk: 0.5% account risk per trade. Position size = (account * 0.005) / risk.
 R-multiple = (exit - blended_entry) / (blended_entry - stop) for full trades.
 
-Transaction costs (match the HermesForge walk_forward cost model):
-  - Stocks:  12bp round-trip (5bp spread + 1bp commission × 2)
-  - Crypto:   5bp round-trip (2bp spread + 0.5bp commission × 2)
+Transaction costs: Crypto 5bp round-trip (2bp spread + 0.5bp commission x 2).
 
 NOTE on timeframes: the spec calls for 4h crypto bars, but the project's cached
 crypto data and Hyperliquid fetcher use daily bars. To stay within the free-data
-+ existing-infra constraints, this version runs on daily bars for BOTH asset
-classes, applying the 3-bar time stop to daily crypto bars. This deviation is
-documented in the report. The strategy logic is timeframe-agnostic.
++ existing-infra constraints, this version runs on daily bars. The strategy logic
+is timeframe-agnostic.
 
 USAGE:
     python3 hype_strategy.py            # run full walk-forward, write report+json
@@ -79,10 +79,8 @@ EMA_SLOW            = 21     # hard exit
 SWING_LOOKBACK      = 5      # bars before ignition for swing-low stop
 PULLBACK_WINDOW     = 3      # bars to wait for a pullback to EMA8
 TIME_STOP_BARS_CRYPTO = 3
-TIME_STOP_BARS_STOCK  = 5
 TIME_STOP_R         = 2.0    # if not +2R by time-stop, exit
 MAX_HOLD_BARS       = 40
-REGIME_SMA_STOCK    = 20     # SPY SMA(20)
 REGIME_SMA_CRYPTO   = 50     # BTC SMA(50)
 RISK_PER_TRADE      = 0.005  # 0.5% account risk
 
@@ -91,20 +89,7 @@ RISK_PER_TRADE      = 0.005  # 0.5% account risk
 MIN_NONZERO_BASELINE = 4
 
 # Transaction costs (match walk_forward.py)
-COST_STOCK  = (5.0 + 1.0) * 2 / 10000   # 12bp round trip
 COST_CRYPTO = (2.0 + 0.5) * 2 / 10000  # 5bp round trip
-
-# ── Universes ────────────────────────────────────────────────────────────────
-# ~50 liquid S&P 500 large-caps (filtered to cached tickers at runtime).
-HYPE_STOCK_UNIVERSE = [
-    "AAPL", "MSFT", "AMZN", "GOOGL", "META", "NVDA", "TSLA", "JPM", "V", "JNJ",
-    "WMT", "PG", "MA", "UNH", "HD", "DIS", "BAC", "XOM", "KO", "PEP",
-    "PFE", "MRK", "TMO", "AVGO", "COST", "ABBV", "CRM", "ADBE", "NFLX", "AMD",
-    "INTC", "CSCO", "ORCL", "ABT", "DHR", "LLY", "ACN", "TXN", "QCOM", "IBM",
-    "GE", "CAT", "BA", "LOW", "BLK", "GS", "MS", "RTX", "HON", "SBUX",
-    "GILD", "AMGN", "MO", "MMM", "COP", "FDX", "CVX", "WFC", "USB", "SCHW",
-    "AMD", "MU", "AMAT", "KLAC", "ADP", "PANW", "NOW", "INTU", "ISRG", "MDT",
-]
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -116,7 +101,7 @@ def _ema(s: pd.Series, span: int) -> pd.Series:
 
 
 def scan_ticker(df: pd.DataFrame, ticker: str, regime: pd.Series = None,
-                asset_class: str = "stock") -> list[dict]:
+                asset_class: str = "crypto") -> list[dict]:
     """
     Scan one ticker's OHLCV for STR-H ignition signals. Returns a list of
     signal dicts in the HermesForge scanner convention (ticker, date,
@@ -140,9 +125,8 @@ def scan_ticker(df: pd.DataFrame, ticker: str, regime: pd.Series = None,
     ema8  = _ema(close, EMA_FAST)
     ema21 = _ema(close, EMA_SLOW)
 
-    time_stop = (TIME_STOP_BARS_CRYPTO if asset_class == "crypto"
-                 else TIME_STOP_BARS_STOCK)
-    cost_pct  = COST_CRYPTO if asset_class == "crypto" else COST_STOCK
+    time_stop = TIME_STOP_BARS_CRYPTO
+    cost_pct  = COST_CRYPTO
 
     a_c  = close.values.astype(float)
     a_h  = high.values.astype(float)
@@ -353,15 +337,8 @@ def _subperiod(date, asset_class):
 # Regime filters
 # ═════════════════════════════════════════════════════════════════════════════
 
-def stock_regime(spy_df: pd.DataFrame) -> pd.Series:
-    """SPY close > SMA(20) → regime ON (bool, indexed by date)."""
-    s = spy_df["close"].sort_index()
-    sma = s.rolling(REGIME_SMA_STOCK).mean()
-    return (s > sma).fillna(False)
-
-
 def crypto_regime(btc_df: pd.DataFrame) -> pd.Series:
-    """BTC close > SMA(50) → regime ON (bool, indexed by date)."""
+    """BTC close > SMA(50) -> regime ON (bool, indexed by date)."""
     s = btc_df["close"].sort_index()
     sma = s.rolling(REGIME_SMA_CRYPTO).mean()
     return (s > sma).fillna(False)
@@ -370,18 +347,6 @@ def crypto_regime(btc_df: pd.DataFrame) -> pd.Series:
 # ═════════════════════════════════════════════════════════════════════════════
 # Data loading
 # ═════════════════════════════════════════════════════════════════════════════
-
-def load_stock_universe():
-    """Load cached daily data for the HYPE stock universe (+ SPY for regime)."""
-    from fetch_data import load_ticker
-    out = {}
-    for t in HYPE_STOCK_UNIVERSE:
-        df = load_ticker(t)
-        if df is not None and len(df) > 100:
-            out[t] = df
-    spy = load_ticker("SPY")
-    return out, spy
-
 
 def load_crypto_universe():
     """Load cached daily crypto data (+ BTC for regime)."""
@@ -455,47 +420,29 @@ def _date_split_index(data: dict):
 
 def run_walk_forward():
     """
-    Load stock + crypto data, build regime filters, scan every ticker, split
+    Load crypto data, build regime filter, scan every symbol, split
     signals 70/30 by date (train/test), and compute per-period stats.
 
     Returns a results dict ready to serialize.
     """
     print("=" * 72, file=sys.stderr)
-    print("STR-H Hype / Momentum Ignition — Walk-Forward Validation", file=sys.stderr)
+    print("STR-H Hype / Momentum Ignition (Crypto-Only) - Walk-Forward Validation", file=sys.stderr)
     print("=" * 72, file=sys.stderr)
 
     # ── Load data ──
-    print("\n[1] Loading stock data...", file=sys.stderr)
-    stock_data, spy = load_stock_universe()
-    print(f"    Stocks: {len(stock_data)} tickers (from {len(HYPE_STOCK_UNIVERSE)} requested)",
-          file=sys.stderr)
-    print("\n[2] Loading crypto data...", file=sys.stderr)
+    print("\n[1] Loading crypto data...", file=sys.stderr)
     crypto_data, btc = load_crypto_universe()
     print(f"    Crypto: {len(crypto_data)} symbols", file=sys.stderr)
 
-    # ── Regime filters ──
-    print("\n[3] Building regime filters...", file=sys.stderr)
-    s_reg = stock_regime(spy) if spy is not None and len(spy) > REGIME_SMA_STOCK else None
+    # ── Regime filter ──
+    print("\n[2] Building regime filter...", file=sys.stderr)
     c_reg = crypto_regime(btc) if btc is not None and len(btc) > REGIME_SMA_CRYPTO else None
-    if s_reg is not None:
-        print(f"    SPY regime ON: {int(s_reg.sum())}/{len(s_reg)} days "
-              f"({s_reg.mean()*100:.1f}%)", file=sys.stderr)
     if c_reg is not None:
         print(f"    BTC regime ON: {int(c_reg.sum())}/{len(c_reg)} days "
               f"({c_reg.mean()*100:.1f}%)", file=sys.stderr)
 
     # ── Scan ──
-    print("\n[4] Scanning stocks for ignition signals...", file=sys.stderr)
-    stock_signals = []
-    for tkr, df in stock_data.items():
-        try:
-            stock_signals.extend(
-                scan_ticker(df, tkr, regime=s_reg, asset_class="stock"))
-        except Exception as e:
-            print(f"    [warn] {tkr}: {e}", file=sys.stderr)
-    print(f"    Stock signals: {len(stock_signals)}", file=sys.stderr)
-
-    print("\n[5] Scanning crypto for ignition signals...", file=sys.stderr)
+    print("\n[3] Scanning crypto for ignition signals...", file=sys.stderr)
     crypto_signals = []
     for tkr, df in crypto_data.items():
         try:
@@ -505,9 +452,8 @@ def run_walk_forward():
             print(f"    [warn] {tkr}: {e}", file=sys.stderr)
     print(f"    Crypto signals: {len(crypto_signals)}", file=sys.stderr)
 
-    # ── 70/30 train/test split by date (per asset class) ──
-    print("\n[6] Splitting train/test (70/30 by date)...", file=sys.stderr)
-    s_cut = _date_split_index(stock_data) if stock_data else None
+    # ── 70/30 train/test split by date ──
+    print("\n[4] Splitting train/test (70/30 by date)...", file=sys.stderr)
     c_cut = _date_split_index(crypto_data) if crypto_data else None
 
     def split(sig, cut):
@@ -517,19 +463,16 @@ def run_walk_forward():
         te = [x for x in sig if pd.Timestamp(x["date"]) > cut]
         return tr, te
 
-    s_train, s_test = split(stock_signals, s_cut)
     c_train, c_test = split(crypto_signals, c_cut)
 
-    print(f"    Stocks cutoff: {s_cut.date() if s_cut else 'n/a'}  "
-          f"train={len(s_train)} test={len(s_test)}", file=sys.stderr)
     print(f"    Crypto cutoff: {c_cut.date() if c_cut else 'n/a'}  "
           f"train={len(c_train)} test={len(c_test)}", file=sys.stderr)
 
     # ── Stats ──
-    print("\n[7] Computing statistics...", file=sys.stderr)
+    print("\n[5] Computing statistics...", file=sys.stderr)
     results = {
         "strategy_id": STRATEGY_ID,
-        "strategy_name": "Hype / Momentum Ignition (long-only)",
+        "strategy_name": "Hype / Momentum Ignition (crypto-only, long)",
         "generated_at": datetime.datetime.utcnow().isoformat() + "Z",
         "config": {
             "vol_spike_lookback": VOL_SPIKE_LOOKBACK,
@@ -540,42 +483,29 @@ def run_walk_forward():
             "ema_slow": EMA_SLOW,
             "swing_lookback": SWING_LOOKBACK,
             "pullback_window": PULLBACK_WINDOW,
-            "time_stop_bars_stock": TIME_STOP_BARS_STOCK,
             "time_stop_bars_crypto": TIME_STOP_BARS_CRYPTO,
             "time_stop_r": TIME_STOP_R,
             "max_hold_bars": MAX_HOLD_BARS,
-            "regime_sma_stock": REGIME_SMA_STOCK,
             "regime_sma_crypto": REGIME_SMA_CRYPTO,
             "risk_per_trade": RISK_PER_TRADE,
-            "cost_stock_bp": COST_STOCK * 10000,
             "cost_crypto_bp": COST_CRYPTO * 10000,
             "direction": "long_only",
-            "timeframe_note": ("Daily bars used for both asset classes. "
-                               "Crypto spec called for 4h; daily used due to "
-                               "cached free-data infra. Logic is timeframe-agnostic."),
+            "asset_class": "crypto_only",
+            "timeframe_note": ("Daily bars used. Crypto spec called for 4h; "
+                               "daily used due to cached free-data infra. "
+                               "Logic is timeframe-agnostic."),
         },
         "universe": {
-            "stock_tickers": sorted(stock_data.keys()),
-            "n_stocks": len(stock_data),
             "crypto_symbols": sorted(crypto_data.keys()),
             "n_crypto": len(crypto_data),
-            "stock_cutoff": str(s_cut.date()) if s_cut else None,
             "crypto_cutoff": str(c_cut.date()) if c_cut else None,
-        },
-        "stock": {
-            "train": compute_stats(s_train),
-            "test":  compute_stats(s_test),
         },
         "crypto": {
             "train": compute_stats(c_train),
             "test":  compute_stats(c_test),
+            "all":   compute_stats(crypto_signals),
         },
-        "combined": {
-            "train": compute_stats(s_train + c_train),
-            "test":  compute_stats(s_test + c_test),
-            "all":   compute_stats(stock_signals + crypto_signals),
-        },
-        "sample_trades": (stock_signals + crypto_signals)[:25],
+        "sample_trades": crypto_signals[:25],
     }
 
     _print_summary(results)
@@ -597,44 +527,37 @@ def _fmt_stats(s: dict, label: str) -> str:
 
 def _print_summary(results: dict):
     print("\n" + "=" * 72, file=sys.stderr)
-    print("STR-H WALK-FORWARD SUMMARY", file=sys.stderr)
+    print("STR-H WALK-FORWARD SUMMARY (CRYPTO-ONLY)", file=sys.stderr)
     print("=" * 72, file=sys.stderr)
-    print("\nSTOCKS (daily, SPY>SMA20 regime):", file=sys.stderr)
-    print(_fmt_stats(results["stock"]["train"],  "train(70%)"), file=sys.stderr)
-    print(_fmt_stats(results["stock"]["test"],   "test(30%)"),  file=sys.stderr)
     print("\nCRYPTO (daily, BTC>SMA50 regime):", file=sys.stderr)
     print(_fmt_stats(results["crypto"]["train"], "train(70%)"), file=sys.stderr)
     print(_fmt_stats(results["crypto"]["test"],  "test(30%)"),  file=sys.stderr)
-    print("\nCOMBINED:", file=sys.stderr)
-    print(_fmt_stats(results["combined"]["train"], "train(70%)"), file=sys.stderr)
-    print(_fmt_stats(results["combined"]["test"],  "test(30%)"),  file=sys.stderr)
-    print(_fmt_stats(results["combined"]["all"],   "all(100%)"),  file=sys.stderr)
+    print(_fmt_stats(results["crypto"]["all"],   "all(100%)"),  file=sys.stderr)
     print("\n" + "=" * 72, file=sys.stderr)
 
 
 def build_markdown_report(results: dict) -> str:
-    s_tr = results["stock"]["train"]; s_te = results["stock"]["test"]
     c_tr = results["crypto"]["train"]; c_te = results["crypto"]["test"]
-    comb_tr = results["combined"]["train"]; comb_te = results["combined"]["test"]
-    comb_all = results["combined"]["all"]
+    c_all = results["crypto"]["all"]
     cfg = results["config"]; uni = results["universe"]
 
     def row(d, label):
         if d["n_trades"] == 0:
-            return f"| {label} | 0 | — | — | — | — | — | — |"
+            return f"| {label} | 0 | - | - | - | - | - | - |"
         return (f"| {label} | {d['n_trades']} | {d['win_rate']*100:.1f}% | "
                 f"{d['mean_r']:+.3f} | {d['total_r']:+.2f} | "
                 f"{d['sharpe_per_trade']:+.2f} | {d['max_drawdown_r']:.2f} | "
                 f"{d['avg_hold_bars']:.1f} |")
 
     L = []
-    L.append("# STR-H — Hype / Momentum Ignition — Walk-Forward Validation")
+    L.append("# STR-H - Hype / Momentum Ignition - Walk-Forward Validation")
     L.append("")
     L.append(f"**Strategy ID:** `{results['strategy_id']}`  ")
     L.append(f"**Generated:** {results['generated_at']}  ")
     L.append(f"**Direction:** Long-only  ")
+    L.append(f"**Asset class:** Crypto only  ")
     L.append(f"**Risk per trade:** {cfg['risk_per_trade']*100:.1f}% account  ")
-    L.append(f"**Timeframe:** Daily bars (both asset classes — see note below)")
+    L.append(f"**Timeframe:** Daily bars (see note below)")
     L.append("")
     L.append("---")
     L.append("")
@@ -649,28 +572,24 @@ def build_markdown_report(results: dict) -> str:
     L.append("## 2. Honest Limitations")
     L.append("")
     L.append("- **Social-volume proxy.** We have no social-media data (Twitter/X, ")
-    L.append("  Reddit, LunarCrush) under the free-data constraint. The 3× 7-bar ")
+    L.append("  Reddit, LunarCrush) under the free-data constraint. The 3x 7-bar ")
     L.append("  volume spike is a structural proxy for attention-driven flow, but ")
     L.append("  it cannot distinguish organic hype from institutional rebalancing, ")
-    L.append("  exchange listings, earnings, or news-driven volume. Treat results as ")
+    L.append("  exchange listings, or news-driven volume. Treat results as ")
     L.append("  a *volume-momentum* strategy, not a confirmed social-sentiment strategy.")
     L.append("- **Timeframe deviation.** The spec calls for 4h crypto bars; the ")
     L.append("  project's cached free-data infrastructure (Hyperliquid fetcher + ")
-    L.append("  parquet cache) uses daily bars. This run uses daily bars for both ")
-    L.append("  stocks and crypto, applying the 3-bar time stop to daily crypto bars. ")
+    L.append("  parquet cache) uses daily bars. This run uses daily bars. ")
     L.append("  The strategy logic is timeframe-agnostic, so the daily results are a ")
     L.append("  lower-frequency (and more conservative) proxy for the 4h version.")
-    L.append("- **Survivorship bias.** The stock universe is the current set of ")
-    L.append("  ~50 liquid large-caps as of the cache date (Aug 2026). Companies that ")
-    L.append("  went bankrupt or were delisted during the backtest window are **not** ")
-    L.append("  included, so stock results are biased toward survivors. The crypto ")
-    L.append("  universe is the current set of liquid Hyperliquid perpetual markets; ")
-    L.append("  previously delisted coins (e.g. FTM, MATIC, RNDR, LUNA-class) were ")
-    L.append("  already excluded from the cache — this is survivorship bias against ")
-    L.append("  failed projects, which is significant for a *hype* strategy since ")
-    L.append("  many hype-driven coins subsequently went to zero.")
+    L.append("- **Survivorship bias.** The crypto universe is the current set of ")
+    L.append("  liquid Hyperliquid perpetual markets; previously delisted coins ")
+    L.append("  (e.g. FTM, MATIC, RNDR, LUNA-class) were already excluded from the ")
+    L.append("  cache. This is survivorship bias against failed projects, which is ")
+    L.append("  *most acute for a hype strategy* since many hype-driven coins ")
+    L.append("  subsequently went to zero.")
     L.append("- **Crypto volume quality.** ~42% of Hyperliquid daily bars report ")
-    L.append("  zero volume. A baseline-health guard requires ≥4 of the prior 7 bars ")
+    L.append("  zero volume. A baseline-health guard requires >=4 of the prior 7 bars ")
     L.append("  to have non-zero volume before a spike is counted, preventing false ")
     L.append("  spikes from degenerate zero-baselines.")
     L.append("- **Look-ahead-free.** All rolling means use `.shift(1)` so the ")
@@ -679,12 +598,11 @@ def build_markdown_report(results: dict) -> str:
     L.append("")
     L.append("## 3. Signal Rules")
     L.append("")
-    L.append(f"- **Volume spike:** `volume > {cfg['vol_spike_mult']}× mean(prior {cfg['vol_spike_lookback']} bars)`")
-    L.append(f"- **Momentum ignition:** `(close-low)/(high-low) ≥ {cfg['close_range_pct']}` "
+    L.append(f"- **Volume spike:** `volume > {cfg['vol_spike_mult']}x mean(prior {cfg['vol_spike_lookback']} bars)`")
+    L.append(f"- **Momentum ignition:** `(close-low)/(high-low) >= {cfg['close_range_pct']}` "
              f"(close in top 25% of range)")
-    L.append(f"- **Volume expansion:** `volume ≥ {cfg['vol_20_mult']}× mean(prior 20 bars)`")
-    L.append(f"- **Regime filter:** SPY > SMA({cfg['regime_sma_stock']}) [stocks] · "
-             f"BTC > SMA({cfg['regime_sma_crypto']}) [crypto]")
+    L.append(f"- **Volume expansion:** `volume >= {cfg['vol_20_mult']}x mean(prior 20 bars)`")
+    L.append(f"- **Regime filter:** BTC > SMA({cfg['regime_sma_crypto']})")
     L.append("")
     L.append("## 4. Entry / Stop / Exit")
     L.append("")
@@ -694,54 +612,46 @@ def build_markdown_report(results: dict) -> str:
              "ignition candle (structural, long-side).")
     L.append(f"- **Trailing exit:** daily close < 8-EMA.")
     L.append(f"- **Hard exit:** daily close < 21-EMA.")
-    L.append(f"- **Time stop:** {cfg['time_stop_bars_stock']} bars [stocks] / "
-             f"{cfg['time_stop_bars_crypto']} bars [crypto] if the trade has not moved "
-             f"≥ {cfg['time_stop_r']}R in favor.")
+    L.append(f"- **Time stop:** {cfg['time_stop_bars_crypto']} bars if the trade has not moved "
+             f">= {cfg['time_stop_r']}R in favor.")
     L.append(f"- **Max-hold cap:** {cfg['max_hold_bars']} bars (backtest boundedness).")
-    L.append("- **Costs:** stocks 12bp round-trip · crypto 5bp round-trip.")
+    L.append(f"- **Costs:** crypto {cfg['cost_crypto_bp']:.0f}bp round-trip.")
     L.append("")
     L.append("## 5. Walk-Forward Results")
     L.append("")
-    L.append("Split: train = first 70% of bars by date · test = last 30% (per asset class).")
+    L.append("Split: train = first 70% of bars by date. test = last 30%.")
     L.append("")
     L.append("### Performance Table")
     L.append("")
     L.append("| Period | Trades | Win Rate | Mean R | Total R | Sharpe (per-trade) | Max DD (R) | Avg Hold (bars) |")
     L.append("|--------|--------|----------|--------|---------|--------------------|------------|-----------------|")
-    L.append(row(s_tr,    "Stocks train"))
-    L.append(row(s_te,    "Stocks test"))
-    L.append(row(c_tr,    "Crypto train"))
-    L.append(row(c_te,    "Crypto test"))
-    L.append(row(comb_tr, "Combined train"))
-    L.append(row(comb_te, "Combined test"))
-    L.append(row(comb_all, "Combined all"))
+    L.append(row(c_tr,  "Crypto train"))
+    L.append(row(c_te,  "Crypto test"))
+    L.append(row(c_all, "Crypto all"))
     L.append("")
     L.append("### Exit-Reason Breakdown")
     L.append("")
-    for label, d in [("Stocks train", s_tr), ("Stocks test", s_te),
-                     ("Crypto train", c_tr), ("Crypto test", c_te),
-                     ("Combined all", comb_all)]:
+    for label, d in [("Crypto train", c_tr), ("Crypto test", c_te),
+                     ("Crypto all", c_all)]:
         L.append(f"**{label}** ({d['n_trades']} trades):")
         if d.get("exit_reasons"):
             items = sorted(d["exit_reasons"].items(), key=lambda x: -x[1])
-            L.append("  " + " · ".join(f"{k}={v}" for k, v in items))
+            L.append("  " + " . ".join(f"{k}={v}" for k, v in items))
         else:
             L.append("  (no trades)")
         L.append("")
     L.append("## 6. Verdict")
     L.append("")
-    # simple heuristic verdict
     def verdict(tr, te):
         if te["n_trades"] < 10:
-            return "INSUFFICIENT SAMPLE (test < 10 trades) — no conclusion"
+            return "INSUFFICIENT SAMPLE (test < 10 trades) - no conclusion"
         if te["mean_r"] > 0.05 and te["win_rate"] >= 0.40:
-            return ("POSITIVE OOS — test-period mean R positive with adequate hit rate; "
+            return ("POSITIVE OOS - test-period mean R positive with adequate hit rate; "
                     "candidate for forward paper-trading at reduced size.")
         if te["mean_r"] > 0:
-            return ("MARGINAL OOS — test mean R positive but thin; monitor before "
+            return ("MARGINAL OOS - test mean R positive but thin; monitor before "
                     "allocating capital.")
-        return "NEGATIVE OOS — edge did not survive out-of-sample; do not trade."
-    L.append(f"- **Stocks:** {verdict(s_tr, s_te)}")
+        return "NEGATIVE OOS - edge did not survive out-of-sample; do not trade."
     L.append(f"- **Crypto:** {verdict(c_tr, c_te)}")
     L.append("")
     L.append("> Sharpe here is **per-trade, R-based** (mean R / std R), not the "
@@ -751,11 +661,9 @@ def build_markdown_report(results: dict) -> str:
     L.append("")
     L.append("## 7. Survivorship & Data-Quality Notes (repeated for emphasis)")
     L.append("")
-    L.append(f"- Stock universe: **{uni['n_stocks']}** cached large-caps (survivorship-biased).")
     L.append(f"- Crypto universe: **{uni['n_crypto']}** Hyperliquid markets (survivorship-biased).")
-    L.append(f"- Stock train/test cutoff: `{uni['stock_cutoff']}` · "
-             f"Crypto cutoff: `{uni['crypto_cutoff']}`")
-    L.append("- Delisted tickers/coins during the backtest window are excluded → "
+    L.append(f"- Crypto train/test cutoff: `{uni['crypto_cutoff']}`")
+    L.append("- Delisted coins during the backtest window are excluded -> "
              "forward-looking survivorship bias, *most acute for a hype strategy* "
              "because many hyped assets subsequently collapsed to zero.")
     L.append("")
@@ -797,13 +705,9 @@ def main():
     # stdout summary (always)
     print("\n--- STR-H RESULTS (stdout) ---")
     for label, d in [
-        ("STOCKS  train", results["stock"]["train"]),
-        ("STOCKS  test",  results["stock"]["test"]),
         ("CRYPTO  train", results["crypto"]["train"]),
         ("CRYPTO  test",  results["crypto"]["test"]),
-        ("COMBINED train", results["combined"]["train"]),
-        ("COMBINED test",  results["combined"]["test"]),
-        ("COMBINED all",   results["combined"]["all"]),
+        ("CRYPTO  all",   results["crypto"]["all"]),
     ]:
         print(_fmt_stats(d, label))
 
