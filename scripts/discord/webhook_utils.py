@@ -196,19 +196,18 @@ def get_webhook_for_channel(source_channel_id: str) -> Optional[str]:
     Look up the webhook URL for a given source channel ID.
 
     Checks environment variables:
-      CROSSPOST_WEBHOOK_{CHANNEL_ID} — per-channel webhook URL
-      CROSSPOST_WEBHOOK_URL — fallback for all channels
+      CROSSPOST_WEBHOOK_{CHANNEL_ID} - per-channel webhook URL
 
     Returns the webhook URL or None if not configured.
+    NOTE: The global CROSSPOST_WEBHOOK_URL fallback was removed because it
+    caused cross-contamination: a single webhook posts to ONE follower channel,
+    so using it as a global fallback sent #strategy-status posts to the
+    #crypto-setups follower channel. Each channel needs its own per-channel
+    webhook env var if webhook crossposting is desired.
     """
-    # Check per-channel env var first
+    # Check per-channel env var only
     env_key = f"CROSSPOST_WEBHOOK_{source_channel_id}"
     webhook_url = os.environ.get(env_key, "")
-    if webhook_url:
-        return webhook_url
-
-    # Check fallback
-    webhook_url = os.environ.get("CROSSPOST_WEBHOOK_URL", "")
     if webhook_url:
         return webhook_url
 
