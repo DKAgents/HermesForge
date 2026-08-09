@@ -1,7 +1,7 @@
 ---
 type: backlog-index
 created: 2026-06-27
-updated: 2026-06-27
+updated: 2026-08-07
 tags: [backlog]
 ---
 
@@ -9,36 +9,88 @@ tags: [backlog]
 
 This index tracks all epics and user stories for the HermesForge Trading System. Each epic groups related stories toward a major system capability milestone.
 
+**Going-forward rule (established 2026-08-07):** All initiatives, bug fixes, and infrastructure work must be assigned a user story (US-XXX) and tracked in this backlog before implementation. No exceptions.
+
 ---
 
 ## Epics
 
 | Epic | Status | Description | Stories |
 |------|--------|-------------|---------|
-| [[Epics/EPIC-001-Foundation\|EPIC-001]] | 🟡 In Progress | Setting up vault, Hermes profiles, and core infrastructure | US-001 → US-006, US-063 |
-| [[Epics/EPIC-002-Research\|EPIC-002]] | ⬜ Backlog | Research swing/position trading strategies for US stocks and crypto | US-010 → US-017 |
-| [[Epics/EPIC-003-PaperTrading\|EPIC-003]] | ⬜ Backlog | Building and validating strategies in paper mode (stocks + crypto) | US-020 → US-026 |
-| [[Epics/EPIC-004-Risk\|EPIC-004]] | ⬜ Backlog | Implementing risk rules, position sizing, and guardian workflow | US-030 → US-034 |
-| [[Epics/EPIC-005-ForgeLoop\|EPIC-005]] | 🟡 In Progress | Automating the continuous improvement loop | US-040 → US-044 |
+| [[EPIC-001-Foundation\|EPIC-001]] | In Progress | Setting up vault, Hermes profiles, and core infrastructure | US-001 to US-006, US-063 |
+| [[EPIC-002-Research\|EPIC-002]] | In Progress | Research swing/position trading strategies for US stocks and crypto | US-010 to US-017, US-089, US-093 |
+| [[EPIC-003-PaperTrading\|EPIC-003]] | Backlog | Building and validating strategies in paper mode (stocks + crypto) | US-020 to US-026 |
+| [[EPIC-004-Risk\|EPIC-004]] | Backlog | Implementing risk rules, position sizing, and guardian workflow | US-030 to US-034 |
+| [[EPIC-005-ForgeLoop\|EPIC-005]] | In Progress | Automating the continuous improvement loop | US-040 to US-044 |
+| [[EPIC-006-KnowledgeEvolution\|EPIC-006]] | Backlog | Knowledge graph evolution and vault maintenance | US-050 to US-053 |
+| [[EPIC-007-StrategyValidation\|EPIC-007]] | Done | Strategy validation infrastructure (walk-forward framework) | US-054 to US-056 |
+| [[EPIC-008-UserControlledAutoExecution\|EPIC-008]] | Backlog | User-controlled auto-execution of trades | US-057 to US-062 |
+| [[EPIC-010-AutoPaperTrading\|EPIC-010]] | In Progress | Automatic paper trading engine | US-065 to US-071 |
+| [[EPIC-011-HyperliquidTestnet\|EPIC-011]] | Backlog | Hyperliquid testnet integration | US-072 to US-076 |
+| [[EPIC-012-AlpacaPaperTrading\|EPIC-012]] | Backlog | Alpaca paper trading integration | US-077 to US-080 |
+| [[EPIC-013-ClosedLoopImprovements\|EPIC-013]] | In Progress | Closed-loop self-improvement, research pipeline, publishing | US-081 to US-088, US-090, US-092 |
+| [[EPIC-014-TechDebt\|EPIC-014]] | Backlog | Known bugs, infrastructure quirks, and workarounds | US-091, US-094 to US-100 |
 
 ---
 
-## Current Sprint / Top Priorities
+## Recently Completed (August 2026)
 
-1. [[Stories/US-001-SSHFS-Mount|US-001]] — Set up SSHFS mount on Mac to access VPS vault
-2. [[Stories/US-002-Hermes-Profiles|US-002]] — Create Hermes profile for each subagent
-3. **US-040** — Design and document Forge Loop v1 *(see 04-ForgeLoop/)*
-4. **US-041** — Implement cron-driven Forge Loop scheduler
-5. **US-042** — Build vault-reading capability for Orchestrator
+| Story | Epic | Description | Commit |
+|-------|------|-------------|--------|
+| US-085 | EPIC-013 | Research pipeline (5 modules, weekly cron) | `7942f30` |
+| US-086 | EPIC-013 | Research publisher with Discord embeds | `9942c6f`, `67c2734` |
+| US-087 | EPIC-013 | Strategy status dashboard expansion (24 strategies) | - |
+| US-088 | EPIC-013 | Webhook-based crossposting system | `9d7ce4a`, `af4c7f8` |
+| US-089 | EPIC-002 | STR-H Hype strategy (crypto-only, walk-forward tested) | `592ab75`, `6e254ce` |
+| US-090 | EPIC-013 | LinkedIn cron style refinement (3 rounds, 24 rules) | cron update |
+| US-091 | EPIC-014 | Webhook global fallback bugfix | `2949676` |
+
+---
+
+## Current Backlog (Unfixed / Pending)
+
+| Story | Epic | Description | Priority | Blocked by |
+|-------|------|-------------|----------|------------|
+| US-092 | EPIC-013 | Per-channel webhooks for follower server | Medium | User action (Discord config) |
+| US-093 | EPIC-002 | STR-H improvements (social data, 4h, survivorship-free) | Medium | Free social data source |
+| US-094 | EPIC-014 | Programmatic em-dash filter for LinkedIn | Low | None |
+| US-095 | EPIC-014 | LinkedIn topic uniqueness guard (programmatic) | Low | None |
+| US-096 | EPIC-014 | Remove stale CROSSPOST_WEBHOOK_URL env var | Low | Identify source of export |
+| US-097 | EPIC-014 | headroom_retrieve upstream bug (#1077) | Low | PR #1176 merge |
+| US-098 | EPIC-014 | hermes config set CLI bug (#16493) | Low | Upstream fix |
+| US-099 | EPIC-014 | write_file truncation guard | Low | None |
+| US-100 | EPIC-014 | send_message text+MEDIA drop | Low | Upstream fix |
+
+---
+
+## Deferred Items (Not Yet User Stories)
+
+These items are known but have not been promoted to user stories yet. They should be assigned US numbers when ready to work.
+
+| Item | Category | Notes |
+|------|----------|-------|
+| STR-L walk-forward validation | Strategy | Only 6 signals in 7 years. No path forward without more data. |
+| Murphy book cross-linking (Phase B) | Knowledge | 1,257 files not yet cross-linked. |
+| Dataview dashboards (Phase C) | Knowledge | Not started. |
+| Stock intraday confirmation | Data | Needs paid data source. Phase 2 deferred. |
+| 6h crypto bars | Data | Deferred. |
+| Polymarket/futures integration | Data | Deferred. |
 
 ---
 
 ## Backlog Health
 
-- **Total Epics:** 5
-- **Total Stories Defined:** 25 (US-001–US-006, US-010–US-017, US-020–US-026, US-030–US-034, US-040–US-044)
-- **In Progress:** EPIC-001 (Foundation), EPIC-005 (Forge Loop)
-- **Backlog / Not Started:** EPIC-002, EPIC-003, EPIC-004
-- **Story Readiness:** US-001 and US-002 are fully groomed with acceptance criteria. Stories US-003 through US-044 need individual story files written before sprint assignment.
-- **Next Grooming Action:** Write story files for US-003–US-006 and US-040–US-044 to unlock EPIC-001 and EPIC-005 sprint work.
-- **Blockers:** SSHFS mount (US-001) must be completed before Obsidian on Mac can be used for daily vault editing.
+- **Total Epics:** 14
+- **Total Stories Defined:** 58 (US-001 to US-100)
+- **Completed (August 2026):** US-085 to US-091 (7 stories)
+- **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
+- **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
+- **Story Readiness:** US-092 through US-100 are fully groomed with acceptance criteria. Deferred items need story files before sprint assignment.
+- **Next Grooming Action:** Promote deferred items to user stories when ready. Prioritize US-092 (per-channel webhooks, blocked on user) and US-093 (STR-H improvements, blocked on data source).
+- **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
+
+---
+
+## Related Notes
+- [[00-Enhancement-Backlog]] - Strategy-specific enhancement ideas (A-001 to B-010, F-001 to F-006)
+- [[EPIC-014-Tech-Debt]] - Infrastructure quirks and workarounds
