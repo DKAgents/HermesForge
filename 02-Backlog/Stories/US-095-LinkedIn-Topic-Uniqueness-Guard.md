@@ -2,7 +2,7 @@
 id: US-095
 epic: EPIC-014
 type: story
-status: backlog
+status: done
 created: 2026-08-07
 points: 2
 tags: [backlog, story]
