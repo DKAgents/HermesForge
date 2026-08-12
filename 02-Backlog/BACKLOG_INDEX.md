@@ -49,6 +49,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-095 | EPIC-014 | LinkedIn topic uniqueness guard (programmatic) | `e5426c5` |
 | US-096 | EPIC-014 | Remove stale CROSSPOST_WEBHOOK_URL env var | `e5426c5` |
 | US-101 | EPIC-013 | STR-B/STR-I signal recency window fix + trades.csv dedup | `cf88b89` |
+| US-071 | EPIC-010 | Paper Trading Performance Report (Discord, cron cb22b038a6d6) | `4dc81e5` |
 
 ---
 
@@ -81,9 +82,10 @@ These items are known but have not been promoted to user stories yet. They shoul
 
 ## Backlog Health
 
-- **Total Epics:** 14
-- **Total Stories Defined:** 59 (US-001 to US-101)
-- **Completed (August 2026):** US-085 to US-096, US-101 (12 stories)
+- **Total Epics:** 14 (1 done: EPIC-007, EPIC-010)
+- **Total Stories Defined:** 60 (US-001 to US-101)
+- **Completed (August 2026):** US-071, US-085 to US-096, US-101 (13 stories)
+- **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
 - **Next Story Number:** US-102

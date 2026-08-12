@@ -1,7 +1,7 @@
 ---
 id: EPIC-010
 type: epic
-status: in-progress
+status: done
 created: 2026-07-20
 updated: 2026-07-20
 supersedes: EPIC-003
@@ -35,7 +35,7 @@ Automatically capture every signal produced by the daily scanners (EPIC-009) as 
 | US-068 | Outcome Tracking Engine (stocks, intraday H/L) | ✅ Done |
 | US-069 | Crypto Data Source Integration (BTC/ETH/SOL) | ✅ Done |
 | US-070 | Self-Improvement Loop Wiring (extract_lessons.py) | ✅ Done |
-| US-071 | Paper Trading Performance Report (Discord) | ⬜ Backlog |
+| US-071 | Paper Trading Performance Report (Discord) | ✅ Done |
 
 ## Definition of Done
 - Every signal from strategies A, B, D (stocks) and the crypto universe automatically becomes a tracked open paper trade — zero manual entry
