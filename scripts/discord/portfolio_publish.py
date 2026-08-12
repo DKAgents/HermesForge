@@ -109,6 +109,22 @@ SCANNER_REGISTRY = {
 # NEAR_MISS_SCANNER = "STR-D-sr-role-reversal"
 NEAR_MISS_SCANNER = None
 
+# ── Per-ticker signal recency window ──────────────────────────────────────────
+# Event-driven per-ticker scanners (STR-B MACD divergence, STR-I AdaptiveTrend,
+# STR-L ATR contraction) fire rarely — a handful of times per ticker per year.
+# Requiring a signal to land on the exact latest bar (the original filter) meant
+# these scanners essentially NEVER produced a publishable signal on any given
+# cron run, so LIVE strategies STR-B and STR-I generated zero trades despite
+# being marked publish_enabled. The batch scanner STR-P avoids this because it
+# keeps its most-recent *rebalance* date (which can be weeks old).
+#
+# To make per-ticker strategies actually usable as LIVE strategies, we accept
+# the most recent signal per ticker if it fired within the last
+# SIGNAL_RECENCY_BARS bars of the data. Each kept signal is tagged with
+# `signal_age_bars` so downstream consumers (publisher, paper-trading monitor)
+# can judge freshness and avoid entering very stale setups.
+SIGNAL_RECENCY_BARS = 5
+
 
 def _parse_frontmatter(text: str) -> dict:
     m = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
@@ -450,11 +466,28 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                     if not signals:
                         continue
                     
-                    # Only keep the most recent signal per ticker (latest bar)
+                    # Keep the most recent signal per ticker if it fired within
+                    # the last SIGNAL_RECENCY_BARS bars (recency window).
+                    # The original "exact latest-bar match" filter starved the
+                    # rare event-driven scanners (STR-B, STR-I, STR-L) of any
+                    # publishable signal — see SIGNAL_RECENCY_BARS docstring.
                     latest = signals[-1]
-                    most_recent_bar_date = str(df.index[-1])[:10]
-                    if str(latest.get("date", ""))[:10] != most_recent_bar_date:
+                    n_bars = len(df)
+                    sig_date = latest.get("date")
+                    try:
+                        sig_pos = int(df.index.get_indexer([pd.Timestamp(sig_date)])[0])
+                    except Exception:
+                        sig_pos = -1
+                    if sig_pos < 0:
+                        # Fallback: exact-date string match (old behaviour)
+                        most_recent_bar_date = str(df.index[-1])[:10]
+                        if str(sig_date)[:10] != most_recent_bar_date:
+                            continue
+                        sig_pos = n_bars - 1
+                    signal_age_bars = (n_bars - 1) - sig_pos
+                    if signal_age_bars < 0 or signal_age_bars > SIGNAL_RECENCY_BARS:
                         continue
+                    latest["signal_age_bars"] = int(signal_age_bars)
                     
                     # Filter direction for stocks (long-only per ADR)
                     if asset_class == "stock":

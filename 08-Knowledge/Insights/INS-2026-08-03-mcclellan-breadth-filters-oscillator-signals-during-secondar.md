@@ -31,3 +31,6 @@ Before acting on an individual security's oversold oscillator signal during a su
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trend]]

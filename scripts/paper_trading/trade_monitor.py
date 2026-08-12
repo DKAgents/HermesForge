@@ -37,6 +37,18 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 import trade_log
 from trade_id import make_discord_url, make_discord_link
 
+# ── Load ~/.hermes/.env if present (cron shells may not pre-source it) ────────
+_env_file = pathlib.Path.home() / ".hermes" / ".env"
+if _env_file.exists():
+    for _line in _env_file.read_text().splitlines():
+        _line = _line.strip()
+        if not _line or _line.startswith("#") or "=" not in _line:
+            continue
+        _k, _, _v = _line.partition("=")
+        _k = _k.strip()
+        if _k and _k not in os.environ:
+            os.environ[_k] = _v.split("#", 1)[0].strip().strip('"').strip("'")
+
 # ── Config ────────────────────────────────────────────────────────────────────
 
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")

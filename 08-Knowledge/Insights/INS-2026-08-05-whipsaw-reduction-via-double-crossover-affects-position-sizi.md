@@ -7,8 +7,11 @@ domains: [edge-conditions, indicators, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "E020-double-crossover-reduces-whipsaws-vs-single-average", "EN028-10-and-50-day-moving-average-crossover"]
 seed_id: diversification_position_limit
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Whipsaw Reduction via Double Crossover Affects Position Sizing Frequency
 
 ## Discovery Summary

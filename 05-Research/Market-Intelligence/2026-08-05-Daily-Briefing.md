@@ -5,8 +5,11 @@ model_tier: T3
 model: google/gemini-2.0-flash-001
 sources: [web-search]
 tags: [market-intelligence, daily-briefing, automated]
+topic: research
+confidence: high
+has_quotes: true
+source: unknown
 ---
-
 # HermesForge Daily Market Intelligence Briefing — Wednesday, August 5, 2026
 
 > **Disclaimer:** This briefing is INFORMATIONAL only. It does NOT recommend trades. Any actionable trade idea identified here must be escalated to T2 (claude-sonnet-4.6) for proper thesis development before acting.

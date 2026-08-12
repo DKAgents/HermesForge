@@ -31,3 +31,6 @@ A trader should treat light-volume breakouts as disqualified entries regardless 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea|Volume Confirmation as Binary Entry Gate Reducing False Breakout Risk]]

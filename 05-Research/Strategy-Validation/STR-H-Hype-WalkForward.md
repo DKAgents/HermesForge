@@ -1,3 +1,11 @@
+---
+topic: research
+confidence: high
+has_quotes: true
+tags: []
+source: unknown
+created: 2026-08-07
+---
 # STR-H - Hype / Momentum Ignition - Walk-Forward Validation
 
 **Strategy ID:** `STR-H-HYPE-IGNITION`  

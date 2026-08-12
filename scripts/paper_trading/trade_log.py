@@ -110,14 +110,28 @@ def register_discord_info(trade_id: str, message_id: str, channel_id: str,
 
 
 def update_entry_status(trade_id: str, entry_status: str) -> None:
-    """Update a trade's entry_status ('pending' -> 'entered')."""
+    """Update a trade's entry_status ('pending' -> 'entered').
+
+    Targets the OPEN row when duplicate trade_ids exist (a strategy may
+    re-enter the same ticker+date after a prior close, producing a closed
+    row and an open row sharing the same trade_id).
+    """
     rows = _read_all_rows()
+    target_row = None
     for row in rows:
-        if row["trade_id"] == trade_id:
-            row["entry_status"] = entry_status
-            _write_all_rows(rows)
-            return
-    raise ValueError(f"trade_id not found: {trade_id}")
+        if row["trade_id"] == trade_id and row.get("status") == "open":
+            target_row = row
+            break
+    if target_row is None:
+        # fall back to any match (legacy behaviour) for safety
+        for row in rows:
+            if row["trade_id"] == trade_id:
+                target_row = row
+                break
+    if target_row is None:
+        raise ValueError(f"trade_id not found: {trade_id}")
+    target_row["entry_status"] = entry_status
+    _write_all_rows(rows)
 
 
 def open_trade(trade_dict: dict) -> str:
@@ -162,14 +176,12 @@ def close_trade(trade_id: str, exit_date: str, exit_price: float, exit_reason: s
     rows = _read_all_rows()
     target_row = None
     for row in rows:
-        if row["trade_id"] == trade_id:
+        if row["trade_id"] == trade_id and row.get("status") == "open":
             target_row = row
             break
 
     if target_row is None:
-        raise ValueError(f"trade_id not found: {trade_id}")
-    if target_row["status"] == "closed":
-        raise ValueError(f"trade_id already closed: {trade_id}")
+        raise ValueError(f"trade_id not found (or already closed): {trade_id}")
 
     entry_price = float(target_row["entry_price"])
     stop_price = float(target_row["stop_price"])

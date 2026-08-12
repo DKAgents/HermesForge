@@ -1,29 +1,10 @@
 [
   {
-    "book": "Insights",
-    "anchor_index_size": 90,
-    "notes_processed": 117,
-    "notes_linked": 3,
-    "total_links_added": 3,
-    "sample": [
-      {
-        "note": "INS-2026-07-19-three-layer-weekly-framework-filters-daily-macd-stochastic-s.md",
-        "links": [
-          "INS-2026-08-04-three-layer-weekly-filter-system-for-daily-trade-entries"
-        ]
-      },
-      {
-        "note": "INS-2026-08-04-crb-bond-ratio-triggers-relative-strength-sector-rotation-de.md",
-        "links": [
-          "INS-2026-08-03-crb-bond-ratio-as-trigger-for-relative-strength-sector-rotat"
-        ]
-      },
-      {
-        "note": "INS-2026-08-04-three-layer-weekly-filter-system-for-daily-trade-entries.md",
-        "links": [
-          "INS-2026-08-02-weekly-trend-confirmation-stack-ma-channel-and-oscillator-fi"
-        ]
-      }
-    ]
+    "book": "Market-Intelligence",
+    "anchor_index_size": 4,
+    "notes_processed": 17,
+    "notes_linked": 0,
+    "total_links_added": 0,
+    "sample": []
   }
 ]
