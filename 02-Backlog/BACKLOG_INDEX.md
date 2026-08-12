@@ -1,7 +1,7 @@
 ---
 type: backlog-index
 created: 2026-06-27
-updated: 2026-08-07
+updated: 2026-08-12
 tags: [backlog]
 ---
 
@@ -44,6 +44,11 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-089 | EPIC-002 | STR-H Hype strategy (crypto-only, walk-forward tested) | `592ab75`, `6e254ce` |
 | US-090 | EPIC-013 | LinkedIn cron style refinement (3 rounds, 24 rules) | cron update |
 | US-091 | EPIC-014 | Webhook global fallback bugfix | `2949676` |
+| US-092 | EPIC-013 | Per-channel webhooks for all 7 channels | `cf88b89` |
+| US-094 | EPIC-014 | Programmatic em-dash filter for LinkedIn | `e5426c5` |
+| US-095 | EPIC-014 | LinkedIn topic uniqueness guard (programmatic) | `e5426c5` |
+| US-096 | EPIC-014 | Remove stale CROSSPOST_WEBHOOK_URL env var | `e5426c5` |
+| US-101 | EPIC-013 | STR-B/STR-I signal recency window fix + trades.csv dedup | `cf88b89` |
 
 ---
 
@@ -51,11 +56,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 
 | Story | Epic | Description | Priority | Blocked by |
 |-------|------|-------------|----------|------------|
-| US-092 | EPIC-013 | Per-channel webhooks for follower server | Medium | User action (Discord config) |
-| US-093 | EPIC-002 | STR-H improvements (social data, 4h, survivorship-free) | Medium | Free social data source |
-| US-094 | EPIC-014 | Programmatic em-dash filter for LinkedIn | Low | None |
-| US-095 | EPIC-014 | LinkedIn topic uniqueness guard (programmatic) | Low | None |
-| US-096 | EPIC-014 | Remove stale CROSSPOST_WEBHOOK_URL env var | Low | Identify source of export |
+| US-093 | EPIC-002 | STR-H improvements (social data, 4h, survivorship-free) | Medium | LunarCrush API key from user |
 | US-097 | EPIC-014 | headroom_retrieve upstream bug (#1077) | Low | PR #1176 merge |
 | US-098 | EPIC-014 | hermes config set CLI bug (#16493) | Low | Upstream fix |
 | US-099 | EPIC-014 | write_file truncation guard | Low | None |
@@ -81,12 +82,11 @@ These items are known but have not been promoted to user stories yet. They shoul
 ## Backlog Health
 
 - **Total Epics:** 14
-- **Total Stories Defined:** 58 (US-001 to US-100)
-- **Completed (August 2026):** US-085 to US-091 (7 stories)
+- **Total Stories Defined:** 59 (US-001 to US-101)
+- **Completed (August 2026):** US-085 to US-096, US-101 (12 stories)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Story Readiness:** US-092 through US-100 are fully groomed with acceptance criteria. Deferred items need story files before sprint assignment.
-- **Next Grooming Action:** Promote deferred items to user stories when ready. Prioritize US-092 (per-channel webhooks, blocked on user) and US-093 (STR-H improvements, blocked on data source).
+- **Next Story Number:** US-102
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
