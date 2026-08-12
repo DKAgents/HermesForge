@@ -66,19 +66,43 @@ def build_report(since_hours: int = 24) -> str:
         lines.append(f"  Worst: {worst['ticker']} ({worst['strategy_id']}) {float(worst['r_multiple']):+.2f}R")
     lines.append("")
 
-    # --- Running totals since inception, by strategy ---
+    # --- Running totals since inception ---
     lines.append("**Running Totals (since inception):**")
     if not closed_rows:
         lines.append("  No closed trades yet.")
     else:
+        # Overall summary
+        all_r = [float(r.get("r_multiple", 0) or 0) for r in closed_rows]
+        total_r = sum(all_r)
+        wins = [r for r in all_r if r > 0]
+        wr = len(wins) / len(all_r) * 100
+        avg_r = total_r / len(all_r)
+        # Max drawdown (running peak-to-trough on cumulative R)
+        peak = 0.0
+        cum = 0.0
+        max_dd = 0.0
+        for r in all_r:
+            cum += r
+            if cum > peak:
+                peak = cum
+            dd = peak - cum
+            if dd > max_dd:
+                max_dd = dd
+        lines.append(f"  Total: {len(closed_rows)} trades, {wr:.0f}% win, {total_r:+.2f}R realized, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
+
+        # By strategy
+        lines.append("")
+        lines.append("**By Strategy:**")
         by_strategy_all = {}
         for r in closed_rows:
             by_strategy_all.setdefault(r["strategy_id"], []).append(r)
         for sid, trades in sorted(by_strategy_all.items()):
-            wins = [t for t in trades if float(t.get("r_multiple", 0) or 0) > 0]
-            wr = len(wins) / len(trades) * 100
-            avg_r = sum(float(t.get("r_multiple", 0) or 0) for t in trades) / len(trades)
-            lines.append(f"  • {sid}: {len(trades)} trades, {wr:.0f}% win rate, avg R {avg_r:+.2f}")
+            r_vals = [float(t.get("r_multiple", 0) or 0) for t in trades]
+            t_wins = [v for v in r_vals if v > 0]
+            t_wr = len(t_wins) / len(r_vals) * 100
+            t_avg = sum(r_vals) / len(r_vals)
+            t_total = sum(r_vals)
+            lines.append(f"  • {sid}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R, avg {t_avg:+.3f}R")
 
         # By asset class
         lines.append("")
@@ -87,10 +111,11 @@ def build_report(since_hours: int = 24) -> str:
         for r in closed_rows:
             by_class.setdefault(r.get("asset_class", "unknown"), []).append(r)
         for ac, trades in sorted(by_class.items()):
-            wins = [t for t in trades if float(t.get("r_multiple", 0) or 0) > 0]
-            wr = len(wins) / len(trades) * 100
-            avg_r = sum(float(t.get("r_multiple", 0) or 0) for t in trades) / len(trades)
-            lines.append(f"  • {ac}: {len(trades)} trades, {wr:.0f}% win rate, avg R {avg_r:+.2f}")
+            r_vals = [float(t.get("r_multiple", 0) or 0) for t in trades]
+            t_wins = [v for v in r_vals if v > 0]
+            t_wr = len(t_wins) / len(r_vals) * 100
+            t_total = sum(r_vals)
+            lines.append(f"  • {ac}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R")
 
     if len(closed_rows) < 10:
         lines.append("")
@@ -99,11 +124,75 @@ def build_report(since_hours: int = 24) -> str:
     return "\n".join(lines)
 
 
+def post_to_discord(report_text: str, channel_id: str, dry_run: bool = False) -> dict:
+    """Post the performance report to a Discord channel via bot REST API."""
+    import subprocess, json, os
+
+    token = os.environ.get("DISCORD_BOT_TOKEN", "")
+    if not token:
+        return {"status": "error", "message": "DISCORD_BOT_TOKEN not set"}
+
+    # Split into chunks if > 2000 chars (Discord limit)
+    chunks = []
+    current = ""
+    for line in report_text.split("\n"):
+        if len(current) + len(line) + 1 > 1900:
+            if current:
+                chunks.append(current)
+            current = line
+        else:
+            current += "\n" + line if current else line
+    if current:
+        chunks.append(current)
+
+    if dry_run:
+        for i, chunk in enumerate(chunks):
+            print(f"  [dry-run chunk {i+1}/{len(chunks)}] {chunk[:80]}...")
+        return {"status": "dry_run", "chunks": len(chunks)}
+
+    results = []
+    for chunk in chunks:
+        payload = json.dumps({"content": chunk}, ensure_ascii=False)
+        with open("/tmp/perf_report_chunk.json", "w") as f:
+            f.write(payload)
+        result = subprocess.run(
+            ["curl", "-s", "-X", "POST",
+             "-H", f"Authorization: Bot {token}",
+             "-H", "Content-Type: application/json",
+             "--data-binary", "@/tmp/perf_report_chunk.json",
+             f"https://discord.com/api/v10/channels/{channel_id}/messages"],
+            capture_output=True, text=True, timeout=15
+        )
+        resp = json.loads(result.stdout)
+        if "id" in resp:
+            results.append({"status": "ok", "id": resp["id"]})
+        else:
+            results.append({"status": "error", "response": resp})
+        import time
+        time.sleep(1)
+
+    return {"status": "ok" if all(r["status"] == "ok" for r in results) else "partial", "results": results}
+
+
 def main():
     ap = argparse.ArgumentParser(description="HermesForge paper trading performance report")
     ap.add_argument("--since-hours", type=int, default=24)
+    ap.add_argument("--post", metavar="CHANNEL_ID", help="Post report to Discord channel")
+    ap.add_argument("--dry-run", action="store_true", help="Show what would be posted without posting")
     args = ap.parse_args()
-    print(build_report(since_hours=args.since_hours))
+
+    report = build_report(since_hours=args.since_hours)
+
+    if args.post:
+        result = post_to_discord(report, args.post, dry_run=args.dry_run)
+        if result["status"] == "ok":
+            print(f"Posted to Discord ({len(result['results'])} messages)")
+        elif result["status"] == "dry_run":
+            print(f"Dry run: {result['chunks']} chunks would be posted")
+        else:
+            print(f"Post result: {result}")
+    else:
+        print(report)
 
 
 if __name__ == "__main__":
