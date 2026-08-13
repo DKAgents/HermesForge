@@ -78,10 +78,34 @@ def size_strategy_d(*args, **kwargs) -> float:
     return 1.0
 
 
+def size_strategy_i(*args, **kwargs) -> float:
+    """Strategy I (Adaptive Trend) — flat 1% per PS-001."""
+    return 1.0
+
+
+def size_strategy_p(*args, **kwargs) -> float:
+    """Strategy P (Cross-Sectional Factor) — flat 0.5% (WATCH status, reduced)."""
+    return 0.5
+
+
+def size_strategy_l(*args, **kwargs) -> float:
+    """Strategy L (ATR Contraction) — flat 1% per PS-001."""
+    return 1.0
+
+
+def size_strategy_h(*args, **kwargs) -> float:
+    """Strategy H (Hype/Momentum) — flat 0.5% (crypto, CR-001)."""
+    return 0.5
+
+
 SIZING_FUNCTIONS = {
-    "STR-A-ma-pullback-fibonacci":     size_strategy_a,
-    "STR-B-macd-histogram-divergence": size_strategy_b,
-    "STR-D-sr-role-reversal":          size_strategy_d,
+    "STR-A-ma-pullback-fibonacci":       size_strategy_a,
+    "STR-B-macd-histogram-divergence":   size_strategy_b,
+    "STR-D-sr-role-reversal":            size_strategy_d,
+    "STR-I-adaptive-trend":               size_strategy_i,
+    "STR-P-crosssectional":               size_strategy_p,
+    "STR-L-atr-contraction":              size_strategy_l,
+    "STR-H-hype":                         size_strategy_h,
 }
 
 
@@ -89,7 +113,11 @@ def get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
     """Dispatch to the correct strategy's sizing function."""
     fn = SIZING_FUNCTIONS.get(strategy_id)
     if fn is None:
-        raise ValueError(f"No sizing function registered for strategy_id={strategy_id}")
+        # Default: 0.5% for crypto, 1% for stocks
+        asset_class = signal_dict.get("asset_class", signal_dict.get("publish_channel", "stock"))
+        if asset_class == "crypto":
+            return 0.5
+        return 1.0
 
     if strategy_id == "STR-B-macd-histogram-divergence":
         return fn(

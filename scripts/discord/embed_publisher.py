@@ -131,6 +131,17 @@ def _register_trade_after_post(signal_dict: dict, short_id: str,
 
         post_url = make_discord_url(channel_id, message_id)
 
+        # Compute position size using the strategy's sizing function
+        import sys as _sys
+        _paper_dir = str(pathlib.Path(__file__).parent.parent / "paper_trading")
+        if _paper_dir not in _sys.path:
+            _sys.path.insert(0, _paper_dir)
+        try:
+            from position_sizing import get_risk_pct
+            risk_pct = get_risk_pct(strategy_id, signal_dict)
+        except Exception:
+            risk_pct = 0.5 if asset_class == "crypto" else 1.0
+
         trade_dict = {
             "strategy_id": strategy_id,
             "short_id": short_id,
@@ -143,6 +154,7 @@ def _register_trade_after_post(signal_dict: dict, short_id: str,
             "entry_price": signal_dict["entry_price"],
             "stop_price": signal_dict["stop_price"],
             "target_price": signal_dict["target_price"],
+            "position_size_pct": risk_pct,
             "discord_message_id": message_id,
             "discord_channel_id": channel_id,
             "discord_post_url": post_url,
