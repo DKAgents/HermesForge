@@ -68,6 +68,7 @@ def build_report(since_hours: int = 24) -> str:
 
     # --- Running totals since inception ---
     lines.append("**Running Totals (since inception):**")
+    by_strategy_all = {}
     if not closed_rows:
         lines.append("  No closed trades yet.")
     else:
@@ -116,6 +117,47 @@ def build_report(since_hours: int = 24) -> str:
             t_wr = len(t_wins) / len(r_vals) * 100
             t_total = sum(r_vals)
             lines.append(f"  • {ac}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R")
+
+    # --- Strategy correlation (need 5+ closed trades per strategy) ---
+    if closed_rows and len(by_strategy_all) >= 2:
+        lines.append("")
+        lines.append("**Strategy Correlation (closed trades, overlap periods):**")
+        # Check if any strategies tend to draw down at the same time
+        import datetime as dt
+        strategy_drawdowns = {}
+        for sid, trades in by_strategy_all.items():
+            if len(trades) < 3:
+                continue
+            # Compute worst drawdown period for this strategy
+            r_seq = [(t.get("exit_date", ""), float(t.get("r_multiple", 0) or 0)) for t in trades]
+            r_seq.sort(key=lambda x: x[0])
+            peak, cum, worst_dd, worst_start, worst_end = 0, 0, 0, "", ""
+            for d, r in r_seq:
+                cum += r
+                if cum > peak:
+                    peak = cum
+                dd = peak - cum
+                if dd > worst_dd:
+                    worst_dd = dd
+                    worst_start = d
+                    worst_end = d
+            strategy_drawdowns[sid] = {"worst_dd": worst_dd, "dd_start": worst_start[:10], "dd_end": worst_end[:10]}
+
+        # Check for overlapping drawdown periods
+        overlap_found = False
+        sids = list(strategy_drawdowns.keys())
+        for i in range(len(sids)):
+            for j in range(i + 1, len(sids)):
+                a, b = strategy_drawdowns[sids[i]], strategy_drawdowns[sids[j]]
+                # Simple overlap: same month
+                a_month = a["dd_start"][:7]
+                b_month = b["dd_start"][:7]
+                if a_month and b_month and a_month == b_month:
+                    overlap_found = True
+                    lines.append(f"  ⚠️ {sids[i]} and {sids[j]} both hit worst drawdown in {a_month}")
+        if not overlap_found:
+            lines.append("  No overlapping drawdown periods detected between strategies.")
+        lines.append(f"  _{len(strategy_drawdowns)} strategies with 3+ closed trades analyzed._")
 
     if len(closed_rows) < 10:
         lines.append("")

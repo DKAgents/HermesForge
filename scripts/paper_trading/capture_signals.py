@@ -88,12 +88,14 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
             entry_date = str(latest["date"])[:10]
             risk_pct = _get_risk_pct(strategy_id, latest)
 
+            # Heat cap disabled for data collection phase — let all signals through
+            # so every strategy gets enough trades to validate or kill.
+            # See US-102: Data Collection Before Portfolio Optimization.
             allowed, heat_reason = position_sizing.check_portfolio_heat(risk_pct)
             if not allowed:
                 summary.setdefault("skipped_heat_limit", 0)
                 summary["skipped_heat_limit"] += 1
-                print(f"  SKIP (heat limit): {strategy_id}/{ticker} -- {heat_reason}")
-                continue
+                print(f"  NOTE (heat limit exceeded, taking anyway): {strategy_id}/{ticker} -- {heat_reason}")
 
             entry_price = latest["entry_price"]
             stop_price = latest["stop_price"]
