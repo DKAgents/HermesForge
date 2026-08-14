@@ -29,6 +29,13 @@ from fetch_macro import get_vix_signal, get_dxy_signal, get_yield_curve_signal
 from fetch_fear_greed import get_current_fg
 from fetch_hyperliquid_metrics import get_funding_summary
 from fetch_lunarcrush import get_crypto_sentiment_summary, get_topic_sentiment_summary
+from fetch_defillama import get_tvl_summary
+from fetch_stablecoin_supply import get_stablecoin_summary
+from fetch_put_call_ratio import get_put_call_summary
+from compute_breadth import get_breadth_summary
+from compute_volatility import compute_vol_risk_premium, get_crypto_volatility
+from compute_rotation import get_rotation_summary
+from compute_correlation import get_correlation_summary
 
 
 def get_regime() -> dict:
@@ -68,6 +75,49 @@ def get_regime() -> dict:
     lunarcrush_topics = {}
     try:
         lunarcrush_topics = get_topic_sentiment_summary()
+    except Exception:
+        pass
+    
+    # New data sources (all optional — don't fail the regime if any is down)
+    tvl = {}
+    try:
+        tvl = get_tvl_summary()
+    except Exception:
+        pass
+    
+    stablecoin = {}
+    try:
+        stablecoin = get_stablecoin_summary()
+    except Exception:
+        pass
+    
+    put_call = {}
+    try:
+        put_call = get_put_call_summary()
+    except Exception:
+        pass
+    
+    breadth = {}
+    try:
+        breadth = get_breadth_summary()
+    except Exception:
+        pass
+    
+    vol_premium = {}
+    try:
+        vol_premium = compute_vol_risk_premium()
+    except Exception:
+        pass
+    
+    rotation = {}
+    try:
+        rotation = get_rotation_summary()
+    except Exception:
+        pass
+    
+    correlation = {}
+    try:
+        correlation = get_correlation_summary()
     except Exception:
         pass
     
@@ -122,6 +172,13 @@ def get_regime() -> dict:
                                     "trend": v.get("trend", "flat")}
                                 for k, v in lunarcrush_crypto.items()} if lunarcrush_crypto else {},
         "lunarcrush_topics": lunarcrush_topics,
+        "tvl": {"total": tvl.get("total_tvl", 0), "trend": tvl.get("trend", "")} if tvl else {},
+        "stablecoin": {"total_supply": stablecoin.get("total_supply", 0), "trend": stablecoin.get("trend", "")} if stablecoin else {},
+        "put_call": put_call,
+        "breadth": breadth,
+        "vol_risk_premium": vol_premium,
+        "rotation": rotation,
+        "correlation": correlation,
         "stock_regime": stock_regime,
         "crypto_regime": crypto_regime,
         "overall": overall,
@@ -168,6 +225,23 @@ def tag_signal(signal: dict, regime: dict = None) -> dict:
         signal["lc_galaxy_score"] = lc_crypto[ticker].get("galaxy_score", 0)
         signal["lc_sentiment"] = lc_crypto[ticker].get("sentiment", 50)
         signal["lc_trend"] = lc_crypto[ticker].get("trend", "flat")
+    
+    # Market breadth
+    breadth = regime.get("breadth", {})
+    if breadth:
+        signal["breadth_pct_above_50ma"] = breadth.get("pct_above_50ma", 50)
+        signal["breadth_divergence"] = breadth.get("divergence", "none")
+    
+    # Volatility risk premium
+    vrp = regime.get("vol_risk_premium", {})
+    if vrp:
+        signal["vol_risk_premium"] = vrp.get("vol_risk_premium", 0)
+        signal["vol_signal"] = vrp.get("signal", "neutral")
+    
+    # Correlation regime
+    corr = regime.get("correlation", {})
+    if corr:
+        signal["correlation_regime"] = corr.get("correlation_regime", "normal")
     
     return signal
 
@@ -234,6 +308,49 @@ def format_regime_report(regime: dict = None) -> str:
         topic_summary = {k: f'{v.get("sentiment",0):.0f} ({v.get("trend","")})' for k, v in lc_topics.items() if v.get("sentiment")}
         if topic_summary:
             lines.append(f"**Topic Sentiment:** {topic_summary}")
+    
+    # Market breadth
+    breadth = regime.get("breadth", {})
+    if breadth:
+        lines.append(f"**Breadth:** A/D={breadth.get('ad_ratio',0)}, "
+                      f"{breadth.get('pct_above_50ma',0)}% > 50MA, "
+                      f"{breadth.get('pct_above_200ma',0)}% > 200MA, "
+                      f"NH={breadth.get('new_highs',0)} NL={breadth.get('new_lows',0)}")
+        if breadth.get("divergence") != "none":
+            lines.append(f"  ⚠️ **{breadth['divergence'].upper()} divergence detected**")
+    
+    # Volatility risk premium
+    vrp = regime.get("vol_risk_premium", {})
+    if vrp:
+        lines.append(f"**Vol Risk Premium:** VIX={vrp.get('vix',0)} vs Realized={vrp.get('realized_vol_20d',0)}% "
+                      f"(VRP={vrp.get('vol_risk_premium',0):+.1f}%) → {vrp.get('signal','')}")
+    
+    # Put/Call ratio
+    pc = regime.get("put_call", {})
+    if pc:
+        lines.append(f"**Put/Call:** {pc.get('total_ratio',0)} (equity: {pc.get('equity_ratio',0)}) → {pc.get('regime','')}")
+    
+    # DeFi TVL
+    tvl = regime.get("tvl", {})
+    if tvl:
+        lines.append(f"**DeFi TVL:** ${tvl.get('total',0)/1e9:.1f}B ({tvl.get('trend','')})")
+    
+    # Stablecoin supply
+    sc = regime.get("stablecoin", {})
+    if sc:
+        lines.append(f"**Stablecoin Supply:** ${sc.get('total_supply',0)/1e9:.1f}B ({sc.get('trend','')})")
+    
+    # Sector rotation
+    rot = regime.get("rotation", {})
+    if rot:
+        lines.append(f"**Sector Rotation:** Leading={rot.get('leading_sector','')}, "
+                      f"Lagging={rot.get('lagging_sector','')}")
+    
+    # Correlation regime
+    corr = regime.get("correlation", {})
+    if corr:
+        lines.append(f"**Correlation Regime:** {corr.get('correlation_regime','')} "
+                      f"(avg={corr.get('avg_asset_correlation',0)})")
     
     return "\n".join(lines)
 
