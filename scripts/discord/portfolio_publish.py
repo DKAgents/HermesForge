@@ -523,18 +523,46 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 else:
                     most_recent_signal_date = None
                 
-                for sig in signals:
-                    # Only keep signals from the most recent rebalance date
-                    if most_recent_signal_date and str(sig.get("date", ""))[:10] != most_recent_signal_date:
-                        continue
-                    sig["strategy_id"] = scanner_id
-                    sig["strategy_name"] = cfg["name"]
-                    sig["strategy_status"] = strategy_status
-                    sig["is_live"] = is_live
-                    sig["publish_channel"] = publish_channel
-                    sig["regime"] = regime_data["regime"]
-                    sig["score"] = score_signal(sig, scanner_id, meta)
-                    scanner_signals.append(sig)
+                # Recency check: only publish if the most recent rebalance is
+                # within SIGNAL_RECENCY_BARS of today. A monthly rebalance
+                # strategy that rebalanced 17 days ago should NOT be published
+                # as new — the entry prices are stale and unactionable.
+                # This is the same check that per_ticker mode does, but
+                # applied to the rebalance date for batch scanners.
+                batch_recency_ok = True
+                if signals and most_recent_signal_date:
+                    # Use any ticker's data to compute age
+                    sample_ticker = next(iter(data))
+                    sample_df = data[sample_ticker]
+                    n_bars = len(sample_df)
+                    try:
+                        rebal_pos = int(sample_df.index.get_indexer(
+                            [pd.Timestamp(most_recent_signal_date)])[0])
+                    except Exception:
+                        rebal_pos = -1
+                    if rebal_pos >= 0:
+                        rebal_age = (n_bars - 1) - rebal_pos
+                        if rebal_age > SIGNAL_RECENCY_BARS:
+                            print(f"  ⏭️ {scanner_id}: last rebalance {most_recent_signal_date} "
+                                  f"is {rebal_age} bars old (> {SIGNAL_RECENCY_BARS}), skipping")
+                            batch_recency_ok = False
+                
+                if batch_recency_ok:
+                    for sig in signals:
+                        # Only keep signals from the most recent rebalance date
+                        if most_recent_signal_date and str(sig.get("date", ""))[:10] != most_recent_signal_date:
+                            continue
+                        # Skip signals that have already completed (exit set)
+                        if sig.get("exit_reason") and sig.get("bars_held", 0) > 0:
+                            continue
+                        sig["strategy_id"] = scanner_id
+                        sig["strategy_name"] = cfg["name"]
+                        sig["strategy_status"] = strategy_status
+                        sig["is_live"] = is_live
+                        sig["publish_channel"] = publish_channel
+                        sig["regime"] = regime_data["regime"]
+                        sig["score"] = score_signal(sig, scanner_id, meta)
+                        scanner_signals.append(sig)
             except Exception as e:
                 summary["errors"] += 1
                 summary["error_details"].append(f"{scanner_id} batch scan error: {e}")
