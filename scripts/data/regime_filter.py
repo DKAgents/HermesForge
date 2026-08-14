@@ -36,6 +36,9 @@ from compute_breadth import get_breadth_summary
 from compute_volatility import compute_vol_risk_premium, get_crypto_volatility
 from compute_rotation import get_rotation_summary
 from compute_correlation import get_correlation_summary
+from fetch_economic_calendar import get_next_high_impact_events
+from fetch_short_interest import get_high_short_interest_stocks
+from compute_strategy_regime import get_strategy_regime_summary
 
 
 def get_regime() -> dict:
@@ -121,6 +124,35 @@ def get_regime() -> dict:
     except Exception:
         pass
     
+    # Economic calendar (upcoming high-impact events)
+    economic_events = []
+    try:
+        economic_events = get_next_high_impact_events(days_ahead=7)
+    except Exception:
+        pass
+    
+    # Short interest (high short interest stocks)
+    short_interest = {}
+    try:
+        si_result = get_high_short_interest_stocks(threshold=10.0)
+        si_stocks = si_result.get("stocks", []) if isinstance(si_result, dict) else []
+        if si_stocks:
+            short_interest = {
+                "count": si_result.get("count", len(si_stocks)),
+                "top": [{"ticker": s.get("ticker", ""), "pct_float": s.get("short_pct_of_float", 0),
+                         "days_to_cover": s.get("days_to_cover", 0)}
+                        for s in si_stocks[:5]],
+            }
+    except Exception:
+        pass
+    
+    # Strategy-regime performance heatmap
+    strategy_regime = {}
+    try:
+        strategy_regime = get_strategy_regime_summary()
+    except Exception:
+        pass
+    
     # --- Stock regime from VIX ---
     stock_regime = vix.get("regime", "unknown") if vix else "unknown"
     
@@ -179,6 +211,9 @@ def get_regime() -> dict:
         "vol_risk_premium": vol_premium,
         "rotation": rotation,
         "correlation": correlation,
+        "economic_events": economic_events,
+        "short_interest": short_interest,
+        "strategy_regime": strategy_regime,
         "stock_regime": stock_regime,
         "crypto_regime": crypto_regime,
         "overall": overall,
@@ -242,6 +277,22 @@ def tag_signal(signal: dict, regime: dict = None) -> dict:
     corr = regime.get("correlation", {})
     if corr:
         signal["correlation_regime"] = corr.get("correlation_regime", "normal")
+    
+    # Economic calendar (tag with next high-impact event if within 3 days)
+    events = regime.get("economic_events", [])
+    if events:
+        signal["next_high_impact_event"] = events[0].get("event", "")
+        signal["next_event_date"] = events[0].get("date", "")
+    
+    # Short interest (if this ticker has high short interest)
+    si = regime.get("short_interest", {})
+    if si and si.get("top"):
+        ticker_upper = ticker.upper()
+        for s in si["top"]:
+            if s.get("ticker", "").upper() == ticker_upper:
+                signal["short_interest_pct"] = s.get("pct_float", 0)
+                signal["short_interest_dtc"] = s.get("days_to_cover", 0)
+                break
     
     return signal
 
@@ -351,6 +402,31 @@ def format_regime_report(regime: dict = None) -> str:
     if corr:
         lines.append(f"**Correlation Regime:** {corr.get('correlation_regime','')} "
                       f"(avg={corr.get('avg_asset_correlation',0)})")
+    
+    # Economic calendar
+    events = regime.get("economic_events", [])
+    if events:
+        lines.append(f"**Upcoming High-Impact Events:** {len(events)}")
+        for ev in events[:3]:
+            lines.append(f"  • {ev.get('date','')} {ev.get('time','')} — {ev.get('event','')} ({ev.get('country','')})")
+    
+    # Short interest
+    si = regime.get("short_interest", {})
+    if si and si.get("top"):
+        top_si = ", ".join(f"{s['ticker']} {s['pct_float']:.1f}% (DTC {s['days_to_cover']:.1f})"
+                           for s in si["top"])
+        lines.append(f"**High Short Interest:** {si['count']} stocks — {top_si}")
+    
+    # Strategy-regime performance
+    sr = regime.get("strategy_regime", {})
+    if sr and sr.get("available"):
+        lines.append(f"**Strategy-Regime Performance:** {sr.get('total_closed',0)} closed trades")
+        if sr.get("best_combo"):
+            bc = sr["best_combo"]
+            lines.append(f"  ✅ Best: {bc['strategy']} @ {bc['regime']} → WR={bc['win_rate']}%, avg={bc['avg_r']:+.2f}R")
+        if sr.get("worst_combo"):
+            wc = sr["worst_combo"]
+            lines.append(f"  ❌ Worst: {wc['strategy']} @ {wc['regime']} → WR={wc['win_rate']}%, avg={wc['avg_r']:+.2f}R")
     
     return "\n".join(lines)
 
