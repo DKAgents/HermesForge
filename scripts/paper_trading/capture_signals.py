@@ -23,6 +23,7 @@ import pathlib
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 
 from fetch_data import load_all as load_all_stocks  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
@@ -52,7 +53,7 @@ def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
 
 
 def _scan_and_capture(data: dict, asset_class: str, data_source: str,
-                       dry_run: bool, summary: dict) -> None:
+                       dry_run: bool, summary: dict, regime: dict = None) -> None:
     """Shared scan+capture loop, used for both stock and crypto data sources."""
     for strategy_id, scan_fn in PAPER_STRATEGIES.items():
         print(f"\nScanning {strategy_id} ({asset_class})...")
@@ -125,6 +126,13 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 "notes": "",
             }
 
+            # Tag with market regime context
+            if regime:
+                try:
+                    tag_signal(trade_dict, regime)
+                except Exception:
+                    pass  # regime tagging is optional
+
             if dry_run:
                 summary["opened"] += 1
                 summary["opened_trades"].append(trade_dict)
@@ -151,12 +159,24 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         "error_details": [],
     }
 
+    # Fetch market regime once for all signals
+    regime = None
+    try:
+        from regime_filter import get_regime, tag_signal
+        print("Fetching market regime data...")
+        regime = get_regime()
+        print(f"  Regime: stock={regime['stock_regime']}, crypto={regime['crypto_regime']}, overall={regime['overall']}")
+        if regime.get("vix"):
+            print(f"  VIX={regime['vix'].get('current', 0):.1f}, DXY trend={regime.get('dxy', {}).get('trend', '?')}, F&G={regime.get('fear_greed', {}).get('value', 0)}")
+    except Exception as e:
+        print(f"  Warning: regime filter unavailable ({e}) — signals will not be tagged")
+
     if include_stocks:
         print("Loading cached stock market data...")
         stock_data = load_all_stocks()
         if stock_data:
             print(f"Loaded {len(stock_data)} stock tickers.")
-            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary)
+            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime)
         else:
             print("No cached stock data found (run fetch_data.py first) -- skipping stocks.")
 
@@ -165,7 +185,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         crypto_data = load_all_crypto()
         if crypto_data:
             print(f"Loaded {len(crypto_data)} crypto symbols.")
-            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary)
+            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary, regime)
         else:
             print("No cached crypto data found (run fetch_crypto_data.py first) -- skipping crypto.")
 
