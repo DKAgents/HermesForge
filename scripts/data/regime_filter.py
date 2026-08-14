@@ -28,6 +28,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from fetch_macro import get_vix_signal, get_dxy_signal, get_yield_curve_signal
 from fetch_fear_greed import get_current_fg
 from fetch_hyperliquid_metrics import get_funding_summary
+from fetch_lunarcrush import get_crypto_sentiment_summary, get_topic_sentiment_summary
 
 
 def get_regime() -> dict:
@@ -57,6 +58,18 @@ def get_regime() -> dict:
         funding = get_funding_summary()
     except Exception:
         pass  # funding is optional, don't fail the whole filter
+    
+    lunarcrush_crypto = {}
+    try:
+        lunarcrush_crypto = get_crypto_sentiment_summary()
+    except Exception:
+        pass  # LunarCrush is optional, don't fail the whole filter
+    
+    lunarcrush_topics = {}
+    try:
+        lunarcrush_topics = get_topic_sentiment_summary()
+    except Exception:
+        pass
     
     # --- Stock regime from VIX ---
     stock_regime = vix.get("regime", "unknown") if vix else "unknown"
@@ -104,6 +117,11 @@ def get_regime() -> dict:
         "fear_greed": fg,
         "funding": {k: {"current_rate": v["current_rate"], "extreme": v["extreme"]}
                      for k, v in funding.items()} if funding else {},
+        "lunarcrush_crypto": {k: {"galaxy_score": v.get("galaxy_score", 0),
+                                    "sentiment": v.get("sentiment", 50),
+                                    "trend": v.get("trend", "flat")}
+                                for k, v in lunarcrush_crypto.items()} if lunarcrush_crypto else {},
+        "lunarcrush_topics": lunarcrush_topics,
         "stock_regime": stock_regime,
         "crypto_regime": crypto_regime,
         "overall": overall,
@@ -142,6 +160,14 @@ def tag_signal(signal: dict, regime: dict = None) -> dict:
     
     fg = regime.get("fear_greed", {})
     signal["fear_greed"] = fg.get("value", 50)
+    
+    # LunarCrush per-coin sentiment (if available for this ticker)
+    lc_crypto = regime.get("lunarcrush_crypto", {})
+    ticker = signal.get("ticker", "")
+    if ticker in lc_crypto:
+        signal["lc_galaxy_score"] = lc_crypto[ticker].get("galaxy_score", 0)
+        signal["lc_sentiment"] = lc_crypto[ticker].get("sentiment", 50)
+        signal["lc_trend"] = lc_crypto[ticker].get("trend", "flat")
     
     return signal
 
@@ -197,6 +223,17 @@ def format_regime_report(regime: dict = None) -> str:
         extremes = {k: v["extreme"] for k, v in funding.items() if v["extreme"] != "neutral"}
         if extremes:
             lines.append(f"**Funding Extremes:** {extremes}")
+    
+    # LunarCrush
+    lc_crypto = regime.get("lunarcrush_crypto", {})
+    if lc_crypto:
+        lines.append(f"**LunarCrush Galaxy Scores:** {dict({k: v['galaxy_score'] for k, v in lc_crypto.items() if v.get('galaxy_score')})}")
+    
+    lc_topics = regime.get("lunarcrush_topics", {})
+    if lc_topics:
+        topic_summary = {k: f'{v.get("sentiment",0):.0f} ({v.get("trend","")})' for k, v in lc_topics.items() if v.get("sentiment")}
+        if topic_summary:
+            lines.append(f"**Topic Sentiment:** {topic_summary}")
     
     return "\n".join(lines)
 

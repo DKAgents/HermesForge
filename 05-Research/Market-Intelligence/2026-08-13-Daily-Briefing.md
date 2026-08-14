@@ -5,8 +5,11 @@ model_tier: T3
 model: google/gemini-2.0-flash-001
 sources: [web-search]
 tags: [market-intelligence, daily-briefing, automated]
+topic: research
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # HermesForge Daily Market Intelligence Briefing
 **Thursday, August 13, 2026** | *Swing & Position Trader Focus*
 

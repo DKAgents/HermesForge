@@ -1,3 +1,11 @@
+---
+topic: research
+confidence: high
+has_quotes: false
+tags: []
+source: unknown
+created: 2026-08-14
+---
 # Edge Candidates
 
 Staging directory for the autonomous strategy pipeline.

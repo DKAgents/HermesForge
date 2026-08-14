@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Trail Stops via P&F Columns to Lock Pivot Profits
 
 ## Discovery Summary

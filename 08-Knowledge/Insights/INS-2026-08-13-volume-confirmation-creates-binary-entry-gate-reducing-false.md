@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "N013-volume-as-a-filter-for-false-breakouts", "C324-confirmation"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume Confirmation Creates Binary Entry Gate Reducing False Breakouts
 
 ## Discovery Summary

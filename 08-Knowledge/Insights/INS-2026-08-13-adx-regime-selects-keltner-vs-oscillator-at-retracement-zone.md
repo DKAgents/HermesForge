@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX Regime Selects Keltner vs Oscillator at Retracement Zones
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ At Fibonacci/Dow retracement levels (33-67% of prior move), use ADX direction to
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trend]]
+- [[INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trends]]
