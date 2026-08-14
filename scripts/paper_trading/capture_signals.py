@@ -24,6 +24,7 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "research"))
 
 from fetch_data import load_all as load_all_stocks  # noqa: E402
 from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
@@ -53,10 +54,25 @@ def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
 
 
 def _scan_and_capture(data: dict, asset_class: str, data_source: str,
-                       dry_run: bool, summary: dict, regime: dict = None) -> None:
+                       dry_run: bool, summary: dict, regime: dict = None,
+                       strategy_directives: dict = None) -> None:
     """Shared scan+capture loop, used for both stock and crypto data sources."""
     for strategy_id, scan_fn in PAPER_STRATEGIES.items():
-        print(f"\nScanning {strategy_id} ({asset_class})...")
+        # Check regime-aware strategy directives
+        if strategy_directives:
+            # Match strategy_id (e.g. "STR-B-macd-histogram-divergence") to directive keys (e.g. "STR-B")
+            strat_prefix = strategy_id.split("-")[0] if "-" in strategy_id else strategy_id
+            directive = strategy_directives.get(f"STR-{strat_prefix}") if strat_prefix else None
+            if not directive:
+                # Try direct match
+                directive = strategy_directives.get(strategy_id)
+            if directive and directive.get("action") == "suppress":
+                print(f"\nScanning {strategy_id} ({asset_class})... SUPPRESSED by regime selector")
+                print(f"  Reason: {directive.get('reason', '')}")
+                summary.setdefault("suppressed_by_regime", 0)
+                summary["suppressed_by_regime"] += 1
+                continue
+            print(f"\nScanning {strategy_id} ({asset_class})...")
 
         # Scanner I (AdaptiveTrend) is long-only for stocks, bidirectional for crypto.
         scanner_kwargs = {}
@@ -88,6 +104,16 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
 
             entry_date = str(latest["date"])[:10]
             risk_pct = _get_risk_pct(strategy_id, latest)
+            
+            # Apply regime-aware risk multiplier
+            if strategy_directives:
+                strat_prefix = strategy_id.split("-")[0] if "-" in strategy_id else strategy_id
+                directive = strategy_directives.get(f"STR-{strat_prefix}") or strategy_directives.get(strategy_id)
+                if directive:
+                    mult = directive.get("risk_multiplier", 1.0)
+                    risk_pct = round(risk_pct * mult, 2)
+                    if mult != 1.0:
+                        print(f"  Regime adjustment: risk {mult:.1f}x → {risk_pct}%")
 
             # Heat cap disabled for data collection phase — let all signals through
             # so every strategy gets enough trades to validate or kill.
@@ -171,12 +197,25 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
     except Exception as e:
         print(f"  Warning: regime filter unavailable ({e}) — signals will not be tagged")
 
+    # Fetch regime-aware strategy directives
+    strategy_directives = {}
+    try:
+        from regime_strategy_selector import get_strategy_directives
+        print("Fetching strategy directives...")
+        dir_result = get_strategy_directives()
+        strategy_directives = dir_result.get("directives", {})
+        print(f"  Posture: {dir_result.get('overall_posture', '?').upper()}")
+        for sid, d in strategy_directives.items():
+            print(f"  {sid}: {d['action']} (risk x{d['risk_multiplier']:.1f}) — {d.get('reason', '')[:80]}")
+    except Exception as e:
+        print(f"  Warning: strategy selector unavailable ({e}) — running all strategies at default risk")
+
     if include_stocks:
         print("Loading cached stock market data...")
         stock_data = load_all_stocks()
         if stock_data:
             print(f"Loaded {len(stock_data)} stock tickers.")
-            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime)
+            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime, strategy_directives)
         else:
             print("No cached stock data found (run fetch_data.py first) -- skipping stocks.")
 
@@ -185,7 +224,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         crypto_data = load_all_crypto()
         if crypto_data:
             print(f"Loaded {len(crypto_data)} crypto symbols.")
-            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary, regime)
+            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary, regime, strategy_directives)
         else:
             print("No cached crypto data found (run fetch_crypto_data.py first) -- skipping crypto.")
 
