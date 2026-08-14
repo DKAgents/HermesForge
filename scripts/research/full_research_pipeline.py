@@ -146,33 +146,74 @@ def run_full_pipeline(stage: bool = False, skip_existing: bool = False) -> dict:
     else:
         print("\n[4/5] Skipping existing research modules", file=sys.stderr)
     
-    # ─── Module 5: Generate Heatmap Visualizations ────────────────────────
-    print("\n[5/5] Generating heatmap visualizations...", file=sys.stderr)
+    # ─── Module 5: Risk Metrics Dashboard ─────────────────────────────────
+    print("\n[5/7] Risk Metrics Dashboard...", file=sys.stderr)
     t0 = time.time()
-    try:
-        from visualize_heatmaps import (
-            generate_correlation_heatmap,
-            generate_strategy_regime_heatmap,
-            generate_crypto_performance_heatmap,
-            generate_sector_rotation_heatmap,
-        )
-        
-        viz_results = {}
-        for name, fn in [
-            ("correlation", generate_correlation_heatmap),
-            ("strategy_regime", generate_strategy_regime_heatmap),
-            ("crypto_performance", generate_crypto_performance_heatmap),
-            ("sector_rotation", generate_sector_rotation_heatmap),
-        ]:
-            path = _safe_call(fn)
-            if path:
-                viz_results[name] = str(path)
-        
-        results["modules"]["visualizations"] = viz_results
-        print(f"  Generated {len(viz_results)} heatmaps in {time.time()-t0:.1f}s", file=sys.stderr)
-    except Exception as e:
-        print(f"  Visualization failed: {e}", file=sys.stderr)
-        results["modules"]["visualizations"] = {"error": str(e)}
+    from compute_risk_metrics import compute_metrics as compute_risk
+    
+    risk = _safe_call(compute_risk)
+    if risk and not risk.get("error"):
+        results["modules"]["risk_metrics"] = {
+            "total_r": risk.get("total_r", 0),
+            "sharpe": risk.get("sharpe", 0),
+            "sortino": risk.get("sortino", 0),
+            "max_dd_r": risk.get("max_drawdown_r", 0),
+            "win_rate": risk.get("win_rate", 0),
+            "profit_factor": risk.get("profit_factor", 0),
+            "expectancy": risk.get("expectancy", 0),
+            "portfolio_heat": risk.get("portfolio_heat", 0),
+        }
+        print(f"  Sharpe={risk.get('sharpe', 0):.2f}, Sortino={risk.get('sortino', 0):.2f}, "
+              f"WR={risk.get('win_rate', 0):.0f}% in {time.time()-t0:.1f}s", file=sys.stderr)
+    else:
+        print(f"  {risk.get('error', 'failed') if risk else 'failed'}", file=sys.stderr)
+    
+    # ─── Module 6: Performance Attribution ────────────────────────────────
+    print("\n[6/7] Performance Attribution...", file=sys.stderr)
+    t0 = time.time()
+    from compute_performance_attribution import run_attribution
+    
+    attribution = _safe_call(run_attribution)
+    if attribution and not attribution.get("error"):
+        results["modules"]["performance_attribution"] = {
+            "total_trades": attribution.get("total_trades", 0),
+            "closed_trades": attribution.get("closed_trades", 0),
+            "key_findings": attribution.get("key_findings", []),
+        }
+        print(f"  {attribution.get('closed_trades', 0)} trades, "
+              f"{len(attribution.get('key_findings', []))} findings in {time.time()-t0:.1f}s", file=sys.stderr)
+    else:
+        print(f"  {attribution.get('error', 'failed') if attribution else 'failed'}", file=sys.stderr)
+    
+    # ─── Module 7: Auto-Kill + Regime Transitions + Seasonality ────────────
+    print("\n[7/7] Auto-Kill + Regime Transitions + Seasonality...", file=sys.stderr)
+    t0 = time.time()
+    
+    from auto_kill_manager import run_kill_analysis
+    kill_results = _safe_call(run_kill_analysis)
+    if kill_results and not kill_results.get("error"):
+        results["modules"]["auto_kill"] = {
+            "kills": kill_results.get("kills", 0),
+            "watches": kill_results.get("watches", 0),
+            "kill_list": [a["strategy_id"] for a in kill_results.get("kill_recommendations", [])],
+            "watch_list": [a["strategy_id"] for a in kill_results.get("watch_recommendations", [])],
+        }
+    
+    from regime_transition_detector import detect_transitions
+    transitions = _safe_call(detect_transitions)
+    if transitions:
+        results["modules"]["regime_transitions"] = {
+            "total_transitions": transitions.get("total_transitions", 0),
+            "high_severity": transitions.get("high_severity", 0),
+            "transitions": transitions.get("transitions", []),
+        }
+    
+    from compute_seasonality import get_seasonality_summary
+    seasonality = _safe_call(get_seasonality_summary)
+    if seasonality:
+        results["modules"]["seasonality"] = seasonality
+    
+    print(f"  Done in {time.time()-t0:.1f}s", file=sys.stderr)
     
     # ─── Summary ──────────────────────────────────────────────────────────
     runtime = time.time() - pipeline_start
@@ -296,6 +337,53 @@ def build_discord_summary(results: dict) -> str:
     viz_mod = results["modules"].get("visualizations", {})
     if viz_mod and not viz_mod.get("error"):
         lines.append(f"**Heatmaps:** {', '.join(viz_mod.keys())}")
+        lines.append("")
+    
+    # Risk metrics
+    risk_mod = results["modules"].get("risk_metrics", {})
+    if risk_mod:
+        lines.append(f"**Risk Metrics:** Sharpe={risk_mod.get('sharpe', 0):.2f}, "
+                      f"Sortino={risk_mod.get('sortino', 0):.2f}, "
+                      f"MaxDD={risk_mod.get('max_dd_r', 0):.1f}R, "
+                      f"WR={risk_mod.get('win_rate', 0):.0f}%, "
+                      f"PF={risk_mod.get('profit_factor', 0)}")
+        lines.append(f"  Total: {risk_mod.get('total_r', 0):+.2f}R, Heat: {risk_mod.get('portfolio_heat', 0):.1f}%")
+        lines.append("")
+    
+    # Performance attribution
+    attr_mod = results["modules"].get("performance_attribution", {})
+    if attr_mod:
+        lines.append(f"**Attribution:** {attr_mod.get('closed_trades', 0)} trades analyzed")
+        for finding in attr_mod.get("key_findings", [])[:3]:
+            lines.append(f"  {finding}")
+        lines.append("")
+    
+    # Auto-kill
+    kill_mod = results["modules"].get("auto_kill", {})
+    if kill_mod:
+        if kill_mod.get("kills", 0) > 0:
+            lines.append(f"🔴 **KILL:** {', '.join(kill_mod.get('kill_list', []))}")
+        if kill_mod.get("watches", 0) > 0:
+            lines.append(f"🟡 **WATCH:** {', '.join(kill_mod.get('watch_list', []))}")
+        if not kill_mod.get("kills") and not kill_mod.get("watches"):
+            lines.append("✅ No strategies need killing or watching")
+        lines.append("")
+    
+    # Regime transitions
+    trans_mod = results["modules"].get("regime_transitions", {})
+    if trans_mod and trans_mod.get("total_transitions", 0) > 0:
+        lines.append(f"🔄 **Regime Transitions:** {trans_mod.get('total_transitions', 0)} detected "
+                      f"({trans_mod.get('high_severity', 0)} high severity)")
+        for t in trans_mod.get("transitions", [])[:3]:
+            lines.append(f"  {'🔴' if t.get('severity') == 'HIGH' else '🟡'} {t.get('description', '')}")
+        lines.append("")
+    
+    # Seasonality
+    season_mod = results["modules"].get("seasonality", {})
+    if season_mod:
+        lines.append(f"**Seasonality:** {season_mod.get('current_month', '?')}")
+        for sig in season_mod.get("seasonal_signals", [])[:3]:
+            lines.append(f"  {sig}")
         lines.append("")
     
     # Action items

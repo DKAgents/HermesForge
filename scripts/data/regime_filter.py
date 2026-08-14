@@ -39,6 +39,8 @@ from compute_correlation import get_correlation_summary
 from fetch_economic_calendar import get_next_high_impact_events
 from fetch_short_interest import get_high_short_interest_stocks
 from compute_strategy_regime import get_strategy_regime_summary
+from fetch_intermarket import get_intermarket_summary
+from fetch_crypto_onchain import get_crypto_onchain_summary
 
 
 def get_regime() -> dict:
@@ -153,6 +155,20 @@ def get_regime() -> dict:
     except Exception:
         pass
     
+    # Intermarket data (VIX term structure, commodities, FX, VVIX, MOVE)
+    intermarket = {}
+    try:
+        intermarket = get_intermarket_summary()
+    except Exception:
+        pass
+    
+    # Crypto on-chain data (BTC dominance, altcoin season, blockchain)
+    crypto_onchain = {}
+    try:
+        crypto_onchain = get_crypto_onchain_summary()
+    except Exception:
+        pass
+    
     # --- Stock regime from VIX ---
     stock_regime = vix.get("regime", "unknown") if vix else "unknown"
     
@@ -214,6 +230,8 @@ def get_regime() -> dict:
         "economic_events": economic_events,
         "short_interest": short_interest,
         "strategy_regime": strategy_regime,
+        "intermarket": intermarket,
+        "crypto_onchain": crypto_onchain,
         "stock_regime": stock_regime,
         "crypto_regime": crypto_regime,
         "overall": overall,
@@ -427,6 +445,44 @@ def format_regime_report(regime: dict = None) -> str:
         if sr.get("worst_combo"):
             wc = sr["worst_combo"]
             lines.append(f"  ❌ Worst: {wc['strategy']} @ {wc['regime']} → WR={wc['win_rate']}%, avg={wc['avg_r']:+.2f}R")
+    
+    # Intermarket
+    im = regime.get("intermarket", {})
+    if im:
+        vix_ts = im.get("vix_term_structure", {})
+        if vix_ts:
+            lines.append(f"**VIX Term Structure:** {vix_ts.get('state', '?')} "
+                          f"(VIX={vix_ts.get('vix', 0):.1f}, VIX3M={vix_ts.get('vix3m', 0):.1f})")
+        vvix = im.get("vvix", {})
+        if vvix:
+            lines.append(f"**VVIX:** {vvix.get('current', 0):.1f} — {'⚠️ High vol-of-vol' if vvix.get('current', 0) > 100 else 'normal'}")
+        move = im.get("move", {})
+        if move:
+            lines.append(f"**MOVE (Bond Vol):** {move.get('current', 0):.1f} — {'⚠️ Bond stress' if move.get('current', 0) > 100 else 'normal'}")
+        commodities = im.get("commodities", {})
+        if commodities:
+            gold = commodities.get("GC=F", {})
+            copper = commodities.get("HG=F", {})
+            oil = commodities.get("CL=F", {})
+            lines.append(f"**Commodities:** Gold={gold.get('price', 0):.0f}, Copper={copper.get('price', 0):.2f}, Oil={oil.get('price', 0):.1f}")
+            go_ratio = im.get("gold_oil_ratio", 0)
+            if go_ratio > 25:
+                lines.append(f"  Gold/Oil ratio: {go_ratio:.1f} (recession fear)")
+            elif go_ratio > 0:
+                lines.append(f"  Gold/Oil ratio: {go_ratio:.1f}")
+    
+    # Crypto on-chain
+    co = regime.get("crypto_onchain", {})
+    if co:
+        dom = co.get("btc_dominance", {})
+        if dom:
+            lines.append(f"**BTC Dominance:** {dom.get('btc', 0):.1f}% ({dom.get('trend', 'flat')})")
+        alt = co.get("altcoin_season", {})
+        if alt:
+            lines.append(f"**Altcoin Season:** {alt.get('classification', '?')} ({alt.get('index_7d', 0):.0f}% beating BTC)")
+        bc = co.get("blockchain", {})
+        if bc:
+            lines.append(f"**BTC Network:** {bc.get('tx_count_24h', 0):,} tx/24h, activity={bc.get('activity_score', 0):.0f}/100")
     
     return "\n".join(lines)
 
