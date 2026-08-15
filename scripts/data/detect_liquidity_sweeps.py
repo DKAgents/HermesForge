@@ -79,6 +79,16 @@ MIN_RR = 2.0
 # Stop buffer beyond the sweep wick (in ATR)
 STOP_BUFFER_ATR = 0.1
 
+# US-109: Per-level-type stop risk cap (fraction of original wick-based risk)
+# Based on MAE/MFE analysis of 696 trades (1-year Alpaca 5m data)
+# swing_high: optimal at 0.6R (+0.078R/trade improvement)
+# swing_low: optimal at 0.7R (+0.025R/trade improvement)
+# All other level types: 1.0 (no change — current stop is optimal)
+STOP_RISK_CAP = {
+    "swing_high": 0.6,
+    "swing_low": 0.7,
+}
+
 # Volume surge required (sweep bar volume vs 20-bar average)
 MIN_VOLUME_SURGE = 1.2
 
@@ -456,12 +466,19 @@ def detect_sweep_at_level(
                     entry_price = bar["close"]  # Enter on sweep candle close
                     stop_price = bar["low"] - (bar_atr * STOP_BUFFER_ATR)  # Below sweep wick
                     
-                    # Target: next resistance level or 3R
+                    # US-109: Apply per-level-type stop risk cap
                     risk = entry_price - stop_price
                     if risk <= 0:
                         continue
                     
-                    target_price = entry_price + (risk * 3.0)  # 3R target
+                    risk_cap = STOP_RISK_CAP.get(level.level_type, 1.0)
+                    if risk_cap < 1.0:
+                        capped_risk = risk * risk_cap
+                        stop_price = entry_price - capped_risk
+                        risk = capped_risk
+                    
+                    # Target: 3R (based on capped risk for tighter R:R)
+                    target_price = entry_price + (risk * 3.0)
                     rr = 3.0
                     
                     # Quality score (recalibrated US-107 v2 based on 826-trade deep backtest)
@@ -549,11 +566,18 @@ def detect_sweep_at_level(
                     entry_price = bar["close"]  # Enter on sweep candle close
                     stop_price = bar["high"] + (bar_atr * STOP_BUFFER_ATR)  # Above sweep wick
                     
+                    # US-109: Apply per-level-type stop risk cap
                     risk = stop_price - entry_price
                     if risk <= 0:
                         continue
                     
-                    target_price = entry_price - (risk * 3.0)  # 3R target
+                    risk_cap = STOP_RISK_CAP.get(level.level_type, 1.0)
+                    if risk_cap < 1.0:
+                        capped_risk = risk * risk_cap
+                        stop_price = entry_price + capped_risk
+                        risk = capped_risk
+                    
+                    target_price = entry_price - (risk * 3.0)
                     rr = 3.0
                     
                     # Quality score (recalibrated US-107 v2 based on 826-trade deep backtest)
