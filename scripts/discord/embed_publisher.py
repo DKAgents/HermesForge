@@ -219,6 +219,19 @@ def _get_confluence(signal_dict: dict) -> str:
             f"\u2022 RSI {'near 70 (overbought)' if direction == 'short' else 'near 30 (oversold)'} \u2192 confirms exhausted sentiment\n"
             "\u2022 ATR-based stop \u2192 volatility-adjusted risk, not a fixed percentage"
         )
+    elif "STR-Q" in sid:
+        level_type = signal_dict.get("level_type", "unknown")
+        quality = signal_dict.get("quality_score", 0)
+        sweep_dir = signal_dict.get("sweep_direction", "")
+        return (
+            "**Liquidity Sweep confluence:**\n"
+            f"\u2022 Price swept {level_type} level then reversed \u2192 institutional liquidity grab confirmed\n"
+            f"\u2022 Sweep direction: {sweep_dir} \u2192 alignment with trade direction\n"
+            f"\u2022 Quality score: {quality}/100 \u2192 data-driven scoring (level type weighted)\n"
+            "\u2022 Stop behind sweep wick \u2192 tight risk, minimal adverse excursion\n"
+            "\u2022 3R target \u2192 favorable risk-reward ratio\n"
+            "\u2022 5-minute intraday execution \u2192 precise timing, post-sweep entry"
+        )
     elif "STR-P" in sid:
         mom = signal_dict.get("factor_mom12_1", 0)
         liq = signal_dict.get("factor_liquid", 0)

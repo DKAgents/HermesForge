@@ -169,6 +169,14 @@ STRATEGIES = [
         "regimes": ["ranging", "trending"],
         "edge": "Multi-factor cross-sectional (crypto only, walk-forward validated)",
     },
+    {
+        "id": "STR-Q",
+        "name": "Liquidity Sweep Reversal",
+        "status": "LIVE",
+        "description": "Institutional stop-loss sweep detection on 5m intraday bars. Enters AFTER price sweeps a liquidity level (PDH/PDL, equal highs/lows, round numbers) and reverses. Stop behind sweep wick, 3R target. Phase 1B PASS: OOS +1.131R, 62.1% WR, p=0.0000. Deep backtest: 826 trades, +0.588R, 2.18 PF. Runs every 5 min via cron b9fb0afb1e29.",
+        "regimes": ["all"],
+        "edge": "Post-sweep reversal entry (intraday)",
+    },
 ]
 
 # ── Research Pipeline Strategies ──────────────────────────────────────────────

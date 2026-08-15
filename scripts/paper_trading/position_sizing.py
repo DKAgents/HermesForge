@@ -98,6 +98,11 @@ def size_strategy_h(*args, **kwargs) -> float:
     return 0.5
 
 
+def size_strategy_q(*args, **kwargs) -> float:
+    """Strategy Q (Liquidity Sweep) — flat 1.0% (intraday, post-sweep confirmation)."""
+    return 1.0
+
+
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
     "STR-B-macd-histogram-divergence":   size_strategy_b,
@@ -106,6 +111,7 @@ SIZING_FUNCTIONS = {
     "STR-P-crosssectional":               size_strategy_p,
     "STR-L-atr-contraction":              size_strategy_l,
     "STR-H-hype":                         size_strategy_h,
+    "STR-Q-liquidity-sweep":              size_strategy_q,
 }
 
 
