@@ -120,11 +120,19 @@ def get_alpaca_bars(
     """
     headers = _get_headers()
     
+    # Map interval to Alpaca timeframe
+    timeframe_map = {
+        "1m": "1Min", "5m": "5Min", "15m": "15Min",
+        "30m": "30Min", "60m": "1Hour", "1h": "1Hour",
+    }
+    alpaca_timeframe = timeframe_map.get(timeframe, timeframe)
+    
     # Calculate time range
     timeframe_minutes = {
         "1Min": 1, "5Min": 5, "15Min": 15, "30Min": 30, "1Hour": 60,
+        "1m": 1, "5m": 5, "15m": 15, "30m": 30, "60m": 60, "1h": 60,
     }
-    mins = timeframe_minutes.get(timeframe, 5)
+    mins = timeframe_minutes.get(alpaca_timeframe, 5)
     
     if end is None:
         end_dt = datetime.now(timezone.utc)
@@ -147,11 +155,12 @@ def get_alpaca_bars(
         _rate_limit()
         
         params = {
-            "timeframe": timeframe,
+            "timeframe": alpaca_timeframe,
             "start": current_start,
             "end": current_end,
             "limit": min(bars_remaining, MAX_BARS_PER_CALL),
             "adjustment": "raw",
+            "feed": "iex",  # Free tier uses IEX feed
         }
         
         url = f"{ALPACA_DATA_URL}/stocks/{symbol}/bars"
@@ -176,12 +185,14 @@ def get_alpaca_bars(
             all_bars.extend(bars)
             bars_remaining -= len(bars)
             
-            # Move window back
-            last_bar_time = pd.Timestamp(bars[0]["t"])
-            current_end = last_bar_time.isoformat()
+            # Advance start to after the last bar received (forward pagination)
+            last_bar_time = pd.Timestamp(bars[-1]["t"])
+            current_start = (last_bar_time + timedelta(minutes=mins)).isoformat()
             
-            if len(bars) < MAX_BARS_PER_CALL:
-                break  # no more data
+            if len(bars) == 0:
+                break  # no more data in this range
+            # Note: IEX feed returns ~2000 bars max per call regardless of limit,
+            # so we don't break on len(bars) < MAX_BARS_PER_CALL
                 
         except requests.exceptions.HTTPError as e:
             if r.status_code == 403:
