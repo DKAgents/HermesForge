@@ -6,8 +6,10 @@ composite_score: 67.6
 confidence: medium
 regime_fit: ['risk_on']
 created: 20260814
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Technology (XLK) leading with momentum continuing
 
 ## Source

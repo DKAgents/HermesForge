@@ -6,8 +6,10 @@ composite_score: 74.2
 confidence: high
 regime_fit: ['risk_on', 'neutral']
 created: 20260814
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Diversified market: avg correlation 0.21 (stock-picking environment)
 
 ## Source

@@ -159,6 +159,26 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 except Exception:
                     pass  # regime tagging is optional
 
+            # Tag with liquidity sweep context (US-107)
+            try:
+                sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "data"))
+                from sweep_timing_filter import get_sweep_context_for_signal
+                sweep_ctx = get_sweep_context_for_signal(
+                    ticker, entry_price, latest.get("direction", "long"),
+                    asset_class, interval="5m",
+                )
+                trade_dict["sweep_found"] = sweep_ctx["sweep_found"]
+                trade_dict["sweep_aligned"] = sweep_ctx["sweep_aligned"]
+                trade_dict["sweep_direction"] = sweep_ctx["sweep_direction"]
+                trade_dict["sweep_quality"] = sweep_ctx["sweep_quality"]
+                trade_dict["sweep_description"] = sweep_ctx["sweep_description"]
+                if sweep_ctx["sweep_aligned"]:
+                    trade_dict["notes"] = (trade_dict.get("notes", "") + 
+                        f" | Sweep confirmed: {sweep_ctx['sweep_direction']} "
+                        f"(quality {sweep_ctx['sweep_quality']}/100)")
+            except Exception as e:
+                pass  # sweep tagging is optional
+
             if dry_run:
                 summary["opened"] += 1
                 summary["opened_trades"].append(trade_dict)

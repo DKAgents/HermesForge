@@ -215,7 +215,38 @@ def run_full_pipeline(stage: bool = False, skip_existing: bool = False) -> dict:
     
     print(f"  Done in {time.time()-t0:.1f}s", file=sys.stderr)
     
-    # ─── Summary ──────────────────────────────────────────────────────────
+    # ─── Module 8: Liquidity Sweep Detection (US-107) ─────────────────────
+    print("\n[8/8] Liquidity Sweep Detection...", file=sys.stderr)
+    t0 = time.time()
+    sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "data"))
+    
+    try:
+        from detect_liquidity_sweeps import scan_universe_for_sweeps, format_sweep_report
+        
+        crypto_symbols = ["BTC", "ETH", "SOL", "OP", "AVAX", "DOGE", "LINK"]
+        stock_symbols = ["SPY", "AAPL", "NVDA", "TSLA", "AMZN", "MSFT", "GOOGL", "META"]
+        
+        crypto_sweeps = _safe_call(
+            scan_universe_for_sweeps, crypto_symbols, "5m", "crypto", min_quality=40
+        )
+        stock_sweeps = _safe_call(
+            scan_universe_for_sweeps, stock_symbols, "5m", "stock", min_quality=40
+        )
+        
+        total_sweeps = sum(len(v) for v in crypto_sweeps.values()) + sum(len(v) for v in stock_sweeps.values())
+        
+        results["modules"]["liquidity_sweeps"] = {
+            "total_sweeps": total_sweeps,
+            "crypto_sweeps": {k: len(v) for k, v in crypto_sweeps.items()} if crypto_sweeps else {},
+            "stock_sweeps": {k: len(v) for k, v in stock_sweeps.items()} if stock_sweeps else {},
+            "crypto_report": format_sweep_report(crypto_sweeps) if crypto_sweeps else "",
+            "stock_report": format_sweep_report(stock_sweeps) if stock_sweeps else "",
+        }
+        print(f"  {total_sweeps} sweeps detected in {time.time()-t0:.1f}s", file=sys.stderr)
+    except Exception as e:
+        print(f"  Sweep detection failed: {e}", file=sys.stderr)
+        results["modules"]["liquidity_sweeps"] = {"error": str(e)}
+
     runtime = time.time() - pipeline_start
     results["runtime_seconds"] = round(runtime, 1)
     

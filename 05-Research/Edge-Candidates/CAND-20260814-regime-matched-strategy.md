@@ -6,8 +6,10 @@ composite_score: 49.5
 confidence: low
 regime_fit: ['caution']
 created: 20260814
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: STR-P-crosssectional performs well in caution regime
 
 ## Source

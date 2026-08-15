@@ -6,8 +6,10 @@ composite_score: 48.6
 confidence: low
 regime_fit: ['caution', 'complacent']
 created: 20260814
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: BNB: sentiment 86 but price trend DOWN
 
 ## Source
