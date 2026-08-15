@@ -26,8 +26,9 @@ import argparse
 import pathlib
 import requests
 
-REPO_ROOT = pathlib.Path(__file__).parent.parent
+REPO_ROOT = pathlib.Path(__file__).parent.parent.parent  # HermesForge root
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 
 HEATMAP_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "heatmaps"
 

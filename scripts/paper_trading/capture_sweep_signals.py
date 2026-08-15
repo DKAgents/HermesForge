@@ -45,6 +45,9 @@ from fetch_intraday_stocks import get_intraday_bars
 import trade_log
 import position_sizing
 
+# US-108: Import tiered filter for equal_lows exclusion on stocks
+from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLUDED_STOCK_LEVEL_TYPES
+
 STRATEGY_ID = "STR-Q-liquidity-sweep"
 EXAMPLE_ACCOUNT_SIZE = 100_000
 
@@ -53,6 +56,11 @@ MIN_QUALITY = 50
 
 # Risk per trade
 RISK_PCT = 1.0
+
+# Discord alert channels (from memory)
+DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
+DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
+DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 
 # Universe
 CRYPTO_SYMBOLS = [
@@ -94,9 +102,115 @@ def _calculate_position_size(entry_price: float, stop_price: float, risk_pct: fl
     return round((EXAMPLE_ACCOUNT_SIZE * risk_pct / 100) / risk_per_unit, 4)
 
 
+# ── US-108: Discord Alert Posting ────────────────────────────────────────────
+
+def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
+    """Post a STR-Q alert embed to the appropriate Discord channel.
+    
+    Posts to #crypto-setups or #stock-setups based on asset class.
+    Returns True if posted successfully.
+    """
+    if not DISCORD_BOT_TOKEN:
+        print("  ⚠️ DISCORD_BOT_TOKEN not set — skipping Discord alert")
+        return False
+    
+    symbol = trade_dict["ticker"]
+    asset_class = trade_dict.get("asset_class", "crypto")
+    direction = trade_dict.get("direction", "long")
+    entry_price = trade_dict["entry_price"]
+    stop_price = trade_dict["stop_price"]
+    target_price = trade_dict["target_price"]
+    
+    channel_id = DISCORD_CRYPTO_SETUPS_CHANNEL if asset_class == "crypto" else DISCORD_STOCK_SETUPS_CHANNEL
+    
+    risk = abs(entry_price - stop_price)
+    reward = abs(target_price - entry_price)
+    rr = reward / risk if risk > 0 else 0
+    stop_pct = (risk / entry_price * 100) if entry_price else 0
+    
+    # Day-of-week color
+    import datetime as _dt
+    day_colors = {
+        0: 0x3498db, 1: 0x2ecc71, 2: 0xe67e22, 3: 0x9b59b6,
+        4: 0xe74c3c, 5: 0x1abc9c, 6: 0xf1c40f,
+    }
+    color = day_colors.get(_dt.datetime.utcnow().weekday(), 0x58a6ff)
+    
+    def _fmt(p):
+        if abs(p) < 1.0: return f"${p:.6f}"
+        elif abs(p) < 100.0: return f"${p:.4f}"
+        else: return f"${p:.2f}"
+    
+    direction_emoji = "🟢" if direction == "long" else "🔴"
+    direction_label = "LONG" if direction == "long" else "SHORT"
+    
+    embed = {
+        "title": f"📊 STR-Q Liquidity Sweep — {symbol}",
+        "description": (
+            f"{direction_emoji} **{direction_label}** | Intraday 5m | "
+            f"Sweep: {sweep.direction} at **{sweep.level_type}**\n"
+            f"Quality: **{sweep.quality_score}/100** | Confirmation: {sweep.confirmation}"
+        ),
+        "color": color,
+        "fields": [
+            {"name": "📍 Entry", "value": _fmt(entry_price), "inline": True},
+            {"name": "🛑 Stop", "value": f"{_fmt(stop_price)} ({stop_pct:.1f}% risk)", "inline": True},
+            {"name": "🎯 Target", "value": _fmt(target_price), "inline": True},
+            {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
+            {"name": "🏷️ Level Type", "value": sweep.level_type, "inline": True},
+            {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
+            {"name": "Sweep Details", "value": (
+                f"• Penetration: {sweep.penetration_atr:.2f} ATR\n"
+                f"• Wick ratio: {sweep.wick_ratio:.2f}\n"
+                f"• Volume surge: {sweep.volume_surge:.2f}x\n"
+                f"• Level: {_fmt(sweep.level_price)}"
+            ), "inline": False},
+            {"name": "Indicator Confluence", "value": (
+                "**Liquidity Sweep confluence:**\n"
+                f"• Price swept {sweep.level_type} level then reversed → institutional liquidity grab confirmed\n"
+                f"• Sweep direction: {sweep.direction} → alignment with trade direction\n"
+                f"• Quality score: {sweep.quality_score}/100 → data-driven scoring (level type weighted)\n"
+                f"• Stop behind sweep wick → tight risk, minimal adverse excursion\n"
+                f"• 3R target → favorable risk-reward ratio\n"
+                f"• 5-minute intraday execution → precise timing, post-sweep entry"
+            ), "inline": False},
+        ],
+        "footer": {"text": "HermesForge STR-Q Intraday Pipeline"},
+        "timestamp": _dt.datetime.utcnow().isoformat() + "Z",
+    }
+    
+    payload = {"embeds": [embed]}
+    
+    import subprocess
+    url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
+    cmd = [
+        "curl", "-s", "-X", "POST",
+        "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
+        "-H", "Content-Type: application/json",
+        "-d", json.dumps(payload),
+        url,
+    ]
+    
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        response = json.loads(result.stdout)
+        if "id" in response:
+            print(f"  📢 Discord alert posted to channel {channel_id}")
+            return True
+        else:
+            print(f"  ⚠️ Discord post failed: {result.stdout[:200]}")
+            return False
+    except Exception as e:
+        print(f"  ⚠️ Discord post error: {e}")
+        return False
+
+
 def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, summary: dict) -> None:
     """Process detected sweeps and open trades."""
-    for sweep in sweeps:
+    # US-108: Filter equal_lows on stocks (34.6% WR, overestimated in small sample)
+    filtered_sweeps = _filter_valid_sweeps(sweeps, asset_type, strategy_id=STRATEGY_ID)
+    
+    for sweep in filtered_sweeps:
         if sweep.quality_score < MIN_QUALITY:
             continue
         
@@ -166,6 +280,9 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 trade_dict["trade_id"] = trade_id
                 summary["opened_trades"].append(trade_dict)
                 print(f"  OPENED: {trade_id} ({direction}) @ ${entry_price:.2f}")
+                
+                # US-108: Post Discord alert to #stock-setups or #crypto-setups
+                _post_str_q_alert(trade_dict, sweep)
             except ValueError as e:
                 summary["skipped_already_open"] += 1
 

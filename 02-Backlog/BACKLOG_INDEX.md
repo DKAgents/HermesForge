@@ -83,12 +83,12 @@ These items are known but have not been promoted to user stories yet. They shoul
 ## Backlog Health
 
 - **Total Epics:** 14 (1 done: EPIC-007, EPIC-010)
-- **Total Stories Defined:** 65 (US-001 to US-105)
-- **Completed (August 2026):** US-071, US-085 to US-096, US-101, US-103, US-104, US-105 (18 stories)
+- **Total Stories Defined:** 68 (US-001 to US-108)
+- **Completed (August 2026):** US-071, US-085 to US-096, US-101, US-103, US-104, US-105, US-106, US-107 (20 stories)
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-102
+- **Next Story Number:** US-109
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---

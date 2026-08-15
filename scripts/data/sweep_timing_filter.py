@@ -77,6 +77,71 @@ SWEEP_BOOST_AMOUNT = 15
 # Max wait time in delay mode (bars)
 MAX_WAIT_BARS = 5
 
+# ── US-108: Tiered Sweep Filter Configuration ────────────────────────────────
+# Per-strategy sweep filter modes based on Phase 1B v2 confluence study.
+# STR-D (weakest baseline, strongest sweep fit) → require mode
+# STR-A/B/I (already have internal confirmation) → boost mode
+# Premium require tier: only count the strongest sweep level types (PDH/PDL/round_number)
+
+TIERED_MODES = {
+    "STR-D": "require",   # Weakest baseline (p=0.435), strongest sweep fit
+    "STR-A": "boost",     # Has MA/Fib confirmation internally
+    "STR-B": "boost",     # Has MACD divergence confirmation internally
+    "STR-I": "boost",     # Has momentum + ATR trailing stop internally
+}
+
+# Premium level types — strongest performers in deep backtest
+# PDH: 62.5% WR, +1.110R | PDL: 70.4% WR, +2.581R | round_number: 61.6% WR, +0.907R
+PREMIUM_LEVEL_TYPES = {"pdh", "pdl", "round_number"}
+
+# Level types to exclude on stocks (poor performers in deep backtest)
+# equal_lows: 34.6% WR on stocks (was 67.7% in small sample — overestimated)
+EXCLUDED_STOCK_LEVEL_TYPES = {"equal_lows"}
+
+# Level types allowed on crypto (equal_lows performs at +1.648R on crypto)
+# No exclusions for crypto — all level types valid
+
+
+def _get_mode_for_strategy(strategy_id: str) -> str:
+    """Determine sweep filter mode based on strategy ID (US-108 tiered approach)."""
+    for prefix, mode in TIERED_MODES.items():
+        if prefix in strategy_id:
+            return mode
+    # Default: boost mode for unknown strategies
+    return "boost"
+
+
+def _filter_valid_sweeps(sweeps: list, asset_type: str, strategy_id: str = "",
+                         premium_only: bool = False) -> list:
+    """
+    Filter sweeps based on asset type and tiered filter rules.
+    
+    US-108:
+    - Stocks: exclude equal_lows (34.6% WR, overestimated in small sample)
+    - Crypto: all level types valid (equal_lows +1.648R)
+    - Premium tier: only PDH/PDL/round_number (strongest performers)
+    """
+    valid = []
+    for s in sweeps:
+        if s.quality_score < MIN_SWEEP_QUALITY:
+            continue
+        if s.confirmation not in ("confirmed", "pending"):
+            continue
+        
+        level_type = getattr(s, 'level_type', '').lower().replace(' ', '_')
+        
+        # Premium filter: only allow strongest level types
+        if premium_only and level_type not in PREMIUM_LEVEL_TYPES:
+            continue
+        
+        # Asset-type exclusions
+        if asset_type == "stock" and level_type in EXCLUDED_STOCK_LEVEL_TYPES:
+            continue
+        
+        valid.append(s)
+    
+    return valid
+
 
 def check_sweep_alignment(
     symbol: str,
@@ -85,6 +150,7 @@ def check_sweep_alignment(
     asset_type: str = "crypto",
     interval: str = "5m",
     mode: str = DEFAULT_MODE,
+    strategy_id: str = "",  # US-108: for tiered mode selection
 ) -> dict:
     """
     Check if a recent liquidity sweep aligns with the proposed trade.
@@ -95,7 +161,8 @@ def check_sweep_alignment(
         direction: 'long' or 'short'
         asset_type: 'crypto' or 'stock'
         interval: Intraday interval to check
-        mode: 'require', 'boost', or 'delay'
+        mode: 'require', 'boost', or 'delay' (overridden by tiered mode if strategy_id given)
+        strategy_id: Strategy ID for US-108 tiered mode selection
     
     Returns:
         {
@@ -104,12 +171,17 @@ def check_sweep_alignment(
             'sweep_direction': str | None,  # 'bullish' or 'bearish'
             'sweep_quality': int | None,
             'sweep_level': float | None,
+            'sweep_level_type': str | None,
             'sweep_time': str | None,
             'boost_amount': int,
             'nearest_level': float | None,  # For delay mode
             'description': str,
         }
     """
+    # US-108: Override mode based on strategy tier
+    if strategy_id:
+        mode = _get_mode_for_strategy(strategy_id)
+    
     # Map strategy direction to sweep direction
     # Long trade -> want bullish sweep (price swept below support, reversed up)
     # Short trade -> want bearish sweep (price swept above resistance, reversed down)
@@ -125,18 +197,15 @@ def check_sweep_alignment(
             "sweep_direction": None,
             "sweep_quality": None,
             "sweep_level": None,
+            "sweep_level_type": None,
             "sweep_time": None,
             "boost_amount": 0,
             "nearest_level": None,
             "description": f"Sweep check failed ({e}), allowing signal.",
         }
     
-    # Filter sweeps by quality and direction
-    valid_sweeps = [
-        s for s in sweeps 
-        if s.quality_score >= MIN_SWEEP_QUALITY 
-        and s.confirmation in ("confirmed", "pending")
-    ]
+    # US-108: Filter sweeps based on tiered rules (asset type exclusions, premium filter)
+    valid_sweeps = _filter_valid_sweeps(sweeps, asset_type, strategy_id)
     
     # Check for direction-aligned sweep
     aligned_sweep = None
@@ -201,6 +270,7 @@ def check_sweep_alignment(
             "sweep_direction": aligned_sweep.direction,
             "sweep_quality": aligned_sweep.quality_score,
             "sweep_level": aligned_sweep.level_price,
+            "sweep_level_type": aligned_sweep.level_type,
             "sweep_time": aligned_sweep.timestamp,
             "boost_amount": SWEEP_BOOST_AMOUNT if mode == "boost" else 0,
             "nearest_level": None,
@@ -222,6 +292,7 @@ def check_sweep_alignment(
                 "sweep_direction": None,
                 "sweep_quality": None,
                 "sweep_level": None,
+                "sweep_level_type": None,
                 "sweep_time": None,
                 "boost_amount": 0,
                 "nearest_level": nearest_level,
@@ -239,6 +310,7 @@ def check_sweep_alignment(
                 "sweep_direction": None,
                 "sweep_quality": None,
                 "sweep_level": None,
+                "sweep_level_type": None,
                 "sweep_time": None,
                 "boost_amount": 0,
                 "nearest_level": nearest_level,
@@ -255,6 +327,7 @@ def check_sweep_alignment(
                 "sweep_direction": None,
                 "sweep_quality": None,
                 "sweep_level": None,
+                "sweep_level_type": None,
                 "sweep_time": None,
                 "boost_amount": 0,
                 "nearest_level": nearest_level,

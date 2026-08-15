@@ -159,22 +159,25 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 except Exception:
                     pass  # regime tagging is optional
 
-            # Tag with liquidity sweep context (US-107)
-            # Mode: require — block signals that don't have a confirmed sweep nearby
+            # Tag with liquidity sweep context (US-107 + US-108 tiered)
+            # US-108: Tiered mode — STR-D requires sweep, STR-A/B/I get boost mode
             try:
                 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "data"))
                 from sweep_timing_filter import check_sweep_alignment
                 sweep_result = check_sweep_alignment(
                     ticker, entry_price, latest.get("direction", "long"),
                     asset_class, interval="5m", mode="require",
+                    strategy_id=strategy_id,  # US-108: tiered mode selection
                 )
                 trade_dict["sweep_found"] = sweep_result["sweep_found"]
                 trade_dict["sweep_aligned"] = sweep_result["sweep_found"]
                 trade_dict["sweep_direction"] = sweep_result["sweep_direction"]
                 trade_dict["sweep_quality"] = sweep_result["sweep_quality"]
+                trade_dict["sweep_level_type"] = sweep_result.get("sweep_level_type")
                 trade_dict["sweep_description"] = sweep_result["description"]
                 
                 # In require mode: skip signal if no sweep found
+                # (STR-D uses require mode; STR-A/B/I use boost mode and won't block)
                 if sweep_result["action"] == "block":
                     summary.setdefault("skipped_no_sweep", 0)
                     summary["skipped_no_sweep"] += 1
