@@ -208,7 +208,8 @@ def get_intraday_bars(
     
     # Fetch from appropriate source
     if USE_ALPACA:
-        df = _fetch_alpaca(symbol, interval, lookback_bars)
+        from alpaca_connector import get_alpaca_bars as _fetch_alpaca_bars
+        df = _fetch_alpaca_bars(symbol, interval, lookback_bars)
     else:
         df = _fetch_yfinance(symbol, interval)
     

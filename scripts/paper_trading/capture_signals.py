@@ -137,7 +137,7 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 "ticker": ticker,
                 "asset_class": asset_class,
                 "data_source": data_source,
-                "direction": latest["direction"],
+                "direction": latest.get("direction", "long"),
                 "signal_id": f"{strategy_id}_{ticker}_{entry_date}",
                 "entry_date": entry_date,
                 "entry_price": entry_price,
@@ -160,24 +160,32 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     pass  # regime tagging is optional
 
             # Tag with liquidity sweep context (US-107)
+            # Mode: require — block signals that don't have a confirmed sweep nearby
             try:
                 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "data"))
-                from sweep_timing_filter import get_sweep_context_for_signal
-                sweep_ctx = get_sweep_context_for_signal(
+                from sweep_timing_filter import check_sweep_alignment
+                sweep_result = check_sweep_alignment(
                     ticker, entry_price, latest.get("direction", "long"),
-                    asset_class, interval="5m",
+                    asset_class, interval="5m", mode="require",
                 )
-                trade_dict["sweep_found"] = sweep_ctx["sweep_found"]
-                trade_dict["sweep_aligned"] = sweep_ctx["sweep_aligned"]
-                trade_dict["sweep_direction"] = sweep_ctx["sweep_direction"]
-                trade_dict["sweep_quality"] = sweep_ctx["sweep_quality"]
-                trade_dict["sweep_description"] = sweep_ctx["sweep_description"]
-                if sweep_ctx["sweep_aligned"]:
+                trade_dict["sweep_found"] = sweep_result["sweep_found"]
+                trade_dict["sweep_aligned"] = sweep_result["sweep_found"]
+                trade_dict["sweep_direction"] = sweep_result["sweep_direction"]
+                trade_dict["sweep_quality"] = sweep_result["sweep_quality"]
+                trade_dict["sweep_description"] = sweep_result["description"]
+                
+                # In require mode: skip signal if no sweep found
+                if sweep_result["action"] == "block":
+                    summary.setdefault("skipped_no_sweep", 0)
+                    summary["skipped_no_sweep"] += 1
+                    print(f"  SKIP (no sweep): {strategy_id}/{ticker} — {sweep_result['description'][:80]}")
+                    continue
+                elif sweep_result["action"] == "boost":
                     trade_dict["notes"] = (trade_dict.get("notes", "") + 
-                        f" | Sweep confirmed: {sweep_ctx['sweep_direction']} "
-                        f"(quality {sweep_ctx['sweep_quality']}/100)")
+                        f" | Sweep confirmed: {sweep_result['sweep_direction']} "
+                        f"(quality {sweep_result['sweep_quality']}/100)")
             except Exception as e:
-                pass  # sweep tagging is optional
+                pass  # sweep filter is optional — don't block on error
 
             if dry_run:
                 summary["opened"] += 1
