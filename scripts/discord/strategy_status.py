@@ -177,6 +177,14 @@ STRATEGIES = [
         "regimes": ["all"],
         "edge": "Post-sweep reversal entry (intraday)",
     },
+    {
+        "id": "STR-R",
+        "name": "Williams Alligator Trend",
+        "status": "LIVE",
+        "description": "Bill Williams' Alligator indicator — three SMMA lines (Jaw 13/8, Teeth 8/5, Lips 5/3) that detect trend awakening. Enters when lines fan out from a sleeping state, exits when they tangle again. Phase 1A: Stocks 510 trades, 35.7% WR, +0.242R, PF 1.44. Crypto: 280 trades, 29.3% WR, +0.172R, PF 1.30. Long-only on stocks, bidirectional on crypto.",
+        "regimes": ["trending"],
+        "edge": "Trend awakening detection via SMMA fan",
+    },
 ]
 
 # ── Research Pipeline Strategies ──────────────────────────────────────────────

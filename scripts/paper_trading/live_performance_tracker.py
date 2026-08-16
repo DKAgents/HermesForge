@@ -81,6 +81,14 @@ BACKTEST_EXPECTATIONS = {
         "min_trades_for_stats": 15,
         "source": "Phase 1A (killed, minimal edge)",
     },
+    "STR-R-alligator": {
+        "expected_avg_r": 0.242,
+        "expected_win_rate": 35.7,
+        "expected_stop_rate": 54.5,
+        "expected_target_rate": 18.0,
+        "min_trades_for_stats": 20,
+        "source": "Phase 1A stocks (510 trades, PF 1.44). Crypto: 280 trades, +0.172R, PF 1.30",
+    },
 }
 
 # Divergence thresholds (in standard deviations)

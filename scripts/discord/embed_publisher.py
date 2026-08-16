@@ -232,6 +232,21 @@ def _get_confluence(signal_dict: dict) -> str:
             "\u2022 3R target \u2192 favorable risk-reward ratio\n"
             "\u2022 5-minute intraday execution \u2192 precise timing, post-sweep entry"
         )
+    elif "STR-R" in sid:
+        jaw = signal_dict.get("alligator_jaw", 0)
+        teeth = signal_dict.get("alligator_teeth", 0)
+        lips = signal_dict.get("alligator_lips", 0)
+        direction = signal_dict.get("direction", "long")
+        fan_order = "Lips > Teeth > Jaw" if direction == "long" else "Lips < Teeth < Jaw"
+        return (
+            "**Williams Alligator confluence:**\n"
+            f"\u2022 Alligator lines fanning in {fan_order} \u2192 trend awakening confirmed\n"
+            f"\u2022 Jaw (SMMA 13)={jaw:.2f}, Teeth (SMMA 8)={teeth:.2f}, Lips (SMMA 5)={lips:.2f}\n"
+            "\u2022 Lines were sleeping (tangled) within last 5 bars \u2192 catching the awakening, not a mature trend\n"
+            "\u2022 Lines are spreading (gap increasing) \u2192 momentum is building\n"
+            "\u2022 Price in front of Alligator's mouth (beyond Lips) \u2192 trend is real\n"
+            "\u2022 1.5 ATR stop, 3R target \u2192 volatility-adjusted risk with favorable R:R"
+        )
     elif "STR-P" in sid:
         mom = signal_dict.get("factor_mom12_1", 0)
         liq = signal_dict.get("factor_liquid", 0)

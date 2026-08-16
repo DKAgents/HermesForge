@@ -103,6 +103,11 @@ def size_strategy_q(*args, **kwargs) -> float:
     return 1.0
 
 
+def size_strategy_r(*args, **kwargs) -> float:
+    """Strategy R (Williams Alligator) — flat 1.0% (trend awakening)."""
+    return 1.0
+
+
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
     "STR-B-macd-histogram-divergence":   size_strategy_b,
@@ -112,6 +117,7 @@ SIZING_FUNCTIONS = {
     "STR-L-atr-contraction":              size_strategy_l,
     "STR-H-hype":                         size_strategy_h,
     "STR-Q-liquidity-sweep":              size_strategy_q,
+    "STR-R-alligator":                    size_strategy_r,
 }
 
 

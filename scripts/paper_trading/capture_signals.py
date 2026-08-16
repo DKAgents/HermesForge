@@ -31,18 +31,20 @@ from scanners.scanner_a_ma_pullback import scan as scan_a       # noqa: E402
 from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
 from scanners.scanner_i_adaptive_trend import scan as scan_i    # noqa: E402
+from scanners.scanner_r_alligator import scan as scan_r         # noqa: E402
 
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
 # Strategy note frontmatter id -> scan fn
-# Paper trading covers A, B, D, I (C is a confirmed Phase 1A kill -- excluded).
+# Paper trading covers A, B, D, I, R (C is a confirmed Phase 1A kill -- excluded).
 PAPER_STRATEGIES = {
     "STR-A-ma-pullback-fibonacci":     scan_a,
     "STR-B-macd-histogram-divergence": scan_b,
     "STR-D-sr-role-reversal":          scan_d,
     "STR-I-adaptive-trend":            scan_i,
+    "STR-R-alligator":                 scan_r,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
@@ -74,9 +76,9 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 continue
             print(f"\nScanning {strategy_id} ({asset_class})...")
 
-        # Scanner I (AdaptiveTrend) is long-only for stocks, bidirectional for crypto.
+        # Scanner I (AdaptiveTrend) and R (Alligator) are long-only for stocks, bidirectional for crypto.
         scanner_kwargs = {}
-        if strategy_id == "STR-I-adaptive-trend":
+        if strategy_id in ("STR-I-adaptive-trend", "STR-R-alligator"):
             scanner_kwargs["long_only"] = (asset_class == "stock")
 
         for ticker, df in data.items():
