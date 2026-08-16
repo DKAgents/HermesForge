@@ -13,12 +13,16 @@ BEARISH (short signal — divergence in uptrend):
                   (when the prior price swing high occurred)
   Entry trigger : MACD line crosses below signal line
                   (macd[i] < signal[i] AND macd[i-1] >= signal[i-1])
-  Stop          : entry_price + 0.5 * ATR(14)  (above entry for short)
-  Target        : lowest low in prior 20 bars   (below entry; skip if above)
+  Stop          : structure-based (nearest confirmed swing, ATR-capped at 2.0)
+  Target        : nearest confirmed overhead/below resistance meeting min_rr=1.5
   Confirmation  : Level 2 if RSI >= 70, else Level 1
 
 BULLISH (long signal — divergence in downtrend):
   Mirror of all conditions above.
+
+v2.0 (US-115): Entry/stop/target now derived from the shared market_structure
+module (pullback entry to confirmed support, structure stop, natural
+resistance target). The MACD divergence detection logic is unchanged.
 
 Exit simulation (same as Scanner A):
   target / stop / 8-bar time stop — whichever comes first.
@@ -26,11 +30,18 @@ Exit simulation (same as Scanner A):
 Dependencies: pandas, numpy only.
 """
 
+import sys
+import os
 import numpy as np
 import pandas as pd
 from pathlib import Path
 
+# Sibling import for market_structure module (same directory)
+sys.path.insert(0, str(Path(__file__).parent))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID      = "B_MACD_DIVERGENCE"
+STRATEGY_VERSION = "2.0"
 MACD_FAST        = 12
 MACD_SLOW        = 26
 MACD_SIGNAL      = 9
@@ -40,10 +51,8 @@ MATURITY_BARS    = 15    # consecutive bars MACD must stay same side of zero
 NARROWING_BARS   = 2     # consecutive bars of narrowing histogram required
 SWING_LOOKBACK   = 10    # bars for "new N-bar high/low" check
 PRIOR_SWING_RANGE = (5, 60)  # wider lookback for Stage 2 prior swing (was 10-20, too narrow)
-TARGET_LOOKBACK  = 20    # bars to find target (lowest low / highest high)
-MIN_RR           = 3.0
 MAX_BARS_HELD    = 8
-ATR_STOP_MULT    = 0.5   # stop = entry +/- ATR_STOP_MULT * ATR
+COOLDOWN_BARS    = 20    # per-ticker cooldown after an accepted trade
 LIQUIDITY_FILTER_ENABLED = False  # Factor decomposition: less liquid = better signals (p=0.0025)
 LIQUIDITY_MAX_DV_RANK    = 0.80   # Skip tickers above this percentile of 60d dollar volume
 DV_LOOKBACK              = 60     # Dollar volume lookback period
@@ -441,48 +450,21 @@ def _check_signal(
     # bearish: macd crosses BELOW signal
     # bullish: macd crosses ABOVE signal
     # -------------------------------------------------------------------
-    crossover = False
+    crossover_bar = None
     for offset in range(0, 3):
         j = i + offset
         if j <= 0 or j >= len(macd_arr):
             break
         if direction == "bearish":
             if macd_arr[j] < signal_arr[j] and macd_arr[j - 1] >= signal_arr[j - 1]:
-                crossover = True
+                crossover_bar = j
                 break
         else:
             if macd_arr[j] > signal_arr[j] and macd_arr[j - 1] <= signal_arr[j - 1]:
-                crossover = True
+                crossover_bar = j
                 break
 
-    if not crossover:
-        return None
-
-    # -------------------------------------------------------------------
-    # Entry, stop, target
-    # -------------------------------------------------------------------
-    entry_price = close_arr[i]
-    atr_val     = atr_arr[i]
-
-    if direction == "bearish":
-        # Short: stop ABOVE entry; target = lowest low in prior 20 bars
-        stop_price   = entry_price + ATR_STOP_MULT * atr_val
-        target_price = float(np.min(low_arr[i - TARGET_LOOKBACK: i]))
-        # Validate target is below entry
-        if target_price >= entry_price:
-            return None
-        # Risk check
-        risk = stop_price - entry_price
-    else:
-        # Long: stop BELOW entry; target = highest high in prior 20 bars
-        stop_price   = entry_price - ATR_STOP_MULT * atr_val
-        target_price = float(np.max(high_arr[i - TARGET_LOOKBACK: i]))
-        # Validate target is above entry
-        if target_price <= entry_price:
-            return None
-        risk = entry_price - stop_price
-
-    if risk <= 0:
+    if crossover_bar is None:
         return None
 
     # -------------------------------------------------------------------
@@ -508,7 +490,7 @@ def _check_signal(
         "prior_swing_bar_offset": i - prior_swing_bar,
     }
 
-    return entry_price, stop_price, target_price, conf_level, macd_bars, extra
+    return crossover_bar, conf_level, macd_bars, extra
 
 
 # ---------------------------------------------------------------------------
