@@ -28,21 +28,27 @@ import trade_log
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
+# ── Configuration (Testing Phase — loosened for data collection) ─────────────
+# These limits are deliberately loose during the strategy validation phase.
+# Once we have 50+ closed trades and know which strategies work, tighten to:
+#   MAX_CONCURRENT_POSITIONS=8, MAX_PORTFOLIO_HEAT_PCT=7.0,
+#   MAX_SAME_SECTOR=3, MAX_SAME_ASSET_CLASS=5, DAILY_MAX_STOPS=3
+
 # Max concurrent open positions across all strategies
-MAX_CONCURRENT_POSITIONS = 8
+MAX_CONCURRENT_POSITIONS = 15
 
 # Max aggregate portfolio heat (% of account at risk across all open trades)
-MAX_PORTFOLIO_HEAT_PCT = 7.0
+MAX_PORTFOLIO_HEAT_PCT = 15.0
 
-# Max trades in the same sector (prevents correlation clustering)
-MAX_SAME_SECTOR = 3
+# Max trades in the same sector (disabled during testing — set high)
+MAX_SAME_SECTOR = 999
 
-# Max trades in the same asset class
-MAX_SAME_ASSET_CLASS = 5
+# Max trades in the same asset class (disabled during testing)
+MAX_SAME_ASSET_CLASS = 999
 
-# Circuit breaker: stop opening new trades after N stops in one day
-DAILY_MAX_STOPS = 3
-CIRCUIT_BREAKER_HOURS = 4  # Cool-down period after circuit breaker trips
+# Circuit breaker: disabled during testing (set high so it never trips)
+DAILY_MAX_STOPS = 999
+CIRCUIT_BREAKER_HOURS = 0  # No cool-down
 
 # ── Sector classification ────────────────────────────────────────────────────
 
