@@ -46,6 +46,10 @@ SMA_PERIOD = 50
 SLOPE_WINDOW = 20
 DATA_DIR = Path.home() / ".hermes" / "market_data"
 
+# Module-level cache for the intermarket signal so that auto-fetch in scan()
+# only happens ONCE per session instead of per-ticker (529 redundant fetches).
+_INTERMARKET_CACHE = None
+
 
 def _atr(df: pd.DataFrame, period: int = ATR_PERIOD) -> pd.Series:
     high, low, close = df["high"], df["low"], df["close"]
@@ -170,6 +174,16 @@ def compute_intermarket_signal(dxy: pd.DataFrame, tnx: pd.DataFrame) -> pd.DataF
     }, index=common)
 
 
+def clear_intermarket_cache():
+    """Clear the module-level intermarket signal cache.
+
+    Call this when you need to force a re-fetch of DXY/TNX data
+    (e.g. after updating the parquet caches on disk).
+    """
+    global _INTERMARKET_CACHE
+    _INTERMARKET_CACHE = None
+
+
 def scan(df: pd.DataFrame, ticker: str, long_only: bool = False,
          intermarket: pd.DataFrame = None) -> list:
     """Scan for intermarket-driven signals on a single ticker.
@@ -178,15 +192,20 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False,
     compatible with the standard 3-arg scan(df, ticker, long_only) contract.
     """
     if intermarket is None or len(intermarket) == 0:
-        print(f"    [STR-AJ] No intermarket data — auto-fetching DXY/TNX...", flush=True)
-        im_data = fetch_intermarket_data()
-        if im_data.get("DXY") is None or im_data.get("TNX") is None:
-            print(f"    [STR-AJ] WARNING: Could not fetch intermarket data for {ticker} — skipping")
-            return []
-        intermarket = compute_intermarket_signal(im_data["DXY"], im_data["TNX"])
-        if intermarket is None or len(intermarket) == 0:
-            print(f"    [STR-AJ] WARNING: Insufficient DXY/TNX overlap — skipping {ticker}")
-            return []
+        global _INTERMARKET_CACHE
+        if _INTERMARKET_CACHE is not None and len(_INTERMARKET_CACHE) > 0:
+            intermarket = _INTERMARKET_CACHE
+        else:
+            print(f"    [STR-AJ] No intermarket data — auto-fetching DXY/TNX (one-time)...", flush=True)
+            im_data = fetch_intermarket_data()
+            if im_data.get("DXY") is None or im_data.get("TNX") is None:
+                print(f"    [STR-AJ] WARNING: Could not fetch intermarket data for {ticker} — skipping")
+                return []
+            intermarket = compute_intermarket_signal(im_data["DXY"], im_data["TNX"])
+            if intermarket is None or len(intermarket) == 0:
+                print(f"    [STR-AJ] WARNING: Insufficient DXY/TNX overlap — skipping {ticker}")
+                return []
+            _INTERMARKET_CACHE = intermarket
     if len(df) < SMA_PERIOD + 5:
         return []
 
