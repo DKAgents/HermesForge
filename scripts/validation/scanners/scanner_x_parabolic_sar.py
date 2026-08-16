@@ -2,32 +2,49 @@
 """
 scanner_x_parabolic_sar.py
 ==========================
-HermesForge STR-X: Parabolic SAR Stop-and-Reverse
+HermesForge STR-X: Parabolic SAR Stop-and-Reverse (v2.0 — structure-based)
 
 Parabolic SAR (Welles Wilder) with AF starting at 0.02, increment 0.02, max 0.2.
 When SAR flips from above price to below = LONG signal.
 When SAR flips from below to above = SHORT signal.
 
-Pure mechanical system — every flip is a signal.
-  Entry on the flip bar close.
-  Stop = current SAR value (the SAR that just flipped acts as the trailing stop).
-  Target = 3R.
-  Time stop: 20 bars (mechanical SAR would reverse at next flip; we cap holds).
-  Long-only for stocks.
+v2.0 changes (US-115): the SAR flip remains the *signal trigger only*.
+Entry, stop, and target are now derived from market structure via the shared
+`market_structure.compute_structure_trade` orchestrator:
+  * Entry  = pullback to nearest confirmed support after the flip (limit order,
+             up to 5 bars wait; market fallback at signal close if no touch).
+  * Stop   = nearest confirmed swing low/high below/above entry, ATR-buffered,
+             capped at 2 ATR, floored at 0.5 ATR.
+  * Target = nearest confirmed overhead/below resistance offering R >= 1.5
+             (ATR fallback if no structural target qualifies; skip if none).
+The SAR value is retained in the signal dict for diagnostics but is no longer
+the stop. R-multiple on target exits is computed from actual prices (no longer
+a fixed 3R). A 20-bar per-ticker cooldown suppresses overlapping signals.
+
+v1.x behaviour: entry=close[i], stop=SAR value, target=3R fixed.
 
 Dependencies: pandas, numpy
 """
 
+import os
 import sys
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
+# Sibling import guard: market_structure.py lives in the same directory as the
+# scanners, so a plain `from market_structure import ...` works when scanners
+# are executed from that directory (the orchestrator's convention). The
+# sys.path.insert below makes the import robust to invocation from elsewhere
+# (e.g. `python scanner_x.py --backtest` from a parent dir).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID = "STR-X-parabolic-sar"
 STRATEGY_NAME = "Parabolic SAR Stop-and-Reverse"
-STRATEGY_VERSION = "1.0"
+STRATEGY_VERSION = "2.0"
 MAX_HOLD_BARS = 20
-TARGET_RR = 3.0
+COOLDOWN_BARS = 20
 AF_START = 0.02
 AF_INCREMENT = 0.02
 AF_MAX = 0.2
@@ -119,6 +136,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     """Scan for Parabolic SAR flip signals.
 
     Returns list of signal dicts matching HermesForge scanner format.
+    Entry/stop/target are derived from market structure (US-115 v2.0).
     """
     if len(df) < 30:
         return []
@@ -137,6 +155,8 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     sar_arr = sar.values.astype(float)
 
     min_start = 3
+    cooldown_until = 0  # next eligible signal bar; 0 = no cooldown active
+
     for i in range(min_start, len(df)):
         if np.isnan(sar_arr[i]) or np.isnan(sar_arr[i - 1]):
             continue
@@ -147,60 +167,68 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
 
         # LONG: SAR flips from above price to below price
         if prev_sar_above and curr_sar_below:
-            entry_price = close_arr[i]
-            # Stop = current SAR value (the SAR that just flipped acts as trailing stop)
-            stop_price = sar_arr[i]
-            risk = entry_price - stop_price
-            if risk <= 0:
-                # If SAR is above entry (shouldn't happen on a flip to below), use ATR
-                stop_price = entry_price - atr.iloc[i]
-                risk = entry_price - stop_price
-                if risk <= 0:
-                    continue
-            target_price = entry_price + risk * TARGET_RR
-            ts = df.index[i]
+            if i < cooldown_until:
+                continue  # per-ticker cooldown — suppress overlapping signals
+            trade = compute_structure_trade(
+                df, signal_idx=i, direction="long",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+                entry_fallback="signal",
+            )
+            if trade is None:
+                continue  # no valid structure target -> skip this signal
             signals.append({
-                "date": ts,
+                "date": df.index[i],
+                "entry_date": df.index[trade["entry_idx"]],
+                "entry_idx": trade["entry_idx"],
                 "ticker": ticker,
                 "strategy_id": STRATEGY_ID,
                 "strategy_name": STRATEGY_NAME,
                 "strategy_version": STRATEGY_VERSION,
                 "direction": "long",
-                "entry_price": round(entry_price, 4),
-                "stop_price": round(stop_price, 4),
-                "target_price": round(target_price, 4),
+                "entry_price": round(trade["entry_price"], 4),
+                "stop_price": round(trade["stop_price"], 4),
+                "target_price": round(trade["target_price"], 4),
+                "risk": round(trade["risk"], 4),
+                "rr": round(trade["rr"], 3),
+                "entry_type": trade["entry_type"],
                 "psar": round(sar_arr[i], 4),
                 "signal_type": "psar_flip_long",
             })
+            cooldown_until = i + COOLDOWN_BARS
 
         # SHORT: SAR flips from below price to above price
         if not long_only:
             prev_sar_below = sar_arr[i - 1] < close_arr[i - 1]
             curr_sar_above = sar_arr[i] > close_arr[i]
             if prev_sar_below and curr_sar_above:
-                entry_price = close_arr[i]
-                stop_price = sar_arr[i]
-                risk = stop_price - entry_price
-                if risk <= 0:
-                    stop_price = entry_price + atr.iloc[i]
-                    risk = stop_price - entry_price
-                    if risk <= 0:
-                        continue
-                target_price = entry_price - risk * TARGET_RR
-                ts = df.index[i]
+                if i < cooldown_until:
+                    continue
+                trade = compute_structure_trade(
+                    df, signal_idx=i, direction="short",
+                    max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+                    entry_fallback="signal",
+                )
+                if trade is None:
+                    continue
                 signals.append({
-                    "date": ts,
+                    "date": df.index[i],
+                    "entry_date": df.index[trade["entry_idx"]],
+                    "entry_idx": trade["entry_idx"],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
                     "strategy_version": STRATEGY_VERSION,
                     "direction": "short",
-                    "entry_price": round(entry_price, 4),
-                    "stop_price": round(stop_price, 4),
-                    "target_price": round(target_price, 4),
+                    "entry_price": round(trade["entry_price"], 4),
+                    "stop_price": round(trade["stop_price"], 4),
+                    "target_price": round(trade["target_price"], 4),
+                    "risk": round(trade["risk"], 4),
+                    "rr": round(trade["rr"], 3),
+                    "entry_type": trade["entry_type"],
                     "psar": round(sar_arr[i], 4),
                     "signal_type": "psar_flip_short",
                 })
+                cooldown_until = i + COOLDOWN_BARS
 
     return signals
 
@@ -211,9 +239,11 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
     """Simulate trade exit by walking forward from entry.
 
     Uses intrabar high/low for stop and target fills (conservative: if both
-    hit same bar, stop is assumed first).
+    hit same bar, stop is assumed first). R-multiple on target exits is
+    computed dynamically from actual prices (no longer a fixed TARGET_RR).
     """
     n = len(df)
+    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
         bar = df.iloc[i]
         if direction == "long":
@@ -221,20 +251,23 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
         else:
             if bar["high"] >= stop_price:
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
 
     # Time stop
     exit_idx = min(entry_idx + max_bars, n - 1)
     exit_price = df.iloc[exit_idx]["close"]
-    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     if risk <= 0:
         r = 0.0
     else:
@@ -258,21 +291,31 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
 
     trades = []
     for sig in signals:
-        target_date = pd.Timestamp(sig["date"])
-        try:
-            entry_idx = df.index.get_loc(target_date)
-        except (KeyError, ValueError, TypeError):
-            # nearest match fallback
-            mask = df.index == target_date
-            if not mask.any():
-                continue
-            entry_idx = df.index.get_loc(df.index[mask][0])
+        # Use the structure-derived entry_idx when present (US-115 v2.0). For
+        # pullback trades entry_idx > signal_idx, so the exit walk MUST start
+        # at the actual fill bar, not the signal bar. Legacy v1.x signals
+        # (no entry_idx) fall back to a date lookup.
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            target_date = pd.Timestamp(sig["date"])
+            try:
+                entry_idx = df.index.get_loc(target_date)
+            except (KeyError, ValueError, TypeError):
+                mask = df.index == target_date
+                if not mask.any():
+                    continue
+                entry_idx = df.index.get_loc(df.index[mask][0])
+
+        if isinstance(entry_idx, slice):
+            entry_idx = entry_idx.start
+        if isinstance(entry_idx, (list, np.ndarray)):
+            entry_idx = int(entry_idx[0])
 
         if entry_idx + 1 >= len(df):
             continue
 
         exit_result = _walk_forward_exit(
-            df, entry_idx, sig["direction"],
+            df, int(entry_idx), sig["direction"],
             sig["entry_price"], sig["stop_price"], sig["target_price"],
         )
         trades.append({

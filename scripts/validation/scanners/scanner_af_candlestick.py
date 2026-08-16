@@ -2,9 +2,10 @@
 """
 scanner_af_candlestick.py
 =========================
-HermesForge STR-AF: Candlestick Reversal Patterns
+HermesForge STR-AF: Candlestick Reversal Patterns (v2.0 — structure-based)
 
 Detects classic candlestick reversal patterns and trades them as reversals.
+Pattern detection logic is UNCHANGED — the patterns are the SIGNAL TRIGGER only.
 
 Patterns (body = abs(close-open), upper_wick = high - max(open,close),
           lower_wick = min(open,close) - low):
@@ -25,27 +26,36 @@ Patterns (body = abs(close-open), upper_wick = high - max(open,close),
       closing well into first candle's body
     - Three Black Crows (3-bar): three consecutive falling bearish candles
 
-Entry on pattern completion bar close.
-Stop: 1 ATR(14).
-Target: 2R.
-Time stop: 10 bars.
+v2.0 (US-115): entry / stop / target are now derived from market structure via
+the shared market_structure.compute_structure_trade module (was: entry=close,
+stop=1 ATR, target=2R fixed).
+  - Entry : pullback to nearest confirmed support, up to 5-bar wait.
+  - Stop  : nearest confirmed swing low below entry, ATR-buffered, capped 2 ATR.
+  - Target: nearest confirmed overhead resistance with R >= 1.5; skip if none.
+  - Cooldown: 20-bar per-ticker guard after each accepted signal.
+  - Exit walk starts at the actual entry_idx. Target R is dynamic.
+  - Time stop: 10 bars (unchanged).
 
 Long-only for stocks (only bullish patterns fire on stocks).
 
-Dependencies: pandas, numpy
+Dependencies: pandas, numpy, scipy (via market_structure)
 """
 
+import os
 import sys
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
+# Sibling import of the shared market_structure module (same directory).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID = "STR-AF-candlestick"
 STRATEGY_NAME = "Candlestick Reversal Patterns"
-STRATEGY_VERSION = "1.0"
+STRATEGY_VERSION = "2.0"
 MAX_HOLD_BARS = 10
-TARGET_RR = 2.0
-STOP_ATR_MULT = 1.0
+COOLDOWN_BARS = 20
 ATR_PERIOD = 14
 
 
@@ -149,10 +159,16 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     if len(df) < max(ATR_PERIOD + 5, 5):
         return []
     pat = _detect_patterns(df)
+    atr_series = pat["atr"]  # Series aligned to df.index
     signals = []
+    last_trade_idx = -COOLDOWN_BARS  # per-ticker cooldown
+
     for i in range(len(df)):
-        atr = pat["atr"].iloc[i]
+        atr = atr_series.iloc[i]
         if pd.isna(atr) or atr <= 0:
+            continue
+        # Cooldown guard: skip signals too close to the last accepted trade.
+        if i - last_trade_idx < COOLDOWN_BARS:
             continue
         close = df["close"].iloc[i]
         date = df.index[i]
@@ -160,49 +176,65 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         # Bullish patterns → LONG
         for pname in BULLISH_PATTERNS:
             if pat[pname].iloc[i]:
-                entry_price = close
-                stop_price = entry_price - STOP_ATR_MULT * atr
-                risk = entry_price - stop_price
-                if risk <= 0:
+                trade = compute_structure_trade(
+                    df, signal_idx=i, direction="long",
+                    max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                    atr=atr_series, entry_fallback="signal",
+                )
+                if trade is None:
                     continue
-                target_price = entry_price + risk * TARGET_RR
                 signals.append({
                     "date": date,
+                    "entry_date": df.index[trade["entry_idx"]],
+                    "entry_idx": trade["entry_idx"],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
                     "strategy_version": STRATEGY_VERSION,
                     "direction": "long",
-                    "entry_price": entry_price,
-                    "stop_price": stop_price,
-                    "target_price": target_price,
-                    "atr": atr,
+                    "entry_price": round(trade["entry_price"], 4),
+                    "stop_price": round(trade["stop_price"], 4),
+                    "target_price": round(trade["target_price"], 4),
+                    "risk": round(trade["risk"], 4),
+                    "rr": round(trade["rr"], 3),
+                    "entry_type": trade["entry_type"],
+                    "atr": float(atr),
                     "signal_type": f"candle_{pname}_long",
                 })
+                last_trade_idx = i
+                break  # one trade per bar (cooldown prevents same-bar overlap)
 
         # Bearish patterns → SHORT (only if not long_only)
         if not long_only:
             for pname in BEARISH_PATTERNS:
                 if pat[pname].iloc[i]:
-                    entry_price = close
-                    stop_price = entry_price + STOP_ATR_MULT * atr
-                    risk = stop_price - entry_price
-                    if risk <= 0:
+                    trade = compute_structure_trade(
+                        df, signal_idx=i, direction="short",
+                        max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                        atr=atr_series, entry_fallback="signal",
+                    )
+                    if trade is None:
                         continue
-                    target_price = entry_price - risk * TARGET_RR
                     signals.append({
                         "date": date,
+                        "entry_date": df.index[trade["entry_idx"]],
+                        "entry_idx": trade["entry_idx"],
                         "ticker": ticker,
                         "strategy_id": STRATEGY_ID,
                         "strategy_name": STRATEGY_NAME,
                         "strategy_version": STRATEGY_VERSION,
                         "direction": "short",
-                        "entry_price": entry_price,
-                        "stop_price": stop_price,
-                        "target_price": target_price,
-                        "atr": atr,
+                        "entry_price": round(trade["entry_price"], 4),
+                        "stop_price": round(trade["stop_price"], 4),
+                        "target_price": round(trade["target_price"], 4),
+                        "risk": round(trade["risk"], 4),
+                        "rr": round(trade["rr"], 3),
+                        "entry_type": trade["entry_type"],
+                        "atr": float(atr),
                         "signal_type": f"candle_{pname}_short",
                     })
+                    last_trade_idx = i
+                    break  # one trade per bar
     return signals
 
 
@@ -210,6 +242,7 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                        entry_price: float, stop_price: float, target_price: float,
                        max_bars: int = MAX_HOLD_BARS) -> dict:
     n = len(df)
+    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
         bar = df.iloc[i]
         if direction == "long":
@@ -217,21 +250,25 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
         else:
             if bar["high"] >= stop_price:
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
     exit_idx = min(entry_idx + max_bars, n - 1)
     exit_price = df.iloc[exit_idx]["close"]
-    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
-    r = ((exit_price - entry_price) / risk) if direction == "long" else ((entry_price - exit_price) / risk)
     if risk <= 0:
         r = 0.0
+    else:
+        r = ((exit_price - entry_price) / risk) if direction == "long" else ((entry_price - exit_price) / risk)
     return {"exit_type": "time", "exit_price": exit_price,
             "bars_held": exit_idx - entry_idx, "r_multiple": round(r, 3)}
 
@@ -242,15 +279,18 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
         return []
     trades = []
     for sig in signals:
-        try:
-            target_date = pd.Timestamp(sig["date"])
-            entry_idx = df.index.get_loc(df.index[df.index == target_date][0])
-        except (KeyError, ValueError, IndexError, TypeError):
-            continue
+        # Use the structure-derived entry_idx (pullback may fill after signal).
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            try:
+                target_date = pd.Timestamp(sig["date"])
+                entry_idx = df.index.get_loc(df.index[df.index == target_date][0])
+            except (KeyError, ValueError, IndexError, TypeError):
+                continue
         if entry_idx + 1 >= len(df):
             continue
         exit_result = _walk_forward_exit(
-            df, entry_idx, sig["direction"],
+            df, int(entry_idx), sig["direction"],
             sig["entry_price"], sig["stop_price"], sig["target_price"],
         )
         trades.append({
@@ -258,6 +298,8 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
             "strategy": STRATEGY_ID,
             "direction": sig["direction"],
             "date": sig["date"],
+            "entry_date": sig.get("entry_date", sig["date"]),
+            "entry_idx": int(entry_idx),
             "entry_price": round(sig["entry_price"], 4),
             "stop_price": round(sig["stop_price"], 4),
             "target_price": round(sig["target_price"], 4),
@@ -265,6 +307,7 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
             "exit_price": round(exit_result["exit_price"], 4),
             "bars_held": exit_result["bars_held"],
             "r_multiple": exit_result["r_multiple"],
+            "entry_type": sig.get("entry_type", "market"),
             "signal_type": sig["signal_type"],
         })
     return trades

@@ -2,7 +2,7 @@
 """
 scanner_aa_williams_r.py
 ========================
-HermesForge STR-AA: Williams %R Strategy
+HermesForge STR-AA: Williams %R Strategy (v2.0 — structure-based)
 
 Compute Williams %R(14):
   %R = -100 * (HighestHigh(n) - Close) / (HighestHigh(n) - LowestLow(n))
@@ -12,26 +12,37 @@ Williams %R ranges from -100 (oversold) to 0 (overbought).
   LONG:  %R crosses above -80 (from oversold, i.e., prev %R < -80 and curr %R >= -80).
   SHORT: %R crosses below -20 (from overbought, i.e., prev %R > -20 and curr %R <= -20).
 
-  Entry on cross bar close.
-  Stop: 1.5 ATR(14).
-  Target: 3R.
-  Time stop: 15 bars.
-  Long-only for stocks.
+v2.0 changes (US-115): the Williams %R cross remains the *signal trigger only*.
+Entry, stop, and target are now derived from market structure via the shared
+`market_structure.compute_structure_trade` orchestrator:
+  * Entry  = pullback to nearest confirmed support after the cross (limit order,
+             up to 5 bars wait; market fallback at signal close if no touch).
+  * Stop   = nearest confirmed swing low/high below/above entry, ATR-buffered,
+             capped at 2 ATR, floored at 0.5 ATR.
+  * Target = nearest confirmed overhead/below resistance offering R >= 1.5
+             (ATR fallback if no structural target qualifies; skip if none).
+R-multiple on target exits is computed from actual prices (no longer fixed 3R).
+A 20-bar per-ticker cooldown suppresses overlapping signals.
+
+v1.x behaviour: entry=close[i], stop=1.5 ATR, target=3R fixed.
 
 Dependencies: pandas, numpy
 """
 
+import os
 import sys
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID = "STR-AA-williams-r"
 STRATEGY_NAME = "Williams %R"
-STRATEGY_VERSION = "1.0"
+STRATEGY_VERSION = "2.0"
 MAX_HOLD_BARS = 15
-TARGET_RR = 3.0
-STOP_ATR_MULT = 1.5
+COOLDOWN_BARS = 20
 WR_PERIOD = 14
 OVERSOLD = -80.0
 OVERBOUGHT = -20.0
@@ -69,15 +80,13 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     wr = _compute_williams_r(df["high"], df["low"], df["close"])
     atr = _compute_atr(df["high"], df["low"], df["close"])
     wr_arr = wr.values
-    atr_arr = atr.values
-    close_arr = df["close"].values.astype(float)
 
     signals = []
     min_start = WR_PERIOD + 1
+    cooldown_until = 0
 
     for i in range(min_start, len(df)):
-        if (np.isnan(wr_arr[i]) or np.isnan(wr_arr[i - 1]) or
-                np.isnan(atr_arr[i])):
+        if (np.isnan(wr_arr[i]) or np.isnan(wr_arr[i - 1])):
             continue
 
         # %R crosses above -80 (oversold exit -> long)
@@ -85,49 +94,65 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         # %R crosses below -20 (overbought exit -> short)
         wr_cross_down = wr_arr[i - 1] > OVERBOUGHT and wr_arr[i] <= OVERBOUGHT
 
-        entry_price = close_arr[i]
-
         if wr_cross_up:
-            stop_price = entry_price - STOP_ATR_MULT * atr_arr[i]
-            risk = entry_price - stop_price
-            if risk <= 0:
+            if i < cooldown_until:
                 continue
-            target_price = entry_price + risk * TARGET_RR
-            ts = df.index[i]
+            trade = compute_structure_trade(
+                df, signal_idx=i, direction="long",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+                entry_fallback="signal",
+            )
+            if trade is None:
+                continue
             signals.append({
-                "date": ts,
+                "date": df.index[i],
+                "entry_date": df.index[trade["entry_idx"]],
+                "entry_idx": trade["entry_idx"],
                 "ticker": ticker,
                 "strategy_id": STRATEGY_ID,
                 "strategy_name": STRATEGY_NAME,
                 "strategy_version": STRATEGY_VERSION,
                 "direction": "long",
-                "entry_price": round(entry_price, 4),
-                "stop_price": round(stop_price, 4),
-                "target_price": round(target_price, 4),
+                "entry_price": round(trade["entry_price"], 4),
+                "stop_price": round(trade["stop_price"], 4),
+                "target_price": round(trade["target_price"], 4),
+                "risk": round(trade["risk"], 4),
+                "rr": round(trade["rr"], 3),
+                "entry_type": trade["entry_type"],
                 "williams_r": round(wr_arr[i], 2),
                 "signal_type": "wr_oversold_exit_long",
             })
+            cooldown_until = i + COOLDOWN_BARS
 
         if not long_only and wr_cross_down:
-            stop_price = entry_price + STOP_ATR_MULT * atr_arr[i]
-            risk = stop_price - entry_price
-            if risk <= 0:
+            if i < cooldown_until:
                 continue
-            target_price = entry_price - risk * TARGET_RR
-            ts = df.index[i]
+            trade = compute_structure_trade(
+                df, signal_idx=i, direction="short",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+                entry_fallback="signal",
+            )
+            if trade is None:
+                continue
             signals.append({
-                "date": ts,
+                "date": df.index[i],
+                "entry_date": df.index[trade["entry_idx"]],
+                "entry_idx": trade["entry_idx"],
                 "ticker": ticker,
                 "strategy_id": STRATEGY_ID,
                 "strategy_name": STRATEGY_NAME,
                 "strategy_version": STRATEGY_VERSION,
                 "direction": "short",
-                "entry_price": round(entry_price, 4),
-                "stop_price": round(stop_price, 4),
-                "target_price": round(target_price, 4),
+                "entry_price": round(trade["entry_price"], 4),
+                "stop_price": round(trade["stop_price"], 4),
+                "target_price": round(trade["target_price"], 4),
+                "risk": round(trade["risk"], 4),
+                "rr": round(trade["rr"], 3),
+                "entry_type": trade["entry_type"],
                 "williams_r": round(wr_arr[i], 2),
                 "signal_type": "wr_overbought_exit_short",
             })
+            cooldown_until = i + COOLDOWN_BARS
 
     return signals
 
@@ -136,6 +161,7 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                        entry_price: float, stop_price: float, target_price: float,
                        max_bars: int = MAX_HOLD_BARS) -> dict:
     n = len(df)
+    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
         bar = df.iloc[i]
         if direction == "long":
@@ -143,19 +169,22 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
         else:
             if bar["high"] >= stop_price:
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
 
     exit_idx = min(entry_idx + max_bars, n - 1)
     exit_price = df.iloc[exit_idx]["close"]
-    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     if risk <= 0:
         r = 0.0
     else:
@@ -178,14 +207,16 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
 
     trades = []
     for sig in signals:
-        target_date = pd.Timestamp(sig["date"])
-        try:
-            entry_idx = df.index.get_loc(target_date)
-        except (KeyError, ValueError, TypeError):
-            mask = df.index == target_date
-            if not mask.any():
-                continue
-            entry_idx = df.index.get_loc(df.index[mask][0])
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            target_date = pd.Timestamp(sig["date"])
+            try:
+                entry_idx = df.index.get_loc(target_date)
+            except (KeyError, ValueError, TypeError):
+                mask = df.index == target_date
+                if not mask.any():
+                    continue
+                entry_idx = df.index.get_loc(df.index[mask][0])
 
         if isinstance(entry_idx, slice):
             entry_idx = entry_idx.start

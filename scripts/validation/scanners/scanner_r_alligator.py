@@ -28,10 +28,15 @@ Signal Rules:
     4. Alligator was sleeping within last 5 bars
 
   Exit:
-    - Stop: 1.5 ATR(14) from entry
-    - Target: 3R
+    - Stop: structure-based (nearest confirmed swing, ATR-capped at 2.0)
+    - Target: nearest confirmed overhead/below resistance meeting min_rr=1.5
     - Time stop: 20 bars
     - Also exit if Alligator goes back to sleep (lines tangle)
+
+v2.0 (US-115): Entry/stop/target now derived from the shared market_structure
+module (pullback entry to confirmed support, structure stop, natural
+resistance target). The Alligator lines remain the signal trigger, and the
+sleep detection is retained for the time-stop exit.
 
 The "was sleeping" requirement filters out entries in mature trends where
 the move may already be exhausted. We want to catch the awakening.
@@ -45,12 +50,15 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
+# Sibling import for market_structure module (same directory)
+sys.path.insert(0, str(Path(__file__).parent))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID = "STR-R-alligator"
 STRATEGY_NAME = "Williams Alligator Trend"
-STRATEGY_VERSION = "1.0"
+STRATEGY_VERSION = "2.0"
 MAX_HOLD_BARS = 20
-TARGET_RR = 3.0
-STOP_ATR_MULT = 1.5
+COOLDOWN_BARS = 20
 
 
 def _smma(series: pd.Series, period: int) -> pd.Series:
@@ -135,6 +143,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     
     signals = []
     
+    atr_series = result["alligator_atr"]
+    last_trade_idx = -999  # cooldown tracker
+    
     for i in range(2, len(result)):
         row = result.iloc[i]
         prev = result.iloc[i - 1]
@@ -163,25 +174,37 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         prev_bullish = prev["alligator_lips"] > prev["alligator_teeth"] > prev["alligator_jaw"]
         prev_bearish = prev["alligator_lips"] < prev["alligator_teeth"] < prev["alligator_jaw"]
         
+        # ── Cooldown guard (skip if within 20 bars of last accepted trade) ──
+        if i - last_trade_idx < COOLDOWN_BARS:
+            continue
+        
         # ── LONG signal ──
         if bullish_fan and not prev_bullish and was_sleeping and spreading:
             # Price should be above lips (in front of the mouth)
             if close > lips:
-                entry_price = close
-                stop_price = entry_price - (STOP_ATR_MULT * atr)
-                risk = entry_price - stop_price
-                target_price = entry_price + (risk * TARGET_RR)
-                
+                trade = compute_structure_trade(
+                    result, signal_idx=i, direction="long",
+                    max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                    atr=atr_series,
+                )
+                if trade is None:
+                    continue
+                last_trade_idx = i
                 signals.append({
                     "date": result.index[i],
+                    "entry_date": result.index[trade["entry_idx"]],
+                    "entry_idx": trade["entry_idx"],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
                     "strategy_version": STRATEGY_VERSION,
                     "direction": "long",
-                    "entry_price": entry_price,
-                    "stop_price": stop_price,
-                    "target_price": target_price,
+                    "entry_price": round(trade["entry_price"], 4),
+                    "stop_price": round(trade["stop_price"], 4),
+                    "target_price": round(trade["target_price"], 4),
+                    "risk": round(trade["risk"], 4),
+                    "rr": round(trade["rr"], 3),
+                    "entry_type": trade["entry_type"],
                     "alligator_jaw": jaw,
                     "alligator_teeth": teeth,
                     "alligator_lips": lips,
@@ -192,21 +215,29 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         # ── SHORT signal ──
         if not long_only and bearish_fan and not prev_bearish and was_sleeping and spreading:
             if close < lips:
-                entry_price = close
-                stop_price = entry_price + (STOP_ATR_MULT * atr)
-                risk = stop_price - entry_price
-                target_price = entry_price - (risk * TARGET_RR)
-                
+                trade = compute_structure_trade(
+                    result, signal_idx=i, direction="short",
+                    max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                    atr=atr_series,
+                )
+                if trade is None:
+                    continue
+                last_trade_idx = i
                 signals.append({
                     "date": result.index[i],
+                    "entry_date": result.index[trade["entry_idx"]],
+                    "entry_idx": trade["entry_idx"],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
                     "strategy_version": STRATEGY_VERSION,
                     "direction": "short",
-                    "entry_price": entry_price,
-                    "stop_price": stop_price,
-                    "target_price": target_price,
+                    "entry_price": round(trade["entry_price"], 4),
+                    "stop_price": round(trade["stop_price"], 4),
+                    "target_price": round(trade["target_price"], 4),
+                    "risk": round(trade["risk"], 4),
+                    "rr": round(trade["rr"], 3),
+                    "entry_type": trade["entry_type"],
                     "alligator_jaw": jaw,
                     "alligator_teeth": teeth,
                     "alligator_lips": lips,
