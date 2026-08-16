@@ -6,12 +6,12 @@ HermesForge STR-Y: ADX/DMI Directional Movement Strategy
 
 Compute ADX(14), +DI(14), -DI(14) using Wilder smoothing.
 
-  LONG entry:  +DI crosses above -DI AND ADX > 25 (trending up).
-  SHORT entry: -DI crosses above +DI AND ADX > 25 (trending down).
+  LONG entry:  +DI crosses above -DI AND ADX > 22 (trending up).
+  SHORT entry: -DI crosses above +DI AND ADX > 22 (trending down).
   Exit signal: opposite DI cross (handled via time-stop / mechanical exits here).
 
   Entry on cross bar close.
-  Stop: 2 ATR(14).
+  Stop: 1 ATR(14).
   Target: 3R.
   Time stop: 20 bars.
   Long-only for stocks.
@@ -26,12 +26,12 @@ from pathlib import Path
 
 STRATEGY_ID = "STR-Y-adx-dmi"
 STRATEGY_NAME = "ADX/DMI Directional Movement"
-STRATEGY_VERSION = "1.0"
+STRATEGY_VERSION = "2.0"
 MAX_HOLD_BARS = 20
 TARGET_RR = 3.0
-STOP_ATR_MULT = 2.0
+STOP_ATR_MULT = 1.0
 ADX_PERIOD = 14
-ADX_THRESHOLD = 25.0
+ADX_THRESHOLD = 22.0
 
 
 def _compute_atr(high: pd.Series, low: pd.Series, close: pd.Series,
