@@ -254,6 +254,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
     )
 
     signals = []
+    last_trade_idx = -999  # cooldown tracker
 
     # Minimum start index: need enough history for all lookbacks
     min_start = max(
@@ -261,7 +262,6 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
         ATR_PERIOD,
         RSI_PERIOD,
         PRIOR_SWING_RANGE[1] + MATURITY_BARS + 5,
-        TARGET_LOOKBACK + 5,
     )
 
     for i in range(min_start, len(df)):
@@ -272,9 +272,9 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                 np.isnan(atr_arr[i])    or np.isnan(macd_arr[i - 1])):
             continue
 
-        # We'll check both directions in a loop to avoid duplicating logic
-        for direction in ("bearish", "long_direction"):  # processed below
-            pass
+        # ── Cooldown guard (skip if within 20 bars of last accepted trade) ──
+        if i - last_trade_idx < COOLDOWN_BARS:
+            continue
 
         # ===================================================================
         # BEARISH SIGNAL (short trade — divergence in uptrend)
@@ -285,27 +285,40 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             direction="bearish",
         )
         if bearish is not None:
-            entry_price, stop_price, target_price, conf_level, macd_bars, extra_b = bearish
-            rr = (entry_price - target_price) / (stop_price - entry_price)
-            if rr >= MIN_RR and target_price < entry_price:
+            crossover_bar, conf_level, macd_bars, extra_b = bearish
+            trade = compute_structure_trade(
+                df, signal_idx=crossover_bar, direction="short",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+            )
+            if trade is not None:
+                last_trade_idx = i
+                entry_idx = trade["entry_idx"]
                 ep, er, bh = _simulate_exit(
-                    close_arr, i, entry_price, stop_price, target_price, "short"
+                    close_arr, entry_idx,
+                    trade["entry_price"], trade["stop_price"],
+                    trade["target_price"], "short"
                 )
                 # Realised R: for short, profit when price falls (ep < entry)
-                realised_r = (entry_price - ep) / (stop_price - entry_price)
+                realised_r = (trade["entry_price"] - ep) / trade["risk"] if trade["risk"] > 0 else 0.0
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
+                    "entry_date":           dates[entry_idx],
+                    "entry_idx":            entry_idx,
                     "direction":            "short",
-                    "entry_price":          round(entry_price,  4),
-                    "stop_price":           round(stop_price,   4),
-                    "target_price":         round(target_price, 4),
+                    "entry_price":          round(trade["entry_price"],  4),
+                    "stop_price":           round(trade["stop_price"],   4),
+                    "target_price":         round(trade["target_price"], 4),
+                    "risk":                 round(trade["risk"], 4),
+                    "rr":                   round(trade["rr"], 3),
+                    "entry_type":           trade["entry_type"],
                     "exit_price":           round(ep,           4),
                     "exit_reason":          er,
                     "r_multiple":           round(realised_r,   4),
                     "bars_held":            bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
+                    "strategy_version":     STRATEGY_VERSION,
                     "confirmation_level":   conf_level,
                     "macd_bars_above_zero": macd_bars,
                     "signal_bar_index":     i,
@@ -324,27 +337,40 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             direction="bullish",
         )
         if bullish is not None:
-            entry_price, stop_price, target_price, conf_level, macd_bars, extra_l = bullish
-            rr = (target_price - entry_price) / (entry_price - stop_price)
-            if rr >= MIN_RR and target_price > entry_price:
+            crossover_bar, conf_level, macd_bars, extra_l = bullish
+            trade = compute_structure_trade(
+                df, signal_idx=crossover_bar, direction="long",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=atr,
+            )
+            if trade is not None:
+                last_trade_idx = i
+                entry_idx = trade["entry_idx"]
                 ep, er, bh = _simulate_exit(
-                    close_arr, i, entry_price, stop_price, target_price, "long"
+                    close_arr, entry_idx,
+                    trade["entry_price"], trade["stop_price"],
+                    trade["target_price"], "long"
                 )
                 # Realised R: for long, profit when price rises (ep > entry)
-                realised_r = (ep - entry_price) / (entry_price - stop_price)
+                realised_r = (ep - trade["entry_price"]) / trade["risk"] if trade["risk"] > 0 else 0.0
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
+                    "entry_date":           dates[entry_idx],
+                    "entry_idx":            entry_idx,
                     "direction":            "long",
-                    "entry_price":          round(entry_price,  4),
-                    "stop_price":           round(stop_price,   4),
-                    "target_price":         round(target_price, 4),
+                    "entry_price":          round(trade["entry_price"],  4),
+                    "stop_price":           round(trade["stop_price"],   4),
+                    "target_price":         round(trade["target_price"], 4),
+                    "risk":                 round(trade["risk"], 4),
+                    "rr":                   round(trade["rr"], 3),
+                    "entry_type":           trade["entry_type"],
                     "exit_price":           round(ep,           4),
                     "exit_reason":          er,
                     "r_multiple":           round(realised_r,   4),
-                    "bars_held":            bh,
+                    "bars_held":             bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
+                    "strategy_version":     STRATEGY_VERSION,
                     "confirmation_level":   conf_level,
                     "macd_bars_above_zero": macd_bars,
                     "signal_bar_index":     i,
@@ -375,8 +401,8 @@ def _check_signal(
 ) -> tuple | None:
     """
     Run all Strategy B checks for one bar and direction.
-    Returns (entry_price, stop_price, target_price, conf_level, macd_bars)
-    or None if any rule fails.
+    Returns (crossover_bar, conf_level, macd_bars, extra) or None if any rule fails.
+    Entry/stop/target are now computed by compute_structure_trade in scan().
     """
 
     # -------------------------------------------------------------------

@@ -190,10 +190,14 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 if trade is None:
                     continue
                 last_trade_idx = i
+                # Convert entry_idx from result-positional to df-positional
+                # (result has NaN rows dropped; _walk_forward_exit uses original df)
+                entry_date_ts = result.index[trade["entry_idx"]]
+                df_entry_idx = int(df.index.get_loc(entry_date_ts))
                 signals.append({
                     "date": result.index[i],
-                    "entry_date": result.index[trade["entry_idx"]],
-                    "entry_idx": trade["entry_idx"],
+                    "entry_date": entry_date_ts,
+                    "entry_idx": df_entry_idx,
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
@@ -211,7 +215,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                     "atr": atr,
                     "signal_type": "alligator_awakening_long",
                 })
-        
+    
         # ── SHORT signal ──
         if not long_only and bearish_fan and not prev_bearish and was_sleeping and spreading:
             if close < lips:
@@ -223,10 +227,12 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 if trade is None:
                     continue
                 last_trade_idx = i
+                entry_date_ts = result.index[trade["entry_idx"]]
+                df_entry_idx = int(df.index.get_loc(entry_date_ts))
                 signals.append({
                     "date": result.index[i],
-                    "entry_date": result.index[trade["entry_idx"]],
-                    "entry_idx": trade["entry_idx"],
+                    "entry_date": entry_date_ts,
+                    "entry_idx": df_entry_idx,
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
