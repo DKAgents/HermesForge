@@ -89,8 +89,11 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
 
     for end in range(MIN_WINDOW, n - 1):
         start = end - MIN_WINDOW
-        shs = [j for j in sh_idx if start <= j <= end]
-        sls = [j for j in sl_idx if start <= j <= end]
+        # Only use pivots confirmed by end+1: a pivot at bar j is confirmed
+        # only if end - j >= PIVOT_DISTANCE (find_peaks(distance=N) requires
+        # N future bars to confirm a peak).
+        shs = [j for j in sh_idx if start <= j <= end - PIVOT_DISTANCE]
+        sls = [j for j in sl_idx if start <= j <= end - PIVOT_DISTANCE]
         if len(shs) < 2 or len(sls) < 2:
             continue
         up_slope, _ = _fit_line(shs, [high[j] for j in shs])

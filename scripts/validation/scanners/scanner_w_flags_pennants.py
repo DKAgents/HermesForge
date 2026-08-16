@@ -129,6 +129,12 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 continue
             shs, _ = find_peaks(win_high, distance=PIVOT_DISTANCE)
             sls, _ = find_peaks(-win_low, distance=PIVOT_DISTANCE)
+            # Exclude unconfirmed pivots within PIVOT_DISTANCE of window end
+            # (find_peaks(distance=N) requires N future bars to confirm).
+            if len(shs) > 0:
+                shs = shs[ce - wpos[shs] >= PIVOT_DISTANCE]
+            if len(sls) > 0:
+                sls = sls[ce - wpos[sls] >= PIVOT_DISTANCE]
             if len(shs) < 2 or len(sls) < 2:
                 continue
             up_slope = _fit_slope(wpos[shs], win_high[shs])
@@ -178,7 +184,17 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                     st = "pennant_short" if is_pennant else "flag_short"
                     make(brk_idx, "short", entry, stop, target, st)
 
-    return signals
+    # Deduplicate by (ticker, date, signal_type) — sliding window can
+    # generate the same signal multiple times. Keep first occurrence.
+    seen = set()
+    deduped = []
+    for sig in signals:
+        key = (sig["ticker"], sig["date"], sig["signal_type"])
+        if key not in seen:
+            seen.add(key)
+            deduped.append(sig)
+
+    return deduped
 
 
 def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,

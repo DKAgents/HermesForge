@@ -146,7 +146,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         if np.isnan(atr_arr[p2_idx]):
             continue
         entry_idx = None
-        for j in range(p2_idx + 1, len(df)):
+        for j in range(p2_idx + SWING_WINDOW + 1, len(df)):
             if np.isnan(close_arr[j]) or np.isnan(atr_arr[j]):
                 continue
             if close_arr[j] > p2_low:
@@ -198,7 +198,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             if np.isnan(atr_arr[p2_idx]):
                 continue
             entry_idx = None
-            for j in range(p2_idx + 1, len(df)):
+            for j in range(p2_idx + SWING_WINDOW + 1, len(df)):
                 if np.isnan(close_arr[j]) or np.isnan(atr_arr[j]):
                     continue
                 if close_arr[j] < p2_high:
