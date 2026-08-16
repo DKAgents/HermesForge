@@ -74,7 +74,8 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
-    vol = df["volume"].values if "volume" in df.columns else np.ones(n)
+    has_vol = "volume" in df.columns
+    vol = df["volume"].values if has_vol else np.ones(n)
     avg_vol = pd.Series(vol).rolling(20).mean().values
     signals = []
 
@@ -97,8 +98,11 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     # fit upper/lower trendlines from swing pivots within that window.
     for end in range(MIN_WINDOW, n - 1):
         start = end - MIN_WINDOW
-        shs = [j for j in sh_idx if start <= j <= end]
-        sls = [j for j in sl_idx if start <= j <= end]
+        # Only use pivots confirmed by end+1: a pivot at bar j is confirmed
+        # only if end - j >= PIVOT_DISTANCE (find_peaks(distance=N) requires
+        # N future bars to confirm a peak).
+        shs = [j for j in sh_idx if start <= j <= end - PIVOT_DISTANCE]
+        sls = [j for j in sl_idx if start <= j <= end - PIVOT_DISTANCE]
         if len(shs) < 2 or len(sls) < 2:
             continue
         # fit lines evaluated at end bar
@@ -126,7 +130,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             continue
         v = vol[brk_idx]
         av = avg_vol[brk_idx] if not np.isnan(avg_vol[brk_idx]) else v
-        vol_ok = v >= VOLUME_MULT * av if av > 0 else True
+        vol_ok = (v >= VOLUME_MULT * av) if (has_vol and av > 0) else True
 
         c = close[brk_idx]
 
