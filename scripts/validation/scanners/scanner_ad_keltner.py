@@ -2,7 +2,7 @@
 """
 scanner_ad_keltner.py
 =====================
-HermesForge STR-AD: Keltner Channel Breakout Strategy (v2.0 — structure-based)
+HermesForge STR-AD: Keltner Channel Breakout Strategy (v2.1 — hybrid)
 
 Keltner Channel:
   Middle = EMA(20)
@@ -13,15 +13,24 @@ Signal Rules (UNCHANGED — indicator logic is the trigger only):
   LONG:  price closes above upper band (breakout up)
   SHORT: price closes below lower band (breakout down)
 
-v2.0 (US-115): entry / stop / target are now derived from market structure via
-the shared market_structure.compute_structure_trade module, NOT from fixed
-parameters.
+v2.1 (US-115 hybrid): Structure-based entry/stop, channel-measured-move target.
+
+The Keltner channel IS the structure for this scanner.  The pullback entry and
+structure stop (from market_structure.compute_structure_trade) improve fill
+quality and risk definition, but the target is based on the channel's own
+volatility expansion, not arbitrary swing highs.
   - Entry : pullback to nearest confirmed support below the breakout close
             (limit order, up to 5-bar wait), else market at signal close.
   - Stop  : nearest confirmed swing low below entry, ATR-buffered, capped at
             2.0 x ATR(10).
-  - Target: nearest confirmed overhead resistance offering R >= 1.5, else
-            ATR-fallback target; skip the signal if none qualifies.
+  - Target: channel measured-move.  The channel width (upper - lower) projected
+            from the breakout band:
+              LONG : upper + (upper - lower)
+              SHORT: lower - (upper - lower)
+            This captures the volatility expansion the channel is signalling,
+            rather than the nearest swing high (which tends to sit closer and
+            clipped ~6% of avg R in v2.0).
+  - Filter: skip the signal if the channel-measured-move R < 1.5.
   - Cooldown: 20-bar per-ticker guard after each accepted signal.
   - Exit walk starts at the actual entry_idx (pullback may fill after signal).
   - Target R is dynamic (computed from entry/stop/target), not a fixed 3R.
@@ -43,7 +52,7 @@ from market_structure import compute_structure_trade
 
 STRATEGY_ID = "STR-AD-keltner"
 STRATEGY_NAME = "Keltner Channel Breakout"
-STRATEGY_VERSION = "2.0"
+STRATEGY_VERSION = "2.1"
 MAX_HOLD_BARS = 20
 COOLDOWN_BARS = 20
 EMA_PERIOD = 20
@@ -125,6 +134,20 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             )
             if trade is None:
                 continue
+
+            # --- v2.1 hybrid: override target with channel measured-move ---
+            # Keep structure-based entry + stop, but project the channel width
+            # from the upper band instead of using compute_structure_trade's
+            # swing-high target (which clipped ~6% of avg R in v2.0).
+            channel_width = upper - lower
+            target_price = upper + channel_width  # = 2*upper - lower
+            risk = trade["entry_price"] - trade["stop_price"]
+            if risk <= 0:
+                continue
+            rr = round((target_price - trade["entry_price"]) / risk, 3)
+            if rr < 1.5:
+                continue  # channel measured-move too tight
+
             signals.append({
                 "date": row.name,
                 "entry_date": res.index[trade["entry_idx"]],
@@ -136,11 +159,12 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 "direction": "long",
                 "entry_price": round(trade["entry_price"], 4),
                 "stop_price": round(trade["stop_price"], 4),
-                "target_price": round(trade["target_price"], 4),
-                "risk": round(trade["risk"], 4),
-                "rr": round(trade["rr"], 3),
+                "target_price": round(target_price, 4),
+                "risk": round(risk, 4),
+                "rr": rr,
                 "entry_type": trade["entry_type"],
                 "kc_upper": upper,
+                "kc_lower": lower,
                 "kc_ema": ema,
                 "atr": atr,
                 "signal_type": "keltner_breakout_long",
@@ -156,6 +180,17 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             )
             if trade is None:
                 continue
+
+            # --- v2.1 hybrid: override target with channel measured-move ---
+            channel_width = upper - lower
+            target_price = lower - channel_width  # = 2*lower - upper
+            risk = trade["stop_price"] - trade["entry_price"]
+            if risk <= 0:
+                continue
+            rr = round((trade["entry_price"] - target_price) / risk, 3)
+            if rr < 1.5:
+                continue  # channel measured-move too tight
+
             signals.append({
                 "date": row.name,
                 "entry_date": res.index[trade["entry_idx"]],
@@ -167,10 +202,11 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 "direction": "short",
                 "entry_price": round(trade["entry_price"], 4),
                 "stop_price": round(trade["stop_price"], 4),
-                "target_price": round(trade["target_price"], 4),
-                "risk": round(trade["risk"], 4),
-                "rr": round(trade["rr"], 3),
+                "target_price": round(target_price, 4),
+                "risk": round(risk, 4),
+                "rr": rr,
                 "entry_type": trade["entry_type"],
+                "kc_upper": upper,
                 "kc_lower": lower,
                 "kc_ema": ema,
                 "atr": atr,
