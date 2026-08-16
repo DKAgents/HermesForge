@@ -60,6 +60,12 @@ MIN_QUALITY = 50
 # Risk per trade
 RISK_PCT = 1.0
 
+# US-110 fix: Recency window measured from CONFIRMATION time, not sweep time
+# A sweep needs CONFIRMATION_BARS (3 bars = 15 min) to confirm after forming.
+# We accept sweeps confirmed within the last 30 min (covers 2 cron cycles).
+CONF_BAR_MINUTES = 3 * 5   # 15 minutes to confirm
+RECENCY_WINDOW_SEC = 1800  # 30 minutes from confirmation time
+
 # Discord alert channels (from memory)
 DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
 DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
@@ -213,90 +219,97 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
     # US-108: Filter equal_lows on stocks (34.6% WR, overestimated in small sample)
     filtered_sweeps = _filter_valid_sweeps(sweeps, asset_type, strategy_id=STRATEGY_ID)
     
+    # Take only the highest-quality sweep per symbol per cycle (avoid duplicates)
+    best_sweep = None
     for sweep in filtered_sweeps:
         if sweep.quality_score < MIN_QUALITY:
             continue
-        
         if sweep.confirmation != "confirmed":
             continue
-        
-        # Skip if already have an open trade for this symbol
-        if trade_log.has_open_trade(STRATEGY_ID, symbol):
-            summary["skipped_already_open"] += 1
-            continue
-        
-        # Map sweep direction to trade direction
-        direction = "long" if sweep.direction == "bullish" else "short"
-        
-        entry_price = sweep.entry_price
-        stop_price = sweep.stop_price
-        target_price = sweep.target_price
-        risk_per_unit = abs(entry_price - stop_price)
-        
-        if risk_per_unit <= 0:
-            continue
-        
-        position_size_units = _calculate_position_size(entry_price, stop_price, RISK_PCT)
-        
-        # US-111: Portfolio Risk Guard — DISABLED during testing phase
-        # Re-enable once we have 50+ closed trades for strategy validation.
-        # risk_allowed, risk_reason = check_trade_allowed(STRATEGY_ID, symbol, asset_type, RISK_PCT)
-        # if not risk_allowed:
-        #     summary.setdefault("skipped_risk_guard", 0)
-        #     summary["skipped_risk_guard"] += 1
-        #     print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
-        #     continue
-        
-        # Create trade ID with timestamp for intraday uniqueness
-        entry_time = pd.Timestamp(sweep.timestamp)
-        entry_date = entry_time.strftime("%Y-%m-%d")
-        time_suffix = entry_time.strftime("%H%M")
-        trade_id = f"{STRATEGY_ID}_{symbol}_{entry_date}_{time_suffix}"
-        
-        trade_dict = {
-            "strategy_id": STRATEGY_ID,
-            "ticker": symbol,
-            "asset_class": asset_type,
-            "data_source": "hyperliquid" if asset_type == "crypto" else "yfinance",
-            "direction": direction,
-            "signal_id": trade_id,
-            "entry_date": entry_date,
-            "entry_price": round(entry_price, 6),
-            "stop_price": round(stop_price, 6),
-            "target_price": round(target_price, 6),
-            "position_size_pct": RISK_PCT,
-            "position_size_units": position_size_units,
-            "quality_tier": f"sweep_q{sweep.quality_score}",
-            "subperiod": f"intraday_{sweep.interval}",
-            "confirmation_level": sweep.confirmation,
-            "weekly_gate_scaling": "",
-            "notes": (
-                f"Sweep: {sweep.direction} at {sweep.level_type} "
-                f"${sweep.level_price:.2f} | Pen: {sweep.penetration_atr:.2f} ATR | "
-                f"Wick: {sweep.wick_ratio:.2f} | Vol: {sweep.volume_surge:.2f}x | "
-                f"Quality: {sweep.quality_score}/100"
-            ),
-        }
-        
-        if dry_run:
+        if best_sweep is None or sweep.quality_score > best_sweep.quality_score:
+            best_sweep = sweep
+    
+    if best_sweep is None:
+        return
+    
+    sweep = best_sweep
+    
+    # Skip if already have an open trade for this symbol
+    if trade_log.has_open_trade(STRATEGY_ID, symbol):
+        summary["skipped_already_open"] += 1
+        return
+    
+    # Map sweep direction to trade direction
+    direction = "long" if sweep.direction == "bullish" else "short"
+    
+    entry_price = sweep.entry_price
+    stop_price = sweep.stop_price
+    target_price = sweep.target_price
+    risk_per_unit = abs(entry_price - stop_price)
+    
+    if risk_per_unit <= 0:
+        return
+    
+    position_size_units = _calculate_position_size(entry_price, stop_price, RISK_PCT)
+    
+    # US-111: Portfolio Risk Guard — DISABLED during testing phase
+    # Re-enable once we have 50+ closed trades for strategy validation.
+    # risk_allowed, risk_reason = check_trade_allowed(STRATEGY_ID, symbol, asset_type, RISK_PCT)
+    # if not risk_allowed:
+    #     summary.setdefault("skipped_risk_guard", 0)
+    #     summary["skipped_risk_guard"] += 1
+    #     print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
+    #     return
+    
+    # Create trade ID with timestamp for intraday uniqueness
+    entry_time = pd.Timestamp(sweep.timestamp)
+    entry_date = entry_time.strftime("%Y-%m-%d")
+    time_suffix = entry_time.strftime("%H%M")
+    trade_id = f"{STRATEGY_ID}_{symbol}_{entry_date}_{time_suffix}"
+    
+    trade_dict = {
+        "strategy_id": STRATEGY_ID,
+        "ticker": symbol,
+        "asset_class": asset_type,
+        "data_source": "hyperliquid" if asset_type == "crypto" else "yfinance",
+        "direction": direction,
+        "signal_id": trade_id,
+        "entry_date": entry_date,
+        "entry_price": round(entry_price, 6),
+        "stop_price": round(stop_price, 6),
+        "target_price": round(target_price, 6),
+        "position_size_pct": RISK_PCT,
+        "position_size_units": position_size_units,
+        "quality_tier": f"sweep_q{sweep.quality_score}",
+        "subperiod": f"intraday_{sweep.interval}",
+        "confirmation_level": sweep.confirmation,
+        "weekly_gate_scaling": "",
+        "notes": (
+            f"Sweep: {sweep.direction} at {sweep.level_type} "
+            f"${sweep.level_price:.2f} | Pen: {sweep.penetration_atr:.2f} ATR | "
+            f"Wick: {sweep.wick_ratio:.2f} | Vol: {sweep.volume_surge:.2f}x | "
+            f"Quality: {sweep.quality_score}/100"
+        ),
+    }
+    
+    if dry_run:
+        summary["opened"] += 1
+        summary["opened_trades"].append(trade_dict)
+        print(f"  WOULD OPEN: {trade_id} ({direction}) @ ${entry_price:.2f}")
+        print(f"    Stop: ${stop_price:.2f} | Target: ${target_price:.2f} | R:R 3:1")
+        print(f"    {trade_dict['notes']}")
+    else:
+        try:
+            trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
+            trade_dict["trade_id"] = trade_id
             summary["opened_trades"].append(trade_dict)
-            print(f"  WOULD OPEN: {trade_id} ({direction}) @ ${entry_price:.2f}")
-            print(f"    Stop: ${stop_price:.2f} | Target: ${target_price:.2f} | R:R 3:1")
-            print(f"    {trade_dict['notes']}")
-        else:
-            try:
-                # Write directly to avoid has_open_trade check with unique trade_id
-                trade_id = trade_log.open_trade(trade_dict)
-                summary["opened"] += 1
-                trade_dict["trade_id"] = trade_id
-                summary["opened_trades"].append(trade_dict)
-                print(f"  OPENED: {trade_id} ({direction}) @ ${entry_price:.2f}")
-                
-                # US-108: Post Discord alert to #stock-setups or #crypto-setups
-                _post_str_q_alert(trade_dict, sweep)
-            except ValueError as e:
-                summary["skipped_already_open"] += 1
+            print(f"  OPENED: {trade_id} ({direction}) @ ${entry_price:.2f}")
+            
+            # US-108: Post Discord alert to #stock-setups or #crypto-setups
+            _post_str_q_alert(trade_dict, sweep)
+        except ValueError as e:
+            summary["skipped_already_open"] += 1
 
 
 def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True) -> dict:
@@ -321,13 +334,19 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                 sweeps = scan_symbol_for_sweeps(symbol, "5m", "crypto", lookback_bars=200)
                 summary["scanned"] += 1
                 
-                # Filter to most recent sweeps only (last 3 bars = 15 min)
+                # Filter to recent sweeps only — measure from CONFIRMATION time, not sweep time
+                # A sweep needs CONFIRMATION_BARS (3 bars = 15 min) after forming to confirm.
+                # So a sweep at T confirms at T+15min. We want sweeps confirmed within the last 30 min.
+                # This gives us a 30-min window of actionable confirmed sweeps.
                 if sweeps:
                     recent_sweeps = []
                     now_ts = pd.Timestamp.now(tz="UTC")
                     for s in sweeps:
                         sweep_time = pd.Timestamp(s.timestamp)
-                        if (now_ts - sweep_time).total_seconds() < 900:  # last 15 min
+                        # Confirmation time = sweep time + CONFIRMATION_BARS * 5 min
+                        confirmation_time = sweep_time + pd.Timedelta(minutes=CONF_BAR_MINUTES)
+                        # Check if confirmation happened within the recency window
+                        if (now_ts - confirmation_time).total_seconds() < RECENCY_WINDOW_SEC:
                             recent_sweeps.append(s)
                     
                     if recent_sweeps:
@@ -364,7 +383,8 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                         now_ts = pd.Timestamp.now(tz="UTC")
                         for s in sweeps:
                             sweep_time = pd.Timestamp(s.timestamp)
-                            if (now_ts - sweep_time).total_seconds() < 900:
+                            confirmation_time = sweep_time + pd.Timedelta(minutes=CONF_BAR_MINUTES)
+                            if (now_ts - confirmation_time).total_seconds() < RECENCY_WINDOW_SEC:
                                 recent_sweeps.append(s)
                         
                         if recent_sweeps:
