@@ -1,0 +1,35 @@
+{
+  "total_trades": 696,
+  "split": {
+    "is": 417,
+    "oos": 279,
+    "split_date": "2026-03-25"
+  },
+  "is_optimal_caps": {
+    "swing_high": 1.0,
+    "equal_highs": 0.8,
+    "swing_low": 0.8,
+    "PDL": 0.9,
+    "round_number": 0.8,
+    "PDH": 0.8,
+    "equal_lows": 0.1
+  },
+  "us109_caps": {
+    "swing_high": 0.6,
+    "swing_low": 0.7
+  },
+  "is_baseline_exp": 0.7118,
+  "is_optimized_exp": 0.7619,
+  "oos_baseline_exp": 0.9527,
+  "oos_optimized_exp": 0.8937,
+  "oos_us109_exp": 0.9111,
+  "is_improvement": 0.0502,
+  "oos_improvement": -0.059,
+  "overfit_ratio": -0.85,
+  "bootstrap_p_value": 0.928,
+  "bootstrap_ci": [
+    -0.1427,
+    0.0152
+  ],
+  "verdict": "CURVE_FIT"
+}

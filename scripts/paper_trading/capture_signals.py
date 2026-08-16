@@ -115,14 +115,25 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     if mult != 1.0:
                         print(f"  Regime adjustment: risk {mult:.1f}x → {risk_pct}%")
 
-            # Heat cap disabled for data collection phase — let all signals through
-            # so every strategy gets enough trades to validate or kill.
-            # See US-102: Data Collection Before Portfolio Optimization.
-            allowed, heat_reason = position_sizing.check_portfolio_heat(risk_pct)
-            if not allowed:
-                summary.setdefault("skipped_heat_limit", 0)
-                summary["skipped_heat_limit"] += 1
-                print(f"  NOTE (heat limit exceeded, taking anyway): {strategy_id}/{ticker} -- {heat_reason}")
+            # US-111: Portfolio Risk Guard — replaces old heat cap
+            # Checks: circuit breaker, concurrent positions, heat, sector concentration, asset class
+            try:
+                from portfolio_risk_guard import check_trade_allowed
+                risk_allowed, risk_reason = check_trade_allowed(
+                    strategy_id, ticker, asset_class, risk_pct
+                )
+                if not risk_allowed:
+                    summary.setdefault("skipped_risk_guard", 0)
+                    summary["skipped_risk_guard"] += 1
+                    print(f"  RISK GUARD: {strategy_id}/{ticker} BLOCKED — {risk_reason}")
+                    continue
+            except ImportError:
+                # Fallback to old heat cap if module not available
+                allowed, heat_reason = position_sizing.check_portfolio_heat(risk_pct)
+                if not allowed:
+                    summary.setdefault("skipped_heat_limit", 0)
+                    summary["skipped_heat_limit"] += 1
+                    print(f"  NOTE (heat limit exceeded, taking anyway): {strategy_id}/{ticker} -- {heat_reason}")
 
             entry_price = latest["entry_price"]
             stop_price = latest["stop_price"]

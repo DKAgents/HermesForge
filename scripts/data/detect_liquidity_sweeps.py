@@ -79,14 +79,12 @@ MIN_RR = 2.0
 # Stop buffer beyond the sweep wick (in ATR)
 STOP_BUFFER_ATR = 0.1
 
-# US-109: Per-level-type stop risk cap (fraction of original wick-based risk)
-# Based on MAE/MFE analysis of 696 trades (1-year Alpaca 5m data)
-# swing_high: optimal at 0.6R (+0.078R/trade improvement)
-# swing_low: optimal at 0.7R (+0.025R/trade improvement)
-# All other level types: 1.0 (no change — current stop is optimal)
+# US-109: Per-level-type stop risk cap (REVERTED by US-110 walk-forward)
+# Walk-forward validation showed the optimization was curve-fitted:
+# IS improvement +0.050R, OOS improvement -0.059R (p=0.93, not significant)
+# All caps set to 1.0 (no cap) — original wick-based stop is optimal
 STOP_RISK_CAP = {
-    "swing_high": 0.6,
-    "swing_low": 0.7,
+    # All level types: 1.0 (no cap, use full wick-based stop)
 }
 
 # Volume surge required (sweep bar volume vs 20-bar average)

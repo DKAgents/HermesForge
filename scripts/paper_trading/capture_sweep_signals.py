@@ -48,6 +48,9 @@ import position_sizing
 # US-108: Import tiered filter for equal_lows exclusion on stocks
 from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLUDED_STOCK_LEVEL_TYPES
 
+# US-111: Portfolio risk guard
+from portfolio_risk_guard import check_trade_allowed, record_stop_loss
+
 STRATEGY_ID = "STR-Q-liquidity-sweep"
 EXAMPLE_ACCOUNT_SIZE = 100_000
 
@@ -234,6 +237,16 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             continue
         
         position_size_units = _calculate_position_size(entry_price, stop_price, RISK_PCT)
+        
+        # US-111: Portfolio Risk Guard check
+        risk_allowed, risk_reason = check_trade_allowed(
+            STRATEGY_ID, symbol, asset_type, RISK_PCT
+        )
+        if not risk_allowed:
+            summary.setdefault("skipped_risk_guard", 0)
+            summary["skipped_risk_guard"] += 1
+            print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
+            continue
         
         # Create trade ID with timestamp for intraday uniqueness
         entry_time = pd.Timestamp(sweep.timestamp)
@@ -447,6 +460,15 @@ def monitor_exits():
                 else:
                     risk = stop_price - entry_price
                     r = (entry_price - exit_price) / risk if risk > 0 else 0
+                
+                # US-111: Record stop losses for circuit breaker
+                if exit_reason == "stop":
+                    try:
+                        tripped, msg = record_stop_loss()
+                        if tripped:
+                            print(f"  ⚡ {msg}")
+                    except Exception:
+                        pass
                 
                 # Close trade
                 trade["status"] = "closed"
