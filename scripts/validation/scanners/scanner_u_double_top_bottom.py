@@ -31,6 +31,7 @@ STOP_ATR_MULT = 1.0
 PEAK_TOLERANCE = 0.03
 MIN_BARS_BETWEEN = 10
 PIVOT_DISTANCE = 4
+ENTRY_SEARCH_WINDOW = 15  # bars after pivot confirmation to search for entry
 
 
 def _compute_atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
@@ -100,7 +101,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         if pattern_h <= 0:
             continue
         # confirmation: first close after p2_idx below trough
-        for j in range(p2_idx + 1, min(p2_idx + 15, n)):
+        # NOTE: start search at p2_idx + PIVOT_DISTANCE so the second peak
+        # is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+        for j in range(p2_idx + PIVOT_DISTANCE, min(p2_idx + ENTRY_SEARCH_WINDOW, n)):
             if close[j] < trough_p:
                 entry = close[j]
                 stop = max(p1, p2) + STOP_ATR_MULT * atr.iloc[j]
@@ -131,7 +134,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         pattern_h = peak_p - min(t1, t2)
         if pattern_h <= 0:
             continue
-        for j in range(t2_idx + 1, min(t2_idx + 15, n)):
+        # NOTE: start search at t2_idx + PIVOT_DISTANCE so the second trough
+        # is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+        for j in range(t2_idx + PIVOT_DISTANCE, min(t2_idx + ENTRY_SEARCH_WINDOW, n)):
             if close[j] > peak_p:
                 entry = close[j]
                 stop = min(t1, t2) - STOP_ATR_MULT * atr.iloc[j]

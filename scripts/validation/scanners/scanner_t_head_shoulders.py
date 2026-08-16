@@ -35,6 +35,7 @@ TARGET_RR = None           # target set per-trade from pattern height
 STOP_ATR_MULT = 1.0
 SHOULDER_TOLERANCE = 0.03  # 3%
 PIVOT_DISTANCE = 5
+ENTRY_SEARCH_WINDOW = 15  # bars after pivot confirmation to search for entry
 
 
 def _compute_atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
@@ -114,7 +115,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             return t1p + slope * (x - t1_idx)
 
         # entry: first close after R_idx below neckline
-        for j in range(R_idx + 1, min(R_idx + 15, n)):
+        # NOTE: start search at R_idx + PIVOT_DISTANCE so the right-shoulder
+        # pivot is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+        for j in range(R_idx + PIVOT_DISTANCE, min(R_idx + ENTRY_SEARCH_WINDOW, n)):
             nl = neckline(j)
             if close[j] < nl:
                 entry = close[j]
@@ -154,7 +157,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         def neckline(x):
             return p1p + slope * (x - p1_idx)
 
-        for j in range(R_idx + 1, min(R_idx + 15, n)):
+        # NOTE: start search at R_idx + PIVOT_DISTANCE so the right-shoulder
+        # pivot is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+        for j in range(R_idx + PIVOT_DISTANCE, min(R_idx + ENTRY_SEARCH_WINDOW, n)):
             nl = neckline(j)
             if close[j] > nl:
                 entry = close[j]

@@ -33,6 +33,7 @@ STOP_ATR_MULT = 1.0
 FIB_MIN = 0.382
 FIB_MAX = 0.618
 PIVOT_DISTANCE = 3   # min bars between pivots
+ENTRY_SEARCH_WINDOW = 15  # bars after pivot confirmation to search for entry
 
 
 def _compute_atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
@@ -132,7 +133,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 continue
 
             # Entry: price closes back above wave B high (impulse resumption)
-            for j in range(c_idx + 1, min(c_idx + 15, n)):
+            # NOTE: start search at c_idx + PIVOT_DISTANCE so the C pivot is
+            # confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+            for j in range(c_idx + PIVOT_DISTANCE, min(c_idx + ENTRY_SEARCH_WINDOW, n)):
                 if df["close"].values[j] > b_price:
                     entry = df["close"].values[j]
                     stop = c_price - STOP_ATR_MULT * atr.iloc[j]
@@ -185,7 +188,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 if not (FIB_MIN <= retr_pct <= FIB_MAX):
                     continue
 
-                for j in range(c_idx + 1, min(c_idx + 15, n)):
+                # NOTE: start search at c_idx + PIVOT_DISTANCE so the C pivot is
+                # confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
+                for j in range(c_idx + PIVOT_DISTANCE, min(c_idx + ENTRY_SEARCH_WINDOW, n)):
                     if df["close"].values[j] < b_price:
                         entry = df["close"].values[j]
                         stop = c_price + STOP_ATR_MULT * atr.iloc[j]

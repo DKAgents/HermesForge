@@ -173,7 +173,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 target_price = entry_price + (risk * TARGET_RR)
                 
                 signals.append({
-                    "date": row.name if hasattr(row.name, 'strftime') else str(row.get("date", i)),
+                    "date": result.index[i],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
@@ -198,7 +198,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 target_price = entry_price - (risk * TARGET_RR)
                 
                 signals.append({
-                    "date": row.name if hasattr(row.name, 'strftime') else str(row.get("date", i)),
+                    "date": result.index[i],
                     "ticker": ticker,
                     "strategy_id": STRATEGY_ID,
                     "strategy_name": STRATEGY_NAME,
@@ -244,25 +244,33 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
     # Time stop — also check if Alligator went back to sleep
     exit_bar = df.iloc[min(entry_idx + max_bars, n - 1)]
     exit_price = exit_bar["close"]
-    
+
+    # Precompute Alligator ONCE (was O(n^2): recomputed for every bar in window)
+    alligator_data = compute_alligator(df)
+
     # Check if Alligator lines tangled during holding period
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
-        r = compute_alligator(df.iloc[:i+1])
-        if len(r) == 0:
-            continue
-        last = r.iloc[-1]
+        last = alligator_data.iloc[i]
         if pd.isna(last.get("alligator_sleeping")):
             continue
         if last["alligator_sleeping"]:
             exit_price = df.iloc[i]["close"]
+            risk = abs(entry_price - stop_price)
+            if risk > 0:
+                if direction == "long":
+                    r_multiple = (exit_price - entry_price) / risk
+                else:
+                    r_multiple = (entry_price - exit_price) / risk
+            else:
+                r_multiple = 0
             return {"exit_type": "sleep", "exit_price": exit_price,
-                    "bars_held": i - entry_idx, "r_multiple": 0}  # simplified
-    
+                    "bars_held": i - entry_idx, "r_multiple": round(r_multiple, 3)}
+
     risk = entry_price - stop_price if direction == "long" else stop_price - entry_price
     r = (exit_price - entry_price) / risk if direction == "long" else (entry_price - exit_price) / risk
     if risk <= 0:
         r = 0
-    
+
     return {"exit_type": "time", "exit_price": exit_price,
             "bars_held": max_bars, "r_multiple": round(r, 3)}
 
@@ -289,7 +297,7 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
         else:
             continue
         
-        if entry_idx + MAX_HOLD_BARS >= len(df):
+        if entry_idx + 1 >= len(df):
             continue
         
         exit_result = _walk_forward_exit(

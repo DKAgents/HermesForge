@@ -174,9 +174,19 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False,
          intermarket: pd.DataFrame = None) -> list:
     """Scan for intermarket-driven signals on a single ticker.
     `intermarket` is the DataFrame from compute_intermarket_signal().
+    If intermarket is None, auto-fetches DXY/TNX so this function is
+    compatible with the standard 3-arg scan(df, ticker, long_only) contract.
     """
     if intermarket is None or len(intermarket) == 0:
-        return []
+        print(f"    [STR-AJ] No intermarket data — auto-fetching DXY/TNX...", flush=True)
+        im_data = fetch_intermarket_data()
+        if im_data.get("DXY") is None or im_data.get("TNX") is None:
+            print(f"    [STR-AJ] WARNING: Could not fetch intermarket data for {ticker} — skipping")
+            return []
+        intermarket = compute_intermarket_signal(im_data["DXY"], im_data["TNX"])
+        if intermarket is None or len(intermarket) == 0:
+            print(f"    [STR-AJ] WARNING: Insufficient DXY/TNX overlap — skipping {ticker}")
+            return []
     if len(df) < SMA_PERIOD + 5:
         return []
 
