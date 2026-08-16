@@ -24,8 +24,10 @@ v2.0 (US-115): Entry/stop/target now derived from the shared market_structure
 module (pullback entry to confirmed support, structure stop, natural
 resistance target). The MACD divergence detection logic is unchanged.
 
-Exit simulation (same as Scanner A):
-  target / stop / 8-bar time stop — whichever comes first.
+Exit simulation (US-115 follow-up: standardised to _walk_forward_exit):
+  Walks forward bar-by-bar using intrabar high/low for realistic stop/target
+  fills. Stop exits are capped at R = -1.0 (no gap-through beyond -1R).
+  Time stop at MAX_HOLD_BARS (15) bars, exits at close.
 
 Dependencies: pandas, numpy only.
 """
@@ -51,7 +53,7 @@ MATURITY_BARS    = 15    # consecutive bars MACD must stay same side of zero
 NARROWING_BARS   = 2     # consecutive bars of narrowing histogram required
 SWING_LOOKBACK   = 10    # bars for "new N-bar high/low" check
 PRIOR_SWING_RANGE = (5, 60)  # wider lookback for Stage 2 prior swing (was 10-20, too narrow)
-MAX_BARS_HELD    = 8
+MAX_HOLD_BARS    = 15    # max bars to hold before time-stop exit (aligned with STR-Z/STR-AA)
 COOLDOWN_BARS    = 20    # per-ticker cooldown after an accepted trade
 LIQUIDITY_FILTER_ENABLED = False  # Factor decomposition: less liquid = better signals (p=0.0025)
 LIQUIDITY_MAX_DV_RANK    = 0.80   # Skip tickers above this percentile of 60d dollar volume
@@ -105,41 +107,49 @@ def _compute_atr(high: pd.Series, low: pd.Series, close: pd.Series,
 # Exit simulation helper
 # ---------------------------------------------------------------------------
 
-def _simulate_exit(
-    closes: np.ndarray,
-    entry_idx: int,
-    entry_price: float,
-    stop_price: float,
-    target_price: float,
-    direction: str,          # 'long' or 'short'
-    max_bars: int = MAX_BARS_HELD,
-) -> tuple:
-    """
-    Scan forward from bar after entry_idx for up to max_bars bars.
-    For 'long'  : target = close >= target_price ; stop = close <= stop_price
-    For 'short' : target = close <= target_price ; stop = close >= stop_price
-    Returns (exit_price, exit_reason, bars_held).
-    """
-    n = len(closes)
-    for offset in range(1, max_bars + 1):
-        idx = entry_idx + offset
-        if idx >= n:
-            last = min(entry_idx + offset - 1, n - 1)
-            return closes[last], "time", offset
-        c = closes[idx]
-        if direction == "long":
-            if c >= target_price:
-                return c, "target", offset
-            if c <= stop_price:
-                return c, "stop", offset
-        else:  # short
-            if c <= target_price:
-                return c, "target", offset
-            if c >= stop_price:
-                return c, "stop", offset
+def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
+                       entry_price: float, stop_price: float, target_price: float,
+                       max_bars: int = MAX_HOLD_BARS) -> dict:
+    """Simulate trade exit by walking forward from entry.
 
+    Uses intrabar high/low for stop and target fills (conservative: if both
+    hit same bar, stop is assumed first). R-multiple on target exits is
+    computed dynamically from actual prices. Stop exits are capped at -1.0R
+    (no gap-through beyond -1R).
+    """
+    n = len(df)
+    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
+    for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
+        bar = df.iloc[i]
+        if direction == "long":
+            if bar["low"] <= stop_price:
+                return {"exit_type": "stop", "exit_price": stop_price,
+                        "bars_held": i - entry_idx, "r_multiple": -1.0}
+            if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
+                return {"exit_type": "target", "exit_price": target_price,
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
+        else:
+            if bar["high"] >= stop_price:
+                return {"exit_type": "stop", "exit_price": stop_price,
+                        "bars_held": i - entry_idx, "r_multiple": -1.0}
+            if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
+                return {"exit_type": "target", "exit_price": target_price,
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
+
+    # Time stop
     exit_idx = min(entry_idx + max_bars, n - 1)
-    return closes[exit_idx], "time", max_bars
+    exit_price = df.iloc[exit_idx]["close"]
+    if risk <= 0:
+        r = 0.0
+    else:
+        r = ((exit_price - entry_price) / risk) if direction == "long" \
+            else ((entry_price - exit_price) / risk)
+    return {"exit_type": "time", "exit_price": round(exit_price, 4),
+            "bars_held": max_bars, "r_multiple": round(r, 3)}
 
 
 # ---------------------------------------------------------------------------
@@ -293,29 +303,19 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             if trade is not None:
                 last_trade_idx = i
                 entry_idx = trade["entry_idx"]
-                ep, er, bh = _simulate_exit(
-                    close_arr, entry_idx,
-                    trade["entry_price"], trade["stop_price"],
-                    trade["target_price"], "short"
-                )
-                # Realised R: for short, profit when price falls (ep < entry)
-                realised_r = (trade["entry_price"] - ep) / trade["risk"] if trade["risk"] > 0 else 0.0
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
                     "entry_date":           dates[entry_idx],
                     "entry_idx":            entry_idx,
                     "direction":            "short",
+                    "signal_type":          "macd_bear_div",
                     "entry_price":          round(trade["entry_price"],  4),
                     "stop_price":           round(trade["stop_price"],   4),
                     "target_price":         round(trade["target_price"], 4),
                     "risk":                 round(trade["risk"], 4),
                     "rr":                   round(trade["rr"], 3),
                     "entry_type":           trade["entry_type"],
-                    "exit_price":           round(ep,           4),
-                    "exit_reason":          er,
-                    "r_multiple":           round(realised_r,   4),
-                    "bars_held":            bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
                     "strategy_version":     STRATEGY_VERSION,
@@ -345,29 +345,19 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
             if trade is not None:
                 last_trade_idx = i
                 entry_idx = trade["entry_idx"]
-                ep, er, bh = _simulate_exit(
-                    close_arr, entry_idx,
-                    trade["entry_price"], trade["stop_price"],
-                    trade["target_price"], "long"
-                )
-                # Realised R: for long, profit when price rises (ep > entry)
-                realised_r = (ep - trade["entry_price"]) / trade["risk"] if trade["risk"] > 0 else 0.0
                 signals.append({
                     "ticker":               ticker,
                     "date":                 dates[i],
                     "entry_date":           dates[entry_idx],
                     "entry_idx":            entry_idx,
                     "direction":            "long",
+                    "signal_type":          "macd_bull_div",
                     "entry_price":          round(trade["entry_price"],  4),
                     "stop_price":           round(trade["stop_price"],   4),
                     "target_price":         round(trade["target_price"], 4),
                     "risk":                 round(trade["risk"], 4),
                     "rr":                   round(trade["rr"], 3),
                     "entry_type":           trade["entry_type"],
-                    "exit_price":           round(ep,           4),
-                    "exit_reason":          er,
-                    "r_multiple":           round(realised_r,   4),
-                    "bars_held":             bh,
                     "subperiod":            subperiod_arr[i],
                     "strategy_id":          STRATEGY_ID,
                     "strategy_version":     STRATEGY_VERSION,
@@ -381,6 +371,102 @@ def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
                 })
 
     return signals
+
+
+# ---------------------------------------------------------------------------
+# run_backtest: standard exit simulation via _walk_forward_exit
+# ---------------------------------------------------------------------------
+
+def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
+    """Run backtest for a single ticker. Returns list of trade results.
+
+    Uses _walk_forward_exit (intrabar high/low) for realistic exit simulation,
+    matching the standard pattern used by all other scanners.
+    """
+    signals = scan(df, ticker)
+    if not signals:
+        return []
+
+    df = df.copy()
+    df.columns = df.columns.str.lower()
+    if not isinstance(df.index, pd.DatetimeIndex):
+        df.index = pd.to_datetime(df.index)
+    df.sort_index(inplace=True)
+
+    trades = []
+    for sig in signals:
+        if long_only and sig.get("direction") == "short":
+            continue
+
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            target_date = pd.Timestamp(sig["date"])
+            try:
+                entry_idx = df.index.get_loc(target_date)
+            except (KeyError, ValueError, TypeError):
+                mask = df.index == target_date
+                if not mask.any():
+                    continue
+                entry_idx = df.index.get_loc(df.index[mask][0])
+
+        if isinstance(entry_idx, slice):
+            entry_idx = entry_idx.start
+        if isinstance(entry_idx, (list, np.ndarray)):
+            entry_idx = int(entry_idx[0])
+
+        if entry_idx + 1 >= len(df):
+            continue
+
+        exit_result = _walk_forward_exit(
+            df, int(entry_idx), sig["direction"],
+            sig["entry_price"], sig["stop_price"], sig["target_price"],
+        )
+        trades.append({
+            "symbol": ticker,
+            "strategy": STRATEGY_ID,
+            "direction": sig["direction"],
+            "date": sig["date"],
+            "entry_price": round(sig["entry_price"], 4),
+            "stop_price": round(sig["stop_price"], 4),
+            "target_price": round(sig["target_price"], 4),
+            "exit_type": exit_result["exit_type"],
+            "exit_price": round(exit_result["exit_price"], 4),
+            "bars_held": exit_result["bars_held"],
+            "r_multiple": exit_result["r_multiple"],
+            "signal_type": sig["signal_type"],
+            "entry_type": sig.get("entry_type", ""),
+        })
+
+    return trades
+
+
+def run_phase1a(symbols: list, asset_type: str = "stock") -> pd.DataFrame:
+    """Run Phase 1A backtest across multiple tickers."""
+    DATA_DIR = Path.home() / ".hermes" / "market_data"
+    all_trades = []
+
+    for sym in symbols:
+        print(f"  Scanning {sym}...", flush=True)
+        cache_path = DATA_DIR / f"{sym}.parquet"
+        if not cache_path.exists():
+            print(f"    No cached data for {sym}")
+            continue
+        df = pd.read_parquet(cache_path)
+        if "Date" in df.columns:
+            df = df.set_index("Date")
+        if not isinstance(df.index, pd.DatetimeIndex):
+            df.index = pd.to_datetime(df.index)
+        df.columns = df.columns.str.lower()
+
+        if "subperiod" not in df.columns:
+            df["subperiod"] = df.index.to_period("Q").astype(str)
+
+        trades = run_backtest(df, sym)
+        all_trades.extend(trades)
+
+    if all_trades:
+        return pd.DataFrame(all_trades)
+    return pd.DataFrame()
 
 
 # ---------------------------------------------------------------------------
@@ -548,19 +634,24 @@ if __name__ == "__main__":
     df.sort_index(inplace=True)
     print(f"Loaded {len(df)} rows  ({df.index[0]} → {df.index[-1]})")
 
-    results = scan(df, ticker="SPY")
-    print(f"\nStrategy B signals found: {len(results)}")
+    trades = run_backtest(df, ticker="SPY")
+    print(f"\nStrategy B trades: {len(trades)}")
 
-    long_sigs  = [s for s in results if s["direction"] == "long"]
-    short_sigs = [s for s in results if s["direction"] == "short"]
+    long_sigs  = [s for s in trades if s["direction"] == "long"]
+    short_sigs = [s for s in trades if s["direction"] == "short"]
     print(f"  Long  (bullish): {len(long_sigs)}")
     print(f"  Short (bearish): {len(short_sigs)}")
 
-    if results:
-        print("\nFirst 3 signals:")
-        for sig in results[:3]:
+    # Verify no gap-through stops (R < -1 on stop exits)
+    stop_exits = [t for t in trades if t["exit_type"] == "stop"]
+    bad_stops = [t for t in stop_exits if t["r_multiple"] < -1.0]
+    print(f"\nStop exits: {len(stop_exits)}, with R < -1: {len(bad_stops)}")
+
+    if trades:
+        print("\nFirst 3 trades:")
+        for sig in trades[:3]:
             print("-" * 60)
             for k, v in sig.items():
                 print(f"  {k:<26}: {v}")
     else:
-        print("No signals detected.")
+        print("No trades detected.")

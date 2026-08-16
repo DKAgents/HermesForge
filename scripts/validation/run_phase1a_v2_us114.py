@@ -126,7 +126,7 @@ def run_one_scanner(scanner_key: str, universe: list, asset_type: str = "stock")
         result_df = pd.DataFrame(columns=[
             "symbol", "strategy", "direction", "date", "entry_price",
             "stop_price", "target_price", "exit_type", "exit_price",
-            "bars_held", "r_multiple", "signal_type"
+            "bars_held", "r_multiple", "signal_type", "entry_type"
         ])
     else:
         result_df = pd.DataFrame(all_trades)
@@ -134,7 +134,7 @@ def run_one_scanner(scanner_key: str, universe: list, asset_type: str = "stock")
         std_cols = [
             "symbol", "strategy", "direction", "date", "entry_price",
             "stop_price", "target_price", "exit_type", "exit_price",
-            "bars_held", "r_multiple", "signal_type"
+            "bars_held", "r_multiple", "signal_type", "entry_type"
         ]
         for c in std_cols:
             if c not in result_df.columns:

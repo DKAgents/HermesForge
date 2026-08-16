@@ -39,40 +39,7 @@ from scanners.scanner_af_candlestick import run_backtest as bt_af
 from scanners.scanner_y_adx_dmi import run_backtest as bt_y
 from scanners.scanner_r_alligator import run_backtest as bt_r
 
-# STR-B uses a different interface — import scan directly and wrap it
-from scanners.scanner_b_macd_divergence import scan as scan_b
-# Also need the exit simulation from B's internal helpers
-from scanners import scanner_b_macd_divergence as scanner_b_mod
-
-
-def run_backtest_b(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
-    """Adapter: wraps STR-B's scan() into HermesForge standard trade output."""
-    if "subperiod" not in df.columns:
-        df = df.copy()
-        df["subperiod"] = df.index.to_period("Q").astype(str)
-    signals = scan_b(df, ticker)
-    # scan_b already embeds exit_price, exit_reason, r_multiple, bars_held
-    # We need to map to standard columns
-    trades = []
-    for sig in signals:
-        # Skip short signals if long_only
-        if long_only and sig.get("direction") == "short":
-            continue
-        trades.append({
-            "symbol": sig.get("ticker", ticker),
-            "strategy": sig.get("strategy_id", "STR-B-macd-divergence"),
-            "direction": sig["direction"],
-            "date": sig["date"],
-            "entry_price": sig["entry_price"],
-            "stop_price": sig["stop_price"],
-            "target_price": sig["target_price"],
-            "exit_type": sig.get("exit_reason", "time"),
-            "exit_price": sig["exit_price"],
-            "bars_held": sig["bars_held"],
-            "r_multiple": sig["r_multiple"],
-            "signal_type": sig.get("signal_bar_index", ""),
-        })
-    return trades
+from scanners.scanner_b_macd_divergence import run_backtest as bt_b
 
 
 SCANNER_MAP = {
@@ -85,7 +52,7 @@ SCANNER_MAP = {
     "AF": ("STR-AF-stocks-phase1a-v3", bt_af),
     "Y":  ("STR-Y-stocks-phase1a-v3",  bt_y),
     "R":  ("STR-R-stocks-phase1a-v3",  bt_r),
-    "B":  ("STR-B-stocks-phase1a-v3",  run_backtest_b),
+    "B":  ("STR-B-stocks-phase1a-v3",  bt_b),
 }
 
 DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data"
@@ -146,14 +113,14 @@ def run_one_scanner(scanner_key: str, universe: list, asset_type: str = "stock")
         result_df = pd.DataFrame(columns=[
             "symbol", "strategy", "direction", "date", "entry_price",
             "stop_price", "target_price", "exit_type", "exit_price",
-            "bars_held", "r_multiple", "signal_type"
+            "bars_held", "r_multiple", "signal_type", "entry_type"
         ])
     else:
         result_df = pd.DataFrame(all_trades)
         std_cols = [
             "symbol", "strategy", "direction", "date", "entry_price",
             "stop_price", "target_price", "exit_type", "exit_price",
-            "bars_held", "r_multiple", "signal_type"
+            "bars_held", "r_multiple", "signal_type", "entry_type"
         ]
         for c in std_cols:
             if c not in result_df.columns:
