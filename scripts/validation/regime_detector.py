@@ -41,7 +41,7 @@ STRATEGY_REGIME_MAP = {
     "STR-L-atr-contraction":           ["low-volatility"],
     "STR-P-crosssectional":            ["ranging", "trending"],
     
-    # Near-miss scanner (always runs — near-misses are informational)
+    # Fallback scanner (runs in all regimes — informational only)
     "STR-D-sr-role-reversal":          ["trending", "ranging", "transitional", "high-volatility", "low-volatility"],
 }
 
