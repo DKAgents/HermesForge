@@ -238,15 +238,14 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
         
         position_size_units = _calculate_position_size(entry_price, stop_price, RISK_PCT)
         
-        # US-111: Portfolio Risk Guard check
-        risk_allowed, risk_reason = check_trade_allowed(
-            STRATEGY_ID, symbol, asset_type, RISK_PCT
-        )
-        if not risk_allowed:
-            summary.setdefault("skipped_risk_guard", 0)
-            summary["skipped_risk_guard"] += 1
-            print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
-            continue
+        # US-111: Portfolio Risk Guard — DISABLED during testing phase
+        # Re-enable once we have 50+ closed trades for strategy validation.
+        # risk_allowed, risk_reason = check_trade_allowed(STRATEGY_ID, symbol, asset_type, RISK_PCT)
+        # if not risk_allowed:
+        #     summary.setdefault("skipped_risk_guard", 0)
+        #     summary["skipped_risk_guard"] += 1
+        #     print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
+        #     continue
         
         # Create trade ID with timestamp for intraday uniqueness
         entry_time = pd.Timestamp(sweep.timestamp)
