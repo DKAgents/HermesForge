@@ -75,7 +75,7 @@ PAPER_STRATEGIES = {
     "STR-AE-4week":                    scan_ae,
     "STR-AF-candlestick":              scan_af,
     "STR-AG-wedge":                    scan_ag,
-    "STR-AI-seasonal":                 scan_ai,
+
     "STR-AJ-intermarket":              scan_aj,
 }
 
@@ -121,7 +121,7 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                            "STR-AA-williams-r", "STR-AB-obv-divergence",
                            "STR-AC-cci", "STR-AD-keltner", "STR-AE-4week",
                            "STR-AF-candlestick", "STR-AG-wedge",
-                           "STR-AI-seasonal", "STR-AJ-intermarket"}
+                           "STR-AJ-intermarket"}
         if strategy_id in long_only_stocks:
             scanner_kwargs["long_only"] = (asset_class == "stock")
 

@@ -201,7 +201,7 @@ STRATEGIES = [
     {"id": "STR-AF", "name": "Candlestick Reversal", "status": "LIVE", "description": "Hammer, Morning Star, Piercing, 3 White Soldiers, etc. Phase 1A: 42.2% WR, +0.164R, PF 1.29.", "regimes": ["reversal"], "edge": "Candle pattern reversal"},
     {"id": "STR-AG", "name": "Wedge Breakout", "status": "LIVE", "description": "Rising/falling wedge contraction, breakout entry. Phase 1A: 57.2% WR, +0.279R, PF 1.81.", "regimes": ["reversal"], "edge": "Wedge breakout"},
     {"id": "STR-AH", "name": "Island Reversal", "status": "KILLED", "description": "Gap up then gap down (or vice versa) with isolated price island. KILLED: US-114 — survivorship bias artifact (84% time exits, beta not edge).", "regimes": ["reversal"], "edge": "Gap island reversal (survivorship bias artifact)"},
-    {"id": "STR-AI", "name": "Seasonal Tendency", "status": "WATCH", "description": "Enter months with >60% historical positive return rate. WATCH: US-114 — OOS not significant, pending parameter sensitivity review.", "regimes": ["all"], "edge": "Calendar seasonal"},
+    {"id": "STR-AI", "name": "Seasonal Tendency", "status": "KILLED", "description": "Enter months with >60% historical positive return rate. KILLED: US-114 — OOS p=0.163, structural breakdown (2023: 93% WR → 2026: 35% WR), November alone = 44% of total R. Parameter tuning cannot fix seasonal instability.", "regimes": ["all"], "edge": "Calendar seasonal (FAILED US-114 — structural breakdown)"},
     {"id": "STR-AJ", "name": "Intermarket Rotation", "status": "LIVE", "description": "Long stocks when DXY falling + yields falling (risk-on). Phase 1A: 54.9% WR, +0.463R, PF 2.16.", "regimes": ["trending"], "edge": "Macro intermarket"},
 ]
 
