@@ -120,6 +120,20 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": False,
         "call_mode": "batch",
     },
+    "VIXC": {
+        "module": "scanner_vix_vrp_contango",
+        "scan_fn": "scan",
+        "name": "VIX Term-Structure Contango Breakout",
+        "params": {
+            "IVTS_MAX": [0.90, 0.92, 0.95],
+            "VIX_MAX": [18, 20],
+            "MIN_RR": [2.0, 3.0],
+            "MIN_PERSIST_FRAC": [0.5, 0.6],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": True,
+        "call_mode": "per_ticker",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -130,6 +144,7 @@ QUICK_PARAMS = {
     "L": {"ATR_LOOKBACK": [120], "ADX_THRESHOLD": [18], "TRAILING_ATR_MULT": [2.0]},
     "D": {"ATR_STOP_MULT": [1.0], "MIN_RR": [3.0], "MAX_HOLD": [8]},
     "P": {"ATR_STOP_MULT": [1.5], "QUINTILE": [5], "MAX_BARS_HELD": [21]},
+    "VIXC": {"IVTS_MAX": [0.92], "VIX_MAX": [20], "MIN_RR": [2.0, 3.0], "MIN_PERSIST_FRAC": [0.6]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────

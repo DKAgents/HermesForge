@@ -48,6 +48,11 @@ from scanners.scanner_af_candlestick import scan as scan_af      # noqa: E402
 from scanners.scanner_ag_wedge import scan as scan_ag            # noqa: E402
 from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-08-16): VIX term-structure
+# contango breakout — walk-forward validated OOS ROBUST EDGE (see
+# 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md).
+from scanners.scanner_vix_vrp_contango import scan as scan_vixc  # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -76,6 +81,10 @@ PAPER_STRATEGIES = {
     "STR-AG-wedge":                    scan_ag,
 
     "STR-AJ-intermarket":              scan_aj,
+
+    # Autonomous-pipeline deployed (2026-08-16): VIX contango breakout.
+    # Watch-level risk (0.5%) — see 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md
+    "STR-VIXC-vix-contango-breakout":  scan_vixc,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention

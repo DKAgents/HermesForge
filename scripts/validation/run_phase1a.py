@@ -13,10 +13,17 @@ Options:
 """
 
 import sys
+import json
 import argparse
 import pathlib
 import datetime
+import importlib.util
 import pandas as pd
+
+try:
+    from scipy import stats as _scipy_stats
+except Exception:  # pragma: no cover
+    _scipy_stats = None
 
 # Paths
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
@@ -95,7 +102,8 @@ def summarize(results: pd.DataFrame, strategy_id: str) -> dict:
             "strategy": strategy_id, "total_signals": 0,
             "signals_per_year": 0.0, "avg_r": 0.0, "median_r": 0.0,
             "win_rate": 0.0, "sub_positive": 0, "classification": "❌ KILL",
-            "friction_flag": False,
+            "friction_flag": False, "p_value": 1.0, "t_stat": 0.0,
+            "mean_r": 0.0,
         }
     # Date range
     results["date"] = pd.to_datetime(results["date"])
@@ -115,16 +123,39 @@ def summarize(results: pd.DataFrame, strategy_id: str) -> dict:
     classification = classify(signals_per_year, avg_r_val, sub_positive)
     friction_flag = avg_r_val < FRICTION_FLAG_R
 
+    # Statistical significance — one-sample t-test, H0: mean R = 0
+    r_vals = results["r_multiple"].dropna().astype(float).values
+    p_value = 1.0
+    t_stat = 0.0
+    if len(r_vals) >= 3:
+        try:
+            if _scipy_stats is not None:
+                t_stat, p_value = _scipy_stats.ttest_1samp(r_vals, 0.0)
+                if p_value is None or r_vals.std(ddof=1) == 0:
+                    t_stat, p_value = (0.0, 1.0) if avg_r_val == 0 else (float('inf'), 0.0)
+                t_stat = float(t_stat)
+                p_value = float(p_value)
+            else:
+                from statistics import NormalDist
+                std_r = float(r_vals.std(ddof=1))
+                t_stat = (avg_r_val / (std_r / (len(r_vals) ** 0.5))) if std_r > 0 else 0.0
+                p_value = 2 * (1 - NormalDist(0, 1).cdf(abs(t_stat))) if abs(t_stat) < 100 else 0.0
+        except Exception:
+            p_value, t_stat = 1.0, 0.0
+
     return {
         "strategy": strategy_id,
         "total_signals": len(results),
         "signals_per_year": round(signals_per_year, 1),
         "avg_r": round(avg_r_val, 3),
+        "mean_r": round(avg_r_val, 3),
         "median_r": round(median_r_val, 3),
         "win_rate": round(win_rate_val, 3),
         "sub_positive": sub_positive,
         "classification": classification,
         "friction_flag": friction_flag,
+        "p_value": round(p_value, 4),
+        "t_stat": round(t_stat, 3),
     }
 
 
@@ -192,12 +223,110 @@ def write_report(summaries: list[dict]):
     print(f"\nReport saved → {out_path}")
 
 
+def _load_scanner_module(scanner_path: str):
+    """Dynamically import a scanner module from a file path.
+
+    Returns (module, scan_fn_name). Detects whether the module exposes a
+    `scan` function (per-ticker: scan(df, ticker)) or a `scan_all` / `scan`
+    batch function (scan(data_dict)).
+    """
+    p = pathlib.Path(scanner_path).expanduser().resolve()
+    if not p.exists():
+        raise FileNotFoundError(f"Scanner file not found: {p}")
+    mod_name = p.stem
+    # Ensure scanners dir is importable so intra-scanner imports resolve
+    scanners_dir = REPO_ROOT / "scripts" / "validation" / "scanners"
+    for d in [str(REPO_ROOT / "scripts" / "validation"), str(scanners_dir)]:
+        if d not in sys.path:
+            sys.path.insert(0, d)
+    spec = importlib.util.spec_from_file_location(mod_name, str(p))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # type: ignore[union-attr]
+    if hasattr(module, "scan"):
+        return module, "scan"
+    raise AttributeError(f"Scanner {p.name} exposes no `scan` function")
+
+
+def run_external_scanner(scanner_path: str, data: dict, strategy_id: str) -> pd.DataFrame:
+    """Run a scanner file across the universe and return a results DataFrame."""
+    module, scan_fn_name = _load_scanner_module(scanner_path)
+    scan_fn = getattr(module, scan_fn_name)
+    import inspect
+    sig = inspect.signature(scan_fn)
+    batch_mode = len(sig.parameters) == 1  # scan(data_dict)
+
+    print(f"\n{'='*60}")
+    print(f"Scanning {strategy_id} (file: {pathlib.Path(scanner_path).name})...")
+    all_signals = []
+    if batch_mode:
+        try:
+            sigs = scan_fn(data)
+            if sigs:
+                all_signals.extend(sigs)
+        except Exception as e:
+            print(f"  ERROR (batch): {e}")
+    else:
+        for ticker, df in data.items():
+            try:
+                signals = scan_fn(df, ticker)
+                if signals:
+                    all_signals.extend(signals)
+            except Exception as e:
+                print(f"  ERROR on {ticker}: {e}")
+    if not all_signals:
+        print("  No signals found.")
+        return pd.DataFrame()
+    results = pd.DataFrame(all_signals)
+    results["strategy_id"] = strategy_id
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = RESULTS_DIR / f"{strategy_id}-phase1a.csv"
+    results.to_csv(out_path, index=False)
+    print(f"  Saved {len(results)} signals -> {out_path.name}")
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run HermesForge Phase 1A signal scanners")
     parser.add_argument("--fetch", action="store_true", help="Fetch/refresh market data first")
-    parser.add_argument("--strategy", choices=["a","b","c","d","e","g","f","h","i","j"], help="Run only one strategy")
+    parser.add_argument("--strategy", choices=["a","b","c","d","e","g","f","h","i","j"], help="Run only one built-in strategy")
+    parser.add_argument("--scanner", type=str, default=None,
+                        help="Path to a scanner .py file to run (must expose scan(df, ticker) or scan(data_dict))")
+    parser.add_argument("--strategy-id", type=str, default=None,
+                        help="Override strategy_id label for --scanner runs")
+    parser.add_argument("--crypto", action="store_true",
+                        help="Load crypto universe (instead of stocks) for --scanner runs")
+    parser.add_argument("--json", action="store_true", help="Emit JSON summary to stdout")
     args = parser.parse_args()
 
+    # ── External scanner mode ────────────────────────────────────────────
+    if args.scanner:
+        if args.fetch:
+            print("Fetching market data...")
+            fetch_all()
+        print("Loading cached data...")
+        if args.crypto:
+            sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
+            from fetch_crypto_data import load_all as load_all_crypto
+            data = load_all_crypto()
+            label = "crypto"
+        else:
+            data = load_all()
+            label = "stock"
+        if not data:
+            print(f"ERROR: No cached {label} data found. Run the relevant fetcher first.")
+            sys.exit(1)
+        print(f"Loaded {len(data)} {label} tickers.")
+
+        strategy_id = args.strategy_id or pathlib.Path(args.scanner).stem
+        results = run_external_scanner(args.scanner, data, strategy_id)
+        summary = summarize(results, strategy_id)
+        if args.json:
+            print(json.dumps(summary, default=str, indent=2))
+        else:
+            print_summary([summary])
+        return
+
+    # ── Built-in strategy mode ────────────────────────────────────────────
     if args.fetch:
         print("Fetching market data...")
         fetch_all()
@@ -217,9 +346,12 @@ def main():
         summary = summarize(results, strategy_id)
         summaries.append(summary)
 
-    print_summary(summaries)
-    if len(summaries) == len(STRATEGY_MAP):
-        write_report(summaries)
+    if args.json:
+        print(json.dumps(summaries, default=str, indent=2))
+    else:
+        print_summary(summaries)
+        if len(summaries) == len(STRATEGY_MAP):
+            write_report(summaries)
 
 
 if __name__ == "__main__":

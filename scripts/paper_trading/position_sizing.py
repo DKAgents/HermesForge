@@ -129,6 +129,13 @@ def size_strategy_ai(*a, **k): return 1.0  # Seasonal
 def size_strategy_aj(*a, **k): return 1.0  # Intermarket
 
 
+# Autonomous-pipeline deployed (2026-08-16): VIX contango breakout.
+# Watch-level: reduced 0.5% base risk because the walk-forward showed a
+# sharp 2022-bear OOS drawdown (mean R -0.34); edge is real but
+# regime-fragile. Capped below the 1% single-idea ceiling per SOUL.md.
+def size_strategy_vixc(*a, **k): return 0.5  # VIX contango breakout (WATCH)
+
+
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
     "STR-B-macd-histogram-divergence":   size_strategy_b,
@@ -157,6 +164,7 @@ SIZING_FUNCTIONS = {
     "STR-AH-island":                      size_strategy_ah,
     "STR-AI-seasonal":                    size_strategy_ai,
     "STR-AJ-intermarket":                 size_strategy_aj,
+    "STR-VIXC-vix-contango-breakout":     size_strategy_vixc,
 }
 
 

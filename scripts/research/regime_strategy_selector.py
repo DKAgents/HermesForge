@@ -64,6 +64,11 @@ STRATEGY_REGISTRY = {
     "STR-P": {"name": "Cross-Sectional Factor", "asset": "crypto", "status": "WATCH",
               "regime_best": ["neutral", "caution"], "regime_avoid": ["risk_off"],
               "base_risk": 0.5, "type": "factor"},
+    # Autonomous-pipeline deployed 2026-08-16 (walk-forward OOS ROBUST EDGE,
+    # but 2022-bear OOS window mean R -0.34 → WATCH risk + risk_off suppress).
+    "STR-VIXC": {"name": "VIX Term-Structure Contango Breakout", "asset": "stock", "status": "WATCH",
+                 "regime_best": ["risk_on", "neutral", "complacent"], "regime_avoid": ["risk_off"],
+                 "base_risk": 0.5, "type": "breakout"},
 }
 
 
