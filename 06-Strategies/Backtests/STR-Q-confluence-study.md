@@ -1,3 +1,11 @@
+---
+topic: strategies
+confidence: high
+has_quotes: true
+tags: []
+source: HermesForge Strategies
+created: 2026-08-16
+---
 # STR-Q Confluence Study: Sweep-Strategy Alignment vs Existing Strategies
 
 **Date:** 2026-08-15

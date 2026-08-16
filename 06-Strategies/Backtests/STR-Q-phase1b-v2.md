@@ -8,8 +8,12 @@ date_range: "2025-08-13 to 2026-08-14"
 split_method: "chronological 60/40 (IS/OOS)"
 validation_date: "2026-08-15"
 status: complete
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # STR-Q Phase 1B v2 — Deep Walk-Forward Validation
 
 ## Overview

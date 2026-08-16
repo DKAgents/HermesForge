@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, fundamental-calendar-risk, rules]
 sources: ["E005-subjectivity-in-defining-significant-penetration", "C065-previous-support-as-future-resistance-in-downtrend", "R029-speed-resistance-lines-role-reversal"]
 seed_id: lesson-a-c8b706
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Earnings Calendar as Objective Filter for Subjective Role-Reversal Entries
 
 ## Discovery Summary

@@ -32,7 +32,6 @@ from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
 from scanners.scanner_i_adaptive_trend import scan as scan_i    # noqa: E402
 from scanners.scanner_r_alligator import scan as scan_r         # noqa: E402
-from scanners.scanner_s_elliott_wave import scan as scan_s      # noqa: E402
 from scanners.scanner_t_head_shoulders import scan as scan_t    # noqa: E402
 from scanners.scanner_u_double_top_bottom import scan as scan_u  # noqa: E402
 from scanners.scanner_v_triangles import scan as scan_v          # noqa: E402
@@ -47,7 +46,6 @@ from scanners.scanner_ad_keltner import scan as scan_ad          # noqa: E402
 from scanners.scanner_ae_4week_rule import scan as scan_ae      # noqa: E402
 from scanners.scanner_af_candlestick import scan as scan_af      # noqa: E402
 from scanners.scanner_ag_wedge import scan as scan_ag            # noqa: E402
-from scanners.scanner_ah_island_reversal import scan as scan_ah   # noqa: E402
 from scanners.scanner_ai_seasonal import scan as scan_ai          # noqa: E402
 from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 
@@ -63,7 +61,6 @@ PAPER_STRATEGIES = {
     "STR-D-sr-role-reversal":          scan_d,
     "STR-I-adaptive-trend":            scan_i,
     "STR-R-alligator":                 scan_r,
-    "STR-S-elliott-wave":              scan_s,
     "STR-T-head-shoulders":            scan_t,
     "STR-U-double-top-bottom":         scan_u,
     "STR-V-triangles":                 scan_v,
@@ -78,12 +75,14 @@ PAPER_STRATEGIES = {
     "STR-AE-4week":                    scan_ae,
     "STR-AF-candlestick":              scan_af,
     "STR-AG-wedge":                    scan_ag,
-    "STR-AH-island":                   scan_ah,
     "STR-AI-seasonal":                 scan_ai,
     "STR-AJ-intermarket":              scan_aj,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
+
+# STR-AJ fires correlated signals across all stocks on macro triggers — limit concentration
+MAX_INTERMARKET_POSITIONS = 3
 
 
 def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
@@ -115,14 +114,14 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
         # Strategies that are long-only for stocks, bidirectional for crypto
         scanner_kwargs = {}
         long_only_stocks = {"STR-I-adaptive-trend", "STR-R-alligator",
-                           "STR-S-elliott-wave", "STR-T-head-shoulders",
+                           "STR-T-head-shoulders",
                            "STR-U-double-top-bottom", "STR-V-triangles",
                            "STR-W-flags-pennants", "STR-X-parabolic-sar",
                            "STR-Y-adx-dmi", "STR-Z-stochastic",
                            "STR-AA-williams-r", "STR-AB-obv-divergence",
                            "STR-AC-cci", "STR-AD-keltner", "STR-AE-4week",
                            "STR-AF-candlestick", "STR-AG-wedge",
-                           "STR-AH-island", "STR-AI-seasonal", "STR-AJ-intermarket"}
+                           "STR-AI-seasonal", "STR-AJ-intermarket"}
         if strategy_id in long_only_stocks:
             scanner_kwargs["long_only"] = (asset_class == "stock")
 
@@ -148,6 +147,18 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 summary["skipped_already_open"] += 1
                 print(f"  SKIP: {strategy_id}/{ticker} already has an open paper trade")
                 continue
+
+            # STR-AJ concentration control: STR-AJ fires correlated signals across
+            # all stocks on macro triggers (DXY/TNX risk-on) — cap at 3 concurrent
+            # positions to avoid portfolio concentration in a single macro bet.
+            if strategy_id == "STR-AJ-intermarket":
+                aj_open_count = len(trade_log.get_open_trades(strategy_id="STR-AJ-intermarket"))
+                if aj_open_count >= MAX_INTERMARKET_POSITIONS:
+                    summary.setdefault("skipped_aj_concentration", 0)
+                    summary["skipped_aj_concentration"] += 1
+                    print(f"  SKIP: {strategy_id}/{ticker} — STR-AJ concentration limit "
+                          f"({aj_open_count}/{MAX_INTERMARKET_POSITIONS} open)")
+                    continue
 
             entry_date = str(latest["date"])[:10]
             risk_pct = _get_risk_pct(strategy_id, latest)

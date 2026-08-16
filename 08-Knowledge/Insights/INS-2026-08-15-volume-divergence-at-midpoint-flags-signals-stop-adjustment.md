@@ -7,8 +7,11 @@ domains: [concepts, patterns, rules]
 sources: ["N043-flag-and-pennant-summary-characteristics", "R082-breakouts-must-be-accompanied-by-heavy-volume", "C050-secondary-trend-retracement-range"]
 seed_id: vol_diverge_stop
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume Divergence at Midpoint Flags Signals Stop Adjustment
 
 ## Discovery Summary

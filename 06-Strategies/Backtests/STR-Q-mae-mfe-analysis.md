@@ -1,3 +1,11 @@
+---
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
+created: 2026-08-16
+---
 # STR-Q MAE/MFE Analysis (Deep Backtest, Phase 1A)
 
 **Source:** `scripts/validation/results/STR-Q-stocks-deep-phase1a.csv`  
