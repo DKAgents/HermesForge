@@ -251,8 +251,14 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
 def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                        entry_price: float, stop_price: float, target_price: float,
                        max_bars: int = MAX_HOLD_BARS) -> dict:
-    """Simulate trade exit by walking forward from entry."""
+    """Simulate trade exit by walking forward from entry.
+    
+    v2.0: target R is computed dynamically from actual entry/stop/target prices
+    (no longer hardcoded TARGET_RR). The Alligator sleep exit is retained as
+    a time-stop variant — r_multiple is always computed from real prices.
+    """
     n = len(df)
+    risk = abs(entry_price - stop_price)
     
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
         bar = df.iloc[i]
@@ -262,15 +268,19 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
         else:
             if bar["high"] >= stop_price:
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
     
     # Time stop — also check if Alligator went back to sleep
     exit_bar = df.iloc[min(entry_idx + max_bars, n - 1)]
@@ -286,28 +296,31 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
             continue
         if last["alligator_sleeping"]:
             exit_price = df.iloc[i]["close"]
-            risk = abs(entry_price - stop_price)
             if risk > 0:
                 if direction == "long":
                     r_multiple = (exit_price - entry_price) / risk
                 else:
                     r_multiple = (entry_price - exit_price) / risk
             else:
-                r_multiple = 0
+                r_multiple = 0.0
             return {"exit_type": "sleep", "exit_price": exit_price,
                     "bars_held": i - entry_idx, "r_multiple": round(r_multiple, 3)}
 
-    risk = entry_price - stop_price if direction == "long" else stop_price - entry_price
-    r = (exit_price - entry_price) / risk if direction == "long" else (entry_price - exit_price) / risk
-    if risk <= 0:
-        r = 0
+    if direction == "long":
+        r = (exit_price - entry_price) / risk if risk > 0 else 0.0
+    else:
+        r = (entry_price - exit_price) / risk if risk > 0 else 0.0
 
     return {"exit_type": "time", "exit_price": exit_price,
             "bars_held": max_bars, "r_multiple": round(r, 3)}
 
 
 def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
-    """Run backtest for a single ticker. Returns list of trade results."""
+    """Run backtest for a single ticker. Returns list of trade results.
+    
+    v2.0: Uses entry_idx from the signal dict (set by compute_structure_trade)
+    for the exit walk start. Falls back to date-based lookup for legacy signals.
+    """
     signals = scan(df, ticker, long_only=long_only)
     if not signals:
         return []
@@ -315,18 +328,21 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
     trades = []
     
     for sig in signals:
-        # Find the bar index for this signal
-        if "date" in sig and hasattr(df.index, 'strftime'):
-            try:
-                target_date = pd.Timestamp(sig["date"])
-                mask = df.index == target_date
-                if not mask.any():
+        # Use entry_idx from compute_structure_trade (pullback entry)
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            # Legacy fallback: derive from signal date
+            if "date" in sig and hasattr(df.index, 'strftime'):
+                try:
+                    target_date = pd.Timestamp(sig["date"])
+                    mask = df.index == target_date
+                    if not mask.any():
+                        continue
+                    entry_idx = df.index.get_loc(df.index[mask][0])
+                except (ValueError, KeyError, TypeError):
                     continue
-                entry_idx = df.index.get_loc(df.index[mask][0])
-            except (ValueError, KeyError, TypeError):
+            else:
                 continue
-        else:
-            continue
         
         if entry_idx + 1 >= len(df):
             continue

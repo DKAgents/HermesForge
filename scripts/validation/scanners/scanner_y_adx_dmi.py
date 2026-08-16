@@ -2,34 +2,52 @@
 """
 scanner_y_adx_dmi.py
 ====================
-HermesForge STR-Y: ADX/DMI Directional Movement Strategy
+HermesForge STR-Y: ADX/DMI Directional Movement Strategy (v3.0 — structure-based)
 
 Compute ADX(14), +DI(14), -DI(14) using Wilder smoothing.
 
+Signal Rules (UNCHANGED — ADX/DMI is the SIGNAL TRIGGER only):
   LONG entry:  +DI crosses above -DI AND ADX > 22 (trending up).
   SHORT entry: -DI crosses above +DI AND ADX > 22 (trending down).
   Exit signal: opposite DI cross (handled via time-stop / mechanical exits here).
 
-  Entry on cross bar close.
-  Stop: 1 ATR(14).
-  Target: 3R.
-  Time stop: 20 bars.
-  Long-only for stocks.
+v3.0 (US-115): entry / stop / target are now derived from market structure via
+the shared market_structure.compute_structure_trade module. This OVERRIDES the
+previous fixed stop; the ADX/DMI cross remains the trigger, structure determines
+stop/target.
+  - Entry : pullback to nearest confirmed support, up to 5-bar wait.
+  - Stop  : nearest confirmed swing low below entry, ATR-buffered, capped 2 ATR.
+  - Target: nearest confirmed overhead resistance with R >= 1.5; skip if none.
+  - Cooldown: 20-bar per-ticker guard after each accepted signal.
+  - Exit walk starts at the actual entry_idx. Target R is dynamic.
+  - Time stop: 20 bars (unchanged).
 
-Dependencies: pandas, numpy
+Version history:
+  1.0 — original (entry=close, stop=2 ATR, target=3R).
+  2.0 — US-114 optimization (ADX_THRESHOLD=22, STOP_ATR_MULT=1.0, target=3R).
+  3.0 — US-115 structure-based entry/stop/target (this version). The fixed
+        STOP_ATR_MULT / TARGET_RR constants are removed; structure decides.
+
+Long-only for stocks.
+
+Dependencies: pandas, numpy, scipy (via market_structure)
 """
 
+import os
 import sys
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
+# Sibling import of the shared market_structure module (same directory).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from market_structure import compute_structure_trade
+
 STRATEGY_ID = "STR-Y-adx-dmi"
 STRATEGY_NAME = "ADX/DMI Directional Movement"
-STRATEGY_VERSION = "2.0"
+STRATEGY_VERSION = "3.0"
 MAX_HOLD_BARS = 20
-TARGET_RR = 3.0
-STOP_ATR_MULT = 1.0
+COOLDOWN_BARS = 20
 ADX_PERIOD = 14
 ADX_THRESHOLD = 22.0
 
@@ -86,7 +104,7 @@ def _compute_adx_dmi(high: pd.Series, low: pd.Series, close: pd.Series,
 
 
 def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
-    """Scan for ADX/DMI cross signals."""
+    """Scan for ADX/DMI cross signals (structure-based entry/stop/target)."""
     if len(df) < 50:
         return []
 
@@ -100,17 +118,22 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     adx = indicators["adx"].values
     plus_di = indicators["plus_di"].values
     minus_di = indicators["minus_di"].values
-    atr_arr = indicators["atr"].values
+    atr_series = indicators["atr"]  # Series aligned to df
     close_arr = df["close"].values.astype(float)
 
     signals = []
     min_start = ADX_PERIOD * 2 + 1
+    last_trade_idx = -COOLDOWN_BARS  # per-ticker cooldown
 
     for i in range(min_start, len(df)):
         if (np.isnan(adx[i]) or np.isnan(adx[i - 1]) or
                 np.isnan(plus_di[i]) or np.isnan(minus_di[i]) or
                 np.isnan(plus_di[i - 1]) or np.isnan(minus_di[i - 1]) or
-                np.isnan(atr_arr[i])):
+                np.isnan(atr_series.iloc[i])):
+            continue
+
+        # Cooldown guard: skip signals too close to the last accepted trade.
+        if i - last_trade_idx < COOLDOWN_BARS:
             continue
 
         # +DI crosses above -DI (bullish cross)
@@ -120,55 +143,67 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
 
         trending = adx[i] > ADX_THRESHOLD
 
-        entry_price = close_arr[i]
-
         # LONG
         if plus_cross_up and trending:
-            stop_price = entry_price - STOP_ATR_MULT * atr_arr[i]
-            risk = entry_price - stop_price
-            if risk <= 0:
+            trade = compute_structure_trade(
+                df, signal_idx=i, direction="long",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                atr=atr_series, entry_fallback="signal",
+            )
+            if trade is None:
                 continue
-            target_price = entry_price + risk * TARGET_RR
-            ts = df.index[i]
             signals.append({
-                "date": ts,
+                "date": df.index[i],
+                "entry_date": df.index[trade["entry_idx"]],
+                "entry_idx": trade["entry_idx"],
                 "ticker": ticker,
                 "strategy_id": STRATEGY_ID,
                 "strategy_name": STRATEGY_NAME,
                 "strategy_version": STRATEGY_VERSION,
                 "direction": "long",
-                "entry_price": round(entry_price, 4),
-                "stop_price": round(stop_price, 4),
-                "target_price": round(target_price, 4),
+                "entry_price": round(trade["entry_price"], 4),
+                "stop_price": round(trade["stop_price"], 4),
+                "target_price": round(trade["target_price"], 4),
+                "risk": round(trade["risk"], 4),
+                "rr": round(trade["rr"], 3),
+                "entry_type": trade["entry_type"],
                 "adx": round(adx[i], 2),
                 "plus_di": round(plus_di[i], 2),
                 "minus_di": round(minus_di[i], 2),
                 "signal_type": "di_bullish_cross",
             })
+            last_trade_idx = i
 
         # SHORT
         if not long_only and minus_cross_up and trending:
-            stop_price = entry_price + STOP_ATR_MULT * atr_arr[i]
-            risk = stop_price - entry_price
-            if risk <= 0:
+            trade = compute_structure_trade(
+                df, signal_idx=i, direction="short",
+                max_wait_bars=5, min_rr=1.5, max_atr=2.0,
+                atr=atr_series, entry_fallback="signal",
+            )
+            if trade is None:
                 continue
-            target_price = entry_price - risk * TARGET_RR
-            ts = df.index[i]
             signals.append({
-                "date": ts,
+                "date": df.index[i],
+                "entry_date": df.index[trade["entry_idx"]],
+                "entry_idx": trade["entry_idx"],
                 "ticker": ticker,
                 "strategy_id": STRATEGY_ID,
                 "strategy_name": STRATEGY_NAME,
                 "strategy_version": STRATEGY_VERSION,
                 "direction": "short",
-                "entry_price": round(entry_price, 4),
-                "stop_price": round(stop_price, 4),
-                "target_price": round(target_price, 4),
+                "entry_price": round(trade["entry_price"], 4),
+                "stop_price": round(trade["stop_price"], 4),
+                "target_price": round(trade["target_price"], 4),
+                "risk": round(trade["risk"], 4),
+                "rr": round(trade["rr"], 3),
+                "entry_type": trade["entry_type"],
                 "adx": round(adx[i], 2),
                 "plus_di": round(plus_di[i], 2),
                 "minus_di": round(minus_di[i], 2),
                 "signal_type": "di_bearish_cross",
             })
+            last_trade_idx = i
 
     return signals
 
@@ -177,6 +212,7 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                        entry_price: float, stop_price: float, target_price: float,
                        max_bars: int = MAX_HOLD_BARS) -> dict:
     n = len(df)
+    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     for i in range(entry_idx + 1, min(entry_idx + max_bars + 1, n)):
         bar = df.iloc[i]
         if direction == "long":
@@ -184,19 +220,22 @@ def _walk_forward_exit(df: pd.DataFrame, entry_idx: int, direction: str,
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["high"] >= target_price:
+                gain = target_price - entry_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
         else:
             if bar["high"] >= stop_price:
                 return {"exit_type": "stop", "exit_price": stop_price,
                         "bars_held": i - entry_idx, "r_multiple": -1.0}
             if bar["low"] <= target_price:
+                gain = entry_price - target_price
+                r_mult = round(gain / risk, 3) if risk > 0 else 0.0
                 return {"exit_type": "target", "exit_price": target_price,
-                        "bars_held": i - entry_idx, "r_multiple": TARGET_RR}
+                        "bars_held": i - entry_idx, "r_multiple": r_mult}
 
     exit_idx = min(entry_idx + max_bars, n - 1)
     exit_price = df.iloc[exit_idx]["close"]
-    risk = (entry_price - stop_price) if direction == "long" else (stop_price - entry_price)
     if risk <= 0:
         r = 0.0
     else:
@@ -219,24 +258,28 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
 
     trades = []
     for sig in signals:
-        target_date = pd.Timestamp(sig["date"])
-        try:
-            entry_idx = df.index.get_loc(target_date)
-        except (KeyError, ValueError, TypeError):
-            mask = df.index == target_date
-            if not mask.any():
-                continue
-            entry_idx = df.index.get_loc(df.index[mask][0])
+        # Use the structure-derived entry_idx (pullback may fill after signal).
+        entry_idx = sig.get("entry_idx")
+        if entry_idx is None:
+            target_date = pd.Timestamp(sig["date"])
+            try:
+                entry_idx = df.index.get_loc(target_date)
+            except (KeyError, ValueError, TypeError):
+                mask = df.index == target_date
+                if not mask.any():
+                    continue
+                entry_idx = df.index.get_loc(df.index[mask][0])
 
         if isinstance(entry_idx, slice):
             entry_idx = entry_idx.start
         if isinstance(entry_idx, (list, np.ndarray)):
             entry_idx = int(entry_idx[0])
+        entry_idx = int(entry_idx)
         if entry_idx + 1 >= len(df):
             continue
 
         exit_result = _walk_forward_exit(
-            df, int(entry_idx), sig["direction"],
+            df, entry_idx, sig["direction"],
             sig["entry_price"], sig["stop_price"], sig["target_price"],
         )
         trades.append({
@@ -244,6 +287,8 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
             "strategy": STRATEGY_ID,
             "direction": sig["direction"],
             "date": sig["date"],
+            "entry_date": sig.get("entry_date", sig["date"]),
+            "entry_idx": entry_idx,
             "entry_price": round(sig["entry_price"], 4),
             "stop_price": round(sig["stop_price"], 4),
             "target_price": round(sig["target_price"], 4),
@@ -251,6 +296,7 @@ def run_backtest(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list
             "exit_price": round(exit_result["exit_price"], 4),
             "bars_held": exit_result["bars_held"],
             "r_multiple": exit_result["r_multiple"],
+            "entry_type": sig.get("entry_type", "market"),
             "signal_type": sig["signal_type"],
         })
 
