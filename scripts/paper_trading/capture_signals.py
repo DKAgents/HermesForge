@@ -46,7 +46,6 @@ from scanners.scanner_ad_keltner import scan as scan_ad          # noqa: E402
 from scanners.scanner_ae_4week_rule import scan as scan_ae      # noqa: E402
 from scanners.scanner_af_candlestick import scan as scan_af      # noqa: E402
 from scanners.scanner_ag_wedge import scan as scan_ag            # noqa: E402
-from scanners.scanner_ai_seasonal import scan as scan_ai          # noqa: E402
 from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 
 import trade_log  # noqa: E402
