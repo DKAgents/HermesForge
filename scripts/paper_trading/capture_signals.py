@@ -32,19 +32,55 @@ from scanners.scanner_b_macd_divergence import scan as scan_b   # noqa: E402
 from scanners.scanner_d_sr_reversal import scan as scan_d       # noqa: E402
 from scanners.scanner_i_adaptive_trend import scan as scan_i    # noqa: E402
 from scanners.scanner_r_alligator import scan as scan_r         # noqa: E402
+from scanners.scanner_s_elliott_wave import scan as scan_s      # noqa: E402
+from scanners.scanner_t_head_shoulders import scan as scan_t    # noqa: E402
+from scanners.scanner_u_double_top_bottom import scan as scan_u  # noqa: E402
+from scanners.scanner_v_triangles import scan as scan_v          # noqa: E402
+from scanners.scanner_w_flags_pennants import scan as scan_w     # noqa: E402
+from scanners.scanner_x_parabolic_sar import scan as scan_x     # noqa: E402
+from scanners.scanner_y_adx_dmi import scan as scan_y            # noqa: E402
+from scanners.scanner_z_stochastic import scan as scan_z         # noqa: E402
+from scanners.scanner_aa_williams_r import scan as scan_aa       # noqa: E402
+from scanners.scanner_ab_obv_divergence import scan as scan_ab   # noqa: E402
+from scanners.scanner_ac_cci import scan as scan_ac              # noqa: E402
+from scanners.scanner_ad_keltner import scan as scan_ad          # noqa: E402
+from scanners.scanner_ae_4week_rule import scan as scan_ae      # noqa: E402
+from scanners.scanner_af_candlestick import scan as scan_af      # noqa: E402
+from scanners.scanner_ag_wedge import scan as scan_ag            # noqa: E402
+from scanners.scanner_ah_island_reversal import scan as scan_ah   # noqa: E402
+from scanners.scanner_ai_seasonal import scan as scan_ai          # noqa: E402
+from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
 # Strategy note frontmatter id -> scan fn
-# Paper trading covers A, B, D, I, R (C is a confirmed Phase 1A kill -- excluded).
+# Paper trading covers A, B, D, I, R-S through R-AJ (C is a confirmed Phase 1A kill).
 PAPER_STRATEGIES = {
     "STR-A-ma-pullback-fibonacci":     scan_a,
     "STR-B-macd-histogram-divergence": scan_b,
     "STR-D-sr-role-reversal":          scan_d,
     "STR-I-adaptive-trend":            scan_i,
     "STR-R-alligator":                 scan_r,
+    "STR-S-elliott-wave":              scan_s,
+    "STR-T-head-shoulders":            scan_t,
+    "STR-U-double-top-bottom":         scan_u,
+    "STR-V-triangles":                 scan_v,
+    "STR-W-flags-pennants":            scan_w,
+    "STR-X-parabolic-sar":             scan_x,
+    "STR-Y-adx-dmi":                   scan_y,
+    "STR-Z-stochastic":                scan_z,
+    "STR-AA-williams-r":               scan_aa,
+    "STR-AB-obv-divergence":           scan_ab,
+    "STR-AC-cci":                      scan_ac,
+    "STR-AD-keltner":                  scan_ad,
+    "STR-AE-4week":                    scan_ae,
+    "STR-AF-candlestick":              scan_af,
+    "STR-AG-wedge":                    scan_ag,
+    "STR-AH-island":                   scan_ah,
+    "STR-AI-seasonal":                 scan_ai,
+    "STR-AJ-intermarket":              scan_aj,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
@@ -76,9 +112,18 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 continue
             print(f"\nScanning {strategy_id} ({asset_class})...")
 
-        # Scanner I (AdaptiveTrend) and R (Alligator) are long-only for stocks, bidirectional for crypto.
+        # Strategies that are long-only for stocks, bidirectional for crypto
         scanner_kwargs = {}
-        if strategy_id in ("STR-I-adaptive-trend", "STR-R-alligator"):
+        long_only_stocks = {"STR-I-adaptive-trend", "STR-R-alligator",
+                           "STR-S-elliott-wave", "STR-T-head-shoulders",
+                           "STR-U-double-top-bottom", "STR-V-triangles",
+                           "STR-W-flags-pennants", "STR-X-parabolic-sar",
+                           "STR-Y-adx-dmi", "STR-Z-stochastic",
+                           "STR-AA-williams-r", "STR-AB-obv-divergence",
+                           "STR-AC-cci", "STR-AD-keltner", "STR-AE-4week",
+                           "STR-AF-candlestick", "STR-AG-wedge",
+                           "STR-AH-island", "STR-AI-seasonal", "STR-AJ-intermarket"}
+        if strategy_id in long_only_stocks:
             scanner_kwargs["long_only"] = (asset_class == "stock")
 
         for ticker, df in data.items():

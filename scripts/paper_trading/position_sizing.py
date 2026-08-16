@@ -108,6 +108,27 @@ def size_strategy_r(*args, **kwargs) -> float:
     return 1.0
 
 
+# US-113: Batch sizing functions for 18 new strategies
+def size_strategy_s(*a, **k): return 1.0  # Elliott Wave
+def size_strategy_t(*a, **k): return 1.0  # Head & Shoulders
+def size_strategy_u(*a, **k): return 1.0  # Double Top/Bottom
+def size_strategy_v(*a, **k): return 1.0  # Triangles
+def size_strategy_w(*a, **k): return 1.0  # Flags & Pennants
+def size_strategy_x(*a, **k): return 1.0  # Parabolic SAR
+def size_strategy_y(*a, **k): return 1.0  # ADX/DMI
+def size_strategy_z(*a, **k): return 1.0  # Stochastic
+def size_strategy_aa(*a, **k): return 1.0  # Williams %R
+def size_strategy_ab(*a, **k): return 1.0  # OBV Divergence
+def size_strategy_ac(*a, **k): return 1.0  # CCI
+def size_strategy_ad(*a, **k): return 1.0  # Keltner
+def size_strategy_ae(*a, **k): return 1.0  # 4-Week Rule
+def size_strategy_af(*a, **k): return 1.0  # Candlestick
+def size_strategy_ag(*a, **k): return 1.0  # Wedge
+def size_strategy_ah(*a, **k): return 1.0  # Island Reversal
+def size_strategy_ai(*a, **k): return 1.0  # Seasonal
+def size_strategy_aj(*a, **k): return 1.0  # Intermarket
+
+
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
     "STR-B-macd-histogram-divergence":   size_strategy_b,
@@ -118,6 +139,24 @@ SIZING_FUNCTIONS = {
     "STR-H-hype":                         size_strategy_h,
     "STR-Q-liquidity-sweep":              size_strategy_q,
     "STR-R-alligator":                    size_strategy_r,
+    "STR-S-elliott-wave":                 size_strategy_s,
+    "STR-T-head-shoulders":               size_strategy_t,
+    "STR-U-double-top-bottom":            size_strategy_u,
+    "STR-V-triangles":                    size_strategy_v,
+    "STR-W-flags-pennants":               size_strategy_w,
+    "STR-X-parabolic-sar":                size_strategy_x,
+    "STR-Y-adx-dmi":                      size_strategy_y,
+    "STR-Z-stochastic":                   size_strategy_z,
+    "STR-AA-williams-r":                  size_strategy_aa,
+    "STR-AB-obv-divergence":              size_strategy_ab,
+    "STR-AC-cci":                         size_strategy_ac,
+    "STR-AD-keltner":                     size_strategy_ad,
+    "STR-AE-4week":                       size_strategy_ae,
+    "STR-AF-candlestick":                 size_strategy_af,
+    "STR-AG-wedge":                       size_strategy_ag,
+    "STR-AH-island":                      size_strategy_ah,
+    "STR-AI-seasonal":                    size_strategy_ai,
+    "STR-AJ-intermarket":                 size_strategy_aj,
 }
 
 
