@@ -31,3 +31,6 @@ Before acting on an oversold oscillator signal in an uptrend (EN041), confirm th
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-16-use-breadth-oscillator-to-confirm-secondary-trend-entries|Use Breadth Oscillator to Confirm Secondary Trend Entries]]

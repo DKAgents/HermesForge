@@ -31,3 +31,6 @@ When trading a primary-trend pullback per EN041, require the McClellan Oscillato
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-16-use-breadth-oscillator-to-confirm-secondary-trend-entries|Use Breadth Oscillator to Confirm Secondary Trend Entries]]

@@ -41,3 +41,6 @@ Then **US-002**: Run `hermes profile create <name>` for each of the 8 subagents.
 - The vault-first approach works well: having structure before code gives clear context to every future agent
 - ADRs created on day 1 set a good precedent for documenting decisions
 - The Forge Loop design should be validated with a real run before automating it via cron
+
+## Related Notes
+- [[2026-08-16|2026-08-16 — Daily Log]]

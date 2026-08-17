@@ -503,6 +503,7 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                     latest["publish_channel"] = publish_channel
                     latest["regime"] = regime_data["regime"]
                     latest["score"] = score_signal(latest, scanner_id, meta)
+                    latest["asset_class"] = asset_class  # routing guard
                     
                     scanner_signals.append(latest)
                     
@@ -562,6 +563,7 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                         sig["publish_channel"] = publish_channel
                         sig["regime"] = regime_data["regime"]
                         sig["score"] = score_signal(sig, scanner_id, meta)
+                        sig["asset_class"] = asset_class  # routing guard
                         scanner_signals.append(sig)
             except Exception as e:
                 summary["errors"] += 1
@@ -627,8 +629,23 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         from embed_publisher import post_daily_batch
         import config as discord_config
 
-        channel_id = (channel_override or "stocks")
-        channel_id = discord_config.PUBLISH_CHANNEL_MAP.get(channel_id, channel_id)
+        # CRITICAL ROUTING GUARD: Ensure signals are posted to the correct channel.
+        # Stocks → DISCORD_STOCK_CHANNEL_ID, Crypto → DISCORD_CRYPTO_CHANNEL_ID
+        # Never allow stock signals in the crypto channel or vice versa.
+        expected_channel_key = channel_override or ("crypto" if asset_class == "crypto" else "stocks")
+        channel_id = discord_config.PUBLISH_CHANNEL_MAP.get(expected_channel_key, expected_channel_key)
+
+        # Validate: every signal in deduped must match the current asset_class
+        for sig in deduped:
+            sig_asset = sig.get("asset_class", asset_class)
+            # Infer from ticker data source if not set
+            if sig_asset != asset_class:
+                print(f"  ⚠️ ROUTING GUARD: {sig.get('ticker', '?')} is {sig_asset} but being posted in {asset_class} batch — SKIPPING")
+        # Filter out any signals that don't match the current asset class
+        deduped = [s for s in deduped if s.get("asset_class", asset_class) == asset_class]
+        if not deduped:
+            print(f"\n  {asset_class.upper()}: 0 signals after routing guard — skipping post")
+            return
 
         # Generate charts for all signals
         for sig in deduped:
@@ -677,16 +694,23 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
 
             summary["all_signals"].append(signal_dict)
 
-        # Post the batch
+        # Post the batch — ONLY if we have signals for THIS asset class
+        # CRITICAL: When deduped is empty, list[-0:] returns the ENTIRE list
+        # (Python slicing bug), which would re-post the previous asset class's
+        # signals to the wrong channel. Guard against this explicitly.
+        if not deduped:
+            print(f"\n  {asset_class.upper()}: 0 signals — skipping post (nothing to publish)")
+            return
+
         live_count = sum(1 for s in deduped if s.get("is_live", False))
         watch_count = len(deduped) - live_count
         strategy_names = sorted(set(s.get("strategy_name", "?") for s in deduped))
 
-        # Near-miss channels removed — confidence scores replace near-miss reporting (US-116)
-        # summary_channel_id = os.environ.get("DISCORD_SUMMARY_CHANNEL_ID", "1529670754357219359")
+        # Use only the signals added in THIS call (last len(deduped) entries)
+        batch_signals = summary["all_signals"][-len(deduped):]
 
         batch_result = post_daily_batch(
-            [s for s in summary["all_signals"][-len(deduped):]],
+            batch_signals,
             channel_id, asset_class, regime_data, dry_run=False,
         )
         summary["posted"] = batch_result["posted"]
