@@ -27,27 +27,11 @@ import pandas as pd
 
 CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "crypto"
 HYPERLIQUID_INFO_URL = "https://api.hyperliquid.xyz/info"
-CRYPTO_UNIVERSE = [
-    "BTC", "ETH", "SOL",
-    # --- Expansion batch (2026-07-23): Phase 1A option-5 decision --
-    # widen the crypto pool for more paper-trading opportunities.
-    # All are liquid, well-established Hyperliquid perp markets.
-    "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
-
-    # --- Expansion batch (2026-07-27): full high-liquidity coverage
-    # All Hyperliquid perpetual markets with max leverage >= 10.
-    # These are the deepest, most established markets with longest
-    # price history (most go back to 2020-2021). Same free public API.
-    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
-    "FARTCOIN", "HYPE", "JUP", "LTC",
-    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
-    "XPL", "XRP", "ZEC",
-    "kBONK", "kPEPE", "kSHIB",
-    # NOTE: Removed 7 delisted tickers (2026-08-02): STRAX (Mar 2024),
-    # RNDR (Jul 2024), MATIC (Sep 2024), LOOM (Dec 2024), FTM (Jan 2025),
-    # MKR (Sep 2025), TON (Jun 2026). These have stale last-bar dates that
-    # pollute the cross-sectional rebalance schedule and batch signal filter.
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import CRYPTO_UNIVERSE  # noqa: E402
 CACHE_MAX_AGE_DAYS = 1  # crypto trades 24/7, refresh more often than stocks
 
 

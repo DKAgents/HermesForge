@@ -49,13 +49,11 @@ WEBHOOK_URL = os.environ.get(
 LOG_FILE = "/root/.hermes/logs/liquidation_listener.log"
 EVENT_LOG_FILE = "/root/.hermes/market_data/liquidation_events.jsonl"
 
-COINS_TO_TRACK = [
-    "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
-    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
-    "FARTCOIN", "HYPE", "JUP", "LTC",
-    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
-    "XPL", "XRP", "ZEC", "kBONK", "kPEPE", "kSHIB",
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import COINS_TO_TRACK  # noqa: E402
 
 _running = True
 _prev_state = {}

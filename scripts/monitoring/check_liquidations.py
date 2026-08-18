@@ -28,13 +28,11 @@ PRICE_MOVE_THRESHOLD = 0.015 # 1.5% price move
 COMBINED_WINDOW_SEC = 300    # 5 minute window
 STATE_FILE = pathlib.Path("/root/.hermes/market_data/liquidation_proxy_state.json")
 
-COINS_TO_TRACK = [
-    "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
-    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
-    "FARTCOIN", "HYPE", "JUP", "LTC",
-    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
-    "XPL", "XRP", "ZEC", "kBONK", "kPEPE", "kSHIB",
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import COINS_TO_TRACK  # noqa: E402
 
 
 def fetch_hyperliquid_state():

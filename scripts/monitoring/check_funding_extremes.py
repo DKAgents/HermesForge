@@ -26,13 +26,11 @@ THRESHOLDS = {
     "medium": 0.0005,    # 0.05% per 8h = 0.219% APR — mildly elevated
 }
 
-COINS_TO_TRACK = [
-    "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
-    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
-    "FARTCOIN", "HYPE", "JUP", "LTC",
-    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
-    "XPL", "XRP", "ZEC", "kBONK", "kPEPE", "kSHIB",
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import COINS_TO_TRACK  # noqa: E402
 
 
 def fetch_hyperliquid_funding():

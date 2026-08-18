@@ -34,9 +34,11 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 from universe import get_universe as get_stock_universe  # noqa: E402
 
 # Crypto universe (matches fetch_lunarcrush.py / fetch_crypto_data.py)
-CRYPTO_UNIVERSE = [
-    "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI", "BNB",
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import CRYPTO_UNIVERSE  # noqa: E402
 
 # --- Config -----------------------------------------------------------------
 SUBREDDITS = [

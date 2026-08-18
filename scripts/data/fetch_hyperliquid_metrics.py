@@ -28,9 +28,11 @@ CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "hyperliquid_metri
 CACHE_MAX_AGE_HOURS = 6  # Funding updates hourly, refresh every 6h
 
 # Same universe as fetch_crypto_data.py
-CRYPTO_UNIVERSE = [
-    "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI", "BNB",
-]
+# --- Universe (single source of truth) ----------------------------------------
+import pathlib as _pl
+import sys as _sys
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
+from config.universe import CRYPTO_UNIVERSE  # noqa: E402
 
 
 def fetch_funding_history(coin: str, hours: int = 168) -> pd.DataFrame:
