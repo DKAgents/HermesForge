@@ -44,7 +44,7 @@ OI_SPIKE_THRESHOLD_PCT = 5.0
 
 WEBHOOK_URL = os.environ.get(
     "HERMESFORGE_WEBHOOK_URL",
-    "http://localhost:7777/webhooks/liquidation-alert"
+    "http://localhost:8644/webhooks/hermesforge-liq"
 )
 LOG_FILE = "/root/.hermes/logs/liquidation_listener.log"
 EVENT_LOG_FILE = "/root/.hermes/market_data/liquidation_events.jsonl"
