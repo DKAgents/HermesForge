@@ -1,5 +1,5 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: short_interest_earnings_momentum
 composite_score: 57.0
@@ -9,6 +9,15 @@ created: 20260816
 topic: research
 has_quotes: false
 tags: [short-interest, earnings, momentum, external]
+pipeline_notes: >
+  REJECTED 20260818: Requires HISTORICAL short interest time series for
+  backtesting (shortPercentOfFloat at each earnings date). Our data
+  pipeline only has current snapshots via yfinance Ticker.info
+  (shortPercentOfFloat, shortRatio). FINRA Reg SHO historical data is
+  not cached and the API is region-restricted from this environment.
+  Cannot backtest without building a historical short interest
+  data collection pipeline first. Revisit if FINRA historical data
+  becomes available.
 ---
 # Edge Candidate: Short Interest Post-Earnings Momentum Amplification
 

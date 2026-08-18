@@ -50,6 +50,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-096 | EPIC-014 | Remove stale CROSSPOST_WEBHOOK_URL env var | `e5426c5` |
 | US-101 | EPIC-013 | STR-B/STR-I signal recency window fix + trades.csv dedup | `cf88b89` |
 | US-113 | EPIC-013 | Autonomous pipeline: VIX contango breakout strategy (walk-forward OOS ROBUST EDGE, deployed WATCH) | this run |
+| US-114 | EPIC-013 | Autonomous pipeline: Low-correlation regime stock picker (Phase 1A positive, deployed WATCH, walk-forward incomplete) | this run |
 | US-071 | EPIC-010 | Paper Trading Performance Report (Discord, cron cb22b038a6d6) | `4dc81e5` |
 
 ---

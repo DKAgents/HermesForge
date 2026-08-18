@@ -53,6 +53,12 @@ from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 # 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md).
 from scanners.scanner_vix_vrp_contango import scan as scan_vixc  # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-08-18): Low-correlation regime
+# stock picker — Phase 1A positive (mean_r=0.092, p=0.0, all 3 sub-periods
+# positive). Deployed WATCH with 0.5% risk. See
+# 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md.
+from scanners.scanner_lowcorr_regime import scan as scan_lowcorr  # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -85,12 +91,23 @@ PAPER_STRATEGIES = {
     # Autonomous-pipeline deployed (2026-08-16): VIX contango breakout.
     # Watch-level risk (0.5%) — see 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md
     "STR-VIXC-vix-contango-breakout":  scan_vixc,
+
+    # Autonomous-pipeline deployed (2026-08-18): Low-correlation regime stock picker.
+    # Watch-level risk (0.5%) — Phase 1A mean_r=0.092 p=0.0, in-sample-with-costs 0.072,
+    # positive in all 3 sub-periods. Walk-forward incomplete (compute-bound on 529-stock
+    # correlation matrix). See 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md
+    "STR-LOWCORR-lowcorr-regime":     scan_lowcorr,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
 
 # STR-AJ fires correlated signals across all stocks on macro triggers — limit concentration
 MAX_INTERMARKET_POSITIONS = 3
+
+# Batch-mode strategies (cross-sectional scanners that take the full data dict,
+# not per-ticker). These are called once with `scan_fn(data)` and produce signals
+# for multiple tickers at once.
+BATCH_STRATEGIES = {"STR-LOWCORR-lowcorr-regime"}
 
 
 def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
@@ -132,6 +149,98 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                            "STR-AJ-intermarket"}
         if strategy_id in long_only_stocks:
             scanner_kwargs["long_only"] = (asset_class == "stock")
+
+        # ── Batch-mode strategies (cross-sectional scanners) ───────────────
+        # These take the full data dict and return signals for multiple tickers.
+        if strategy_id in BATCH_STRATEGIES:
+            try:
+                all_batch_signals = scan_fn(data)
+            except Exception as e:
+                summary["errors"] += 1
+                summary["error_details"].append(f"{strategy_id} (batch) scan error: {e}")
+                continue
+
+            if not all_batch_signals:
+                continue
+
+            # Filter for signals on the most recent bar date
+            most_recent_bar_date = str(list(data.values())[0].index[-1])[:10]
+            recent_batch = [s for s in all_batch_signals
+                            if str(s.get("date", ""))[:10] == most_recent_bar_date]
+
+            for latest in recent_batch:
+                ticker = latest.get("ticker", "")
+                df = data.get(ticker)
+                if df is None:
+                    continue
+
+                summary["signals_found"] += 1
+
+                if trade_log.has_open_trade(strategy_id, ticker):
+                    summary["skipped_already_open"] += 1
+                    print(f"  SKIP: {strategy_id}/{ticker} already has an open paper trade")
+                    continue
+
+                entry_date = str(latest["date"])[:10]
+                risk_pct = _get_risk_pct(strategy_id, latest)
+
+                # Apply regime-aware risk multiplier
+                if strategy_directives:
+                    strat_prefix = strategy_id.split("-")[0] if "-" in strategy_id else strategy_id
+                    directive = strategy_directives.get(f"STR-{strat_prefix}") or strategy_directives.get(strategy_id)
+                    if directive:
+                        mult = directive.get("risk_multiplier", 1.0)
+                        risk_pct = round(risk_pct * mult, 2)
+
+                entry_price = latest["entry_price"]
+                stop_price = latest["stop_price"]
+                risk_per_unit = abs(entry_price - stop_price)
+                position_size_units = (
+                    round((EXAMPLE_ACCOUNT_SIZE * risk_pct / 100) / risk_per_unit, 4)
+                    if risk_per_unit else 0
+                )
+
+                trade_dict = {
+                    "strategy_id": strategy_id,
+                    "ticker": ticker,
+                    "asset_class": asset_class,
+                    "data_source": data_source,
+                    "direction": latest.get("direction", "long"),
+                    "signal_id": f"{strategy_id}_{ticker}_{entry_date}",
+                    "entry_date": entry_date,
+                    "entry_price": entry_price,
+                    "stop_price": stop_price,
+                    "target_price": latest["target_price"],
+                    "position_size_pct": risk_pct,
+                    "position_size_units": position_size_units,
+                    "quality_tier": "",
+                    "subperiod": latest.get("subperiod", "n/a"),
+                    "confirmation_level": latest.get("confirmation_level", ""),
+                    "weekly_gate_scaling": latest.get("weekly_gates_passing", ""),
+                    "notes": "",
+                }
+
+                # Tag with market regime context
+                if regime:
+                    try:
+                        tag_signal(trade_dict, regime)
+                    except Exception:
+                        pass
+
+                if dry_run:
+                    summary["opened"] += 1
+                    summary["opened_trades"].append(trade_dict)
+                    print(f"  WOULD OPEN: {strategy_id}/{ticker} @ {entry_price} ({entry_date})")
+                else:
+                    try:
+                        trade_id = trade_log.open_trade(trade_dict)
+                        summary["opened"] += 1
+                        trade_dict["trade_id"] = trade_id
+                        print(f"  OPENED: {strategy_id}/{ticker} @ {entry_price} ({entry_date})")
+                    except Exception as e:
+                        summary["errors"] += 1
+                        summary["error_details"].append(f"{strategy_id}/{ticker} open error: {e}")
+            continue  # Skip per-ticker loop for batch strategies
 
         for ticker, df in data.items():
             try:

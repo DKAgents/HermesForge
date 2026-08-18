@@ -134,6 +134,19 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": True,
         "call_mode": "per_ticker",
     },
+    "LOWCORR": {
+        "module": "scanner_lowcorr_regime",
+        "scan_fn": "scan",
+        "name": "Low-Correlation Regime Stock Picker",
+        "params": {
+            "CORR_THRESHOLD": [0.20, 0.25, 0.30],
+            "ATR_STOP_MULT": [1.5, 2.0, 2.5],
+            "MAX_BARS_HELD": [5, 10, 15],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": True,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -145,6 +158,7 @@ QUICK_PARAMS = {
     "D": {"ATR_STOP_MULT": [1.0], "MIN_RR": [3.0], "MAX_HOLD": [8]},
     "P": {"ATR_STOP_MULT": [1.5], "QUINTILE": [5], "MAX_BARS_HELD": [21]},
     "VIXC": {"IVTS_MAX": [0.92], "VIX_MAX": [20], "MIN_RR": [2.0, 3.0], "MIN_PERSIST_FRAC": [0.6]},
+    "LOWCORR": {"CORR_THRESHOLD": [0.25], "ATR_STOP_MULT": [2.0], "MAX_BARS_HELD": [10]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────

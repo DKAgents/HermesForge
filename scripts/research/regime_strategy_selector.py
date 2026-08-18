@@ -121,6 +121,10 @@ STRATEGY_REGISTRY = {
     "STR-AJ": {"name": "Intermarket Rotation", "asset": "stock", "status": "LIVE",
                "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
                "base_risk": 1.0, "type": "macro"},
+    # Autonomous-pipeline deployed 2026-08-18 (Phase 1A positive, WATCH risk).
+    "STR-LOWCORR": {"name": "Low-Correlation Regime Stock Picker", "asset": "stock", "status": "WATCH",
+                    "regime_best": ["risk_on", "neutral", "diversified"], "regime_avoid": ["risk_off", "unified"],
+                    "base_risk": 0.5, "type": "regime_factor"},
 }
 
 

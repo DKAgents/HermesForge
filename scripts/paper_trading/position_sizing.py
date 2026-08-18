@@ -136,6 +136,14 @@ def size_strategy_aj(*a, **k): return 1.0  # Intermarket
 def size_strategy_vixc(*a, **k): return 0.5  # VIX contango breakout (WATCH)
 
 
+# Autonomous-pipeline deployed (2026-08-18): Low-correlation regime stock picker.
+# Watch-level: Phase 1A mean_r=0.092 (p=0.0, t=15.62), in-sample-with-costs 0.072.
+# Edge is small but highly significant and positive in all 3 sub-periods.
+# Walk-forward incomplete (529-stock correlation matrix is compute-bound).
+# Reduced to 0.5% risk per SOUL.md single-idea ceiling.
+def size_strategy_lowcorr(*a, **k): return 0.5  # Low-correlation regime (WATCH)
+
+
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
     "STR-B-macd-histogram-divergence":   size_strategy_b,
@@ -165,6 +173,7 @@ SIZING_FUNCTIONS = {
     "STR-AI-seasonal":                    size_strategy_ai,
     "STR-AJ-intermarket":                 size_strategy_aj,
     "STR-VIXC-vix-contango-breakout":     size_strategy_vixc,
+    "STR-LOWCORR-lowcorr-regime":          size_strategy_lowcorr,
 }
 
 

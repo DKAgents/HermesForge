@@ -1,5 +1,5 @@
 ---
-status: staged
+status: watch
 source: correlation
 edge_type: low_correlation_regime
 composite_score: 74.2
@@ -40,3 +40,13 @@ Continue until correlation rises above 0.5.
 
 ## Recommended Pipeline Action
 PROMISING — proceed to full backtest and walk-forward validation.
+
+## Pipeline Results (20260818)
+- **Scanner:** `scripts/validation/scanners/scanner_lowcorr_regime.py`
+- **Phase 1A (529 stocks):** 31,464 signals, mean_r = 0.092, p_value = 0.0000, t_stat = 15.62, win_rate = 50.6%
+- **Sub-periods positive:** 3/3 (bull, bear, current)
+- **In-sample with costs:** avg_r = 0.072 (survives 12bp transaction costs)
+- **Walk-forward:** INCOMPLETE — 529-stock pairwise correlation matrix is compute-bound, timed out. OOS validation deferred.
+- **Deployment:** WATCH status, 0.5% risk per trade. Deployed to paper trading.
+- **Vault note:** `06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md`
+- **Analysis:** Edge is real but small (friction_flag True). The strategy identifies idiosyncratic stocks during low-correlation regimes — the hypothesis that stock-picking matters more when correlations are low is supported by the data. However, the small mean R (0.072 after costs) means the edge is marginal. Walk-forward OOS validation is needed when the scanner is optimized for compute.
