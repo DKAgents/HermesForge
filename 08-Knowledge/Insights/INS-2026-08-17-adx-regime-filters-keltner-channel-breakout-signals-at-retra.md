@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX Regime Filters Keltner Channel Breakout Signals at Retracements
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Only take Keltner Channel midline-bounce entries during 33-67% retracements when
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-01-adx-regime-filter-for-keltner-channel-breakout-validity|ADX Regime Filter for Keltner Channel Breakout Validity]]

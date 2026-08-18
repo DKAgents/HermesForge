@@ -33,5 +33,6 @@ At Fibonacci/Dow retracement levels (33-67% of prior move), use ADX direction to
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]
 - [[INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trend]]
 - [[INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trends]]

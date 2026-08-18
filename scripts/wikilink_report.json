@@ -1,17 +1,10 @@
 [
   {
-    "book": "09-Journal",
-    "anchor_index_size": 5,
-    "notes_processed": 6,
-    "notes_linked": 1,
-    "total_links_added": 1,
-    "sample": [
-      {
-        "note": "2026-06-27-Bootstrap.md",
-        "links": [
-          "2026-08-16"
-        ]
-      }
-    ]
+    "book": "technical-analysis-financial-markets-murphy",
+    "anchor_index_size": 1121,
+    "notes_processed": 1257,
+    "notes_linked": 0,
+    "total_links_added": 0,
+    "sample": []
   }
 ]
