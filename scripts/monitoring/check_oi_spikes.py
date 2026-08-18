@@ -21,9 +21,10 @@ OI_STATE_FILE = pathlib.Path("/root/.hermes/market_data/oi_state.json")
 SPIKE_THRESHOLD_PCT = 5.0  # 5% change in 1 hour
 COINS_TO_TRACK = [
     "BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI",
-    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA", "HYPE",
-    "JUP", "LTC", "NEAR", "ONDO", "PAXG", "TRUMP", "TRX", "UNI", "WLD",
-    "XRP", "ZEC", "kBONK", "kPEPE", "kSHIB",
+    "AAVE", "ADA", "APT", "BCH", "BNB", "CRV", "DOT", "ENA",
+    "FARTCOIN", "HYPE", "JUP", "LTC",
+    "NEAR", "ONDO", "PAXG", "PUMP", "TRUMP", "TRX", "UNI", "WLD",
+    "XPL", "XRP", "ZEC", "kBONK", "kPEPE", "kSHIB",
 ]
 
 
