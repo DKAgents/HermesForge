@@ -20,6 +20,7 @@ import datetime
 import pathlib
 import time
 import sys
+import logging
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from timezone_utils import now_pt
@@ -30,6 +31,8 @@ from alert_publisher import get_quality_tier, _tradingview_link
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "paper_trading"))
 from trade_id import generate_short_id, make_discord_url, get_strategy_code
 import trade_log
+
+logger = logging.getLogger(__name__)
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -381,6 +384,28 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
         "footer": {"text": "HermesForge Signal Pipeline"},
         "timestamp": now_pt().isoformat(),
     }
+
+    # ── Options recommendations (stocks only) ─────────────────────────────
+    # Fetch live options chain and suggest single-leg, debit spread, and
+    # credit spread strategies aligned with the signal's entry/stop/target.
+    if publish_channel == "stocks" and entry and stop and target:
+        try:
+            from options_recommender import (
+                get_options_recommendations,
+                format_options_embed,
+            )
+            recs = get_options_recommendations(
+                ticker, direction, entry, stop, target
+            )
+            options_text = format_options_embed(recs)
+            if options_text and "No liquid options" not in options_text:
+                embed["fields"].append({
+                    "name": "📉 Options Ideas",
+                    "value": options_text[:1024],  # Discord field value limit
+                    "inline": False,
+                })
+        except Exception as e:
+            logger.debug(f"Options rec failed for {ticker}: {e}")
 
     return embed
 
