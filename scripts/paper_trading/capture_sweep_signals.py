@@ -71,11 +71,10 @@ DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
 DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 
-# Universe
-CRYPTO_SYMBOLS = [
-    "BTC", "ETH", "SOL", "OP", "ARB", "AVAX", "DOGE", "LINK",
-    "SUI", "APT", "TIA", "SEI", "INJ", "RNDR",
-]
+# Universe — use consolidated single source of truth
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).parent.parent / "hermes_config"))
+from universe import CRYPTO_UNIVERSE as CRYPTO_SYMBOLS
 
 STOCK_SYMBOLS = [
     "SPY", "QQQ", "AAPL", "NVDA", "TSLA", "AMZN", "MSFT", "GOOGL", "META",

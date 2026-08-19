@@ -23,6 +23,11 @@ Usage:
 import sys, os, re, json, argparse, math, hashlib, subprocess
 from pathlib import Path
 from datetime import datetime, timezone
+
+import zoneinfo
+_PT_TZ = zoneinfo.ZoneInfo("America/Los_Angeles")
+def now_pt(): return datetime.now(_PT_TZ)
+
 from collections import defaultdict
 
 # Load .env so OPENROUTER_API_KEY is available
