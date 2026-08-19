@@ -444,7 +444,12 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         call_mode = cfg["call_mode"]
         note_id = cfg["note_id"]
         meta = strategy_meta.get(note_id, {})
-        publish_channel = channel_override or meta.get("publish_channel", "stocks")
+        # CRITICAL: publish_channel is determined by asset_class, NOT strategy
+        # metadata. The metadata field was meant to indicate which asset class
+        # a strategy was designed for, but using it as the posting target caused
+        # stock signals (AMAT, AMZN, etc.) to be routed to the crypto channel
+        # when the strategy metadata said publish_channel: crypto.
+        publish_channel = "crypto" if asset_class == "crypto" else "stocks"
 
         # Determine if this strategy is publish_enabled (live) or WATCH
         is_live = meta.get("publish_enabled", False)
@@ -647,12 +652,22 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
             print(f"\n  {asset_class.upper()}: 0 signals after routing guard — skipping post")
             return
 
-        # Generate charts for all signals
+        # Generate charts for all signals, checking dedup first
+        new_signals = []
         for sig in deduped:
             ticker = sig["ticker"]
             entry_date = str(sig.get("date", ""))[:10]
             scanner_id = sig["strategy_id"]
             signal_id = dedup.make_signal_id(scanner_id, ticker, entry_date)
+
+            # DEDUP: Skip signals already posted (same strategy+ticker+date)
+            # This prevents reposting the same trade setup on subsequent days.
+            # A signal is re-posted only if its entry_date changes (new signal_id)
+            # which happens when the trade is entered, stopped, targets, or decays.
+            if dedup.is_duplicate(signal_id):
+                summary["skipped_duplicates"] += 1
+                print(f"  SKIP (already posted): {signal_id}")
+                continue
 
             # Build signal dict (same as text path)
             signal_dict = {
@@ -676,7 +691,7 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 "regime_adx": regime_data.get("adx", ""),
                 "score": sig["score"],
                 "is_live": sig.get("is_live", False),
-                "publish_channel": sig.get("publish_channel", signal_publish_channel),
+                "publish_channel": "crypto" if asset_class == "crypto" else "stocks",
                 "asset_class": asset_class,
             }
             for key, value in sig.items():
@@ -692,7 +707,15 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 signal_dict["_chart_path"] = None
                 print(f"  Chart error for {ticker}: {e}")
 
+            signal_dict["_signal_id"] = signal_id
             summary["all_signals"].append(signal_dict)
+            new_signals.append(signal_dict)
+
+        # Replace deduped with only the new (non-duplicate) signals
+        if not new_signals:
+            print(f"\n  {asset_class.upper()}: 0 new signals after dedup — skipping post")
+            return
+        deduped = new_signals
 
         # Post the batch — ONLY if we have signals for THIS asset class
         # CRITICAL: When deduped is empty, list[-0:] returns the ENTIRE list
@@ -715,6 +738,23 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         )
         summary["posted"] = batch_result["posted"]
         summary["errors"] += batch_result["errors"]
+
+        # Record successfully posted signals in dedup log so they are not
+        # re-posted on subsequent days.
+        if batch_result["posted"] > 0:
+            posted_ids = batch_result.get("message_ids", [])
+            for i, sig in enumerate(batch_signals):
+                sid = sig.get("_signal_id", "")
+                if not sid:
+                    continue
+                # Only record if this signal got a message ID (successfully posted)
+                if i < len(posted_ids) and posted_ids[i]:
+                    channel_name = "crypto" if asset_class == "crypto" else "stocks"
+                    dedup.record_published(
+                        sid, sig["strategy_id"], sig["ticker"],
+                        sig["date"], channel_name
+                    )
+                    summary["signals_found"] += 1
 
         print(f"\n  {asset_class.upper()}: {batch_result['posted']} embeds posted "
               f"({live_count} live, {watch_count} watch)")
@@ -760,7 +800,8 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
             if key not in signal_dict:
                 signal_dict[key] = value
         
-        publish_channel = sig.get("publish_channel", "stocks")
+        # CRITICAL: route by asset_class, not by strategy metadata field
+        publish_channel = "crypto" if asset_class == "crypto" else "stocks"
         
         # Only publish live signals; WATCH signals are logged but not posted
         if not sig.get("is_live", False):

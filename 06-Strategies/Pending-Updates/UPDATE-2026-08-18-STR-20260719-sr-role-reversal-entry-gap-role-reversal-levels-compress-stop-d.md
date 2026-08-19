@@ -6,8 +6,11 @@ similarity: 0.704
 date: 2026-08-18
 reviewed: false
 tags: [pending-update, strategy, knowledge-evolution]
+topic: strategies
+confidence: high
+has_quotes: false
+source: HermesForge Strategies
 ---
-
 # Pending Update: STR-20260719-sr-role-reversal-entry
 
 ## Triggering Insight

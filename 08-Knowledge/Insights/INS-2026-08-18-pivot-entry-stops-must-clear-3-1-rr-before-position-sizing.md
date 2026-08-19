@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["C245-stop-order", "RG035-combining-technical-factors-with-money-management-for-stop-p", "EN071-pivot-point-buy-signal-rules"]
 seed_id: prior_swing_low_stop
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Pivot Entry Stops Must Clear 3:1 RR Before Position Sizing
 
 ## Discovery Summary

@@ -23,7 +23,7 @@ PUBLISH_CHANNEL_MAP = {
 }
 
 DEDUP_LOG_PATH = os.path.expanduser("~/HermesForge/scripts/discord/published_signals.csv")
-DEFAULT_LOOKBACK_DAYS = 5
+DEFAULT_LOOKBACK_DAYS = 30  # Don't repost same setup for 30 days (trade lifecycle)
 RISK_PCT_DEFAULT = 1.0          # % account risk per trade, matches SOUL.md hard rule ceiling
 EXAMPLE_ACCOUNT_SIZE = 100_000  # for illustrative share-count sizing in alerts
 

@@ -5,8 +5,10 @@ strategy_id: STR-LOWCORR-lowcorr-regime
 source: autonomous-pipeline
 candidate: CAND-20260814-low-correlation-regime
 tags: [strategy, stock, regime, correlation, autonomous-pipeline]
+topic: strategies
+confidence: high
+has_quotes: false
 ---
-
 # STR-LOWCORR: Low-Correlation Regime Stock Picker
 
 ## Origin
