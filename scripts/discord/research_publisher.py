@@ -22,6 +22,9 @@ import sys
 import json
 import subprocess
 import pathlib
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from timezone_utils import now_pt
 import datetime
 import time
 import glob
@@ -391,7 +394,7 @@ def format_research_embeds() -> list:
     while staying under Discord's 1024-char per-field and 6000-char per-embed limits.
     All embeds share the same day-of-week color (left border).
     """
-    dt = datetime.datetime.utcnow()
+    dt = now_pt()
     dow = dt.weekday()
     color = DAY_COLORS[dow]
     day_name = DAY_NAMES[dow]
@@ -422,7 +425,7 @@ def format_research_embeds() -> list:
 
     # ── Embed 1: Executive Summary + Factor Screener ──
     desc_lines = [
-        f"**{day_name}, {dt.strftime('%Y-%m-%d %H:%M')} UTC**",
+        f"**{day_name}, {dt.strftime('%Y-%m-%d %H:%M %Z')}**",
         f"Pipeline runtime: {runtime:.0f}s | Action items: {total_items}",
         "",
         f"🔬 Factor anomalies: {stock_fs.get('n_candidates',0)} stocks, {crypto_fs.get('n_candidates',0)} crypto",

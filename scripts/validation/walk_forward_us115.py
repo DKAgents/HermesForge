@@ -277,7 +277,7 @@ def main():
     report_lines = []
     report_lines.append("# US-115 v3 Structure-Based Validation — Walk-Forward Report")
     report_lines.append("")
-    report_lines.append(f"**Generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M UTC')}")
+    report_lines.append(f"**Generated:** {pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d %H:%M %Z')}")
     report_lines.append("**Backtester:** T3 (deepseek-v4-flash)")
     report_lines.append("**Scope:** 10 scanners re-validated with market_structure module (pullback entry, structure stop, natural target, min 1.5R, 20-bar cooldown)")
     report_lines.append("**Universe:** 529 stocks | **Split:** IS=60% | OOS=40%")

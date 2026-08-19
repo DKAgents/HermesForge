@@ -20,6 +20,8 @@ import datetime
 import pathlib
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from timezone_utils import now_pt
+
 import config
 
 
@@ -239,7 +241,7 @@ def format_alert(signal_dict: dict) -> str:
     tier_tag, met_ratio, conditions = get_quality_tier(signal_dict)
     conditions_block = "\n".join(f"• {c}" for c in conditions)
 
-    now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M")
+    now = now_pt().strftime("%Y-%m-%d %H:%M %Z")
 
     # Regime: use the regime field (set by portfolio_publish.py), fall back to subperiod
     regime = signal_dict.get("regime", signal_dict.get("subperiod", "unknown"))
@@ -280,7 +282,7 @@ def format_alert(signal_dict: dict) -> str:
         f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n\n"
         f"**Regime:** {regime_str}\n\n"
         f"**Key Conditions:** ({met_ratio} met)\n{conditions_block}\n\n"
-        f"_Posted: {now} UTC_"
+        f"_Posted: {now}_"
     )
 
 

@@ -339,7 +339,7 @@ def main():
 
     report_lines = []
     report_lines.append("# US-114 Walk-Forward Validation Report")
-    report_lines.append(f"**Generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M UTC')}")
+    report_lines.append(f"**Generated:** {pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d %H:%M %Z')}")
     report_lines.append(f"**Job:** 19-strategy scan | IS=60% | OOS=40% | Bootstrap + t-test")
     report_lines.append("")
     report_lines.append("## Summary Table")

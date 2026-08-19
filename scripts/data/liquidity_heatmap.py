@@ -279,7 +279,7 @@ def generate_heatmap_png(data, coin="BTC", output_path=None):
         f"Sources: OKX ({data['okx_bid_levels']}+{data['okx_ask_levels']} levels) + "
         f"Hyperliquid ({data['hl_bid_levels']}+{data['hl_ask_levels']} levels)\n"
         f"Bin size: ${bin_size}  |  "
-        f"Time: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
+        f"Time: {now_pt().strftime('%Y-%m-%d %H:%M %Z')}"
     )
     fig.text(0.5, 0.01, legend_text, ha="center", fontsize=8, color="#666")
 
@@ -315,7 +315,7 @@ def generate_text_summary(data, oi_okx=0, oi_hl=0, coin="BTC"):
     lines = []
     lines.append(f"{'='*60}")
     lines.append(f"  {coin} LIQUIDITY DEPTH ANALYSIS")
-    lines.append(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"  {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     lines.append(f"{'='*60}")
     lines.append(f"")
     lines.append(f"  Mid Price: ${mid:,.1f}")

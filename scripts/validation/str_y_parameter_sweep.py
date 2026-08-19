@@ -327,7 +327,7 @@ def generate_report(results: list[dict]) -> None:
 
     lines = []
     lines.append("# SWEEP REPORT: STR-Y ADX/DMI Parameter Sensitivity")
-    lines.append(f"**Generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"**Generated:** {pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d %H:%M %Z')}")
     lines.append(f"**Job:** Parameter sensitivity sweep — {len(results)} combinations | "
                  f"IS=60% | OOS=40% | Bootstrap + t-test p-values")
     lines.append("")

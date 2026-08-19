@@ -35,6 +35,8 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation" / "scanners"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
+from timezone_utils import now_pt
 
 from walk_forward import (
     STRATEGY_CONFIGS, QUICK_PARAMS, OPTIMIZATION_SAMPLE, CRYPTO_OPTIMIZATION_SAMPLE,
@@ -200,7 +202,7 @@ def run_decay_check(stock_data: dict, crypto_data: dict) -> dict:
     Compares to history and flags decay.
     """
     history = _load_history()
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+    today = now_pt().strftime("%Y-%m-%d")
 
     results = []
     for key in MONITORED:
@@ -271,7 +273,7 @@ def run_decay_check(stock_data: dict, crypto_data: dict) -> dict:
         "n_decayed": len(decayed),
         "results": results,
         "decayed": decayed,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": now_pt().isoformat(),
     }
 
 
@@ -279,7 +281,7 @@ def format_report(results: dict, show_history: bool = False) -> str:
     """Format a human-readable markdown report."""
     lines = []
     lines.append("# HermesForge Strategy Edge Decay Report")
-    lines.append(f"Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"Generated: {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     lines.append(f"Strategies monitored: {results['strategies_monitored']}")
     lines.append(f"Decay flags: {results['n_decayed']}")
     lines.append("")

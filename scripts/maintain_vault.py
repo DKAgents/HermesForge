@@ -130,7 +130,7 @@ def write_run_log(summary: dict, dry_run: bool):
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc)
     date_str = now.strftime('%Y-%m-%d')
-    time_str = now.strftime('%H:%M UTC')
+    time_str = now.strftime('%H:%M %Z')
     fname = LOG_DIR / f'Maintenance-{now.strftime("%Y-%m-%dT%H%M")}.md'
 
     steps = summary.get('steps', [])
@@ -219,7 +219,7 @@ def main():
     start = datetime.now(timezone.utc)
     print(f"\n{'='*60}")
     print(f"  HermesForge Vault Maintenance")
-    print(f"  {start.strftime('%Y-%m-%d %H:%M UTC')}  |  scope={args.scope}  |  dry_run={args.dry_run}")
+    print(f"  {start.strftime('%Y-%m-%d %H:%M %Z')}  |  scope={args.scope}  |  dry_run={args.dry_run}")
     print(f"{'='*60}\n")
 
     checkpoint = load_checkpoint()

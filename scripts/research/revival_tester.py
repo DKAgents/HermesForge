@@ -280,7 +280,7 @@ def format_report(results: dict) -> str:
     """Format a human-readable markdown report."""
     lines = []
     lines.append("# HermesForge Killed Strategy Revival Report")
-    lines.append(f"Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"Generated: {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     lines.append(f"Strategies tested: {results['strategies_tested']}")
     lines.append(f"Revival candidates: {results['n_candidates']}")
     lines.append("")

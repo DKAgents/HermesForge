@@ -52,7 +52,7 @@ def run_full_pipeline(save: bool = False) -> dict:
     # Load data
     print("=" * 60, file=sys.stderr)
     print("HermesForge Research Pipeline", file=sys.stderr)
-    print(f"Started: {today.strftime('%Y-%m-%d %H:%M UTC')}", file=sys.stderr)
+    print(f"Started: {today.strftime('%Y-%m-%d %H:%M %Z')}", file=sys.stderr)
     print("=" * 60, file=sys.stderr)
 
     print("\n[1/4] Loading data...", file=sys.stderr)
@@ -102,7 +102,7 @@ def run_full_pipeline(save: bool = False) -> dict:
     # Assemble report
     report_parts = []
     report_parts.append(f"# HermesForge Weekly Research Report")
-    report_parts.append(f"**Date:** {today.strftime('%Y-%m-%d %H:%M UTC')}")
+    report_parts.append(f"**Date:** {today.strftime('%Y-%m-%d %H:%M %Z')}")
     report_parts.append(f"**Pipeline runtime:** {total_time:.1f}s")
     report_parts.append("")
     report_parts.append("---")

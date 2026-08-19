@@ -52,7 +52,7 @@ def run_full_pipeline(stage: bool = False, skip_existing: bool = False) -> dict:
     
     print("=" * 60, file=sys.stderr)
     print("HermesForge Full Research Pipeline", file=sys.stderr)
-    print(f"Started: {today.strftime('%Y-%m-%d %H:%M UTC')}", file=sys.stderr)
+    print(f"Started: {today.strftime('%Y-%m-%d %H:%M %Z')}", file=sys.stderr)
     print("=" * 60, file=sys.stderr)
     
     results = {

@@ -296,7 +296,7 @@ def write_strategy_pending_update(lesson: dict, lesson_path: str, strategy_stems
 
     PENDING_DIR.mkdir(parents=True, exist_ok=True)
     written = []
-    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    today = now_pt().strftime('%Y-%m-%d')
 
     for stem in lesson.get('related_strategy_stems', []):
         if stem not in strategy_stems:
@@ -426,7 +426,7 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"  HermesForge Lesson Extractor")
-    print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"  {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     print(f"  dry_run={args.dry_run}")
     print(f"{'='*60}\n")
 

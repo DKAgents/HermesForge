@@ -475,7 +475,7 @@ def write_report(insights: list[dict], seeds_run: int, total_llm_calls: int, dry
     fname = DISCOVERY_DIR / f'Discoveries-{week}.md'
 
     prefix = '[DRY RUN] ' if dry_run else ''
-    date_str = now.strftime('%Y-%m-%d %H:%M UTC')
+    date_str = now_pt().strftime('%Y-%m-%d %H:%M %Z')
 
     if not insights:
         body = '_No new insights discovered this run._'
@@ -534,7 +534,7 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"  HermesForge Connection Discovery")
-    print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"  {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     print(f"  dry_run={args.dry_run} | seed_filter={args.seed or 'all'} | limit={args.limit or '∞'}")
     print(f"{'='*60}")
 

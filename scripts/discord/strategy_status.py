@@ -19,6 +19,9 @@ import sys
 import json
 import subprocess
 import pathlib
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from timezone_utils import now_pt
 import datetime
 import time
 import glob
@@ -337,7 +340,7 @@ def _format_group(strategies: list, status: str, label: str) -> dict | None:
 
 def format_strategy_dashboard() -> dict:
     """Format the strategy status dashboard as a Discord embed."""
-    dt = datetime.datetime.utcnow()
+    dt = now_pt()
 
     # Load research pipeline strategies
     research_strategies = _build_research_strategies()
@@ -409,7 +412,7 @@ def format_strategy_dashboard() -> dict:
             f"**{total_strategies} strategies** ({len(manual)} manual + {len(research_strategies)} research) | "
             f"🟢 {len(manual_live)} live | 🟡 {len(manual_watch)} watch | "
             f"🔴 {len(manual_killed)} killed | 🔬 {len(research_candidates)} candidates\n"
-            f"Last updated: {dt.strftime('%Y-%m-%d %H:%M')} UTC"
+            f"Last updated: {dt.strftime('%Y-%m-%d %H:%M %Z')}"
         ),
         "color": 0x58a6ff,
         "fields": fields,
@@ -565,7 +568,7 @@ def post_strategy_dashboard(channel_id: str, dry_run: bool = False) -> dict:
     state = _load_state()
     state[channel_id] = {
         "message_id": new_msg_id,
-        "posted_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "posted_at": now_pt().isoformat() + "Z",
     }
     _save_state(state)
 

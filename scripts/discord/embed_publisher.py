@@ -22,6 +22,8 @@ import time
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from timezone_utils import now_pt
+
 from alert_publisher import get_quality_tier, _tradingview_link
 
 # Trade tracking
@@ -183,13 +185,13 @@ def _register_trade_after_post(signal_dict: dict, short_id: str,
 
 def get_day_color(dt=None):
     if dt is None:
-        dt = datetime.datetime.utcnow()
+        dt = now_pt()
     return DAY_COLORS.get(dt.weekday(), 0x58a6ff)
 
 
 def get_day_name(dt=None):
     if dt is None:
-        dt = datetime.datetime.utcnow()
+        dt = now_pt()
     return DAY_NAMES[dt.weekday()]
 
 
@@ -377,7 +379,7 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
         "color": color,
         "fields": fields,
         "footer": {"text": "HermesForge Signal Pipeline"},
-        "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+        "timestamp": now_pt().isoformat(),
     }
 
     return embed
@@ -387,14 +389,14 @@ def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
                         live_count: int, watch_count: int, strategies: list,
                         color: int) -> dict:
     """Format the daily header as a Discord embed — icon + day/date only."""
-    dt = datetime.datetime.utcnow()
+    dt = now_pt()
     day_name = get_day_name(dt)
     date_str = f"{day_name.upper()}, {MONTH_NAMES[dt.month - 1].upper()} {dt.day}, {dt.year}"
 
     embed = {
         "title": f"📅 {date_str}",
         "color": color,
-        "footer": {"text": f"HermesForge Daily Pipeline — {dt.strftime('%H:%M')} UTC"},
+        "footer": {"text": f"HermesForge Daily Pipeline — {dt.strftime('%H:%M %Z')}"},
     }
 
     return embed

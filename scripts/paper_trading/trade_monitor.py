@@ -34,6 +34,8 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "discord"))
+from timezone_utils import now_pt
 import trade_log
 from trade_id import make_discord_url, make_discord_link
 
@@ -453,7 +455,7 @@ def main():
     args = ap.parse_args()
 
     print(f"\n{'='*60}")
-    print(f"HermesForge Trade Monitor — {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"HermesForge Trade Monitor — {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     print(f"{'='*60}")
 
     summary = run(dry_run=args.dry_run,

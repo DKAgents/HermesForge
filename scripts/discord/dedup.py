@@ -15,6 +15,7 @@ import pathlib
 import datetime
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from timezone_utils import now_pt
 import config
 
 LOG_PATH = pathlib.Path(config.DEDUP_LOG_PATH)
@@ -45,7 +46,7 @@ def is_duplicate(signal_id: str, lookback_days: int = config.DEFAULT_LOOKBACK_DA
     (calendar days, used as a simple proxy for trading days — acceptable
     since daily-bar signals cannot repeat sub-day anyway).
     """
-    cutoff = datetime.datetime.utcnow() - datetime.timedelta(days=lookback_days)
+    cutoff = now_pt().replace(tzinfo=None) - datetime.timedelta(days=lookback_days)
     for row in _read_rows():
         if row["signal_id"] != signal_id:
             continue
@@ -65,7 +66,7 @@ def record_published(signal_id: str, strategy_id: str, ticker: str,
     with open(LOG_PATH, "a", newline="") as f:
         csv.writer(f).writerow([
             signal_id, strategy_id, ticker, entry_date,
-            datetime.datetime.utcnow().isoformat(), channel,
+            now_pt().replace(tzinfo=None).isoformat(), channel,
         ])
 
 

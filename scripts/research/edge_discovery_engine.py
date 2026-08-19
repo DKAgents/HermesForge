@@ -1119,7 +1119,7 @@ def stage_top_edges(results: dict, max_stage: int = 3) -> list:
         EDGE_CANDIDATES_DIR.mkdir(parents=True, exist_ok=True)
     
     staged = []
-    today = datetime.utcnow().strftime("%Y%m%d")
+    today = now_pt().strftime("%Y%m%d")
     
     for edge in results.get("edges", [])[:max_stage]:
         score = edge.get("score", {}).get("composite", 0)

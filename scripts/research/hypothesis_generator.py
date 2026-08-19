@@ -288,7 +288,7 @@ def format_report(stock_results: dict, crypto_results: dict) -> str:
     """Format a human-readable markdown report."""
     lines = []
     lines.append("# HermesForge New Strategy Hypothesis Report")
-    lines.append(f"Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"Generated: {now_pt().strftime('%Y-%m-%d %H:%M %Z')}")
     lines.append("")
 
     for results, label in [(stock_results, "Stocks"), (crypto_results, "Crypto")]:
