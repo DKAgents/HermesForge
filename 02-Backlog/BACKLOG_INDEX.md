@@ -64,6 +64,9 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-098 | EPIC-014 | hermes config set CLI bug (#16493) | Low | Upstream fix |
 | US-099 | EPIC-014 | write_file truncation guard | Low | None |
 | US-100 | EPIC-014 | send_message text+MEDIA drop | Low | Upstream fix |
+| US-118 | EPIC-009 | Posting agent for channel routing validation | Low | None |
+| US-119 | EPIC-009 | Real-time market event monitoring (liquidation webhook) | Medium | None |
+| US-120 | EPIC-009 | Advanced options strategies (iron condors, straddles, calendars) | Medium | IV rank data source |
 
 ---
 

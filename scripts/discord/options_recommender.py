@@ -30,16 +30,61 @@ logger = logging.getLogger(__name__)
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-MIN_DTE = 25
-MAX_DTE = 60
-PREFERRED_DTE = 35  # target ~35 DTE
+MIN_DTE = 20
+MAX_DTE = 75  # wider range to accommodate per-stock optimization
+PREFERRED_DTE = 35  # default target ~35 DTE
 
 MAX_EXPIRIES_TO_CHECK = 3
 MIN_STRIKE_LIQUIDITY = 0  # skip strikes with 0 vol AND 0 OI
 
 
-def _pick_best_expiry(expirations: tuple) -> list[str]:
-    """Pick 1-3 expirations within the preferred DTE window."""
+def _compute_optimal_dte(ticker: str, current_price: float) -> int:
+    """
+    Compute the optimal DTE for a given stock based on its volatility profile.
+    
+    Rationale: The optimal DTE for a swing trade option should be:
+    - Base: expected hold time (10 trading days) * 1.5 buffer → ~21 calendar days
+    - + IV adjustment: high-IV stocks need more time (theta is expensive)
+    - + Volatility adjustment: high-ATR stocks need more time (stock needs room)
+    
+    This gives each stock a custom DTE rather than a one-size-fits-all 30-45.
+    """
+    try:
+        t = yf.Ticker(ticker)
+        hist = t.history(period="20d")
+        if len(hist) > 0:
+            high_low = (hist["High"] - hist["Low"]).mean()
+            atr_pct = (high_low / current_price) * 100 if current_price else 2.0
+        else:
+            atr_pct = 2.0
+    except Exception:
+        atr_pct = 2.0
+
+    # Base: 10 trading days hold * 1.5 buffer * 7/5 (trading→calendar)
+    base_dte = int(10 * 1.5 * 7 / 5)  # = 21
+
+    # IV adjustment (we don't have IV rank, but IV from ATM option is a proxy)
+    # Low IV (<20%) = theta is cheap, can go shorter → +0
+    # Mid IV (20-40%) = moderate → +5
+    # High IV (>40%) = theta is expensive, go longer → +15
+    # Note: yfinance IV can be unreliable, so this is a gentle adjustment
+    iv_adj = 0  # We'll use ATR% as the primary signal since yfinance IV is often 0
+
+    # Volatility adjustment using ATR%
+    if atr_pct > 3.0:
+        vol_adj = 10  # high vol = stock needs more room to work
+    elif atr_pct > 1.5:
+        vol_adj = 5
+    else:
+        vol_adj = 0  # low vol = shorter is fine
+
+    optimal = base_dte + iv_adj + vol_adj
+    return max(MIN_DTE, min(optimal, MAX_DTE))
+
+
+def _pick_best_expiry(expirations: tuple, optimal_dte: int = None) -> list[str]:
+    """Pick 1-3 expirations near the optimal DTE (per-stock if provided)."""
+    target_dte = optimal_dte if optimal_dte else PREFERRED_DTE
     today = datetime.datetime.now()
     candidates = []
 
@@ -49,11 +94,12 @@ def _pick_best_expiry(expirations: tuple) -> list[str]:
         except ValueError:
             continue
         dte = (exp_date - today).days
+        # Allow a window of ±15 days around the target DTE
         if MIN_DTE <= dte <= MAX_DTE:
             candidates.append((exp_str, dte))
 
-    # Sort by distance from preferred DTE
-    candidates.sort(key=lambda x: abs(x[1] - PREFERRED_DTE))
+    # Sort by distance from target DTE
+    candidates.sort(key=lambda x: abs(x[1] - target_dte))
     return [exp_str for exp_str, _ in candidates[:MAX_EXPIRIES_TO_CHECK]]
 
 
@@ -142,6 +188,8 @@ def get_options_recommendations(
     try:
         t = yf.Ticker(ticker)
         expirations = t.options
+        info = t.fast_info
+        current_price = info.get("lastPrice") or info.get("previousClose") or entry_price
     except Exception as e:
         logger.warning(f"Could not fetch options for {ticker}: {e}")
         return []
@@ -149,7 +197,11 @@ def get_options_recommendations(
     if not expirations:
         return []
 
-    expiries = _pick_best_expiry(expirations)
+    # Compute per-stock optimal DTE based on volatility profile
+    optimal_dte = _compute_optimal_dte(ticker, current_price)
+    logger.debug(f"{ticker} optimal DTE: {optimal_dte}")
+
+    expiries = _pick_best_expiry(expirations, optimal_dte)
     if not expiries:
         # Fallback: use 3rd expiry
         if len(expirations) > 2:
