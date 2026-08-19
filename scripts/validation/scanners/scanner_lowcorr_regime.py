@@ -103,47 +103,59 @@ def _compute_avg_correlation(data: dict, date: pd.Timestamp,
     {ticker: correlation_to_market_proxy}.
 
     Uses the last `corr_window` bars of returns up to `date`.
+
+    Optimized: pre-extracts returns as a numpy matrix and uses np.corrcoef
+    instead of building a DataFrame and calling .corr() per-ticker.
     """
     # Collect returns for all tickers in the window
-    ret_dict = {}
+    tickers = []
+    ret_arrays = []
     for ticker, df in data.items():
         mask = df.index <= date
         df_slice = df[mask]
         if len(df_slice) < corr_window + 2:
             continue
-        rets = df_slice["close"].pct_change().dropna()
+        rets = df_slice["close"].pct_change().dropna().values
         if len(rets) < corr_window:
             continue
-        ret_dict[ticker] = rets.iloc[-corr_window:]
+        tickers.append(ticker)
+        ret_arrays.append(rets[-corr_window:])
 
-    if len(ret_dict) < MIN_ASSETS:
+    if len(tickers) < MIN_ASSETS:
         return np.nan, {}
 
-    # Build returns DataFrame
-    ret_df = pd.DataFrame(ret_dict)
-    ret_df = ret_df.dropna(axis=1, how="all")
+    # Build returns matrix: shape (n_tickers, corr_window)
+    ret_matrix = np.array(ret_arrays, dtype=np.float64)
 
-    if ret_df.shape[1] < MIN_ASSETS:
+    # Drop columns (time steps) where any ticker has NaN
+    valid_cols = ~np.isnan(ret_matrix).any(axis=0)
+    ret_matrix = ret_matrix[:, valid_cols]
+    n_tickers = ret_matrix.shape[0]
+
+    if n_tickers < MIN_ASSETS or ret_matrix.shape[1] < 2:
         return np.nan, {}
 
     # Market proxy = equal-weighted average of all returns
-    market_ret = ret_df.mean(axis=1)
+    market_ret = ret_matrix.mean(axis=0)
 
-    # Correlation of each ticker to market proxy
+    # Correlation of each ticker to market proxy (vectorized)
+    # Stack: [tickers; market] -> corrcoef -> extract last row
+    stacked = np.vstack([ret_matrix, market_ret])
+    corr_matrix_full = np.corrcoef(stacked)
+    corr_to_market_vals = corr_matrix_full[-1, :-1]
+
     corr_to_market = {}
-    for ticker in ret_df.columns:
-        corr = ret_df[ticker].corr(market_ret)
-        if not np.isnan(corr):
-            corr_to_market[ticker] = float(corr)
+    for i, ticker in enumerate(tickers):
+        c = corr_to_market_vals[i]
+        if not np.isnan(c):
+            corr_to_market[ticker] = float(c)
 
-    # Average pairwise correlation (upper triangle of correlation matrix)
-    corr_matrix = ret_df.corr()
-    if corr_matrix.empty:
-        return np.nan, corr_to_market
+    # Average pairwise correlation: use the ticker-only correlation matrix
+    corr_matrix = corr_matrix_full[:-1, :-1]
 
     # Extract upper triangle (excluding diagonal)
     mask_upper = np.triu(np.ones(corr_matrix.shape, dtype=bool), k=1)
-    upper_vals = corr_matrix.values[mask_upper]
+    upper_vals = corr_matrix[mask_upper]
     upper_vals = upper_vals[~np.isnan(upper_vals)]
 
     if len(upper_vals) == 0:
@@ -178,7 +190,7 @@ def _simulate_exit(df: pd.DataFrame, entry_idx: int, direction: str,
     return closes[exit_idx], "time", max_bars
 
 
-def scan(data: dict) -> list:
+def scan(data: dict, latest_only: bool = False) -> list:
     """
     Batch scanner. Takes the full stock data dict, identifies low-correlation
     regime periods, and generates long signals for the most idiosyncratic stocks.
@@ -187,6 +199,10 @@ def scan(data: dict) -> list:
     ----------
     data : dict
         {ticker: DataFrame} mapping for all stock tickers
+    latest_only : bool
+        If True, only evaluate the most recent rebalance date (for live
+        signal capture — avoids computing 300+ historical correlation
+        matrices that will be discarded). Default False (full backtest).
 
     Returns
     -------
@@ -211,6 +227,10 @@ def scan(data: dict) -> list:
 
     # Rebalance dates
     rebalance_dates = all_dates[::REBALANCE_FREQ]
+
+    # Live capture: only evaluate the most recent rebalance
+    if latest_only and rebalance_dates:
+        rebalance_dates = [rebalance_dates[-1]]
 
     signals = []
     in_regime = False

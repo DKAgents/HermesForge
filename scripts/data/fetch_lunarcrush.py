@@ -46,7 +46,7 @@ CACHE_MAX_AGE_HOURS = 12
 import pathlib as _pl
 import sys as _sys
 _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
-from config.universe import CRYPTO_UNIVERSE  # noqa: E402
+from hermes_config.universe import CRYPTO_UNIVERSE  # noqa: E402
 
 # Stock universe — fetch subset for efficiency (top 50 by liquidity)
 # Full 529 would use too many API calls on free tier

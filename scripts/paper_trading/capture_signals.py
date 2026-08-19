@@ -154,7 +154,7 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
         # These take the full data dict and return signals for multiple tickers.
         if strategy_id in BATCH_STRATEGIES:
             try:
-                all_batch_signals = scan_fn(data)
+                all_batch_signals = scan_fn(data, latest_only=True)
             except Exception as e:
                 summary["errors"] += 1
                 summary["error_details"].append(f"{strategy_id} (batch) scan error: {e}")

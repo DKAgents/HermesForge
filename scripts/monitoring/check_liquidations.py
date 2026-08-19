@@ -32,7 +32,7 @@ STATE_FILE = pathlib.Path("/root/.hermes/market_data/liquidation_proxy_state.jso
 import pathlib as _pl
 import sys as _sys
 _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent))
-from config.universe import COINS_TO_TRACK  # noqa: E402
+from hermes_config.universe import COINS_TO_TRACK  # noqa: E402
 
 
 def fetch_hyperliquid_state():
