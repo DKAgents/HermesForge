@@ -7,8 +7,11 @@ domains: [indicators, rules]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "N013-volume-as-a-filter-for-false-breakouts"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume Threshold as Binary Entry Gate Reduces False Breakout Risk
 
 ## Discovery Summary

@@ -1,7 +1,8 @@
 signal_id,strategy_id,ticker,entry_date,published_at,channel
-STR-I-adaptive-trend_AMAT_2026-08-12,STR-I-adaptive-trend,AMAT,2026-08-12,2026-08-19T02:02:03.719423,stocks
-STR-I-adaptive-trend_AMZN_2026-08-10,STR-I-adaptive-trend,AMZN,2026-08-10,2026-08-19T02:02:03.719552,stocks
-STR-I-adaptive-trend_ANET_2026-08-12,STR-I-adaptive-trend,ANET,2026-08-12,2026-08-19T02:02:03.719627,stocks
-STR-I-adaptive-trend_CIEN_2026-08-12,STR-I-adaptive-trend,CIEN,2026-08-12,2026-08-19T02:02:03.719722,stocks
-STR-I-adaptive-trend_CVNA_2026-08-14,STR-I-adaptive-trend,CVNA,2026-08-14,2026-08-19T02:02:03.719804,stocks
-STR-B-macd-histogram-divergence_GRMN_2026-08-14,STR-B-macd-histogram-divergence,GRMN,2026-08-14,2026-08-19T02:02:03.719900,stocks
+STR-I-adaptive-trend_AMAT_2026-08-12,STR-I-adaptive-trend,AMAT,2026-08-12,2026-08-18T22:01:30.526033,stocks
+STR-I-adaptive-trend_AMZN_2026-08-10,STR-I-adaptive-trend,AMZN,2026-08-10,2026-08-18T22:01:30.526156,stocks
+STR-I-adaptive-trend_ANET_2026-08-12,STR-I-adaptive-trend,ANET,2026-08-12,2026-08-18T22:01:30.526229,stocks
+STR-I-adaptive-trend_CIEN_2026-08-12,STR-I-adaptive-trend,CIEN,2026-08-12,2026-08-18T22:01:30.526289,stocks
+STR-I-adaptive-trend_CVNA_2026-08-14,STR-I-adaptive-trend,CVNA,2026-08-14,2026-08-18T22:01:30.526348,stocks
+STR-B-macd-histogram-divergence_GRMN_2026-08-14,STR-B-macd-histogram-divergence,GRMN,2026-08-14,2026-08-18T22:01:30.526404,stocks
+STR-I-adaptive-trend_DELL_2026-08-12,STR-I-adaptive-trend,DELL,2026-08-12,2026-08-19T07:47:51.582614,stocks
