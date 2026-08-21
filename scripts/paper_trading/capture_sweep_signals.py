@@ -35,6 +35,7 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation" / "scanners"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 
 from detect_liquidity_sweeps import (
     scan_symbol_for_sweeps, SweepEvent,
@@ -44,6 +45,9 @@ from fetch_intraday_stocks import get_intraday_bars
 
 import trade_log
 import position_sizing
+
+# Pacific Time utility for display timestamps
+from timezone_utils import now_pt
 
 # US-108: Import tiered filter for equal_lows exclusion on stocks
 from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLUDED_STOCK_LEVEL_TYPES
@@ -130,18 +134,49 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
     target_price = trade_dict["target_price"]
     
     channel_id = DISCORD_CRYPTO_SETUPS_CHANNEL if asset_class == "crypto" else DISCORD_STOCK_SETUPS_CHANNEL
-    
+
     risk = abs(entry_price - stop_price)
     reward = abs(target_price - entry_price)
     rr = reward / risk if risk > 0 else 0
     stop_pct = (risk / entry_price * 100) if entry_price else 0
-    
+
+    # ── Confidence tier (based on quality score + confirmation + confluence) ──
+    q = sweep.quality_score
+    is_confirmed = sweep.confirmation == "confirmed"
+    vol_surge = sweep.volume_surge
+    # Tier logic:
+    #   A (High):   Q >= 60 AND confirmed AND vol surge >= 1.5x
+    #   B (Medium): Q >= 50 AND confirmed
+    #   C (Low):    everything else
+    if q >= 60 and is_confirmed and vol_surge >= 1.5:
+        tier, conf_label = "A", "High"
+    elif q >= 50 and is_confirmed:
+        tier, conf_label = "B", "Medium"
+    else:
+        tier, conf_label = "C", "Low"
+
+    # Key conditions that justify the confidence
+    conditions = []
+    if is_confirmed:
+        conditions.append(f"• Sweep confirmed (not pending) → higher reliability")
+    if vol_surge >= 2.0:
+        conditions.append(f"• Strong volume surge ({vol_surge:.1f}x) → institutional participation")
+    elif vol_surge >= 1.5:
+        conditions.append(f"• Volume surge ({vol_surge:.1f}x) above average")
+    if sweep.wick_ratio >= 2.0:
+        conditions.append(f"• Wick ratio {sweep.wick_ratio:.1f} → strong rejection at level")
+    if sweep.penetration_atr <= 0.5:
+        conditions.append(f"• Minimal penetration ({sweep.penetration_atr:.2f} ATR) → clean sweep")
+    if rr >= 3.0:
+        conditions.append(f"• Favorable R:R ({rr:.1f}:1) → target at 3R minimum")
+    conditions_text = "\n".join(conditions) if conditions else "• See sweep details below"
+
     # Day-of-week color
-    import datetime as _dt
     day_colors = {
         0: 0x3498db, 1: 0x2ecc71, 2: 0xe67e22, 3: 0x9b59b6,
         4: 0xe74c3c, 5: 0x1abc9c, 6: 0xf1c40f,
     }
+    import datetime as _dt
     color = day_colors.get(_dt.datetime.utcnow().weekday(), 0x58a6ff)
     
     def _fmt(p):
@@ -165,13 +200,15 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
             {"name": "🛑 Stop", "value": f"{_fmt(stop_price)} ({stop_pct:.1f}% risk)", "inline": True},
             {"name": "🎯 Target", "value": _fmt(target_price), "inline": True},
             {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
-            {"name": "🏷️ Level Type", "value": sweep.level_type, "inline": True},
+            {"name": "Confidence", "value": f"{tier} ({conf_label})", "inline": True},
             {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
+            {"name": "Key Conditions", "value": conditions_text, "inline": False},
             {"name": "Sweep Details", "value": (
                 f"• Penetration: {sweep.penetration_atr:.2f} ATR\n"
                 f"• Wick ratio: {sweep.wick_ratio:.2f}\n"
                 f"• Volume surge: {sweep.volume_surge:.2f}x\n"
-                f"• Level: {_fmt(sweep.level_price)}"
+                f"• Level: {_fmt(sweep.level_price)}\n"
+                f"• Quality score: {sweep.quality_score}/100"
             ), "inline": False},
             {"name": "Indicator Confluence", "value": (
                 "**Liquidity Sweep confluence:**\n"
@@ -184,7 +221,7 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
             ), "inline": False},
         ],
         "footer": {"text": "HermesForge STR-Q Intraday Pipeline"},
-        "timestamp": _dt.datetime.utcnow().isoformat() + "Z",
+        "timestamp": now_pt().isoformat(),
     }
     
     payload = {"embeds": [embed]}
