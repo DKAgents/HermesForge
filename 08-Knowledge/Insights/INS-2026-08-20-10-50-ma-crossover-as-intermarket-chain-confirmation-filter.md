@@ -7,8 +7,11 @@ domains: [indicators, intermarket_analysis, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "EN028-10-and-50-day-moving-average-crossover"]
 seed_id: commodity_inflation_stock
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # 10/50 MA Crossover as Intermarket Chain Confirmation Filter
 
 ## Discovery Summary
