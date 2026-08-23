@@ -386,7 +386,7 @@ Respond as JSON only:
     payload = json.dumps({
         "model": "z-ai/glm-5.2",
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 300,
+        "max_tokens": 800,
         "temperature": 0.3,
     }).encode()
 
