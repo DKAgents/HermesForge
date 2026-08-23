@@ -150,6 +150,7 @@ See [[STR-L-phase1b]] for full details.
 | 2026-07-30 | Strategy created | First graph-aware discovery cycle — fills low-volatility regime gap + improves upon killed STR-F |
 
 ## Related
+- [[R052-filters-for-confirming-breakouts]] — Apply breakout confirmation filters like close beyond peak or two-day rule
 
 - [[REGIME-low-volatility]]
 - [[REGIME-transitional]]

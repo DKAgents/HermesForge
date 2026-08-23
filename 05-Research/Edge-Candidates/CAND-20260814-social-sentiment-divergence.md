@@ -56,3 +56,6 @@ or similar sentiment API) to measure the divergence between sentiment score and 
 **Recommendation:** If social sentiment data becomes available (e.g., via X API, LunarCrush,
 or Santiment integration), this candidate can be re-staged. The hypothesis is well-formed
 and testable — it just needs the data feed.
+
+## Related
+- [[N118-hpi-divergence-analysis-warning-of-trend-change]] — See technical-analysis-financial-markets-murphy/patterns/N118-hpi-divergence-analysis-warning-of-trend-change for divergence analysis foundation
