@@ -17,6 +17,13 @@
   "vimMode": false,
   "alwaysUpdateLinks": true,
   "userIgnoreFilters": [
-    "*.DS_Store"
+    "*.DS_Store",
+    "._*",
+    ".git/",
+    ".smart-env/",
+    "node_modules/",
+    "__pycache__/",
+    "*.pyc",
+    ".trash/"
   ]
 }
