@@ -64,45 +64,26 @@ import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
 # Strategy note frontmatter id -> scan fn
-# Paper trading covers A, B, D, I, R-S through R-AJ (C is a confirmed Phase 1A kill).
+# Only live (publish=true) and watch (collecting data) strategies are scanned.
+# Killed strategies and unvalidated hypotheses are excluded — see Phase 1A results
+# and strategy frontmatter for status.
 PAPER_STRATEGIES = {
-    "STR-A-ma-pullback-fibonacci":     scan_a,
+    # Live (publishing to Discord)
     "STR-B-macd-histogram-divergence": scan_b,
-    "STR-D-sr-role-reversal":          scan_d,
     "STR-I-adaptive-trend":            scan_i,
-    "STR-R-alligator":                 scan_r,
-    "STR-T-head-shoulders":            scan_t,
-    "STR-U-double-top-bottom":         scan_u,
-    "STR-V-triangles":                 scan_v,
-    "STR-W-flags-pennants":            scan_w,
-    "STR-X-parabolic-sar":             scan_x,
-    "STR-Y-adx-dmi":                   scan_y,
-    "STR-Z-stochastic":                scan_z,
-    "STR-AA-williams-r":               scan_aa,
-    "STR-AB-obv-divergence":           scan_ab,
-    "STR-AC-cci":                      scan_ac,
-    "STR-AD-keltner":                  scan_ad,
-    "STR-AE-4week":                    scan_ae,
-    "STR-AF-candlestick":              scan_af,
-    "STR-AG-wedge":                    scan_ag,
 
-    "STR-AJ-intermarket":              scan_aj,
+    # Watch (paper trading, collecting data, no publishing)
+    "STR-A-ma-pullback-fibonacci":     scan_a,
+    "STR-D-sr-role-reversal":          scan_d,
 
     # Autonomous-pipeline deployed (2026-08-16): VIX contango breakout.
-    # Watch-level risk (0.5%) — see 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md
     "STR-VIXC-vix-contango-breakout":  scan_vixc,
 
     # Autonomous-pipeline deployed (2026-08-18): Low-correlation regime stock picker.
-    # Watch-level risk (0.5%) — Phase 1A mean_r=0.092 p=0.0, in-sample-with-costs 0.072,
-    # positive in all 3 sub-periods. Walk-forward incomplete (compute-bound on 529-stock
-    # correlation matrix). See 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md
     "STR-LOWCORR-lowcorr-regime":     scan_lowcorr,
 }
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
-
-# STR-AJ fires correlated signals across all stocks on macro triggers — limit concentration
-MAX_INTERMARKET_POSITIONS = 3
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict,
 # not per-ticker). These are called once with `scan_fn(data)` and produce signals
@@ -265,17 +246,7 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 print(f"  SKIP: {strategy_id}/{ticker} already has an open paper trade")
                 continue
 
-            # STR-AJ concentration control: STR-AJ fires correlated signals across
-            # all stocks on macro triggers (DXY/TNX risk-on) — cap at 3 concurrent
-            # positions to avoid portfolio concentration in a single macro bet.
-            if strategy_id == "STR-AJ-intermarket":
-                aj_open_count = len(trade_log.get_open_trades(strategy_id="STR-AJ-intermarket"))
-                if aj_open_count >= MAX_INTERMARKET_POSITIONS:
-                    summary.setdefault("skipped_aj_concentration", 0)
-                    summary["skipped_aj_concentration"] += 1
-                    print(f"  SKIP: {strategy_id}/{ticker} — STR-AJ concentration limit "
-                          f"({aj_open_count}/{MAX_INTERMARKET_POSITIONS} open)")
-                    continue
+            
 
             entry_date = str(latest["date"])[:10]
             risk_pct = _get_risk_pct(strategy_id, latest)
