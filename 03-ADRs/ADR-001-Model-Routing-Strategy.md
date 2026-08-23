@@ -3,7 +3,7 @@ id: ADR-001
 type: adr
 status: accepted
 created: 2026-06-27
-updated: 2026-07-20
+updated: 2026-08-23
 deciders: [human, orchestrator]
 tags: [adr, model-routing, cost-optimization, llm-strategy]
 topic: adrs
@@ -80,7 +80,7 @@ points as automation volume increases.
 | Tier | Model (OpenRouter) | Approx Cost (in/out per 1M) | Used For |
 |------|--------------------|-----------------------------|----------|
 | **T1** | `anthropic/claude-opus-4.8` | $5 / $25 | Novel strategy design, major architecture decisions, critical risk incidents only. Use sparingly. |
-| **T2** | `z-ai/glm-5.2` | ~$0.67/$2.10 (OpenRouter, 2026-07-26) | Build work (coder, architect, orchestrator), high-quality research synthesis, hard floor for risk-guardian. Switched from `anthropic/claude-sonnet-5` on 2026-07-26 per user request — see Change Log. |
+| **T2** | `deepseek/deepseek-v4-pro` | ~$0.41/$0.83 (OpenRouter, 2026-08-23) | Build work (coder, architect, orchestrator), high-quality research synthesis, hard floor for risk-guardian. Switched from `z-ai/glm-5.2` on 2026-08-23 per user request — see Change Log. |
 | **T3** | `deepseek/deepseek-v4-flash` (primary)<br>`z-ai/glm-5.2` (secondary) | DeepSeek ~$0.05–0.14 / $0.15–0.28<br>GLM ~$0.4–1.4 / $1.3–4.4 | Most operational trading, backtesting, daily research, product-owner, most automation. |
 | **T4** | Gemini Flash variants / MiniMax M3 / cheaper open models | <$0.50 blended | News triage, alert classification, bulk scanning, documenter, simple structured tasks. |
 
@@ -209,6 +209,7 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 
 ## Change Log
 
+- **2026-08-23**: T2 tier switched from `z-ai/glm-5.2` to `deepseek/deepseek-v4-pro` per explicit user (Dan Keseloff) instruction. Rationale: GLM-5.2 price increased 45% since adoption ($0.67→$0.97 input, $2.10→$3.04 output); DeepSeek V4 Pro at $0.41/$0.83 is less than half the price with strong reasoning and 1M context window. Expected savings: ~$14/month (~$172/year, 7.9% cost reduction). User reviewed full OpenRouter model landscape (422 models), actual usage stats (729 sessions, 781M tokens, $181.61/month), and approved the switch. Hermes global default updated via `hermes config set model.default deepseek/deepseek-v4-pro`. Vault Connection Weaver and Discovery Engine scripts updated to use the new T2 model. T3 (deepseek-v4-flash) and T1 (claude-opus-4.8) unchanged. Follow-up: monitor quality of build/research/synthesis tasks on DeepSeek V4 Pro for regressions vs GLM-5.2 baseline.
 - **2026-07-26**: T2 tier and hard floor switched from `anthropic/claude-sonnet-5` to `z-ai/glm-5.2` per explicit user (Dan Keseloff) instruction. Rationale given: cost (GLM-5.2 ~$0.67/$2.10 vs Sonnet-5 $2-3/$10-15 per 1M tokens) and consolidating on OpenRouter. User explicitly approved relaxing the risk-guardian/orchestrator/architect/coder hard floor to allow this. Follow-up: monitor risk-guardian/orchestrator/architect/coder output quality on GLM-5.2 for regressions vs. the Sonnet-5 baseline; escalate back to T1/Sonnet-class model if quality issues surface. Cron job `27a6aa851a96` (Sonnet-5 pricing reminder, Aug 25-28 2026) is now stale for T2 purposes but left in place — revisit at that date.
 - **2026-07-29**: Cron job tier cleanup (biweekly model review 2026-07-27). Tiered 2 mechanical cron jobs to T3 (`deepseek/deepseek-v4-flash`): `27a6aa851a96` (Sonnet-5 Pricing Reminder — now stale, no LLM reasoning needed) and `a76bfb516675` (ADR-005 Readiness Check — mechanical status check). Paper Trading Capture (`4b178ecc02cd`) is `no_agent: true` (script-only, no LLM) — no tier assignment needed. Daily Signal Scanner (`3f49a07a2f04`) and Weekly Model Review (`07149d6b05cc`) kept on default (T2) — require reasoning/reliability. T4 (`gemini-2.0-flash-001`) remains unused — user deferred decision on removal. Sonnet-5 pricing countdown retired — user confirmed move away from Sonnet-5.
 

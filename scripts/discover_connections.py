@@ -51,7 +51,7 @@ SEEDS_FILE   = SCRIPTS_DIR / 'discovery_seeds.yaml'
 STATE_FILE   = INDEX_DIR / 'discovery_state.json'
 
 OPENROUTER_URL = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
-LLM_MODEL    = 'anthropic/claude-sonnet-4.6'
+LLM_MODEL    = 'deepseek/deepseek-v4-pro'
 MAX_TOKENS   = 2000
 DEDUP_SIMILARITY_THRESHOLD = 0.85  # skip if existing insight is this similar to new one
 ACTIONABILITY_MIN = 3              # write to vault only if score >= this

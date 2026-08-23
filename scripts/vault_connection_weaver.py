@@ -384,7 +384,7 @@ Respond as JSON only:
 {{"usefulness": N, "confidence": F, "is_trivial": bool, "is_redundant": bool, "connection_type": "...", "rationale": "...", "suggested_link_text": "..."}}"""
 
     payload = json.dumps({
-        "model": "z-ai/glm-5.2",
+        "model": "deepseek/deepseek-v4-pro",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 800,
         "temperature": 0.3,
