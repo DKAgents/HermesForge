@@ -41,6 +41,7 @@ import config as discord_config  # noqa: E402
 import dedup                      # noqa: E402
 from alert_publisher import publish_signal  # noqa: E402
 from chart_generator import generate_setup_chart  # noqa: E402
+from trade_id import generate_short_id  # noqa: E402
 
 STRATEGIES_DIR = REPO_ROOT / "06-Strategies" / "Hypotheses"
 
@@ -215,6 +216,11 @@ def _scan_and_publish(data: dict, asset_class: str, enabled_scanners: dict,
             for key, value in latest.items():
                 if key not in signal_dict:
                     signal_dict[key] = value
+
+            # ── Generate short ID for post attribution ──
+            short_id = generate_short_id(ticker, scanner_id, entry_date)
+            signal_dict["short_id"] = short_id
+            signal_dict["signal_id"] = signal_id
 
             try:
                 chart_dir = CHART_OUTPUT_DIR

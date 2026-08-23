@@ -57,6 +57,7 @@ import config as discord_config
 import dedup
 from alert_publisher import publish_signal
 from chart_generator import generate_setup_chart
+from trade_id import generate_short_id
 
 STRATEGIES_DIR = REPO_ROOT / "06-Strategies" / "Hypotheses"
 CHART_OUTPUT_DIR = pathlib.Path.home() / ".hermes" / "signal_charts"
@@ -698,7 +699,10 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 if key not in signal_dict:
                     signal_dict[key] = value
 
-            # Generate chart
+            # ── Generate short ID for post attribution ──
+            short_id = generate_short_id(ticker, scanner_id, entry_date)
+            signal_dict["short_id"] = short_id
+            signal_dict["_signal_id"] = signal_id
             chart_path = CHART_OUTPUT_DIR / f"{signal_id}.png"
             try:
                 generate_setup_chart(ticker, signal_dict, str(chart_path))
@@ -799,6 +803,11 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
         for key, value in sig.items():
             if key not in signal_dict:
                 signal_dict[key] = value
+        
+        # ── Generate short ID for post attribution ──
+        short_id = generate_short_id(ticker, scanner_id, entry_date)
+        signal_dict["short_id"] = short_id
+        signal_dict["_signal_id"] = signal_id
         
         # CRITICAL: route by asset_class, not by strategy metadata field
         publish_channel = "crypto" if asset_class == "crypto" else "stocks"

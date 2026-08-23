@@ -585,13 +585,15 @@ def build_sweep_embed(signal_dict: dict) -> dict:
     stop_pct = (risk / entry * 100) if entry else 0
 
     direction_emoji = "🟢" if direction == "long" else "🔴"
+    short_id = signal_dict.get("short_id", "")
+    id_str = f" | `{short_id}`" if short_id else ""
 
     # Build the standardized embed — same field order as daily signals
     embed = {
         "title": f"📊 STR-Q Liquidity Sweep — {ticker}",
         "description": (
             f"{direction_emoji} **{direction_label}** | Intraday 5m | "
-            f"Sweep: {signal_dict.get('sweep_direction', direction)} at **{level_type}**\n"
+            f"Sweep: {signal_dict.get('sweep_direction', direction)} at **{level_type}**{id_str}\n"
             f"Quality: **{quality_score}/100** | Confirmation: {confirmation}"
         ),
         "color": _get_day_color(),

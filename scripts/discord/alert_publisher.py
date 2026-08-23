@@ -273,8 +273,12 @@ def format_alert(signal_dict: dict) -> str:
     stop_str = _fmt_price(stop)
     target_str = _fmt_price(target)
 
+    # Trade identifier — include if present
+    short_id = signal_dict.get("short_id", "")
+    id_line = f"\n🔖 **Trade ID:** `{short_id}`" if short_id else ""
+
     return (
-        f"📊 **{strategy_name} v{version}** | Confidence: {tier_tag}\n\n"
+        f"📊 **{strategy_name} v{version}** | Confidence: {tier_tag}{id_line}\n\n"
         f"**{ticker}** | {direction_label} | Daily | "
         f"Chart: <{tv_url}>\n\n"
         f"📍 Entry:  {entry_str}\n"
