@@ -20,6 +20,8 @@ import os
 PUBLISH_CHANNEL_MAP = {
     "stocks": os.environ.get("DISCORD_STOCK_CHANNEL_ID", ""),
     "crypto": os.environ.get("DISCORD_CRYPTO_CHANNEL_ID", ""),
+    "daytrade-stocks": os.environ.get("DISCORD_DAYTRADE_STOCK_CHANNEL_ID", ""),
+    "daytrade-crypto": os.environ.get("DISCORD_DAYTRADE_CRYPTO_CHANNEL_ID", ""),
 }
 
 DEDUP_LOG_PATH = os.path.expanduser("~/HermesForge/scripts/discord/published_signals.csv")
