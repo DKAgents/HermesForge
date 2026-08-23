@@ -1,5 +1,5 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: btc_eth_etf_flow_rotation
 composite_score: 54.0
@@ -62,3 +62,21 @@ Engine does NOT scan ETF flows. This is entirely new data source. The engine's c
 
 ## Recommended Pipeline Action
 PROMISING — proceed to backtest ETH/BTC ratio long strategy triggered by ETF flow divergence. The signal is novel and captures institutional positioning directly. Medium confidence due to limited ETH ETF history (~13 months), but the logic is sound and data is freely available.
+
+## Pipeline Rejection (2026-08-23)
+**Decision:** REJECT at Stage 1 (Read & Critique)
+
+**Rationale:** The hypothesis requires daily ETF flow data (BTC ETF net outflows, ETH ETF net
+inflows) from SoSoValue, Farside Investors, or similar sources. While the data is freely
+available, it is not integrated into our backtest pipeline.
+
+**Issues:**
+- No ETF flow data feed exists in `fetch_data.py` or `fetch_crypto_data.py`
+- OHLCV data alone (BTC-USD, ETH-USD) cannot test ETF flow divergence signals
+- The candidate's three strategies (ETH/BTC long, ETH long, BTC short) all depend on flow thresholds
+- ETH ETF history is only ~13 months (launched mid-2025), limiting statistical power even if data were available
+
+**Recommendation:** This is the most promising of the three evaluated candidates. Build an
+ETF flow data fetcher (`fetch_etf_flows.py`) using SoSoValue/Farside free APIs, then re-stage.
+The hypothesis is well-formed with clear entry/exit rules and institutional logic. Priority:
+MEDIUM — re-evaluate once the data pipeline is extended.

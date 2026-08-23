@@ -1,5 +1,5 @@
 ---
-status: staged
+status: rejected
 source: sentiment
 edge_type: social_sentiment_divergence
 composite_score: 48.6
@@ -40,3 +40,19 @@ Exit at -10% or when sentiment drops below 40.
 
 ## Recommended Pipeline Action
 SPECULATIVE — quick Phase 1A backtest to check for edge.
+
+## Pipeline Rejection (2026-08-23)
+**Decision:** REJECT at Stage 1 (Read & Critique)
+
+**Rationale:** The hypothesis requires social sentiment data (e.g., LunarCrush, Santiment,
+or similar sentiment API) to measure the divergence between sentiment score and price trend.
+
+**Issues:**
+- Our data pipeline provides OHLCV only (yfinance for 529 stocks, Hyperliquid for 35 crypto)
+- No social sentiment data feed is integrated
+- Cannot test "sentiment 86 but price trending down" without sentiment time series
+- The engine's `sentiment` module may exist but is not part of the Phase 1A backtest pipeline
+
+**Recommendation:** If social sentiment data becomes available (e.g., via X API, LunarCrush,
+or Santiment integration), this candidate can be re-staged. The hypothesis is well-formed
+and testable — it just needs the data feed.
