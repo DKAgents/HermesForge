@@ -711,7 +711,6 @@ def _scan_asset_class(data: dict, asset_class: str, scanners: dict,
                 signal_dict["_chart_path"] = None
                 print(f"  Chart error for {ticker}: {e}")
 
-            signal_dict["_signal_id"] = signal_id
             summary["all_signals"].append(signal_dict)
             new_signals.append(signal_dict)
 

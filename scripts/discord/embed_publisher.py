@@ -362,7 +362,7 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
     status_str = "LIVE" if is_live else "WATCH"
 
     # Trade ID line
-    id_line = f" | `{short_id}`" if short_id else ""
+    id_line = f" | 🔖 Trade ID: `{short_id}`" if short_id else ""
 
     # Build embed fields
     fields = [
@@ -586,7 +586,7 @@ def build_sweep_embed(signal_dict: dict) -> dict:
 
     direction_emoji = "🟢" if direction == "long" else "🔴"
     short_id = signal_dict.get("short_id", "")
-    id_str = f" | `{short_id}`" if short_id else ""
+    id_str = f" | 🔖 Trade ID: `{short_id}`" if short_id else ""
 
     # Build the standardized embed — same field order as daily signals
     embed = {
