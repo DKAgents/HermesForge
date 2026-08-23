@@ -245,3 +245,10 @@ sweep. **Status remains `killed`; no production variant was created.**
 Standalone sweep script (not registered in `run_phase1a.py`, does not
 affect the killed baseline scanner): `scripts/validation/scanners/_phase1b_g_sweep.py`
 
+
+## Related
+- [[C264-relative-strength-analysis-on-stock-market-sectors]] — See C264-relative-strength-analysis-on-stock-market-sectors for the underlying relative strength concept
+
+- [[R251-trendline-analysis-on-relative-strength-lines]] — See R251-trendline-analysis-on-relative-strength-lines for trendline-based confirmation on RS ratio charts
+
+- [[N112-relative-strength-analysis-for-sector-rotation]] — See N112-relative-strength-analysis-for-sector-rotation for theoretical background on relative strength analysis.

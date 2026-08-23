@@ -150,6 +150,8 @@ See [[STR-L-phase1b]] for full details.
 | 2026-07-30 | Strategy created | First graph-aware discovery cycle — fills low-volatility regime gap + improves upon killed STR-F |
 
 ## Related
+- [[R056-triangle-time-limit-for-breakout-resolution]] — Apply Murphy's triangle time limit to contraction duration for breakout validity
+
 - [[R052-filters-for-confirming-breakouts]] — Apply breakout confirmation filters like close beyond peak or two-day rule
 
 - [[REGIME-low-volatility]]
