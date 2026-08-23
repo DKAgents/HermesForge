@@ -18,7 +18,9 @@ tags: []
 scanner_module: scanner_p_crosssectional
 
 strategy_id: STR-P-crosssectional-factor
----
+
+scanner_alias: scan_p
+scan_mode: batch---
 # STR-P: Cross-Sectional Factor Ranking (Crypto)
 
 ## Hypothesis

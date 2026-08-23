@@ -59,6 +59,10 @@ from scanners.scanner_vix_vrp_contango import scan as scan_vixc  # noqa: E402
 # 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md.
 from scanners.scanner_lowcorr_regime import scan as scan_lowcorr  # noqa: E402
 
+# Watch-list scanners (imported but not yet scanning — need status:watch frontmatter)
+from scanners.scanner_l_atr_contraction import scan as scan_l   # noqa: E402
+from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -80,6 +84,7 @@ _SCANNER_ALIASES = {
     "scan_ae":      scan_ae,      "scan_af":      scan_af,
     "scan_ag":      scan_ag,      "scan_aj":      scan_aj,
     "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
+    "scan_l":       scan_l,       "scan_p":       scan_p,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).

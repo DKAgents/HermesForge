@@ -35,7 +35,8 @@ scanner_module: scanner_l_atr_contraction
 
 
 strategy_id: STR-L-atr-contraction-breakout
----
+
+scanner_alias: scan_l---
 # STR-L: ATR Contraction Breakout
 
 ## Graph Properties
