@@ -415,9 +415,13 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
 # Ensures every post has: chart attachment, TradingView link, confidence field,
 # consistent field ordering, correct channel routing, and Pacific Time timestamps.
 
-# Channel routing — derived from asset_class, NEVER from strategy metadata
+# Channel routing — swing (daily) vs day trading (intraday)
+# Swing setups: higher timeframe, daily bars, multi-day holds
 DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
 DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
+# Day trading setups: intraday bars, same-day holds (STR-Q sweep, etc.)
+DISCORD_DAYTRADE_STOCK_CHANNEL = "1540951208028803142"
+DISCORD_DAYTRADE_CRYPTO_CHANNEL = "1540951134200402071"
 
 # Day-of-week colors (shared between daily and sweep)
 DAY_COLORS = {
@@ -432,12 +436,16 @@ def _get_day_color() -> int:
     return DAY_COLORS.get(dt.weekday(), 0x58a6ff)
 
 
-def _route_channel(asset_class: str) -> str:
-    """Route to the correct Discord channel based on asset class.
+def _route_channel(asset_class: str, timeframe: str = "daily") -> str:
+    """Route to the correct Discord channel based on asset class and timeframe.
 
     This is the SINGLE source of truth for channel routing.
-    Stocks -> #stock-setups, Crypto -> #crypto-setups.
+    
+    Day trading (intraday):  → #day-trade-stocks / #day-trade-crypto
+    Swing (daily):           → #stock-setups / #crypto-setups
     """
+    if timeframe == "intraday":
+        return DISCORD_DAYTRADE_CRYPTO_CHANNEL if asset_class == "crypto" else DISCORD_DAYTRADE_STOCK_CHANNEL
     if asset_class == "crypto":
         return DISCORD_CRYPTO_SETUPS_CHANNEL
     return DISCORD_STOCK_SETUPS_CHANNEL
@@ -473,7 +481,8 @@ def publish_signal(signal_dict: dict, asset_class: str,
     version = signal_dict.get("strategy_version", "1.0")
 
     # ── Channel routing ──
-    channel_id = _route_channel(asset_class)
+    timeframe = signal_dict.get("timeframe", "daily")
+    channel_id = _route_channel(asset_class, timeframe)
     signal_dict["publish_channel"] = asset_class
 
     # ── Generate chart ──

@@ -73,9 +73,6 @@ RISK_PCT = 1.0
 CONF_BAR_MINUTES = 3 * 5   # 15 minutes to confirm
 RECENCY_WINDOW_SEC = 1800  # 30 minutes from confirmation time
 
-# Discord alert channels (from memory)
-DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
-DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 
 # Universe — use consolidated single source of truth
@@ -182,6 +179,7 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         "strategy_id": "STR-Q-liquidity-sweep",
         "strategy_name": "STR-Q Liquidity Sweep",
         "strategy_version": "1.0",
+        "timeframe": "intraday",  # routes to day trading channel
         "signal_id": trade_dict.get("signal_id", f"STR-Q_{ticker}_{now_pt().strftime('%Y%m%d_%H%M%S')}"),
         "trade_id": trade_dict.get("trade_id", ""),
         "short_id": trade_dict.get("short_id", ""),
