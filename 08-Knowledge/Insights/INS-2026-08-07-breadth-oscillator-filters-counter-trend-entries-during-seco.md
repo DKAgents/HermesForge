@@ -31,3 +31,6 @@ Before acting on an oscillator overbought/oversold signal during an established 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-22-use-breadth-oscillator-to-filter-counter-trend-oscillator-si|Use Breadth Oscillator to Filter Counter-Trend Oscillator Signals]]

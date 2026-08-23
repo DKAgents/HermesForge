@@ -49,6 +49,9 @@ import position_sizing
 # Pacific Time utility for display timestamps
 from timezone_utils import now_pt
 
+# Centralized publisher (ensures chart + TradingView + consistent template + routing)
+from embed_publisher import publish_signal, build_sweep_embed
+
 # US-108: Import tiered filter for equal_lows exclusion on stocks
 from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLUDED_STOCK_LEVEL_TYPES
 
@@ -114,40 +117,34 @@ def _calculate_position_size(entry_price: float, stop_price: float, risk_pct: fl
     return round((EXAMPLE_ACCOUNT_SIZE * risk_pct / 100) / risk_per_unit, 4)
 
 
-# ── US-108: Discord Alert Posting ────────────────────────────────────────────
+# ── US-108: Discord Alert Posting (centralized via embed_publisher) ──────────
 
 def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
     """Post a STR-Q alert embed to the appropriate Discord channel.
-    
-    Posts to #crypto-setups or #stock-setups based on asset class.
-    Returns True if posted successfully.
+
+    Uses the centralized publish_signal() from embed_publisher.py to ensure:
+    - Chart attachment (STR-Q chart profile from chart_generator.py)
+    - TradingView link in description
+    - Consistent field ordering (same template as daily signals)
+    - Correct channel routing (crypto -> #crypto-setups, stock -> #stock-setups)
+    - Pacific Time timestamps
+    - Confidence field with tier + conditions
     """
     if not DISCORD_BOT_TOKEN:
         print("  ⚠️ DISCORD_BOT_TOKEN not set — skipping Discord alert")
         return False
-    
-    symbol = trade_dict["ticker"]
+
     asset_class = trade_dict.get("asset_class", "crypto")
     direction = trade_dict.get("direction", "long")
     entry_price = trade_dict["entry_price"]
     stop_price = trade_dict["stop_price"]
     target_price = trade_dict["target_price"]
-    
-    channel_id = DISCORD_CRYPTO_SETUPS_CHANNEL if asset_class == "crypto" else DISCORD_STOCK_SETUPS_CHANNEL
-
-    risk = abs(entry_price - stop_price)
-    reward = abs(target_price - entry_price)
-    rr = reward / risk if risk > 0 else 0
-    stop_pct = (risk / entry_price * 100) if entry_price else 0
+    ticker = trade_dict["ticker"]
 
     # ── Confidence tier (based on quality score + confirmation + confluence) ──
     q = sweep.quality_score
     is_confirmed = sweep.confirmation == "confirmed"
     vol_surge = sweep.volume_surge
-    # Tier logic:
-    #   A (High):   Q >= 60 AND confirmed AND vol surge >= 1.5x
-    #   B (Medium): Q >= 50 AND confirmed
-    #   C (Low):    everything else
     if q >= 60 and is_confirmed and vol_surge >= 1.5:
         tier, conf_label = "A", "High"
     elif q >= 50 and is_confirmed:
@@ -156,9 +153,13 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         tier, conf_label = "C", "Low"
 
     # Key conditions that justify the confidence
+    risk = abs(entry_price - stop_price)
+    reward = abs(target_price - entry_price)
+    rr = reward / risk if risk > 0 else 0
+
     conditions = []
     if is_confirmed:
-        conditions.append(f"• Sweep confirmed (not pending) → higher reliability")
+        conditions.append("• Sweep confirmed (not pending) → higher reliability")
     if vol_surge >= 2.0:
         conditions.append(f"• Strong volume surge ({vol_surge:.1f}x) → institutional participation")
     elif vol_surge >= 1.5:
@@ -171,79 +172,47 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         conditions.append(f"• Favorable R:R ({rr:.1f}:1) → target at 3R minimum")
     conditions_text = "\n".join(conditions) if conditions else "• See sweep details below"
 
-    # Day-of-week color
-    day_colors = {
-        0: 0x3498db, 1: 0x2ecc71, 2: 0xe67e22, 3: 0x9b59b6,
-        4: 0xe74c3c, 5: 0x1abc9c, 6: 0xf1c40f,
+    # ── Build signal_dict for the centralized publisher ──
+    signal_dict = {
+        "ticker": ticker,
+        "direction": direction,
+        "entry_price": entry_price,
+        "stop_price": stop_price,
+        "target_price": target_price,
+        "strategy_id": "STR-Q-liquidity-sweep",
+        "strategy_name": "STR-Q Liquidity Sweep",
+        "strategy_version": "1.0",
+        "signal_id": trade_dict.get("signal_id", f"STR-Q_{ticker}_{now_pt().strftime('%Y%m%d_%H%M%S')}"),
+        "trade_id": trade_dict.get("trade_id", ""),
+        "short_id": trade_dict.get("short_id", ""),
+        "date": now_pt().strftime("%Y-%m-%d"),
+        "confidence_tier": tier,
+        "confidence_label": conf_label,
+        "conditions_text": conditions_text,
+        # Sweep-specific fields for chart generation
+        "level_type": sweep.level_type,
+        "level_price": sweep.level_price,
+        "penetration_atr": sweep.penetration_atr,
+        "wick_ratio": sweep.wick_ratio,
+        "volume_surge": sweep.volume_surge,
+        "quality_score": sweep.quality_score,
+        "confirmation": sweep.confirmation,
+        "sweep_direction": sweep.direction,
     }
-    import datetime as _dt
-    color = day_colors.get(_dt.datetime.utcnow().weekday(), 0x58a6ff)
-    
-    def _fmt(p):
-        if abs(p) < 1.0: return f"${p:.6f}"
-        elif abs(p) < 100.0: return f"${p:.4f}"
-        else: return f"${p:.2f}"
-    
-    direction_emoji = "🟢" if direction == "long" else "🔴"
-    direction_label = "LONG" if direction == "long" else "SHORT"
-    
-    embed = {
-        "title": f"📊 STR-Q Liquidity Sweep — {symbol}",
-        "description": (
-            f"{direction_emoji} **{direction_label}** | Intraday 5m | "
-            f"Sweep: {sweep.direction} at **{sweep.level_type}**\n"
-            f"Quality: **{sweep.quality_score}/100** | Confirmation: {sweep.confirmation}"
-        ),
-        "color": color,
-        "fields": [
-            {"name": "📍 Entry", "value": _fmt(entry_price), "inline": True},
-            {"name": "🛑 Stop", "value": f"{_fmt(stop_price)} ({stop_pct:.1f}% risk)", "inline": True},
-            {"name": "🎯 Target", "value": _fmt(target_price), "inline": True},
-            {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
-            {"name": "Confidence", "value": f"{tier} ({conf_label})", "inline": True},
-            {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
-            {"name": "Key Conditions", "value": conditions_text, "inline": False},
-            {"name": "Sweep Details", "value": (
-                f"• Penetration: {sweep.penetration_atr:.2f} ATR\n"
-                f"• Wick ratio: {sweep.wick_ratio:.2f}\n"
-                f"• Volume surge: {sweep.volume_surge:.2f}x\n"
-                f"• Level: {_fmt(sweep.level_price)}\n"
-                f"• Quality score: {sweep.quality_score}/100"
-            ), "inline": False},
-            {"name": "Indicator Confluence", "value": (
-                "**Liquidity Sweep confluence:**\n"
-                f"• Price swept {sweep.level_type} level then reversed → institutional liquidity grab confirmed\n"
-                f"• Sweep direction: {sweep.direction} → alignment with trade direction\n"
-                f"• Quality score: {sweep.quality_score}/100 → data-driven scoring (level type weighted)\n"
-                f"• Stop behind sweep wick → tight risk, minimal adverse excursion\n"
-                f"• 3R target → favorable risk-reward ratio\n"
-                f"• 5-minute intraday execution → precise timing, post-sweep entry"
-            ), "inline": False},
-        ],
-        "footer": {"text": "HermesForge STR-Q Intraday Pipeline"},
-        "timestamp": now_pt().isoformat(),
-    }
-    
-    payload = {"embeds": [embed]}
-    
-    import subprocess
-    url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
-    cmd = [
-        "curl", "-s", "-X", "POST",
-        "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
-        "-H", "Content-Type: application/json",
-        "-d", json.dumps(payload),
-        url,
-    ]
-    
+
+    # Build the standardized embed (same template as daily signals)
+    embed = build_sweep_embed(signal_dict)
+    signal_dict["_pre_built_embed"] = embed
+
+    # ── Post via centralized publisher (handles chart + TradingView + routing) ──
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
-        response = json.loads(result.stdout)
-        if "id" in response:
+        result = publish_signal(signal_dict, asset_class, dry_run=False, crosspost=False)
+        if result.get("status") == "ok":
+            channel_id = result.get("channel_id", "?")
             print(f"  📢 Discord alert posted to channel {channel_id}")
             return True
         else:
-            print(f"  ⚠️ Discord post failed: {result.stdout[:200]}")
+            print(f"  ⚠️ Discord post failed: {result.get('response', 'unknown error')[:200]}")
             return False
     except Exception as e:
         print(f"  ⚠️ Discord post error: {e}")

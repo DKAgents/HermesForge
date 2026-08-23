@@ -533,6 +533,135 @@ def _chart_sr_reversal(df_full, df, signal_dict, entry, stop, target, title):
 
 
 # ---------------------------------------------------------------------------
+# Strategy Q — Liquidity Sweep: sweep level + wick marker + volume panel
+# ---------------------------------------------------------------------------
+
+def _chart_liquidity_sweep(df_full, df, signal_dict, entry, stop, target, title):
+    """Chart profile for STR-Q liquidity sweep strategy.
+
+    Shows the swept liquidity level as a horizontal line, the sweep wick
+    highlighted, entry/stop/target lines, and a volume panel with the
+    surge bar highlighted. Also draws an ATR band around the sweep level
+    to visualize penetration depth.
+    """
+    close_full = df_full["Close"]
+    rsi = _rsi(close_full).tail(LOOKBACK_BARS)
+    atr_full = _atr_for_chart(df_full, 14)
+    atr_window = atr_full.tail(LOOKBACK_BARS)
+
+    apds = [
+        mpf.make_addplot(rsi, panel=1, color="#a371f7", width=1.0, ylabel="RSI"),
+    ]
+
+    fig, axes = _base_plot(
+        df, _dark_style(), entry, stop, target, apds,
+        panel_ratios=(4, 2, 1.5), volume=True, volume_panel=2, title=title, signal_dict=signal_dict,
+    )
+
+    price_ax = axes[0]
+
+    # ── Draw the swept liquidity level ──
+    level_price = signal_dict.get("level_price") or signal_dict.get("sweep_level_price")
+    level_type = signal_dict.get("level_type", "unknown")
+    if level_price is not None and level_price > 0:
+        # Draw the level as a distinct line (different from entry/stop/target)
+        price_ax.axhline(level_price, color="#e3b341", linewidth=1.5,
+                        linestyle="-", alpha=0.8)
+        price_ax.text(0, level_price, f" {level_type.replace('_', ' ').title()}",
+                     color="#e3b341", fontsize=7, va="bottom", fontweight="bold")
+
+        # Draw ATR penetration band around the level
+        atr_val = signal_dict.get("penetration_atr", 0.5)
+        atr_at_signal = signal_dict.get("atr_at_signal")
+        if atr_at_signal and atr_at_signal > 0:
+            pen_price = atr_val * atr_at_signal
+        else:
+            # Estimate from visible ATR
+            pen_price = atr_val * (atr_window.iloc[-1] if len(atr_window) > 0 else 1.0)
+
+        # Shade the penetration zone (where price went beyond the level)
+        direction = signal_dict.get("direction", "long")
+        if direction == "long":
+            # Bullish sweep: price went below the level, then reversed up
+            price_ax.axhspan(level_price - pen_price, level_price,
+                            color="#f85149", alpha=0.10)
+            price_ax.text(len(df) - 1, level_price - pen_price * 0.5,
+                         f" Sweep zone ({atr_val:.2f} ATR)",
+                         color="#f85149", fontsize=6, va="center")
+        else:
+            # Bearish sweep: price went above the level, then reversed down
+            price_ax.axhspan(level_price, level_price + pen_price,
+                            color="#f85149", alpha=0.10)
+            price_ax.text(len(df) - 1, level_price + pen_price * 0.5,
+                         f" Sweep zone ({atr_val:.2f} ATR)",
+                         color="#f85149", fontsize=6, va="center")
+
+    # ── Highlight the sweep candle (signal bar) ──
+    signal_idx = signal_dict.get("_signal_bar_idx", len(df) - 1)
+    if isinstance(signal_idx, (int, float)) and 0 <= signal_idx < len(df):
+        sweep_high = df["High"].iloc[int(signal_idx)]
+        sweep_low = df["Low"].iloc[int(signal_idx)]
+        price_ax.axvspan(int(signal_idx) - 0.4, int(signal_idx) + 0.4,
+                        color="#e3b341", alpha=0.15)
+        # Mark the sweep wick with an arrow
+        direction = signal_dict.get("direction", "long")
+        if direction == "long":
+            # Wick went below the level (bullish sweep)
+            price_ax.annotate("Sweep", xy=(int(signal_idx), sweep_low),
+                             xytext=(int(signal_idx) + 3, sweep_low - (sweep_high - sweep_low) * 0.5),
+                             color="#e3b341", fontsize=7, fontweight="bold",
+                             arrowprops=dict(arrowstyle="->", color="#e3b341", lw=1.2))
+        else:
+            # Wick went above the level (bearish sweep)
+            price_ax.annotate("Sweep", xy=(int(signal_idx), sweep_high),
+                             xytext=(int(signal_idx) + 3, sweep_high + (sweep_high - sweep_low) * 0.5),
+                             color="#e3b341", fontsize=7, fontweight="bold",
+                             arrowprops=dict(arrowstyle="->", color="#e3b341", lw=1.2))
+
+    # ── Volume panel: highlight the surge bar ──
+    vol_ax = axes[1] if len(axes) > 1 else None
+    volume_surge = signal_dict.get("volume_surge", 0)
+    if vol_ax is not None and volume_surge > 0:
+        sig_idx_int = int(signal_idx) if isinstance(signal_idx, (int, float)) else len(df) - 1
+        if 0 <= sig_idx_int < len(df):
+            vol_ax.axvspan(sig_idx_int - 0.4, sig_idx_int + 0.4,
+                          color="#3fb950", alpha=0.15)
+            vol_ax.text(0.02, 0.92, f"Volume surge: {volume_surge:.1f}x avg",
+                        color="#3fb950", fontsize=8, transform=vol_ax.transAxes,
+                        fontweight="bold")
+
+    # ── Quality score annotation ──
+    quality_score = signal_dict.get("quality_score", 0)
+    confirmation = signal_dict.get("confirmation", "confirmed")
+    wick_ratio = signal_dict.get("wick_ratio", 0)
+    if quality_score:
+        price_ax.text(0.02, 0.95,
+                     f"Q: {quality_score}/100 | {confirmation} | Wick: {wick_ratio:.1f}",
+                     color="#58a6ff", fontsize=8, transform=price_ax.transAxes,
+                     fontweight="bold")
+
+    # ── RSI panel: 70/30 lines ──
+    rsi_ax = axes[2] if len(axes) > 2 else None
+    if rsi_ax is not None:
+        rsi_ax.axhline(70, color="#f85149", linewidth=0.8, linestyle="--", alpha=0.5)
+        rsi_ax.axhline(30, color="#3fb950", linewidth=0.8, linestyle="--", alpha=0.5)
+        rsi_ax.axhline(50, color="#484f58", linewidth=0.5, linestyle=":", alpha=0.4)
+        rsi_ax.text(len(df) - 1, 70.5, " 70", color="#f85149", fontsize=6, va="bottom")
+        rsi_ax.text(len(df) - 1, 30.5, " 30", color="#3fb950", fontsize=6, va="bottom")
+
+    # ── Legend ──
+    _add_legend(price_ax, [
+        ("#e3b341", f"{level_type.replace('_', ' ').title()} (swept)"),
+        ("#f85149", "Sweep penetration zone"),
+        (COLOR_ENTRY, "Entry"),
+        (COLOR_STOP, "Stop (beyond wick)"),
+        (COLOR_TARGET, "Target (3R)"),
+    ], loc="upper left")
+
+    return fig
+
+
+# ---------------------------------------------------------------------------
 # Generic fallback — original MACD+RSI layout, used for unknown strategy_id
 # ---------------------------------------------------------------------------
 
@@ -738,6 +867,7 @@ CHART_PROFILES = {
     "STR-D-sr-role-reversal":          _chart_sr_reversal,
     "STR-I-adaptive-trend":           _chart_adaptive_trend,
     "STR-P-crosssectional":           _chart_crosssectional,
+    "STR-Q-liquidity-sweep":          _chart_liquidity_sweep,
 }
 
 

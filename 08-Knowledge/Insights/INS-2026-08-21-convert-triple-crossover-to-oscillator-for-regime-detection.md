@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C128-moving-averages-as-oscillators-via-double-crossover", "R323-triple-crossover-method-moving-averages", "N037-triple-crossover-method-4-9-18-day-moving-average"]
 seed_id: pattern_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Convert Triple Crossover to Oscillator for Regime Detection
 
 ## Discovery Summary

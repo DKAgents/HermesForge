@@ -7,8 +7,11 @@ domains: [concepts, rules]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "EN069-price-gaps-as-support-and-resistance-for-timing"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Gap + Role-Reversal Double Confirmation Sets Precise Stop Levels
 
 ## Discovery Summary

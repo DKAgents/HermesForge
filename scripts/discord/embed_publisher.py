@@ -410,6 +410,214 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
     return embed
 
 
+# ── Centralized publisher ────────────────────────────────────────────────────
+# Single entry point for ALL trade setup posts (daily signals + intraday sweeps).
+# Ensures every post has: chart attachment, TradingView link, confidence field,
+# consistent field ordering, correct channel routing, and Pacific Time timestamps.
+
+# Channel routing — derived from asset_class, NEVER from strategy metadata
+DISCORD_STOCK_SETUPS_CHANNEL = "1528555538848153640"
+DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
+
+# Day-of-week colors (shared between daily and sweep)
+DAY_COLORS = {
+    0: 0x3498db, 1: 0x2ecc71, 2: 0xe67e22, 3: 0x9b59b6,
+    4: 0xe74c3c, 5: 0x1abc9c, 6: 0xf1c40f,
+}
+
+
+def _get_day_color() -> int:
+    """Get the day-of-week color for today (Pacific Time)."""
+    dt = now_pt()
+    return DAY_COLORS.get(dt.weekday(), 0x58a6ff)
+
+
+def _route_channel(asset_class: str) -> str:
+    """Route to the correct Discord channel based on asset class.
+
+    This is the SINGLE source of truth for channel routing.
+    Stocks -> #stock-setups, Crypto -> #crypto-setups.
+    """
+    if asset_class == "crypto":
+        return DISCORD_CRYPTO_SETUPS_CHANNEL
+    return DISCORD_STOCK_SETUPS_CHANNEL
+
+
+def publish_signal(signal_dict: dict, asset_class: str,
+                   dry_run: bool = False, crosspost: bool = False) -> dict:
+    """Centralized publish function for ALL trade setup posts.
+
+    Takes a signal_dict (works for both daily signals and intraday sweeps),
+    generates a chart, builds a standardized embed, and posts to the correct
+    Discord channel with chart attachment.
+
+    Required signal_dict fields:
+        - ticker, direction, entry_price, stop_price, target_price
+        - strategy_id, strategy_name, strategy_version
+        - confidence_tier (e.g. "A (High)") or quality_tier + confirmation_level (for STR-Q)
+        - regime (for daily signals)
+
+    Optional fields:
+        - level_type, level_price, penetration_atr, wick_ratio, volume_surge,
+          quality_score, confirmation (for STR-Q sweeps)
+        - regime_benchmark, regime_adx (for daily signals)
+        - is_live, short_id, publish_channel
+
+    Returns {status, message_id, channel_id, chart_path} or {status: error}.
+    """
+    import pathlib as _pl
+
+    ticker = signal_dict.get("ticker", "?")
+    strategy_id = signal_dict.get("strategy_id", "")
+    strategy_name = signal_dict.get("strategy_name", "Strategy")
+    version = signal_dict.get("strategy_version", "1.0")
+
+    # ── Channel routing ──
+    channel_id = _route_channel(asset_class)
+    signal_dict["publish_channel"] = asset_class
+
+    # ── Generate chart ──
+    chart_path = None
+    try:
+        from chart_generator import generate_setup_chart
+        chart_dir = _pl.Path.home() / ".hermes" / "signal_charts"
+        chart_dir.mkdir(parents=True, exist_ok=True)
+        chart_path = str(chart_dir / f"{signal_dict.get('signal_id', ticker)}_{now_pt().strftime('%Y%m%d_%H%M%S')}.png")
+        generate_setup_chart(ticker, signal_dict, chart_path)
+    except Exception as e:
+        logger.warning(f"Chart generation failed for {ticker}: {e}")
+        chart_path = None
+
+    # ── Build embed ──
+    # If the signal already has a pre-built embed (STR-Q sweeps), augment it
+    # with chart + TradingView link + any missing fields.
+    # Otherwise, use format_signal_embed (daily signals).
+    if signal_dict.get("_pre_built_embed"):
+        embed = signal_dict["_pre_built_embed"]
+        # Add TradingView link to description if not present
+        tv_url = _tradingview_link(ticker, asset_class)
+        desc = embed.get("description", "")
+        if "TradingView" not in desc and "tradingview" not in desc.lower():
+            embed["description"] = desc + f" | [TradingView Chart]({tv_url})"
+        # Add chart image reference
+        if chart_path and os.path.exists(chart_path):
+            embed["image"] = {"url": "attachment://chart.png"}
+    else:
+        color = _get_day_color()
+        short_id = signal_dict.get("short_id", "")
+        embed = format_signal_embed(signal_dict, color, short_id)
+
+    # ── Post to Discord ──
+    payload = {"embeds": [embed]}
+
+    if dry_run:
+        print(f"  [dry-run] Would post {ticker} to channel {channel_id}")
+        return {"status": "ok", "message_id": "dry_run", "channel_id": channel_id, "chart_path": chart_path}
+
+    result = _post_to_discord(channel_id, payload, chart_path=chart_path, crosspost=crosspost)
+
+    # Register in trade log if this is a new trade
+    if result["status"] == "ok" and result.get("message_id") != "dry_run":
+        try:
+            short_id = signal_dict.get("short_id", "")
+            if short_id:
+                trade_id = signal_dict.get("trade_id", "")
+                if trade_id:
+                    post_url = make_discord_url(channel_id, result["message_id"])
+                    trade_log.register_discord_info(trade_id, result["message_id"], channel_id, post_url)
+        except Exception as e:
+            logger.debug(f"Trade log registration failed: {e}")
+
+    return {**result, "channel_id": channel_id, "chart_path": chart_path}
+
+
+# ── STR-Q sweep embed builder ────────────────────────────────────────────────
+# Builds a standardized embed for STR-Q sweep signals using the same field
+# template as daily signals, then passes it to publish_signal().
+
+def build_sweep_embed(signal_dict: dict) -> dict:
+    """Build a standardized embed for STR-Q sweep signals.
+
+    This produces the same field structure as format_signal_embed(),
+    ensuring template consistency between daily and intraday posts.
+    The embed is stored in signal_dict['_pre_built_embed'] and then
+    passed to publish_signal() which handles chart + posting.
+    """
+    ticker = signal_dict["ticker"]
+    direction = signal_dict.get("direction", "long")
+    direction_label = "LONG" if direction == "long" else "SHORT"
+    entry = signal_dict["entry_price"]
+    stop = signal_dict["stop_price"]
+    target = signal_dict["target_price"]
+
+    # Confidence tier (already computed by capture_sweep_signals.py)
+    tier = signal_dict.get("confidence_tier", "C")
+    conf_label = signal_dict.get("confidence_label", "Low")
+    conditions_text = signal_dict.get("conditions_text", "• See sweep details below")
+
+    # Sweep details
+    level_type = signal_dict.get("level_type", "unknown")
+    quality_score = signal_dict.get("quality_score", 0)
+    penetration_atr = signal_dict.get("penetration_atr", 0)
+    wick_ratio = signal_dict.get("wick_ratio", 0)
+    volume_surge = signal_dict.get("volume_surge", 0)
+    level_price = signal_dict.get("level_price", 0)
+    confirmation = signal_dict.get("confirmation", "confirmed")
+
+    # Price formatting
+    def _fmt(p):
+        if abs(p) < 1.0: return f"${p:.6f}"
+        elif abs(p) < 100.0: return f"${p:.4f}"
+        else: return f"${p:,.2f}"
+
+    risk = abs(entry - stop)
+    reward = abs(target - entry)
+    rr = reward / risk if risk > 0 else 0
+    stop_pct = (risk / entry * 100) if entry else 0
+
+    direction_emoji = "🟢" if direction == "long" else "🔴"
+
+    # Build the standardized embed — same field order as daily signals
+    embed = {
+        "title": f"📊 STR-Q Liquidity Sweep — {ticker}",
+        "description": (
+            f"{direction_emoji} **{direction_label}** | Intraday 5m | "
+            f"Sweep: {signal_dict.get('sweep_direction', direction)} at **{level_type}**\n"
+            f"Quality: **{quality_score}/100** | Confirmation: {confirmation}"
+        ),
+        "color": _get_day_color(),
+        "fields": [
+            {"name": "📍 Entry", "value": _fmt(entry), "inline": True},
+            {"name": "🛑 Stop", "value": f"{_fmt(stop)} ({stop_pct:.1f}% risk)", "inline": True},
+            {"name": "🎯 Target", "value": _fmt(target), "inline": True},
+            {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
+            {"name": "Confidence", "value": f"{tier} ({conf_label})", "inline": True},
+            {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
+            {"name": "Key Conditions", "value": conditions_text, "inline": False},
+            {"name": "Sweep Details", "value": (
+                f"• Penetration: {penetration_atr:.2f} ATR\n"
+                f"• Wick ratio: {wick_ratio:.2f}\n"
+                f"• Volume surge: {volume_surge:.2f}x\n"
+                f"• Level: {_fmt(level_price)}\n"
+                f"• Quality score: {quality_score}/100"
+            ), "inline": False},
+            {"name": "Indicator Confluence", "value": (
+                "**Liquidity Sweep confluence:**\n"
+                f"• Price swept {level_type} level then reversed → institutional liquidity grab confirmed\n"
+                f"• Sweep direction: {signal_dict.get('sweep_direction', direction)} → alignment with trade direction\n"
+                f"• Quality score: {quality_score}/100 → data-driven scoring (level type weighted)\n"
+                f"• Stop behind sweep wick → tight risk, minimal adverse excursion\n"
+                f"• 3R target → favorable risk-reward ratio\n"
+                f"• 5-minute intraday execution → precise timing, post-sweep entry"
+            ), "inline": False},
+        ],
+        "footer": {"text": "HermesForge STR-Q Intraday Pipeline"},
+        "timestamp": now_pt().isoformat(),
+    }
+
+    return embed
+
+
 def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
                         live_count: int, watch_count: int, strategies: list,
                         color: int) -> dict:
