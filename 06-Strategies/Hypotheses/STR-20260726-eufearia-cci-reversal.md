@@ -350,3 +350,12 @@ STR-I is the stronger strategy (higher Sharpe and return), but STR-J has a signi
 | Date | Change | Trigger |
 |------|--------|---------|
 | 2026-07-26 | Strategy created from EUFEARIA PRO 7 Pine Script | User-submitted indicator code; created hypothesis file + scanner for Phase 1A testing |
+
+## Evidence Base (auto-generated from evidence_links)
+
+- [[C154-macd-histogram-momentum-warning-signals]]
+- [[N165-relative-strength-index-rsi-overboughtoversold-levels]]
+- [[RG017-overboughtoversold-readings-in-strong-trends]]
+- [[RG032-3-to-1-reward-to-risk-ratio]]
+- [[RG037-use-protective-stops-to-limit-losses]]
+

@@ -160,3 +160,16 @@ See [[STR-L-phase1b]] for full details.
 - [[FAIL-STR-G-relative-strength]]
 - [[FAIL-STR-H-first-pullback]]
 - [[ADR-004-Phase1-Validation-Framework]]
+
+## Evidence Base (auto-generated from evidence_links)
+
+- [[N140-average-true-range-atr-definition]]
+- [[N195-standard-deviation-and-bollinger-bands]]
+- [[N041-bollinger-bands-construction]]
+- [[C124-bollinger-band-width-as-volatility-measure]]
+- [[N099-adx-line-measuring-directional-movement]]
+- [[N101-adx-line-trending-vs-trading-market-identification]]
+- [[R215-adx-level-thresholds-40-and-20]]
+- [[R216-using-adx-to-select-markets-for-trend-following]]
+- [[N044-long-term-moving-averages-on-weekly-charts]]
+

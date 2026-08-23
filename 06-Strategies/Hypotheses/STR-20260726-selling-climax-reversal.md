@@ -143,3 +143,16 @@ All 6 signals were stopped out. Phase 1B perturbations (ATR-based stop, lower ta
 - [[STRATEGIES-MOC]]
 - [[FAIL-STR-E-rsi-mean-reversion]]
 - [[ADR-004-Phase1-Validation-Framework]]
+
+## Evidence Base (auto-generated from evidence_links)
+
+- [[N006-selling-climax-bottom-reversal-day]]
+- [[N162-selling-climax]]
+- [[N003-reversal-day-definition]]
+- [[N155-reversal-days]]
+- [[R033-reversal-day-significance-factors]]
+- [[R031-reversal-day-significance-factors]]
+- [[N013-volume-as-a-filter-for-false-breakouts]]
+- [[C084-differences-between-tops-and-bottoms]]
+- [[RG032-3-to-1-reward-to-risk-ratio]]
+

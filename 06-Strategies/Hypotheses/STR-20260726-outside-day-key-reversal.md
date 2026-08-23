@@ -154,3 +154,16 @@ Phase 1B best variant (V5: 3-day decline + 2:1 + 20-bar): +0.125 avg R, 60% win 
 - [[Discoveries-2026-W32-high-vol]]
 - [[STRATEGIES-MOC]]
 - [[ADR-004-Phase1-Validation-Framework]]
+
+## Evidence Base (auto-generated from evidence_links)
+
+- [[N004-outside-day-as-reversal-confirmation]]
+- [[N146-key-reversal-day]]
+- [[N003-reversal-day-definition]]
+- [[R033-reversal-day-significance-factors]]
+- [[R031-reversal-day-significance-factors]]
+- [[N155-reversal-days]]
+- [[N013-volume-as-a-filter-for-false-breakouts]]
+- [[RG032-3-to-1-reward-to-risk-ratio]]
+- [[C084-differences-between-tops-and-bottoms]]
+

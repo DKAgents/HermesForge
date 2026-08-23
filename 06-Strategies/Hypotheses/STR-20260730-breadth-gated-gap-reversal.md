@@ -125,3 +125,16 @@ Standalone scanner: `scanner_k_breadth_gap.py` (not added to live registry)
 - [[FAIL-STR-E-rsi-mean-reversion]]
 - [[FAIL-STR-H-first-pullback]]
 - [[ADR-004-Phase1-Validation-Framework]]
+
+## Evidence Base (auto-generated from evidence_links)
+
+- [[N009-breakaway-gap]]
+- [[EN069-price-gaps-as-support-and-resistance-for-timing]]
+- [[N118-advance-decline-ad-line-construction]]
+- [[N186-mcclellan-oscillator]]
+- [[N159-mcclellan-oscillator]]
+- [[N123-new-highs-vs-new-lows-indicator]]
+- [[R257-mcclellan-oscillator-overboughtoversold-levels]]
+- [[R262-ad-line-breadth-confirmation-rule]]
+- [[C024-market-breadth-indicators]]
+
