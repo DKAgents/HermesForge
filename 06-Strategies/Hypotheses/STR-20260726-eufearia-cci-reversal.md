@@ -29,6 +29,9 @@ tags: [strategy, hypothesis, cci, mean-reversion, reversal, oscillator, swing, e
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
+scanner_module: scanner_f_eufearia
+
+strategy_id: STR-F-eufearia-cci
 ---
 # EUFEARIA CCI Reversal — Modified CCI Oscillator Mean-Reversion at Extremes
 

@@ -20,6 +20,9 @@ tags: [strategy, hypothesis, relative-strength, sector-rotation, breakout, swing
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
+scanner_module: scanner_g_relative_strength
+
+strategy_id: STR-G-relative-strength
 ---
 # Relative-Strength / Sector-Rotation Breakout Entry
 

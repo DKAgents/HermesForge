@@ -29,7 +29,11 @@ tags: [strategy, hypothesis, momentum, trend-following, atr, trailing-stop, cryp
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
----
+scanner_module: scanner_i_adaptive_trend
+scanner_alias: scan_i
+
+strategy_id: STR-I-adaptive-trend
+scanner_alias: scan_i---
 
 # AdaptiveTrend — Systematic Momentum + ATR Trailing Stop on 6-Hour Bars
 

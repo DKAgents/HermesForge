@@ -31,6 +31,10 @@ evidence_links:
 tags: [strategy, hypothesis, volatility, atr, breakout, low-volatility, swing, long-only]
 topic: strategies
 has_quotes: false
+scanner_module: scanner_l_atr_contraction
+
+
+strategy_id: STR-L-atr-contraction-breakout
 ---
 # STR-L: ATR Contraction Breakout
 

@@ -26,6 +26,9 @@ confirmation_count: 1
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
+scanner_module: scanner_c_breakout_volume
+
+strategy_id: STR-C-breakout-volume-trend
 ---
 # Trend-Following Breakout with Volume Confirmation
 

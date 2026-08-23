@@ -19,6 +19,9 @@ tags: [strategy, hypothesis, bollinger-bands, volatility-squeeze, breakout, swin
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
+scanner_module: scanner_e_bollinger
+
+strategy_id: STR-E-bollinger-squeeze
 ---
 # Bollinger Band Squeeze Breakout Entry
 

@@ -15,6 +15,10 @@ source: "Factor decomposition: PRICEMOM +40% annualized, p=0.04 in crypto"
 topic: strategies
 has_quotes: false
 tags: []
+scanner_module: scanner_p_pricemom
+scanner_alias: scan_p_mom
+
+strategy_id: STR-P-pricemom-factor
 ---
 # STR-O: Price Momentum Factor Strategy
 

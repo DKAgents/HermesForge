@@ -28,6 +28,9 @@ evidence_links:
 tags: [strategy, hypothesis, reversal, outside-day, key-reversal, high-volatility, swing, long-only]
 topic: strategies
 has_quotes: false
+scanner_module: scanner_n_outside_day
+
+strategy_id: STR-N-outside-day
 ---
 # STR-N: Outside Day Key Reversal
 

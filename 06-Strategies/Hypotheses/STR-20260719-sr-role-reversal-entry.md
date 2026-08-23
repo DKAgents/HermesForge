@@ -1,7 +1,7 @@
 ---
 id: STR-20260719-sr-role-reversal-entry
 type: strategy
-status: hypothesis
+status: watch
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -25,7 +25,11 @@ tags: [strategy, hypothesis, support-resistance, role-reversal, swing]
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
----
+scanner_module: scanner_d_sr_reversal
+scanner_alias: scan_d
+
+strategy_id: STR-D-sr-role-reversal
+scanner_alias: scan_d---
 # Support/Resistance Role-Reversal Entry
 
 ## Thesis

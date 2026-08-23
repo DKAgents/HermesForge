@@ -20,6 +20,9 @@ tags: [strategy, hypothesis, rsi, mean-reversion, killed, phase1a]
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
+scanner_module: scanner_h_rsi
+
+strategy_id: STR-H-rsi-mean-reversion
 ---
 # RSI Mean-Reversion at Extremes
 

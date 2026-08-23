@@ -20,6 +20,9 @@ topic: strategies
 has_quotes: false
 source: HermesForge Strategies
 tags: []
+scanner_module: scanner_h_first_pullback
+
+strategy_id: STR-H-first-pullback
 ---
 # High-RR First-Pullback Trend Swing (Long/Short) v1.4
 

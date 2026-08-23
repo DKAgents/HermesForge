@@ -63,32 +63,109 @@ import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
 
-# Strategy note frontmatter id -> scan fn
-# Only live (publish=true) and watch (collecting data) strategies are scanned.
-# Killed strategies and unvalidated hypotheses are excluded — see Phase 1A results
-# and strategy frontmatter for status.
-PAPER_STRATEGIES = {
-    # Live (publishing to Discord)
-    "STR-B-macd-histogram-divergence": scan_b,
-    "STR-I-adaptive-trend":            scan_i,
+# ── Auto-discovery: builds PAPER_STRATEGIES from frontmatter ──────────────────
 
-    # Watch (paper trading, collecting data, no publishing)
-    "STR-A-ma-pullback-fibonacci":     scan_a,
-    "STR-D-sr-role-reversal":          scan_d,
-
-    # Autonomous-pipeline deployed (2026-08-16): VIX contango breakout.
-    "STR-VIXC-vix-contango-breakout":  scan_vixc,
-
-    # Autonomous-pipeline deployed (2026-08-18): Low-correlation regime stock picker.
-    "STR-LOWCORR-lowcorr-regime":     scan_lowcorr,
+# Strategy frontmatter key → imported scan function alias.
+# All 22 scanners are imported above (fast, <3s). The dict below is a static
+# lookup table mapping frontmatter's ``scanner_alias`` to the Python function.
+_SCANNER_ALIASES = {
+    "scan_a":       scan_a,       "scan_b":       scan_b,
+    "scan_d":       scan_d,       "scan_i":       scan_i,
+    "scan_r":       scan_r,       "scan_t":       scan_t,
+    "scan_u":       scan_u,       "scan_v":       scan_v,
+    "scan_w":       scan_w,       "scan_x":       scan_x,
+    "scan_y":       scan_y,       "scan_z":       scan_z,
+    "scan_aa":      scan_aa,      "scan_ab":      scan_ab,
+    "scan_ac":      scan_ac,      "scan_ad":      scan_ad,
+    "scan_ae":      scan_ae,      "scan_af":      scan_af,
+    "scan_ag":      scan_ag,      "scan_aj":      scan_aj,
+    "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
 }
 
-EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
+# Batch-mode strategies (cross-sectional scanners that take the full data dict).
+# Populated from frontmatter: ``scan_mode: batch``.
+BATCH_STRATEGIES = set()
 
-# Batch-mode strategies (cross-sectional scanners that take the full data dict,
-# not per-ticker). These are called once with `scan_fn(data)` and produce signals
-# for multiple tickers at once.
-BATCH_STRATEGIES = {"STR-LOWCORR-lowcorr-regime"}
+
+def _discover_strategies(vault_root: str = ".") -> dict:
+    """Read strategy hypothesis frontmatter and return {strategy_id: scan_fn}.
+
+    Only strategies with ``status: live`` or ``status: watch`` are included.
+    Killed and hypothesis-only strategies are automatically skipped.
+
+    Reviving a strategy: change ``status: killed`` → ``status: watch`` in its
+    hypothesis file → auto-scanned on next run.  No code change needed.
+
+    Adding a new strategy: create hypothesis file with ``status: watch``,
+    ``scanner_alias: scan_xx``, and a matching scanner import → auto-scanned.
+    """
+    import yaml, importlib, re
+    from pathlib import Path
+
+    hypotheses_dir = Path(vault_root) / "06-Strategies" / "Hypotheses"
+    if not hypotheses_dir.is_dir():
+        return {}
+
+    active = {}
+    for f in sorted(hypotheses_dir.glob("STR-*.md")):
+        content = f.read_text()
+        if not content.startswith("---"):
+            continue
+        end = content.find("---", 3)
+        if end == -1:
+            continue
+        try:
+            fm = yaml.safe_load(content[3:end])
+        except Exception:
+            # Fallback: extract key-value pairs with regex for malformed YAML
+            fm = {}
+            for line in content[3:end].split('\n'):
+                m = re.match(r'^(\w[\w_-]*):\s*(.*)', line)
+                if m:
+                    fm[m.group(1)] = m.group(2).strip()
+        if not isinstance(fm, dict):
+            continue
+
+        status = fm.get("status", "")
+        if status not in ("live", "watch"):
+            # Auto-skip killed, hypothesis, and unknown strategies
+            continue
+
+        strategy_id = fm.get("strategy_id", "")
+        if not strategy_id:
+            # Infer from id field (e.g. "STR-B-macd-histogram-divergence")
+            strategy_id = fm.get("id", f.stem)
+
+        alias = fm.get("scanner_alias", "")
+        scan_fn = _SCANNER_ALIASES.get(alias)
+        if not scan_fn:
+            print(f"  ⚠️  {f.stem}: scanner_alias={alias} not found in _SCANNER_ALIASES — skipping")
+            continue
+
+        active[strategy_id] = scan_fn
+
+        # Track batch-mode strategies
+        if fm.get("scan_mode") == "batch":
+            BATCH_STRATEGIES.add(strategy_id)
+
+    return active
+
+
+# ── Static module-level init (runs once at import time) ────────────────────────
+PAPER_STRATEGIES = _discover_strategies()
+if not PAPER_STRATEGIES:
+    # Fallback: if frontmatter discovery fails, use last-known-good hardcoded list
+    PAPER_STRATEGIES = {
+        "STR-B-macd-histogram-divergence": scan_b,
+        "STR-I-adaptive-trend":            scan_i,
+        "STR-A-ma-pullback-fibonacci":     scan_a,
+        "STR-D-sr-role-reversal":          scan_d,
+        "STR-VIXC-vix-contango-breakout":  scan_vixc,
+        "STR-LOWCORR-lowcorr-regime":     scan_lowcorr,
+    }
+    BATCH_STRATEGIES = {"STR-LOWCORR-lowcorr-regime"}
+
+EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
 
 
 def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:

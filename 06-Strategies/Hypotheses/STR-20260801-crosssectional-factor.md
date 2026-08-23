@@ -15,6 +15,9 @@ source_date: 2026-08-01
 topic: strategies
 has_quotes: false
 tags: []
+scanner_module: scanner_p_crosssectional
+
+strategy_id: STR-P-crosssectional-factor
 ---
 # STR-P: Cross-Sectional Factor Ranking (Crypto)
 

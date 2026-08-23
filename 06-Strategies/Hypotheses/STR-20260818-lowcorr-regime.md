@@ -8,7 +8,10 @@ tags: [strategy, stock, regime, correlation, autonomous-pipeline]
 topic: strategies
 confidence: high
 has_quotes: false
----
+scanner_module: scanner_lowcorr_regime
+scanner_alias: scan_lowcorr
+
+scan_mode: batch---
 # STR-LOWCORR: Low-Correlation Regime Stock Picker
 
 ## Origin

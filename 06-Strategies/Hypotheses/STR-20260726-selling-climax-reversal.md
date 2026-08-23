@@ -28,6 +28,9 @@ evidence_links:
 tags: [strategy, hypothesis, reversal, selling-climax, high-volatility, swing, long-only]
 topic: strategies
 has_quotes: false
+scanner_module: scanner_m_selling_climax
+
+strategy_id: STR-M-selling-climax
 ---
 # STR-M: Selling Climax Reversal
 

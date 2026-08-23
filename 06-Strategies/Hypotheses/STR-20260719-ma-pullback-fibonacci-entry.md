@@ -1,7 +1,7 @@
 ---
 id: STR-20260719-ma-pullback-fibonacci-entry
 type: strategy
-status: hypothesis
+status: watch
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -31,7 +31,11 @@ tags: [strategy, hypothesis, pullback, fibonacci, moving-average, swing, trendin
 topic: strategies
 has_quotes: false
 source: HermesForge Strategies
----
+scanner_module: scanner_a_ma_pullback
+scanner_alias: scan_a
+
+strategy_id: STR-A-ma-pullback-fibonacci
+scanner_alias: scan_a---
 # Moving Average Pullback with Fibonacci Precision Entry
 
 ## Thesis

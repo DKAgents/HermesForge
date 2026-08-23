@@ -16,11 +16,13 @@ last_reviewed: 2026-08-16
 created: 2026-08-16
 updated: 2026-08-16
 origin: HermesForge Autonomous Strategy Pipeline (cron)
-"tags: [strategy, breakout, vix, vrp, term-structure, contango, regime-filter, autonomous-pipeline]"
+tags: [strategy, breakout, vix, vrp, term-structure, contango, regime-filter, autonomous-pipeline]
 topic: strategies
 has_quotes: false
 source: HermesForge Autonomous Pipeline
-tags: []
+scanner_module: scanner_vix_vrp_contango
+scanner_alias: scan_vixc
+strategy_id: STR-VIXC-vix-contango-breakout
 ---
 
 # VIX Term-Structure Contango Breakout (Long-Only) v1.0

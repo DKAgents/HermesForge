@@ -32,6 +32,9 @@ evidence_links:
 tags: [strategy, hypothesis, gap, breadth, reversal, transitional, swing, long-only]
 topic: strategies
 has_quotes: false
+scanner_module: scanner_k_breadth_gap
+
+strategy_id: STR-K-breadth-gated-gap
 ---
 # STR-K: Breadth-Gated Gap Reversal
 
