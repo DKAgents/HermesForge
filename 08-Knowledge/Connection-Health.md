@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-24T10:01:31Z
+updated: 2026-08-24T14:08:11Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,13 +9,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 30 |
-| Connections created | 1 | 10 |
+| Notes examined | 5 | 35 |
+| Connections created | 1 | 11 |
 | Review queue | 12 | 12 |
-| Avg score | 2.7 | — |
+| Avg score | 3.3 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3587
+- Total wikilinks in vault: ~3588
 - Total notes: 1931
 - Avg degree per note: 1.858
 - Notes with links: 696 (36.1%)
@@ -28,11 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 18 notes, avg degree 0.06
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-24T10:01:31Z)
-- **06-Strategies/Hypotheses/STR-20260726-relative-strength-sector-rotation-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R250-sector-rotation-rule-using-relative-strength-lines.md** (score 4.0): Note B provides the classic Murphy formulation of sector rotation using relative strength lines, which underpins the specific quantitative entry criteria in Note A.
+## Recent Discoveries (last run: 2026-08-24T14:08:11Z)
+- **06-Strategies/Hypotheses/STR-20260726-outside-day-key-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N057-weekly-and-monthly-reversal-patterns.md** (score 4.0): Note A describes a daily key reversal pattern, while Note B provides the higher-timeframe (weekly/monthly) equivalent from Murphy, directly extending the concept's applicability and confirming its significance on longer timeframes.
 
 ## Reflection Notes
 - Run 2: Created 2 connections from 5 notes. Avg score: 2.4.
 - Run 3: Created 6 connections from 5 notes. Avg score: 2.8.
 - Run 5: Created 1 connections from 5 notes. Avg score: 2.0.
 - Run 6: Created 1 connections from 5 notes. Avg score: 2.7.
+- Run 7: Created 1 connections from 5 notes. Avg score: 3.3.

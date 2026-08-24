@@ -149,6 +149,7 @@ Phase 1B best variant (V5: 3-day decline + 2:1 + 20-bar): +0.125 avg R, 60% win 
 | 2026-07-26 | Strategy killed at Phase 1A | -0.037 avg R overall. Regime-dependent edge in period3_current not enough. |
 
 ## Related
+- [[N057-weekly-and-monthly-reversal-patterns]] — See N057-weekly-and-monthly-reversal-patterns for higher-timeframe confirmation of key reversals
 
 - [[REGIME-high-volatility]]
 - [[Discoveries-2026-W32-high-vol]]
