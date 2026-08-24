@@ -33,4 +33,5 @@ When using the 10/50 double crossover for entry signals, calculate position size
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[C336-support-level|Support Level]]
 - [[INS-2026-08-21-pivot-stop-placement-must-satisfy-both-technical-and-rr-crit|Pivot Stop Placement Must Satisfy Both Technical and RR Criteria]]

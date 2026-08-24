@@ -31,3 +31,6 @@ Before entering a Pivot Point buy signal per EN071, calculate the distance from 
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,6 @@ A trader using 1% position sizing should prefer the 10/50-day double crossover o
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[EN026-single-moving-average-buy-and-sell-signals|Single Moving Average Buy and Sell Signals]]

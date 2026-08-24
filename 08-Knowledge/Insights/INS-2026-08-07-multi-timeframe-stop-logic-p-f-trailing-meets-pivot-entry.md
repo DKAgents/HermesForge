@@ -31,3 +31,7 @@ After a pivot point buy stop is elected per EN071 rules, immediately switch stop
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

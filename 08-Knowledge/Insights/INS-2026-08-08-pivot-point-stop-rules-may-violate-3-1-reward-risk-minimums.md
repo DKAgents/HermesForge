@@ -31,3 +31,7 @@ Before executing either pivot point entry variant in EN071, calculate the distan
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

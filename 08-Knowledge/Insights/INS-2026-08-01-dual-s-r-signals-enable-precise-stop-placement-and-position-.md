@@ -31,3 +31,6 @@ On a short trade, identify the nearest overhead resistance level (role-reversed 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

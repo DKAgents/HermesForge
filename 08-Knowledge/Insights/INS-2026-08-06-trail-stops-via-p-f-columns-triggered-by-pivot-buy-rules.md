@@ -31,3 +31,7 @@ After entry via EN071's pivot buy stop, switch stop management to RG023's P&F tr
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C243-market-order|Market Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

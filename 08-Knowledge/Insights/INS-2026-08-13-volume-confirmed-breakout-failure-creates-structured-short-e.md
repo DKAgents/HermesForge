@@ -31,3 +31,6 @@ When a breakout occurs on light volume, place a conditional short order triggere
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

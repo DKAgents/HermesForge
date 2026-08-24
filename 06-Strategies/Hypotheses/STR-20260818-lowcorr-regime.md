@@ -1,4 +1,12 @@
 ---
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
+created: 2026-08-24
+---
+---
 status: watch
 created: 2026-08-18
 strategy_id: STR-LOWCORR-lowcorr-regime

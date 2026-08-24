@@ -31,3 +31,7 @@ In a downtrend, sell rallies that reach the convergence of a price gap's lower e
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

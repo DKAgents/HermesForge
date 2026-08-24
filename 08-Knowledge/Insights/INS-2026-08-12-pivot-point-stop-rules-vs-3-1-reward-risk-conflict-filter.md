@@ -31,3 +31,7 @@ Before entering an EN071 pivot buy signal, calculate the distance from entry (ab
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[C245-stop-order|Stop Order]]

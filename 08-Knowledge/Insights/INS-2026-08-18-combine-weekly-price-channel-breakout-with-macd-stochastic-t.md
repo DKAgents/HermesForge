@@ -30,3 +30,6 @@ A trader should only take daily MACD or Stochastics crossover signals in the dir
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[E019-weekly-chart-signals-as-filters-for-short-term-timing|Weekly Chart Signals as Filters for Short-Term Timing]]

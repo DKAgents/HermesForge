@@ -33,4 +33,5 @@ When a flag or pennant breakout occurs on below-average volume (violating R082),
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-08-02-volume-divergence-at-midpoint-flags-signals-stop-adjustment-|Volume Divergence at Midpoint Flags Signals Stop Adjustment Zone]]

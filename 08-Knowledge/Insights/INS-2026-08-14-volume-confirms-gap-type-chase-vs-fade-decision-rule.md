@@ -31,3 +31,6 @@ Chase a gap only if it occurs with a heavy volume surge consistent with R082's b
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

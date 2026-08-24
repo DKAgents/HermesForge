@@ -31,3 +31,7 @@ After entering via a pivot-point buy signal (EN071), a trader should immediately
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

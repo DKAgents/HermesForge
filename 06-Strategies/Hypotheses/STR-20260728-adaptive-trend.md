@@ -1,4 +1,12 @@
 ---
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
+created: 2026-08-24
+---
+---
 id: STR-20260728-adaptive-trend
 type: strategy
 status: live

@@ -31,3 +31,7 @@ In a downtrend, prefer entering short at a rally into a gap (EN069) over a rally
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 5/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

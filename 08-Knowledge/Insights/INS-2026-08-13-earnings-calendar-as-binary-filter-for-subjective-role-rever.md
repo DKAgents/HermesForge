@@ -31,3 +31,6 @@ Before entering any role-reversal trade — whether at a violated support-turned
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

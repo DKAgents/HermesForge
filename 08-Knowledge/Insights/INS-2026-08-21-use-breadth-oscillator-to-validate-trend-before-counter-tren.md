@@ -31,3 +31,6 @@ Before acting on EN041's oversold-in-uptrend buy signal, require the McClellan O
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[R125-overbought-and-oversold-oscillator-readings|Overbought and Oversold Oscillator Readings]]

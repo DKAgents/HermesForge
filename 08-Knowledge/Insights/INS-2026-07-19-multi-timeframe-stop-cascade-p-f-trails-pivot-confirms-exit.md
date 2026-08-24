@@ -31,3 +31,6 @@ On a pivot point buy signal per EN071, place the initial protective stop below t
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

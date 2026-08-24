@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX Regime Gates Keltner Channel Breakout Reliability at Retracements
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When price pulls back into the 33%-67% retracement zone of the prior swing, chec
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

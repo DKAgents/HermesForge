@@ -31,3 +31,6 @@ A trader should require above-average volume at the precise candle/bar of patter
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C097-confirmation-principle|Confirmation Principle]]

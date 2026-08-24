@@ -31,3 +31,7 @@ When a prior support level is violated and price rallies back into that level or
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

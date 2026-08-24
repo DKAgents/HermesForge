@@ -31,3 +31,6 @@ A trader should use volume level at pattern breakout as a position-sizing input:
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C097-confirmation-principle|Confirmation Principle]]

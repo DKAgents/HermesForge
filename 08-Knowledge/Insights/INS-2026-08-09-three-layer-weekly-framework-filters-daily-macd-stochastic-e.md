@@ -33,4 +33,6 @@ Only take daily MACD or Stochastic crossover signals when: (1) price is above th
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[N185-price-channels|Price Channels]]
+- [[C336-support-level|Support Level]]
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa|Three-Layer Weekly Confirmation System for Daily Entry Signals]]

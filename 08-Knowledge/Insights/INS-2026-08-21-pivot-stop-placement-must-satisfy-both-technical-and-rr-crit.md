@@ -31,3 +31,8 @@ Before placing the pivot point buy stop per EN071, calculate position size using
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

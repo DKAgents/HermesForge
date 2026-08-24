@@ -7,8 +7,11 @@ domains: [edge-conditions, indicators, risk-guidelines, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "E020-double-crossover-reduces-whipsaws-vs-single-average", "EN028-10-and-50-day-moving-average-crossover"]
 seed_id: diversification_position_limit
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Double Crossover Lag Creates Position Sizing Entry Timing Risk
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When entering on a 10/50 crossover signal, a trader should widen their reward-to
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-08-21-pivot-stop-placement-must-satisfy-both-technical-and-rr-crit|Pivot Stop Placement Must Satisfy Both Technical and RR Criteria]]

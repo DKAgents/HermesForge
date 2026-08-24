@@ -33,4 +33,5 @@ Before entering any role-reversal trade — whether at a violated support-turned
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[C334-resistance-level|Resistance Level]]
 - [[INS-2026-08-01-earnings-calendar-as-binary-filter-for-subjective-role-rever|Earnings Calendar as Binary Filter for Subjective Role-Reversal Entries]]

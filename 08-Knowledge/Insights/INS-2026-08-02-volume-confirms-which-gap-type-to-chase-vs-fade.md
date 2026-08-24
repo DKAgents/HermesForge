@@ -31,3 +31,7 @@ When a gap forms, immediately check volume: a gap accompanied by a surge in volu
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N144-island-reversal-pattern|Island Reversal Pattern]]
+- [[N161-runaway-gaps|Runaway Gaps]]

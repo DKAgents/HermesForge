@@ -31,3 +31,6 @@ On any gap open, require immediate confirmation of heavy volume before chasing; 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

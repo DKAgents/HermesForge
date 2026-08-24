@@ -31,3 +31,6 @@ A trader should only act on candle reversal patterns when BOTH RSI (>70 overboug
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C097-confirmation-principle|Confirmation Principle]]

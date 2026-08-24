@@ -7,8 +7,11 @@ domains: [edge-conditions, indicators, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "EN028-10-and-50-day-moving-average-crossover", "E040-commodity-exporters-and-deflation-risk"]
 seed_id: commodity_inflation_stock
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Commodity Exporter Stress Signals 10/50 MA Entry Timing
 
 ## Discovery Summary

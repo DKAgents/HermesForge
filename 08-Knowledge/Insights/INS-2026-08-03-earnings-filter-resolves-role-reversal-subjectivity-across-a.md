@@ -31,3 +31,6 @@ Before acting on any role-reversal entry — whether from a violated horizontal 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

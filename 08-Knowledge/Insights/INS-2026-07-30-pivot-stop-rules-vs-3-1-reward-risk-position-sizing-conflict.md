@@ -31,3 +31,7 @@ Before entering a pivot point buy signal per EN071, calculate whether the techni
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

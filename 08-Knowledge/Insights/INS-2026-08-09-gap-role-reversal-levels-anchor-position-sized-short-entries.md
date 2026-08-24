@@ -31,3 +31,6 @@ In a downtrend, when price rallies into a prior support-turned-resistance level 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

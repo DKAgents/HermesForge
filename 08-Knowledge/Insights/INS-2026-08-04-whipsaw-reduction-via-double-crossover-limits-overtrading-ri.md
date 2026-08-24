@@ -31,3 +31,6 @@ A trader using 1% position sizing with the 10/50-day crossover rule should expec
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[EN026-single-moving-average-buy-and-sell-signals|Single Moving Average Buy and Sell Signals]]

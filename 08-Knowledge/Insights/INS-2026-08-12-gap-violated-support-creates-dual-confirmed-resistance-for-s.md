@@ -31,3 +31,6 @@ When a downtrend bounce approaches a zone where both a violated support level an
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

@@ -31,3 +31,6 @@ When a gap appears, check volume immediately: a gap on surging volume signals a 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

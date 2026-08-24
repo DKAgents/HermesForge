@@ -31,3 +31,6 @@ A trader should enter in the direction of a gap only when accompanied by heavy v
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N144-island-reversal-pattern|Island Reversal Pattern]]

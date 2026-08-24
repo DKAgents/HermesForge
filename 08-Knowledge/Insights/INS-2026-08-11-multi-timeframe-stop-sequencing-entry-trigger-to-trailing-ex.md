@@ -31,3 +31,6 @@ After a pivot point buy signal fires and the initial protective stop is set belo
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

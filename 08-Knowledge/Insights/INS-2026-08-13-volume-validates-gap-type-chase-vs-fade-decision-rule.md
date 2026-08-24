@@ -31,3 +31,6 @@ When a price gap forms, require a volume surge relative to recent average to cla
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

@@ -31,3 +31,6 @@ A trader should add an earnings calendar check as a pre-trade binary filter: if 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

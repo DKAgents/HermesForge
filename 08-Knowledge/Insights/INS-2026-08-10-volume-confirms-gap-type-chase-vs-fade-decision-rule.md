@@ -31,3 +31,6 @@ When a gap occurs, check volume immediately: a gap on surging volume relative to
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

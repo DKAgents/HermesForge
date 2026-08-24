@@ -31,3 +31,7 @@ In a downtrend, when a rally approaches both a prior violated support level and 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

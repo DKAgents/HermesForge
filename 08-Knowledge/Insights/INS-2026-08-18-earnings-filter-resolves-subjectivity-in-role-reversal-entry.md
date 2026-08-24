@@ -31,3 +31,6 @@ Before acting on any role-reversal signal (whether at a price support/resistance
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

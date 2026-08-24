@@ -31,3 +31,6 @@ Before entering any reversal pattern breakout, require visible volume expansion 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C097-confirmation-principle|Confirmation Principle]]

@@ -31,3 +31,6 @@ A trader should only initiate pullback entries in uptrends when price retraces i
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[N084-key-fibonacci-ratios-618-1618-2618-382|Key Fibonacci Ratios: .618, 1.618, 2.618, .382]]

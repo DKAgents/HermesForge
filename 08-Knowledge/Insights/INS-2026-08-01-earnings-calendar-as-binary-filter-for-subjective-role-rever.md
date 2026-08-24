@@ -31,3 +31,6 @@ Before entering any role-reversal trade (whether from a violated support level p
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

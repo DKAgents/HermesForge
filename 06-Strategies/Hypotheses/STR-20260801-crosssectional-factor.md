@@ -1,4 +1,12 @@
 ---
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
+created: 2026-08-24
+---
+---
 id: STR-20260801-crosssectional-factor
 type: strategy
 status: watch

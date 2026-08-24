@@ -31,3 +31,6 @@ After an EN071 pivot buy signal is triggered and the initial stop placed under t
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

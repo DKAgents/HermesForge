@@ -31,3 +31,6 @@ In a downtrend, identify both the nearest violated support level (now resistance
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 5/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

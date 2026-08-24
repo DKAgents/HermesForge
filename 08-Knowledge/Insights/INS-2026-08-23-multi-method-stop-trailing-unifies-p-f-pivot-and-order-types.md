@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Multi-Method Stop Trailing Unifies P&F, Pivot, and Order Types
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ A trader should place the initial protective stop per EN071 rules (below current
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C243-market-order|Market Order]]

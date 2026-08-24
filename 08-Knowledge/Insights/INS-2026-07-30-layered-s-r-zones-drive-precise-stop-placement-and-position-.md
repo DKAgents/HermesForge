@@ -31,3 +31,7 @@ In a downtrend, when a price gap's lower end and a prior violated support level 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

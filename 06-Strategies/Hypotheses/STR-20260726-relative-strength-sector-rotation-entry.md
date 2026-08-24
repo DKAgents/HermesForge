@@ -247,6 +247,8 @@ affect the killed baseline scanner): `scripts/validation/scanners/_phase1b_g_swe
 
 
 ## Related
+- [[C265-top-down-market-approach]] — See Note B for the top-down framework this strategy fits into
+
 - [[C264-relative-strength-analysis-on-stock-market-sectors]] — See C264-relative-strength-analysis-on-stock-market-sectors for the underlying relative strength concept
 
 - [[R251-trendline-analysis-on-relative-strength-lines]] — See R251-trendline-analysis-on-relative-strength-lines for trendline-based confirmation on RS ratio charts

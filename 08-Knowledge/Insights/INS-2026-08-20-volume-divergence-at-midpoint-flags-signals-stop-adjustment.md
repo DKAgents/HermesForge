@@ -31,3 +31,6 @@ When a flag or pennant breakout occurs on below-average volume (violating R082),
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

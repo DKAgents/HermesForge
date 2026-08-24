@@ -31,3 +31,6 @@ When a downtrend bounce rallies into a price zone where a prior violated support
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

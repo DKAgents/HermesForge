@@ -31,3 +31,7 @@ Before placing the pivot point buy stop per EN071, calculate the distance from e
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG020-protective-sell-stops-on-point-and-figure-charts|Protective Sell Stops on Point and Figure Charts]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,6 @@ When applying the role-reversal entry rule from C065, traders should require tha
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

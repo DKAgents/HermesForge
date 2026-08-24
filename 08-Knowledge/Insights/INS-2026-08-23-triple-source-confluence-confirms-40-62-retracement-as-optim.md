@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C050-secondary-trend-retracement-range", "EN068-4060-retracement-zones-for-timing-entries", "N085-fibonacci-percentage-retracements-38-50-62"]
 seed_id: swing_low_entry_filter
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Triple-Source Confluence Confirms 40-62% Retracement as Optimal Entry Zone
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ In an uptrend, wait for pullbacks into the 40-62% retracement zone and look for 
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 5/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

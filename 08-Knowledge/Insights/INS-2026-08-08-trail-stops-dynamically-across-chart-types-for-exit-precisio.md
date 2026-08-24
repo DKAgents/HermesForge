@@ -31,3 +31,7 @@ Once a pivot-point buy is triggered and initial stop is set below the day's low,
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C243-market-order|Market Order]]
+- [[C245-stop-order|Stop Order]]

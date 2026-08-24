@@ -31,3 +31,6 @@ Before acting on any support-turned-resistance or speedline role-reversal setup 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

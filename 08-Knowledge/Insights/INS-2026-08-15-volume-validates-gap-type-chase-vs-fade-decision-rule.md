@@ -31,3 +31,6 @@ Chase a gap only when it is accompanied by a volume surge confirming it as break
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

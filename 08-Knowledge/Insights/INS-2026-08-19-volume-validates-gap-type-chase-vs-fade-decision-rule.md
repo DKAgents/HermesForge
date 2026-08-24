@@ -31,3 +31,7 @@ A trader should only chase a gap if volume is significantly above average (confi
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N144-island-reversal-pattern|Island Reversal Pattern]]
+- [[N161-runaway-gaps|Runaway Gaps]]

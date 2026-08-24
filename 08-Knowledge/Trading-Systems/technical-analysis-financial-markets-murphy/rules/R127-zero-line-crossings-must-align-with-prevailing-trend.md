@@ -25,6 +25,7 @@ Buy positions should only be taken on zero line crossings to the upside if the m
 > "Buy positions should only be taken on crossings above the zero line if the market trend is up. Short positions should be taken on crossings below the zero line only if the price trend is down." — John J. Murphy
 
 ## Related Notes
+- [[INS-2026-08-11-mcclellan-breadth-filter-validates-oscillator-signals-agains|McClellan Breadth Filter Validates Oscillator Signals Against Secondary Trends]]
 - [[R126-zero-line-crossing-as-buysell-signal|Zero Line Crossing as Buy/Sell Signal]]
 
 ---

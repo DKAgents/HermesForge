@@ -31,3 +31,7 @@ After a pivot-point buy signal is confirmed per EN071, trail the protective stop
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C243-market-order|Market Order]]
+- [[C245-stop-order|Stop Order]]

@@ -31,3 +31,6 @@ In a downtrend, identify where a violated support level and an overhead gap coin
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

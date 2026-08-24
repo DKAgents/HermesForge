@@ -31,3 +31,6 @@ In a downtrend, when a rally reaches a level that is simultaneously a prior viol
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

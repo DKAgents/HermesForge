@@ -31,3 +31,6 @@ On any gap open, immediately check volume relative to recent average: a breakawa
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[R003-volume-confirms-the-trend|Volume Confirms the Trend]]

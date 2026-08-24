@@ -30,3 +30,8 @@ In a downtrend, when a bounce approaches a prior violated support level that als
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
