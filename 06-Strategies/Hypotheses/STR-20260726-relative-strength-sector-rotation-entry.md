@@ -247,6 +247,8 @@ affect the killed baseline scanner): `scripts/validation/scanners/_phase1b_g_swe
 
 
 ## Related
+- [[R250-sector-rotation-rule-using-relative-strength-lines]] — See classic Murphy sector rotation rule
+
 - [[C265-top-down-market-approach]] — See Note B for the top-down framework this strategy fits into
 
 - [[C264-relative-strength-analysis-on-stock-market-sectors]] — See C264-relative-strength-analysis-on-stock-market-sectors for the underlying relative strength concept
