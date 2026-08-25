@@ -46,6 +46,9 @@ from fetch_intraday_stocks import get_intraday_bars
 import trade_log
 import position_sizing
 
+# Trade ID generation for post attribution
+from trade_id import generate_short_id
+
 # Pacific Time utility for display timestamps
 from timezone_utils import now_pt
 
@@ -313,7 +316,11 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             trade_dict["trade_id"] = trade_id
             summary["opened_trades"].append(trade_dict)
             print(f"  OPENED: {trade_id} ({direction}) @ ${entry_price:.2f}")
-            
+
+            # ── Generate trade ID for post attribution (same format as daily/swing) ──
+            short_id = generate_short_id(symbol, STRATEGY_ID, entry_date)
+            trade_dict["short_id"] = short_id
+
             # US-108: Post Discord alert to #stock-setups or #crypto-setups
             _post_str_q_alert(trade_dict, sweep)
         except ValueError as e:
