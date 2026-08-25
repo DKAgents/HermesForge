@@ -942,6 +942,10 @@ def generate_setup_chart(ticker: str, signal_dict: dict, output_path: str) -> st
         df_full = _load_ohlcv(ticker)
 
     signal_date = pd.to_datetime(signal_dict["date"])
+    # Normalize timezone: if the index is tz-aware (intraday data), make
+    # signal_date tz-aware too so comparisons don't raise TypeError.
+    if df_full.index.tz is not None and signal_date.tz is None:
+        signal_date = signal_date.tz_localize("UTC")
 
     # Use ALL available data (not filtered to signal_date) so charts show
     # the most recent bars. Indicators are computed on the full dataset.
