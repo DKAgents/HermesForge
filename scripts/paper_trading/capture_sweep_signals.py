@@ -68,10 +68,11 @@ MIN_QUALITY = 50
 RISK_PCT = 1.0
 
 # US-110 fix: Recency window measured from CONFIRMATION time, not sweep time
-# A sweep needs CONFIRMATION_BARS (3 bars = 15 min) to confirm after forming.
-# We accept sweeps confirmed within the last 30 min (covers 2 cron cycles).
-CONF_BAR_MINUTES = 3 * 5   # 15 minutes to confirm
-RECENCY_WINDOW_SEC = 1800  # 30 minutes from confirmation time
+# CONFIRMATION_BARS reduced from 3→1 (2026-08-25) to cut post latency.
+# A sweep now confirms 1 bar (5 min) after forming.
+# We accept sweeps confirmed within the last 15 min (covers 3 cron cycles).
+CONF_BAR_MINUTES = 1 * 5    # 5 minutes to confirm
+RECENCY_WINDOW_SEC = 900    # 15 minutes from confirmation time
 
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 
@@ -264,20 +265,22 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
     #     print(f"  RISK GUARD: {symbol} BLOCKED — {risk_reason}")
     #     return
     
-    # Create trade ID with timestamp for intraday uniqueness
+    # Create trade ID with timestamp for intraday uniqueness.
+    # Store full UTC timestamp for accurate time-stop calculation in exit monitor.
     entry_time = pd.Timestamp(sweep.timestamp)
-    entry_date = entry_time.strftime("%Y-%m-%d")
-    time_suffix = entry_time.strftime("%H%M")
-    trade_id = f"{STRATEGY_ID}_{symbol}_{entry_date}_{time_suffix}"
-    
+    entry_ts_utc = entry_time.tz_localize('UTC') if entry_time.tz is None else entry_time.tz_convert('UTC')
+    entry_date = entry_ts_utc.strftime("%Y-%m-%d")
+    time_suffix = entry_ts_utc.strftime("%H%M")
+    trade_id_local = f"{STRATEGY_ID}_{symbol}_{entry_date}_{time_suffix}"
+
     trade_dict = {
         "strategy_id": STRATEGY_ID,
         "ticker": symbol,
         "asset_class": asset_type,
         "data_source": "hyperliquid" if asset_type == "crypto" else "yfinance",
         "direction": direction,
-        "signal_id": trade_id,
-        "entry_date": entry_date,
+        "signal_id": trade_id_local,
+        "entry_date": str(entry_ts_utc),  # full UTC timestamp for time-stop calc
         "entry_price": round(entry_price, 6),
         "stop_price": round(stop_price, 6),
         "target_price": round(target_price, 6),
@@ -298,7 +301,7 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
     if dry_run:
         summary["opened"] += 1
         summary["opened_trades"].append(trade_dict)
-        print(f"  WOULD OPEN: {trade_id} ({direction}) @ ${entry_price:.2f}")
+        print(f"  WOULD OPEN: {trade_id_local} ({direction}) @ ${entry_price:.2f}")
         print(f"    Stop: ${stop_price:.2f} | Target: ${target_price:.2f} | R:R 3:1")
         print(f"    {trade_dict['notes']}")
     else:
@@ -466,9 +469,16 @@ def monitor_exits():
                     exit_reason = "target"
                     exit_price = target_price
             
-            # Time stop: 15 bars = 75 min
+            # Time stop: 15 bars = 75 min.  Use the full UTC entry timestamp stored
+            # in entry_date (now an ISO-8601 string from the sweep detector), not
+            # just a date.  Fall back to midnight UTC for legacy rows.
             if exit_reason is None:
-                entry_time = pd.Timestamp(entry_date, tz="UTC")
+                try:
+                    entry_time = pd.Timestamp(entry_date, tz="UTC")
+                except Exception:
+                    entry_time = pd.Timestamp(entry_date, tz="UTC")  # may fail for bare dates
+                if entry_time.tz is None:
+                    entry_time = entry_time.tz_localize("UTC")
                 elapsed = (pd.Timestamp.now(tz="UTC") - entry_time).total_seconds()
                 if elapsed > 75 * 60:  # 75 minutes
                     exit_reason = "time"
@@ -517,7 +527,7 @@ def monitor_exits():
             for row in rows:
                 if row["trade_id"] == closure["trade_id"]:
                     row["status"] = "closed"
-                    row["exit_date"] = closure["exit_price"]  # simplified
+                    row["exit_date"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
                     row["exit_price"] = closure["exit_price"]
                     row["exit_reason"] = closure["exit_reason"]
                     row["r_multiple"] = closure["r_multiple"]

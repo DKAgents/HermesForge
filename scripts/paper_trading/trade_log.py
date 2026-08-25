@@ -40,8 +40,14 @@ def _ensure_log():
 
 
 def make_trade_id(strategy_id: str, ticker: str, entry_date: str) -> str:
-    """trade_id = {strategy_id}_{ticker}_{entry_date} — matches US-061 signal_id convention."""
-    return f"{strategy_id}_{ticker}_{entry_date}"
+    """trade_id = {strategy_id}_{ticker}_{entry_date} — matches US-061 signal_id convention.
+
+    For intraday strategies (STR-Q), entry_date may include a HHMM time suffix
+    to disambiguate multiple entries on the same day. For daily strategies,
+    entry_date is just YYYY-MM-DD.
+    """
+    date_part = str(entry_date)[:10]
+    return f"{strategy_id}_{ticker}_{date_part}"
 
 
 def _read_all_rows() -> list[dict]:

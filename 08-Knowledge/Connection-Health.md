@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-24T14:08:11Z
+updated: 2026-08-24T22:21:19Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 35 |
-| Connections created | 1 | 11 |
-| Review queue | 12 | 12 |
-| Avg score | 3.3 | — |
+| Notes examined | 5 | 45 |
+| Connections created | 0 | 11 |
+| Review queue | 18 | 18 |
+| Avg score | 2.6 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~3588
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 18 notes, avg degree 0.06
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-24T14:08:11Z)
-- **06-Strategies/Hypotheses/STR-20260726-outside-day-key-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N057-weekly-and-monthly-reversal-patterns.md** (score 4.0): Note A describes a daily key reversal pattern, while Note B provides the higher-timeframe (weekly/monthly) equivalent from Murphy, directly extending the concept's applicability and confirming its significance on longer timeframes.
+## Recent Discoveries (last run: 2026-08-24T22:21:19Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 2: Created 2 connections from 5 notes. Avg score: 2.4.
