@@ -70,12 +70,11 @@ MIN_QUALITY = 50
 # Risk per trade
 RISK_PCT = 1.0
 
-# US-110 fix: Recency window measured from CONFIRMATION time, not sweep time
-# CONFIRMATION_BARS reduced from 3→1 (2026-08-25) to cut post latency.
-# A sweep now confirms 1 bar (5 min) after forming.
-# We accept sweeps confirmed within the last 15 min (covers 3 cron cycles).
-CONF_BAR_MINUTES = 1 * 5    # 5 minutes to confirm
-RECENCY_WINDOW_SEC = 900    # 15 minutes from confirmation time
+# Recency window measured from CONFIRMATION time (not sweep time).
+# At CONFIRMATION_BARS=2: sweep confirms 2 bars (10 min) after forming.
+# We accept sweeps confirmed within the last 20 min (covers 4 cron cycles).
+CONF_BAR_MINUTES = 2 * 5    # 10 minutes to confirm
+RECENCY_WINDOW_SEC = 1200   # 20 minutes from confirmation time
 
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
 

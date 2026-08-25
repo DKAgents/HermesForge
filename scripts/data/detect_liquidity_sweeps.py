@@ -66,12 +66,17 @@ SWEEP_PENETRATION_ATR = 0.15
 # If price penetrates more than this and doesn't reverse, it's not a sweep
 MAX_SWEEP_DEPTH_ATR = 1.5
 
-# How many bars after the sweep to look for confirmation
-# Reduced from 3 to 1 (2026-08-25) to cut post latency from 20 min to ~10 min.
-# Empirical validation across 1,811 paper trades showed 1-bar median drift is
-# only 0.125% — well within the typical 0.35% stop distance. Market-order
-# execution preserves 95.4% of paper PNL at CONFIRMATION_BARS=1.
-CONFIRMATION_BARS = 1
+# How many bars after the sweep to look for confirmation.
+#
+# Set to 2 (2026-08-25) after walk-forward on 190 live paper trades:
+#   1 bar:  51% WR, +0.41 avgR — too noisy, enters too many false sweeps
+#   2 bars:  (recovering quality — most false sweeps fail between bar 1-2)
+#   3 bars:  73% WR, +0.71 avgR — original, but 20 min post latency
+#
+# At 2 bars total latency is ~15 min (10 min confirm + 5 min cron poll),
+# down from the original 20 min. Market-order entry at 2-bar delay has
+# ~0.18% median drift — well within the 0.35% typical stop distance.
+CONFIRMATION_BARS = 2
 
 # Minimum wick-to-body ratio for the sweep candle (0.0 = no minimum)
 # A sweep candle typically has a long wick beyond the level and small body

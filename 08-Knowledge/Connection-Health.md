@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-25T06:39:27Z
+updated: 2026-08-25T15:04:56Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 55 |
-| Connections created | 1 | 12 |
-| Review queue | 19 | 19 |
-| Avg score | 3.6 | — |
+| Notes examined | 5 | 65 |
+| Connections created | 0 | 12 |
+| Review queue | 21 | 21 |
+| Avg score | 2.3 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~3592
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 18 notes, avg degree 0.06
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-25T06:39:27Z)
-- **06-Strategies/Hypotheses/STR-20260726-outside-day-key-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EX002-nonfailure-swing-reversal-signal.md** (score 4.0): The nonfailure swing's requirement for a lower high (E) followed by a new low under D (S2) before confirming reversal provides a structural framework that could validate or filter the Outside Day Key Reversal's trigger, which currently lacks explicit confirmation sequencing.
+## Recent Discoveries (last run: 2026-08-25T15:04:56Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 3: Created 6 connections from 5 notes. Avg score: 2.8.
