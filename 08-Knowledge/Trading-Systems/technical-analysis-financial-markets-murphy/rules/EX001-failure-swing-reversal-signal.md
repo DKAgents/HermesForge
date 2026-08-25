@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Failure Swing Reversal Signal
 
 A failure swing occurs when a rally peak (C) fails to exceed the previous peak (A), and price then declines below the prior trough (B). The presence of two lower peaks and two lower troughs constitutes a clear sell signal at the point where the low at B is broken. This is considered a definitive reversal signal under Dow Theory.

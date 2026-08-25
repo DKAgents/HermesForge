@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Following vs. Counter Trend Systems
 
 Most successful trading systems are trend following. Counter trend systems should not be overlooked because they bring a degree of negative correlation to the table, meaning that when one system is making money, the other is losing money, resulting in a smoother equity curve for the two systems combined than for either one alone.

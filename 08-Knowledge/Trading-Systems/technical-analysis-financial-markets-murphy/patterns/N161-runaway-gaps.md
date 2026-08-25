@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Runaway Gaps
 
 Runaway gaps (also called measuring gaps) occur in the middle of a strong trend and signal continuation of the prevailing move. They are one of the three main types of price gaps used in technical analysis.

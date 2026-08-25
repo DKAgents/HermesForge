@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Transaction Costs in System Testing
 
 The author recommends not accounting for transaction costs (slippage and commissions) during the testing phase, but instead factoring them in at the end. This approach keeps the evaluation process more pure and allows results to remain useful if cost assumptions change in the future.

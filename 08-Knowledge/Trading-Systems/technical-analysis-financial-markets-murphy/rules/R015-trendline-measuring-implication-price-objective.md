@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Measuring Implication (Price Objective)
 
 Once a trendline is broken, prices will typically move a distance beyond the trendline equal to the vertical distance prices achieved on the other side of the line prior to the trend reversal. For example, if prices moved $50 above an up trendline during the uptrend, they would be expected to drop $50 below the trendline after it is broken.

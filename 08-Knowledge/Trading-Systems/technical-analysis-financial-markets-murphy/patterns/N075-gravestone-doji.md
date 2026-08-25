@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gravestone Doji
 
 The Gravestone Doji has only a long upper shadow and no lower shadow, with open and close prices equal at or near the low of the session. The longer the upper shadow, the more bearish the interpretation. It signals that buyers pushed prices up during the session but sellers drove them back down to the open by the close.

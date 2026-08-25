@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Saucers and Spikes
 
 Saucers (rounding tops and bottoms) and spikes (V-reversals) are major reversal patterns. Saucers form gradually over time while spikes are sharp, sudden reversals. Both signal significant trend changes.

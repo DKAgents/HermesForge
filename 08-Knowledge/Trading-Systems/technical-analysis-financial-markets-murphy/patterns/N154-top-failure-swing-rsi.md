@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Top Failure Swing (RSI)
 
 A top failure swing occurs when the RSI rises above 70, pulls back, rallies again but fails to exceed the prior high, and then breaks below the prior pullback low. This is a bearish signal indicating potential price reversal.

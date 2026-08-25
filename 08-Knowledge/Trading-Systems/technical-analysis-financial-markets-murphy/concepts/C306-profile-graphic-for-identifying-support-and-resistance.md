@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Profile Graphic for Identifying Support and Resistance
 
 Every trend change occurs at a single moment in time, not conveniently at the end of the hour, day, week or month. The profile graphic can be used to more accurately identify that specific time where control changed hands between buyers and sellers. By pinning down such control shifts, the profile graphic allows the trader to identify key support and resistance levels.

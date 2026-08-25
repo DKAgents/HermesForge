@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Left Translation (Bearish)
 
 When the trend of the next longer cycle is down (bear market), the cycle crest shifts to the left of the ideal midpoint, causing left translation. This means prices spend more time going down than up within the cycle. Left translation is a bearish signal.

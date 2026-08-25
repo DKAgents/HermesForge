@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Let Profits Run and Cut Losses Short
 
 One of the oldest maxims of trading is to let profits run and cut losses short. Large profits are achieved by staying with persistent trends, and because only a relative handful of trades during the year will generate large profits, it is necessary to maximize those few big winners. The other side is keeping losing trades as small as possible.

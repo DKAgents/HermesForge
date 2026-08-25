@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 5-Step Plan for Building a Trading System
 
 The five-step plan for building a trading system is: 1) Start with a concept, 2) Turn it into a set of objective rules, 3) Visually check it out on the charts, 4) Formally test it with a computer, 5) Evaluate the results. This structured approach ensures that ideas are properly validated before being traded with real capital.

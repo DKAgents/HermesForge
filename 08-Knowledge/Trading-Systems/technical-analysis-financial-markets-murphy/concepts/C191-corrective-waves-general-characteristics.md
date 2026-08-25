@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Corrective Waves: General Characteristics
 
 Corrective waves are less clearly defined than impulse waves and tend to be more difficult to identify and predict. They can never take place in five waves; corrective waves are threes, never fives (with the exception of triangles). The three main classifications are zig-zags, flats, and triangles.

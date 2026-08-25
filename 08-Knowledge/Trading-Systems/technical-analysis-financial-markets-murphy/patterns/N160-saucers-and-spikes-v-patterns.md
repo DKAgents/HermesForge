@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Saucers and Spikes (V-Patterns)
 
 Saucers represent gradual, rounded reversals while spikes (V-patterns) represent sharp, sudden reversals. Both are classified as reversal patterns and the time between troughs is a relevant analytical consideration.

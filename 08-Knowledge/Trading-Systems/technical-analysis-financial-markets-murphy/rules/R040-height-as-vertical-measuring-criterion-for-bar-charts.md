@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Height as Vertical Measuring Criterion for Bar Charts
 
 Virtually all measuring techniques for reversal patterns on bar charts are based on the height of the pattern, using a vertical measuring criteria. The horizontal width of a price pattern is reserved for point and figure charting, which uses the 'count' method to project price targets based on the width of a top or bottom.

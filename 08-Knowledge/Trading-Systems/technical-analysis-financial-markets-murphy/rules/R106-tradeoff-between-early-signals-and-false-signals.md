@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Tradeoff Between Early Signals and False Signals
 
 The more sensitive the moving average, the earlier the trend signals will be generated, but the greater the number of false signals. Shorter averages give trend signals earlier in the move but generate more whipsaws. Longer averages are slower and more reliable during a sustained trend but give back more when the trend reverses due to their greater distance from price.

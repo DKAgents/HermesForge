@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Broadening Formation Completion Signal
 
 The broadening top pattern is completed by the violation of the second trough. This is an unusually difficult pattern to trade and is fortunately relatively rare.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Value Area Comparison for Trend Identification
 
 By comparing consecutive days' value areas, traders can identify trend direction and continuation. If today's value area is higher than yesterday's value area, the current market price trend is up. If tomorrow's value area is higher than today's, the current market uptrend has continued. This method offers an alternative to traditional trendline analysis.

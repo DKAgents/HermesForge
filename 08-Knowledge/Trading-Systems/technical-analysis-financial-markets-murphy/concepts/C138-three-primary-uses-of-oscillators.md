@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Primary Uses of Oscillators
 
 Oscillators are most useful in three situations: (1) when the oscillator reaches an extreme reading near the upper or lower boundary, signaling overbought or oversold conditions; (2) when there is a divergence between the oscillator and price action while the oscillator is at an extreme position; and (3) when the oscillator crosses the zero or midpoint line, generating trading signals in the direction of the price trend.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Bottom: Volume Sequence
 
 The volume pattern at the bottom mirrors the top for the first half: volume at the head is lighter than at the left shoulder. The rally from the head should show increasing activity, often exceeding volume on the rally from the left shoulder. The dip to the right shoulder should be on very light volume. The breakout through the neckline must be on heavy volume, and the return move back to the neckline should occur on light volume.

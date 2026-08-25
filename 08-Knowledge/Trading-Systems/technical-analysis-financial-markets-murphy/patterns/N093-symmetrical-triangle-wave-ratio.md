@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Wave Ratio
 
 In a symmetrical triangle Elliott Wave pattern, each successive wave is related to its previous wave by approximately .618. This Fibonacci relationship governs the contracting price swings within the triangle formation.

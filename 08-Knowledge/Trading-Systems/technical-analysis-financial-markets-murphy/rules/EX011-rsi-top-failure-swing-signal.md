@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Top Failure Swing Signal
 
 A top failure swing is confirmed when the second RSI peak is lower than the first while the RSI line is over 70 and prices are still rallying. The break by the RSI line below the middle trough signals the top and a potential sell signal.

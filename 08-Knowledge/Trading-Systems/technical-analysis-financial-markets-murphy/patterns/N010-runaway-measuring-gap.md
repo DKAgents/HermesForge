@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Runaway (Measuring) Gap
 
 The runaway gap forms around the middle of a trend move, where prices leap forward on moderate volume. In an uptrend it is a sign of strength; in a downtrend, a sign of weakness. Like breakaway gaps, runaway gaps act as support on subsequent corrections and are often not filled. A close below a runaway gap in an uptrend is a negative sign.

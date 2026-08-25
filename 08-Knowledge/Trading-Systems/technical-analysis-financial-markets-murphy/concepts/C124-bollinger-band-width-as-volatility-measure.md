@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Band Width as Volatility Measure
 
 Bollinger Bands expand during periods of rising price volatility and contract during periods of low market volatility. There is a tendency for the bands to alternate between expansion and contraction. When the bands are unusually far apart, that is often a sign that the current trend may be ending; when the distance has narrowed too far, that is often a sign that a market may be about to initiate a new trend.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Total vs. Individual Volume and Open Interest in Futures
 
 Futures technicians use total volume and open interest figures across all delivery months rather than figures for individual contract months. This is because individual contract figures are distorted by the contract lifecycle: volume and open interest are low early in a contract's life, build toward maturity, and then decline again as expiration approaches and traders liquidate positions.

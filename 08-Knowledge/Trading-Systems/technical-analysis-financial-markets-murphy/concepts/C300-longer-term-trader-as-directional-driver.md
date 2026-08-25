@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Longer Term Trader as Directional Driver
 
 The longer term trader is responsible for determining the market's directional movement. Monitoring longer term trader activity helps detect evidence of a price trend. After identifying and evaluating longer term trader activity, an educated conclusion regarding price direction can be reached.

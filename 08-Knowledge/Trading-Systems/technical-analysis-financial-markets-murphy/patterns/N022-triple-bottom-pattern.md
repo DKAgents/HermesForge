@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Bottom Pattern
 
 The triple bottom is a mirror image of the triple top with three troughs at approximately the same level. Prices must close through the two intervening peaks to complete the pattern. Heavy upside volume on the completion of the bottom is essential. As an alternate strategy, the breaking of the nearest peak or trough can also be used as a reversal signal.

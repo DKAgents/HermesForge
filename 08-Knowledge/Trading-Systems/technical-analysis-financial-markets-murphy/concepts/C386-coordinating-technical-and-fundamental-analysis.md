@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Coordinating Technical and Fundamental Analysis
 
 Technical analysis should be coordinated with fundamental analysis rather than used in isolation. Technical tools are used for timing entries and exits while fundamental analysis provides the underlying rationale for the trade direction.

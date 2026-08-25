@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breakout of a Triple Top (B-3)
 
 The triple top breakout is the first of the complex formations and involves 5 columns with 2 columns of X's being penetrated. It is stronger than the simple signals because the wider base indicates greater upside potential. The simple bullish buy signal is embedded within this and all complex formations.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Tops and Bottoms
 
 Triple tops and bottoms are reversal patterns where price tests a level three times before reversing direction. They are related to the number three principle in technical analysis and are considered stronger reversal signals than double tops/bottoms.

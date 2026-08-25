@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle Measuring Technique
 
 Measure the height of the descending triangle at the base to the left and project that distance downward from the breakdown point to obtain a minimum price objective.

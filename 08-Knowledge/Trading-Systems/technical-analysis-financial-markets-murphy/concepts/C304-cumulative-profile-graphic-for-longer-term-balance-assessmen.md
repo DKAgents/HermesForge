@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cumulative Profile Graphic for Longer Term Balance Assessment
 
 By combining daily consecutive profile graphics into a larger cumulative profile graphic, an evolving picture of longer term balance or imbalance emerges. Individual sessions may suggest an uptrending market without a hint of reversal, but when combined into a cumulative profile, a balanced picture may emerge. Once balanced, a market moves to a state of imbalance which more often than not begins after a final test at the fairest price.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Neckline Break Completes the Head and Shoulders Pattern
 
 The head and shoulders top is only confirmed when the neckline — drawn under the last two reaction lows (points B and D) — is decisively broken on a closing basis. Until that downside violation takes place, the pattern may not be a true head and shoulders top and the uptrend may resume. Volume should increase on the breaking of the neckline.

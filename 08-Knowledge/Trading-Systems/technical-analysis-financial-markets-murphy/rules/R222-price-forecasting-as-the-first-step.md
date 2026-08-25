@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Forecasting as the First Step
 
 Price forecasting is the crucial first step in any trading decision. It determines whether the trader is bullish or bearish and answers whether to enter from the long or short side. If the price forecast is wrong, nothing else that follows will work.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rule of Alternation — General Principle
 
 The Rule of Alternation holds that the market usually doesn't act the same way two times in a row. If a certain type of top or bottom occurred the last time, it will probably not occur again the next time. The rule does not tell us exactly what will happen, but tells us what probably won't happen.

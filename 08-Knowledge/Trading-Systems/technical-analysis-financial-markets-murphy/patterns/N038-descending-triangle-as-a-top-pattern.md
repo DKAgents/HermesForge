@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle as a Top Pattern
 
 Although the descending triangle is typically a continuation pattern found within downtrends, it can occasionally appear at market tops. A close below the flat lower line in this context signals a major trend reversal to the downside.

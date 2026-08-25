@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Treasury Bond Seasonal Pattern
 
 Treasury Bond prices usually hit important highs during January. Over the entire year, Treasury Bond prices are usually weaker during the first half of the year and stronger during the second half. Bond bulls are better served by the second half of the year.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rule of Alternation
 
 The rule of alternation warns not to expect the same thing twice in succession. This means that if one corrective wave is a zig-zag, the next corrective wave is likely to be a flat or triangle, and vice versa.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Exhaustion Gap — Bearish Confirmation Signal
 
 When prices close below an exhaustion gap in an uptrend, it confirms the exhaustion gap and signals a trend reversal. This is a classic example where falling below a gap in an uptrend has very bearish implications.

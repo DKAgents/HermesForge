@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Measures Intensity Behind Price Moves
 
 The level of volume measures the intensity or urgency behind a price move. Heavier volume reflects a higher degree of intensity or pressure. By monitoring volume alongside price action, the technician can gauge buying or selling pressure and use this to confirm price movement or warn that a price move is not to be trusted.

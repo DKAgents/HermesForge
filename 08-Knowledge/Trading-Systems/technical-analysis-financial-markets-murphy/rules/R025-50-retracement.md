@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 50% Retracement
 
 The best-known retracement is the 50% retracement. If a market trends from 100 to 200, the subsequent reaction very often retraces about half of the prior move to the 150 level before upward momentum is regained. This is a very well-known market tendency that happens quite frequently.

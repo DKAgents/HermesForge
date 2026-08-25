@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # McClellan Oscillator Overbought/Oversold Levels
 
 A McClellan Oscillator reading above +100 is a signal of an overbought stock market, while a reading below -100 is considered an oversold stock market. These extreme readings can be used to identify short to intermediate term market turning points.

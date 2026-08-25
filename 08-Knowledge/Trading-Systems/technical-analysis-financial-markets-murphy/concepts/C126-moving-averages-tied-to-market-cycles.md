@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages Tied to Market Cycles
 
 There appears to be a definite relationship between underlying market cycles and the correct moving averages to use, suggesting moving averages can be adjusted to fit the dominant cycles in each market. The monthly cycle (20-21 trading days) may explain the popularity of the 5, 10, 20, and 40 day moving averages. Cycles tend to be related to their next longer and shorter cycles harmonically, or by a factor of two.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave 4 / Wave 1 Non-Overlap Rule
 
 Wave 4 should not overlap wave 1. This is a key rule for validating Elliott Wave counts, though it is noted as not as rigid in futures markets.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Contrary Opinion in Futures
 
 Murphy includes contrary opinion as a tool in futures trading, where extreme bullish or bearish sentiment readings can signal potential market reversals. This is a sentiment-based complement to price-based technical analysis.

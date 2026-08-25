@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Applying Technical Analysis to Mutual Funds
 
 Technical analysis can be applied to mutual fund charts just as it is applied to any other market, with minor modifications. Mutual fund charts tend to have lower volatility, making them excellent vehicles for chart analysis. All standard technical tools—chart patterns, trendlines, moving averages, oscillators—can be applied to mutual fund charts.

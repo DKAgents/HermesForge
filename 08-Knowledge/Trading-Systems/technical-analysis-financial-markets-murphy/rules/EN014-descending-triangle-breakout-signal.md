@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle Breakout Signal
 
 The bearish signal from a descending triangle is registered by a decisive close under the lower flat trendline, usually on increased volume. A return move sometimes occurs and should encounter resistance at the lower trendline.

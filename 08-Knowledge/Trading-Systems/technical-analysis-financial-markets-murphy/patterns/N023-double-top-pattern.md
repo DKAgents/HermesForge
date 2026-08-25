@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top Pattern
 
 The double top is one of the most common and easily recognized reversal patterns, often referred to as an 'M' formation. It has two peaks at approximately the same level, and the pattern is complete when the middle trough is broken on a closing basis. Volume is usually lighter on the second peak and picks up on the breakdown. A return move back to the breakdown level is not unusual.

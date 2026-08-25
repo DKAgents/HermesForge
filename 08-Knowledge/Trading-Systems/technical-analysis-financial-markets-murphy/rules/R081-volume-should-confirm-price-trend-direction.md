@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Should Confirm Price Trend Direction
 
 In an uptrend, volume should be heavier on up moves and lighter on pullbacks. In a downtrend, volume should be heavier on down moves and lighter on bounces. As long as this pattern continues, the prevailing trend is likely to persist. When this pattern begins to change, the chartist should start looking for signs of a reversal.

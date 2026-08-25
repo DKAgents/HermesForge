@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Divergence Principle
 
 Divergence is the opposite of confirmation and refers to a situation where different technical indicators fail to confirm one another. It is one of the best early warning signals of impending trend reversals. Despite its negative connotation, divergence is a valuable concept in market analysis.

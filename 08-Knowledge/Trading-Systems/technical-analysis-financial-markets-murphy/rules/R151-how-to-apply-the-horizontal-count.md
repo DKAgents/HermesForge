@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # How to Apply the Horizontal Count
 
 To apply the horizontal count, identify a topping or basing congestion area and count the total number of columns across it, including empty columns. The line to count across should be near the middle of the congestion area, specifically the line with the fewest empty boxes (most filled x's and o's). Project that column count upward (for a base) or downward (for a top) from the measuring line to obtain the price target.

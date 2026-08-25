@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Zero Line Crossover Signals
 
 Crossings of the MACD lines above and below the zero line generate buy and sell signals respectively, similar to the momentum technique. A crossing above the zero line is bullish; a crossing below is bearish.

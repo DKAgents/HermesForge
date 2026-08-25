@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measured Move: Application Rule
 
 In the measured move, when a rally from point A to point B is followed by a countertrend swing from B to C (which retraces a third to a half of wave AB), it is assumed that the next leg in the uptrend (CD) will come close to duplicating the first leg (AB). The height of wave AB is measured upward from the bottom of the correction at point C to derive the price target.

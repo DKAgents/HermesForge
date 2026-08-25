@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Daily vs Weekly AD Line
 
 The daily AD line is better suited for short to intermediate comparisons with major stock averages, while the weekly AD line is more useful for trend comparisons spanning several years. A negative divergence in the daily AD line warns of short to intermediate problems, but a similar divergence must also appear in the weekly AD line to confirm a more serious problem is developing.

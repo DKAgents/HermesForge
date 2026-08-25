@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Complex Head and Shoulders Pattern
 
 A variation of the head and shoulders pattern where two heads may appear or double left and right shoulders form. These patterns are not common but have the same forecasting implications as the standard pattern. There is a strong tendency toward symmetry: a single left shoulder usually indicates a single right shoulder, and a double left shoulder increases the odds of a double right shoulder.

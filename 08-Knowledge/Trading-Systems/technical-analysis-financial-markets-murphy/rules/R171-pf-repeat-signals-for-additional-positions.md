@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Repeat Signals for Additional Positions
 
 After the initial buy or sell signal, subsequent repeat signals that appear as the move continues can be used to add additional positions. These repeat signals confirm the ongoing trend and provide opportunities to pyramid into winning trades.

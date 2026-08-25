@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Common Time Period Variations
 
 While 9 and 14-day spans are the most common values used, technicians experiment with other periods. Some use shorter lengths such as 5 or 7 days to increase the volatility of the RSI line. Others use 21 or 28 days to smooth out the RSI signals.

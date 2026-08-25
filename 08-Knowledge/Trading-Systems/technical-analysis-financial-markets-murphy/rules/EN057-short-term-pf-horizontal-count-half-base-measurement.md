@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Short-Term P&F Horizontal Count (Half-Base Measurement)
 
 To calculate a short-term upside price objective using the horizontal count method, measure halfway across the price base and project that distance upward from the base. For example, the Intel chart shows a short-term objective to 33 arrived at by measuring halfway across the price base.

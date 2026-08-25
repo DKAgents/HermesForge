@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Top Pattern
 
 The triple top is a variation of the head and shoulders where all three peaks are at approximately the same level rather than the middle being higher. Volume tends to decline with each successive peak. The pattern is not complete until support levels along both intervening lows have been broken on heavier volume. The measuring implication is the height of the pattern projected downward from the breakdown point.

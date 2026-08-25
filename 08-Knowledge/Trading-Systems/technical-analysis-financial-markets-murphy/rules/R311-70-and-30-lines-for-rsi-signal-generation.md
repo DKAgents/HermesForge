@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 70 and 30 Lines for RSI Signal Generation
 
 The 70 line on the RSI is used to identify overbought conditions and generate sell signals, while the 30 line identifies oversold conditions and generates buy signals. These threshold levels are standard interpretive guidelines for the RSI oscillator.

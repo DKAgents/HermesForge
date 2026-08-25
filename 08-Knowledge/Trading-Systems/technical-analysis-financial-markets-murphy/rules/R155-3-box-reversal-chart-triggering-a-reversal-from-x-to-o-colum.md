@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Chart: Triggering a Reversal from X to O Column
 
 When the daily high is not high enough to fill the next X box, look at the low price to determine if a 3-box reversal has occurred. If a 3-box reversal is confirmed, move one column to the right, move down one box, and fill the next 3 boxes with O's to signify a new down column. Once in a down column, consult only the low price each day to continue the O column.

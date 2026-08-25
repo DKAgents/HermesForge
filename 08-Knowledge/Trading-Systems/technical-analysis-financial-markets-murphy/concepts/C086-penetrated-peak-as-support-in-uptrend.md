@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Penetrated Peak as Support in Uptrend
 
 In an uptrend, a previously penetrated peak should function as support on subsequent corrections. When a decline carries well below a prior peak, it is a warning signal that the uptrend may be deteriorating. This principle is violated during the formation of the head and shoulders top.

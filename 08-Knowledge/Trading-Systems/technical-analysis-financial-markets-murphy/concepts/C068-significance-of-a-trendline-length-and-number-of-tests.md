@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Significance of a Trendline: Length and Number of Tests
 
 The significance of a trendline is determined by two factors: how long it has been intact and how many times it has been tested. A trendline tested eight times is more significant than one tested three times, and a trendline in effect for nine months is more important than one in effect for nine weeks. The more significant the trendline, the more important its penetration.

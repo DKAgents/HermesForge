@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Morning Star — Bullish Reversal Pattern
 
 The Morning Star is the bullish counterpart to the Evening Star and is a powerful three-day bullish reversal candle pattern requiring a prior downtrend. The scenario is the opposite of the Evening Star: a long black first day, a small-body Star day that gaps below the first day, and a third day that gaps above the star and closes above the midpoint of the first day's body.

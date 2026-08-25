@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, volume, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Breadth Indicators
 
 The book covers a range of market breadth indicators including the Advance-Decline Line, McClellan Oscillator, McClellan Summation Index, New High-New Low Index, Upside vs. Downside Volume, and the Arms Index (TRIN). These are used to measure the internal strength or weakness of a market beyond simple price averages.

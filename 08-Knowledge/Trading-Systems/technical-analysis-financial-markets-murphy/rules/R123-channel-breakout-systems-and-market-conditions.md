@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Breakout Systems and Market Conditions
 
 Channel breakout systems work extremely well in trending markets and can be applied on daily, weekly, and monthly charts. They are a robust alternative or complement to moving average crossover systems.

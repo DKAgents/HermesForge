@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Adjustment Rules
 
 Trendlines on point and figure charts may need to be adjusted over time. If a correction breaks below a rising support line and the uptrend resumes, a new 45-degree support line is drawn from the new reaction low. If a trend is so strong that the original trendline is too far from price action, a tighter 'best fitting' trendline should be drawn.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Technical Concepts for Optimal Timing
 
 The most effective timing approach combines multiple technical factors simultaneously. When a buy signal has been given, look for confluence of a 40–60% retracement zone, a prominent support level, a potential support gap, and a nearby significant up trendline. The idea is to buy near support and exit quickly if that support is broken.

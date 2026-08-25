@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag and Pennant: Midpoint Occurrence Rule
 
 Flags and pennants typically appear at about the halfway point of a market move. After the pattern completes, the subsequent move will approximately duplicate the flagpole — the distance of the move prior to the pattern's formation. This provides a price target by measuring the flagpole distance from the breakout point of the pattern.

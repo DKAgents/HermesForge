@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pivot Point Signal Strength by Time of Day
 
 The later in the day a pivot point signal is given, the stronger it is. As the day progresses, the pivot points are narrowed as are the protective stops. This means signals generated near the close carry more weight than those generated early in the session.

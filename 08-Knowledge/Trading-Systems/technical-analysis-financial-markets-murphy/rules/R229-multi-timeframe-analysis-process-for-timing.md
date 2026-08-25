@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Multi-Timeframe Analysis Process for Timing
 
 The trading process must begin with a long-range view and gradually work toward the shorter term. Analysis starts with monthly and weekly charts for long-term perspective, then the daily chart for the actual trading decision, and finally the intraday chart for greater precision. The long-term chart provides a telescopic view while the intraday chart allows microscopic study.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stop Limit Order
 
 A stop limit order combines a stop and a limit order, specifying both a stop price (which activates the order) and a limit price (which controls the execution price). Once the stop is elected, the order becomes a limit order. This is useful when the trader wants to buy or sell a breakout but wants to control the price paid or received, though it risks missing the market if prices gap beyond the limit price.

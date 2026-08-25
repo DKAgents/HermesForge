@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-9-18 Day System: Sell Signal
 
 When an uptrend reverses, the first sign is that the 4 day average dips below both the 9 day and the 18 day averages — this is only a selling alert. Some traders may use this initial crossing to begin liquidating long positions. A confirmed sell short signal is given when the 9 day average subsequently drops below the 18 day average.

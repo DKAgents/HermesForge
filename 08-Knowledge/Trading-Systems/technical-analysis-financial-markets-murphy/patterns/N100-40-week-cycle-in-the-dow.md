@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 40-Week Cycle in the Dow
 
 Cycle arc analysis revealed a 40-week cycle in the Dow Jones Industrial Average, with cycle lows coinciding with important reaction lows. The last two cycle troughs were in the spring of 1997 and the start of 1998.

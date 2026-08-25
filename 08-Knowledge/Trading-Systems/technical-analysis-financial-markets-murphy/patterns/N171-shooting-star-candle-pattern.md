@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Shooting Star Candle Pattern
 
 The Shooting Star is a bearish reversal candlestick pattern with a small real body at the lower end of the trading range and a long upper shadow. It signals that buyers pushed prices higher during the session but sellers regained control by the close.

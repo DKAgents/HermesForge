@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Inverse Relationship Between Commodity Prices and Bond Prices
 
 Treasury Bond prices are influenced by expectations for inflation, and commodity prices usually trend in the opposite direction of bond prices. When commodities rise (signaling inflation), bonds typically fall; when bonds rise strongly, commodities typically fall.

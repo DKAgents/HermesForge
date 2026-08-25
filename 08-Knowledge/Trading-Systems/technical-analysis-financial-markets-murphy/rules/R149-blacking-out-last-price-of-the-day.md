@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Blacking Out Last Price of the Day
 
 When constructing an intraday point and figure chart, the last price of each trading day is blacked out (filled in differently) to help track time and distinguish separate days' trading activity.

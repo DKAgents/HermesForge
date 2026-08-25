@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Harmonic Relationship of Moving Average Periods
 
 The 20 day average measures the monthly cycle. The 40 day average is double the 20 day (next longer cycle). The 10 day average is half of 20 and the 5 day average is half again of 10. This harmonic relationship by a factor of two explains why these specific moving average lengths are so widely used in commodity and futures markets.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, fibonacci, risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Maximum Retracement Parameter
 
 The maximum retracement parameter defines the maximum acceptable retracement of a prior move before the trend is considered broken. This is used to set stop levels and assess trend integrity.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flat Corrective Pattern
 
 The flat correction follows a 3-3-5 pattern, distinguishing it from the zig-zag's 5-3-5 pattern. The flat is more of a consolidation than a correction and is considered a sign of strength in a bull market. In a bull market flat, wave B rallies all the way to the top of wave A, and wave C terminates at or just below the bottom of wave A.

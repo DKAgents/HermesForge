@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule Primarily for Futures Trading
 
 The 4 week rule is used primarily for futures trading. It was developed by Richard Donchian, recognized as a pioneer in commodity trend trading using mechanical systems, and was found to be the most successful system in comparative testing published in 1970.

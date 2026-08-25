@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Continuation Trading Approach
 
 Traders who assume the rectangle is a continuation pattern take long positions near the lower end of the price band in an uptrend, or initiate short positions near the top of the range in downtrends. Other traders avoid trendless markets altogether and await a clearcut breakout before committing funds.

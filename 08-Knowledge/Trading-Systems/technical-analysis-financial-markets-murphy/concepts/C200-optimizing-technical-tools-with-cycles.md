@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Optimizing Technical Tools with Cycles
 
 Moving averages and oscillators can be optimized by tying them to dominant cycles. Trendline analysis can be made more precise with cyclic analysis. Price pattern analysis can be enhanced if combined with cyclic peaks and troughs.

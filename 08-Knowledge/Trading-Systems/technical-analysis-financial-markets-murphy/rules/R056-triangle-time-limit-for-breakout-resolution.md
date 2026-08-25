@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangle Time Limit for Breakout Resolution
 
 Prices should break out in the direction of the prior trend somewhere between two-thirds to three-quarters of the horizontal width of the triangle, measured from the vertical base on the left to the apex on the right. If prices remain within the triangle beyond the three-quarters point, the triangle begins to lose its potency and prices will likely drift out to the apex and beyond without a decisive breakout.

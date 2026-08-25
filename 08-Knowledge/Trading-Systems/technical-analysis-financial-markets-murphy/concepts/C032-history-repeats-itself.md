@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, market-psychology, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # History Repeats Itself
 
 The third foundational premise of technical analysis is that history repeats itself. This underpins the use of historical chart patterns and technical indicators, as past market behavior is expected to recur due to consistent human psychology in markets.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag Midpoint Rule
 
 The flag usually occurs near the midpoint of the overall price move. This characteristic can be used to project the likely extent of the move after the breakout from the flag pattern.

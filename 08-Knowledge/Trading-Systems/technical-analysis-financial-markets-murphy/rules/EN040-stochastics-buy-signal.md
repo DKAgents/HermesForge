@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastics Buy Signal
 
 A buy signal occurs when the %K line crosses above the %D line while below the 20 level. This indicates the market is moving out of oversold territory and an upward reversal may be underway.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Diversification vs. Concentration Tradeoff
 
 While diversification limits risk exposure, it can be overdone. Too many simultaneous market commitments can dilute profitable trades with a larger number of losers. Some successful traders concentrate in a handful of markets, which is acceptable as long as those markets are trending. The more negative correlation between markets, the more true diversification is achieved.

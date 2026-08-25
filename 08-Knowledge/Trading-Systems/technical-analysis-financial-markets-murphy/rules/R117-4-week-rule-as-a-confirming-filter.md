@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule as a Confirming Filter
 
 The 4 week rule does not have to be used as a standalone trading system; weekly signals can serve as a technical indicator to identify breakouts and trend reversals. A 1 or 2 week rule can act as an excellent confirming filter for other techniques such as moving average crossovers. For example, a moving average crossover signal could be confirmed by a 2 week breakout in the same direction before taking a market position.

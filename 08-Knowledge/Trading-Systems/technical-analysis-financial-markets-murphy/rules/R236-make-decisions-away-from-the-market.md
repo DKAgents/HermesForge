@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Make Decisions Away from the Market
 
 Except for very short term trading, trading decisions should be made away from the market, preferably when markets are closed. This reduces emotional decision-making driven by real-time price fluctuations.

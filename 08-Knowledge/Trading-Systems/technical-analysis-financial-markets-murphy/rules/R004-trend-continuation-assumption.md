@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Continuation Assumption
 
 Dow's sixth tenet states that a trend is assumed to remain in effect until it gives definite signals of reversal. This principle, analogous to Newton's law of inertia, means the odds favor continuation of the existing trend. Reversal signals can be identified through support/resistance levels, price patterns, trendlines, and moving averages.

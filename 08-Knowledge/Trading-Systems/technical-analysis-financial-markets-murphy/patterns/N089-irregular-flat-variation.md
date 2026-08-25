@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Irregular Flat Variation
 
 There are two irregular variations of the normal flat correction. In the first type, wave B exceeds the top of wave A and wave C violates the bottom of wave A. In the second variation, wave B reaches the top of wave A but wave C fails to reach the bottom of wave A, denoting greater market strength in a bull market.

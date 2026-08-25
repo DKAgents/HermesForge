@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Up Trendline Significance
 
 An up trendline is a straight line drawn upward and to the right below reaction lows. The longer the up trendline has been in effect and the more times it has been tested, the more significant it becomes. Violation of the trendline usually signals that the uptrend may be changing direction.

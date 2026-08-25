@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Price Objective Measurement
 
 The minimum price objective is calculated by measuring the vertical distance from the top of the head to the neckline, then projecting that distance downward from the point where the neckline is broken. An alternative method is to measure the length of the first wave of decline (head to neckline) and double it. The objective is a minimum target; prices often move well beyond it.

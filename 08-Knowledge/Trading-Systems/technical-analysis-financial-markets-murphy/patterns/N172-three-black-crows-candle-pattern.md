@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Black Crows Candle Pattern
 
 Three Black Crows is a bearish reversal candlestick pattern consisting of three consecutive long black (bearish) candles, each opening within the prior candle's body and closing near its low. It signals strong selling pressure and a potential trend reversal.

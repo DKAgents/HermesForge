@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Four Types of Elliott Triangles
 
 Elliott classifies four types of triangles: ascending (top flat, bottom rising), descending (top declining, bottom flat), contracting or symmetrical (top declining, bottom rising), and expanding or reverse symmetrical (top rising, bottom declining). All four varieties appear in both uptrends and downtrends and are sideways consolidation patterns.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Classification
 
 Trends refer to the direction of prices, with rising peaks and troughs constituting an uptrend and falling peaks and troughs constituting a downtrend. A trading range is characterized by horizontal peaks and troughs. Trends are generally classified into major (longer than a year), intermediate (one to six months), or minor (less than a month).

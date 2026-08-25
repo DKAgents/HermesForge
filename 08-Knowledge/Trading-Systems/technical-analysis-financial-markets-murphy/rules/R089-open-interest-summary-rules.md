@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Summary Rules
 
 The four open interest rules can be summarized as: (1) Rising open interest in an uptrend is bullish. (2) Declining open interest in an uptrend is bearish. (3) Rising open interest in a downtrend is bearish. (4) Declining open interest in a downtrend is bullish. These rules help determine whether price moves are driven by new money or forced liquidation.

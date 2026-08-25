@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume More Important on the Upside
 
 Volume should generally increase in the direction of the market trend and is an important confirming factor in the completion of all price patterns. At market tops, volume is less critical in the early stages of a reversal since markets can 'fall of their own weight.' However, at bottoms, a significant increase in volume during the upside breakout is absolutely essential — if volume does not expand on the upside breakout, the entire pattern should be questioned.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Factor in Triangles
 
 Triangles are considered intermediate patterns, typically taking longer than one month but less than three months to form. A triangle lasting less than a month is likely a different pattern, such as a pennant.

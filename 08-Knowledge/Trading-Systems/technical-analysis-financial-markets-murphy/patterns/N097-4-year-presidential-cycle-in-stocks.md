@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-Year Presidential Cycle in Stocks
 
 The 4-year Presidential Cycle coincides with U.S. presidential election terms. Election years (year 1) and preelection years (year 4) are normally strong, while postelection (year 2) and midterm years (year 3) are normally weak. According to Hirsch's Trader's Almanac, election years since 1904 have seen average gains of 224%, postelection years 72%, midterm years 63%, and preelection years 217%.

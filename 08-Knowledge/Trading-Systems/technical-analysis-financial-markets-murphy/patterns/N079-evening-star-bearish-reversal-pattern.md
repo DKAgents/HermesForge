@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Evening Star — Bearish Reversal Pattern
 
 The Evening Star is a powerful three-day bearish reversal candle pattern requiring a prior uptrend. The first day is a long white candlestick reinforcing the uptrend. On the second day, prices gap up above the body of the first day, trading is restricted, and the close is near the open (forming a small body Star that gaps away from the first day). The third day opens with a gap below the body of the star and closes lower, with the close price below the midpoint of the first day's body.

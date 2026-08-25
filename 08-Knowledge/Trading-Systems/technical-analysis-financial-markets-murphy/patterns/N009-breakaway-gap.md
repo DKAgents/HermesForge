@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breakaway Gap
 
 The breakaway gap usually occurs at the completion of an important price pattern and signals the beginning of a significant market move. It commonly appears at major breakouts from topping or basing areas, or at the breaking of a major trendline. Breakaway gaps usually occur on heavy volume and are often not filled; the heavier the volume after the gap, the less likely it is to be filled.

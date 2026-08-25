@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market-If-Touched (M.I.T.) Order
 
 An M.I.T. order is similar to a limit order but becomes a market order when the limit price is touched, guaranteeing a fill once the price level is reached. Unlike a buy limit order, which may not fill even if the limit price is touched (prices may bounce sharply), an M.I.T. order ensures execution. It is most useful when the trader wants to buy a dip but doesn't want to risk missing the market after the limit price is hit, though it is not permitted on all exchanges.

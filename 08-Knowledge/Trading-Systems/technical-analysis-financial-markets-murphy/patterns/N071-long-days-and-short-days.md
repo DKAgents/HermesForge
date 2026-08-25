@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long Days and Short Days
 
 Long Days are candlesticks where the difference between the open and close prices is great, producing a large body. Short Days are candlesticks where the difference between the open and close price is small, producing a small body. These classifications refer only to the size of the body and make no reference to the high and/or low prices (shadows).

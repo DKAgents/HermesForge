@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume-Based Rollover Timing Rule
 
 The optimal time to roll over from the current futures contract to the next one is when the current contract's volume begins to erode. Declining volume signals deteriorating liquidity, making it increasingly difficult to enter and exit positions at favorable prices. Traders should monitor volume closely as expiration approaches to determine the best rollover point.

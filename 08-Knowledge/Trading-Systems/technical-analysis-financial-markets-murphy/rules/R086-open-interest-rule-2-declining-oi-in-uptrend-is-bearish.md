@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Rule 2: Declining OI in Uptrend is Bearish
 
 If prices are rising but open interest declines, the rally is being caused primarily by short covering rather than new buying. Money is leaving rather than entering the market. This action is considered bearish because the uptrend will probably run out of steam once the necessary short covering has been completed.

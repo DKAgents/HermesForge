@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Top/Bottom Measuring Technique
 
 The measuring implication for triple tops and bottoms is based on the height of the pattern. Prices will usually move a minimum distance from the breakout point at least equal to the height of the pattern. Once the breakout occurs, a return move to the breakout point is not unusual.

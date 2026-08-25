@@ -2,8 +2,11 @@
 type: risk-escalation
 created: 2026-06-30
 tags: [risk, escalation, guardian]
+topic: risk
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Risk Guardian Escalation Criteria
 
 ## When the Risk Guardian Acts Autonomously (No Human Needed)

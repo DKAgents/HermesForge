@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Spinning Tops Candle Pattern
 
 Spinning Tops are candlestick patterns with small real bodies and long upper and lower shadows, indicating indecision in the market. They signal that neither buyers nor sellers are in control and often precede reversals.

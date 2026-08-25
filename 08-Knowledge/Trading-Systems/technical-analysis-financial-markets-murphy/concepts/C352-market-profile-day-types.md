@@ -13,8 +13,8 @@ has_quotes: false
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Day Types
 
 Market Profile identifies several day types including Normal Day, Normal Variation Day, Neutral Day, and Pioneer Range. Each day type has different implications for market structure and trader behavior.

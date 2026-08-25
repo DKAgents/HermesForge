@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Bearish Divergence Signal
 
 A bearish divergence occurs when the D line is over 80 and forms two declining peaks while prices continue to move higher. The actual sell signal is triggered when the faster K line crosses the slower D line after this divergence is established.

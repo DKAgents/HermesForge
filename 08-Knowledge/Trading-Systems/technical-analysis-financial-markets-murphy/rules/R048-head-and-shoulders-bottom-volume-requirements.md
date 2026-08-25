@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Bottom: Volume Requirements
 
 Volume plays a much more critical role in identifying and completing a head and shoulders bottom than a top. The rally from the head should show increasing volume exceeding that of the rally from the left shoulder. The breakout through the neckline must be accompanied by a sharp burst of trading volume to confirm the signal. Heavy volume is an absolutely essential ingredient in the completion of the basing pattern.

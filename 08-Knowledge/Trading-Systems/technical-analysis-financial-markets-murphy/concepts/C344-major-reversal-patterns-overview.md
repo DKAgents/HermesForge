@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Major Reversal Patterns Overview
 
 Major reversal patterns include double tops and bottoms, head and shoulders (including complex, failed, and inverse variations), triple tops and bottoms, and saucers/spikes. Volume confirmation is essential for all reversal patterns, and price patterns must be measured using appropriate techniques.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Volume and Open Interest Confirm Price Pattern Resolutions
 
 Increases in volume and open interest help confirm the resolution of price patterns or any other significant chart developments that signal the beginning of a new trend.

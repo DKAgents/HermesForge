@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend-Following Systems Work Only ~30% of the Time
 
 Wilder himself estimates that strong trending conditions occur only about 30% of the time. If that estimate is even close to reality, then a trend-following system will not work for about 70% of the time. This is the fundamental challenge of any trend-following approach.

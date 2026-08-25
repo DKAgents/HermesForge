@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zero Line Crossover as Trading Signal
 
 The crossing of the zero (or midpoint) line by the oscillator can generate important trading signals in the direction of the price trend. A cross above zero is a buy signal and a cross below zero is a sell signal, used in conjunction with the prevailing trend.

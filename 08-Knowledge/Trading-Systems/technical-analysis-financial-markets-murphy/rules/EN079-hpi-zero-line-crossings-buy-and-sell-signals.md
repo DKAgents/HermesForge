@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI Zero Line Crossings – Buy and Sell Signals
 
 Crossings of the HPI above the zero line are interpreted as buy signals, while crossings below the zero line are interpreted as sell signals. On daily data, the HPI may cross above and below the zero line several times before a longer-lasting buy or sell signal is confirmed. This characteristic means daily signals can produce multiple false or short-term signals before a sustained trend signal emerges.

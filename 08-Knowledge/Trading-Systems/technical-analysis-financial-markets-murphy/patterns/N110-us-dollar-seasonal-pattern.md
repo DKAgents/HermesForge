@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # U.S. Dollar Seasonal Pattern
 
 The U.S. Dollar has a tendency to bottom during January. The peak in the German mark during January coincides with this low point in the U.S. dollar that usually occurs at the start of the new year.

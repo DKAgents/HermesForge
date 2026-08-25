@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Minimum Reversal Points for Triangle Construction
 
 The minimum requirement for a valid triangle is four reversal points — two touches on each of the two converging trendlines. Many triangles have six reversal points, meaning three peaks and three troughs forming five waves within the triangle before the trend resumes. This five-wave tendency within triangles is also relevant to Elliott Wave Theory.

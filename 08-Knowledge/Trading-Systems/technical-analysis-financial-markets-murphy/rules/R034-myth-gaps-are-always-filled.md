@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Myth: Gaps Are Always Filled
 
 The common maxim that 'gaps are always filled' is not true. Some gaps should be filled and others should not. Different types of gaps have different forecasting implications depending on their type and where they occur in the trend.

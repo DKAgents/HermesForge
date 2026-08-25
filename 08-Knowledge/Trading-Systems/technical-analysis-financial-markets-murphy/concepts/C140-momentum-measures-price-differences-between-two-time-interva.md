@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Measures Price Differences Between Two Time Intervals
 
 Momentum measures the difference between prices at two time intervals. For the momentum line to advance, the price gain for the last day's close must be greater than the gain of the lookback period ago. If the last price gain equals that of the lookback period, the momentum line is flat. If the last price gain is less, the momentum line declines even though prices are still rising.

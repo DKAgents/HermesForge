@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Volume Precedes Price
 
 Volume precedes price. Changes in buying or selling pressure are often detected in volume before they are reflected in price. On Balance Volume (OBV) or some variation thereof can be used to more accurately measure the direction of volume pressure.

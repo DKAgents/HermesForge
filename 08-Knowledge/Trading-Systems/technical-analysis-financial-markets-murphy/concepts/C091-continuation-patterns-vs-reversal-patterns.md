@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Patterns vs. Reversal Patterns
 
 Continuation patterns indicate that sideways price action is nothing more than a pause in the prevailing trend, and that the next move will be in the same direction as the preceding trend. Reversal patterns, by contrast, usually indicate that a major trend reversal is in progress. Reversal patterns usually take much longer to build and represent major trend changes, while continuation patterns are shorter-term and more accurately classified as near-term or intermediate patterns.

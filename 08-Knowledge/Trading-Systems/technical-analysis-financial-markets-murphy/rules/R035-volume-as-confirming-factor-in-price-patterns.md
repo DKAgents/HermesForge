@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume as Confirming Factor in Price Patterns
 
 Volume plays an important confirming role in all price patterns. In times of doubt, a study of the volume pattern accompanying the price data can be the deciding factor as to whether or not the pattern can be trusted.

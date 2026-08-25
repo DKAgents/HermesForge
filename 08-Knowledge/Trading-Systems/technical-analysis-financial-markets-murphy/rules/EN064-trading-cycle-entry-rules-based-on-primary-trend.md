@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Cycle Entry Rules Based on Primary Trend
 
 If the primary trend is up, troughs in the 4-week trading cycle are used for purchases. If the primary trend is down, crests in the trading cycle should be sold short. The 10-day alpha and beta cycles can be used for further fine-tuning of entry and exit timing.

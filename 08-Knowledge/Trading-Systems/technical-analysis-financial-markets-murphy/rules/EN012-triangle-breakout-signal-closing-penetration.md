@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangle Breakout Signal — Closing Penetration
 
 The actual trend signal from a triangle is given by a closing penetration of one of the trendlines, not just an intraday penetration. A minimum penetration criterion is a closing price outside the trendline. Sometimes a return move (throwback) will occur back to the penetrated trendline after the breakout, at which point the broken upper trendline becomes support in an uptrend, or the broken lower trendline becomes resistance in a downtrend.

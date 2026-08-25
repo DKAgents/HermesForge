@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ascending Triple Top (B-4)
 
 The ascending triple top is stronger than the standard triple top breakout (B-3) because both the tops and the bottoms are ascending. This dual ascending structure provides additional bullish confirmation. It represents a progressively stronger complex formation.

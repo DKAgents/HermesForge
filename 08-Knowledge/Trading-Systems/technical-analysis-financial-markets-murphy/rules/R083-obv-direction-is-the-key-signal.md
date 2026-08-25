@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # OBV Direction Is the Key Signal
 
 It is the direction of the OBV line (its trend) that is important, not the actual numbers themselves. The actual OBV values will differ depending on how far back you are charting. Traders should concentrate on the direction of the OBV line rather than its absolute value.

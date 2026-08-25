@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Pattern
 
 A symmetrical triangle is a sideways price pattern between two converging trendlines where the upper trendline is declining and the lower trendline is rising. This pattern represents an even balance between buyers and sellers, although the prior trend is usually resumed. The breakout through either trendline signals the direction of the price trend.

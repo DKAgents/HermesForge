@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Rule Time Period Harmonics Parallel to Moving Averages
 
 The same harmonic time periods that explain the popularity of 5, 10, 20, and 40 day moving averages translate directly into weekly rule time periods of 1, 2, 4, and 8 weeks. This parallel structure reinforces the validity of using these specific time periods for both moving averages and weekly breakout rules.

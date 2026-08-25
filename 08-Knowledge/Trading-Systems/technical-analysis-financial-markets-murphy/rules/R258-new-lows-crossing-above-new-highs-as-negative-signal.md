@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # New Lows Crossing Above New Highs as Negative Signal
 
 A negative market signal is activated when the moving average of new lows crosses above the moving average of new highs. Conversely, when new highs reach an extreme, the market has a topping tendency, and when new lows reach an extreme, the market is near a bottom.

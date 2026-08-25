@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Chart Flexibility via Box Size and Reversal Criteria
 
 Point and figure charts can be adjusted by varying the box size and reversal criteria to serve different trading purposes. Increasing the box size (e.g., from 5 to 10 points) makes the chart less sensitive and produces fewer signals, suitable for long-term investors. Reducing the box size (e.g., to 3 points) produces more signals and is better for shorter-term trading.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Handling Intraday Trendline Penetrations
 
 When prices violate a trendline on an intraday basis but then close back in the direction of the original trend, the trendline may still be considered valid. A compromise approach is to keep the original trendline but draw a new dotted line until it can be better determined which is the truer line. There is no hard and fast rule for this situation.

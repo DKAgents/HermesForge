@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Triangle as Five-Wave Consolidation
 
 Elliott's triangle is a sideways consolidation pattern that breaks down into five waves, with each wave in turn having three waves of its own. This parallels the classical use of the triangle as a continuation pattern. In commodity futures, triangles sometimes form with only three waves instead of five due to incomplete pattern formation.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Contrarian Position Trigger Levels
 
 A contrarian position can usually be considered when Bullish Consensus numbers are above 90% or under 20%. Readings over 75% or under 25% are warning zones. It is generally advisable to await a change in the trend of the numbers before taking action against the prevailing trend.

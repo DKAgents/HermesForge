@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle — Bearish Pattern
 
 The descending triangle has a declining upper trendline and a flat or horizontal bottom line. It is usually a bearish pattern, suggesting that sellers are becoming more aggressive at progressively lower highs while buyers remain at a fixed price level. A breakdown below the flat bottom line confirms the bearish resolution.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles, program-trading]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 49-Day Trading Cycle in S&P 500 Futures
 
 The Ehrlich Cycle Forecaster identified a 49-day trading cycle in S&P 500 futures prices. The next cycle low is estimated to occur 49 days from the last cycle low. This cycle can be used to anticipate future lows in S&P 500 futures.

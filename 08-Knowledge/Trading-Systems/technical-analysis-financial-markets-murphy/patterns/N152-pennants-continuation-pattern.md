@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pennants (Continuation Pattern)
 
 Pennants are short-term continuation patterns that form after a sharp price move. They are constructed with converging trendlines and have measuring implications equal to the length of the prior move (the flagpole).

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rising Three Methods Candle Pattern
 
 The Rising Three Methods is a bullish continuation candlestick pattern consisting of a long white candle followed by three small declining candles contained within the first candle's range, then another long white candle closing above the first. It signals continuation of the uptrend.

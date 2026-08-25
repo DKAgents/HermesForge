@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume, candlesticks, fibonacci, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Grouping and Prioritizing Technical Tools
 
 Traders should start with basic tools such as price, volume, trendlines, percentage retracements, moving averages, and oscillators. Secondary inputs like cycles and Fibonacci tools should be used unless the trader has a special interest in those areas. From the many available oscillators, traders should pick one or two they are most comfortable with.

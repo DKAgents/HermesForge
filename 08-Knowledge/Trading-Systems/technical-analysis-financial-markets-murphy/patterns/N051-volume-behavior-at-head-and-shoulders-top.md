@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Behavior at Head and Shoulders Top
 
 One of the first warning signs of a head and shoulders top is when prices move to new highs during the formation of the head on light volume, followed by heavier activity on the subsequent decline to the neckline. This divergence between price making new highs and declining volume signals weakening buying pressure and a potential reversal.

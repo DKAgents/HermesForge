@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Duration of Flags and Pennants
 
 Both flags and pennants are relatively short-term patterns and should be completed within one to three weeks. Pennants and flags in downtrends tend to take even less time to develop, often lasting no longer than one or two weeks.

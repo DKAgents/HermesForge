@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Histogram Best Use: Exit Signals
 
 Histogram turns are best used for spotting early exit signals from existing positions. It is much more dangerous to use histogram turns as an excuse to initiate new positions against the prevailing trend.

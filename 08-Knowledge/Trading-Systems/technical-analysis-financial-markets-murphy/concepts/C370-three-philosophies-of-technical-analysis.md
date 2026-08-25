@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Philosophies of Technical Analysis
 
 Technical analysis rests on three core premises: market action discounts everything, prices move in trends, and history repeats itself. These philosophical foundations justify the use of price charts and technical indicators for forecasting.

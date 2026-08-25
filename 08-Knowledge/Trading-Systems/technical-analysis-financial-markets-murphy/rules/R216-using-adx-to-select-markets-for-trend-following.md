@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Using ADX to Select Markets for Trend-Following
 
 Because the ADX line is on a scale from 0 to 100, the trend trader could simply trade those markets with the highest trend ratings. Nontrending systems such as oscillators could be utilized on markets with low directional movement. This allows the trader to match the appropriate trading approach to current market conditions.

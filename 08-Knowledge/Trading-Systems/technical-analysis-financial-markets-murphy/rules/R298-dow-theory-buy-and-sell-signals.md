@@ -13,8 +13,8 @@ has_quotes: true
 topic: [dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Theory Buy and Sell Signals
 
 A Dow Theory buy signal is given when both the Dow Industrial and Dow Transportation Averages close above a prior rally peak. A sell signal is given when both averages close below a prior reaction low. Both averages must confirm each other for a valid signal.

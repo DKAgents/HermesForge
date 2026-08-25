@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Markets Discount All Known Information
 
 Dow's first tenet holds that the stock market averages reflect all known information affecting supply and demand, including economic data, news, and even acts of God. While markets cannot anticipate natural disasters, they rapidly assimilate such events into price action. This is a foundational premise of technical analysis.

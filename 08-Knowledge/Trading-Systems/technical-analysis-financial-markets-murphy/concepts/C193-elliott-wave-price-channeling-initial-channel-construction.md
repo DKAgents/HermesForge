@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Price Channeling — Initial Channel Construction
 
 Elliott used price channels to arrive at price objectives and to help confirm the completion of wave counts. An initial trend channel is constructed by drawing a basic up trendline along the bottoms of waves 1 and 2, with a parallel channel line drawn over the top of wave 1. The entire uptrend will often stay within those two boundaries.

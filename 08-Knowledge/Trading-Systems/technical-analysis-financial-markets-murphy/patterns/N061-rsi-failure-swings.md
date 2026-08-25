@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Failure Swings
 
 Failure swings occur when the RSI is above 70 or under 30. A top failure swing occurs when a peak in the RSI (over 70) fails to exceed a previous peak in an uptrend, followed by a downside break of a previous trough. A bottom failure swing occurs when the RSI is in a downtrend (under 30), fails to set a new low, and then proceeds to exceed a previous peak.

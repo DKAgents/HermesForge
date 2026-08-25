@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow's Three-Tier Trend Classification
 
 Dow identified three distinct trend timeframes: the primary trend (the tide), lasting more than a year and possibly several years; the secondary or intermediate trend (the waves), lasting three weeks to three months; and the minor trend (ripples), lasting less than three weeks. Each shorter trend is a component of the larger one.

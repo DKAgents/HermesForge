@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Sequential Rotation Pattern
 
 The interaction between commodity prices, bond prices, and stock prices follows a sequential pattern that tracks the business cycle. This rotation among the three asset classes can be used in economic forecasting. Dr. Geoffrey Moore documented this in 'Leading Indicators for the 1990s.'

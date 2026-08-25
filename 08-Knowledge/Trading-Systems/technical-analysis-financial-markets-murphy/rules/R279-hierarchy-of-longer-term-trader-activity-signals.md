@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Hierarchy of Longer Term Trader Activity Signals
 
 Activity at the extremes provides the clearest indication of longer term trader influence, followed by range extension, and then value area buying and selling. Traders should prioritize these signals in this order when assessing directional control.

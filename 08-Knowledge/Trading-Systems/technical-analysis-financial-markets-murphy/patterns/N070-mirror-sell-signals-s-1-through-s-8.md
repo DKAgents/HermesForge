@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Mirror Sell Signals (S-1 through S-8)
 
 The 8 sell signals are exact mirror images of the 8 buy signals, with prices headed down instead of up. All the same principles apply in reverse, including the progression from simple to complex formations and increasing signal strength.

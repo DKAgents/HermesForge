@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Break Confirmation of Major Trend Change
 
 A break of a long-term down trendline on a weekly or monthly chart confirms a new major uptrend. For example, IBM's break of an 8-year down trendline in 1995 confirmed the new major uptrend that had begun with the 1993 bottom. Long-term trendline breaks are high-significance signals for major directional changes.

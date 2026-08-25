@@ -3,8 +3,11 @@ type: dashboard
 created: 2026-06-27
 updated: 2026-06-27
 tags: [meta, dashboard]
+topic: meta
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # 🏭 HermesForge Dashboard
 
 ## 🔥 Active Stories

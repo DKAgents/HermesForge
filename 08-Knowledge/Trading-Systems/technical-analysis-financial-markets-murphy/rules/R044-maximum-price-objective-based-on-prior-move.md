@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Maximum Price Objective Based on Prior Move
 
 The maximum downside objective from a topping pattern is a complete retracement of the entire prior bull move. Reversal patterns can only be expected to reverse or retrace what has gone before them. For example, if the previous bull market went from 30 to 100, the maximum downside objective would be a retracement all the way back to 30.

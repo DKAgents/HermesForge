@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keep It Simple
 
 Traders should keep their approach simple, as more complicated systems are not always better. Simplicity in analysis and execution often leads to more consistent results.

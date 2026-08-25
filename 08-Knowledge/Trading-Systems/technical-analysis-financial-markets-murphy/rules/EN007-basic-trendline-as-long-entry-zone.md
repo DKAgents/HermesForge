@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Basic Trendline as Long Entry Zone
 
 The basic up trendline (lower boundary of an ascending channel) can be used for the initiation of new long positions. When price pulls back to the basic trendline within an established channel, it presents a buying opportunity aligned with the prevailing trend. This approach uses the channel structure to time entries at favorable risk/reward levels.

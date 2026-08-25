@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation
 
 Rectangle formations are consolidation patterns defined by parallel support and resistance levels. Traders can trade swings within the range, and volume patterns within the rectangle provide confirmation signals. The pattern has similarities and differences with other continuation patterns.

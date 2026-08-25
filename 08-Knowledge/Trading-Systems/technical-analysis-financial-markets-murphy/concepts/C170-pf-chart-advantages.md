@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Chart Advantages
 
 Point and figure charts offer three key advantages: (1) flexibility through varying box and reversal sizes to adapt to different markets and needs; (2) more precise trading signals compared to bar charts; and (3) better trading discipline through adherence to specific P&F signals.

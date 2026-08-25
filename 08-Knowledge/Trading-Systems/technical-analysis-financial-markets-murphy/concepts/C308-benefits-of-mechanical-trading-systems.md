@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Benefits of Mechanical Trading Systems
 
 The mechanical approach offers three main benefits: back testing ideas before trading them on historical data rather than hard earned cash; being more objective and less emotional by letting the computer execute trades free of human emotion; and doing more work by covering more markets, trading more systems, and analyzing more time frames each day.

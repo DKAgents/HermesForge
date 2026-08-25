@@ -13,8 +13,8 @@ has_quotes: true
 topic: [fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Philosophical Basis of Technical Analysis
 
 Murphy emphasizes that a full appreciation of technical analysis must begin with understanding both what it claims to do and the philosophical rationale behind those claims. The approach is grounded in specific premises that distinguish it from other forms of market analysis. Understanding these premises is presented as a prerequisite to studying the tools and techniques.

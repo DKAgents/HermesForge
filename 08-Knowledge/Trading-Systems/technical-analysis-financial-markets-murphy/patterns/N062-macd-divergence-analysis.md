@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Divergence Analysis
 
 A negative (bearish) divergence exists when MACD lines are well above the zero line (overbought) and start to weaken while prices continue to trend higher — often a warning of a market top. A positive (bullish) divergence exists when MACD lines are well below the zero line (oversold) and start to move up ahead of the price line — often an early sign of a market bottom.

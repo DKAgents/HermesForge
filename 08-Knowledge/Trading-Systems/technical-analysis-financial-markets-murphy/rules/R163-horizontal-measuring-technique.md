@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Horizontal Measuring Technique
 
 To calculate a price objective using the horizontal method, count the number of columns across a base or topping pattern, then multiply by the reversal value (box size times number of boxes for reversal). Add this total to the bottom of a basing pattern for an upside target, or subtract from the top of a topping pattern for a downside target. For example, 10 columns with a $1 box and 3-box reversal yields a $30 target.

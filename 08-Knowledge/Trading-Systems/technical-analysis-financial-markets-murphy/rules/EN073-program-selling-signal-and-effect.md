@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Program Selling Signal and Effect
 
 Program selling is triggered when the S&P 500 futures premium over cash narrows too far below fair value. This results in buying of S&P 500 futures and selling of the basket of stocks. Program selling is negative for the stock market.

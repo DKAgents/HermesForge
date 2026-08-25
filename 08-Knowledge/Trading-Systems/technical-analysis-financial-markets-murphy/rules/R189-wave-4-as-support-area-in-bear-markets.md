@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave 4 as Support Area in Bear Markets
 
 Once five up waves have been completed and a bear trend begins, the bear market will usually not move below the previous fourth wave of one lesser degree. The bottom of wave 4 typically contains the bear market decline. This rule provides a useful maximum downside price objective, though exceptions exist.

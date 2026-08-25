@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Five Major Reversal Patterns
 
 The five most commonly used major reversal patterns are: the head and shoulders, double and triple tops and bottoms, the saucer, and the V (spike). Of these, the most common are the head and shoulders and double tops and bottoms. These patterns usually signal important trend reversals in progress and are classified as major reversal patterns.

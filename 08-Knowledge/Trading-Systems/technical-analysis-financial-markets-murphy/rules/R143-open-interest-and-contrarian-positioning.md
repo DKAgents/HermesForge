@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest and Contrarian Positioning
 
 Higher open interest figures increase the probability that contrarian positions will prove profitable. A contrarian position should not be taken while open interest is still increasing, as rising open interest increases the odds the current trend will continue. Wait for open interest to flatten or decline before acting against the trend.

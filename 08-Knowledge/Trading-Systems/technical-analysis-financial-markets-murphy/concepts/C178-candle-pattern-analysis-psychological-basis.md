@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Candle Pattern Analysis — Psychological Basis
 
 A Japanese candle pattern is a psychological depiction of traders' mentality at the time, vividly showing the actions of traders as time unfolds in the market. The consistency of human reactions during similar market situations is what makes candle pattern analysis work. Patterns can consist of a single candlestick line or a combination of multiple lines, normally never more than five.

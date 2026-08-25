@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pyramiding Rules
 
 When pyramiding (adding to positions), each successive layer should be smaller than the previous one, and positions should only be added to winning trades. Never add to a losing position, and protective stops should be adjusted to the breakeven point as new layers are added.

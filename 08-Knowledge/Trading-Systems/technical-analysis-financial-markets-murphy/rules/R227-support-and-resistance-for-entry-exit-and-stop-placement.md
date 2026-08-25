@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Support and Resistance for Entry, Exit, and Stop Placement
 
 Support and resistance are the most effective chart tools for determining entry and exit points. A breakout above resistance signals a new long position, with protective stops placed below the nearest support or just below the breakout point (which now acts as support). Rallies to resistance in a downtrend or declines to support in an uptrend can be used to initiate or add to profitable positions.

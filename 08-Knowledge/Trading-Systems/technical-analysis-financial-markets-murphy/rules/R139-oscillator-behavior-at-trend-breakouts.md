@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Behavior at Trend Breakouts
 
 When a price breakout occurs from a sideways range, the oscillator is already in an extreme position. An upside breakout is accompanied by an overbought oscillator; a downside breakout by an oversold reading. In such cases, the oscillator should be ignored and the breakout position taken, as oscillators often reach extremes quickly and stay there in the early stages of a new trend.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly and Monthly Reversal Patterns
 
 On monthly charts, a new monthly high followed by a close below the previous month's close often represents a significant turning point, especially near major support or resistance areas. Weekly reversals are the equivalent of key reversal days on daily charts but carry significantly more weight. These patterns occur frequently on long-term charts and signal major trend changes.

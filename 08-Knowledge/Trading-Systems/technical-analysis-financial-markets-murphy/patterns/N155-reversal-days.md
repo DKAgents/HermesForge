@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Days
 
 Reversal days signal potential trend changes and include top reversal days and selling climax patterns. A top reversal day occurs when price makes a new high but closes lower, while a selling climax involves a sharp decline followed by a reversal close.

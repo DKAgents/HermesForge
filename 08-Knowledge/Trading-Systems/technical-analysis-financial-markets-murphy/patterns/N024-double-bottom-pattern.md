@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Bottom Pattern
 
 The double bottom is a mirror image of the double top, often referred to as a 'W' formation. Volume is more important on the upside breakout than at the top. Return moves back to the breakout point are more common at bottoms than at tops. The measuring rule and general characteristics are similar to the head and shoulders and triple bottom.

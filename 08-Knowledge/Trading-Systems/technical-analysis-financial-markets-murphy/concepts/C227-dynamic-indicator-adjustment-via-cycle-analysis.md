@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, cycles, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dynamic Indicator Adjustment via Cycle Analysis
 
 Uncovering dominant cycles allows for the dynamic adjusting of technical indicators to fit current market conditions. Rather than using fixed indicator parameters, cycle analysis enables traders to continuously optimize moving average lengths and oscillator periods as market cycles evolve.

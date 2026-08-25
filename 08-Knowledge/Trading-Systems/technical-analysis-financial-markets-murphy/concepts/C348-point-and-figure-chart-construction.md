@@ -13,8 +13,8 @@ has_quotes: false
 topic: [point-and-figure, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Chart Construction
 
 Point and figure charts record only significant price movements, filtering out time and minor fluctuations. Intraday point and figure charts can be constructed from intraday price data. The 3-box reversal method is the standard approach, and horizontal counts are used to project price targets.

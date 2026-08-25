@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Efficient Market Hypothesis vs. Technical Premise
 
 The Efficient Market Hypothesis (EMH) holds that markets quickly discount all information, making it impossible to profit from that information. The author notes this is actually very close to the technical premise that markets discount everything — the key difference is that technicians believe price action itself reveals discounted information before it becomes publicly known, making price monitoring valuable.

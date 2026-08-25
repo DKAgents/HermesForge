@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Managing Positions at Resistance and Overbought Conditions
 
 When a market reaches a first profit objective, is near resistance, and oscillators show an overbought condition, the trading portion of the position can be partially liquidated or a tight protective stop utilized to lock in profits. If the trend then resumes, any liquidated positions can be reinstated. The trending portion should be maintained with loose stops.

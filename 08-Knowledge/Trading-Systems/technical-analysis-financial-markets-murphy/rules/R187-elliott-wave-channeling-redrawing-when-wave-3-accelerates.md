@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Channeling — Redrawing When Wave 3 Accelerates
 
 If wave 3 begins to accelerate to the point that it exceeds the upper channel line, the channel lines must be redrawn along the top of wave 1 and the bottom of wave 2. This updated channel better captures the stronger momentum of an extended or accelerating third wave.

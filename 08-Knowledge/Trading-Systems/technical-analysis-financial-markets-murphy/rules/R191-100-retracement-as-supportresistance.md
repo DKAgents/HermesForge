@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 100% Retracement as Support/Resistance
 
 A complete retracement (100%) of a previous bull or bear market should mark an important support or resistance area. This is derived from the first Fibonacci ratio of 1/1 = 1.00 (100%).

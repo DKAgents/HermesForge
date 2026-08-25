@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI 70/30 Signal Lines
 
 When RSI rises above 70, the market is considered overbought and a sell signal may be generated when it crosses back below 70. When RSI falls below 30, the market is oversold and a buy signal may be generated when it crosses back above 30.

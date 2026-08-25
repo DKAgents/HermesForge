@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuous Negotiation and Range Parameters
 
 When a market moves directionally it establishes range parameters — an unfair high and an unfair low — and then trades between them to establish a fair value area. All trade takes place through this negotiating process and remains within these parameters until one side is eventually taken out, forming a new high or new low.

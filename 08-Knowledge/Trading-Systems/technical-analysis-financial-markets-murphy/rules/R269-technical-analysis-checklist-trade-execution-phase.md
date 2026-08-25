@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, risk-management, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis Checklist — Trade Execution Phase
 
 After forming a bullish or bearish conclusion, a trader must answer: which way will the market trend over the next several months, whether to buy or sell, how many units to trade, how much risk is acceptable if wrong, what the profit objective is, where to enter the market, what type of order to use, and where to place the protective stop.

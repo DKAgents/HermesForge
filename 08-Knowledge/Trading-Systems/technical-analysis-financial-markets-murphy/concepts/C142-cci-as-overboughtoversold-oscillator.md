@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CCI as Overbought/Oversold Oscillator
 
 Most chartists use the CCI as an overbought/oversold oscillator rather than for directional signals. Readings over +100 are considered overbought and readings under -100 are considered oversold. The default period is 20 days, but users can vary this to adjust sensitivity.

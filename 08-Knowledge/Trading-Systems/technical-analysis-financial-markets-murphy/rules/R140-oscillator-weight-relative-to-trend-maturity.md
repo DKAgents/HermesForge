@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Weight Relative to Trend Maturity
 
 Give less attention to the oscillator in the early stages of an important move, but pay close attention to its signals as the move reaches maturity. Basic trend analysis should be the main consideration in early trend stages, with oscillators given a lesser role; as the trend matures, the oscillator should be given greater weight.

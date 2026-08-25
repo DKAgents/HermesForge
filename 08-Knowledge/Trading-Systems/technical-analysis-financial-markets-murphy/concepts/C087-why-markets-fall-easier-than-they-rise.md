@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Why Markets Fall Easier Than They Rise
 
 Markets can fall just from inertia because lack of demand or buying interest is often enough to push prices lower. However, markets do not go up on inertia — prices only rise when demand exceeds supply and buyers are more aggressive than sellers. This asymmetry explains why volume confirmation is more critical at bottoms than at tops.

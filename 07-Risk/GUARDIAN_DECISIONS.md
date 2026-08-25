@@ -2,8 +2,11 @@
 type: guardian-decisions
 created: 2026-06-30
 tags: [risk, guardian, decisions]
+topic: risk
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Risk Guardian Decision Log
 
 ## Purpose

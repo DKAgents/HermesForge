@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Inverse Head and Shoulders (Head and Shoulders Bottom)
 
 The inverse head and shoulders is a mirror image of the topping pattern, forming at market bottoms with three distinct troughs where the middle trough (head) is lower than the two surrounding troughs (shoulders). A key difference from the top is that the rally from the head should show heavier volume, and the breaking of the neckline should see a burst of trading activity. Return moves back to the neckline are more common at bottoms than at tops.

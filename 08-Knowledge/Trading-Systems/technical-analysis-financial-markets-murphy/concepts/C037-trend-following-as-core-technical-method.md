@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend-Following as Core Technical Method
 
 Most technical techniques are trend-following in nature, meaning their intent is to identify and follow existing trends rather than predict turning points. The goal is to identify trends in their early stages and trade in the direction of those trends. Accepting that markets trend is a prerequisite for using these methods.

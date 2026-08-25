@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top Formation
 
 In an uptrend, the market sets a new high at point A on increased volume, declines to point B on declining volume, then rallies to point C which fails to penetrate point A on a closing basis. This creates a potential double top. The ideal double top has two prominent peaks at approximately the same price level.

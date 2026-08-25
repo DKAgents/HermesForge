@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Constructing 3 and 5 Box Reversals from 1 Box Chart
 
 The correct order of construction is to begin with the 1-box reversal chart, from which the 3-box and 5-box reversal charts can be derived. A 1-box reversal chart cannot be constructed from a 3-box or 5-box reversal chart because data is lost in the compression.

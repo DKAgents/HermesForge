@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Constant Forward Continuous Contract Construction Rules
 
 Three inputs are needed: the commodity symbol, the number of contracts used in the calculation, and the number of weeks into the future to look. The number of contracts used should never be less than 2 and probably never greater than 4. The number of weeks should always be greater than 3 and could go up to 40 in some cases.

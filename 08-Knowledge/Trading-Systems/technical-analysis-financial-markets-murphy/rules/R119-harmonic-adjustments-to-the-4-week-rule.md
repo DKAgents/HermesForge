@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Harmonic Adjustments to the 4 Week Rule
 
 Adjustments to the 4 week rule work best when the base number (4) is divided or multiplied by 2, following the cyclic principle of harmonics. To shorten the time span, move from 4 to 2 weeks, or from 2 to 1 week. To lengthen, move from 4 to 8 weeks. This mirrors the harmonic relationships seen in the 5, 10, 20, and 40 day moving averages.

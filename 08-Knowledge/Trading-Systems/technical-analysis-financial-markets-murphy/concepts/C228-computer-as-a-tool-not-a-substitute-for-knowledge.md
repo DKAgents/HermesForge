@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Computer as a Tool, Not a Substitute for Knowledge
 
 The computer is an extremely valuable tool in the hands of a technically oriented trader who has already done their basic homework, but it will not turn a poor technician into a good one. Traders who are not properly schooled in the underlying concepts of indicators may be overwhelmed by the vast array of software available. Access to computer power can foster a false sense of security and competence.

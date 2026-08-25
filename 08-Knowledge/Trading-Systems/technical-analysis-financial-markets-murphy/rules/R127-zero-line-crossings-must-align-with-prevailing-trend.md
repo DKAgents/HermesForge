@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zero Line Crossings Must Align with Prevailing Trend
 
 Buy positions should only be taken on zero line crossings to the upside if the market trend is up. Short positions should only be taken on crossings below the zero line if the price trend is down. Trading oscillator signals against the prevailing trend is discouraged.

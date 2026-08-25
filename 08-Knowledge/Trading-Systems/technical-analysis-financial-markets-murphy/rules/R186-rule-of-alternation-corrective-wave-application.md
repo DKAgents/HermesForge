@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rule of Alternation — Corrective Wave Application
 
 In its specific application, the Rule of Alternation is used to predict the type of corrective pattern to expect. Corrective patterns tend to alternate in complexity: if wave 2 was a simple A-B-C pattern, wave 4 will probably be a complex pattern such as a triangle. Conversely, if wave 2 is complex, wave 4 will probably be simple.

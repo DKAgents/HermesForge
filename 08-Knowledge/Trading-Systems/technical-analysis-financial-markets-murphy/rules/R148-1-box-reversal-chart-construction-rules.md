@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, point-and-figure, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 1-Box Reversal Chart Construction Rules
 
 On a 1-box reversal chart, every column must contain at least 2 boxes filled in. If a reversal would leave only one mark in a column, the new direction's marks are added to the same column rather than starting a new one. This rule can result in columns containing both x's and o's, which is unique to 1-box reversal charts.

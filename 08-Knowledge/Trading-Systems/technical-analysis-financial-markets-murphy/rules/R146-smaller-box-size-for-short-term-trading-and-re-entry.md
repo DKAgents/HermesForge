@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Smaller Box Size for Short-Term Trading and Re-Entry
 
 Reducing the box size increases the number of corrections recorded during an uptrend, generating more repeat buy signals for later entry or for adding to winning positions. It also allows the trader to raise protective sell stops below the latest columns of o's.

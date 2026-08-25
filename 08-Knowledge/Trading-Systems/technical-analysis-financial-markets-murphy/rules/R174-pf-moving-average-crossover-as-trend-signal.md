@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Moving Average Crossover as Trend Signal
 
 When the faster P&F moving average (10-column) stays above the slower moving average (20-column), it confirms an ongoing uptrend. When the two moving averages converge, it signals a potential consolidation or trend change. P&F moving averages are interpreted using the same principles as bar chart moving averages.

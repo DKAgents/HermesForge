@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # AD Divergence as a Warning Signal
 
 When the Dow Industrials are hitting new highs while the broader market measured by the AD line is not following, this is called 'bad market breadth' or an AD divergence. This divergence is a warning signal that the market rally may not be sustainable. Technicians watch this closely because the AD line historically peaks well ahead of the major averages.

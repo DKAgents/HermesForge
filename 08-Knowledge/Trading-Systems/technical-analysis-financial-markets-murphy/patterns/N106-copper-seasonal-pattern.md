@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Copper Seasonal Pattern
 
 Copper shows a strong seasonal uptrend from the January/February period with a tendency to top in March or April. It usually bottoms during October and February and peaks during the April-May period.

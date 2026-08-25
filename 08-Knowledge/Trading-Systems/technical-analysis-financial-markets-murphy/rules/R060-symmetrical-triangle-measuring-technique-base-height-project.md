@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Measuring Technique – Base Height Projection
 
 The simplest measuring technique for a symmetrical triangle is to measure the height of the vertical line at the widest part of the triangle (the base) and project that distance from the breakout point. This gives a minimum price objective.

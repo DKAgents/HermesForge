@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 20 Day Price Channel Breakout Signal
 
 A 20 day (4 week) price channel can be applied to charts to spot channel breakouts. A buy signal is generated when prices close above the upper channel. The signal is reversed only when prices close beneath the lower channel. Price channels can be used on daily, weekly, or monthly charts.

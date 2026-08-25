@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Holding Long Positions in Correlated Markets is Not Diversification
 
 Holding long positions in multiple markets that are highly correlated does not constitute diversification. For example, holding long positions in four foreign currency markets simultaneously is not good diversification since foreign currencies usually trend in the same direction against the U.S. dollar.

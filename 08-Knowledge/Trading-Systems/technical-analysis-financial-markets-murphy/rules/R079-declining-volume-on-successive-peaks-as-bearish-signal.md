@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, oscillators, volume, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Declining Volume on Successive Peaks as Bearish Signal
 
 When price reaches successive new highs or retests prior highs with progressively lighter volume, this is a bearish warning sign indicating that the uptrend is losing momentum. The lack of buying conviction at higher price levels suggests the trend may be nearing exhaustion.

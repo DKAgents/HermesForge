@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Simple Signals Preferred in Futures Markets
 
 Because of the rapid price movement characteristic of futures markets, complex patterns are not as common in commodity trading as in stock trading. Much greater emphasis is placed on simple signals in futures, and many futures traders use simple signals alone. Waiting for complex patterns in futures will cause many profitable opportunities to be missed.

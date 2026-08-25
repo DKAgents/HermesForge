@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Default Time Period
 
 Wilder originally employed a 14-day period for RSI. Fourteen weeks are used for weekly charts. The number of days can be varied by changing the value of x in the formula.

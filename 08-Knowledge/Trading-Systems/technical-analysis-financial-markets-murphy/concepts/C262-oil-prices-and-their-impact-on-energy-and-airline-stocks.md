@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oil Prices and Their Impact on Energy and Airline Stocks
 
 Rising oil prices benefit energy shares but hurt airline stocks due to higher fuel costs. Falling oil prices have the opposite effect, hurting energy shares while benefiting airlines. This intermarket relationship can be used to rotate between these sectors based on the trend of oil prices.

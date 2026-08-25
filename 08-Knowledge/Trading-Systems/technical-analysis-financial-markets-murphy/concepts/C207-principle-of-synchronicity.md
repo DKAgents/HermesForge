@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Synchronicity
 
 The Principle of Synchronicity refers to the strong tendency for waves of differing lengths to bottom at approximately the same time. When a longer cycle bottoms, shorter harmonically related cycles tend to bottom simultaneously. Synchronicity also means that similar cycle lengths across different markets will tend to turn at the same time, providing cross-market confirmation.

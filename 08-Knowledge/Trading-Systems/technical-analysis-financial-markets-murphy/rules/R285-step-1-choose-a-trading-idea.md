@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Step 1: Choose a Trading Idea
 
 The first step in building a trading system is to select a core trading idea or methodology. This can be trend following, counter-trend, pattern recognition, or another approach. The idea must be clearly defined before it can be converted into rules.

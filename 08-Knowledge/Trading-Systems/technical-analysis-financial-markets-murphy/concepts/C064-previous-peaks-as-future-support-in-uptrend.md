@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Previous Peaks as Future Support in Uptrend
 
 In an uptrend, once a prior resistance peak is decisively broken, that level transforms into a support zone. On subsequent corrections, prices tend to find support at or near that prior resistance peak. This is illustrated by the Nasdaq 100 example where a 1997 resistance peak became support during a later intermediate decline.

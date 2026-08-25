@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Simple Signal for Liquidation Only
 
 A simple P&F signal can be reserved solely for liquidation purposes, requiring a more complex formation (such as a double top or bottom) before initiating a new commitment. This conservative approach reduces false entries by demanding stronger confirmation for new positions.

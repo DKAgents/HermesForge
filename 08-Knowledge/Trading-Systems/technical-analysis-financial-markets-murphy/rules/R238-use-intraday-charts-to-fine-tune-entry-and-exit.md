@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Use Intraday Charts to Fine-Tune Entry and Exit
 
 Intraday charts should be used to fine-tune entry and exit points once the overall trade direction has been determined from longer-term charts. This allows for tighter stops and better trade timing.

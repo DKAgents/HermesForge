@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pennant Pattern Construction
 
 A pennant resembles a small symmetrical triangle and usually lasts no longer than three weeks. Like the flag, it is preceded by a sharp move and represents a brief pause in the trend, with volume diminishing during formation and expanding on the breakout.

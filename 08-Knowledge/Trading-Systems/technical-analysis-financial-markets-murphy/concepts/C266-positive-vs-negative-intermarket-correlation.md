@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Positive vs. Negative Intermarket Correlation
 
 Two markets that normally trend in the same direction, such as bonds and stocks, are positively correlated. Markets that trend in opposite directions, like bonds and commodities, are negatively correlated. Understanding the sign and magnitude of correlation helps traders determine how much emphasis to place on a particular intermarket relationship.

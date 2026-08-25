@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis Core Premise
 
 All financial markets are linked in some way, including international and domestic markets. A complete understanding of any one market—such as the stock market—is not possible without understanding what is happening in other markets. These relationships may shift on occasion but are always present in one form or another.

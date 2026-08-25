@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Right Shoulder Rally Retracement Range
 
 The rally forming the right shoulder will often retrace one-half to two-thirds of the decline from the head to the neckline (points C to D). This provides a guideline for anticipating where the right shoulder peak may form.

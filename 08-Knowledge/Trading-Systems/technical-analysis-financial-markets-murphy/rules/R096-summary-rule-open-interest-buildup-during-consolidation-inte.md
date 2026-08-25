@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Open Interest Buildup During Consolidation Intensifies Breakout (Futures)
 
 A buildup in open interest during consolidation periods intensifies the ensuing breakout. This applies only to futures markets and is driven by the forced liquidation of traders caught on the wrong side of the breakout.

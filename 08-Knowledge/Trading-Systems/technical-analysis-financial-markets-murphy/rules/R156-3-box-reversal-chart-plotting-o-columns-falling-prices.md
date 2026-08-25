@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Chart: Plotting O Columns (Falling Prices)
 
 When in a down (O) column, consult only the daily low price to see if the column of O's can be continued. If one or more O's can be filled in, do so. Only when the daily low does not permit filling in any more O's should you look at the daily high to see if a 3-box reversal to the upside has occurred.

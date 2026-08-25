@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intraday Charts for Precision Timing
 
 Intraday price charts are especially useful for timing because they deal with very short-term market action. They are indispensable for day trading but are also valuable for any trader seeking to fine-tune entry and exit points once the basic decision to enter or exit a market has been made. All standard technical principles are clearly visible on these sensitive charts.

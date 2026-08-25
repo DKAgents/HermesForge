@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combined Retracement Zones (Dow + Fibonacci)
 
 Combining Dow Theory retracements (33%, 50%, 66%) with Elliott Wave/Fibonacci retracements (38%, 62%) yields a minimum retracement zone of 33–38% and a maximum zone of 62–66%. Some technicians round these off further to arrive at a 40–60% retracement zone.

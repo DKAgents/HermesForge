@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Work from Long Term to Short Term
 
 Analysis should begin with the long-term chart perspective and then work down to shorter time frames. This ensures that short-term trades are aligned with the dominant longer-term trend.

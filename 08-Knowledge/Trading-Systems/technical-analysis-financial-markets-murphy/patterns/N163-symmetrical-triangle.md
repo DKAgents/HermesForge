@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle
 
 A symmetrical triangle is a continuation pattern formed by converging trendlines with lower highs and higher lows. The breakout direction typically follows the prior trend, volume contracts during formation and expands on breakout, and there is a time limit for resolution.

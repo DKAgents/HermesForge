@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Candle Patterns
 
 Key reversal candlestick patterns include Dark Cloud Cover, Evening Star, Morning Star, and Piercing Line. These patterns signal potential trend reversals and are identified by specific multi-candle formations that indicate a shift in buying or selling pressure.

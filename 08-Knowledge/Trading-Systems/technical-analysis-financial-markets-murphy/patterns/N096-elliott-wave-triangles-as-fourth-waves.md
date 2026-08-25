@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave: Triangles as Fourth Waves
 
 Triangles are usually fourth waves and always precede the final wave. Triangles can also appear as B corrective waves within a larger correction.

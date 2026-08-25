@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Kondratieff Wave
 
 The Kondratieff Wave is a long-term economic cycle of approximately 50-60 years, identified by Russian economist Nikolai Kondratieff. It represents a long-term cycle in economic activity and commodity prices relevant to long-term market forecasting.

@@ -2,8 +2,11 @@
 type: risk-guide
 created: 2026-06-30
 tags: [risk, position-sizing]
+topic: risk
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Position Sizing Guide
 
 ## The Formula

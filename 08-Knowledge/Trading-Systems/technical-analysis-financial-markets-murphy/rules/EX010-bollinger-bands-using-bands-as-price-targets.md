@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Bands: Using Bands as Price Targets
 
 If prices bounce off the lower band and cross above the 20 day average, the upper band becomes the upper price target. A crossing below the 20 day average would identify the lower band as the downside target. In a strong uptrend, prices will usually fluctuate between the upper band and the 20 day average, and a crossing below the 20 day average warns of a trend reversal to the downside.

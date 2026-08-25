@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend-Following Systems — Strengths and Weaknesses
 
 Trend-following systems perform well when a trend is present but become useless during trading ranges. Traders must be able to identify the current market condition to know when to apply or avoid trend-following approaches. This is a fundamental limitation of all trend-following methodologies.

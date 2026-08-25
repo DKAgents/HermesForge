@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zero Line Crossing as Buy/Sell Signal
 
 A crossing of the momentum line above the zero line generates a buy signal, while a crossing below the zero line generates a sell signal. However, basic trend analysis remains the overriding consideration and oscillator signals should not be used to trade against the prevailing trend.

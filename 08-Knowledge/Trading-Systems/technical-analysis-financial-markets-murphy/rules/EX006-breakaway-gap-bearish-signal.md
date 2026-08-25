@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breakaway Gap — Bearish Signal
 
 In all cases, a close below an upward breakaway gap is a sign of weakness. It is important that prices not fall below gaps during an uptrend, as doing so signals deterioration of the bullish trend.

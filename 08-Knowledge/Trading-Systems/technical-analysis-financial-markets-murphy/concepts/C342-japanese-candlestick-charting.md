@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, market-breadth, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Japanese Candlestick Charting
 
 Japanese candlestick charting uses open, high, low, and close data to form visual representations of price action. Basic candlesticks include Long Days, Short Days, Spinning Tops, and Doji. Patterns are classified as reversal or continuation and can be filtered for higher reliability.

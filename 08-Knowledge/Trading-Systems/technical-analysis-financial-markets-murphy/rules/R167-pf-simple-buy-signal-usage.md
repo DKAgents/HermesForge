@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Simple Buy Signal Usage
 
 A simple buy signal on a P&F chart can be used for two purposes: covering existing short positions and/or initiating new long positions. This dual-purpose nature makes the signal actionable for traders on both sides of the market.

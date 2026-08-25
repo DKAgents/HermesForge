@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Principles Applied to Mutual Funds
 
 All technical tools described in intermarket analysis can be applied to charts of mutual funds as a final check on analysis. Price charts and a computer make this work easily achievable across many markets simultaneously.

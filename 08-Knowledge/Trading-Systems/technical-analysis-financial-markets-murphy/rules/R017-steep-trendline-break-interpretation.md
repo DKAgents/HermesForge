@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Steep Trendline Break Interpretation
 
 When a steep trendline is broken, it may not signal a full trend reversal but rather an adjustment to a more sustainable slope closer to 45 degrees. A new, less steep trendline should be drawn to track the continuing trend.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confirmation and Divergence
 
 When two market averages (Industrials and Transports) move in the same direction and confirm each other's signals, it strengthens the validity of the trend signal. When they diverge — one making a new high while the other does not — the prior trend is assumed to continue. Divergence is a warning sign rather than a reversal signal on its own.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pros and Cons of System Trading
 
 Murphy addresses the advantages and disadvantages of mechanical trading systems, implying that no system is perfect and that discretionary judgment remains important. This is relevant to the edge-condition awareness of any systematic approach.

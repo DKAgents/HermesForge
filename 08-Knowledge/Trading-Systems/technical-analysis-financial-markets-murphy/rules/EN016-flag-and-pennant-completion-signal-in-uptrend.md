@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag and Pennant Completion Signal in Uptrend
 
 Both flags and pennants in uptrends are completed on the penetration of the upper trendline. This breakout should take place on heavier volume, confirming the resumption of the prior uptrend.

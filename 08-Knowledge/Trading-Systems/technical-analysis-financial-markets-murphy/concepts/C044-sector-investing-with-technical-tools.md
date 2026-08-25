@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sector Investing with Technical Tools
 
 Sector investing, primarily through index options and mutual funds, has gained wide popularity. The author indicates that technical timing tools can be used to determine which market sectors are performing well and which are not, extending the application of technical analysis beyond individual securities.

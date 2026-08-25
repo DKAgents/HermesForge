@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Leveling or Decline in Open Interest Warns of Trend Change (Futures)
 
 Within an uptrend, a sudden leveling off or decline in open interest often warns of a change in trend. This rule applies only to futures markets.

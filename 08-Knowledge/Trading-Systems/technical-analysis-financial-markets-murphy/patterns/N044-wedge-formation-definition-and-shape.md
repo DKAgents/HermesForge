@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wedge Formation: Definition and Shape
 
 The wedge formation is similar to a symmetrical triangle in shape and time to form, identified by two converging trendlines meeting at an apex. It typically lasts more than one month but not more than three months, placing it in the intermediate category. What distinguishes the wedge is its noticeable slant either to the upside or downside.

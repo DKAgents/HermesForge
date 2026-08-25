@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Arms Index Intraday Interpretation
 
 On an intraday basis, a very high Arms Index reading is positive (contrary signal indicating oversold conditions), while a very low reading is negative (indicating overbought conditions). The Arms Index can be used for intraday trading by tracking its direction and spotting signs of short-term market extremes.

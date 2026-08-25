@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Entry Strategy in Trending Markets
 
 In an uptrend, buy when the market is oversold. In a downtrend, sell short when the market is overbought. Alternatively, buy when the momentum oscillator crosses back above the zero line when the major trend is bullish, and sell a crossing under the zero line in a bear market.

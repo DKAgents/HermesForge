@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Double Top/Bottom Vertical Count Adjustment
 
 When a double top or double bottom pattern occurs on a point and figure chart, the vertical count should use the second column of o's or x's rather than the first. This adjustment accounts for the pattern structure and provides a more accurate price projection.

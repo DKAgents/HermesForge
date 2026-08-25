@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Right Translation (Bullish)
 
 When the trend of the next longer cycle is up (bull market), the cycle crest shifts to the right of the ideal midpoint, causing right translation. This means prices spend more time going up than down within the cycle. Right translation is a bullish signal.

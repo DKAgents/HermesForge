@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Head and Shoulders Pattern
 
 The head and shoulders pattern, typically known as a reversal pattern, can sometimes appear as a continuation pattern instead. While it was described in the previous chapter as the best known and most trustworthy of all reversal patterns, traders must be aware that it can also signal continuation of the existing trend.

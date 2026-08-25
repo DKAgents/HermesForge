@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Vertical Measuring Technique
 
 The vertical count measures the number of boxes in the first column of the new trend. In an uptrend, measure the first up column of X's; in a downtrend, measure the first down column of O's. Multiply that value by 3 and add to the bottom (uptrend) or subtract from the top (downtrend) of the column. If a double top or bottom occurs, use the second column of O's or X's for the vertical count.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Head and Shoulders Completion Signal
 
 The continuation head and shoulders pattern is completed and the prior trend resumes with a close above (in uptrend) or below (in downtrend) the neckline. This close beyond the neckline serves as the trigger signal to enter in the direction of the original trend.

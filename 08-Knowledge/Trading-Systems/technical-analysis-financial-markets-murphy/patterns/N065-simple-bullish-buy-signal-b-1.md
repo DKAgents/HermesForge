@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Simple Bullish Buy Signal (B-1)
 
 The simplest bullish buy signal requires only 3 columns, with the second column of X's moving 1 box above the previous column of X's. This represents a simple breakout through resistance. It is the foundational pattern from which more complex formations are built.

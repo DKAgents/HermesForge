@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Patterns
 
 Continuation patterns are price formations that imply a pause or consolidation in the prevailing trend. The most common types are triangles, flags, and pennants.

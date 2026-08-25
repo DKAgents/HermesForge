@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Day Significance Factors
 
 The importance of a reversal day is determined by the volume on the reversal day and the width of the price range. The heavier the volume and the wider the range, the more significant the reversal day becomes.

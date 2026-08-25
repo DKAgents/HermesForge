@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Qualities of a Cycle: Amplitude, Period, Phase
 
 The three qualities of a cycle are amplitude, period, and phase. Amplitude measures the height of the wave expressed in dollars, cents, or points. The period is the time between troughs. The phase is a measure of the time location of a wave trough, used to compare the timing of different cycles.

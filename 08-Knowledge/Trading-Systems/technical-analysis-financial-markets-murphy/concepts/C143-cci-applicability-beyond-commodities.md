@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CCI Applicability Beyond Commodities
 
 Although the Commodity Channel Index was originally developed for commodities, it is also used for trading stock index futures and options such as the S&P 100 (OEX). The user can vary the default period of 20 days to adjust its sensitivity.

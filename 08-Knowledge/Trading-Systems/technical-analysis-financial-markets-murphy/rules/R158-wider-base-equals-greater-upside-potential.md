@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wider Base Equals Greater Upside Potential
 
 In point and figure charting, the wider the base formed by a pattern, the greater the upside (or downside) potential. This principle underpins why complex formations with more columns are considered stronger signals than simple ones.

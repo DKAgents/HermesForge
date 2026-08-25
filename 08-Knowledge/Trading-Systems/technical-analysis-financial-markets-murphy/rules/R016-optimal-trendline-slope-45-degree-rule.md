@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Optimal Trendline Slope (45-Degree Rule)
 
 Most important up trendlines tend to approximate an average slope of 45 degrees, reflecting a balance between price and time. A trendline that is too steep indicates an unsustainable rate of ascent, while a trendline that is too flat suggests the uptrend is weak and suspect. The 45-degree line technique was favored by W.D. Gann.

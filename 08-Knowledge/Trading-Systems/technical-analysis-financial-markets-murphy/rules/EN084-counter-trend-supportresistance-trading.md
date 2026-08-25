@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Counter Trend: Support/Resistance Trading
 
 A counter-trend approach based on support and resistance involves buying a decline into support and selling a rally into resistance. This method fades the prevailing short-term move by anticipating a reversal at known price levels.

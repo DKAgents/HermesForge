@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sector Rotation Rule Using Relative Strength Lines
 
 The general strategy is to rotate funds into sectors whose relative strength lines are just turning up and to rotate out of sectors whose relative strength lines are just turning down. These moves can be implemented using sector index options or mutual funds that match the various market sectors and industry groups.

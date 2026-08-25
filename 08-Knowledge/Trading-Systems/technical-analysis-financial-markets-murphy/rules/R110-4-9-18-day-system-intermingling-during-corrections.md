@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, system-design, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-9-18 Day System: Intermingling During Corrections
 
 Some intermingling of the three averages may occur during corrections or consolidations, but the general uptrend remains intact as long as the overall alignment is maintained. Some traders may take profits during the intermingling process while others may use it as a buying opportunity. There is flexibility in applying the rules depending on how aggressively one wants to trade.

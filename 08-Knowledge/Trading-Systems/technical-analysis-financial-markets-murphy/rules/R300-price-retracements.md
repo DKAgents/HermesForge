@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Retracements
 
 Prices normally retrace the prior trend by a percentage amount before resuming the original trend. The best known example is the 50% retracement. Minimum and maximum retracements are normally one third and two thirds, respectively. Elliott wave analysis uses Fibonacci retracements of 38% and 62%.

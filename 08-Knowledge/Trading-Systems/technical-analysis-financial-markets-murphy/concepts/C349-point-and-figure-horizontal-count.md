@@ -13,8 +13,8 @@ has_quotes: false
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Horizontal Count
 
 The horizontal count method on point and figure charts measures the width of a consolidation pattern to project a price target. The count is taken across the congestion area and multiplied by the box size and reversal amount.

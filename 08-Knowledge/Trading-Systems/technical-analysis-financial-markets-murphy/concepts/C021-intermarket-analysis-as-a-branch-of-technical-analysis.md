@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis as a Branch of Technical Analysis
 
 Murphy describes intermarket analysis as a branch of technical analysis he helped create, examining the links between bonds and stocks, bonds and commodities, commodities and the dollar, and stock sectors. It is presented as a broader application of technical principles across all financial markets, including the use of relative strength analysis and top-down market approaches.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Closeout of a Long Position
 
 The closeout point for a long position is exactly the same point as the sell signal. Stop-loss orders should be placed in advance since all buy and stop-loss points can be determined beforehand.

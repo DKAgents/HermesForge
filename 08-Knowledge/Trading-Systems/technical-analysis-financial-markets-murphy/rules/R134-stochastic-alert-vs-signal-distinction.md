@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Alert vs. Signal Distinction
 
 An alert or set-up is present when the %D line is in an extreme area (above 80 or below 20) and diverging from the price action. The actual signal takes place when the D line is crossed by the faster K line. This two-step process distinguishes between a warning condition and an actionable signal.

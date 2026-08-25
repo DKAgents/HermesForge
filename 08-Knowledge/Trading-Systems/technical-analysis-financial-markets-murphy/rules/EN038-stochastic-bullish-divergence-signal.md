@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastic Bullish Divergence Signal
 
 A bullish divergence is present when the D line is under 20 and forms two rising bottoms while prices continue to move lower. The actual buy signal is triggered when the faster K line crosses the slower D line after this divergence is established.

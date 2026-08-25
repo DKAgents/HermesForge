@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Limit Orders and Market Orders
 
 A limit order specifies a price at which to buy or sell, while a market order executes immediately at the best available price. A market-if-touched (M.I.T.) order becomes a market order when a specified price is touched.

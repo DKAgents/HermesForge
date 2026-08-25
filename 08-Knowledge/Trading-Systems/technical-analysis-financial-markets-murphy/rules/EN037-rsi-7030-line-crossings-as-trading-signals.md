@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI 70/30 Line Crossings as Trading Signals
 
 A crossing back above the 30 line after the RSI has dipped under 30 is taken by many traders as a confirmation that the trend in the oscillator has turned up and is a buy signal. In an overbought market, a crossing back under the 70 line can often be used as a sell signal. Some type of divergence or double bottom may develop in the oscillator in the oversold region before the crossover.

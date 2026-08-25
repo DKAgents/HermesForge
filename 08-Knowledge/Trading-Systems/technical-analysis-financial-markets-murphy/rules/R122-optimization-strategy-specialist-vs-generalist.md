@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Optimization Strategy: Specialist vs. Generalist
 
 Traders following only a handful of markets should experiment with optimization, as different markets may respond best to different parameters. Traders who follow a large number of markets (such as stock market generalists) should use the same technical parameters for all of them, as optimizing thousands of stocks is impractical.

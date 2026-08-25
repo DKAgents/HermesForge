@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, candlesticks, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Building a Trading System: 5-Step Plan
 
 The book outlines a 5-step plan for building a trading system: (1) Start with a concept/idea, (2) Turn the idea into a set of objective rules, (3) Visually check it on charts, (4) Formally test it with a computer, and (5) Evaluate results. Money management is also addressed as part of the system-building process.

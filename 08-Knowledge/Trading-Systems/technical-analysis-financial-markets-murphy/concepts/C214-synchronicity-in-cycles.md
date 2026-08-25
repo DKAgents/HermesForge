@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Synchronicity in Cycles
 
 Synchronicity refers to the tendency for cycle lows of different lengths to occur at the same time. When multiple cycles bottom simultaneously, it creates a more significant and reliable trough. Cycles lacking synchronicity produce less clear turning points.

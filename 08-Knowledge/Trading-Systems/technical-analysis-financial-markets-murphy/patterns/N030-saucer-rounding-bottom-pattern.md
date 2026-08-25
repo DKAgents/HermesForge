@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Saucer (Rounding) Bottom Pattern
 
 The saucer or rounding bottom shows a very slow and gradual turn from down to sideways to up. It is difficult to determine exactly when the saucer has been completed or to measure how far prices will travel in the opposite direction. Saucer bottoms are usually spotted on weekly or monthly charts spanning several years, and the longer they last, the more significant they become.

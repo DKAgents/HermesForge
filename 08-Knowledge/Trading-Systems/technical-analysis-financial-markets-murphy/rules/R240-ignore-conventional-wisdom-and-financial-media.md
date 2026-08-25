@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ignore Conventional Wisdom and Financial Media
 
 Traders should try to ignore conventional wisdom and not take anything said in the financial media too seriously. Contrarian thinking is often necessary for successful trading.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Round Numbers as Psychological Support and Resistance
 
 Markets tend to stall at round numbers such as 10, 20, 25, 50, 75, 100, and multiples of 1000. Traders naturally think in terms of round numbers as price objectives, causing these levels to act as psychological support or resistance. Historical examples include gold stalling at $300, $400, and $500, and the Dow Jones Industrial Average stalling at multiples of 1000.

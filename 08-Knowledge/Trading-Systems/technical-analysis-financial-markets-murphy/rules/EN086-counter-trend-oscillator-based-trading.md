@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Counter Trend: Oscillator-Based Trading
 
 Oscillator-based counter-trend trading involves buying when the oscillator is oversold and selling when it is overbought. If divergence between the price series and the oscillator is also present, a much stronger signal is generated. It is usually best to wait for some sign of a price reversal before acting on the oscillator signal.

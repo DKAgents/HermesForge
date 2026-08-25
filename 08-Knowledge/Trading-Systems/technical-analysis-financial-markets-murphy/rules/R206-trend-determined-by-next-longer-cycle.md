@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Determined by Next Longer Cycle
 
 The trend of each cycle is determined by the direction of its next longer cycle. Once the trend of a longer cycle is established, the trend of the next shorter cycle is known. This principle requires traders using any short-term trend for timing to first determine the direction of the next longer trend and then trade in that direction.

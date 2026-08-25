@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, candlesticks, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # ATR-Based Bands as Supplementary Tools
 
 Neither STARC bands nor Keltner channels are presented as stand-alone trading systems; they should be considered additional tools to complement other analysis methods such as percentage envelopes or Bollinger Bands.

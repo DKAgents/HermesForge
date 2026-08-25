@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pullbacks as Entry Opportunities
 
 Pullbacks are defined as the market taking an immediate entry on a signal, then a reversal is captured after a signal, thereby waiting for the price to pull back to take the position at or near the signal but at a better price. This allows traders to enter positions at more favorable levels after a signal has been generated.

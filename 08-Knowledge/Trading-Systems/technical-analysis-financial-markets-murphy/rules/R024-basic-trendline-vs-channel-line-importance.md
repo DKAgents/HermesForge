@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Basic Trendline vs. Channel Line Importance
 
 Of the two lines in a channel, the basic trendline is by far the more important and more reliable. The channel line is a secondary use of the trendline technique. However, the channel line works often enough to justify its inclusion in the chartist's toolkit.

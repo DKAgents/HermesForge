@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Differences: Stocks vs. Commodities
 
 Wave 3 tends to extend in stocks while wave 5 tends to extend in commodities. The rule that wave 4 cannot overlap wave 1 is strict in stocks but less rigid in commodities (intraday penetrations can occur on futures charts). Major bull markets in commodities can be 'contained,' meaning bull market highs do not always exceed previous bull market highs, unlike stocks.

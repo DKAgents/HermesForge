@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # DI Lines as a Filter on Trend-Following Systems
 
 The two Directional Indicator (DI) lines from the DMI system can be used as a filter on Parabolic SAR or any other sensitive trend-following trading system. This helps reduce false signals generated during non-trending market conditions.

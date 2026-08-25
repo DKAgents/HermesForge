@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Avoiding Spot Month Volatility in Continuation Charts
 
 To avoid the extreme volatility that can occur in the spot (nearest) contract just before expiration, some technicians stop plotting the nearest contract one to two months before it expires. Others avoid the nearest contract altogether and instead chart the second or third contract in the delivery sequence.

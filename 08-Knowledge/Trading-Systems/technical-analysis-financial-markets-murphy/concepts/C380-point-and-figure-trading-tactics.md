@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Trading Tactics
 
 Point and figure charts are used to generate specific trading tactics including entry signals, price targets via measuring techniques, and trendline analysis. They are particularly useful for identifying support, resistance, and breakout levels.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Isolating Cycles by Visual Inspection
 
 The simplest method to isolate dominant cycles is visual inspection of daily bar charts. By identifying obvious tops and bottoms and calculating average time periods between them, average cycle lengths can be determined. This forms the foundation for cycle analysis.

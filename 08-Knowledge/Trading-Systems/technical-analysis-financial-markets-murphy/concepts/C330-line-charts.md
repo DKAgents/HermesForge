@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Line Charts
 
 Line charts connect the closing prices of a given market over a span of time, resulting in a curving line. They are most useful for overlay or comparison charts in intermarket analysis and for visual trend analysis of open-end mutual funds.

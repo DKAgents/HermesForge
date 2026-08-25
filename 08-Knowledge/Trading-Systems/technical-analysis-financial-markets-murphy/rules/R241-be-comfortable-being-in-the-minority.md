@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Be Comfortable Being in the Minority
 
 Successful traders must learn to be comfortable being in the minority. If a trader is correct about the market direction, most people will disagree with them, as markets often move against the consensus.

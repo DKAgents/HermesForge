@@ -7,8 +7,11 @@ created: 2026-06-30
 updated: 2026-07-17
 owner: risk-guardian
 tags: [risk, rules, framework, trading]
+topic: risk
+confidence: high
+has_quotes: true
+source: HermesForge Risk Framework
 ---
-
 # HermesForge Risk Rules v1.0
 
 ## Overview

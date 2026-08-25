@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Lengths Are Dynamic, Not Static
 
 Cycle lengths in markets are not static; they keep changing over time. What worked a month ago may not work a month from now. This dynamic nature of cycles complicates the search for dominant cycles and necessitates tools like MESA that can adapt to changing cycle lengths.

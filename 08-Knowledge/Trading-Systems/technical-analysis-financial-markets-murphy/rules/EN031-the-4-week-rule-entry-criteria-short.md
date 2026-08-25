@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # The 4 Week Rule — Entry Criteria (Short)
 
 Liquidate long positions and sell short whenever the price falls below the lows of the four preceding full calendar weeks. This breakdown below the 4-week low signals a new downtrend and triggers a short entry while simultaneously closing any existing long position.

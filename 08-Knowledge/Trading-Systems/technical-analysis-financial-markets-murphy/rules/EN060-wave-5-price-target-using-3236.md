@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave 5 Price Target Using 3.236
 
 The top of wave 5 can be approximated by multiplying wave 1 by 3.236 (which equals 2 x 1.618) and adding that value to the top or bottom of wave 1 for maximum and minimum targets respectively.

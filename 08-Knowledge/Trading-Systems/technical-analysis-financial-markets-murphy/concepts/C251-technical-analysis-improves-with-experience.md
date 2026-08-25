@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis Improves with Experience
 
 Technical analysis is a skill that improves with experience and study. Traders should always remain students of the market and continue learning throughout their careers.

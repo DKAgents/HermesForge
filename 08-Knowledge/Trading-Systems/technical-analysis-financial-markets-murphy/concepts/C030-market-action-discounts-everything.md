@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Action Discounts Everything
 
 The cornerstone premise of technical analysis holds that all factors that could possibly affect price — fundamental, political, psychological, or otherwise — are already reflected in the market price. Therefore, studying price action alone is sufficient for forecasting. The technician indirectly studies fundamentals by reading price, since rising prices imply bullish fundamentals and falling prices imply bearish fundamentals.

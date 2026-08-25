@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measured Move: Corrective Wave Retracement
 
 In the measured move framework, the corrective wave (BC) often retraces a third to a half of the first upleg (AB) before the uptrend is resumed. This retracement range is consistent with general market retracement principles and helps confirm the validity of the measured move setup.

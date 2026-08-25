@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Harmonicity
 
 The Principle of Harmonicity states that neighboring cycle waves are usually related by a small whole number, typically two. For example, if a 20-day cycle exists, the next shorter cycle will usually be 10 days and the next longer cycle will be 40 days. This harmonic relationship explains why shorter and longer trading rules (e.g., 2-week, 4-week, 8-week rules) tend to be valid.

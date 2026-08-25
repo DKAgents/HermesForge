@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 40–60% Retracement Zones for Timing Entries
 
 In an uptrend, pullbacks that retrace 40–60% of the prior advance provide excellent opportunities for new or additional long positions. In downtrends, bounces of 40–60% usually provide excellent shorting opportunities. These percentage retracements can be applied to very short-term and intraday charts for precise timing.

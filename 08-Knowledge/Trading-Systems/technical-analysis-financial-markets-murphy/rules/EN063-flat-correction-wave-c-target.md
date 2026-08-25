@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flat Correction Wave C Target
 
 In a flat 3-3-5 correction where the B wave reaches or exceeds the top of wave A, wave C will be approximately 1.618 times the length of wave A. This extended C wave is characteristic of flat correction structures.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flat Correction (3-3-5) — Regular and Irregular
 
 A flat correction is a sideways corrective pattern labeled A-B-C with a 3-3-5 wave structure. In a regular flat, wave B returns to approximately the start of wave A and wave C ends near the end of wave A. In an irregular flat, wave B exceeds the start of wave A, making the correction appear more complex. Both bull market and bear market variants exist.

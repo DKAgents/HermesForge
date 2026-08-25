@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Analysis Procedure: Long to Short Term
 
 The proper procedure in cycle analysis is to begin with a study of long-term dominant cycles spanning several years, then work toward intermediate cycles of several weeks to months, and finally use very short-term cycles of several hours to several days for timing entry and exit points. Short-term cycles also help confirm turning points of longer cycles.

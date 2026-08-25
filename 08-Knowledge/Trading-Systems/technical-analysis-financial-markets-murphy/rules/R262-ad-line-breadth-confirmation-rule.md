@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # AD Line Breadth Confirmation Rule
 
 The primary use of the advance-decline line in all its forms is to measure the direction of the broader market and ensure it is moving in the same direction as the more narrowly constructed but popular market averages. Divergence between the two is the key warning signal regardless of the specific calculation method used.

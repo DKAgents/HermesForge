@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Soybean Seasonal Pattern
 
 In soybeans, most seasonal tops occur between April and June with seasonal bottoms taking place between August and October. A well-known seasonal pattern is the 'February Break' where grain and soybean prices usually drop from late December or early January into February.

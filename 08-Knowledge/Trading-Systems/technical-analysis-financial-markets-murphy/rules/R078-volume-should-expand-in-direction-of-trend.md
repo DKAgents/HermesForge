@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Should Expand in Direction of Trend
 
 Volume should increase or expand in the direction of the existing price trend. In an uptrend, volume should be heavier as price moves higher and should decrease or contract on price dips. As long as this pattern continues, volume is said to be confirming the price trend.

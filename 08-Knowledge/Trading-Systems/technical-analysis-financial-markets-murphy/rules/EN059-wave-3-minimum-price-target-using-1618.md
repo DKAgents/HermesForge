@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave 3 Minimum Price Target Using 1.618
 
 A minimum price target for the top of wave 3 can be calculated by multiplying the length of wave 1 by 1.618 and adding that total to the bottom of wave 2. This provides a Fibonacci-based upside objective for the third impulse wave.

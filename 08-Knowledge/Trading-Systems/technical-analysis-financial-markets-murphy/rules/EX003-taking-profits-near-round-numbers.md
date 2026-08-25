@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Taking Profits Near Round Numbers
 
 A trader can use the tendency of round numbers to act as support or resistance to begin taking profits as an important round number is approached. This is a practical application of the psychological significance of round numbers in price action.

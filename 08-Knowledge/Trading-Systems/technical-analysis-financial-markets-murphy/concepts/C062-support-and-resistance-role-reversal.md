@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Support and Resistance Role Reversal
 
 Once a support level is decisively penetrated to the downside, it reverses roles and becomes a resistance level on subsequent bounces. Conversely, once a resistance level is decisively broken to the upside, it becomes a new support level on subsequent pullbacks. This role reversal is driven by the shift in trader psychology — previous sellers near a resistance peak become buyers once that level is broken.

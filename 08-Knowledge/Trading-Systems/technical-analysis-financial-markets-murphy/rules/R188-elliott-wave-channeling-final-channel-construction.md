@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Channeling — Final Channel Construction
 
 The final channel is drawn under the two corrective waves (waves 2 and 4) and usually above the top of wave 3. If wave 3 is unusually strong or extended, the upper channel line is adjusted accordingly. This final channel helps confirm wave counts and project where wave 5 may terminate.

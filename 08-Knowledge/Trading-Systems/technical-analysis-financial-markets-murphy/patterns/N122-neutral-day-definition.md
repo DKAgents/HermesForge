@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Neutral Day Definition
 
 A neutral day occurs when the longer term trader extends the range after the initial balance in one direction, then reverses and extends the range in the opposite direction. Neutral days indicate trader uncertainty and occur when the market probes or tests for price trend continuation or change.

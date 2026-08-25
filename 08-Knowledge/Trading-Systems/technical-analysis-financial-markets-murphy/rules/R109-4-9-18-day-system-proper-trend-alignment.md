@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-9-18 Day System: Proper Trend Alignment
 
 In an uptrend, the proper alignment is for the 4 day average to be above the 9 day, which is above the 18 day average. In a downtrend, the order is reversed: the 4 day is the lowest, followed by the 9 day, then the 18 day average. The shorter the moving average, the more closely it follows the price trend.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Violation as a Trend Change Signal
 
 When a trendline is violated (broken), it signals a change in trend and calls for liquidation of all positions in the direction of the previous trend. The breaking of the trendline is one of the best early warnings of a change in trend. This signal applies to both up and down trendlines.

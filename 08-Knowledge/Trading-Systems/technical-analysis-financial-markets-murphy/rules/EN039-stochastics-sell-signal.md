@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastics Sell Signal
 
 A sell signal occurs when the faster %K line crosses below the slower %D line from above the 80 level. This indicates the market is moving out of overbought territory and a downward reversal may be underway.

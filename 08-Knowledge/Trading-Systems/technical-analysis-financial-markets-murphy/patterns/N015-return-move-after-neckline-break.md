@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Return Move After Neckline Break
 
 After the neckline is broken, a return move (bounce back to the neckline or previous reaction low) often occurs. The broken neckline and prior reaction low now act as overhead resistance. Heavy volume on the initial neckline break reduces the likelihood of a return move; lighter volume increases it. The return move bounce should be on light volume, and the subsequent resumption of the downtrend should be on heavier volume.

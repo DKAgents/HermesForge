@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Role Reversal
 
 Once a trendline is decisively broken, it reverses its role. An up trendline (support line) becomes a resistance line after being broken to the downside. A down trendline (resistance line) becomes a support line after being broken to the upside. Trendlines should be projected as far to the right as possible even after being broken, as old trendlines frequently act as support or resistance again in the future.

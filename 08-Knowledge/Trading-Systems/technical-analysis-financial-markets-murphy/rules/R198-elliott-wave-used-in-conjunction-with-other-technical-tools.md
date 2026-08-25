@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Used in Conjunction with Other Technical Tools
 
 Elliott Wave Theory should be used in conjunction with other technical tools, not in isolation. Trying to force unclear market action into an Elliott format while ignoring other technical tools is a misuse of the theory. The key is to view it as a partial answer to the puzzle of market forecasting.

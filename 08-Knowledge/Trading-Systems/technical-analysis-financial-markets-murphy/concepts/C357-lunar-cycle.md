@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Lunar Cycle
 
 The lunar cycle is a approximately 28-day cycle that some analysts apply to financial markets. It is one of several natural cycles studied in the context of market timing.

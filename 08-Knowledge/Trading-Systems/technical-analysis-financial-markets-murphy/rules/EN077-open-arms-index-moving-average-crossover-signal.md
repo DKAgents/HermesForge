@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators, market-breadth, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Arms Index Moving Average Crossover Signal
 
 A crossing of the Open Arms Index's 10-day moving average often signals turning points in the market. Because the Open Arms version is smoother, its crossover signals may be more reliable and less prone to whipsaws than the raw Arms Index.

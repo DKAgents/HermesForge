@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangle Price Measurement — Width of Triangle
 
 Elliott's measurement for the fifth and final wave after completion of a triangle is the same as in classical charting: the market is expected to move a distance equal to the widest part of the triangle (its height). This provides a price objective for the thrust move following triangle completion.

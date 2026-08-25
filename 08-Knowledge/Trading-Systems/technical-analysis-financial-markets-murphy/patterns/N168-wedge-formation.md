@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wedge Formation
 
 A wedge formation is characterized by converging trendlines that both slope in the same direction, either up or down. A rising wedge is typically bearish and a falling wedge is typically bullish.

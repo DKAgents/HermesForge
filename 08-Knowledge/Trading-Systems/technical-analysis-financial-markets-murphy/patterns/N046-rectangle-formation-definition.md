@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Definition
 
 The rectangle formation represents a pause in the trend during which prices move sideways between two parallel horizontal lines. Also called a trading range, congestion area, or 'line' in Dow Theory. It usually represents a consolidation period in the existing trend and is typically resolved in the direction of the preceding trend.

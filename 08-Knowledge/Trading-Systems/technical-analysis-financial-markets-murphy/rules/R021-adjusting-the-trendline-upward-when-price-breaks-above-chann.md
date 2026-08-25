@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting the Trendline Upward When Price Breaks Above Channel
 
 If prices move above a projected rising channel line by a significant amount, it signals a strengthening trend. In this case, chartists draw a steeper basic up trendline from the last reaction low, parallel to the new (higher) channel line. The new steeper support line often functions better than the original flatter trendline as the trend accelerates.

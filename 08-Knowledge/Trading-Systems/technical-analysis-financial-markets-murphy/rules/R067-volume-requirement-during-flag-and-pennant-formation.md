@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Requirement During Flag and Pennant Formation
 
 An important requirement for both flags and pennants is that volume should dry up noticeably while each of the patterns is forming. This contraction in volume is a key confirming characteristic of these continuation patterns.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Linear Extrapolation for Perpetual Contract Pricing
 
 To find the Constant Forward Continuous Contract price, plot the closing prices of the two nearest contracts above their respective expiration dates, then draw a straight line between the two points. The value at the desired forward date (e.g., 12 weeks out) is read from this line. The slope of the line reflects the market's outlook for the underlying asset.

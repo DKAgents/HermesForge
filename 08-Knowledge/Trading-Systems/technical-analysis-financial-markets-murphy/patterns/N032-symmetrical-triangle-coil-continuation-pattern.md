@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle (Coil) — Continuation Pattern
 
 The symmetrical triangle, also called a coil, is usually a continuation pattern representing a pause in the existing trend after which the original trend is resumed. If the prior trend was up, the percentages favor resolution on the upside; if the prior trend was down, the triangle has bearish implications. The pattern requires a minimum of four reversal points (two touches on each converging trendline).

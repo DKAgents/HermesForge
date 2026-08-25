@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Historical Economic and Market Cycles
 
 Research by Edward R. Dewey identified numerous recurring cycles including an 18.33 year cycle in real estate activity, a 9.2 year stock market cycle, and an 11.11 year average sunspot cycle. Many seemingly unrelated cycles clustered around similar periods and acted in synchrony, turning at the same time.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rising Three Methods — Bullish Continuation Pattern
 
 The Rising Three Methods is a five-day bullish continuation pattern occurring in an uptrend. Day 1 is a long white candle supporting the uptrend. Days 2–4 are small-bodied days (at least two black) that trend downward but remain within the range of Day 1's body, representing a 'period of rest.' Day 5 is another long white candle that closes at a new high, confirming continuation of the uptrend.

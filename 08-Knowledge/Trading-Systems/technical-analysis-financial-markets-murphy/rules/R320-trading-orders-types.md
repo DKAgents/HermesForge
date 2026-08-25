@@ -13,8 +13,8 @@ has_quotes: false
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Orders — Types
 
 Key order types include market orders, limit orders (buy/sell), stop orders (buy/sell), and stop-limit orders. Each order type serves a specific purpose in trade execution, risk management, and position entry/exit.

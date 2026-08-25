@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Best Time to Use a Trending System
 
 The best time to use a trending system is when the ADX line is rising. A rising ADX confirms that directional movement is increasing and the market is in a trending mode suitable for trend-following approaches.

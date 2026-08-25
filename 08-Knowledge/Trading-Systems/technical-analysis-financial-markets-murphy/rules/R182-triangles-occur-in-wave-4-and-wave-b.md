@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triangles Occur in Wave 4 and Wave B
 
 Triangles usually occur in the fourth wave and precede the final move in the direction of the major trend. They can also appear in the B wave of an A-B-C correction. In an uptrend, triangles are both bullish (indicating resumption of the uptrend) and bearish (indicating that after one more wave up, prices will probably peak).

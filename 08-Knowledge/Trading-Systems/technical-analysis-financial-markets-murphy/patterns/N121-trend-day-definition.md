@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Day Definition
 
 A trend day occurs when the longer term trader extends the range successively further beyond the initial balance, with the range being considerably more than double the initial balance. The longer term trader controls direction as the market continues its search for a fair price. The market moves in one direction and closes at or near the directional extreme.

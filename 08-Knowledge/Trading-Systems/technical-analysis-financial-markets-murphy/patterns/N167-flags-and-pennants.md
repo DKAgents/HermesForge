@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flags and Pennants
 
 Flags and pennants are short-term continuation patterns that form after sharp, nearly vertical price moves. They represent brief consolidations before the trend resumes, and the measured move technique is used to project price targets.

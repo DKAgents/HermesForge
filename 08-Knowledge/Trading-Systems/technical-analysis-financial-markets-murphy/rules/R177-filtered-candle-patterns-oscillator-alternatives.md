@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Filtered Candle Patterns — Oscillator Alternatives
 
 Candle pattern filtering is not limited to Stochastics %D. Any technical oscillator can be used to filter candle patterns, including Wilder's RSI, Lambert's CCI, and Williams' %R. The key requirement is that the oscillator must be in its presignal (overbought or oversold) area before a candle reversal pattern is considered valid.

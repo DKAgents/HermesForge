@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-legged Doji
 
 The Long-legged Doji has long upper and lower shadows with open and close prices equal or nearly equal. It reflects considerable indecision on the part of market participants. The long shadows indicate that prices moved significantly in both directions during the session before closing near the open.

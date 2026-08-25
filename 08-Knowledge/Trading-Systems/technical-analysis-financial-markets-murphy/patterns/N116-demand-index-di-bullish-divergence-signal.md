@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Bullish Divergence Signal
 
 A bullish (positive) divergence occurs when prices make lower lows while the DI forms higher lows. This pattern suggests that selling pressure is diminishing and that prices may be bottoming. The divergence is confirmed when the DI subsequently crosses above the zero line.

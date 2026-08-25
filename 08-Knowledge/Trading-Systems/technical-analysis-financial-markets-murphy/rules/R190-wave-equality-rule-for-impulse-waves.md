@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave Equality Rule for Impulse Waves
 
 One of the three impulse waves (1, 3, or 5) sometimes extends while the other two are equal in time and magnitude. If wave 5 extends, waves 1 and 3 should be about equal. If wave 3 extends, waves 1 and 5 tend toward equality.

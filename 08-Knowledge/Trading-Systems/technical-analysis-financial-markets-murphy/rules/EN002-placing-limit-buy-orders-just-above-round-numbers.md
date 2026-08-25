@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Placing Limit Buy Orders Just Above Round Numbers
 
 When trying to buy into a short-term dip in an uptrend, limit buy orders should be placed just above an important round number rather than at the round number itself. Because many other traders are also trying to buy at the round number, the market may never reach that exact level, so placing orders slightly above increases the chance of execution.

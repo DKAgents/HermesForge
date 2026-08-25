@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Lengthening Time Period to Avoid False Signals in Trading Ranges
 
 In a trading range environment, the time period can be expanded to 8 weeks to prevent taking positions on shorter-term and premature trend signals. This approach keeps a trend trader on the sidelines until a genuinely important trend signal is generated.

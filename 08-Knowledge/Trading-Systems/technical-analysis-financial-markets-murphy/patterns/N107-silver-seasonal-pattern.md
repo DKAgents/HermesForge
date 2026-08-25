@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Silver Seasonal Pattern
 
 Silver has a seasonal low in January with higher prices into March. Traders can use this seasonal tendency to time long entries in silver at the start of the year.

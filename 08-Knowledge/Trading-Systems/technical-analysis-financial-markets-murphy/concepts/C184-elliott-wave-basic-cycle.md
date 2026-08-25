@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Basic Cycle
 
 The stock market follows a repetitive rhythm of a five-wave advance followed by a three-wave decline, forming one complete cycle of eight waves. In the advancing portion, waves 1, 3, and 5 are impulse waves (rising), while waves 2 and 4 are corrective waves. The three-wave correction is labeled a, b, c.

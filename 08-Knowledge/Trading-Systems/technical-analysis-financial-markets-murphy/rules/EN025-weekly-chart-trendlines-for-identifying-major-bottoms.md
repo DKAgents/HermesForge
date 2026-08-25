@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Chart Trendlines for Identifying Major Bottoms
 
 Long-term up trendlines drawn on weekly charts connecting multi-year lows serve as major support levels. When price pulls back to test these trendlines, it often marks a significant bottom and potential entry point. Tracking weekly charts allows traders to identify these trendline support levels that would not be visible on daily charts.

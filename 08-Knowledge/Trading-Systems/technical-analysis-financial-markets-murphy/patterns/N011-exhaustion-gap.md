@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Exhaustion Gap
 
 The exhaustion gap appears near the end of a market move after all objectives have been achieved and the breakaway and runaway gaps have been identified. Prices leap forward in a last gasp but that upward leap quickly fades and prices turn lower within a couple of days or a week. When prices close below that last gap, it is a dead giveaway that the exhaustion gap has appeared, with very bearish implications.

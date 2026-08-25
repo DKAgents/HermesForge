@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Overbought and Oversold Conditions
 
 Oscillators determine when a market is in an overbought or oversold condition. When the oscillator reaches an upper extreme, the market is overbought and vulnerable to a selloff. When the oscillator reaches a lower extreme, the market is oversold and due for a bounce.

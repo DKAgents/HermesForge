@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, oscillators, elliott-wave, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend-Following Systems Cannot Anticipate Reversals
 
 A drawback of trend-following systems is that no allowance is generally made for anticipating market reversals. They don't recognize when a market has reached a long-term support or resistance level, when oscillator divergences are being given, or when an Elliott Wave fifth pattern is clearly visible. The system will stay with the position until well after the market has changed direction.

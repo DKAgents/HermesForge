@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, fibonacci, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Percentage-Based Reversal Criteria in Logarithmic P&F Charts
 
 In logarithmic P&F charting, reversal criteria are expressed as percentages rather than fixed price amounts. A 1-box reversal requires a retracement equal to the box percentage (e.g., 3.6% for AOL). A 2-box reversal chart requires double that percentage (e.g., 7.2% for AOL) to start a new column.

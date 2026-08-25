@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Prior Trend Prerequisite for Reversal Patterns
 
 A prior major trend is an essential prerequisite for any reversal pattern — a market must have something to reverse. If a formation resembling a reversal pattern appears without a preceding trend, the pattern is suspect and should not be traded as a reversal. Knowing where certain patterns are most apt to occur in the trend structure is one of the key elements in pattern recognition.

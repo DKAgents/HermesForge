@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders as Continuation Pattern
 
 The head and shoulders formation can also appear as a continuation pattern, not just a reversal. Complex head and shoulders patterns and failed head and shoulders patterns are also recognized variations.

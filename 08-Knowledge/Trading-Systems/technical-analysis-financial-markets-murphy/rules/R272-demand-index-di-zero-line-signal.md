@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Zero Line Signal
 
 A DI reading above the zero line indicates greater buying pressure and is considered positive/bullish for prices. A DI reading below the zero line indicates greater selling pressure and implies prices will move lower. Crossings of the zero line can serve as confirmation signals for trend changes.

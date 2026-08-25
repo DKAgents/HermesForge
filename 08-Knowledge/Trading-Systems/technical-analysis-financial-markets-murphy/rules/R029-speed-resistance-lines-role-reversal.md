@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Speed Resistance Lines — Role Reversal
 
 As with all trendlines, speedlines reverse roles once they are broken. During the correction of an uptrend, if the upper line (2/3 line) is broken and prices fall to the 1/3 line and rally from there, that upper line becomes a resistance barrier. Only when that upper line is broken would a signal be given that the old highs will probably be challenged.

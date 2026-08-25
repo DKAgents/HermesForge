@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Top and Triple Bottom Patterns
 
 A triple top is a price pattern with three prominent peaks at approximately the same level, similar to the head and shoulders top except that all three peaks occur at about the same level. The triple bottom is a mirror image of the triple top and signals a potential bullish reversal.

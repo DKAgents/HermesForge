@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Peaks and Troughs Confirm New Downtrend
 
 A new downtrend is confirmed when both descending peaks and descending troughs are established. In the head and shoulders top, the failure of the right shoulder to exceed the head (descending peak) combined with the neckline break (descending trough) fulfills both requirements for a new downtrend.

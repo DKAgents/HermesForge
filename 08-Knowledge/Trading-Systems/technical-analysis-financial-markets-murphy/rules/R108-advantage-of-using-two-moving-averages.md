@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Advantage of Using Two Moving Averages
 
 Using one moving average alone has several disadvantages due to the inherent tradeoff between sensitivity and reliability. It is usually more advantageous to employ two moving averages simultaneously to generate more reliable trend signals while reducing false signals.

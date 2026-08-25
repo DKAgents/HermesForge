@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cyclic Principles: Summation, Synchronicity, Variation
 
 The principle of summation states that price movement is the sum of all active cycles. Synchronicity holds that cycles of similar length tend to turn at the same time. Variation acknowledges that cycles do not repeat with perfect regularity.

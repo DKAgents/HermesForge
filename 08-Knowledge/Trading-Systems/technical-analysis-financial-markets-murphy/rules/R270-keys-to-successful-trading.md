@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keys to Successful Trading
 
 The keys to successful trading are knowledge, discipline, and patience. Discipline and patience are best achieved by doing homework and having a plan of action before entering the market. Going through a checklist won't guarantee right conclusions but helps ensure the right questions are asked.

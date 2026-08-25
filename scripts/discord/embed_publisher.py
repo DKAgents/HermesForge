@@ -484,6 +484,9 @@ def publish_signal(signal_dict: dict, asset_class: str,
     timeframe = signal_dict.get("timeframe", "daily")
     channel_id = _route_channel(asset_class, timeframe)
     signal_dict["publish_channel"] = asset_class
+    # Inject asset_class so chart_generator can pick the right intraday data source
+    if "asset_class" not in signal_dict:
+        signal_dict["asset_class"] = asset_class
 
     # ── Generate chart ──
     chart_path = None

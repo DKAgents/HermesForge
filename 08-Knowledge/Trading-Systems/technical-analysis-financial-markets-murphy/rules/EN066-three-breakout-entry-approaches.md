@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Breakout Entry Approaches
 
 A trader faces three choices when entering on a breakout: anticipating the breakout (better price but higher failure odds), entering on the actual breakout (higher odds of success but worse price), or waiting for the pullback after the breakout (sensible compromise but risks missing dynamic markets). Trading multiple units allows combining all three approaches by taking a small position in anticipation, adding on the breakout, and adding more on the corrective dip.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zig-Zag Corrective Pattern
 
 A zig-zag is a three-wave corrective pattern against the major trend that breaks down into a 5-3-5 sequence. In a bull market zig-zag, wave B falls short of the beginning of wave A, and wave C moves well beyond the end of wave A. A double zig-zag variation consists of two 5-3-5 zig-zag patterns connected by an intervening a-b-c pattern.

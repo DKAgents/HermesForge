@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gold Seasonal Pattern
 
 Gold shows a tendency to bottom in August. This seasonal low can serve as a timing reference for initiating long positions in gold.

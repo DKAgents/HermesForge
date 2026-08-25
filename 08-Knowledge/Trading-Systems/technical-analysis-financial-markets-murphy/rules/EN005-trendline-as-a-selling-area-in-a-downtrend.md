@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline as a Selling Area in a Downtrend
 
 A down trendline can be used as a resistance area for selling purposes. Rallies back to the down trendline provide opportunities to initiate or add to short positions as long as the trendline remains intact.

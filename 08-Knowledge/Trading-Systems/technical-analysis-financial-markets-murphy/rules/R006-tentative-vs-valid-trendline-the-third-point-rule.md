@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Tentative vs. Valid Trendline: The Third Point Rule
 
 A trendline drawn through only two points is considered tentative. To confirm the validity of a trendline, it must be touched a third time with prices bouncing off of it. Two points are needed to draw the trendline, and a third point is required to make it a valid trendline.

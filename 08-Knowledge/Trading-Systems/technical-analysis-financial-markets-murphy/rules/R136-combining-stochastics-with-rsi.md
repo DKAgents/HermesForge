@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Stochastics with RSI
 
 It is a good idea to combine stochastics with RSI for more reliable signals. Using multiple oscillators together provides confirmation and reduces false signals.

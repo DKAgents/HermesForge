@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Island Reversal
 
 An island reversal is a combination of an exhaustion gap in one direction and a breakaway gap in the other direction within a few days. The result is usually two or three trading days standing alone with gaps on either side. The island reversal usually signals a trend reversal.

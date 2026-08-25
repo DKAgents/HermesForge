@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top and Double Bottom
 
 A double top displays two prominent peaks. The reversal is complete when the middle trough is broken. The double bottom is a mirror image of the top.

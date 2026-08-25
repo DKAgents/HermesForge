@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Troughs More Reliable Than Peaks
 
 Cycle troughs are considered more reliable reference points than cycle peaks because most variations in cycles occur at the peaks. Cycle lengths are therefore measured from trough to trough rather than peak to peak. This makes trough identification the primary task in cycle analysis.

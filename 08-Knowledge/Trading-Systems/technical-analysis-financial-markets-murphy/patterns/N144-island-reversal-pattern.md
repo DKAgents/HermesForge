@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Island Reversal Pattern
 
 The island reversal pattern is formed when a gap occurs in one direction followed by a gap in the opposite direction, leaving a cluster of prices isolated. This pattern signals a significant reversal in trend.

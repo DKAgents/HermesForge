@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermediate, Primary, and Long-Term Cycles
 
 Market cycles are classified by duration: the intermediate cycle, the primary cycle, and long-term cycles including the Kondratieff Wave. Each cycle operates within the context of longer cycles and contains shorter cycles within it.

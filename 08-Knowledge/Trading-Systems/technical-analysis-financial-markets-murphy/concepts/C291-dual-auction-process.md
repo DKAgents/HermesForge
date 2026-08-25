@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dual Auction Process
 
 The market operates in a dual auction mode where prices rotate around a fair or mean price area. When price moves up and more buying comes in, the up-move advertises for an opposite response (selling) to stop the directional move. The opposite is true when price moves down, creating a self-regulating auction mechanism.

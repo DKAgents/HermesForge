@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Spike (V Reversal) Pattern
 
 Spikes or V patterns are the hardest market turns to deal with because they happen very quickly with little or no transition period. They usually occur in markets that have become so overextended in one direction that a sudden piece of adverse news causes a very abrupt reversal. A daily or weekly reversal on very heavy volume is sometimes the only warning signal they provide.

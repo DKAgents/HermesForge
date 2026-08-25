@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Using DMI as a Filter on Parabolic SAR
 
 The Parabolic is a more sensitive system, giving more frequent and earlier signals. By using Directional Movement as a filter, several bad Parabolic signals can be avoided by following only those signals in the same direction as the Directional Movement lines. When the +DI line is above the -DI line, all Parabolic sell signals can be ignored, eliminating several whipsaws during rally phases.

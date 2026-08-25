@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3% Price Filter for Trendline Penetration
 
 A common price filter for confirming a valid trendline break is the 3% penetration criterion, used mainly for longer-term trendlines. It requires that the trendline be broken on a closing basis by at least 3% of the price level where the line was broken. This filter is not appropriate for shorter-term trading or some financial futures such as interest rate markets, where a 1% criterion may be more suitable.

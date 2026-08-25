@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sector Rotation Based on CRB/Bond Ratio
 
 When the CRB/Bond ratio is rising, stock investors should buy inflation-sensitive stocks such as golds, oils, and cyclicals. When the ratio is falling, investors should sell golds, oils, and cyclicals and rotate into defensive sectors such as utilities, financials, and consumer staples. This rotation strategy aligns stock sector exposure with the prevailing inflationary or deflationary environment.

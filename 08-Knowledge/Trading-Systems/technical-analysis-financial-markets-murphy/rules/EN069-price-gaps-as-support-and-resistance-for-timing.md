@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Gaps as Support and Resistance for Timing
 
 Price gaps on bar charts function as support or resistance levels for timing entries. After an upmove, underlying gaps act as support — buy a dip to the upper end of the gap or into the gap itself, with a protective stop placed below the gap. In a bear move, sell a rally to the lower end of the gap or into the gap, with a protective stop kept above the gap.

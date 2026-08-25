@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Checklist
 
 A technical checklist is a systematic review of multiple technical factors before making a trading decision. It ensures that traders consider all relevant indicators, patterns, and conditions before entering or exiting a trade.

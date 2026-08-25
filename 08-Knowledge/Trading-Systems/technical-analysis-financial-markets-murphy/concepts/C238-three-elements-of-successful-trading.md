@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three Elements of Successful Trading
 
 Successful trading requires three distinct elements: price forecasting (what to do), timing/tactics (when to do it), and money management (how much to commit). Price forecasting determines bullish or bearish bias and is the crucial first step. Timing determines specific entry and exit points, and money management covers allocation of funds and survival.

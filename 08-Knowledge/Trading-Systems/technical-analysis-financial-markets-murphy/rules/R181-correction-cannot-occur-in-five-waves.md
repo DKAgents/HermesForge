@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Correction Cannot Occur in Five Waves
 
 A correction can never take place in five waves. In a bull market, a five-wave decline means it is probably only the first wave of a three-wave (a-b-c) decline with more downside to come. In a bear market, a three-wave advance should be followed by resumption of the downtrend, while a five-wave rally warns of a more substantial upside move.

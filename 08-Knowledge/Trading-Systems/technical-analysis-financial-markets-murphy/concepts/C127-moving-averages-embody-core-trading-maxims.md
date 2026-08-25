@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages Embody Core Trading Maxims
 
 Moving averages are popular trend-following systems because they embody the oldest maxims of successful trading: trade in the direction of the trend, let profits run, and cut losses short. The moving average system forces the user to obey these rules by providing specific buy and sell signals based on those principles.

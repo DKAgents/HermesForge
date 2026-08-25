@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rollover Date for Continuous Contracts
 
 A fixed rollover date must be set for each commodity when constructing continuous contracts. A recommended starting point is 10 days prior to expiration. What is important is that there is a rollover sometime prior to actual expiration.

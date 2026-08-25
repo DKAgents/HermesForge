@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels — Breakout Interpretation (Bullish)
 
 When prices close above the Keltner plus band, a positive signal is generated indicating a breakout in upward volatility and that prices will continue higher. This is analogous to a four-week channel breakout system.

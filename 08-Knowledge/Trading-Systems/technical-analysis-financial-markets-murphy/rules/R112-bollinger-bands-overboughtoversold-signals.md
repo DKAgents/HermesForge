@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bollinger Bands: Overbought/Oversold Signals
 
 Prices are considered overextended on the upside (overbought) when they touch the upper Bollinger Band. They are considered overextended on the downside (oversold) when they touch the lower band. This makes the bands useful for identifying potential reversal points.

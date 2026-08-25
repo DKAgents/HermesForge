@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stock Market Monthly Seasonal Tendencies
 
 The strongest three-month span for the stock market is November through January. February is weaker, followed by a strong March and April. After a soft June, the market turns strong during July (start of the traditional summer rally). September is the weakest month of the year, and December is the strongest month, ending with the Santa Claus rally just after Christmas.

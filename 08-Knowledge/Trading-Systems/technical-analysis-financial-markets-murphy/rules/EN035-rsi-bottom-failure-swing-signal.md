@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Bottom Failure Swing Signal
 
 A bottom failure swing is confirmed when the second RSI trough is higher than the first while below 30 and prices are still falling. The upside penetration of the RSI peak (point 3) signals a bottom and potential buy opportunity.

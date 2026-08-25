@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principles of Good Concept Design
 
 Good concepts usually make good sense; if a concept seems to work but makes little sense, it may be coincidence and unlikely to continue working in the future. Concepts must fit the trader's personality to provide discipline during drawdown periods. Concepts should be straightforward and objective, and if trend following, should trade with the major trend, let profits run, and cut losses short. Most importantly, concepts must have a positive expectation.

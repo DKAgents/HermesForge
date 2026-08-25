@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nine Degrees of Trend
 
 Elliott categorized nine different degrees of trend ranging from a Grand Supercycle spanning two hundred years to a subminuette degree covering only a few hours. The basic eight-wave cycle remains constant regardless of the degree of trend being studied.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Breaks as Entry and Exit Signals
 
 Breaking of a tight trendline is one of the most useful early entry or exit signals for timing trades. Trendlines can also serve as entry points when acting as support or resistance — buying against a major up trendline or selling against a down trendline is an effective timing strategy. Other technical factors must always be considered alongside trendline breaks.

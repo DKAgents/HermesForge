@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, oscillators, fibonacci, risk-management, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 62% Retracement as Support on Weekly Charts
 
 The 62% (Fibonacci) retracement level acts as significant support on weekly charts. A price decline stopping at the 62% retracement level, especially when it coincides with prior chart support, provides a high-probability bounce signal. This level should be monitored on weekly charts as a potential entry point.

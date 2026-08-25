@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bear Market Floor Rule
 
 Bear markets should not fall below the bottom of the previous fourth wave. This provides a key support level and a rule for invalidating wave counts in downtrending markets.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Determining Threes vs. Fives
 
 Whether a given wave divides into five waves or three waves is determined by the direction of the next larger wave. Waves moving in the direction of the next larger wave subdivide into five waves; waves moving against the trend of the next larger wave subdivide into three waves.

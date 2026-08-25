@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis vs Fundamental Analysis
 
 The technician does not concern themselves with the reasons why prices rise or fall, particularly in early trend stages or at critical turning points where the reasons are often unknown. The chartist lets the market indicate direction rather than trying to outsmart or outguess it. Technicians indirectly study fundamentals through price, since price reflects supply and demand forces.

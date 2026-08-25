@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, program-trading]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Short-Term Bond Futures Influence on S&P 500 Futures
 
 On a short-term basis, sudden changes in trend in the S&P 500 futures contract are often influenced by sudden changes in the Treasury Bond futures contract. Sudden moves in bond futures can trigger sudden moves in S&P 500 futures, which in turn activate program trading.

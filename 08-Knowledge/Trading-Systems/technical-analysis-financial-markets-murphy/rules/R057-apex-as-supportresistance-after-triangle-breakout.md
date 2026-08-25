@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Apex as Support/Resistance After Triangle Breakout
 
 After a triangle breakout occurs, the apex of the triangle acts as an important support or resistance level. In an upside breakout, the apex serves as support; in a downside breakout, it serves as resistance. This is an additional reference point for managing trades after the breakout.

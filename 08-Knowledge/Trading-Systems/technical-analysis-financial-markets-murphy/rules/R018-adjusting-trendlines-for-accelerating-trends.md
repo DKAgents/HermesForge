@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting Trendlines for Accelerating Trends
 
 Trendlines must be adjusted when a trend accelerates or decelerates. If the original trendline is too flat, it must be redrawn at a steeper angle. For accelerating trends requiring increasingly steep trendlines, a moving average (curvilinear trendline) is preferable to drawing multiple steeper trendlines.

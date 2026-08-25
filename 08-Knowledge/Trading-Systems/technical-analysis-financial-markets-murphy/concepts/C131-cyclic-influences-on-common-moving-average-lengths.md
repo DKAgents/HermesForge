@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cyclic Influences on Common Moving Average Lengths
 
 Commonly used moving averages such as the 4, 9, and 18 day averages (derivatives of 5, 10, and 20) can be explained by cyclic influences and the harmonic relationships of neighboring cycles. The 4-week cycle may also help explain the success of the 4-week rule and its shorter counterpart, the 2-week rule.

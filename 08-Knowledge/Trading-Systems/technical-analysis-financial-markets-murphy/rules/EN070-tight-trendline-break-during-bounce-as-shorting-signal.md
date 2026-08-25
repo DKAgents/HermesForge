@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Tight Trendline Break During Bounce as Shorting Signal
 
 During a bounce in a downtrend, the breaking of a tight up trendline drawn over the bounce highs can serve as a shorting opportunity. Conversely, violation of a tight down trendline drawn above the highs of a downside reaction in an uptrend can be used as a buying signal. These trendline breaks on short-term reactions provide precise entry timing.

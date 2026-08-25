@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dark Cloud Cover — Bearish Reversal Pattern
 
 The Dark Cloud Cover is a two-day bearish reversal pattern that requires a prior uptrend. The first day is a long white candlestick confirming the uptrend. The second day opens above the high of the previous day (adding to bullishness) but closes at least below the midpoint of the first day's body, producing a black candle. This significant reversal of intraday direction signals a blow to bullish mentality and forces many traders to exit.

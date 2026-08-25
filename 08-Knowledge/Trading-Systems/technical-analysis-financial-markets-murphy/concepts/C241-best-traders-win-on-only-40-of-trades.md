@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Best Traders Win on Only 40% of Trades
 
 The best futures traders make money on only 40% of their trades, meaning most trades wind up being losers. Profitability is achieved not by winning most trades but by ensuring that the dollar amount of winning trades is greater than that of losing trades. This is why reward-to-risk ratios are essential.

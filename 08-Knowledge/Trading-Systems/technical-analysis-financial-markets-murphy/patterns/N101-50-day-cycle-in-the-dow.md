@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 50-Day Cycle in the Dow
 
 Daily cycle arc analysis revealed 50-day cycle bottoms in the Dow during the second half of 1997 and the start of 1998. Shorter-term cycles can be identified within longer-term cycles for more precise timing.

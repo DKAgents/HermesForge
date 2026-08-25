@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sell Signal in 3-Box Reversal Point and Figure
 
 A sell signal occurs when a column of O's declines one box lower than the low of the previous O column. This is the standard breakdown sell signal in the Chartcraft 3-box reversal method.

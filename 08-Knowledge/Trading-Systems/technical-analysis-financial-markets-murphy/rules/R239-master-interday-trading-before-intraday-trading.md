@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Master Interday Trading Before Intraday Trading
 
 Traders should master interday (daily chart) trading before attempting intraday trading. Intraday trading is more demanding and requires a solid foundation in the principles of technical analysis.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume on Breakout from Flags and Pennants
 
 The breaking of the upper or lower trendlines of flags and pennants should take place on heavier volume. Upside volume is considered more critically important than downside volume when confirming breakouts.

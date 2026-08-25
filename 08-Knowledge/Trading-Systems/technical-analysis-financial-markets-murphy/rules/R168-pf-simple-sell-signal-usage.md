@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Simple Sell Signal Usage
 
 A simple sell signal on a P&F chart can be used for liquidating existing long positions and/or initiating new short positions. Like the buy signal, it serves traders on both sides of the market.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adding Positions on Neckline Breakout or Return Move
 
 If an initial long probe during the right shoulder formation proves profitable, additional positions can be added on the actual penetration of the neckline or on the return move back to the neckline after the breakout. This layered approach allows traders to build a position with confirmation at multiple stages.

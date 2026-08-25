@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Filter for Trendline Breaks (Two-Day Rule)
 
 A valid trendline break requires prices to close beyond the trendline for two successive days. A single-day violation does not count as a confirmed break. This rule applies to both up and down trendlines as well as important support and resistance levels.

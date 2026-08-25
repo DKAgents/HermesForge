@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ascending Triangle
 
 An ascending triangle is a sideways price pattern between two converging trendlines where the lower line is rising while the upper line is flat. It is generally a bullish continuation pattern.

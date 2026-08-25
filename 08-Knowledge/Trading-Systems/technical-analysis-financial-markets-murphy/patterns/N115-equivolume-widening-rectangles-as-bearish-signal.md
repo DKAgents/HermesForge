@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume, candlesticks, point-and-figure, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Equivolume – Widening Rectangles as Bearish Signal
 
 When rectangles on an Equivolume chart start to widen during a sell-off, it indicates that volume is increasing on down moves, which is a negative sign for the market or stock. This widening during a decline suggests distribution and confirms the bearish price action with heavy volume.

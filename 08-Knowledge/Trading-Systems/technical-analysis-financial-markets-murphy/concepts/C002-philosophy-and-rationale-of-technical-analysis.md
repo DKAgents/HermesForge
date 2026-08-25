@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Philosophy and Rationale of Technical Analysis
 
 Murphy opens the book by establishing the philosophical foundation of technical analysis — the idea that price action reflects all available information and that studying price charts can yield actionable forecasts. This rationale underpins every technique discussed in the book.

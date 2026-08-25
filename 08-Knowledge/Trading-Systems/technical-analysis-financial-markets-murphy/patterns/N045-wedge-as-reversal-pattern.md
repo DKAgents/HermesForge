@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wedge as Reversal Pattern
 
 While wedges most often appear within an existing trend as continuation patterns, they can also appear at tops or bottoms and signal a trend reversal. Near the end of an uptrend, a rising wedge signals a bearish reversal. At bottoms, a falling wedge signals a possible end of a bear trend. This situation is less common than the continuation wedge.

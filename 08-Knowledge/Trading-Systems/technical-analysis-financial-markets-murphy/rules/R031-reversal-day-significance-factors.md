@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Day — Significance Factors
 
 The wider the range for the day and the heavier the volume, the more significant is the signal for a possible near-term trend reversal. When the reversal day also forms an outside day (both the high and low exceed the range of the previous day), it carries more significance. By itself, the reversal day formation is not of major importance but can be significant when taken in context with other technical information.

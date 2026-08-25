@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Extremes Formation Rule — Minimum Two Single Prints
 
 Extremes are formed when the longer term trader competes with the short term trader for opportunities at a particular price level, which later becomes either the session high or low. A minimum of two single prints is required to establish an extreme. The more eager the longer term trader is in this price competition, the more single prints appear and the longer the single print extreme.

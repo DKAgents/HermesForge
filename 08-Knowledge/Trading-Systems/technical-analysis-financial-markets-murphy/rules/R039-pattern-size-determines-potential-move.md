@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pattern Size Determines Potential Move
 
 The larger the pattern — defined by both height (volatility of price swings within the pattern) and width (time required to build and complete the pattern) — the more important the pattern and the greater the potential for the ensuing price move. Height is the primary measuring criterion for bar charts, while width (the count) is used in point and figure charting to project price targets.

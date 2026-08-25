@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Robustness Across Multiple Markets
 
 A robust trading system should work well across many different markets, not just the one it was developed on. A system that works in crude oil should also work in heating oil and unleaded gasoline over the same period. The author tests systems across an entire database of markets and expects the system to perform well in the majority of them.

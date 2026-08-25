@@ -13,8 +13,8 @@ has_quotes: false
 topic: [intermarket, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Crude Oil Seasonal Pattern
 
 Petroleum products have a tendency to peak during October and usually don't bottom until the end of winter. Crude oil prices peak during October and turn up during March.

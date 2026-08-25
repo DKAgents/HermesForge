@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Monthly Reversal Pattern
 
 Monthly reversals follow the same logic as weekly reversals but on a monthly bar chart. They are considered even more important than weekly reversals due to the longer time frame they represent.

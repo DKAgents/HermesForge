@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-Week Rule
 
 The 4-week rule generates buy signals when price closes above the highest close of the prior four weeks and sell signals when price closes below the lowest close of the prior four weeks. It is related to time cycles and can be adjusted for different market conditions.

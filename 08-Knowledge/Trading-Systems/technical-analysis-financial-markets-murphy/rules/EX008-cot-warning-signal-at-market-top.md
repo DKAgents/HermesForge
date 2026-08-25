@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # COT Warning Signal at Market Top
 
 A warning signal of a possible top in a rising market occurs when the large and small traders become heavily net long at the same time that the commercials are becoming heavily net short. This extreme divergence signals a potential reversal to the downside.

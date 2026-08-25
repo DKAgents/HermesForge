@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Selling Climaxes at Market Bottoms
 
 Selling climaxes occur at major market bottoms. Prices suddenly drop sharply on heavy trading activity and rebound as quickly. This dramatic market action signals a potential bottom and reversal.

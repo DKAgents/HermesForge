@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Signals as Trend Filters for MACD and Stochastics
 
 The principle of using weekly signals as trend filters is especially applicable to MACD and Stochastics crossover systems. This prevents using daily signals to trade against the prevailing trend established on the weekly chart. Both indicators should be evaluated on weekly charts first before acting on daily chart signals.

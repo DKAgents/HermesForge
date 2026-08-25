@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, market-breadth, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # New High-New Low Index Zero Line and Histogram
 
 Elder suggests plotting the New High-New Low Index as a histogram with a horizontal reference at the zero line to make divergences easier to spot. Crossings above and below the zero line reflect bullish and bearish shifts in market psychology respectively.

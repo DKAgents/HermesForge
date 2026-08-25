@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Step 4: Formal Computer Testing
 
 The trading logic must be converted into computer code and formally tested. For futures traders, using a continuous (spread-adjusted) price series is recommended for initial testing before moving to actual contracts. The system should be tested across different parameter sets, different time periods, and many different markets to validate robustness.

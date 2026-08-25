@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Behavior at Double and Triple Tops
 
 In double and triple top formations, volume tends to be lighter on each successive peak, followed by heavier downside activity. This pattern of diminishing volume on rallies and increasing volume on declines confirms the bearish reversal nature of these formations.

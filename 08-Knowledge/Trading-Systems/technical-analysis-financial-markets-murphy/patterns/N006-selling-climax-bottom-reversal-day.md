@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Selling Climax (Bottom Reversal Day)
 
 A selling climax is a dramatic turnaround at the bottom of a down move where all discouraged longs have finally been forced out of the market on heavy volume. The subsequent absence of selling pressure creates a vacuum that prices quickly rally to fill. While it may not mark the final bottom, it usually signals that a significant low has been seen.

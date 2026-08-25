@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Close Losing Positions Before Winning Ones
 
 When managing a portfolio of trades, losing positions should be closed out before winning ones. This preserves capital and allows profitable trades to continue running.

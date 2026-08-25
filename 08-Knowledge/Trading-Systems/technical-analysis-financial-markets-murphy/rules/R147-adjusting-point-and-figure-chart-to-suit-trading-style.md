@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting Point and Figure Chart to Suit Trading Style
 
 Traders can alter both the box size and the reversal criteria to customize the sensitivity of a point and figure chart. The chart can be made more or less sensitive depending on whether the trader is focused on short-term or long-term trends.

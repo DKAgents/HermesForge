@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Crossover Buy and Sell Signals
 
 A buy signal is generated when the faster MACD line crosses above the slower signal line. A sell signal is generated when the faster MACD line crosses below the slower signal line. This resembles a dual moving average crossover method.

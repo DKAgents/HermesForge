@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measuring Techniques for Price Patterns
 
 Most price patterns have certain measuring techniques that help the analyst determine minimum price objectives. While these objectives are only an approximation of the size of the subsequent move, they are helpful in assisting the trader to determine reward-to-risk ratio.

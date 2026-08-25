@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term and Seasonal Cycles Determine Major Trend
 
 Long-term and seasonal cycles determine the major trend of a market. If a two-year cycle has bottomed, it can be expected to advance for at least a year measured from its trough to its crest. Markets also have annual seasonal patterns, tending to peak or trough at certain times of the year; grain markets, for example, usually hit their low point around harvest time.

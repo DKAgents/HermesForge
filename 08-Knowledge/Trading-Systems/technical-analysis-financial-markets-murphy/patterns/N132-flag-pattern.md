@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag Pattern
 
 A flag is a continuation price pattern, generally lasting less than three weeks, which resembles a parallelogram that slopes against the prevailing trend. It represents a minor pause in a dynamic price trend.

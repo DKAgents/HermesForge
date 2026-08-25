@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Analysis on Relative Strength Lines
 
 Simple trendline analysis applied to relative strength ratio lines can help identify turning points in sector performance. Breaking of a trendline on an RS ratio chart signals a potential change in the relative performance of that sector versus the benchmark, providing an actionable signal for sector rotation.

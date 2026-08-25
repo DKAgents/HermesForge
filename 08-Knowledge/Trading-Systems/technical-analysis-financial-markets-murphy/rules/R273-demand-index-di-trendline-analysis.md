@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Trendline Analysis
 
 The DI can be plotted as a line (rather than a histogram) to facilitate trendline analysis on the indicator itself. Trendline breaks on the DI often precede trendline breaks on the price chart, providing an early warning signal. Buying on a DI trendline break can significantly improve entry price compared to waiting for the price trendline break.

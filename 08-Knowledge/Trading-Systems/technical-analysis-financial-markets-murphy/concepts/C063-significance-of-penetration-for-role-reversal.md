@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Significance of Penetration for Role Reversal
 
 Role reversal of support and resistance only occurs after a significant penetration of the level. The greater the distance prices travel away from a support or resistance level, the more significant that level becomes. However, determining what constitutes a 'significant' penetration involves a degree of subjectivity, and the author acknowledges this as a benchmark challenge.

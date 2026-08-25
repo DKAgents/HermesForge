@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI Divergence Analysis – Warning of Trend Change
 
 Divergence analysis using the HPI can warn traders of a change from positive to negative money flow before it is reflected in price. A negative divergence occurs when prices make a higher high while the HPI forms a lower high, signaling weakening money flow and a potential price decline. This was demonstrated in T-Bond futures where the HPI peaked in early 1993 while bonds were nearly 10 points higher, warning of the 1994 price decline.

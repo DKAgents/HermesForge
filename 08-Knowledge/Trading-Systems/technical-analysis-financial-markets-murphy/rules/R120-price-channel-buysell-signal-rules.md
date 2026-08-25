@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Channel Buy/Sell Signal Rules
 
 A buy signal is generated when prices close above the upper channel line. A sell signal requires a close beneath the lower channel line. These signals remain in effect until the opposite channel boundary is breached.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # General Rule: Failure to Reach One Side Signals Likely Break of Other Side
 
 As a general rule of thumb, the failure of any move within an established price channel to reach one side of the channel indicates that the trend is shifting and increases the likelihood that the other side of the channel will be broken. This principle applies in both uptrends and downtrends and serves as an early diagnostic tool for trend deterioration. It is actionable as a warning to tighten stops or reduce position size.

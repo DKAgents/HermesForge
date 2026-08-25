@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Normal Variation Day Characteristics
 
 A normal variation day features an initial balance established by short term traders, after which longer term traders extend the range to almost double the initial balance. This distinguishes it from a full trend day where the range exceeds double the initial balance.

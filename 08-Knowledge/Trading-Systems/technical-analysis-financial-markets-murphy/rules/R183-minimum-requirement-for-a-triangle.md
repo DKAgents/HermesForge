@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Minimum Requirement for a Triangle
 
 The minimum requirement for a valid triangle is four points — two upper and two lower — to allow the drawing of two converging trendlines. This applies regardless of whether the triangle forms with three or five internal waves.

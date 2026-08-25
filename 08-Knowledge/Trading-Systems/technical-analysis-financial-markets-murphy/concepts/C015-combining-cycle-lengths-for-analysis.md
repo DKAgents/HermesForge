@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Cycle Lengths for Analysis
 
 Murphy discusses combining multiple cycle lengths to improve analytical accuracy. Dominant cycles and their combinations are used to anticipate turning points in markets.

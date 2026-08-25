@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Following Systems
 
 Trend following systems trade in the direction of the major trend, buying after the bottom and selling after the top. Popular methodologies among money managers include moving averages and Donchian's weekly rule. These systems aim to capture the bulk of a sustained directional move.

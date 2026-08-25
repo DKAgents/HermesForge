@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cover Point for a Short Position
 
 The cover point for a short position is exactly the same point as the buy signal. Because this point can be determined in advance, a stop order to cover should be placed in the market ahead of time.

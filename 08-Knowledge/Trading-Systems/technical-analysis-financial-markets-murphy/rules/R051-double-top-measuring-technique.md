@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top Measuring Technique
 
 The price target for a double top is measured by taking the height of the pattern (from the peaks to the middle trough at point B) and projecting that distance downward from the breakdown point. Alternatively, measure the height of the first downleg (points A to B) and project that length downward from point B. The same technique applies in reverse for double bottoms.

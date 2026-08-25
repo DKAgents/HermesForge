@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measuring Cycle Length from Trough to Trough
 
 Cyclic analysts prefer to measure cycle lengths from low to low (trough to trough). Measurements can be taken between crests, but they are not considered to be as stable or reliable as those taken between troughs. The beginning and end of a cyclic wave is measured at a low point.

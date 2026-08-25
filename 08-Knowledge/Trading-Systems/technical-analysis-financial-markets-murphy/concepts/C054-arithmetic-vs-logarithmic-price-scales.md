@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Arithmetic vs. Logarithmic Price Scales
 
 Arithmetic scales show equal distances for equal price moves in absolute terms, so a move from 50 to 55 looks the same as a move from 1 to 6. Logarithmic (ratio) scales show equal distances for equal percentage moves, so a doubling from 10 to 20 covers the same vertical distance as a doubling from 20 to 40. Many stock chart services use log charts while futures chart services typically use arithmetic scales.

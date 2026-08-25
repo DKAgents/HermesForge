@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Normal Day Pattern
 
 A normal day occurs when the longer term trader is relatively inactive. The day's range is established in the pioneer range (the first column of prices) during the session's first half-hour period of trade. The short term trader establishes the initial balance, the unfair high and low, and then prices rotate between these parameters for the balance of the day.

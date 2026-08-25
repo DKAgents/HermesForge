@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # AD Line and Market Average Confirmation Rule
 
 In a healthy market, the advance-decline line and the major market averages should be trending in the same direction. When both the AD line and the Dow are trending upward together, it confirms a healthy bull market. Divergence between the AD line and market averages is a warning signal.

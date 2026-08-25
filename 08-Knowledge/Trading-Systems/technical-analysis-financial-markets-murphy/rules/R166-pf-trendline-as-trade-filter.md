@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Trendline as Trade Filter
 
 The trendline on a point and figure chart can be used as a directional filter. Long positions should only be taken when price is above the trendline, and short positions should only be taken when price is below the trendline. This helps align trades with the dominant trend direction.

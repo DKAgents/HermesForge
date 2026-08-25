@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Maximum Price Objective Based on Prior Trend
 
 Most measuring techniques provide only minimum price objectives, but the maximum objective is the total extent of the prior move. For example, if a major bull market has occurred and a major topping pattern forms, the maximum downside implication would be a 100% retracement of the entire bull market, back to the point where it began.

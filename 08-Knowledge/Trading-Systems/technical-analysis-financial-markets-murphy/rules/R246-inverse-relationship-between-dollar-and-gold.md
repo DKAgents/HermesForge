@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Inverse Relationship Between Dollar and Gold
 
 The prices of gold and the U.S. dollar usually trend in opposite directions. Gold is one of the commodities most affected by the dollar. When analyzing the gold market, it is necessary to know what the dollar is doing.

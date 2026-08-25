@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Selling Climax
 
 A selling climax is a sharp, high-volume price decline that exhausts selling pressure and often marks a significant market bottom. It is a type of reversal day pattern associated with capitulation.

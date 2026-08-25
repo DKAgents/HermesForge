@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # CCI Trading Signals per Lambert
 
 Lambert's original recommendation was to take long positions in markets with CCI values over +100 and to consider short sales in markets with CCI values below -100. These crossings of the +100 and -100 levels serve as directional trading signals.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Confirmation at Pattern Completion
 
 The completion of each reversal price pattern should be accompanied by a noticeable increase in volume. This volume expansion serves as a confirming factor that the breakout is valid. The absence of increased volume at a breakout point, especially on the upside, is a warning signal that the pattern may be unreliable.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # OBV Divergence as Reversal Warning
 
 The OBV line should follow in the same direction as the price trend. If prices show a series of higher peaks and troughs, the OBV line should do the same. When the OBV line fails to move in the same direction as prices, a divergence exists and warns of a possible trend reversal. A bearish divergence occurs when prices make new highs but OBV fails to confirm.

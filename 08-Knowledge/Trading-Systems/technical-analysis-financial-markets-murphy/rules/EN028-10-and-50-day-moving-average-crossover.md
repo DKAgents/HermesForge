@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 10 and 50 Day Moving Average Crossover
 
 Another popular double crossover combination uses the 10-day and 50-day moving averages. When the 10-day average crosses above the 50-day average, it signals an uptrend and a buy. When the 10-day average slips under the 50-day average, it signals a downtrend and a sell.

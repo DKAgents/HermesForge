@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels — Breakout Interpretation (Bearish)
 
 When prices close below the Keltner minus band, a negative signal is generated indicating prices will move lower and a new downtrend may begin. The negative signal remains in effect until prices close above the plus band.

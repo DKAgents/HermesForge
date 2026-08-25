@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Maintains Its Slope Over Time
 
 Once a trend assumes a certain slope or rate of speed as identified by the trendline, it will usually maintain the same slope. This is a corollary to the principle that a trend in motion tends to remain in motion. The trendline helps determine the extremities of corrective phases and signals when the trend is changing.

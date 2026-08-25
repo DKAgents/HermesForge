@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Normal Variation Day Pattern
 
 A normal variation day occurs when the longer term trader is more active and extends the range beyond the initial balance. The short term trader's initial balance parameters do not hold and there is some directional movement which extends the range and sets a new high or new low parameter. As a rule, the range extension beyond the initial balance can be anywhere from a couple of ticks to double the initial balance, and this profile type is probably the most common.

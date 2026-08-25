@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3-Box Reversal Chart: Plotting X Columns (Rising Prices)
 
 When the last column is an X column (rising prices), look only at the daily high price. If the daily high permits filling in one or more X boxes, fill in those boxes and stop — that is all that is done for that day. Continue this process each day as long as prices rise enough to plot at least one X, ignoring the low price entirely while in an X column.

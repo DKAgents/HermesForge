@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Translation as Trend Definition
 
 Right and left translation are essentially a time-based definition of trend. In a bull trend, prices spend more time going up than down; in a bear trend, prices spend more time going down than up. This mirrors the classic price-based definition of trend but expressed in terms of time.

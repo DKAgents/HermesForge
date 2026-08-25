@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # The 4 Week Rule — Entry Criteria (Long)
 
 Cover short positions and buy long whenever the price exceeds the highs of the four preceding full calendar weeks. This breakout above the 4-week high signals a new uptrend and triggers a long entry while simultaneously closing any existing short position.

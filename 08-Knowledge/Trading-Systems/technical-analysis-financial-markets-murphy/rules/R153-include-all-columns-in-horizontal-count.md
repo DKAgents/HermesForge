@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Include All Columns in Horizontal Count
 
 When performing the horizontal count, every column within the congestion area must be included in the count, even columns that are empty. Omitting empty columns would understate the width of the base and produce an inaccurate price objective.

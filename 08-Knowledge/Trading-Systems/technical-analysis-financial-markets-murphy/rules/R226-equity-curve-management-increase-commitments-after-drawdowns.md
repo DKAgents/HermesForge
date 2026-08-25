@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Equity Curve Management: Increase Commitments After Drawdowns
 
 A trader's track record resembles a price chart with peaks and troughs, and the equity curve should trend upward if the trader is profitable. The worst time to increase position size is after a winning streak, analogous to buying an overbought market. The wiser approach is to increase commitments after a dip in equity, improving the odds that heavier positions are initiated near equity troughs rather than peaks.

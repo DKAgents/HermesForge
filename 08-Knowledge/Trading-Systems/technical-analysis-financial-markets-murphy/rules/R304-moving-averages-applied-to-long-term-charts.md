@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, oscillators, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages Applied to Long-Term Charts
 
 Moving averages applied to long-term (monthly and weekly) charts help identify major trends and filter out short-term noise. Long-term moving averages are particularly useful for identifying the persistence of major trends.

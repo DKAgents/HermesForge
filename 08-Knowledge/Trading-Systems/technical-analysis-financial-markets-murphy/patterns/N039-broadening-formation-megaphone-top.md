@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Broadening Formation (Megaphone Top)
 
 The broadening formation is an inverted or expanding triangle where trendlines diverge rather than converge. It is also called a megaphone top and typically shows three successively higher peaks and two declining troughs. It is a rare, unusually bearish pattern that most often occurs at major market tops near the end of a major bull market.

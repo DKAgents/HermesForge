@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Normal Day Characteristics
 
 A normal day features an initial balance established by short term traders in the first two periods, with longer term traders remaining inactive. The result is a symmetrical or balanced price distribution. The range does not extend significantly beyond the initial balance.

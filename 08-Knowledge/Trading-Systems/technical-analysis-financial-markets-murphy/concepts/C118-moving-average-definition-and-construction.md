@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Definition and Construction
 
 A moving average is an average of a certain body of data that moves forward with each new trading day. For a 10-day moving average, the last 10 closing prices are summed and divided by 10. Each day, the new close is added and the close 11 days back is subtracted, then divided by 10. The term 'moving' refers to the fact that only the most recent N days are used in the calculation.

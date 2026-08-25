@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders as Most Reliable Reversal Pattern
 
 The head and shoulders reversal is considered the best known and most reliable of all major reversal patterns. It forms in a major uptrend where a series of ascending peaks and troughs gradually begin to lose momentum. Most other reversal patterns are considered variations of the head and shoulders pattern.

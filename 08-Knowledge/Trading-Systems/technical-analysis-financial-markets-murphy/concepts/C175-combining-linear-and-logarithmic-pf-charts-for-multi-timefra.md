@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Linear and Logarithmic P&F Charts for Multi-Timeframe Analysis
 
 Using both a long-term logarithmic P&F chart and a shorter-term linear P&F chart of the same stock provides both macro trend context and detailed near-term price action. The logarithmic chart covers multiple years for trend identification, while the linear chart zooms in on recent price action for timing entries and identifying potential breakouts.

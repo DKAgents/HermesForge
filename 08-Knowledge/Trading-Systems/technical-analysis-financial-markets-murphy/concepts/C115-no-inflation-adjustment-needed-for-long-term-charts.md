@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # No Inflation Adjustment Needed for Long-Term Charts
 
 Long-term charts do not require adjustment for inflation because markets themselves have already made the necessary adjustments. A declining currency causes commodity prices to rise, and rising currencies cause commodity prices to fall — the market action itself reflects inflation and deflation. The technical principle that price action discounts everything, including inflation, supports this view.

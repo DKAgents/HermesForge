@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Rule 1: Rising OI in Uptrend is Bullish
 
 With prices advancing in an uptrend and total open interest increasing, new money is flowing into the market reflecting aggressive new buying. This is considered bullish because it confirms that the uptrend is being driven by genuine new participation rather than short covering.

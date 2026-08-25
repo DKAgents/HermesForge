@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Time Period and Sensitivity Relationship
 
 The shorter the time period, the more sensitive the oscillator becomes and the wider its amplitude. The time period is lengthened to make the oscillator smoother and narrower in amplitude. The 9-day oscillator has greater amplitude than the original 14-day.

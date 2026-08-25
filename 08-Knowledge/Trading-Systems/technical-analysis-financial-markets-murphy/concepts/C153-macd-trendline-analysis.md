@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Trendline Analysis
 
 Simple trendlines can be drawn on the MACD lines to help identify important trend changes, adding another dimension of analysis beyond crossover and divergence signals.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Premature Double Top/Bottom Labeling
 
 Many traders incorrectly label a pattern as a double top or bottom as soon as prices fail to clear the first peak or bounce from the first trough on the first attempt. Because technical odds favor continuation of the present trend, it is usually wise to await completion of the pattern before taking action. A double top is only confirmed when support at the intervening trough is broken.

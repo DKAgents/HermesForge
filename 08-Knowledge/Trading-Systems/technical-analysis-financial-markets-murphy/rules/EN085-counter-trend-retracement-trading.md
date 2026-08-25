@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Counter Trend: Retracement Trading
 
 Retracement trading involves buying pullbacks in a bull market and selling rallies in a bear market, but only if the major trend remains intact. For example, buying a 50% pullback of the last advance is a common technique. The danger is that retracements can extend further than anticipated, making exit strategies difficult to implement.

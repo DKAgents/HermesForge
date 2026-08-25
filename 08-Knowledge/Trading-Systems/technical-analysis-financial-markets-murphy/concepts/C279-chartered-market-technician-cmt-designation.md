@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Chartered Market Technician (CMT) Designation
 
 The CMT is a three-step examination process instituted by the Market Technicians Association (MTA) that qualifies analysts to carry the CMT designation. It serves as a professional credential for technical analysts, analogous to the CFA for security analysts or the bar exam for lawyers. Traders and investors should verify that their technical analyst holds a CMT.

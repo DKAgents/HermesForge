@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Divergence as Primary Warning Signal
 
 Divergence between the RSI and the price line, when the RSI is above 70 or below 30, is a serious warning that should be heeded. Wilder himself considers divergence the single most indicative characteristic of the RSI. This is considered the greatest value of the RSI oscillator.

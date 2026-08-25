@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Piercing Line — Bullish Reversal Pattern
 
 The Piercing Line is the bullish counterpart to the Dark Cloud Cover and requires a prior downtrend. The first candlestick is a long black day which solidifies traders' confidence in the downtrend. The next day, prices open at a new low and then trade higher all day, closing above the midpoint of the first candlestick's body. This significant change in intraday direction signals a shift in downtrend mentality and causes many traders to reverse or exit their positions.

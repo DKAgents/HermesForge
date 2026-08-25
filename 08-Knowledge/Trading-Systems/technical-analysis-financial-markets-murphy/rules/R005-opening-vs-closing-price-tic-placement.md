@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Opening vs. Closing Price Tic Placement
 
 The closing price tic is placed to the right of the vertical bar, while the opening price tic is placed to the left. This convention distinguishes the two data points visually on the bar chart.

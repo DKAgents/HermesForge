@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Summation
 
 The Principle of Summation holds that all price movement is the simple addition of all active cycles. All price patterns, including double tops and complex formations, are formed by the interaction of two or more different cycles. By isolating each individual cycle, measuring it, projecting it forward, and summing the projections, future price trends can theoretically be estimated.

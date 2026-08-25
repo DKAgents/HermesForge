@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Parabolic SAR Applied Across Multiple Timeframes
 
 Parabolics can be applied on monthly, weekly, and daily charts to track trends across different timeframes. On a monthly chart, they can track the primary trend. On weekly charts, they can identify intermediate trend changes. This multi-timeframe application allows traders to align their positions with the dominant trend.

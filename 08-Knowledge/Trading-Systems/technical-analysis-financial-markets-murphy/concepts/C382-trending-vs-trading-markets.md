@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trending vs. Trading Markets
 
 Markets alternate between trending and trading (range-bound) conditions, requiring different analytical approaches and tools. Identifying whether a market is trending or trading is essential for selecting appropriate technical strategies.

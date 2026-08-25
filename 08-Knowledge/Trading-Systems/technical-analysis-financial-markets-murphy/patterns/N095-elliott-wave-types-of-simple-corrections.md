@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave: Types of Simple Corrections
 
 The two types of simple corrections in Elliott Wave Theory are zig-zags (5-3-5) and flats (3-3-5). These corrective patterns define the internal wave structure of counter-trend moves.

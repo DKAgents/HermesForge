@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Averages Synchronized with Dominant Cycles
 
 Moving averages can be made more useful if their lengths are synchronized with dominant cycle lengths. The popular 5, 10, and 20 day moving averages correspond directly to the nominal cycle model's shorter-term cycle lengths. Aligning moving average periods with dominant cycles improves their effectiveness as trend-following tools.

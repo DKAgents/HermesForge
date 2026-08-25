@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume and Price Patterns
 
 Volume provides confirmation in price patterns; expanding volume on breakouts validates the pattern while low volume breakouts are suspect. The degree of penetration and volume behavior together determine the significance of a pattern breakout.

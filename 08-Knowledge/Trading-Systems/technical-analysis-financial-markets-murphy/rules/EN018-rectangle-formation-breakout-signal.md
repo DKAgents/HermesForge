@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Breakout Signal
 
 A decisive close outside either the upper or lower boundary of the rectangle signals completion of the pattern and points the direction of the trend. The analyst must remain alert that the rectangular consolidation does not turn into a reversal pattern such as a triple top or triple bottom.

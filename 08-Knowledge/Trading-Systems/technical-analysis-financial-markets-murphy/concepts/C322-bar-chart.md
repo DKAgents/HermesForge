@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bar Chart
 
 On a daily bar chart, each bar represents one day's activity. The vertical bar spans from the day's high to the day's low. A tic to the left marks the opening price and a tic to the right marks the closing price. Bar charts can be constructed for any time period.

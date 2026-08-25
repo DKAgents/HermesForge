@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Upside Breakout Above a Bullish Triangle (B-6)
 
 This pattern requires two conditions to be met: first, a simple buy signal must be present, and second, the upper trendline of the triangle must be cleared. It combines a basic buy signal with a trendline breakout for added confirmation.

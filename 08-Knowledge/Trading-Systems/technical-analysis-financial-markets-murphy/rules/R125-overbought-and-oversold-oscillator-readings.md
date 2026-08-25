@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Overbought and Oversold Oscillator Readings
 
 When the oscillator reaches an extreme value near the upper end of its band, the market is considered overbought and the price trend is overextended and vulnerable to a correction. When the oscillator is near the lower extreme, the market is oversold. As a general rule, traders should be buying when the oscillator is in the lower end of the band and selling when it is in the upper end.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Line (Return Line)
 
 A channel line is drawn parallel to the basic trendline from the first prominent peak (in an uptrend) or trough (in a downtrend), forming a price channel. In an uptrend, the basic trendline is drawn along the lows and the channel line is projected over the first peak, parallel to the basic trendline. If the next rally reaches and backs off from the channel line and prices then return to the original trendline, a channel is confirmed.

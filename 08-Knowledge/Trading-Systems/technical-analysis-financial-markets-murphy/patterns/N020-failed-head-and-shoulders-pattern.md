@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Failed Head and Shoulders Pattern
 
 Once prices have moved through the neckline and completed a head and shoulders pattern, prices should not recross the neckline. At a top, any decisive close back above the neckline after a downside break is a serious warning that the initial breakdown was a bad signal, creating a failed head and shoulders. This pattern starts out looking like a classic reversal but at some point prices resume their original trend.

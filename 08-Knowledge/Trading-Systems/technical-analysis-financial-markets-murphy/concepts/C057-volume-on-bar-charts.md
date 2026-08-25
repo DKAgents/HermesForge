@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume on Bar Charts
 
 Volume represents the total trading activity in a market for a given day — the total number of futures contracts traded or stock shares that changed hands. It is plotted as a vertical bar at the bottom of the chart beneath the corresponding day's price bar. A taller volume bar indicates heavier trading activity; a shorter bar indicates lighter activity.

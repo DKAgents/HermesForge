@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Number Three in Technical Analysis
 
 The number three appears repeatedly in technical analysis: three types of trends, three phases of major trends, three parts of head and shoulders patterns, three-box reversals, and the fan principle requiring three trendline breaks. This recurring significance makes three a key number in technical methodology.

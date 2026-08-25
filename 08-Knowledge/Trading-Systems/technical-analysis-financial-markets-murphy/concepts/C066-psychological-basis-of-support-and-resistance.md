@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Psychological Basis of Support and Resistance
 
 Support and resistance levels exist on charts because of the collective psychology of market participants. Traders who sold near a resistance level create selling pressure that defines resistance; once that level is broken, those same traders become buyers on dips, converting resistance into support. This psychological mechanism gives support and resistance levels their predictive power.

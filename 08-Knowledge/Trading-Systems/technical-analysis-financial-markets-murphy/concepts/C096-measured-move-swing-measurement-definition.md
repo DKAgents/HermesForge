@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measured Move (Swing Measurement): Definition
 
 The measured move describes the phenomenon where a major market advance or decline is divided into two equal and parallel moves. For this approach to work, the market moves should be fairly orderly and well defined. It is a variation of techniques already seen in flags, pennants, and the tendency of markets to retrace a third to a half of a prior trend.

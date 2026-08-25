@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Reversal Pattern
 
 On a weekly bar chart, an upside weekly reversal occurs when the market trades lower during the week, makes a new low for the move, but on Friday closes above the previous Friday's close. Weekly reversals are much more significant than daily reversals and are watched closely by chartists as signaling important turning points.

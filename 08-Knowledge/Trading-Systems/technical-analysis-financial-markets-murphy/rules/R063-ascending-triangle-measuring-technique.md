@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ascending Triangle Measuring Technique
 
 Measure the height of the ascending triangle at its widest point and project that vertical distance upward from the breakout point. This provides a minimum price objective based on the volatility of the pattern.

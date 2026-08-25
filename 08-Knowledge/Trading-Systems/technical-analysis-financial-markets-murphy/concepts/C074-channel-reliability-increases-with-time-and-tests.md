@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Reliability Increases with Time and Tests
 
 The longer a channel remains intact and the more often it is successfully tested, the more important and reliable it becomes. This mirrors the principle applied to basic trendlines — repeated validation at both boundaries increases the statistical significance of the channel. Traders should give more weight to well-established, long-duration channels.

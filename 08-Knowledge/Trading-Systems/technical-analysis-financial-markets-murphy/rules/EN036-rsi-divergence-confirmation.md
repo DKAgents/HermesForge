@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Divergence Confirmation
 
 When the oscillator makes a second move into the danger zone that fails to confirm the price move into new highs or new lows, some defensive action can be taken to protect existing positions. If the oscillator then moves in the opposite direction, breaking a previous high or low, then a divergence or failure swing is confirmed.

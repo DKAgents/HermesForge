@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength Ratio Line Breakout
 
 A breakout in the relative strength ratio line of an individual stock versus its sector index signals a potential buy opportunity. Stocks showing a ratio line that is turning up from a base or breaking out to new highs relative to their index are preferred candidates for purchase.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Momentum Below Zero Signals Near-Term Downtrend
 
 When the momentum line moves below the zero line, the latest close is below the close of the same number of days ago, indicating a near-term downtrend. As momentum continues to drop farther below zero, the downtrend gains momentum. Only when the line begins to advance again does the analyst know the downtrend is decelerating.

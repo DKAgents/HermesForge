@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pivot Point Buy Signal Rules
 
 If the market opens above the previous day's close but below the previous day's high, a buy stop is placed above the previous day's high. If the buy stop is elected, a protective sell stop is placed below the current day's low. At 35 minutes before the close, if no position has been taken, a buy stop is placed above the current day's high with a protective stop under today's open. No action is generally taken during the first 30 minutes of trading. As a final requirement, prices must close above both the previous day's closing price and today's opening price.

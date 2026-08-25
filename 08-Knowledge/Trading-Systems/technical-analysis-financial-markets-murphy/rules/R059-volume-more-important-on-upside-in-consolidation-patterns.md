@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume More Important on Upside in Consolidation Patterns
 
 As with reversal patterns, volume is more important on the upside than on the downside in consolidation patterns. An increase in volume is essential to the resumption of an uptrend in all consolidation patterns.

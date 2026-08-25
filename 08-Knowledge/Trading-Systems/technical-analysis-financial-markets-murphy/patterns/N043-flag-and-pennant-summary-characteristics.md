@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag and Pennant: Summary Characteristics
 
 Both flags and pennants share seven key characteristics: (1) preceded by an almost straight-line move (flagpole) on heavy volume; (2) prices pause one to three weeks on very light volume; (3) trend resumes on a burst of trading activity; (4) both occur at about the midpoint of the market move; (5) pennant resembles a small horizontal symmetrical triangle; (6) flag resembles a small parallelogram sloping against the prevailing trend; (7) both take less time to develop in downtrends.

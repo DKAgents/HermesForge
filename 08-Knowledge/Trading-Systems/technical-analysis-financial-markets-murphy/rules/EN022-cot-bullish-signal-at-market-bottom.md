@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, point-and-figure, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # COT Bullish Signal at Market Bottom
 
 A bullish signal at a market bottom occurs when the commercials are heavily net long while the large and small traders are heavily net short. This extreme divergence between commercials and speculators indicates a high-probability buying opportunity.

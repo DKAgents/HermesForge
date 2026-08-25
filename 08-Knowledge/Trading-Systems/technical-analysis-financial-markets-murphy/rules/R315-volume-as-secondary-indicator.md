@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume as Secondary Indicator
 
 Volume is considered a secondary indicator to price, used to confirm the strength of price moves and patterns. General rules include volume expanding in the direction of the trend and contracting during corrections.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal Day — Definition
 
 A reversal day takes place either at a top or a bottom. A top reversal day is the setting of a new high in an uptrend followed by a lower close on the same day — prices set a new high at some point during the day (usually at or near the opening) then weaken and close lower than the previous day's closing. A bottom reversal day is a new low during the day followed by a higher close.

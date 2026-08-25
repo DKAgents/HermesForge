@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, fibonacci, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fibonacci Tools as Secondary Inputs
 
 Fibonacci tools including fan lines, arcs, time zones, and retracements are available in charting software but should be used as secondary inputs unless the trader has a special interest in those areas. They complement primary tools like trendlines and moving averages.

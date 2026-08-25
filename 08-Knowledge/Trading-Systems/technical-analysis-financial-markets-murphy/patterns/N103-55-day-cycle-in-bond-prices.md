@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 55-Day Cycle in Bond Prices
 
 Applied to daily bond charts, cycle arcs showed a tendency for bond prices to bottom every 55 trading days. This shorter-term cycle can be used to time entries in bond futures.

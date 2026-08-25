@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Entry Points in Point and Figure Patterns
 
 Entry points in point and figure patterns generally coincide with the retesting of support areas in a base or resistance areas in a top, breakout points, and the breaking of trendlines. Blackened boxes in chart examples represent suggested buying and selling points.

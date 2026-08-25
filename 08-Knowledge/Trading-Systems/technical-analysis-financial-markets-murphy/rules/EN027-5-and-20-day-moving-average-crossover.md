@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 5 and 20 Day Moving Average Crossover
 
 One popular double crossover combination uses the 5-day and 20-day moving averages. A buy signal occurs when the 5-day average crosses above the 20-day average. A sell signal is generated when the 5-day average moves below the 20-day average.

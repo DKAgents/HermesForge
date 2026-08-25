@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle Pattern
 
 The descending triangle is a mirror image of the ascending triangle, with a descending upper line and a flat lower line. It indicates sellers are more aggressive than buyers and is generally a bearish pattern usually resolved to the downside.

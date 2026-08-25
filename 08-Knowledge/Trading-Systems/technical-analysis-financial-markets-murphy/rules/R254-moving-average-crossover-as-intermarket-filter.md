@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, intermarket, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Crossover as Intermarket Filter
 
 A moving-average crossover system in the bond market can be used as a filter for stock index trading. This intermarket filter approach, described by Murray Ruggiero Jr., demonstrates how signals from one market can improve trading system performance in a related market.

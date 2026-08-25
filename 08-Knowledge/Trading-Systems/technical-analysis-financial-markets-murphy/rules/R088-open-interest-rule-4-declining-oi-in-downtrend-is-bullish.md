@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Rule 4: Declining OI in Downtrend is Bullish
 
 If total open interest is declining along with declining prices, the price decline is being caused by discouraged or losing longs being forced to liquidate their positions. This action indicates a strengthening technical situation because the downtrend will probably end once open interest has declined sufficiently to show that most losing longs have completed their selling.

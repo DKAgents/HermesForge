@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 75-Month (6.25-Year) Cycle in Bonds
 
 Beginning with the major bottom in 1981, cycle finder arcs revealed that bonds have shown a tendency to form important bottoms every 75 months (6.25 years). These numbers may shift with time but still provide useful trading information.

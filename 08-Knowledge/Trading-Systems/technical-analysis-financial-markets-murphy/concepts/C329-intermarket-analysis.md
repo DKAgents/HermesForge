@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis
 
 Intermarket analysis considers the price action of related market sectors: currencies, commodities, bonds, and stocks, as well as international markets. It is based on the premise that all markets are interrelated and impact one another.

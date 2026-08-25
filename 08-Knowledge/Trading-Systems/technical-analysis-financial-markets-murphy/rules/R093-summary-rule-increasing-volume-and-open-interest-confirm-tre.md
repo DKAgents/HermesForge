@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Increasing Volume and Open Interest Confirm Trend Continuation
 
 Increasing volume and open interest indicate that the current price trend will probably continue. Conversely, declining volume and open interest suggest that the price trend may be changing.

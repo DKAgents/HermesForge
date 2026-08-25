@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flags and Pennants Measuring Implication — Half-Mast Rule
 
 Flags and pennants are said to 'fly at half-mast' from a flagpole, where the flagpole is the prior sharp advance or decline. This means these continuation patterns tend to appear at roughly the midpoint of the move, and the price move after the pattern is completed should duplicate the size of the move preceding it.

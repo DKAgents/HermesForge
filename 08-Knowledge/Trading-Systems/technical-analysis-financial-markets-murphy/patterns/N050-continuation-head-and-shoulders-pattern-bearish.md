@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Continuation Head and Shoulders Pattern (Bearish)
 
 In a downtrend, prices form a consolidation where the middle peak exceeds the other two peaks, creating an upside-down head and shoulders pattern. This signals continuation of the downtrend. The pattern is completed and the downtrend resumes when price breaks below the neckline.

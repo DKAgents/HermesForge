@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breaking the Major Trendline vs. Breaking the Channel Line
 
 Breaking the major (basic) trendline signals an important change in trend, while breaking the upper channel line in an uptrend has the opposite meaning — it signals an acceleration of the existing trend. These two events must not be confused, as they carry diametrically opposite implications for trade management. Some traders view clearing the upper channel line as a reason to add to long positions.

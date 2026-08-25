@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline as a Buying Area in an Uptrend
 
 In an uptrend, corrective dips will often touch or come very close to the up trendline. Because the intent of the trader is to buy dips in an uptrend, the trendline provides a support boundary under the market that can be used as a buying area. This approach is valid as long as the trendline has not been violated.

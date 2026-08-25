@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Step 2: Convert Idea into Objective Rules
 
 The trading idea must be expressed in fully objective terms such that 100 different people following the rules will all arrive at exactly the same conclusions. This is described as the most difficult step in the 5-step plan. The overall problem must be broken down into increasing levels of detail until all specifics are finalized.

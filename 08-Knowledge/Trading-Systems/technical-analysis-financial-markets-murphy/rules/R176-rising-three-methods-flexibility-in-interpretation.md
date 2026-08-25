@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rising Three Methods — Flexibility in Interpretation
 
 While the ideal Rising Three Methods pattern requires small reaction days to remain within the first day's body range and be predominantly black, flexibility can be applied with experience. The three small reaction days could remain within the first day's high-low range instead of the body's range, do not always have to be predominantly black, and the 'period of rest' could be expanded to include more than three reaction days.

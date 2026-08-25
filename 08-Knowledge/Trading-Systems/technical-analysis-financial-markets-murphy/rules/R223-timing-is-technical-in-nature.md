@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Timing is Technical in Nature
 
 Timing of specific entry and exit points is especially crucial in futures trading due to low margin requirements and high leverage. Even a correct directional call can result in a loss if timing is off. Timing is almost entirely technical in nature, meaning even fundamentally oriented traders must use technical tools for entry and exit decisions.

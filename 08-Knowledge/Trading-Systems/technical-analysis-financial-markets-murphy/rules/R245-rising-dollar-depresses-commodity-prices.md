@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rising Dollar Depresses Commodity Prices
 
 A rising U.S. dollar normally has a depressing effect on most commodity prices and is considered noninflationary. Conversely, a falling dollar tends to be associated with rising commodity prices. This relationship means the dollar must be monitored when analyzing commodity trends.

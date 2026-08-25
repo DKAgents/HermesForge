@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Line Measuring Implication
 
 Once a breakout occurs from an existing price channel, prices usually travel a distance equal to the width of the channel. The user measures the width of the channel and projects that amount from the point at which either trendline is broken. This provides a price target after a channel breakout.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4 Week Rule as Continuous System
 
 The 4 week rule as presented is a continuous system, meaning the trader always has a position — either long or short. Continuous systems have a basic weakness in that they stay in the market and get whipsawed during trendless market periods, which is a known limitation of all trend-following systems.

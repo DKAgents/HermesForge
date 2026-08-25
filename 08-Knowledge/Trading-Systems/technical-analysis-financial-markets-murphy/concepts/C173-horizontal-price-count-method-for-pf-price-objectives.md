@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Horizontal Price Count Method for P&F Price Objectives
 
 Horizontal price counts across a price base are used to arrive at short and long term price objectives on P&F charts. A short-term objective is derived by measuring halfway across the price base and projecting that distance upward. A long-term objective is derived by measuring across the entire price base and projecting that full distance upward.

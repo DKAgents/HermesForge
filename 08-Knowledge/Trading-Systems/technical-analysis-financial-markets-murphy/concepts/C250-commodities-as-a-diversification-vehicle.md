@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commodities as a Diversification Vehicle
 
 Since commodities often trend in opposite directions to bonds and stocks, they provide an excellent diversification vehicle for a portfolio. The Goldman Sachs Commodity Index, which includes 22 commodity markets, can be used as a benchmark for commodity exposure.

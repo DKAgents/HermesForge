@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Daily and Weekly Stochastics
 
 One way to combine daily and weekly stochastics is to use weekly signals to determine market direction and daily signals for timing. The Stochastic oscillator can be used on weekly and monthly charts for longer range perspective and also effectively on intraday charts for shorter term trading.

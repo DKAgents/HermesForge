@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Evening Star — Subjective vs. Computer Interpretation
 
 Some references accept an Evening Star pattern as valid even if it does not meet every detail exactly, such as the third day not gapping down or the close not being quite below the midpoint of the first day's body. These details are subjective when visually interpreting a candlestick chart but must be explicitly defined for computer programs, which require precise mathematical instructions and do not allow for subjective interpretation.

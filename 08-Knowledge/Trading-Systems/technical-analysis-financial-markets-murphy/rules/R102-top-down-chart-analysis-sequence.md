@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Top-Down Chart Analysis Sequence
 
 Step 1: Analyze the 20-year monthly chart for major patterns, trendlines, and support/resistance. Step 2: Consult the most recent 5-year weekly chart. Step 3: Narrow focus to the last 6–9 months on the daily bar chart. Step 4: Optionally use intraday charts for precise entry/exit timing. This macro-to-micro approach ensures proper market perspective.

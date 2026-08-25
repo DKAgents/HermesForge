@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillators and Trend Importance
 
 Oscillators should always be used in conjunction with the prevailing trend. Overbought signals in an uptrend and oversold signals in a downtrend are less reliable than signals that align with the trend direction. The trend context is critical for oscillator interpretation.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendlines Should Include the Full Price Range
 
 Trendlines on bar charts should be drawn over or under the entire day's price range, not just closing prices. While the closing price is the most important price of the day, it represents only a small sample of that day's activity. Including the full daily range is the standard and more common procedure.

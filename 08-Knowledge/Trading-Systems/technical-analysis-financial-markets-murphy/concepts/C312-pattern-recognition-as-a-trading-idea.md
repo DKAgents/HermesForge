@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pattern Recognition as a Trading Idea
 
 Pattern recognition can be visual (e.g., the head and shoulders formation) or statistical (e.g., seasonal price patterns). The head and shoulders formation is cited as a highly reliable visual pattern. Statistical patterns such as seasonal tendencies can also form the basis of a systematic trading approach.

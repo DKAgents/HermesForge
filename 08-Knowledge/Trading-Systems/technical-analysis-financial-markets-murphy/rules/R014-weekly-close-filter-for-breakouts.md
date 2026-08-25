@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Close Filter for Breakouts
 
 Another filter requires a Friday close beyond a major breakout point to ensure a valid weekly signal. This adds an additional confirmation layer beyond daily price action.

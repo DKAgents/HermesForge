@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stop Order
 
 A stop order specifies a price at which an order is executed and becomes a market order once the stop price is hit. A buy stop is placed above the market to initiate a long on a bullish breakout; a sell stop is placed below the market to limit losses on a long position or can be trailed upward to protect profits. The actual fill price may be beyond the stop price in fast markets.

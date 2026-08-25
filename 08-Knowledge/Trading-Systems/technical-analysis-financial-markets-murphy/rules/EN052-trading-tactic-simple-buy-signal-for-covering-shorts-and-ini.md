@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Tactic: Simple Buy Signal for Covering Shorts and Initiating Longs
 
 A simple buy signal on a point and figure chart can be used both for covering existing short positions and for initiating new long positions. This is the most basic application of the buy signal in trading tactics.

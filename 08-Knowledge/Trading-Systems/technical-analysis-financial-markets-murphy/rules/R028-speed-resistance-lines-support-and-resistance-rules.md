@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, risk-management]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Speed Resistance Lines — Support and Resistance Rules
 
 In an uptrend correction, the downside correction will usually stop at the higher speedline (2/3 speedline). If not, prices will drop to the lower speedline (1/3 speedline). If the lower line is also broken, prices will probably continue all the way to the beginning of the prior trend. In a downtrend, breaking the lower line indicates a probable rally to the higher line, and if that is broken, a rally to the top of the prior trend is indicated.

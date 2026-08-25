@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Commitments of Traders Report and Hedger Open Interest
 
 Study the Commitments of Traders Report to ensure that hedgers hold less than 50% of the open interest before applying Contrary Opinion. Contrary Opinion works better when most open interest is held by speculators, who are considered weaker hands. It is not advisable to trade against large hedging interests.

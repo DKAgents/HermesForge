@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Top Formation
 
 A head and shoulders top consists of three peaks where the middle peak (head) is higher than the two surrounding peaks (shoulders). The pattern forms after an uptrend, with the left shoulder on heavy volume, the head on lighter volume, and the right shoulder on the lightest volume. The pattern is not complete until the neckline is decisively broken on a closing basis.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Rule 3: Rising OI in Downtrend is Bearish
 
 With prices in a downtrend and open interest rising, new money is flowing into the market reflecting aggressive new short selling. This action increases the odds that the downtrend will continue and is considered bearish.

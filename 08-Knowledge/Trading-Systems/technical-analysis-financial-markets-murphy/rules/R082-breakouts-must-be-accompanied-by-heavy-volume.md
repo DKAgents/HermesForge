@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Breakouts Must Be Accompanied by Heavy Volume
 
 The resolution of all price patterns at the breakout point should be accompanied by heavier trading activity for the breakout signal to be considered valid. Consolidation patterns like the triangle should show a gradual drop off in volume during formation, followed by a volume surge at the breakout.

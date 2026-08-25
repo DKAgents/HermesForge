@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastics Overbought/Oversold Levels for Major Turns
 
 Turns in the 14-week stochastics from above 80 (overbought) and below 20 (oversold) can anticipate major turns in markets. Stochastics charts can be constructed for 14 days, 14 weeks, or 14 months depending on the desired timeframe.

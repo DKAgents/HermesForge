@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Forced Liquidation Fuels Early Stage of New Trend
 
 The early stage of any new trend immediately following a breakout is usually fueled by forced liquidation by those caught on the wrong side of the market. The more traders caught on the wrong side (manifested in high open interest), the more severe the response to a sudden adverse market move. The new trend is further aided by those on the right side using accumulated paper profits to finance additional positions.

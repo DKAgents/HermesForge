@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wedge Formation: Directional Bias Rule
 
 Like the flag pattern, the wedge slants against the prevailing trend. Therefore, a falling wedge is considered bullish and a rising wedge is bearish. This rule applies whether the wedge appears as a continuation pattern in the middle of a move or as a reversal pattern at tops and bottoms.

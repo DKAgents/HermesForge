@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI Zero Line – Basic Interpretation
 
 The most basic interpretation of the HPI is whether it is above or below the zero line. A positive value (above zero) means the HPI is projecting higher prices and that open interest is rising along with prices. Negative readings suggest that funds are flowing out of the commodity being analyzed.

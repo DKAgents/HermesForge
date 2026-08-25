@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Pennant Continuation Pattern
 
 The pennant is a continuation price pattern similar to the flag, except that it is more horizontal and resembles a small symmetrical triangle. Like the flag, the pennant usually lasts from one to three weeks and is typically followed by a resumption of the prior trend.

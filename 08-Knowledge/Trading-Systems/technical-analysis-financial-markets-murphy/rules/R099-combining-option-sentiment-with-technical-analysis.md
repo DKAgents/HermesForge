@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, volume, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Option Sentiment with Technical Analysis
 
 Options traders use open interest and volume put/call figures to determine extremes in bullish or bearish sentiment. These sentiment readings work best when combined with technical measures such as support, resistance, and the trend of the underlying market. Since timing is crucial in options, most option traders are technically oriented.

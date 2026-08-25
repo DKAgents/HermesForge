@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest in Futures
 
 Open interest is the total number of outstanding futures contracts held by market participants at the end of the day. Because every long position must have a corresponding short, open interest is counted only on one side (either longs or shorts, not both combined). It is plotted on the chart as a solid line, typically above the volume bars but below the price bars.

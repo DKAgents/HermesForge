@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Supply and Demand as Price Driver
 
 The technical premise that market action discounts everything is grounded in supply and demand economics: if demand exceeds supply, prices rise; if supply exceeds demand, prices fall. The technician reverses this logic — rising prices imply bullish fundamentals (demand exceeding supply) and falling prices imply bearish fundamentals. Charts reflect the bullish or bearish psychology of the marketplace but do not cause market moves.

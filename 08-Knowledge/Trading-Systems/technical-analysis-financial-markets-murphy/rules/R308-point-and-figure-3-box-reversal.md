@@ -13,8 +13,8 @@ has_quotes: false
 topic: [candlesticks, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure 3-Box Reversal
 
 The 3-box reversal method requires a price move of at least 3 boxes in the opposite direction before a new column is started. This filters out minor price fluctuations and focuses on more significant price moves.

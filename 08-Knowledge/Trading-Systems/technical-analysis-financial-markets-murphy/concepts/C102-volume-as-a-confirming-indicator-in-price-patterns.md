@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume as a Confirming Indicator in Price Patterns
 
 Volume serves as an important confirming indicator when analyzing price patterns. It does not generate primary signals on its own but validates or questions the significance of price movements observed in chart patterns.

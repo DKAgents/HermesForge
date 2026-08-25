@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term P&F Horizontal Count (Full-Base Measurement)
 
 To calculate a long-term upside price objective using the horizontal count method, measure across the entire price base and project that full distance upward. For Intel, this full-base measurement produced a long-term price objective of 87.6.

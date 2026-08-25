@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Simple Bullish Buy Signal with Rising Bottoms (B-2)
 
 B-2 is similar to B-1 but uses 4 columns, with the bottom of the second column of O's higher than the first. This adds the bullish feature of rising bottoms, making it a slightly stronger pattern than B-1. It shows the same bullish breakout but with additional confirmation from ascending lows.

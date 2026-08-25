@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Doji Lines
 
 Doji candlesticks occur when the open price and the close price are equal (or nearly equal, especially during large price movements). Doji lines can have shadows of varying length and signal indecision in the market. There are several important Doji variations: Long-legged Doji, Gravestone Doji, and Dragonfly Doji.

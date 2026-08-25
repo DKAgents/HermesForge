@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Buy Signal in 3-Box Reversal Point and Figure
 
 A buy signal occurs when a column of X's rises one box higher than the high of the previous X column. This is the standard breakout buy signal in the Chartcraft 3-box reversal method.

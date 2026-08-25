@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Patterns on Long-Term Charts
 
 Standard price patterns such as double tops and bottoms, head and shoulders reversals, and triangles (usually continuation patterns) appear on long-term weekly and monthly charts and are interpreted the same way as on daily charts. These patterns carry greater significance on long-term charts due to the extended time frame involved.

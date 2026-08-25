@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 1-3% Penetration Criterion and Two-Day Rule for Neckline Confirmation
 
 To confirm a neckline break, traders can use either a 1-3% penetration criterion or the two-day rule (two successive closes below the neckline). These filters help avoid false breakouts and provide added confirmation before acting on the pattern.

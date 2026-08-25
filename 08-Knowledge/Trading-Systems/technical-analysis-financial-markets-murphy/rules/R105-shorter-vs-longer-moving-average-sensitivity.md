@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Shorter vs. Longer Moving Average Sensitivity
 
 Shorter-term averages are more sensitive to price action, while longer-range averages are less sensitive. In certain market conditions it is more advantageous to use a shorter average, and at other times a longer and less sensitive average proves more useful. The shorter average generates earlier signals but more false signals, while the longer average is slower but more reliable.

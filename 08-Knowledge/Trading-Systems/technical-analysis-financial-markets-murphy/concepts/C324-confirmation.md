@@ -13,8 +13,8 @@ has_quotes: false
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confirmation
 
 Confirmation means having as many market factors as possible agreeing with one another. For example, if prices and volume are rising together, volume is confirming the price action. The opposite of confirmation is divergence.

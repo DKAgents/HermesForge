@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Intermarket Analysis: Futures and Stocks Are Linked
 
 The world of futures trading has blended with that of traditional stocks and bonds to the point that they can hardly be separated. Technical analysis methods used to analyze different financial markets have become more universally applied as a result. Stock investors should keep informed of what is happening in the futures markets.

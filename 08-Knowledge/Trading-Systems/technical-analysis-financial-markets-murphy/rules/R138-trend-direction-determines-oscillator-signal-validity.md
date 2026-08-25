@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Direction Determines Oscillator Signal Validity
 
 Most oscillator buy signals work best in uptrends and oscillator sell signals are most profitable in downtrends. Market analysis should always begin by determining the general trend; oscillators are then used to time entry within that trend direction.

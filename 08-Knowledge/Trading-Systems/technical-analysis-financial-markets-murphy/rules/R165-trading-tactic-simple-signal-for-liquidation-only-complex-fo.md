@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Tactic: Simple Signal for Liquidation Only, Complex for New Commitment
 
 A more conservative approach uses the simple signal only for liquidating existing positions, while requiring a complex formation before initiating a new commitment in the opposite direction. This reduces false entries by demanding stronger confirmation before reversing position.

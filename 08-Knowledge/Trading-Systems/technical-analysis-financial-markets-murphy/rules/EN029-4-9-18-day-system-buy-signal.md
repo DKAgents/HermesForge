@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-9-18 Day System: Buy Signal
 
 A buying alert takes place in a downtrend when the 4 day average crosses above both the 9 and the 18 day averages. A confirmed buy signal occurs when the 9 day then crosses above the 18 day, placing the 4 day over the 9 day which is over the 18 day. At a bottom, the 4 day turns up first and crosses the other two lines, then the 9 day crosses over the 18 day to confirm.

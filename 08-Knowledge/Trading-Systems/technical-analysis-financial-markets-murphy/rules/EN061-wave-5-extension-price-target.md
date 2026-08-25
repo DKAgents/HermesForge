@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave 5 Extension Price Target
 
 When waves 1 and 3 are approximately equal and wave 5 is expected to extend, a price objective is obtained by measuring the distance from the bottom of wave 1 to the top of wave 3, multiplying by 1.618, and adding the result to the bottom of wave 4.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Inverse Head and Shoulders
 
 The inverse head and shoulders is a bullish reversal pattern. The slope of the neckline is an important consideration, as an upward-sloping neckline is more bullish. Breaking above the neckline confirms the reversal.

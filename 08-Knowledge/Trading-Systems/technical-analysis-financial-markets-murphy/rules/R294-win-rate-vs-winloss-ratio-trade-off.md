@@ -13,8 +13,8 @@ has_quotes: false
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Win Rate vs. Win/Loss Ratio Trade-off
 
 A system can be profitable with a win rate below 50% if the average winning trade is significantly larger than the average losing trade. In the example, only 49% of trades were winners (67 of 137), yet the system was highly profitable because the average win ($16.89) was 2.82 times the average loss ($5.72). This illustrates that win rate alone is not a sufficient measure of system quality.

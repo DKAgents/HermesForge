@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, intermarket, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting Long-Term Charts for Inflation
 
 Long-term price charts should be adjusted for inflation to provide a more accurate picture of real price trends over extended periods. This is particularly important when analyzing commodity and stock markets over decades.

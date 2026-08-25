@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Measured Move (Continuation Pattern)
 
 The measured move is a continuation pattern where the second leg of a move is approximately equal to the first leg. It is used to project price targets in trending markets.

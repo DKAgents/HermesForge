@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Variations in Double Top Peak Levels
 
 In real-life examples, the two peaks of a double top are often not at exactly the same price level. A second peak that falls slightly short of the first is not too problematic. However, when the second peak slightly exceeds the first, it can create confusion as it may appear to be a valid upside breakout when it is actually part of the topping process.

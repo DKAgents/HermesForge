@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Three White Soldiers Candle Pattern
 
 Three White Soldiers is a bullish reversal candlestick pattern consisting of three consecutive long white (bullish) candles, each opening within the prior candle's body and closing near its high. It signals strong buying pressure and a potential trend reversal.

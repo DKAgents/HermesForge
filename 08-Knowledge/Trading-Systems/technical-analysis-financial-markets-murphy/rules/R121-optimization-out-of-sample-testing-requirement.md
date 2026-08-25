@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Optimization: Out-of-Sample Testing Requirement
 
 When optimizing technical parameters, the correct procedure is to use only part of the price data to choose the best parameters and a separate portion to test the results. Testing optimized parameters on 'out of sample' price data helps ensure that final results will be closer to what one might experience from actual trading.

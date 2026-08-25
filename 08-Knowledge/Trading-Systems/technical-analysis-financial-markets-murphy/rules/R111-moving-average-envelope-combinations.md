@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Envelope Combinations
 
 For short-term analysis, 3% envelopes around a 21 day moving average are commonly used. For long-range analysis, possible combinations include 5% envelopes around a 10 week average or a 10% envelope around a 40 week average. Moves outside the envelopes suggest an overextended market.

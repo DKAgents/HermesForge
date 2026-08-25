@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave Subdivision Principle
 
 Each wave subdivides into waves of one lesser degree, which in turn can be subdivided into waves of even lesser degree. Each wave is also part of the wave of the next higher degree. The largest two waves can be subdivided into 8 lesser waves, then 34, then 144, following the Fibonacci sequence.

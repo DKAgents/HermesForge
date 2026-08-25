@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Descending Triangle
 
 The descending triangle is a bearish continuation pattern with a flat lower support line and declining upper trendline. It typically resolves with a downside breakout and is the mirror image of the ascending triangle.

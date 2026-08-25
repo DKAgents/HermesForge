@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Differences Between Tops and Bottoms
 
 Topping patterns are generally shorter in duration and more volatile than bottoms, with wider and more violent price swings. Bottoms typically have smaller price ranges but take longer to build. As a result, it is usually easier and less costly to identify and trade bottoms than to catch market tops.

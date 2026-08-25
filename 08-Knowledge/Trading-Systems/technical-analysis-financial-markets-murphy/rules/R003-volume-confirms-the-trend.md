@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Confirms the Trend
 
 Dow's fifth tenet holds that volume should expand in the direction of the major trend. In an uptrend, volume should increase as prices rise and diminish on pullbacks. In a downtrend, volume should increase as prices fall and diminish on rallies. Dow treated volume as a secondary confirming indicator, basing actual buy and sell signals solely on closing prices.

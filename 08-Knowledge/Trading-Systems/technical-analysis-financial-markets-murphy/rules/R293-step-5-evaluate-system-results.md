@@ -13,8 +13,8 @@ has_quotes: true
 topic: [risk-management, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Step 5: Evaluate System Results
 
 After testing, the trader must evaluate results by understanding the concept behind the system, analyzing the equity curve, assessing drawdowns, and reviewing the system on a trade-by-trade basis. Key questions include how quickly the system exits losers and how long it stays with winners. The trader must be completely comfortable with the results before trading the system in real time.

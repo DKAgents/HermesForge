@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, support-resistance, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3% Penetration Criterion
 
 A trendline or support/resistance level is considered broken only when price closes beyond it by at least 3%. This filter helps avoid false breakout signals and whipsaws.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # No Action in First 30 Minutes
 
 No action is generally taken during the first 30 minutes of trading when using pivot point techniques. This avoids the volatility and noise typically associated with the market open.

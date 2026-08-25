@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Wave Troughs More Reliable Than Wave Crests
 
 In price wave analysis, wave troughs are more clearly defined and more convenient reference points than wave crests. As a result, cycle periods are measured trough to trough, phase differences are measured between troughs, and cycle lows are the primary reference points for cyclic analysis. Analysts should anchor their cycle measurements to price lows rather than highs.

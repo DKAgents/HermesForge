@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Failing to Reach Upper Channel Line — Bearish Signal
 
 When prices fail to reach the upper channel line and a down trendline is drawn over two declining peaks, a tentative channel line can be drawn from the most recent low parallel to the down trendline. The lower channel line sometimes indicates where initial support will be evident.

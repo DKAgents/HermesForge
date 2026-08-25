@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Stochastics Sell Signal Criteria
 
 A sell signal in Stochastics is generated when the faster %K line crosses below the slower %D line while both lines are in the overbought zone above 80. This crossover in the overbought zone confirms a potential bearish reversal.

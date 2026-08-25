@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages, cycles, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average Crossover System Tied to Cycles
 
 Moving averages can be tied to dominant cycle lengths to generate crossover systems. For a 40-day cycle, one could use a 40-day moving average with a 20-day average (one-half the cycle) or a 10-day average (one-quarter the cycle). The main challenge is identifying the dominant cycle at any given point in time.

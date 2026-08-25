@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Program Buying Signal and Effect
 
 Program buying is triggered when S&P 500 futures trade too high relative to the cash index (premium exceeds fair value). Program traders sell the futures contract and buy a basket of S&P 500 stocks to bring the two back into line. The result of program buying is positive for the stock market as it pushes the S&P 500 cash index higher.

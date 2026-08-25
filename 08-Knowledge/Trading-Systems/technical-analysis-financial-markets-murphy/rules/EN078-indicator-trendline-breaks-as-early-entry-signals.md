@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Indicator Trendline Breaks as Early Entry Signals
 
 When an indicator such as the DI breaks its downtrend line before the corresponding price downtrend is broken, this provides an early entry signal. Acting on the indicator trendline break rather than waiting for the price trendline break can meaningfully improve the entry price. This principle applies broadly to trendline analysis of technical indicators.

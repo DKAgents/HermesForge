@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Key Reversal Day
 
 A key reversal day occurs when prices make a new high (or low) for the move and then reverse to close below (or above) the previous day's close. This pattern signals a potential trend reversal and is more significant on high volume.

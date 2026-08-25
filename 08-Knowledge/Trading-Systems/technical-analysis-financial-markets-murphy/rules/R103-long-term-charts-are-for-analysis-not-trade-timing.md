@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Charts Are for Analysis, Not Trade Timing
 
 Long-term charts are intended for determining major trends and price objectives, not for timing entry and exit points. For trade timing, daily and intraday charts must be used. A clear distinction must be maintained between market analysis for forecasting and the timing of market commitments.

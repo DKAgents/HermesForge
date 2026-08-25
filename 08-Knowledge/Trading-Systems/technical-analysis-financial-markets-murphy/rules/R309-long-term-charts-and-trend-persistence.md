@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Charts and Trend Persistence
 
 Long-term charts (monthly and weekly) reveal the persistence of major trends and provide important context for shorter-term analysis. Patterns on long-term charts carry greater significance than those on short-term charts. Long-term charts should be consulted before making trading decisions.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Top-Down Approach to Stock Market Analysis
 
 The top-down approach begins with an analysis of the overall market's health, then moves down to market sectors and industry groups, and finally to individual stocks. The goal is to pick the best stocks in the best groups when the stock market is technically healthy. Standard technical tools including chart patterns, volume analysis, trendlines, moving averages, and oscillators are used at each level.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # COT Rule: Follow Commercials, Fade Traders
 
 The guiding principle in analyzing the COT Report is that large commercial hedgers are usually right while traders (large and small speculators) are usually wrong. The idea is to place yourself in the same positions as the hedgers and in the opposite positions of the two categories of traders.

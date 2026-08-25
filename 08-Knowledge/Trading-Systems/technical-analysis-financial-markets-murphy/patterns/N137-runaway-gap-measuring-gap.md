@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Runaway Gap (Measuring Gap)
 
 A runaway gap is a price gap that usually occurs around the midpoint of an important market trend. For this reason, it is also called a measuring gap, as it can be used to project the likely extent of the remaining move.

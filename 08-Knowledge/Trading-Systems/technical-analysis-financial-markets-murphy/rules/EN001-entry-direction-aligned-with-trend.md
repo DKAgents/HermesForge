@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Entry Direction Aligned with Trend
 
 The author states that the purpose of charting is to identify trends in their early stages for the purpose of trading in the direction of those trends. This implies that entries should be made in the direction of the identified trend, not against it.

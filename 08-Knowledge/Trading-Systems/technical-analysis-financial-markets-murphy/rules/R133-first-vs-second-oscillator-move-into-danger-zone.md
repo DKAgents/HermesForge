@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # First vs. Second Oscillator Move into Danger Zone
 
 The first move into the overbought or oversold region is usually just a warning. The signal to pay close attention to is the second move by the oscillator into the danger zone. If the second move fails to confirm the price move into new highs or new lows, forming a double top or bottom on the oscillator, a possible divergence exists.

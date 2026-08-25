@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal vs. Continuation Candle Patterns
 
 Most candle patterns are used to determine reversal points in the market, while a few are used to determine trend continuation. Whenever a reversal pattern has bullish implications, an inversely related pattern has bearish meaning. When there is a pair of patterns that work in both bullish and bearish situations, they usually have the same name, though in a few cases the bullish pattern and its bearish counterpart have completely different names.

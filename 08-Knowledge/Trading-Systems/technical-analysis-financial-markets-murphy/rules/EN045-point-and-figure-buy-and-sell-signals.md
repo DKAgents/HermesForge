@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Buy and Sell Signals
 
 A buy signal is given when one x column rises above the top of a previous x column. A sell signal is given when a column of o's falls below a previous o column. These breakouts are more precise than those on bar charts and can be used directly as buy and sell signals.

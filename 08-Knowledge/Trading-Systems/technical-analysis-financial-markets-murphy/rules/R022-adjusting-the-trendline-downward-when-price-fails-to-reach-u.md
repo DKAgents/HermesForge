@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Adjusting the Trendline Downward When Price Fails to Reach Upper Channel
 
 When an uptrend fails to reach the upper end of its channel, this justifies drawing a new, flatter support line under the last reaction low, parallel to a new resistance line drawn over the past two peaks. This adjustment reflects the reduced momentum of the trend and recalibrates the channel to current price behavior. It provides a more accurate framework for managing the trade going forward.

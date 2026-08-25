@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trend Prerequisite for Reversal Candle Patterns
 
 Before applying Japanese candle reversal patterns, the preceding trend of the market must be identified. A bullish reversal pattern cannot exist in an uptrend — a series of candlesticks may resemble the bullish pattern, but if the trend is up, it is not a valid bullish Japanese candle pattern. Likewise, a bearish reversal candle pattern cannot exist in a downtrend. Using a short-term moving average (approximately ten periods) is recommended for trend determination.

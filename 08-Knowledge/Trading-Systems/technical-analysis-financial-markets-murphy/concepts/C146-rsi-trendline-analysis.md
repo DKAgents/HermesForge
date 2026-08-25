@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # RSI Trendline Analysis
 
 Trendline analysis can be employed to detect changes in the trend of the RSI. Moving averages can also be used for the same purpose. Breaking of RSI trendlines can give timely buy and sell signals.

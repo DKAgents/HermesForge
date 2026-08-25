@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Visibility on Monthly Charts
 
 Bullish symmetrical triangles that span multiple years are easily identifiable on monthly charts but may not be visible on daily charts. Monthly chart analysis is therefore essential for spotting large-scale continuation patterns that provide major directional signals.

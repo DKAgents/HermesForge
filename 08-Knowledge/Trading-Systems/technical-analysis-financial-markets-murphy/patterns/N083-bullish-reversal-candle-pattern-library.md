@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Reversal Candle Pattern Library
 
 The complete library of bullish reversal candle patterns includes: Long White Body (1), Hammer (1), Inverted Hammer (1), Belt Hold (1), Engulfing Pattern (2), Harami (2), Harami Cross (2), Piercing Line (2), Doji Star (2), Meeting Lines (2), Three White Soldiers (3), Morning Star (3), Morning Doji Star (3), Abandoned Baby (3), Tri-Star (3), Breakaway (5), Three Inside Up (3), Three Outside Up (3), Kicking (2), Unique Three Rivers Bottom (3), Three Stars in the South (3), Concealing Swallow (4), Stick Sandwich (3), Homing Pigeon (2), Ladder Bottom (5), Matching Low (2).

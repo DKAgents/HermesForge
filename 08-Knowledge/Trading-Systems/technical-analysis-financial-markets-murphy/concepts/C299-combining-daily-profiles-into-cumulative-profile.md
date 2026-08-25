@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Daily Profiles into Cumulative Profile
 
 By combining daily consecutive profile graphics into a larger cumulative profile graphic, an evolving picture of long-term balance or imbalance emerges. This aggregated view allows traders to assess the longer-term auction context beyond a single session.

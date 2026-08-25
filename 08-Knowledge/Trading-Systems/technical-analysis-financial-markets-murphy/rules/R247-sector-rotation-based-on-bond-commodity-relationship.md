@@ -13,8 +13,8 @@ has_quotes: true
 topic: [intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Sector Rotation Based on Bond-Commodity Relationship
 
 When bonds are strong and commodities weak, interest rate-sensitive stock groups (utilities, financial stocks, consumer staples) usually outperform. When commodity markets are strong relative to bonds, inflation-sensitive groups (gold, energy, cyclical stocks) outperform while interest rate-sensitive groups underperform. Monitoring the Treasury Bond/commodity price relationship helps determine which sectors will do better at any given time.

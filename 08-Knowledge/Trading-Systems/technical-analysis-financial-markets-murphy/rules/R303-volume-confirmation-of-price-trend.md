@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Confirmation of Price Trend
 
 Volume represents the level of trading activity in a stock, option, or futures contract. Expanding volume in the direction of the current price trend confirms the price trend, while declining volume may signal weakening momentum.

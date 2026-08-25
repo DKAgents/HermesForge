@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # One-Third and Two-Thirds Retracement Parameters
 
 Besides the 50% retracement, the minimum retracement is about 33% and the maximum about 66%. In a correction of a strong trend, the market usually retraces at least a third of the previous move. A trader looking for a buying area can compute a 33–50% zone on the chart and use that price zone as a general frame of reference for buying opportunities.

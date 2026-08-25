@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Reaction to Fundamental News as Technical Signal
 
 Observing how the market reacts to fundamental news can serve as an excellent technical indication. Unexpected or counterintuitive reactions to news often reveal the underlying trend's true strength or weakness.

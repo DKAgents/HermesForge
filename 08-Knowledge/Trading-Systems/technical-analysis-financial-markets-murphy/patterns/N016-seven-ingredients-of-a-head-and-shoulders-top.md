@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Seven Ingredients of a Head and Shoulders Top
 
 The complete head and shoulders top requires: (1) a prior uptrend, (2) a left shoulder on heavier volume followed by a corrective dip, (3) a rally into new highs on lighter volume (head), (4) a decline below the previous peak approaching the prior reaction low, (5) a third rally on noticeably light volume that fails to reach the head, (6) a close below the neckline, and (7) a return move back to the neckline followed by new lows.

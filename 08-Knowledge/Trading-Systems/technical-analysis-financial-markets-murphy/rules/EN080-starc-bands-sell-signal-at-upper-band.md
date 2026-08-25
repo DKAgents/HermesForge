@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, candlesticks, intermarket]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # STARC Bands — Sell Signal at Upper Band
 
 When prices rise to or above the starc+ band, this represents a low-risk selling opportunity. In the gold futures example, prices reaching the starc+ band (point 2) provided a low-risk sell entry after having been near the starc- band just three weeks earlier.

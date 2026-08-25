@@ -13,8 +13,8 @@ has_quotes: true
 topic: [moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Robustness Across Parameter Sets
 
 A trading system must perform reasonably well across different sets of parameters, not just the specific parameters it was optimized on. For example, if a 5/20 moving average crossover is being tested, nearby parameter combinations such as 6/18, 6/23, 4/21, and 5/19 should also perform reasonably well. If they do not, the original result should be viewed with skepticism.

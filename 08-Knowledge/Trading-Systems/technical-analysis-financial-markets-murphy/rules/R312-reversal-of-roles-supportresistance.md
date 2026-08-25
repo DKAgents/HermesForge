@@ -13,8 +13,8 @@ has_quotes: false
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Reversal of Roles (Support/Resistance)
 
 Once a support level is broken, it becomes a new resistance level, and once a resistance level is broken, it becomes new support. This principle is fundamental to understanding price behavior and setting price targets.

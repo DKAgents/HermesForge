@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Parabolic SAR — Not to Be Used Alone
 
 Parabolic SAR can generate useful trading signals but probably should not be used in isolation. It works well when a trend is present but is largely useless during a trading range environment. Traders must be able to distinguish between trending and ranging markets before applying it.

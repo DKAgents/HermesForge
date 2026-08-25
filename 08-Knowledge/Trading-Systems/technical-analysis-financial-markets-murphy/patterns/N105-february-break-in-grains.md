@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # February Break in Grains
 
 Grain and soybean prices usually drop from late December or early January into February, a pattern known as the 'February Break.' This is a reliable seasonal tendency that traders can anticipate and position for.

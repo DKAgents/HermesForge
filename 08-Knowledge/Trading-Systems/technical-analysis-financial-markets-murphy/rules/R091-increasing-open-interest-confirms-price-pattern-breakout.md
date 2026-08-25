@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Increasing Open Interest Confirms Price Pattern Breakout
 
 Increasing open interest at the completion of a price pattern is viewed as added confirmation of a reliable trend signal. For example, the breaking of the neckline of a head and shoulders bottom is more convincing if the breakout occurs on increasing open interest along with heavier volume. However, open interest sometimes dips slightly at the beginning of a new trend due to initial forced liquidation, so short-term open interest changes should not be over-interpreted.

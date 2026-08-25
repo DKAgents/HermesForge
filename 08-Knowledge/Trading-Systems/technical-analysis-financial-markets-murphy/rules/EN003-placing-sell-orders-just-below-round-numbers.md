@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Placing Sell Orders Just Below Round Numbers
 
 Traders looking to sell on a bounce should place resting sell orders just below round numbers, not at the round number itself. This accounts for the tendency of markets to stall just before reaching a round number, ensuring the sell order is more likely to be filled.

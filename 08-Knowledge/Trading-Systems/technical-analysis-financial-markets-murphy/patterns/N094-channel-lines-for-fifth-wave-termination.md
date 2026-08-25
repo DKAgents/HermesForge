@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Channel Lines for Fifth Wave Termination
 
 When drawing Elliott Wave channel lines, the upper channel line may need to be drawn over the top of wave 1. The fifth wave should come close to the upper channel line before terminating. For long-term trend channel lines, semilog charts should be used alongside arithmetic charts.

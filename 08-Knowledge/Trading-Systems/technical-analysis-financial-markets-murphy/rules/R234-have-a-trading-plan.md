@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Have a Trading Plan
 
 Traders should not trade impulsively but should have a plan before entering any trade. The principle 'plan your work and work your plan' emphasizes discipline and adherence to a predetermined strategy.

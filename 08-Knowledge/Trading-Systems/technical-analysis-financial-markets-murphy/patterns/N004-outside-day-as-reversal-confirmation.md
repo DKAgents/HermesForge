@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Outside Day as Reversal Confirmation
 
 An outside day occurs when both the high and low on the reversal day exceed the range of the previous day. While an outside day is not a requirement for a reversal day, it does carry more significance when present. It adds weight to the reversal signal when combined with heavy volume and a wide daily range.

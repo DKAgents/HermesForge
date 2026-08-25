@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Using System Signals as a Disciplining Device
 
 System signals can be used as mechanical confirmation along with other technical factors. Even if the system is not being traded mechanically, the signals can be used as a disciplined way to keep the trader on the right side of the major trend. No short positions would be taken as long as the computer trend was up, and no longs would be taken in a computer downtrend.

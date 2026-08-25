@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ascending Triangle as a Bottom Pattern
 
 While the ascending triangle most often appears as a continuation pattern in an uptrend, it can also appear at the end of a downtrend as a bottoming pattern. Even in this context, the interpretation remains bullish; breaking above the upper line signals completion of the base and a bullish reversal.

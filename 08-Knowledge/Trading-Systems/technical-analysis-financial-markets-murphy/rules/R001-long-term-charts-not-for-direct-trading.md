@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long Term Charts Not for Direct Trading
 
 Murphy explicitly states that long-term charts are not intended for direct trading purposes. They serve to provide perspective on the broader trend environment rather than to generate specific entry or exit signals.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Averages Must Confirm Each Other
 
 Dow's fourth tenet states that no important bull or bear market signal is valid unless both the Industrial and Rail (Transport) Averages give the same signal. Both averages must exceed a previous secondary peak to confirm a bull market. When the two averages diverge, the prior trend is assumed to remain in effect. Signals need not occur simultaneously, but closer timing provides stronger confirmation.

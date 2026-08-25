@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Summary Rule: Volume Used in All Markets, Open Interest Mainly in Futures
 
 Volume is used in all markets (futures, options, and stocks), while open interest applies mainly to futures and options. For futures, only the total volume and open interest figures are used for analysis purposes.

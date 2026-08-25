@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Filter for Trendline Breaks (1-3% Rule)
 
 An alternative to the two-day time filter is a price filter requiring prices to penetrate a trendline by a predetermined price increment or percentage amount, commonly 1-3%. This rule applies to both trendlines and important support and resistance levels.

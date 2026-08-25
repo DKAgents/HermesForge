@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average as a Mechanical Trend-Following System
 
 Moving average rules can easily be programmed into a computer, which then generates specific buy and sell signals, making them the basis for many mechanical trend-following systems. Unlike chart analysis, which is largely subjective and difficult to test, moving average trend signals are precise and not open to debate. Two technicians may disagree on chart patterns, but moving average signals are objective.

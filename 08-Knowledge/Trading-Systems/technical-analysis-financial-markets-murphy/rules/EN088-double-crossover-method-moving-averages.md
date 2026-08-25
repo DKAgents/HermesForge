@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Crossover Method (Moving Averages)
 
 The double crossover method uses two moving averages of different lengths. A buy signal is generated when the shorter average crosses above the longer average, and a sell signal when it crosses below. This method uses two moving averages simultaneously.

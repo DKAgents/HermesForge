@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Contrary Opinion: Strong Hands vs. Weak Hands
 
 Because futures trading is a zero-sum game, if 80% of traders are long, the remaining 20% holding short positions must be well-capitalized enough to absorb the longs of the 80%, meaning shorts hold positions approximately 4 to 1 larger per trader. The heavily capitalized minority (shorts in this case) are considered strong hands, while the majority holding smaller positions per trader are weak hands who will be forced to liquidate on any sudden adverse price move.

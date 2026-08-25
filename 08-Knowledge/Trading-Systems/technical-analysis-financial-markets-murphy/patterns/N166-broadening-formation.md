@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Broadening Formation
 
 The broadening formation is characterized by expanding price swings with diverging trendlines, the opposite of a symmetrical triangle. It often signals market instability and is typically a reversal pattern.

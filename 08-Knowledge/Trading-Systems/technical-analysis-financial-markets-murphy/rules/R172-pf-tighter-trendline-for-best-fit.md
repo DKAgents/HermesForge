@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Tighter Trendline for Best Fit
 
 When the original up trendline is too far away from the price action, a tighter trendline should be drawn to arrive at a 'best fitting' support line. This ensures the trendline remains relevant and useful as a reference for trade management.

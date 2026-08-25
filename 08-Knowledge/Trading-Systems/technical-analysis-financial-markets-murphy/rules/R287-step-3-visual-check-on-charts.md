@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Step 3: Visual Check on Charts
 
 Before writing computer code, the trader should visually check the trading signals produced by the rules on a price chart. This informal process serves two purposes: verifying the idea has been stated properly, and providing preliminary evidence that the idea is potentially profitable.

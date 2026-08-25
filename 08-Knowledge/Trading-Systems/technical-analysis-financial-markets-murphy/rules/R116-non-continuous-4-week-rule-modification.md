@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Non-Continuous 4 Week Rule Modification
 
 The 4 week rule can be made non-continuous by using a shorter time span (1 or 2 weeks) for liquidation purposes. A 4 week breakout is required to initiate a new position, but a 1 or 2 week signal in the opposite direction warrants liquidation. After liquidation, the trader remains out of the market until a new 4 week breakout is registered.

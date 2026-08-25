@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, volume, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Multiple Market Averages Trending Together
 
 The greater the number of stock market averages trending in the same direction, the greater the chances are for that trend to continue. Analysts should also check the advance-decline line, new highs-new lows line, and upside-downside volume lines to confirm trend direction.

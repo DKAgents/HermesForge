@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Semilog Scaling for Long-Range Charts
 
 Semilog (logarithmic) chart scaling becomes more valuable when studying long-range price trends. On log-scaled charts, up trendlines are broken sooner than on linear-scaled charts because the log scale compresses large price moves at higher levels. Analysts should be aware that trendline breaks may occur at different price levels depending on the scale used.

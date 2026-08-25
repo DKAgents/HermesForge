@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Candle Patterns Used in Conjunction with Other Indicators
 
 Japanese candle patterns should be used in the same manner as any other technical tool — to study the psychology of market participants. When used in conjunction with other technical indicators via the filtering concept, candle patterns will almost always offer a trading signal prior to using other price-based indicators alone.

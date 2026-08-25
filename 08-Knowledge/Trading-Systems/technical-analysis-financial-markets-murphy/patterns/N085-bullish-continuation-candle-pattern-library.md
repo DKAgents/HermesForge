@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bullish Continuation Candle Pattern Library
 
 The complete library of bullish continuation candle patterns includes: Separating Lines (2), Rising Three Methods (5), Upside Tasuki Gap (3), Side by Side White Lines (3), Three Line Strike (4), Upside Gap Three Methods (3), On Neck Line (2), In Neck Line (2).

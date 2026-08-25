@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Duration
 
 The rectangle typically falls into the one to three month duration category, similar to triangles and wedges. The volume pattern differs from other continuation patterns in that the broad price swings prevent the usual dropoff in activity seen in other such patterns.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Pattern
 
 The head and shoulders is the best known reversal pattern. At a market top, three prominent peaks are formed with the middle peak (head) slightly higher than the two outer peaks (shoulders). When the neckline connecting the two intervening troughs is broken, the pattern is complete. The inverse head and shoulders is the bottom version.

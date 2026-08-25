@@ -13,8 +13,8 @@ has_quotes: true
 topic: [system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Robustness Across Time Periods
 
 A valid trading system should test well across different periods of time, not just a single favorable interval. A system that tests well in the Japanese Yen over a recent five-year period should also test reasonably well over any other five-year interval. Failure to hold up across time periods is a warning sign.

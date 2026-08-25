@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Gann Contract — Same Month Annual Rollover
 
 Gann Contracts use a specific contract month and roll over only to the same contract month in the following year, maintaining seasonal consistency in the data. For example, July Wheat data is used until the July contract expires, then the Gann Contract switches to the next year's July Wheat contract. This approach is useful for analysts who want to study seasonal patterns without cross-month distortions.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, risk-management, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Entry Variation: Buy 3-Box Reversal After Correction
 
 After a correction following the original breakout, a trader can buy a 3-box reversal in the direction of the original breakout. This method provides added confirmation of trend resumption and allows placement of a closer stop under the latest column of o's.

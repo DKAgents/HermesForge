@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 45-Degree Trendlines on 3-Box Reversal Charts
 
 On 3-box reversal point and figure charts, trendlines are drawn at 45-degree angles rather than connecting previous tops or bottoms as in conventional charting. This is necessary because of the severe condensation on these charts, making it impractical to connect rally tops or reaction lows.

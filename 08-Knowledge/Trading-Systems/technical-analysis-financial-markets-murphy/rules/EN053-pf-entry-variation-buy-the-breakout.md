@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Entry Variation: Buy the Breakout
 
 The most straightforward entry method in a P&F uptrend is to buy the actual breakout as it occurs. This is the most aggressive entry and captures the move from the earliest possible point, though it may result in a higher entry price.

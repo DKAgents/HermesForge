@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Reversal Patterns
 
 Point and figure reversal patterns are variations on double and triple tops and bottoms, head and shoulders, V's and inverted V's, and saucers. Patterns with the most pronounced horizontal ranges lend themselves well to taking count measurements. The V base, due to the absence of a significant horizontal price area, is not amenable to taking a horizontal count.

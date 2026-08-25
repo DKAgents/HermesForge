@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 133-Day Cycle in Boeing Stock
 
 The ECF uncovered a 133-day cycle in Boeing stock. Since the last cycle low occurred during November 1997, the next cycle low was estimated 133 days later on June 3, 1998. Individual stocks can exhibit identifiable dominant cycles.

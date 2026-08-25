@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Weekly and Daily Chart Signals
 
 Signals on weekly charts are always more important than those on daily charts. The correct method is to use weekly signals to determine market direction and daily signals to fine-tune entry and exit points. A daily signal should only be followed when it agrees with the weekly signal, making weekly signals act as trend filters for daily signals and preventing trading against the prevailing trend.

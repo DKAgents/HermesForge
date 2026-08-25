@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Previous Support as Future Resistance in Downtrend
 
 In a downtrend, once a prior support level is violated to the downside, it reverses roles and acts as a resistance ceiling on subsequent bounces. Traders who previously bought at that support level and are now holding losing positions will tend to sell on any rally back to that level, reinforcing its new role as resistance.

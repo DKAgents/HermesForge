@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, fibonacci]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Aggressive Entry Tactics for Head and Shoulders Bottom
 
 More aggressive traders will begin probing the long side during the formation of the right shoulder rather than waiting for the neckline break. Entry signals include: buying a 50% or 66% retracement of the rally from the bottom of the head to the top of the right shoulder rally; buying the first upside break of a tight down trendline drawn along the decline into the right shoulder; or buying as the right shoulder approaches the same level as the bottom of the left shoulder.

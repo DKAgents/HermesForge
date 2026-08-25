@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Nominal Cycle Model
 
 The simplified nominal model organizes cycles into years, months, weeks, and days with key lengths of 54 years, 18 years, 9 years, 4.5 years, 1 year, seasonal, and shorter cycles down to 40, 20, 10, and 5 days. These numbers account for most popular moving average lengths. Even the well-known 4, 9, and 18 day moving average technique is a variation of the 5, 10, and 20 day numbers.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Blowoffs at Market Tops
 
 Blowoffs occur at major market tops. Prices suddenly begin to rally sharply after a long advance, accompanied by a large jump in trading activity, and then peak abruptly. In futures, blowoffs are often accompanied by a drop in open interest during the final rally, which serves as a negative warning signal.

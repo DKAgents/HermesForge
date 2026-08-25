@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave, intermarket, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave Best Applied to Broad Markets, Not Individual Stocks
 
 Elliott Wave theory was originally designed for stock market averages and does not work as well on individual common stocks. It may also be less reliable in thinly traded futures markets because mass psychology is a key foundation of the theory. Widely followed markets like gold are excellent vehicles for wave analysis.

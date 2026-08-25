@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # January Effect
 
 The January Effect is the tendency for smaller stocks to outperform larger stocks during January. It should not be confused with the January Barometer, which relates January's S&P 500 performance to the full year's market direction.

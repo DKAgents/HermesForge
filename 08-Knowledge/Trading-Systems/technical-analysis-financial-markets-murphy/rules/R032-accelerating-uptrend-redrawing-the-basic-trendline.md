@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Accelerating Uptrend — Redrawing the Basic Trendline
 
 When the upper channel line is broken (as in wave 5 of an accelerating uptrend), many chartists will redraw the basic up trendline parallel to the new upper channel line. Because the uptrend is accelerating, it stands to reason that the basic up trendline will do likewise.

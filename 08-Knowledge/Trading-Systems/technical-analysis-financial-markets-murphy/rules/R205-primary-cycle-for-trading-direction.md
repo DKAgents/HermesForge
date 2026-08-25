@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Primary Cycle for Trading Direction
 
 For trading purposes, the weekly primary cycle (3 to 6 months) is the most useful and is equivalent to the intermediate trend. It generally determines which side of a market to trade. The next shorter 4-week trading cycle is used to establish entry and exit points in the direction of the primary trend.

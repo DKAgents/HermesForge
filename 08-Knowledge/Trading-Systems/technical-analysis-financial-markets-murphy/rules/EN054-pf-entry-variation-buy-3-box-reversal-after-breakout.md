@@ -13,8 +13,8 @@ has_quotes: true
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Entry Variation: Buy 3-Box Reversal After Breakout
 
 After a breakout occurs, a trader can wait for a 3-box reversal to obtain a lower entry point. This pullback entry allows for a better price but requires patience and risks missing the move if no reversal occurs.

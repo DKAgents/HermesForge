@@ -181,6 +181,8 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         "strategy_name": "STR-Q Liquidity Sweep",
         "strategy_version": "1.0",
         "timeframe": "intraday",  # routes to day trading channel
+        "asset_class": asset_class,  # "crypto" or "stock" — needed for chart data source selection
+        "subperiod": trade_dict.get("subperiod", "intraday_5m"),  # e.g. "intraday_5m" — for chart timeframe label
         "signal_id": trade_dict.get("signal_id", f"STR-Q_{ticker}_{now_pt().strftime('%Y%m%d_%H%M%S')}"),
         "trade_id": trade_dict.get("trade_id", ""),
         "short_id": trade_dict.get("short_id", ""),

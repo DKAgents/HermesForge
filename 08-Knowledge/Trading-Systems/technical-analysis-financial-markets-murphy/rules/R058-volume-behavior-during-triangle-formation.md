@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Volume Behavior During Triangle Formation
 
 Volume should diminish as price swings narrow within a triangle. On the breakout that completes the pattern, volume should pick up noticeably. Return moves should occur on light volume, with heavier activity resuming as the trend continues.

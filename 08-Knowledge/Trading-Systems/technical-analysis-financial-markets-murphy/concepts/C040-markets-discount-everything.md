@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Markets Discount Everything
 
 A foundational premise of technical analysis is that important market information is discounted in the market price long before it becomes publicly known. This makes monitoring price action more valuable than acting on fundamental information, especially over the short term.

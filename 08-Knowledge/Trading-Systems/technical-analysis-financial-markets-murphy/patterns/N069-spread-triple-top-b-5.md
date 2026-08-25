@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Spread Triple Top (B-5)
 
 The spread triple top is even stronger than the ascending triple top because it involves 7 columns and 3 columns of X's are exceeded. The greater number of columns and penetrations indicates a wider base and therefore greater upside potential.

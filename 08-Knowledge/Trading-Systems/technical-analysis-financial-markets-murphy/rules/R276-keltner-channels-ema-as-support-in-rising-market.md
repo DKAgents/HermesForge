@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Keltner Channels — EMA as Support in Rising Market
 
 In a rising market following a Keltner breakout above the plus band, the 20-period EMA should act as support on pullbacks. A retest of the EMA after a bullish breakout can serve as a secondary entry point before the next leg higher.

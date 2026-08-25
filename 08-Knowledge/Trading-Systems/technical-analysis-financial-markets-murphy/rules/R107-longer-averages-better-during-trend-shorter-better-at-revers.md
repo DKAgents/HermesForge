@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Longer Averages Better During Trend; Shorter Better at Reversals
 
 The longer average performs better while the trend remains in motion, but gives back more when the trend reverses because its insensitivity — which kept it from getting tangled in short-term corrections — works against the trader when the trend actually reverses. A shorter average is better when the trend is in the process of reversing. This leads to the conclusion that using two moving averages is generally more advantageous than using one.

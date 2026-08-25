@@ -5,8 +5,11 @@ status: accepted
 created: 2026-06-27
 deciders: [human, risk-guardian]
 tags: [adr, safety, paper-trading]
+topic: adrs
+confidence: high
+has_quotes: false
+source: HermesForge ADR
 ---
-
 # ADR-002: Paper Trading First Policy
 
 ## Status

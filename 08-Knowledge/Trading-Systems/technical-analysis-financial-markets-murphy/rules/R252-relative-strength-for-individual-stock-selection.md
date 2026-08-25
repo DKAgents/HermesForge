@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Relative Strength for Individual Stock Selection
 
 Once a desired index is chosen, divide each individual stock within the index by the index itself to identify stocks showing the greatest relative strength. Traders can purchase stocks with the strongest ratio lines or buy cheaper stocks whose ratio lines are just turning up. The key rule is to avoid stocks whose relative strength (ratio) lines are still falling.

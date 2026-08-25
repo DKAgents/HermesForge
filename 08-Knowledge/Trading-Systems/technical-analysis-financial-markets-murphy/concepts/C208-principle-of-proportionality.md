@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Principle of Proportionality
 
 The Principle of Proportionality describes the relationship between cycle period and amplitude: cycles with longer periods should have proportionally wider amplitudes. For example, the amplitude of a 40-day cycle should be approximately double that of a 20-day cycle. This principle helps analysts gauge the expected price magnitude of moves associated with different cycle lengths.

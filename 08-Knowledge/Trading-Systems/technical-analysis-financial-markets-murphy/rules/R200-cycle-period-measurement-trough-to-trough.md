@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Cycle Period Measurement: Trough to Trough
 
 The period of a price wave is most often measured from trough to trough rather than crest to crest, because wave troughs are more clearly defined in price action than wave crests. This convention applies across all cycle length analysis in technical analysis.

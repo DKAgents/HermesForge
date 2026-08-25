@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Fan Principle at a Bottom
 
 At a market bottom, three successive down trendlines are drawn as prices make lower rally attempts. The breaking of the third down trendline constitutes a new uptrend signal. Previously broken resistance lines become support levels during this process.

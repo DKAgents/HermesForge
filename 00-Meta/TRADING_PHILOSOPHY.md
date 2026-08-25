@@ -2,8 +2,11 @@
 type: meta
 created: 2026-06-30
 tags: [meta, trading, philosophy]
+topic: meta
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # HermesForge Trading Philosophy
 
 ## Core Approach

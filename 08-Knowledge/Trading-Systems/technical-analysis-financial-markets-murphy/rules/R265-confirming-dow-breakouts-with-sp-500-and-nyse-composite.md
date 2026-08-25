@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confirming Dow Breakouts with S&P 500 and NYSE Composite
 
 Breakouts in the Dow Industrials should be confirmed by similar breakouts in both the S&P 500 and the NYSE Composite Index for the breakout to have staying power. This multi-index confirmation reduces the risk of acting on false breakouts.

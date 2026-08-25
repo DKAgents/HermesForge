@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Shorter Average Crossing Longer Average as Trend Reversal
 
 If the shorter moving average crosses below the longer average in an uptrend, a trend reversal is signaled. In a downtrend, a rise in the shorter average to the longer usually represents an ideal selling area unless the longer line is crossed, in which case a trend reversal signal is registered.

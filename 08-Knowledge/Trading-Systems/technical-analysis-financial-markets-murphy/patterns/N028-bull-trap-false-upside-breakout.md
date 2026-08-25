@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Bull Trap (False Upside Breakout)
 
 Near the end of a major bull market, the final leg may set a new high before reversing direction, creating a 'bull trap.' This false breakout lures buyers in before the market reverses sharply downward. Volume analysis can help identify these false breakouts, as a false upside breakout on light volume followed by a decline on heavy volume is a negative chart combination.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # OBV Confirmation of Price Trend
 
 If prices show a series of higher peaks and troughs (an uptrend), the OBV line should do the same. If prices are trending lower, so should the OBV line. OBV can be used to confirm the quality of the current price trend or warn of an impending reversal by diverging from the price action.

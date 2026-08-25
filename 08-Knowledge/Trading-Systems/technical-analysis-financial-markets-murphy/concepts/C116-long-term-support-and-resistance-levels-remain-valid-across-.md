@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Long-Term Support and Resistance Levels Remain Valid Across Decades
 
 Historic support and resistance levels established years or even decades earlier remain valid reference points for future price action. For example, IBM's 1993 bottom occurred at the same level as its 1974 bottom, 20 years earlier. Markets repeatedly fail at historic resistance and bounce off historic support, confirming that past price action has bearing on future price action.

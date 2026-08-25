@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Flag and Pennant Completion Signal in Downtrend
 
 In a downtrend, the breaking of the lower trendline of a flag or pennant signals the resumption of the downtrend. This breakdown should also occur on heavier volume.

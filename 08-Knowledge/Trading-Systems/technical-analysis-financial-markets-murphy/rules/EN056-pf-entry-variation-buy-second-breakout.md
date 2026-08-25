@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # P&F Entry Variation: Buy Second Breakout
 
 A second breakout in the same direction as the original breakout signal can be used as an additional entry point. This provides further confirmation of the trend and can be used to add to existing positions or initiate new ones.

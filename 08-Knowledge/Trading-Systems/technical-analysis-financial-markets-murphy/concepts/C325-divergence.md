@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators, candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Divergence
 
 Divergence occurs when two indicators are not confirming each other. In oscillator analysis, for example, prices trend higher while an oscillator starts to drop. Divergence usually warns of a trend reversal.

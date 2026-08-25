@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Using Technical Analysis as a Trend Filter for Fundamentalists
 
 Fundamental analysts can use price charts or computer trend-following systems as a filter to prevent taking positions opposite an existing trend. Unusual chart action can also alert the fundamental analyst to examine the fundamental situation more closely.

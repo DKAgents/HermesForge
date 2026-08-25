@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Failure to Reach Channel Line as Early Warning Signal
 
 When price fails to reach the upper channel line during an uptrend, it is often an early warning that the trend is weakening and that the basic trendline (lower boundary) may soon be broken. This failure indicates diminishing momentum and shifts the odds toward a trend reversal. Traders should monitor whether each successive rally reaches the upper channel boundary.

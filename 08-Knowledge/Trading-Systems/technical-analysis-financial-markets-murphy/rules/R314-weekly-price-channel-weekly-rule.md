@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, moving-averages, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Weekly Price Channel (Weekly Rule)
 
 The weekly rule uses weekly price channels to generate trading signals, with the 4-week rule being the most common application. Adjustments can be made to the channel length, and the rule has a relationship with market cycles.

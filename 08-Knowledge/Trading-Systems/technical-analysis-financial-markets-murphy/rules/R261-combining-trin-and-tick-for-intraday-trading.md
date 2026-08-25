@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining TRIN and TICK for Intraday Trading
 
 The Arms Index (TRIN) and TICK indicator can be used together for intraday trading. A rising TICK combined with a falling TRIN is a positive signal, while a falling TICK combined with a rising TRIN is a negative signal. This combination provides a more complete picture of intraday market conditions.

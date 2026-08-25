@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Factors Lead Known Fundamentals
 
 Technical factors tend to lead the known fundamentals, meaning price charts often signal important market moves before the fundamental reasons become apparent. Any important market move must ultimately be caused by underlying fundamental factors, so technicians benefit from having some awareness of fundamental conditions.

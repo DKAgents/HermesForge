@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # MACD Overbought and Oversold Conditions
 
 MACD values fluctuate above and below a zero line, giving it oscillator characteristics. An overbought condition is present when the lines are too far above the zero line; an oversold condition when the lines are too far below. The best buy signals occur when prices are well below the zero line (oversold), and the best sell signals come from above the zero line.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Ascending Triangle — Bullish Pattern
 
 The ascending triangle has a rising lower trendline and a flat or horizontal upper trendline. It is generally a bullish pattern, suggesting that buyers are becoming more aggressive at progressively higher lows while sellers remain at a fixed price level. A breakout above the flat upper line confirms the bullish resolution.

@@ -80,8 +80,14 @@ def _load_bars_since(ticker: str, entry_date: str, asset_class: str = "stock") -
         raise FileNotFoundError(f"No cached data for {ticker} ({asset_class})")
     df = pd.read_parquet(path)
     df.index = pd.to_datetime(df.index)
+    if df.index.tz is None:
+        df.index = df.index.tz_localize("UTC")
     df = df.sort_index()
     entry_ts = pd.to_datetime(entry_date)
+    if entry_ts.tz is None and df.index.tz is not None:
+        entry_ts = entry_ts.tz_localize("UTC")
+    elif entry_ts.tz is not None and df.index.tz is not None:
+        entry_ts = entry_ts.tz_convert("UTC")
     return df[df.index > entry_ts]
 
 

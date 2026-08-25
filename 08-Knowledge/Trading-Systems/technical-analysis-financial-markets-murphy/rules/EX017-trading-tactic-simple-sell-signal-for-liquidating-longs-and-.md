@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, exit-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trading Tactic: Simple Sell Signal for Liquidating Longs and Initiating Shorts
 
 A simple sell signal can be used for the liquidation of existing long positions and/or the initiation of new short positions. This mirrors the buy signal tactic and provides clear exit and entry points on the short side.

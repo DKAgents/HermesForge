@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Rectangle Formation: Range Trading Strategy
 
 Some chartists trade the swings within a rectangle by buying dips near the bottom and selling rallies near the top of the range. Because positions are taken at the extremes of the range, risks are relatively small and well defined. When a breakout occurs, the trader exits the last losing trade immediately and can reverse position by initiating a new trade in the direction of the new trend.

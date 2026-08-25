@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # HPI – Weekly Data Preferred for Fewer False Signals
 
 The HPI, like the Demand Index, is most effective when used on weekly data, as fewer false signals are evident compared to daily data. Traders should prefer weekly charts when using the HPI to filter out noise and short-term whipsaws.

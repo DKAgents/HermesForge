@@ -13,8 +13,8 @@ has_quotes: false
 topic: [fibonacci, general-principles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technician versus Chartist Distinction
 
 Murphy addresses the distinction between the terms 'technician' and 'chartist,' suggesting that while chartists rely primarily on visual chart patterns, technicians employ a broader toolkit including quantitative indicators. The terms are often used interchangeably but carry different connotations.

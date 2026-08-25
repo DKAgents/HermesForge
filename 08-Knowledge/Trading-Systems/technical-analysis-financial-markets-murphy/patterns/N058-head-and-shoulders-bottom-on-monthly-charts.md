@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Head and Shoulders Bottom on Monthly Charts
 
 Head and shoulders bottoms can form over very long periods (e.g., 10 years) on monthly charts and carry major bullish significance when completed. The breakout above the neckline confirms the pattern. The right shoulder of such a pattern may itself form a bullish ascending triangle, adding further confirmation of the reversal.

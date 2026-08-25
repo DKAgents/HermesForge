@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Measuring Technique – Parallel Channel Line
 
 A second measuring method is to draw a trendline from the top of the base parallel to the lower trendline. This upper channel line becomes the upside target. Prices may reach the channel line at approximately the same time the two converging lines meet at the apex, providing a rough time target.

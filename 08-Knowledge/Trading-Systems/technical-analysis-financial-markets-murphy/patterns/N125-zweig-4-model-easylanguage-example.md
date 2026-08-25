@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, system-design]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zweig 4% Model (EasyLanguage Example)
 
 The Zweig 4% Model is a trend-following system applied to a weekly chart of the Value Line Composite Index (VLCI). A buy signal is generated when the weekly close rises 4% or more from its lowest close since the last sell signal; a sell signal is generated when the weekly close falls 4% or more from its highest close since the last buy signal. The system was designed by Ned Davis and described in Martin Zweig's book.

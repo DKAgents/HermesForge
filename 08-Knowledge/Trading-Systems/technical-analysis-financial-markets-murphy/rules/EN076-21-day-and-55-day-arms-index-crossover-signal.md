@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages, oscillators, fibonacci, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 21-Day and 55-Day Arms Index Crossover Signal
 
 Using 21-day and 55-day moving-average crossovers of the Arms Index can generate good intermediate-term trade signals. This approach applies Fibonacci-based periods to the contrary indicator to identify turning points in the broader market trend.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Tops and Bottoms with Filters
 
 Double tops and bottoms are major reversal patterns. Filters such as price and time filters should be applied to confirm the pattern and avoid false signals. The ideal pattern has specific volume characteristics and measuring implications.

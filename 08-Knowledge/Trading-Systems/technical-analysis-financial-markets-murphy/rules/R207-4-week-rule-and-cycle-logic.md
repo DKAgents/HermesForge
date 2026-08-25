@@ -13,8 +13,8 @@ has_quotes: true
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 4-Week Rule and Cycle Logic
 
 The 4-week rule developed by Richard Donchian generates buy signals when a market sets new 4-week highs and sell signals when a 4-week low is established. Cycle logic explains why this rule works: when a market exceeds the high of the previous 4 weeks, it signals that at the very least the next longer cycle (the 8-week cycle) has bottomed and turned up.

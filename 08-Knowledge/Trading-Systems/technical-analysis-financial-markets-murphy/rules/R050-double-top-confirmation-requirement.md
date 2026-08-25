@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Top Confirmation Requirement
 
 A double top is not confirmed until the previous support point at B is violated on a closing basis. Until that happens, prices could be in a sideways consolidation phase preparing for a resumption of the original uptrend. The reversal is not complete until the prior support is broken.

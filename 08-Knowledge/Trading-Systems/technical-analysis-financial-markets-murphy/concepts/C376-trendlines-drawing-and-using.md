@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendlines — Drawing and Using
 
 Trendlines are drawn by connecting successive lows in an uptrend or successive highs in a downtrend. Their significance is determined by length, number of touches, and steepness. Small penetrations must be handled carefully, and price filters (such as the 3% rule or 2-day rule) help confirm valid breaks.

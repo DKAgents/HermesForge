@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Trendline Break as Reversal Signal
 
 Trendlines are straight lines drawn on a chart below reaction lows in an uptrend, or above rally peaks in a downtrend, that determine the steepness of the current trend. The breaking of a trendline usually signals a trend reversal.

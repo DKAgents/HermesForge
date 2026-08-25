@@ -13,8 +13,8 @@ has_quotes: false
 topic: [trend, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Open Interest Interpretation Rules
 
 General rules for interpreting open interest: rising open interest in an uptrend confirms the trend; falling open interest in an uptrend is a warning sign; rising open interest in a downtrend confirms the downtrend; falling open interest in a downtrend signals potential reversal. Open interest is a secondary indicator.

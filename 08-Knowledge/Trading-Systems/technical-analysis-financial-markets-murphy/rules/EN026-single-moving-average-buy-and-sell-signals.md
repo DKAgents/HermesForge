@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Single Moving Average Buy and Sell Signals
 
 When using a single moving average, a buy signal is generated when the closing price moves above the moving average line. A sell signal is given when prices move below the moving average. For added confirmation, some technicians also like to see the moving average line itself turn in the direction of the price crossing.

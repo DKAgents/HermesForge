@@ -13,8 +13,8 @@ has_quotes: false
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Heavy Volume on Downside Moves as Bearish Confirmation
 
 Heavier volume accompanying price declines, particularly following light-volume rallies or new highs, confirms bearish pressure and validates reversal patterns such as head and shoulders and double/triple tops. This volume behavior reinforces the significance of the price pattern as a genuine reversal signal.

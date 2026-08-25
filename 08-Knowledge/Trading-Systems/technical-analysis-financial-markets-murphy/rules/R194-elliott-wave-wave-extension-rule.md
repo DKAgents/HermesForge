@@ -13,8 +13,8 @@ has_quotes: true
 topic: [elliott-wave]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Elliott Wave: Wave Extension Rule
 
 Sometimes one of the impulse waves extends. When this occurs, the other two impulse waves should then be equal in time and magnitude. This provides a method for projecting targets when an extension is identified.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Filters for Confirming Breakouts
 
 To reduce false signals, chartists use several filters: (1) require a close beyond a previous resistance peak rather than just an intraday penetration; (2) use a percentage penetration criterion such as 1% or 3%; (3) apply a two-day penetration rule requiring prices to close beyond the top of the first peak for two consecutive days; (4) require a Friday close beyond the previous peak; (5) examine volume on the upside breakout for reliability clues.

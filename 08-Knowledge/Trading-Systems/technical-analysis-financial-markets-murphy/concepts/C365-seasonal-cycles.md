@@ -13,8 +13,8 @@ has_quotes: false
 topic: [cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Seasonal Cycles
 
 Seasonal cycles are recurring price patterns tied to calendar periods, such as the January Barometer and the Presidential Cycle. They are classified as a type of time cycle and can be combined with other technical tools for improved timing.

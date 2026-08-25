@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, elliott-wave, fibonacci, cycles]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Complete Elliott Cycle Fibonacci Wave Count
 
 One complete Elliott cycle comprises eight waves (five up and three down), all Fibonacci numbers. Two further subdivisions produce 34 and 144 waves, also Fibonacci numbers. This demonstrates that the mathematical structure of the wave principle is inherently Fibonacci-based beyond just wave counting.

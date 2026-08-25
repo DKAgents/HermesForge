@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Symmetrical Triangle Breakout Timing
 
 The breakout from a symmetrical triangle should occur somewhere between two-thirds and three-quarters of the way through the pattern, measured from the base to the apex. A breakout on the 13th week of an 18-week triangle (just beyond the two-thirds point) is cited as an example.

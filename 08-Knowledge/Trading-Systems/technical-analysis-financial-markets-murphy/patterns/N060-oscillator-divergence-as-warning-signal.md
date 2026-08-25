@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator Divergence as Warning Signal
 
 A divergence between the oscillator and price action when the oscillator is in an extreme position is usually an important warning signal. This divergence suggests that the prevailing trend may be losing momentum and a reversal could be imminent.

@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Moving Average as a Trend Follower, Not a Predictor
 
 The moving average is a trend-following device whose purpose is to identify when a new trend has begun or an old trend has ended or reversed. It does not predict market action in the same sense that standard chart analysis attempts to do. The moving average is a follower, not a leader — it never anticipates, only reacts, and tells us a trend has begun only after the fact.

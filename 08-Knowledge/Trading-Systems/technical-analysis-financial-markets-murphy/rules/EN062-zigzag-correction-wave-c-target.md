@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Zigzag Correction Wave C Target
 
 In a normal 5-3-5 zigzag correction, wave C is often approximately equal in length to wave A. Alternatively, wave C length can be estimated by multiplying .618 by the length of wave A and subtracting that result from the bottom of wave A.

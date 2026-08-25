@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # All 16 Signals Applicable to Stock Markets
 
 In stock market trading, all 16 point and figure signals (8 buy and 8 sell) can be used effectively. This contrasts with futures markets where only simple signals are commonly relied upon due to faster price movement.

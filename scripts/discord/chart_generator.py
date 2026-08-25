@@ -31,6 +31,11 @@ import matplotlib.pyplot as plt
 CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data"
 LOOKBACK_BARS = 60
 
+# Ensure intraday data modules are importable
+DATA_DIR = pathlib.Path(__file__).parent.parent / "data"
+if str(DATA_DIR) not in sys.path:
+    sys.path.insert(0, str(DATA_DIR))
+
 COLOR_ENTRY = "#3fb950"
 COLOR_STOP = "#f85149"
 COLOR_TARGET = "#58a6ff"
@@ -57,6 +62,40 @@ def _load_ohlcv(ticker: str) -> pd.DataFrame:
             )
     df = pd.read_parquet(path)
     df.index = pd.to_datetime(df.index)
+    df = df.rename(columns={
+        "open": "Open", "high": "High", "low": "Low",
+        "close": "Close", "volume": "Volume",
+    })
+    return df[["Open", "High", "Low", "Close", "Volume"]]
+
+
+def _load_intraday_ohlcv(ticker: str, asset_class: str, interval: str = "5m") -> pd.DataFrame:
+    """Load intraday OHLCV data for charting.
+
+    Uses the appropriate data source based on asset_class:
+    - crypto: fetch_intraday_crypto.get_intraday_candles (Hyperliquid API)
+    - stock:  fetch_intraday_stocks.get_intraday_bars (yfinance/Alpaca)
+
+    Returns a DataFrame with datetime index and columns Open/High/Low/Close/Volume
+    compatible with the daily _load_ohlcv() output.
+    """
+    lookback = LOOKBACK_BARS + 200  # enough for indicator computation + display window
+
+    if asset_class == "crypto":
+        from fetch_intraday_crypto import get_intraday_candles
+        df = get_intraday_candles(ticker, interval, lookback_bars=lookback)
+    else:
+        from fetch_intraday_stocks import get_intraday_bars
+        df = get_intraday_bars(ticker, interval, lookback_bars=lookback)
+
+    if df is None or len(df) == 0:
+        raise FileNotFoundError(
+            f"No intraday data for {ticker} ({asset_class}, {interval}). "
+            f"Run fetch_intraday_{'crypto' if asset_class == 'crypto' else 'stocks'} first."
+        )
+
+    df = df.copy()
+    df = df.set_index("timestamp")
     df = df.rename(columns={
         "open": "Open", "high": "High", "low": "Low",
         "close": "Close", "volume": "Volume",
@@ -880,8 +919,27 @@ def generate_setup_chart(ticker: str, signal_dict: dict, output_path: str) -> st
     Charts always show the most recent data available, not just up to the
     signal date. The signal bar is marked with a vertical line at its
     position within the visible window. The title shows the latest data date.
+
+    For intraday signals (timeframe == "intraday"), loads 5m bar data from
+    the appropriate intraday source (Hyperliquid for crypto, yfinance/Alpaca
+    for stocks) instead of daily parquet cache.
     """
-    df_full = _load_ohlcv(ticker)
+    # ── Determine timeframe and load correct data source ──
+    timeframe = signal_dict.get("timeframe", "daily")
+    bar_interval_label = "Daily"  # default
+
+    if timeframe == "intraday":
+        # Parse interval from subperiod (e.g. "intraday_5m" → "5m")
+        subperiod = signal_dict.get("subperiod", "intraday_5m")
+        interval = "5m"  # default
+        if "intraday_" in str(subperiod):
+            interval = str(subperiod).replace("intraday_", "")
+        bar_interval_label = interval
+
+        asset_class = signal_dict.get("asset_class", "crypto")
+        df_full = _load_intraday_ohlcv(ticker, asset_class, interval)
+    else:
+        df_full = _load_ohlcv(ticker)
 
     signal_date = pd.to_datetime(signal_dict["date"])
 
@@ -892,7 +950,13 @@ def generate_setup_chart(ticker: str, signal_dict: dict, output_path: str) -> st
 
     df = df_full.tail(LOOKBACK_BARS).copy()
 
-    # Find the signal bar position within the visible window
+    # Find the signal bar position within the visible window.
+    # For intraday data, the signal_date is just a date ("2026-08-25") without
+    # time, and the bars have full timestamps.  Since all bars in the intraday
+    # window will be from the same day, the comparison still works correctly
+    # (dates after midnight are > midnight).  When signal_date falls before all
+    # window bars, the fallback sets signal_bar_idx to the last bar — which is
+    # correct for real-time intraday signals.
     signal_dates_in_window = df.index[df.index <= signal_date]
     if len(signal_dates_in_window) > 0:
         # Count bars from signal date to end of window
@@ -909,10 +973,10 @@ def generate_setup_chart(ticker: str, signal_dict: dict, output_path: str) -> st
     stop = signal_dict["stop_price"]
     target = signal_dict["target_price"]
     strategy_name = signal_dict.get("strategy_name", signal_dict.get("strategy_id", "Strategy"))
-    # Title shows the latest data date (when analysis was run)
+    # Title shows the latest data date + timeframe interval
     latest_date = pd.Timestamp(df.index[-1])
     date_str = latest_date.strftime("%Y-%m-%d")
-    title = f"\n{ticker} — {strategy_name} — {date_str}"
+    title = f"\n{ticker} — {strategy_name} — {bar_interval_label} — {date_str}"
 
     strategy_id = signal_dict.get("strategy_id", "")
     chart_fn = CHART_PROFILES.get(strategy_id, _chart_generic)

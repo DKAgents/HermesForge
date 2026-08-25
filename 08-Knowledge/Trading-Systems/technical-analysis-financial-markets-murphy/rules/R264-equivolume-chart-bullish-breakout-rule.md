@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, chart-patterns, volume, chart-construction]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Equivolume Chart Bullish Breakout Rule
 
 A bullish price breakout should always be accompanied by a burst of trading activity. On an Equivolume chart, this is represented by a noticeably wider rectangle. In an uptrend, up days should show wider rectangles while down days should show narrower rectangles.

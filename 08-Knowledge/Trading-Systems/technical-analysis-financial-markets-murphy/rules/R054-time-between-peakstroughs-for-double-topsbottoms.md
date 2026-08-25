@@ -13,8 +13,8 @@ has_quotes: true
 topic: [chart-patterns]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Time Between Peaks/Troughs for Double Tops/Bottoms
 
 The size of a double top or bottom pattern is critical to its validity. The longer the time period between the two peaks and the greater the height of the pattern, the greater the potential reversal. Most valid double tops or bottoms should have at least one month between the two peaks or troughs, with some spanning two or three months. On longer-range monthly and weekly charts, these patterns can span several years.

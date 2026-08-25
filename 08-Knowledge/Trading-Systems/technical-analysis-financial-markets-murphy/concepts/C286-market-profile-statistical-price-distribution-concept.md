@@ -13,8 +13,8 @@ has_quotes: true
 topic: [market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile — Statistical Price Distribution Concept
 
 Market Profile is a statistical approach to price analysis that displays price as a frequency distribution histogram turned on its side, forming a bell-shaped normal distribution. The modal price represents the most frequently traded price, and approximately 68.3% of prices fall within one standard deviation of the mean, while virtually all values fall within three standard deviations.

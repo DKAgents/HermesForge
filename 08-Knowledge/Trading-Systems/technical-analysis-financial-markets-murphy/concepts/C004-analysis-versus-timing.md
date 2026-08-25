@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Analysis versus Timing
 
 Murphy separates the act of market analysis from the act of trade timing, implying that even correct fundamental analysis can fail without precise entry and exit timing — an area where technical analysis excels.

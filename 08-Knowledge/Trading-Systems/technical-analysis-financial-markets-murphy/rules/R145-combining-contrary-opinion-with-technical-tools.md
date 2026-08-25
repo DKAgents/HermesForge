@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance, oscillators, market-psychology]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Combining Contrary Opinion with Technical Tools
 
 Trade in the same direction as the trend of the consensus numbers until an extreme is reached, then monitor for a sign of a change in trend. Standard technical tools such as support/resistance levels, trendlines, and moving averages should be used to confirm trend turns at critical times. Oscillator divergences are especially useful when Bullish Consensus numbers are overbought or oversold.

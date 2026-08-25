@@ -13,8 +13,8 @@ has_quotes: false
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Technical Analysis as Economic Forecasting Tool
 
 Murphy argues that technical analysis of financial markets can serve as a form of economic forecasting, since market prices tend to lead economic conditions. This elevates technical analysis beyond mere trading signal generation.

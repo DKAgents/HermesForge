@@ -13,8 +13,8 @@ has_quotes: true
 topic: [dow-theory]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dow Theory Confirmation Rule
 
 A Dow Theory buy signal is present when both the Dow Industrials and the Dow Transports hit new highs simultaneously. When one diverges from the other, a caution signal is given.

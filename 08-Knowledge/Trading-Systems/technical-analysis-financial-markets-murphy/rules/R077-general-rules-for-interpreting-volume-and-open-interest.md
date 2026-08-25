@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # General Rules for Interpreting Volume and Open Interest
 
 Rising price with rising volume and rising open interest signals a strong market. Rising price with falling volume and falling open interest signals a weak market. Declining price with rising volume and rising open interest signals a weak (bearish) market. Declining price with falling volume and falling open interest signals a strong (potential reversal) market. If volume and open interest are both increasing, the current price trend will probably continue; if both are declining, the current trend may be nearing its end.

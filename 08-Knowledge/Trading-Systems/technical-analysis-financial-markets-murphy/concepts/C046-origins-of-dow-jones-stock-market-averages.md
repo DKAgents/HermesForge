@@ -13,8 +13,8 @@ has_quotes: true
 topic: [general]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Origins of Dow Jones Stock Market Averages
 
 Charles Dow published the first stock market average on July 3, 1884, composed of closing prices of eleven stocks — nine railroad companies and two manufacturing firms — as an indicator of the country's economic health. By 1897, Dow created two separate indices (a 12-stock industrial index and a 20-stock rail index) to better represent economic health, evolving into the modern Dow Jones averages.

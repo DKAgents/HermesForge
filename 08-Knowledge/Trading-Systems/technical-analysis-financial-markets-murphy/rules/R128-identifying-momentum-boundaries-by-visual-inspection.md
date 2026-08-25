@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Identifying Momentum Boundaries by Visual Inspection
 
 Because the momentum line lacks fixed upper and lower boundaries, the analyst should check the back history of the momentum line and draw horizontal lines along its upper and lower extremities. These lines must be adjusted periodically, especially after important trend changes. This is the simplest and most effective way to identify overbought and oversold extremes.

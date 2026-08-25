@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # 3% Penetration Criteria for Support and Resistance
 
 Many chartists use a 3% penetration as a criterion for confirming a break of major support and resistance levels. Shorter-term support and resistance areas may require a smaller number, such as 1%. The key principle is that support and resistance areas only reverse roles when the market moves far enough away to convince participants they have made a mistake.

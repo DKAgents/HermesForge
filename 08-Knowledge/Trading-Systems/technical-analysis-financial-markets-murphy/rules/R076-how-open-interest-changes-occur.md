@@ -13,8 +13,8 @@ has_quotes: true
 topic: [volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # How Open Interest Changes Occur
 
 Open interest increases when both buyer and seller initiate new positions. It remains unchanged when one party initiates a new position while the other liquidates an old one. It decreases when both parties are liquidating old positions. By tracking net changes in open interest, the chartist can determine whether money is flowing into or out of the market.

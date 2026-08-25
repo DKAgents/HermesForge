@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Dragonfly Doji
 
 The Dragonfly Doji is the opposite of the Gravestone Doji: the lower shadow is long and there is no upper shadow, with open and close prices equal at or near the high of the session. It is usually considered quite bullish, signaling that sellers pushed prices down during the session but buyers drove them back up to the open by the close.

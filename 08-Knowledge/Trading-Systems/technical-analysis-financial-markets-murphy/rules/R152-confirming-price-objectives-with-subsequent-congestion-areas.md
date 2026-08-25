@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, support-resistance]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confirming Price Objectives with Subsequent Congestion Areas
 
 After the initial breakout from a base, subsequent congestion areas that form during the uptrend can be used to generate additional horizontal counts. These additional counts can be used to confirm the original price objectives derived from the base.

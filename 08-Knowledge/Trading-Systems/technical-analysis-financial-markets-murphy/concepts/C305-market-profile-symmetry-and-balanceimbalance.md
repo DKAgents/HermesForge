@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, fibonacci, market-profile]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Market Profile Symmetry and Balance/Imbalance
 
 The symmetry attribute of the profile graphic allows the trader to assess the market's state of balance or imbalance in any timeframe. When a market is symmetric, a condition of balance or equilibrium exists between buyers and sellers. A market imbalance implies price trend continuation as the market works toward a new equilibrium, while market balance is fleeting and implies a directional move is likely to occur, signaling traders to consider trend following methodologies.

@@ -13,8 +13,8 @@ has_quotes: false
 topic: [chart-patterns, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Double Tops and Bottoms
 
 Double tops and bottoms are reversal patterns where price tests a prior high or low twice before reversing. Filters are used to confirm the pattern, and variations from the ideal pattern must be considered when trading these formations.

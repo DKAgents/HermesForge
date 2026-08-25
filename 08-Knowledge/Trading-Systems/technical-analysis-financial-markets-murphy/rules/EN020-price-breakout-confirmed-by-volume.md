@@ -13,8 +13,8 @@ has_quotes: true
 topic: [support-resistance, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, entry-criteria]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Price Breakout Confirmed by Volume
 
 A price breakout through a significant resistance level should be accompanied by a noticeable burst of trading activity (increased volume) to be considered valid and bullish. A breakout on low volume is suspect and may not be trustworthy.

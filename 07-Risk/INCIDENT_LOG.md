@@ -2,8 +2,11 @@
 type: incident-log
 created: 2026-06-30
 tags: [risk, incidents]
+topic: risk
+confidence: high
+has_quotes: false
+source: HermesForge Risk Framework
 ---
-
 # Risk Incident Log
 
 ## Purpose

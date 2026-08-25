@@ -5,8 +5,11 @@ created: 2026-06-27
 updated: 2026-06-27
 status: active
 tags: [meta, context, system]
+topic: meta
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # HermesForge — System Context
 
 ## Mission

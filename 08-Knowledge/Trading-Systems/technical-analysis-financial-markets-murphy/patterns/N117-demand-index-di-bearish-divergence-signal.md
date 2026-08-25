@@ -13,8 +13,8 @@ has_quotes: true
 topic: [oscillators, volume]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Demand Index (DI) — Bearish Divergence Signal
 
 A bearish (negative) divergence occurs when prices make higher highs while the DI forms lower highs. This pattern warns of a potential price peak and impending decline. In the T-Bond example, the DI formed a significantly lower high while the bond contract was nearly six points higher, warning of a price peak.

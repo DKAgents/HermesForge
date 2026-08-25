@@ -13,8 +13,8 @@ has_quotes: false
 topic: [point-and-figure]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, concept]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Point and Figure Vertical Count
 
 The vertical count method on point and figure charts measures the height of a column of X's or O's to project a price target. It provides an alternative measuring technique to the horizontal count.

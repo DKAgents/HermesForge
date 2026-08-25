@@ -13,8 +13,8 @@ has_quotes: true
 topic: [trend, oscillators]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Oscillator as Secondary Indicator
 
 The oscillator is a secondary indicator that must be subordinated to basic trend analysis. Trading in the direction of the overriding market trend is paramount, and oscillator signals should be interpreted within that context.

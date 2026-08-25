@@ -13,8 +13,8 @@ has_quotes: false
 topic: [moving-averages]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, rule]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Triple Crossover Method (Moving Averages)
 
 The triple crossover method uses three moving averages of different lengths to generate trading signals. Buy signals occur when the shorter averages cross above the longer average, and sell signals occur on the reverse crossover.

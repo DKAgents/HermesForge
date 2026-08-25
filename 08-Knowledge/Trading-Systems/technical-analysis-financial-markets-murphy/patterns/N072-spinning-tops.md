@@ -13,8 +13,8 @@ has_quotes: true
 topic: [candlesticks, market-breadth]
 ingested_at: 2026-07-19
 tags: [trading-system, technical-analysis-of-the-financial-markets, atomic-note, pattern]
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Spinning Tops
 
 Spinning Tops are candlesticks with small bodies where the upper and lower shadows are of greater length than the body. The body color is relatively unimportant in spinning top candlesticks. These candlesticks are considered as days of indecision in the market.
