@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: macro_sentiment_composite_extreme
+rejection_reason: Regime overlay, not a per-ticker scanner. BofA Bull & Bear indicator is proprietary. The proposed proxy (F&G + P/C + Breadth + VIX) is a risk-management overlay for existing strategies, not a standalone signal generator. Defer to risk-management module enhancement task.
 composite_score: 76.0
 confidence: high
 regime_fit: ['complacent', 'risk_on', 'caution']

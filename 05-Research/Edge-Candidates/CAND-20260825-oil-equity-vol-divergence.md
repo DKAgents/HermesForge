@@ -1,7 +1,8 @@
 ---
-status: staged
+status: speculative
 source: web
 edge_type: oil_equity_volatility_divergence_resolution
+speculative_note: Quick-test candidate. Needs CL=F (WTI crude) which may not be cached. If CL=F data available, build scanner to test deflationary-resolution strategy (long SPY/QQQ when oil declining and VIX low). Proceed to quick scanner + Phase 1A if data available.
 composite_score: 50.0
 confidence: medium
 regime_fit: ['neutral', 'caution']

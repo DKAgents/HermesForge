@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: rwa_defi_tvl_divergence
+rejection_reason: Insufficient data — RWA TVL (RWA.xyz) and DeFi TVL (DefiLlama) not in data pipeline. Key RWA tokens (ONDO, CFG) may not have sufficient Hyperliquid history.
 composite_score: 52.0
 confidence: medium
 regime_fit: ['neutral', 'risk_on']

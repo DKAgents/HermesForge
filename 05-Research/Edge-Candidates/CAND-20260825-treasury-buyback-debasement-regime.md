@@ -1,7 +1,8 @@
 ---
-status: staged
+status: watch
 source: web
 edge_type: treasury_buyback_dollar_debasement_regime
+deployment_notes: Phase 1A: 65 sigs, mean_r=0.302, p=0.157 (SPECULATIVE). Walk-forward: OOS mean_r=0.131, p=0.553 (NO EDGE, but positive mean R). Deployed WATCH with 0.5% risk to paper trading. Strategy ID: STR-DEBASEMENT. Scanner: scanner_treasury_debasement.py.
 composite_score: 72.0
 confidence: high
 regime_fit: ['risk_on', 'neutral', 'complacent']

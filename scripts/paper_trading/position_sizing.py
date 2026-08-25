@@ -142,6 +142,7 @@ def size_strategy_vixc(*a, **k): return 0.5  # VIX contango breakout (WATCH)
 # Walk-forward incomplete (529-stock correlation matrix is compute-bound).
 # Reduced to 0.5% risk per SOUL.md single-idea ceiling.
 def size_strategy_lowcorr(*a, **k): return 0.5  # Low-correlation regime (WATCH)
+def size_strategy_debase(*a, **k): return 0.5  # Treasury debasement (WATCH, reduced risk)
 
 
 SIZING_FUNCTIONS = {
@@ -174,6 +175,7 @@ SIZING_FUNCTIONS = {
     "STR-AJ-intermarket":                 size_strategy_aj,
     "STR-VIXC-vix-contango-breakout":     size_strategy_vixc,
     "STR-LOWCORR-lowcorr-regime":          size_strategy_lowcorr,
+    "STR-DEBASEMENT-treasury-buyback":     size_strategy_debase,
 }
 
 

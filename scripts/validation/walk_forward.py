@@ -147,6 +147,20 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": True,
         "call_mode": "batch",
     },
+    "DEBASE": {
+        "module": "scanner_treasury_debasement",
+        "scan_fn": "scan",
+        "name": "Treasury Debasement Regime",
+        "params": {
+            "ATR_STOP_MULT": [1.0, 1.5, 2.0],
+            "PULLBACK_PCT": [0.05, 0.10, 0.15],
+            "MIN_RR": [1.5, 2.0, 2.5],
+        },
+        "asset_class": "crypto",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+        "long_only": True,
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -159,6 +173,7 @@ QUICK_PARAMS = {
     "P": {"ATR_STOP_MULT": [1.5], "QUINTILE": [5], "MAX_BARS_HELD": [21]},
     "VIXC": {"IVTS_MAX": [0.92], "VIX_MAX": [20], "MIN_RR": [2.0, 3.0], "MIN_PERSIST_FRAC": [0.6]},
     "LOWCORR": {"CORR_THRESHOLD": [0.25], "ATR_STOP_MULT": [2.0], "MAX_BARS_HELD": [10]},
+    "DEBASE": {"ATR_STOP_MULT": [1.5], "PULLBACK_PCT": [0.10], "MIN_RR": [2.0]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────

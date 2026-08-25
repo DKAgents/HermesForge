@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: meta_factor_crowding_decay
+rejection_reason: Not a standalone scanner — this is a meta-overlay on the existing factor screener. Requires modifying the factor weighting system, not creating a new per-ticker signal scanner. Defer to factor-screener improvement task.
 composite_score: 49.0
 confidence: low
 regime_fit: ['all']

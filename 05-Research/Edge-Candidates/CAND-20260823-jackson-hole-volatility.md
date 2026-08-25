@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: macro_event_volatility_regime
+rejection_reason: Event-specific and non-backtestable as a scanner. Jackson Hole occurs once/year; cannot generate sufficient signal count for Phase 1A statistical testing (minimum 12 sigs/yr). Event is 2 days away — manual risk-reduction overlay already recommended.
 composite_score: 65.0
 confidence: medium
 regime_fit: ['neutral', 'caution', 'complacent']

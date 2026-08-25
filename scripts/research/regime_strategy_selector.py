@@ -125,6 +125,11 @@ STRATEGY_REGISTRY = {
     "STR-LOWCORR": {"name": "Low-Correlation Regime Stock Picker", "asset": "stock", "status": "WATCH",
                     "regime_best": ["risk_on", "neutral", "diversified"], "regime_avoid": ["risk_off", "unified"],
                     "base_risk": 0.5, "type": "regime_factor"},
+    # Autonomous-pipeline deployed 2026-08-25 (Phase 1A p=0.157 SPECULATIVE,
+    # walk-forward OOS mean R +0.131 but p=0.553 → WATCH risk).
+    "STR-DEBASE": {"name": "Treasury Buyback Debasement Regime", "asset": "crypto", "status": "WATCH",
+                   "regime_best": ["risk_on", "neutral", "complacent"], "regime_avoid": ["risk_off"],
+                   "base_risk": 0.5, "type": "macro_regime"},
 }
 
 

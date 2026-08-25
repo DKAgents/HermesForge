@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: insider_sell_ratio_extreme
+rejection_reason: Insufficient data — no insider trading data in pipeline (yfinance 529 stocks / Hyperliquid 35 crypto). Aggregate B/S ratio from GuruFocus requires proprietary data feed.
 composite_score: 55.0
 confidence: medium
 regime_fit: ['complacent', 'caution']

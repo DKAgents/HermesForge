@@ -59,6 +59,12 @@ from scanners.scanner_vix_vrp_contango import scan as scan_vixc  # noqa: E402
 # 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md.
 from scanners.scanner_lowcorr_regime import scan as scan_lowcorr  # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-08-25): Treasury Buyback /
+# Dollar Debasement regime trade — Phase 1A positive (p=0.157), walk-forward
+# OOS mean R > 0 but not significant → deployed WATCH with 0.5% risk. See
+# 06-Strategies/Hypotheses/STR-20260825-treasury-debasement-regime.md.
+from scanners.scanner_treasury_debasement import scan as scan_debase  # noqa: E402
+
 # Watch-list scanners (imported but not yet scanning — need status:watch frontmatter)
 from scanners.scanner_l_atr_contraction import scan as scan_l   # noqa: E402
 from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
@@ -85,6 +91,7 @@ _SCANNER_ALIASES = {
     "scan_ag":      scan_ag,      "scan_aj":      scan_aj,
     "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
     "scan_l":       scan_l,       "scan_p":       scan_p,
+    "scan_debase":  scan_debase,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).

@@ -1,7 +1,8 @@
 ---
-status: staged
+status: rejected
 source: web
 edge_type: trend_microstructure_decay
+rejection_reason: Strategy-level gate, not a standalone scanner. Requires auditing existing LIVE strategies and applying duration-based risk multipliers. No new signal generation. Defer to strategy audit/risk-management task.
 composite_score: 61.0
 confidence: medium
 regime_fit: ['risk_on', 'neutral', 'diversified']
