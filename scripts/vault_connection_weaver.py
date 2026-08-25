@@ -809,16 +809,38 @@ def main():
         print("╚════════════════════╝")
 
     # Git commit
-    if args.commit and not args.dry_run and run_report["connections_created"] > 0:
+    # The Health stage rewrites Connection-Health.md on EVERY run, so the tree
+    # goes dirty even when 0 connections are created. Commit whenever --commit
+    # is passed. On 0-connection runs use a path-scoped commit so a concurrent
+    # pipeline's unrelated staged changes are not swept into this commit.
+    if args.commit and not args.dry_run:
         try:
-            subprocess.run(["git", "add", "-A"], cwd=str(vault), check=True)
-            subprocess.run(
-                ["git", "commit", "-m",
-                 f"vault-weaver: {run_report['connections_created']} connections created "
-                 f"(run {state['total_runs']})"],
-                cwd=str(vault), check=True, capture_output=True
-            )
-            print(f"✅ Git committed: {run_report['connections_created']} connections")
+            health_rel = "08-Knowledge/Connection-Health.md"
+            if run_report["connections_created"] > 0:
+                subprocess.run(["git", "add", "-A"], cwd=str(vault), check=True)
+                subprocess.run(
+                    ["git", "commit", "-m",
+                     f"vault-weaver: {run_report['connections_created']} connections created "
+                     f"(run {state['total_runs']})"],
+                    cwd=str(vault), check=True, capture_output=True
+                )
+                print(f"✅ Git committed: {run_report['connections_created']} connections")
+            else:
+                # Health-only run: commit just the dashboard, leave other work alone.
+                diff = subprocess.run(
+                    ["git", "diff", "--quiet", "--", health_rel], cwd=str(vault)
+                )
+                if diff.returncode == 0:
+                    print("✅ No changes to commit (tree already clean)")
+                else:
+                    subprocess.run(
+                        ["git", "commit", "-m",
+                         f"vault-weaver: health dashboard update "
+                         f"(run {state['total_runs']}, 0 connections)",
+                         "--", health_rel],
+                        cwd=str(vault), check=True, capture_output=True
+                    )
+                    print("✅ Git committed: health dashboard update (0 connections)")
         except Exception as e:
             print(f"⚠️ Git commit failed: {e}")
 
