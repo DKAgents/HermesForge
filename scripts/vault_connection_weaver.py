@@ -636,15 +636,44 @@ def main():
 
     # Get seed notes
     if args.priority_dirs:
-        # Use priority dirs instead of git log
-        seeds = []
-        for d in args.priority_dirs.split(","):
-            d = d.strip()
-            for p in (vault / d).rglob("*.md"):
+        # Round-robin across priority dirs AND skip notes examined in the last
+        # 7 days, so a single dir doesn't monopolize the batch and the weaver
+        # keeps making progress instead of re-examining the same already-linked
+        # notes forever. The 7-day skip must also apply to SEEDS — candidate
+        # discovery applies it to targets, but seeds were previously unfiltered.
+        dirs = [d.strip() for d in args.priority_dirs.split(",") if d.strip()]
+        now = datetime.now(timezone.utc)
+        per_dir = []
+        for d in dirs:
+            files = []
+            for p in sorted((vault / d).rglob("*.md")):
                 rel = str(p.relative_to(vault))
-                if not should_skip(rel):
-                    seeds.append(rel)
-        seeds = seeds[:args.batch]
+                if should_skip(rel):
+                    continue
+                examined = state.get("examined_notes", {}).get(rel, {})
+                last = examined.get("last_examined")
+                if last:
+                    try:
+                        last_dt = datetime.fromisoformat(last.replace("Z", "+00:00"))
+                        if (now - last_dt).days < 7:
+                            continue  # recently examined — skip as seed
+                    except Exception:
+                        pass
+                files.append(rel)
+            per_dir.append(files)
+        seeds = []
+        i = 0
+        while len(seeds) < args.batch and any(per_dir):
+            progressed = False
+            for files in per_dir:
+                if i < len(files):
+                    seeds.append(files[i])
+                    progressed = True
+                    if len(seeds) >= args.batch:
+                        break
+            if not progressed:
+                break
+            i += 1
     else:
         seeds = get_recent_notes(vault, since_days=3, limit=args.batch)
 
