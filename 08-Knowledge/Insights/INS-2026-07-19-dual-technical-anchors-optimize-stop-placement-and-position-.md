@@ -34,3 +34,10 @@ In a downtrend, identify both the violated support level (C065) and any nearby u
 
 ## Related Notes
 - [[C336-support-level|Support Level]]
+
+## Related
+- [[RG031-protective-stop-placement-as-an-art]] — See RG031 for the general art of stop placement that this dual-anchor method exemplifies
+
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid anchoring stops at round-number levels (Murphy rule)
+
+- [[C245-stop-order]] — See C245-stop-order for execution mechanics and slippage risk when placing stops at technical anchors

@@ -201,3 +201,6 @@ All 3 signals across the entire universe/history stopped out (AIG -3.75R, GOOGL 
 | 2026-07-26 | v1.4 — redefined trend "leg" as swing-segmented (impulsive move from most recent qualifying pullback, not solely the 50/200 cross date) to address signal-scarcity risk identified when reviewing v1.3 | Hermes critique flagging v1.3's tightened rules would likely produce insufficient trade volume for PT-001 evaluation; user approved folding the fix directly into the frozen spec |
 | 2026-07-26 | Created as formal hypothesis file, `status: hypothesis`, `publish_enabled: false` | User request to formalize after 4 review rounds |
 | 2026-07-26 | Phase 1A scanner built (`scanner_h_first_pullback_trend_swing.py`), registered in `run_phase1a.py`, run against full 216-ticker universe. Result: **KILL** — 0.9 sig/yr, avg R -1.975, 0% win rate, 0/3 sub-periods positive. v1.4 fix did not resolve signal scarcity; confirmation-candle/EMA-zone/volume filter stack identified as the actual bottleneck. | User instruction "Proceed" after v1.4 fold-in confirmation |
+
+## Related
+- [[EN068-4060-retracement-zones-for-timing-entries]] — Constrain valid pullbacks to 40-60% retracement zone per Murphy

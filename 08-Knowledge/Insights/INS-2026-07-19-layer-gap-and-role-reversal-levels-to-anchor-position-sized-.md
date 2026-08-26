@@ -34,3 +34,8 @@ In a downtrend, identify where a prior violated support level (C065) and an unfi
 
 ## Related Notes
 - [[C336-support-level|Support Level]]
+
+## Related
+- [[RG034-handling-winning-streaks-and-position-sizing]] — See RG034 for why position sizing must not increase after wins despite correct stop placement
+
+- [[C239-money-management-as-survival-mechanism]] — See C239-money-management-as-survival-mechanism for the survival principle behind position sizing.
