@@ -32,3 +32,6 @@ A trader should require both a structural filter from R052 (e.g., two consecutiv
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See volume breakout confirmation rule
