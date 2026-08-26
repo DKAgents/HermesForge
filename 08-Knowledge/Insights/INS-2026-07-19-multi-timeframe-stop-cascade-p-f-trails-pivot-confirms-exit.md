@@ -34,3 +34,6 @@ On a pivot point buy signal per EN071, place the initial protective stop below t
 
 ## Related Notes
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
+
+## Related
+- [[RG035-combining-technical-factors-with-money-management-for-stop-p]] — See RG035 for money management constraints on stop placement

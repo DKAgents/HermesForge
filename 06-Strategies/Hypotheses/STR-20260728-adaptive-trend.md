@@ -323,3 +323,6 @@ Phase 1B/2: Walk-forward portfolio backtest ✅
 Phase 3: Robustness (walk-forward, Monte Carlo, regime-conditional, parameter sensitivity) ← NEXT (stocks only)
 Phase 4: Paper trading (60-90 days)
 Phase 5: Live execution with kill-switch criteria
+
+## Related
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — See oscillator entry for trend confirmation
