@@ -175,3 +175,10 @@ Murphy warns that Fibonacci tools should be secondary inputs precisely because t
 | Date | Change | Trigger |
 |------|--------|---------|
 | 2026-07-19 | Strategy created | US-052 schema; revised instructions from pre-build critical review |
+
+## Related
+- [[EN027-5-and-20-day-moving-average-crossover]] — See 5/20 crossover for entry confirmation filter
+
+- [[EN085-counter-trend-retracement-trading]] — See general retracement rule
+
+- [[EN028-10-and-50-day-moving-average-crossover]] — Confirm primary uptrend using the 10/50 MA crossover rule

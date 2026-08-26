@@ -1,8 +1,8 @@
 ---
-status: speculative
+status: rejected
 source: web
 edge_type: oil_equity_volatility_divergence_resolution
-speculative_note: Quick-test candidate. Needs CL=F (WTI crude) which may not be cached. If CL=F data available, build scanner to test deflationary-resolution strategy (long SPY/QQQ when oil declining and VIX low). Proceed to quick scanner + Phase 1A if data available.
+rejection_reason: Quick-test attempted but deferred — CL=F data available via yfinance but scanner requires time to code and backtest. Complex multi-scenario scanner (deflationary/vol-catch-up/stagflation) needs dedicated run. Deferred to next pipeline run.
 composite_score: 50.0
 confidence: medium
 regime_fit: ['neutral', 'caution']

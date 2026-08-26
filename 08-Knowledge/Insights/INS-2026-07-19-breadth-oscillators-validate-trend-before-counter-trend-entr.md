@@ -31,3 +31,12 @@ Before executing an oscillator-based oversold buy in an uptrend (EN041), require
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[RG017-overboughtoversold-readings-in-strong-trends]] — See RG017-overboughtoversold-readings-in-strong-trends for why oscillators fail in strong trends
+
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for the trend-alignment rule that prevents false counter-trend signals.
+
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — See breadth oscillator validation for counter-trend entries
+
+- [[EN086-counter-trend-oscillator-based-trading]] — Refines the basic counter-trend oscillator rule with breadth validation
