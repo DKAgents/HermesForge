@@ -34,3 +34,6 @@ A trader should require dual confirmation — RSI above 70 (or below 30) AND Sto
 
 ## Related Notes
 - [[INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter|Dual-Oscillator Confirmation Gate for Candle Reversal Patterns]]
+
+## Related
+- [[N065-macd-indicator-construction]] — See N065-macd-indicator-construction for potential third oscillator confirmation alternative

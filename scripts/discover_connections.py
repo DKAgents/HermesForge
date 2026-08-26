@@ -79,7 +79,10 @@ def llm_call(messages: list[dict], max_tokens: int = MAX_TOKENS) -> str:
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
             data = json.loads(r.read())
-            return data['choices'][0]['message']['content']
+            content = data["choices"][0]["message"]["content"]
+            if content is None:
+                return "ERROR: LLM returned null content"
+            return content
     except Exception as e:
         return f'ERROR: {e}'
 
@@ -414,6 +417,9 @@ def synthesize_group(notes: list[dict], seed: dict, state: dict, dry_run: bool) 
     print(f"    → Calling LLM for {len(note_texts)} notes across domains: {[note_domain(p) for p in note_paths]}")
     response = llm_call([{'role': 'user', 'content': prompt}])
 
+    if response is None:
+        print("    ✗ LLM returned None, skipping")
+        return None
     if response.startswith('ERROR:'):
         print(f"    ✗ LLM error: {response}")
         return None

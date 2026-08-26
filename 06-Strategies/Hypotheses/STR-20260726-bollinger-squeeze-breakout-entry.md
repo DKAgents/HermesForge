@@ -201,3 +201,6 @@ buggy — the underlying conclusion doesn't change either way).
 - Script used: `scripts/validation/phase1b_bollinger_sweep.py` (standalone;
   does not modify `scanner_f_bollinger_squeeze.py` or the existing `'f'`
   registration in `run_phase1a.py`).
+
+## Related
+- [[R052-filters-for-confirming-breakouts]] — Apply breakout confirmation filters to reduce false signals

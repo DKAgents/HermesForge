@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-26T03:52:53Z
+updated: 2026-08-26T07:59:21Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 80 |
-| Connections created | 6 | 18 |
-| Review queue | 22 | 22 |
+| Notes examined | 5 | 85 |
+| Connections created | 7 | 25 |
+| Review queue | 23 | 23 |
 | Avg score | 2.6 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3605
+- Total wikilinks in vault: ~3612
 - Total notes: 1937
-- Avg degree per note: 1.861
+- Avg degree per note: 1.865
 - Notes with links: 698 (36.1%)
 - Orphan notes (no links): 1238 (63.9%)
 
@@ -28,17 +28,18 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 20 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-26T03:52:53Z)
-- **06-Strategies/Hypotheses/STR-20260719-ma-pullback-fibonacci-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN027-5-and-20-day-moving-average-crossover.md** (score 4.0): The 5/20 crossover provides a systematic entry trigger that can be layered on top of the Fibonacci pullback setup to confirm that the short-term trend has resumed before entering. Without this filter, traders risk entering on a retracement that continues to fail.
-- **08-Knowledge/Insights/INS-2026-07-19-breadth-oscillator-filters-confirm-trend-before-counter-tren.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN086-counter-trend-oscillator-based-trading.md** (score 4.0): Note A warns that oscillator signals are dangerous in strong trends and proposes breadth confirmation as a filter; Note B describes the basic counter-trend oscillator strategy that Note A is critiquing and improving upon. Linking them shows the evolution from generic oscillator entry rules to a refined approach requiring breadth confirmation, making Note B the foundation that Note A upgrades.
-- **06-Strategies/Hypotheses/STR-20260719-macd-histogram-divergence-weekly-assessment.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN042-macd-crossover-buy-and-sell-signals.md** (score 4.0): The divergence strategy in Note A explicitly avoids relying on overbought/oversold or simple crossovers, which are the basis of the signal in Note B; linking them highlights the evolution from basic MACD signals to a more robust divergence-based filter.
-- **08-Knowledge/Insights/INS-2026-07-19-breadth-oscillators-validate-trend-before-counter-trend-entr.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R268-technical-analysis-checklist-market-analysis-phase.md** (score 4.0): Note A provides a specific condition for using breadth oscillators to validate trend before counter-trend entry, refining the general oscillator checks in Note B's market analysis checklist.
-- **08-Knowledge/Insights/INS-2026-07-19-breadth-oscillators-validate-trend-before-counter-trend-entr.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R127-zero-line-crossings-must-align-with-prevailing-trend.md** (score 4.0): Note B provides a concrete Murphy rule that operationalizes Note A's warning about false oscillator signals by requiring trend alignment for zero-line crossings, directly applicable to breadth oscillators like the McClellan Oscillator.
-- **08-Knowledge/Insights/INS-2026-07-19-breadth-oscillators-validate-trend-before-counter-trend-entr.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG017-overboughtoversold-readings-in-strong-trends.md** (score 5.0): Note A identifies the 'oscillators lie in strong trends' problem as a core challenge for counter-trend entries, while Note B provides the canonical Murphy explanation of why overbought/oversold readings are premature in strong trends — together they validate that breadth oscillators don't solve this problem, they just reframe it with market-wide data.
+## Recent Discoveries (last run: 2026-08-26T07:59:21Z)
+- **06-Strategies/Hypotheses/STR-20260719-sr-role-reversal-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EX001-failure-swing-reversal-signal.md** (score 4.0): The failure swing provides a specific Dow Theory confirmation signal that can be used to time entries when a role reversal level is identified, adding a rule-based filter to the strategy.
+- **06-Strategies/Hypotheses/STR-20260719-sr-role-reversal-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C095-rectangle-formation-support-and-resistance-role-reversal.md** (score 5.0): Note B provides the foundational technical theory (role reversal in rectangle formations) that directly supports the strategy in Note A, which relies on gaps and prior support/resistance levels for entry signals. This connection bridges practical strategy with canonical TA doctrine.
+- **08-Knowledge/Insights/INS-2026-07-19-dual-oscillator-confirmation-gate-for-candle-reversal-entrie.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C183-filtered-candle-patterns-concept.md** (score 5.0): Note A proposes a stricter dual-oscillator requirement (RSI + Stochastics), while Note B describes the original single-oscillator filtered candle patterns concept by Greg Morris. This directly extends the foundational concept with a more specific gating condition.
+- **08-Knowledge/Insights/INS-2026-07-19-dual-oscillator-confirmation-gate-for-candle-reversal-entrie.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R127-zero-line-crossings-must-align-with-prevailing-trend.md** (score 4.0): Note A proposes a dual-oscillator gate for reversal entries, while Note B warns against trading oscillator signals against the prevailing trend. Combining them creates a three-part filter where the dual-oscillator confirmation is only valid when the zero-line crossing aligns with trend direction.
+- **08-Knowledge/Insights/INS-2026-07-19-dual-oscillator-confirmation-gate-for-candle-reversal-entrie.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N082-filtered-candle-patterns-stochastics-d-application.md** (score 5.0): Note B provides the specific Stochastics %D presignal zone definition (above 80/below 20) that Note A's dual-oscillator gate requires but doesn't define. This fills a critical implementation gap in Note A's framework.
+- **06-Strategies/Hypotheses/STR-20260726-bollinger-squeeze-breakout-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R052-filters-for-confirming-breakouts.md** (score 4.0): Note B provides general breakout confirmation filters (close beyond peak, percentage, two-day rule, volume) that directly enhance the Bollinger squeeze breakout entry in Note A by reducing false signals.
+- **08-Knowledge/Insights/INS-2026-07-19-dual-oscillator-confirmation-maximizes-candle-reversal-signa.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N065-macd-indicator-construction.md** (score 4.0): Note A establishes a dual-oscillator confirmation rule using RSI and Stochastics, but MACD (Note B) is another momentum oscillator that could serve as an alternative or additional filter in the same framework. Linking them allows the dual-oscillator concept to be extended or compared with MACD-based confirmation for candle reversal signals.
 
 ## Reflection Notes
-- Run 5: Created 1 connections from 5 notes. Avg score: 2.0.
 - Run 6: Created 1 connections from 5 notes. Avg score: 2.7.
 - Run 7: Created 1 connections from 5 notes. Avg score: 3.3.
 - Run 11: Created 1 connections from 5 notes. Avg score: 3.6.
 - Run 16: Created 6 connections from 5 notes. Avg score: 2.6.
+- Run 17: Created 7 connections from 5 notes. Avg score: 2.6.

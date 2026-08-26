@@ -34,3 +34,10 @@ A trader should require both RSI and Stochastics to be in overbought or oversold
 
 ## Related Notes
 - [[INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter|Dual-Oscillator Confirmation Gate for Candle Reversal Patterns]]
+
+## Related
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082-filtered-candle-patterns-stochastics-d-application|Stochastics %D presignal zone definition for %D threshold specification
+
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See trend-alignment rule for oscillator zero-line crossings
+
+- [[C183-filtered-candle-patterns-concept]] — Greg Morris's original single-oscillator filter concept

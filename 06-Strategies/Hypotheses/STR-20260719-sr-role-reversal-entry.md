@@ -96,3 +96,8 @@ When price violates a significant support level, that level becomes resistance �
 | Date | Change | Trigger |
 |------|--------|---------|
 | 2026-07-19 | Strategy created | US-052 Living Strategy Layer; seeded from Murphy S/R notes + INS layer-gap insight |
+
+## Related
+- [[C095-rectangle-formation-support-and-resistance-role-reversal]] — See C095-rectangle-formation-support-and-resistance-role-reversal for the role reversal principle underpinning this entry strategy
+
+- [[EX001-failure-swing-reversal-signal]] — Confirm role reversal with failure swing pattern
