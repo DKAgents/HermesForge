@@ -31,3 +31,6 @@ Before acting on 4-9-18 triple crossover signals, compute the 4-minus-18 MA spre
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related
+- [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for overbought/oversold thresholds on oscillator spread
