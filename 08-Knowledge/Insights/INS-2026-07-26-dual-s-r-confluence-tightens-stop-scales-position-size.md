@@ -34,3 +34,6 @@ In a downtrend, when a bounce rallies into a zone where a prior violated support
 
 ## Related Notes
 - [[C336-support-level|Support Level]]
+
+## Related
+- [[RG031-protective-stop-placement-as-an-art]] — See RG031-protective-stop-placement-as-an-art for the volatility principle behind precise stop calibration

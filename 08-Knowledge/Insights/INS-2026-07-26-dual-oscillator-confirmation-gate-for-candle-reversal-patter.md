@@ -31,3 +31,6 @@ Only enter a candle reversal trade when the pattern is present AND both RSI (>70
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — See MACD divergence as a directional momentum filter for reversal patterns
