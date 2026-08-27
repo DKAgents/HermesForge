@@ -31,3 +31,6 @@ Before entering a pivot-point buy signal per EN071, calculate the distance from 
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003-protective-stop-placement-relative-to-round-numbers for round-number constraint on pivot stops

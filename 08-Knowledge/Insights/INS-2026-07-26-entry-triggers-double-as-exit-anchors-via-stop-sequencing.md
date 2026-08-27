@@ -31,3 +31,8 @@ At entry via EN071 pivot rules, immediately place the protective sell stop below
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for a P&F-specific stop placement technique.
+
+- [[R227-support-and-resistance-for-entry-exit-and-stop-placement]] — Stop placement principle from Murphy
