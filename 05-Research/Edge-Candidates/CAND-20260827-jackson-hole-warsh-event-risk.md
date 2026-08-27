@@ -1,5 +1,7 @@
 ---
-status: staged
+status: skipped
+skipped_note: "Not a systematic backtestable strategy — this is a one-time event risk advisory (Kevin Warsh's Jackson Hole debut, Aug 28, 2026). The specific scenario (Warsh hawkish debut, Treasury buyback context, debasement trade in play) has no historical analog and produces 1 data point. The recommended action is risk reduction (reduce STR-DEBASE sizing by 50% 24h before event) — an operational decision, not a backtestable signal. Keeping as risk-management advisory in the candidate library for reference, but not progressing through the strategy pipeline."
+skipped_date: 20260827
 source: web
 edge_type: jackson_hole_warsh_event_risk
 composite_score: 54.0

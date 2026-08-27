@@ -1,5 +1,8 @@
 ---
-status: staged
+status: backtest_failed
+backtest_note: "F&G > 75 systematically tested as short signal across 246 historical instances (BTC 2020-2026). Result: mean forward BTC return POSITIVE at all holding periods (3d:+1.6%, 5d:+2.7%, 7d:+3.8%, 14d:+7.7%, 21d:+11.1%). Win rates 57-66%. Shorting extreme greed is a losing strategy — trend persists. The 'fast ramp' filter (F&G went from <50 to >75 in 10d) had only 3 instances. Funding rate confirmation could not be tested (only 7d of funding history cached). Conclusion: The specific historical analog (Oct 2025) is a one-time warning, not a systematic edge. Keeping as risk-management advisory, not deploying systematic strategy."
+backtest_date: 20260827
+backtest_scanner: scanner_fg_overheat_short
 source: web
 edge_type: crypto_fg80_contrarian_warning
 composite_score: 56.0
