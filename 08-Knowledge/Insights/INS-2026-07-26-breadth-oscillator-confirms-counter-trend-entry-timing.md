@@ -34,3 +34,6 @@ When trading a primary-trend pullback per EN041, require the McClellan Oscillato
 
 ## Related Notes
 - [[INS-2026-08-16-use-breadth-oscillator-to-confirm-secondary-trend-entries|Use Breadth Oscillator to Confirm Secondary Trend Entries]]
+
+## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for establishing the primary trend direction required before fading oscillators
