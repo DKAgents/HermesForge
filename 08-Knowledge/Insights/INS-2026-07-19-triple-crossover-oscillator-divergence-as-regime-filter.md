@@ -31,3 +31,6 @@ Before acting on a 4-9-18 triple crossover buy or sell signal, compute both MA-d
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for classic divergence conditions that validate regime signals
