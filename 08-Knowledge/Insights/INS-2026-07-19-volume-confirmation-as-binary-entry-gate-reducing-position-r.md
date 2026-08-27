@@ -31,3 +31,6 @@ Before entering on any pattern breakout, require measurable above-average volume
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume confirmation rule
