@@ -35,3 +35,8 @@ In a downtrend, when a price gap's lower end and a prior violated support level 
 ## Related Notes
 - [[C336-support-level|Support Level]]
 - [[C334-resistance-level|Resistance Level]]
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid round numbers when setting stops at confluent resistance zones
+
+- [[C245-stop-order]] — See C245-stop-order for stop order mechanics underlying RG035 placement rules

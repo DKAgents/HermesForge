@@ -34,3 +34,6 @@ After a Pivot Point buy signal (EN071) is triggered and the position survives th
 
 ## Related Notes
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
+
+## Related
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for optimizing stop frequency via box size

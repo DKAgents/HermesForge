@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-28T08:45:04Z
+updated: 2026-08-28T12:49:18Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 145 |
-| Connections created | 5 | 65 |
-| Review queue | 38 | 38 |
-| Avg score | 3.2 | — |
+| Notes examined | 5 | 150 |
+| Connections created | 3 | 68 |
+| Review queue | 39 | 39 |
+| Avg score | 2.6 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3720
+- Total wikilinks in vault: ~3723
 - Total notes: 1964
-- Avg degree per note: 1.894
+- Avg degree per note: 1.896
 - Notes with links: 721 (36.8%)
 - Orphan notes (no links): 1242 (63.2%)
 
@@ -28,16 +28,14 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-28T08:45:04Z)
-- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C183-filtered-candle-patterns-concept.md** (score 5.0): Note A extends the filtered candle patterns concept from Note B by requiring simultaneous RSI and Stochastics extremes, creating a more stringent dual-oscillator confirmation gate.
-- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R127-zero-line-crossings-must-align-with-prevailing-trend.md** (score 4.0): Note A proposes a dual-oscillator extreme filter for candle patterns, while Note B adds a trend-alignment requirement for oscillator signals. Combining them creates a stronger gate: dual extremes must also align with zero-line crossings and prevailing trend direction.
-- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 4.0): Note A proposes a dual-oscillator gate (RSI + Stochastics) for candle reversal patterns; Note B introduces MACD divergence as another overbought/oversold condition. This suggests MACD could serve as an alternative or additional third filter in the confirmation gate framework.
-- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-threshold-for-candle-reversal-f.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N082-filtered-candle-patterns-stochastics-d-application.md** (score 5.0): Note B defines the specific presignal threshold rule for Stochastics %D that Note A's dual-oscillator filter depends on, making it the foundational source for the Stochastics leg of the combined RSI+Stochastics extreme zone requirement.
-- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-threshold-for-candle-reversal-f.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 4.0): Note A proposes a dual oscillator filter using RSI and stochastics, while Note B describes MACD divergence as another oscillator-based reversal signal. MACD could serve as a third confirming condition or alternative oscillator in the dual-threshold framework, extending the filter's robustness.
+## Recent Discoveries (last run: 2026-08-28T12:49:18Z)
+- **08-Knowledge/Insights/INS-2026-07-30-exit-precision-combining-p-f-trailing-stops-with-pivot-buy-r.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG020-protective-sell-stops-on-point-and-figure-charts.md** (score 4.0): RG020 introduces a specific parameter—smaller box size—that directly enhances the P&F trailing stop mechanism described in Note A, allowing traders to raise stops more frequently and precisely during trend continuation. This adds a concrete optimization layer (chart granularity) to the two-phase exit strategy without being an obvious or already-captured link.
+- **08-Knowledge/Insights/INS-2026-07-30-layered-s-r-zones-drive-precise-stop-placement-and-position-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C245-stop-order.md** (score 4.0): Note A describes a specific rule (RG035) requiring stops at valid technical levels above resistance for shorts, while Note B provides the foundational definition of a stop order. Linking them connects the abstract mechanism to a concrete application rule, clarifying that stops aren't arbitrary but must be placed at confluent resistance zones.
+- **08-Knowledge/Insights/INS-2026-07-30-layered-s-r-zones-drive-precise-stop-placement-and-position-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note B adds a critical filter to Note A's stop placement strategy by warning against obvious round numbers, which could undermine the precision of confluent resistance zones if stops are placed exactly at those psychologically significant levels.
 
 ## Reflection Notes
-- Run 25: Created 2 connections from 5 notes. Avg score: 1.1.
 - Run 26: Created 3 connections from 5 notes. Avg score: 2.4.
 - Run 27: Created 6 connections from 5 notes. Avg score: 4.1.
 - Run 28: Created 6 connections from 5 notes. Avg score: 3.6.
 - Run 29: Created 5 connections from 5 notes. Avg score: 3.2.
+- Run 30: Created 3 connections from 5 notes. Avg score: 2.6.
