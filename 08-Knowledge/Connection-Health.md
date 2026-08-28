@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-28T12:49:18Z
+updated: 2026-08-28T16:52:11Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 150 |
-| Connections created | 3 | 68 |
-| Review queue | 39 | 39 |
-| Avg score | 2.6 | — |
+| Notes examined | 5 | 155 |
+| Connections created | 2 | 70 |
+| Review queue | 40 | 40 |
+| Avg score | 3.0 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3723
+- Total wikilinks in vault: ~3725
 - Total notes: 1964
-- Avg degree per note: 1.896
+- Avg degree per note: 1.897
 - Notes with links: 721 (36.8%)
 - Orphan notes (no links): 1242 (63.2%)
 
@@ -28,14 +28,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-28T12:49:18Z)
-- **08-Knowledge/Insights/INS-2026-07-30-exit-precision-combining-p-f-trailing-stops-with-pivot-buy-r.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG020-protective-sell-stops-on-point-and-figure-charts.md** (score 4.0): RG020 introduces a specific parameter—smaller box size—that directly enhances the P&F trailing stop mechanism described in Note A, allowing traders to raise stops more frequently and precisely during trend continuation. This adds a concrete optimization layer (chart granularity) to the two-phase exit strategy without being an obvious or already-captured link.
-- **08-Knowledge/Insights/INS-2026-07-30-layered-s-r-zones-drive-precise-stop-placement-and-position-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C245-stop-order.md** (score 4.0): Note A describes a specific rule (RG035) requiring stops at valid technical levels above resistance for shorts, while Note B provides the foundational definition of a stop order. Linking them connects the abstract mechanism to a concrete application rule, clarifying that stops aren't arbitrary but must be placed at confluent resistance zones.
-- **08-Knowledge/Insights/INS-2026-07-30-layered-s-r-zones-drive-precise-stop-placement-and-position-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note B adds a critical filter to Note A's stop placement strategy by warning against obvious round numbers, which could undermine the precision of confluent resistance zones if stops are placed exactly at those psychologically significant levels.
+## Recent Discoveries (last run: 2026-08-28T16:52:11Z)
+- **08-Knowledge/Insights/INS-2026-07-30-mcclellan-oscillator-filters-counter-trend-entries-during-se.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N159-mcclellan-oscillator.md** (score 4.0): Note A proposes using the McClellan Oscillator as a filter for counter-trend entries, but it does not define the oscillator itself. Note B provides the precise definition and standard interpretation, making this link essential for readers who need the indicator's mechanics.
+- **08-Knowledge/Insights/INS-2026-07-30-pivot-stop-rules-vs-3-1-reward-risk-position-sizing-conflict.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG020-protective-sell-stops-on-point-and-figure-charts.md** (score 4.0): Note B's smaller box size P&F chart method can generate tighter, technically valid stops, potentially resolving the conflict in Note A where pivot-based stops violate risk limits.
 
 ## Reflection Notes
-- Run 26: Created 3 connections from 5 notes. Avg score: 2.4.
 - Run 27: Created 6 connections from 5 notes. Avg score: 4.1.
 - Run 28: Created 6 connections from 5 notes. Avg score: 3.6.
 - Run 29: Created 5 connections from 5 notes. Avg score: 3.2.
 - Run 30: Created 3 connections from 5 notes. Avg score: 2.6.
+- Run 31: Created 2 connections from 5 notes. Avg score: 3.0.

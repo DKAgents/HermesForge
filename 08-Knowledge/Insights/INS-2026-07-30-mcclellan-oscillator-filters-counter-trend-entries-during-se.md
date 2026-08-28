@@ -31,3 +31,6 @@ When a momentum oscillator signals oversold during an uptrend's secondary correc
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[N159-mcclellan-oscillator]] — See N159-mcclellan-oscillator for the oscillator's calculation and standard signals
