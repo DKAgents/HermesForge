@@ -31,3 +31,10 @@ Only trade candle reversal patterns when both RSI (>70 overbought / <30 oversold
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for MACD as potential third oscillator filter
+
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for trend-alignment requirement on oscillator signals
+
+- [[C183-filtered-candle-patterns-concept]] — See C183-filtered-candle-patterns-concept for the foundational candle filtering concept

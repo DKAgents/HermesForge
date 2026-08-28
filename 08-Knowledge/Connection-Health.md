@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-28T04:41:24Z
+updated: 2026-08-28T08:45:04Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 140 |
-| Connections created | 6 | 60 |
+| Notes examined | 5 | 145 |
+| Connections created | 5 | 65 |
 | Review queue | 38 | 38 |
-| Avg score | 3.6 | — |
+| Avg score | 3.2 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3715
+- Total wikilinks in vault: ~3720
 - Total notes: 1964
-- Avg degree per note: 1.892
+- Avg degree per note: 1.894
 - Notes with links: 721 (36.8%)
 - Orphan notes (no links): 1242 (63.2%)
 
@@ -28,17 +28,16 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-28T04:41:24Z)
-- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C239-money-management-as-survival-mechanism.md** (score 4.0): Note A quantifies how lag in a double crossover systematically compresses reward, causing a 1% position sizing rule to threaten survival. Note B's general principle of money management as a survival mechanism directly validates the severity of this risk.
-- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG034-handling-winning-streaks-and-position-sizing.md** (score 4.0): Connecting these notes highlights that the danger of increasing position sizes after winning streaks (Note B) is compounded when the trading system already suffers from lag-induced compressed rewards (Note A), making drawdowns even more severe.
-- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R226-equity-curve-management-increase-commitments-after-drawdowns.md** (score 4.0): Note A warns that lag compresses reward per signal, making fixed 1% risk riskier; Note B advises increasing size after drawdowns. Together, they suggest that applying R226 to a lagging system could amplify losses precisely when the equity dip is caused by late entries, adding a critical condition to the equity curve management rule.
-- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN041-oscillator-entry-strategy-in-trending-markets.md** (score 4.0): Note A's oscillator reveals regime weakness (compression), which can filter out false signals from Note B's oscillator entry strategy when the market is not trending.
-- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 5.0): Note A's insight that crossover-derived oscillators reveal regime weakness is directly exemplified by Note B's MACD divergence analysis, which detects momentum loss before price reversals.
-- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N161-momentum-oscillator-construction.md** (score 4.0): Note A describes converting crossover spreads into oscillators to detect compression, while Note B provides the foundational construction method for momentum oscillators using price differences. This reveals the technical lineage from basic momentum calculation to the more advanced crossover-derived oscillator concept.
+## Recent Discoveries (last run: 2026-08-28T08:45:04Z)
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C183-filtered-candle-patterns-concept.md** (score 5.0): Note A extends the filtered candle patterns concept from Note B by requiring simultaneous RSI and Stochastics extremes, creating a more stringent dual-oscillator confirmation gate.
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R127-zero-line-crossings-must-align-with-prevailing-trend.md** (score 4.0): Note A proposes a dual-oscillator extreme filter for candle patterns, while Note B adds a trend-alignment requirement for oscillator signals. Combining them creates a stronger gate: dual extremes must also align with zero-line crossings and prevailing trend direction.
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 4.0): Note A proposes a dual-oscillator gate (RSI + Stochastics) for candle reversal patterns; Note B introduces MACD divergence as another overbought/oversold condition. This suggests MACD could serve as an alternative or additional third filter in the confirmation gate framework.
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-threshold-for-candle-reversal-f.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N082-filtered-candle-patterns-stochastics-d-application.md** (score 5.0): Note B defines the specific presignal threshold rule for Stochastics %D that Note A's dual-oscillator filter depends on, making it the foundational source for the Stochastics leg of the combined RSI+Stochastics extreme zone requirement.
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-threshold-for-candle-reversal-f.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 4.0): Note A proposes a dual oscillator filter using RSI and stochastics, while Note B describes MACD divergence as another oscillator-based reversal signal. MACD could serve as a third confirming condition or alternative oscillator in the dual-threshold framework, extending the filter's robustness.
 
 ## Reflection Notes
-- Run 24: Created 1 connections from 5 notes. Avg score: 2.0.
 - Run 25: Created 2 connections from 5 notes. Avg score: 1.1.
 - Run 26: Created 3 connections from 5 notes. Avg score: 2.4.
 - Run 27: Created 6 connections from 5 notes. Avg score: 4.1.
 - Run 28: Created 6 connections from 5 notes. Avg score: 3.6.
+- Run 29: Created 5 connections from 5 notes. Avg score: 3.2.

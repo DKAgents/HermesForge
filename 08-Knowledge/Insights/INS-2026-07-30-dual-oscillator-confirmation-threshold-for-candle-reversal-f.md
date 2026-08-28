@@ -31,3 +31,8 @@ Only act on candle reversal patterns when BOTH RSI (above 70 or below 30) AND st
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — See MACD divergence as potential third oscillator confirmation
+
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082-filtered-candle-patterns-stochastics-d-application for the Stochastics %D presignal threshold that defines the overbought/oversold extreme zone
