@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-28T00:37:56Z
+updated: 2026-08-28T04:41:24Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,36 +9,36 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 135 |
-| Connections created | 6 | 54 |
+| Notes examined | 5 | 140 |
+| Connections created | 6 | 60 |
 | Review queue | 38 | 38 |
-| Avg score | 4.1 | — |
+| Avg score | 3.6 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3671
-- Total notes: 1950
-- Avg degree per note: 1.883
-- Notes with links: 708 (36.4%)
-- Orphan notes (no links): 1241 (63.6%)
+- Total wikilinks in vault: ~3715
+- Total notes: 1964
+- Avg degree per note: 1.892
+- Notes with links: 721 (36.8%)
+- Orphan notes (no links): 1242 (63.2%)
 
 ## Weakly Connected Areas
 - `04-ForgeLoop` — 26 notes, avg degree 0.0
-- `04-ForgeLoop/Maintenance` — 41 notes, avg degree 0.0
+- `04-ForgeLoop/Maintenance` — 42 notes, avg degree 0.0
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-28T00:37:56Z)
-- **08-Knowledge/Insights/INS-2026-07-26-three-layer-weekly-trend-gate-before-daily-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN023-trendline-break-confirmation-of-major-trend-change.md** (score 5.0): Note B's concept of a weekly/monthly trendline break provides a high-significance macro-level trend confirmation that can be added as a primary filter in the three-layer weekly trend gate, strengthening the entry criteria from Note A.
-- **08-Knowledge/Insights/INS-2026-07-26-three-layer-weekly-trend-gate-before-daily-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN070-tight-trendline-break-during-bounce-as-shorting-signal.md** (score 5.0): Note B provides a precise entry timing technique (tight trendline breaks on bounces) that can be applied after the weekly trend gate in Note A confirms the trade direction, creating a complete filter-to-entry sequence.
-- **08-Knowledge/Insights/INS-2026-07-26-three-layer-weekly-trend-gate-before-daily-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN041-oscillator-entry-strategy-in-trending-markets.md** (score 5.0): Note A's three-layer weekly filter operationalizes Murphy's general oscillator entry rule by defining specific weekly trend, momentum, and channel conditions that must be met before acting on daily overbought/oversold signals.
-- **08-Knowledge/Insights/INS-2026-07-26-triple-crossover-generates-two-embeddable-oscillator-signals.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C154-macd-histogram-momentum-warning-signals.md** (score 5.0): Note A discovers two embeddable spread-oscillators (4-9, 9-18) from a triple MA system; Note B provides the histogram framework to monitor the widening/narrowing of those spreads for earlier momentum warnings before crossovers occur. This transforms static oscillator signals into a dynamic momentum-sequencing tool.
-- **08-Knowledge/Insights/INS-2026-07-26-triple-crossover-generates-two-embeddable-oscillator-signals.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 4.0): Divergence analysis from MACD (Note B) can be directly applied to the two spread-oscillators (4−9 and 9−18) derived from the triple crossover system (Note A), adding a valuable confirming or warning signal that wasn't originally described.
-- **08-Knowledge/Insights/INS-2026-07-26-triple-crossover-generates-two-embeddable-oscillator-signals.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN041-oscillator-entry-strategy-in-trending-markets.md** (score 5.0): Note A reveals that MA spreads can be treated as oscillators; Note B provides a general entry strategy for oscillators in trending markets. Linking them directly enables a concrete trading system using the 4-9 and 9-18 spread-oscillators with Murphy's rules.
+## Recent Discoveries (last run: 2026-08-28T04:41:24Z)
+- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C239-money-management-as-survival-mechanism.md** (score 4.0): Note A quantifies how lag in a double crossover systematically compresses reward, causing a 1% position sizing rule to threaten survival. Note B's general principle of money management as a survival mechanism directly validates the severity of this risk.
+- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG034-handling-winning-streaks-and-position-sizing.md** (score 4.0): Connecting these notes highlights that the danger of increasing position sizes after winning streaks (Note B) is compounded when the trading system already suffers from lag-induced compressed rewards (Note A), making drawdowns even more severe.
+- **08-Knowledge/Insights/INS-2026-07-26-whipsaw-lag-amplifies-1-position-sizing-risk-per-signal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R226-equity-curve-management-increase-commitments-after-drawdowns.md** (score 4.0): Note A warns that lag compresses reward per signal, making fixed 1% risk riskier; Note B advises increasing size after drawdowns. Together, they suggest that applying R226 to a lagging system could amplify losses precisely when the equity dip is caused by late entries, adding a critical condition to the equity curve management rule.
+- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN041-oscillator-entry-strategy-in-trending-markets.md** (score 4.0): Note A's oscillator reveals regime weakness (compression), which can filter out false signals from Note B's oscillator entry strategy when the market is not trending.
+- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N062-macd-divergence-analysis.md** (score 5.0): Note A's insight that crossover-derived oscillators reveal regime weakness is directly exemplified by Note B's MACD divergence analysis, which detects momentum loss before price reversals.
+- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N161-momentum-oscillator-construction.md** (score 4.0): Note A describes converting crossover spreads into oscillators to detect compression, while Note B provides the foundational construction method for momentum oscillators using price differences. This reveals the technical lineage from basic momentum calculation to the more advanced crossover-derived oscillator concept.
 
 ## Reflection Notes
-- Run 23: Created 1 connections from 5 notes. Avg score: 1.2.
 - Run 24: Created 1 connections from 5 notes. Avg score: 2.0.
 - Run 25: Created 2 connections from 5 notes. Avg score: 1.1.
 - Run 26: Created 3 connections from 5 notes. Avg score: 2.4.
 - Run 27: Created 6 connections from 5 notes. Avg score: 4.1.
+- Run 28: Created 6 connections from 5 notes. Avg score: 3.6.

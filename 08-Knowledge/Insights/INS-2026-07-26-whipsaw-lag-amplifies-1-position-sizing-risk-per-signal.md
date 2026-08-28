@@ -31,3 +31,10 @@ When using the 10/50 crossover, a trader applying 1% position sizing should expl
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related
+- [[R226-equity-curve-management-increase-commitments-after-drawdowns]] — See equity curve management rule for timing of size increases after drawdowns
+
+- [[RG034-handling-winning-streaks-and-position-sizing]] — See RG034-handling-winning-streaks-and-position-sizing for why increasing size after wins is especially dangerous with lagging systems.
+
+- [[C239-money-management-as-survival-mechanism]] — See C239-money-management-as-survival-mechanism for why this lag amplification threatens survival.

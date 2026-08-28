@@ -31,3 +31,10 @@ Before acting on a 4-9-18 triple crossover signal, compute the oscillator spread
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related
+- [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for the foundational price-difference method underlying crossover oscillators
+
+- [[N062-macd-divergence-analysis]] — See MACD divergence analysis for classic oscillator weakness signals.
+
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — See Note A for detecting regime weakness to filter oscillator entries
