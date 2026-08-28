@@ -31,3 +31,10 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — See foundational oscillator entry rule that this gate refines.
+
+- [[EN070-tight-trendline-break-during-bounce-as-shorting-signal]] — Use tight trendline breaks for entry timing after weekly gate
+
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — Use long-term trendline break on weekly chart as ultimate trend filter
