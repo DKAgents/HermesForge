@@ -31,3 +31,6 @@ A trader should only enter a flag/pennant breakout if (1) volume visibly contrac
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN008-volume-confirmation-at-pattern-completion]] — See EN008-volume-confirmation-at-pattern-completion for the foundational Murphy rule that underlies this filter

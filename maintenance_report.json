@@ -1,0 +1,73 @@
+{
+  "scope": "all",
+  "changed_files": 1823,
+  "steps": [
+    {
+      "step": "detect_changes",
+      "status": "ok",
+      "output": "1823 files"
+    },
+    {
+      "step": "frontmatter_check",
+      "status": "ok",
+      "output": "Frontmatter check complete:\n  Total scanned : 200\n  Patched       : 0\n  Errors        : 0\n  Clean         : 200\nScanning 200 notes...\nFrontmatter check complete:\n  Total scanned : 200\n  Patched       : 0\n  Errors        : 0\n  Clean         : 200\nScanning 200 notes...\nFrontmatter check complete:\n  Total scanned : 23\n  Patched       : 0\n  Errors        : 0\n  Clean         : 23\nScanning 23 notes..."
+    },
+    {
+      "step": "fts_index",
+      "status": "ok",
+      "returncode": 0,
+      "output": "technical-analysis-financial-markets-murphy: 1257 notes indexed/updated\n  vault/00-Meta: 5 notes indexed/updated\n  vault/03-ADRs: 7 notes indexed/updated\n  vault/07-Risk: 9 notes indexed/updated\n  vault/Skills: 4 notes indexed/updated\n\nDone. 1282 notes indexed/updated.\n\n=== Vault Index Stats ===\nTotal notes indexed: 1285\n\nBy book:\n  technical-analysis-financial-markets-murphy       : 1257\n  vault-07-risk                                     : 9\n  vault-03-adrs                                     : 7\n  vault-00-meta                                     : 5\n  vault-skills                                      : 4\n  vault-learnings                                   : 3\n\nBy concept_type:\n  concept             : 380\n  rule                : 321\n  indicator           : 187\n  pattern             : 162\n  entry-criteria      : 89\n  risk-guideline      : 51\n  edge-condition      : 49\n  exit-criteria       : 20\n  vault-note          : 6\n  decision            : 6\n  risk-rule           : 3\n  meta                : 3\n  moc                 : 2\n  risk-note           : 1\n  incident-log        : 1\n  guardian-decisions  : 1\n  graph-inventory     : 1\n  elevation-plan      : 1\n  atomic-note         : 1\n\nIndex location: /root/.hermes/vault_index/vault.db"
+    },
+    {
+      "step": "embedding",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Loading model: all-MiniLM-L6-v2\n  Embedding dim: 384\n  technical-analysis-financial-markets-murphy: 1257 notes\n    Embedding 1257 notes (skipping 0 unchanged)...\n    Progress: 64/1257\n    Progress: 128/1257\n    Progress: 192/1257\n    Progress: 256/1257\n    Progress: 320/1257\n    Progress: 384/1257\n    Progress: 448/1257\n    Progress: 512/1257\n    Progress: 576/1257\n    Progress: 640/1257\n    Progress: 704/1257\n    Progress: 768/1257\n    Progress: 832/1257\n    Progress: 896/1257\n    Progress: 960/1257\n    Progress: 1024/1257\n    Progress: 1088/1257\n    Progress: 1152/1257\n    Progress: 1216/1257\n    Progress: 1257/1257\n  00-Meta: 5 notes\n    Embedding 5 notes (skipping 0 unchanged)...\n  03-ADRs: 7 notes\n    Embedding 7 notes (skipping 0 unchanged)...\n  07-Risk: 9 notes\n    Embedding 9 notes (skipping 0 unchanged)...\n  Learnings: 0 notes\n    All 0 notes up to date\n  Skills: 4 notes\n    Embedding 4 notes (skipping 0 unchanged)...\n\nDone. 1282 notes embedded in 34.7s\n\n=== Chroma Collection Stats ===\nTotal embeddings: 1284\nCollection: vault_notes\nStore: /root/.hermes/vault_index/chroma\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n\nLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\nLoading weights: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 103/103 [00:00<00:00, 4906.68it/s]\n/root/HermesForge/scripts/embed_vault.py:50: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.\n  print(f\"  Embedding dim: {model.get_sentence_embedding_dimension()}\")"
+    },
+    {
+      "step": "wikilinks:Strategy-Validation",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Processing: Strategy-Validation (1 notes)\n  Anchor index: 1 unambiguous anchors\n  Notes linked: 0\n  Total links added: 0\n\nReport: /root/HermesForge/scripts/wikilink_report.json\nGrand total links added: 0"
+    },
+    {
+      "step": "wikilinks:Failure-Modes",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Processing: Failure-Modes (7 notes)\n  Anchor index: 7 unambiguous anchors\n  Notes linked: 0\n  Total links added: 0\n\nReport: /root/HermesForge/scripts/wikilink_report.json\nGrand total links added: 0"
+    },
+    {
+      "step": "wikilinks:Trading-Systems",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Processing: Trading-Systems (1258 notes)\n  Anchor index: 1122 unambiguous anchors\n  Notes linked: 0\n  Total links added: 0\n\nReport: /root/HermesForge/scripts/wikilink_report.json\nGrand total links added: 0"
+    },
+    {
+      "step": "wikilinks:06-Strategies",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Processing: 06-Strategies (62 notes)\n  Anchor index: 43 unambiguous anchors\n  Notes linked: 0\n  Total links added: 0\n\nReport: /root/HermesForge/scripts/wikilink_report.json\nGrand total links added: 0"
+    },
+    {
+      "step": "wikilinks:09-Journal",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Processing: 09-Journal (5 notes)\n  Anchor index: 5 unambiguous anchors\n  Notes linked: 0\n  Total links added: 0\n\nReport: /root/HermesForge/scripts/wikilink_report.json\nGrand total links added: 0"
+    },
+    {
+      "step": "dedup_scan",
+      "status": "ok",
+      "returncode": 0,
+      "output": "Duplication report:\n  Pairs above 90%   : 3\n  Auto-delete candidates (\u226598%): 0\n\nTop duplicates:\n  \ud83d\udfe1 report (0.949)\n    A: N108-gold-mining-shares-as-leading-indicators-for-gold-prices.md\n    B: N106-gold-mining-shares-as-leading-indicator-for-gold-prices.md\n  \ud83d\udfe1 report (0.927)\n    A: N203-on-balance-volume-obv.md\n    B: N182-on-balance-volume-obv.md\n  \ud83d\udfe1 report (0.910)\n    A: N086-bearish-continuation-candle-pattern-library.md\n    B: N085-bullish-continuation-candle-pattern-library.md\n\nReport written to /root/.hermes/vault_index/dedup_report.json\nLoading 1258 notes...\n  1258 notes with body content\nBuilding TF-IDF vectors...\nComputing pairwise similarities (this may take a moment for large vaults)...\n  Comparing 208,969 pairs..."
+    },
+    {
+      "step": "lesson_extract",
+      "status": "skipped",
+      "output": "no new trade logs"
+    }
+  ],
+  "duration_s": 49.516509,
+  "dedup_candidates": 3,
+  "notes": "\u26a0\ufe0f 3 dedup candidates found \u2014 review dedup_report.json",
+  "timestamp": "2026-08-29T02:01:09.319740+00:00"
+}

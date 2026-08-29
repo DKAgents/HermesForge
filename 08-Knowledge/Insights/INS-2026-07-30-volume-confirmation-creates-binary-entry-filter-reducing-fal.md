@@ -34,3 +34,8 @@ A trader should withhold entry on any upside breakout that occurs on below-avera
 
 ## Related Notes
 - [[INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea|Volume Confirmation as Binary Entry Gate Reducing False Breakout Risk]]
+
+## Related
+- [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for price-based filters that complement volume confirmation
+
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume confirmation rule
