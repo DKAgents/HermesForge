@@ -31,3 +31,8 @@ When a flag or pennant breaks out on below-average volume, immediately tighten t
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R052-filters-for-confirming-breakouts]] — See breakout confirmation filters for additional validation criteria.
+
+- [[N019-flag-and-pennant-measuring-technique]] — See N019-flag-and-pennant-measuring-technique for target projection to complement stop adjustment
