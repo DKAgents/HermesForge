@@ -31,3 +31,10 @@ A trader using the 4-9-18 triple crossover system (N037) should calculate the os
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related
+- [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for applying overbought/oversold thresholds to triple-crossover oscillator gaps
+
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — Use triple crossover gap as regime filter before applying Murphy's oscillator entry rules
+
+- [[N062-macd-divergence-analysis]] — Use triple MA gap oscillator to filter MACD divergences

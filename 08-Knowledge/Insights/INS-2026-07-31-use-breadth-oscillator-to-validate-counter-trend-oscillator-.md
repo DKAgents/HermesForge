@@ -31,3 +31,10 @@ Before acting on an oversold oscillator entry signal in an uptrend (per EN041), 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R145-combining-contrary-opinion-with-technical-tools]] — See R145-combining-contrary-opinion-with-technical-tools for another confirmation filter using sentiment extremes
+
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — See Note A for breadth confirmation of oscillator signals
+
+- [[EN086-counter-trend-oscillator-based-trading]] — Validate with breadth oscillator
