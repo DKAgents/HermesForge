@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-28T20:54:12Z
+updated: 2026-08-29T00:57:10Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 160 |
-| Connections created | 2 | 72 |
-| Review queue | 41 | 41 |
-| Avg score | 3.2 | — |
+| Notes examined | 5 | 165 |
+| Connections created | 5 | 77 |
+| Review queue | 42 | 42 |
+| Avg score | 2.9 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3727
+- Total wikilinks in vault: ~3732
 - Total notes: 1964
-- Avg degree per note: 1.898
+- Avg degree per note: 1.9
 - Notes with links: 721 (36.8%)
 - Orphan notes (no links): 1242 (63.2%)
 
@@ -28,13 +28,16 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-28T20:54:12Z)
-- **08-Knowledge/Insights/INS-2026-07-30-triple-crossover-vs-macd-oscillator-regime-dependent-signal-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N065-macd-indicator-construction.md** (score 4.0): Connecting the MACD construction note to the regime-dependent triple crossover insight shows exactly how the oscillator principle (MA difference) is applied to a different MA system, making the method concrete and actionable.
-- **08-Knowledge/Insights/INS-2026-07-30-triple-crossover-vs-macd-oscillator-regime-dependent-signal-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN027-5-and-20-day-moving-average-crossover.md** (score 4.0): Note A proposes using oscillator compression to detect when a triple crossover system is in ranging vs. trending regimes; Note B provides a classic 5/20 double crossover example that could serve as a simpler testbed for validating this regime-detection concept before applying it to the more complex 4-9-18 system.
+## Recent Discoveries (last run: 2026-08-29T00:57:10Z)
+- **08-Knowledge/Insights/INS-2026-07-30-use-breadth-oscillator-to-validate-counter-trend-oscillator-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN086-counter-trend-oscillator-based-trading.md** (score 5.0): Note A proposes a specific filter (McClellan Oscillator) to improve the reliability of counter-trend oscillator signals, directly addressing the false-signal weakness of the basic rule described in Note B.
+- **08-Knowledge/Insights/INS-2026-07-30-use-breadth-oscillator-to-validate-counter-trend-oscillator-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R145-combining-contrary-opinion-with-technical-tools.md** (score 4.0): Note A proposes using a breadth oscillator to validate counter-trend signals; Note B adds the critical condition that oscillator divergences are most useful specifically when sentiment is at extremes—giving a precise timing filter for when the breadth-based validation matters most.
+- **08-Knowledge/Insights/INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R082-breakouts-must-be-accompanied-by-heavy-volume.md** (score 5.0): Note A transforms the general volume rule from Note B into a specific binary entry gate, making the rule actionable as a false-breakout filter.
+- **08-Knowledge/Insights/INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R052-filters-for-confirming-breakouts.md** (score 4.0): Note A defines a binary volume-based entry gate for breakouts, while Note B provides additional non-volume filters (close confirmation, percentage penetration, two-day rule). Linking them creates a multi-factor confirmation framework where volume serves as the primary gate and Murphy's filters act as secondary conditions.
+- **08-Knowledge/Insights/INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R002-dow-averages-must-confirm-each-other.md** (score 4.0): Both notes describe confirmation rules as filters against false signals in technical analysis: volume confirmation for breakouts and Dow's inter-index confirmation. Linking them cross-references the broader concept of confirmation.
 
 ## Reflection Notes
-- Run 28: Created 6 connections from 5 notes. Avg score: 3.6.
 - Run 29: Created 5 connections from 5 notes. Avg score: 3.2.
 - Run 30: Created 3 connections from 5 notes. Avg score: 2.6.
 - Run 31: Created 2 connections from 5 notes. Avg score: 3.0.
 - Run 32: Created 2 connections from 5 notes. Avg score: 3.2.
+- Run 33: Created 5 connections from 5 notes. Avg score: 2.9.

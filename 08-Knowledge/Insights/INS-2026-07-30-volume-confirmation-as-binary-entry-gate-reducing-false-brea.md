@@ -31,3 +31,10 @@ A trader should require above-average volume at the exact candle of pattern comp
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[R002-dow-averages-must-confirm-each-other]] — Confirmation across indices in Dow Theory
+
+- [[R052-filters-for-confirming-breakouts]] — See Murphy's additional breakout filters for layered confirmation beyond volume
+
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume rule
