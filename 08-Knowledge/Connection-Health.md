@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-29T09:02:48Z
+updated: 2026-08-29T13:06:37Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 175 |
-| Connections created | 3 | 83 |
-| Review queue | 44 | 44 |
+| Notes examined | 5 | 180 |
+| Connections created | 4 | 87 |
+| Review queue | 45 | 45 |
 | Avg score | 2.7 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~3773
+- Total wikilinks in vault: ~3777
 - Total notes: 1977
-- Avg degree per note: 1.908
+- Avg degree per note: 1.91
 - Notes with links: 733 (37.1%)
 - Orphan notes (no links): 1243 (62.9%)
 
@@ -28,14 +28,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 22 notes, avg degree 0.05
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-29T09:02:48Z)
-- **08-Knowledge/Insights/INS-2026-07-30-volume-confirmed-breakout-filter-with-stop-placement-logic.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N018-head-and-shoulders-bottom-volume-sequence.md** (score 4.0): Note B provides a classic pattern example that embodies the volume-confirmed breakout principle in Note A, allowing the stop placement logic to be applied to head and shoulders bottom breakouts.
-- **08-Knowledge/Insights/INS-2026-07-30-volume-divergence-in-flag-pennant-breakouts-signals-stop-adj.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N019-flag-and-pennant-measuring-technique.md** (score 4.0): Note A defines a volume-based stop adjustment rule for flag/pennant breakouts, while Note B provides the standard price target measuring technique. Linking them connects risk management with reward projection, forming a more complete trade plan for these patterns.
-- **08-Knowledge/Insights/INS-2026-07-30-volume-divergence-in-flag-pennant-breakouts-signals-stop-adj.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R052-filters-for-confirming-breakouts.md** (score 4.0): Note B provides additional breakout confirmation filters (close beyond peak, percentage, two-day rule) that can complement the volume-based stop adjustment rule in Note A, enhancing false-breakout detection.
+## Recent Discoveries (last run: 2026-08-29T13:06:37Z)
+- **08-Knowledge/Insights/INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N067-macd-histogram-as-early-warning-signal.md** (score 4.0): The MACD histogram on weekly charts can serve as an early warning for trend changes, providing a concrete method to define the weekly trend that R142 requires before daily entries.
+- **08-Knowledge/Insights/INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN023-trendline-break-confirmation-of-major-trend-change.md** (score 4.0): EN023 provides a third method (trendline breaks) for defining the weekly trend that R142 requires as a filter, complementing the 10/40-week MA and price channel methods already identified in Note A. This directly enriches the operational toolkit for the weekly trend confirmation rule.
+- **08-Knowledge/Insights/INS-2026-07-31-gap-resistance-confluence-determines-stop-distance-and-posit.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R227-support-and-resistance-for-entry-exit-and-stop-placement.md** (score 5.0): Note A refines the general stop-placement principle in Note B by specifying that gap-resistance confluence creates a higher-confidence level for setting stops and calculating position size, adding a concrete condition for improved risk management.
+- **08-Knowledge/Insights/INS-2026-07-31-gap-resistance-confluence-determines-stop-distance-and-posit.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C063-significance-of-penetration-for-role-reversal.md** (score 4.0): Note B adds the nuance that support/resistance role reversal requires a significant penetration, which directly impacts the validity of the resistance level used in Note A's confluence-based stop placement strategy.
 
 ## Reflection Notes
-- Run 31: Created 2 connections from 5 notes. Avg score: 3.0.
 - Run 32: Created 2 connections from 5 notes. Avg score: 3.2.
 - Run 33: Created 5 connections from 5 notes. Avg score: 2.9.
 - Run 34: Created 3 connections from 5 notes. Avg score: 3.6.
 - Run 35: Created 3 connections from 5 notes. Avg score: 2.7.
+- Run 36: Created 4 connections from 5 notes. Avg score: 2.7.

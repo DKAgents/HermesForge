@@ -35,3 +35,8 @@ In a downtrend, sell rallies that reach the convergence of a price gap's lower e
 ## Related Notes
 - [[C336-support-level|Support Level]]
 - [[C334-resistance-level|Resistance Level]]
+
+## Related
+- [[C063-significance-of-penetration-for-role-reversal]] — See C063 for the condition that role reversal requires significant penetration
+
+- [[R227-support-and-resistance-for-entry-exit-and-stop-placement]] — See general S/R stop placement rule for the foundational principle

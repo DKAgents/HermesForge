@@ -31,3 +31,8 @@ Before acting on a daily MACD or Stochastics crossover signal, a trader should c
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for trendline break method of weekly trend definition
+
+- [[N067-macd-histogram-as-early-warning-signal]] — Weekly MACD histogram as trend filter
