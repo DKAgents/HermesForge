@@ -31,3 +31,6 @@ A trader should only take daily MACD or Stochastics buy signals when price is ab
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — See Murphy's weekly trendline break rule for validating the layered confirmation approach

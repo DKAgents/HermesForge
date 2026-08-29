@@ -31,3 +31,10 @@ Before applying the 4-9-18 or any triple crossover system, traders should comput
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related
+- [[N047-commonly-used-moving-average-combinations]] — See N047 for the standard MA pairs (4-9, 9-18) that become oscillator traps in ranges
+
+- [[EN027-5-and-20-day-moving-average-crossover]] — See INS-2026-07-31-ma-crossover-systems-fail-in-ranging-markets-via-oscillator- for why this system whipsaws in ranges
+
+- [[EN028-10-and-50-day-moving-average-crossover]] — See EN028-10-and-50-day-moving-average-crossover as a canonical double-crossover system vulnerable to the ranging-market whipsaw problem
