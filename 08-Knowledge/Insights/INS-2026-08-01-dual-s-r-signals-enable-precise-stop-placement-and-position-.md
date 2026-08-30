@@ -34,3 +34,10 @@ On a short trade, identify the nearest overhead resistance level (role-reversed 
 
 ## Related Notes
 - [[C334-resistance-level|Resistance Level]]
+
+## Related
+- [[RG031-protective-stop-placement-as-an-art]] — See RG031-protective-stop-placement-as-an-art for the general principle behind precise stop placement
+
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Adjust S/R stops to avoid round number clusters per RG003
+
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for P&F stop placement method

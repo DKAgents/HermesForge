@@ -31,3 +31,10 @@ A trader should require both RSI (above 70 or below 30 per N165) and Stochastics
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — MACD divergence as additional oscillator filter
+
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082-filtered-candle-patterns-stochastics-d-application for Stochastics presignal area definition
+
+- [[C183-filtered-candle-patterns-concept]] — See C183-filtered-candle-patterns-concept for the foundational filtering concept
