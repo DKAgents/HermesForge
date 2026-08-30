@@ -26,6 +26,15 @@
       "p_value": 1.0,
       "hit_rate": 0,
       "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-08-30",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
     }
   ],
   "STR-I": [
@@ -54,6 +63,15 @@
       "sharpe_proxy": 1.097,
       "p_value": 0.015,
       "hit_rate": 0.492,
+      "verdict": "ROBUST EDGE"
+    },
+    {
+      "date": "2026-08-30",
+      "n_signals": 60,
+      "mean_r": 0.4839,
+      "sharpe_proxy": 1.085,
+      "p_value": 0.0153,
+      "hit_rate": 0.483,
       "verdict": "ROBUST EDGE"
     }
   ],
@@ -84,6 +102,15 @@
       "p_value": 0.5525,
       "hit_rate": 0.358,
       "verdict": "NO EDGE"
+    },
+    {
+      "date": "2026-08-30",
+      "n_signals": 386,
+      "mean_r": 0.0248,
+      "sharpe_proxy": 0.052,
+      "p_value": 0.7698,
+      "hit_rate": 0.35,
+      "verdict": "NO EDGE"
     }
   ],
   "STR-L": [
@@ -107,6 +134,15 @@
     },
     {
       "date": "2026-08-23",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-08-30",
       "n_signals": 0,
       "mean_r": 0,
       "sharpe_proxy": 0,

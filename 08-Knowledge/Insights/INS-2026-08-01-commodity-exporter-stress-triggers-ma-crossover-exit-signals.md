@@ -31,3 +31,6 @@ When commodity prices plunge, place sell-stop alerts on commodity-exporter equit
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[E020-double-crossover-reduces-whipsaws-vs-single-average]] — Double crossover reduces whipsaws vs single MA
