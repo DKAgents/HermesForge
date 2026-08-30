@@ -31,3 +31,6 @@ Before entering any EN071 pivot buy signal, calculate the distance from the entr
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related
+- [[RG031-protective-stop-placement-as-an-art]] — See RG031 - Protective Stop Placement as an Art for balancing technical stops and money management
