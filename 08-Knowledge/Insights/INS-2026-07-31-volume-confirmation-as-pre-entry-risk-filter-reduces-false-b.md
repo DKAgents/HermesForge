@@ -31,3 +31,8 @@ A trader should require heavy volume at upside breakout completion before enteri
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[N028-bull-trap-false-upside-breakout]] — See bull trap pattern for volume confirmation context
+
+- [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for general breakout filters that include volume, which this two-stage filter refines.

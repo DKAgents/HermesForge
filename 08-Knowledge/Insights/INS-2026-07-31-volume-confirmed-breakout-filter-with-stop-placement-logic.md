@@ -31,3 +31,6 @@ A trader should only enter a long breakout when both a price filter (e.g., 2-day
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See foundational volume rule for breakouts
