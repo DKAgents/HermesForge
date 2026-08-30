@@ -31,3 +31,6 @@ A trader should require ADX to be rising before entering Keltner Channel breakou
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for complementary breakout confirmation techniques to combine with ADX regime filtering
