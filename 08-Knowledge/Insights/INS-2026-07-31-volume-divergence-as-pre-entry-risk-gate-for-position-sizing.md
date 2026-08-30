@@ -31,3 +31,8 @@ A trader should require measurable above-average volume at breakout before enter
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See Murphy's foundational breakout volume rule
+
+- [[N118-hpi-divergence-analysis-warning-of-trend-change]] — See HPI divergence for another pre-price warning signal

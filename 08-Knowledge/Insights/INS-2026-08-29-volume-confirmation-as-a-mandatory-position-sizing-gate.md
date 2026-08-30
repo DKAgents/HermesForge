@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "N013-volume-as-a-filter-for-false-breakouts", "C324-confirmation"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume confirmation as a mandatory position sizing gate
 
 ## Discovery Summary
