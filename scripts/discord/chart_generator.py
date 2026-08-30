@@ -81,17 +81,13 @@ def _load_intraday_ohlcv(ticker: str, asset_class: str, interval: str = "5m") ->
     """
     lookback = LOOKBACK_BARS + 200  # enough for indicator computation + display window
 
-    if asset_class == "crypto":
-        from fetch_intraday_crypto import get_intraday_candles
-        df = get_intraday_candles(ticker, interval, lookback_bars=lookback)
-    else:
-        from fetch_intraday_stocks import get_intraday_bars
-        df = get_intraday_bars(ticker, interval, lookback_bars=lookback)
+    from intraday_provider import get_intraday_candles
+    df = get_intraday_candles(ticker, interval, asset_class=asset_class, lookback_bars=lookback)
 
     if df is None or len(df) == 0:
         raise FileNotFoundError(
             f"No intraday data for {ticker} ({asset_class}, {interval}). "
-            f"Run fetch_intraday_{'crypto' if asset_class == 'crypto' else 'stocks'} first."
+            f"Run intraday data fetch first."
         )
 
     df = df.copy()

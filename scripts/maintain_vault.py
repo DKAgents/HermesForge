@@ -386,6 +386,23 @@ def main():
     log_path, _ = write_run_log(summary, args.dry_run)
     print(f"\n  Log written: {log_path}")
 
+    # Purge old cron output (14-day retention) — added 2026-08-30
+    cron_out = Path.home() / ".hermes" / "cron" / "output"
+    if cron_out.exists():
+        cutoff_ts = time.time() - (14 * 86400)
+        cron_purge = 0
+        for f in cron_out.rglob("*"):
+            if f.is_file():
+                try:
+                    if f.stat().st_mtime < cutoff_ts:
+                        f.unlink()
+                        cron_purge += 1
+                except OSError:
+                    pass
+        if cron_purge:
+            summary['cron_output_purged'] = cron_purge
+            print(f"  🧹 Purged {cron_purge} stale cron output file(s) (> 14 days)")
+
     if args.report:
         Path(args.report).write_text(json.dumps(summary, indent=2))
 

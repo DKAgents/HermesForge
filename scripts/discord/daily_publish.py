@@ -64,6 +64,23 @@ SCANNER_TO_NOTE_ID = {
 }
 
 CHART_OUTPUT_DIR = pathlib.Path.home() / ".hermes" / "signal_charts"
+CHART_RETENTION_HOURS = 48  # Charts are ephemeral — posted to Discord, not reused
+
+
+def purge_old_charts(retention_hours: int = CHART_RETENTION_HOURS) -> int:
+    """Remove chart PNGs older than retention_hours. Returns count purged."""
+    if not CHART_OUTPUT_DIR.exists():
+        return 0
+    cutoff = __import__('time').time() - (retention_hours * 3600)
+    purged = 0
+    for f in CHART_OUTPUT_DIR.glob("*.png"):
+        try:
+            if f.stat().st_mtime < cutoff:
+                f.unlink()
+                purged += 1
+        except OSError:
+            pass
+    return purged
 
 
 def _parse_frontmatter(text: str) -> dict:
@@ -267,6 +284,12 @@ def main():
     args = ap.parse_args()
 
     summary = run_pipeline(dry_run=args.dry_run)
+
+    # Purge old charts (retention = 48 hours)
+    purged = purge_old_charts()
+    if purged > 0:
+        print(f"  🧹 Purged {purged} old chart(s) (> {CHART_RETENTION_HOURS}h)")
+        summary["charts_purged"] = purged
 
     print(f"\n{'='*60}")
     print(f"SUMMARY: {summary['signals_found']} signals found, "

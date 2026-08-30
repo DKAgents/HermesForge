@@ -40,8 +40,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
 from detect_liquidity_sweeps import (
     scan_symbol_for_sweeps, SweepEvent,
 )
-from fetch_intraday_crypto import get_intraday_candles
-from fetch_intraday_stocks import get_intraday_bars
+from intraday_provider import get_intraday_candles
 
 import trade_log
 import position_sizing
@@ -447,10 +446,7 @@ def monitor_exits():
         
         # Get current price
         try:
-            if asset_class == "crypto":
-                df = get_intraday_candles(ticker, "5m", lookback_bars=5)
-            else:
-                df = get_intraday_bars(ticker, "5m", lookback_bars=5)
+            df = get_intraday_candles(ticker, "5m", asset_class=asset_class, lookback_bars=5)
             
             if len(df) == 0:
                 continue

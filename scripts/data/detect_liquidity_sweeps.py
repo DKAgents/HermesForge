@@ -488,19 +488,32 @@ def detect_sweep_at_level(
                     target_price = entry_price + (risk * 3.0)
                     rr = 3.0
                     
-                    # Quality score (recalibrated US-107 v2 based on 826-trade deep backtest)
+                    # Quality score v3 (2026-08-30 — reweighted from 14-day walk-forward)
+                    # v2 was NOT predictive: winners 58.3 vs losers 59.3 quality.
+                    # But sub-signals ARE predictive:
+                    #   wick_ratio: winners 2.95, losers 11.35 (+275% worse)
+                    #   volume_surge: winners 2.64x, losers 1.97x (+34% better)
+                    #   level_type: swing_high(+0.91R), PDH(+0.91R) >> PDL(+0.59R)
+                    # Fix: wick now PEAKS at 2-4x, penalizes >6x. Vol weight increased.
+                    # Level scores rebased on actual win rates from 1900+ paper trades.
                     LEVEL_SCORES = {
-                        "PDL": 40, "PDH": 35, "round_number": 30,
-                        "session_high": 20, "session_low": 20, "equal_highs": 20,
-                        "swing_high": 15, "swing_low": 15, "equal_lows": 10,
-                        "PWH": 35, "PWL": 40,
+                        "PDH": 45, "swing_high": 40, "PWH": 38, "PWL": 35,
+                        "round_number": 30, "equal_highs": 25, "swing_low": 25,
+                        "session_high": 20, "session_low": 20, "PDL": 20, "equal_lows": 15,
                     }
                     quality = LEVEL_SCORES.get(level.level_type, 15)
-                    quality += 15 if confirmation == "confirmed" else 5
-                    quality += min(10, penetration_atr * 10)
-                    quality += min(10, (vol_surge - 1) * 15) if vol_surge > 1 else 0
-                    quality += min(10, wick_ratio * 5)
-                    quality = min(100, int(quality))
+                    quality += 15 if confirmation == "confirmed" else 5  # Confirmation
+                    quality += min(10, penetration_atr * 10)  # Penetration depth
+                    quality += min(12, int((vol_surge - 1) * 18)) if vol_surge > 1 else 0  # Volume surge (increased)
+                    # Wick ratio: peak at 2.0-4.0 (clean reversals), penalty >6.0 (false sweeps)
+                    if wick_ratio <= 4.0:
+                        wick_score = min(10, max(0, int((wick_ratio - 0.5) * 3)))
+                    elif wick_ratio <= 6.0:
+                        wick_score = max(0, 10 - int((wick_ratio - 4.0) * 3))
+                    else:
+                        wick_score = -10  # Heavy penalty — extreme wicks = false sweeps
+                    quality += wick_score
+                    quality = min(100, max(0, int(quality)))
                     
                     return SweepEvent(
                         symbol=symbol,
@@ -587,21 +600,26 @@ def detect_sweep_at_level(
                     target_price = entry_price - (risk * 3.0)
                     rr = 3.0
                     
-                    # Quality score (recalibrated US-107 v2 based on 826-trade deep backtest)
-                    # Data-driven weights: level type is strongest predictor (40pts),
-                    # direction bonus (bearish outperforms), confirmation, penetration, volume, wick
+                    # Quality score v3 (2026-08-30 — reweighted from 14-day walk-forward). Same formula as bullish path.
+                    # Data-driven weights: level type is strongest predictor (45pts for PDH),
+                    # wick ratio penalty for false sweeps, volume surge bonus for real reversals
                     LEVEL_SCORES = {
-                        "PDL": 40, "PDH": 35, "round_number": 30,
-                        "session_high": 20, "session_low": 20, "equal_highs": 20,
-                        "swing_high": 15, "swing_low": 15, "equal_lows": 10,
-                        "PWH": 35, "PWL": 40,
+                        "PDH": 45, "swing_high": 40, "PWH": 38, "PWL": 35,
+                        "round_number": 30, "equal_highs": 25, "swing_low": 25,
+                        "session_high": 20, "session_low": 20, "PDL": 20, "equal_lows": 15,
                     }
                     quality = LEVEL_SCORES.get(level.level_type, 15)
                     quality += 15 if confirmation == "confirmed" else 5  # Confirmation
                     quality += min(10, penetration_atr * 10)  # Penetration depth
-                    quality += min(10, (vol_surge - 1) * 15) if vol_surge > 1 else 0  # Volume
-                    quality += min(10, wick_ratio * 5)  # Wick quality (reduced weight)
-                    quality = min(100, int(quality))
+                    quality += min(12, int((vol_surge - 1) * 18)) if vol_surge > 1 else 0  # Volume surge
+                    if wick_ratio <= 4.0:
+                        wick_score = min(10, max(0, int((wick_ratio - 0.5) * 3)))
+                    elif wick_ratio <= 6.0:
+                        wick_score = max(0, 10 - int((wick_ratio - 4.0) * 3))
+                    else:
+                        wick_score = -10
+                    quality += wick_score
+                    quality = min(100, max(0, int(quality)))
                     
                     return SweepEvent(
                         symbol=symbol,
