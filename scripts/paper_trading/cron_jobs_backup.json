@@ -910,7 +910,57 @@
       },
       "enabled_toolsets": null,
       "workdir": null
+    },
+    {
+      "id": "027a8460e1e7",
+      "name": "Cron Watchdog [T3]",
+      "prompt": "[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to the user — do NOT use send_message or try to deliver the output yourself. Just produce your report/output as your final response and the system handles the rest. SILENT: If there is genuinely nothing new to report, respond with exactly \"[SILENT]\" (nothing else) to suppress delivery. Never combine [SILENT] with content — either report your findings normally, or say [SILENT] and nothing more.]\n\nYou are the HermesForge Cron Watchdog. Your job: detect failing or stale cron jobs before they silently break.\n\n## Check 1: job health (read jobs.json)\n```\ncat /root/.hermes/cron/jobs.json\n```\nParse as JSON. For each active job, check:\n- last_status: if not \"ok\" and not null → flag\n- last_run_at: if more than 2x the schedule interval has passed since last run → flag\n- For no_agent scripts: if last_run_at is older than 24h → flag\n\n## Check 2: output freshness\nCheck /root/.hermes/cron/output/ for each job_id. If the latest output file is older than the expected cadence, flag.\n\n## Check 3: STR-Q sweep specifically\nCheck if /root/.hermes/cron/output/b9fb0afb1e29/ has output files within the last 10 minutes. STR-Q runs every 5 minutes — if the most recent output is > 15 minutes old, something is wrong.\n\n## Report rules\n- If ALL checks pass: respond \"[SILENT]\" — nothing delivered.\n- If ANY check fails: post a concise alert listing:\n  - Which job(s) failed\n  - What the failure looks like (status, staleness, etc.)\n  - Recommended action\n- Keep the alert under 300 words. Be specific. Name the job ID and the failure mode.\n- Post via the delivery channel only (do not use send_message directly).",
+      "skills": [],
+      "skill": null,
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "openrouter",
+      "provider_snapshot": null,
+      "model_snapshot": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "interval",
+        "minutes": 30,
+        "display": "every 30m"
+      },
+      "schedule_display": "every 30m",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-08-31T04:21:02.265274+00:00",
+      "next_run_at": "2026-08-31T04:51:02.299951+00:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "failure_streak": 0,
+      "deliver": "discord:1532020053548208328",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520487239774113914",
+        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
+        "thread_id": "1520487239774113914",
+        "user_id": "1500551729735929866",
+        "scope_id": "1500553453628428361"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-08-31T04:20:11.894258+00:00"
+  "updated_at": "2026-08-31T04:21:12.683497+00:00"
 }
