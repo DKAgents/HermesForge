@@ -1,0 +1,2 @@
+ticker,date,direction,entry_price,stop_price,target_price,exit_price,exit_reason,r_multiple,bars_held,subperiod,strategy_id,rsi_entry,sma_pct
+OP,2026-03-11,long,0.12028,0.11321,0.12735,0.12821,target,1.1216,4,crypto_unlabeled,STR-OP-MR-CRYPTO-MEAN-REVERSION,31.44,-0.0134

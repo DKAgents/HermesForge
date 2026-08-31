@@ -1,11 +1,13 @@
 ---
-status: staged
+status: rejected
 source: strategy_regime
 edge_type: regime_matched_strategy
 composite_score: 66.8
 confidence: medium
 regime_fit: ['risk_on']
 created: 20260830
+processed: 20260831
+notes: REJECT — regime-specific position-sizing adjustment for STR-Q (+50% size in risk_on), not a new strategy. Should be handled via existing strategy tuning/risk module, not as a new edge candidate.
 ---
 
 # Edge Candidate: STR-Q-liquidity-sweep performs well in risk_on regime

@@ -1,11 +1,13 @@
 ---
-status: staged
+status: rejected
 source: correlation
 edge_type: low_correlation_regime
 composite_score: 73.1
 confidence: high
 regime_fit: ['risk_on', 'neutral']
 created: 20260830
+processed: 20260831
+notes: REJECT — regime observation (avg corr=0.22), not a codable strategy. No independent entry/exit rules — operational guidance to run existing stock-picking scanners. Removed from pipeline.
 ---
 
 # Edge Candidate: Diversified market: avg correlation 0.22 (stock-picking environment)

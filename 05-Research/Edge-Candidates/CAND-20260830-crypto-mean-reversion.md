@@ -1,11 +1,13 @@
 ---
-status: staged
+status: backtest_failed
 source: rotation
 edge_type: crypto_mean_reversion
 composite_score: 72.3
 confidence: medium
 regime_fit: ['neutral', 'risk_on']
 created: 20260830
+processed: 20260831
+notes: BACKTEST_FAILED — Phase 1A: 1 signal only, mean R=+1.122, p_value=1.0, sig/yr < 12 → KILL. OP daily data limited on Hyperliquid; RSI<35 + close-near-20MA condition extremely selective. Single-asset mean reversion lacks signal frequency to survive ADR-004 thresholds. Reconsider with broader crypto universe or higher timeframe.
 ---
 
 # Edge Candidate: OP down -20.3% in 7d but up 5.1% in 30d
