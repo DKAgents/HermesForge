@@ -685,15 +685,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 4401
+        "completed": 4402
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-15T21:34:16.777047+00:00",
-      "next_run_at": "2026-08-31T04:20:00+00:00",
-      "last_run_at": "2026-08-31T04:15:20.018501+00:00",
+      "next_run_at": "2026-08-31T04:25:00+00:00",
+      "last_run_at": "2026-08-31T04:20:11.531188+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -860,7 +860,57 @@
       "enabled_toolsets": null,
       "workdir": null,
       "attach_to_session": false
+    },
+    {
+      "id": "df2caa178eaa",
+      "name": "Daily Git Push to GitHub",
+      "prompt": "null",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "provider_snapshot": null,
+      "model_snapshot": null,
+      "base_url": null,
+      "script": "#!/bin/bash\n# Daily push: HermesForge repo → GitHub\n# Runs at 3am UTC daily (after vault maintenance at 2am, connection discovery at 4am)\ncd /root/HermesForge || exit 1\n\n# Only push if there are unpushed commits\nif git status -sb | grep -q 'ahead'; then\n    echo \"=== $(date -u +%Y-%m-%dT%H:%M:%SZ) Pushing HermesForge to GitHub ===\"\n    git push origin main 2>&1\n    echo \"Done.\"\nelse\n    echo \"=== $(date -u +%Y-%m-%dT%H:%M:%SZ) Nothing to push ===\"\nfi",
+      "no_agent": true,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "display": "every day at 3am"
+      },
+      "schedule_display": "every day at 3am",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-08-31T04:20:11.892133+00:00",
+      "next_run_at": "2026-09-01T03:00:00+00:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520487239774113914",
+        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
+        "thread_id": "1520487239774113914",
+        "user_id": "1500551729735929866",
+        "scope_id": "1500553453628428361"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-08-31T04:15:20.019316+00:00"
+  "updated_at": "2026-08-31T04:20:11.894258+00:00"
 }
