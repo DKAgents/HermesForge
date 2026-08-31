@@ -9,8 +9,10 @@ created: 20260830
 phase1a_result: mean_r=-0.275, p=0.4447, signals/yr=3.1, kill
 phase1a_date: 20260830
 phase1a_note: "Hypothesis rejected. GLD drops >-2.5% with SPY flat do NOT predict SPY weakness. Mean R is negative (-0.275) — SPY tends to recover after gold selloffs. Only 20 signals in 6.5 years. The 'canary in the coal mine' thesis is not supported by data."
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Gold Collapse — Pre-Risk-Off Leading Indicator for Equities
 
 ## Source

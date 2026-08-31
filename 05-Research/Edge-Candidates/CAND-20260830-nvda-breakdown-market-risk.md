@@ -9,8 +9,10 @@ created: 20260830
 phase1a_result: mean_r=-0.171, p=0.2167, signals/yr=9.6, kill
 phase1a_date: 20260830
 phase1a_note: "Hypothesis rejected. NVDA drops >-3.5% do NOT predict SPY weakness. Mean R is negative (-0.171) — SPY tends to recover after NVDA selloffs (dip-buying). 70 signals over 6.5 years. Market tends to buy the NVDA dip, not follow it lower."
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: NVDA -4.57% Breakdown — Top-Heavy Market Structure Risk
 
 ## Source

@@ -9,8 +9,10 @@ created: 20260830
 phase1a_result: mean_r=-0.493, p=0.0000, signals/yr=56.5, kill
 phase1a_date: 20260830
 phase1a_note: "Hypothesis (H2) rejected. BTC dominance extremes (proxied by BTC/ETH ratio > 90th percentile + BTC rally > 15% in 30d) do NOT predict BTC weakness. Mean R is strongly negative (-0.493, p=0.0) — the momentum continues. 106 signals suggest this is a robust anti-signal: when BTC is dominant, shorting it loses money. Trend continuation, not reversal. H1 (alt rotation) may still be worth testing separately."
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: BTC Dominance 59.5% — Cycle Inflection Point
 
 ## Source

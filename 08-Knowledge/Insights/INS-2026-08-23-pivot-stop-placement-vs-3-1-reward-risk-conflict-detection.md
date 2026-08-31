@@ -31,3 +31,6 @@ Before placing the EN071 pivot buy stop, calculate the distance to the mandatory
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-27-pivot-point-stop-distance-vs-risk-limits-resolution|Pivot Point Stop Distance vs. Risk Limits Resolution]]

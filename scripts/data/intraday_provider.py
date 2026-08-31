@@ -51,7 +51,9 @@ class IntradayProvider:
         # Fetch fresh
         if source == "hyperliquid":
             df = self._fetch_hyperliquid(ticker, interval, lookback_bars)
-        elif source in ("yfinance", "alpaca"):
+        elif source == "alpaca":
+            df = self._fetch_alpaca(ticker, interval, lookback_bars)
+        elif source == "yfinance":
             df = self._fetch_yfinance(ticker, interval, lookback_bars)
         else:
             return None
@@ -65,8 +67,8 @@ class IntradayProvider:
     def _resolve_source(self, asset_class: str) -> str:
         if asset_class == "crypto":
             return "hyperliquid"
-        # Alpaca takes priority if configured, else yfinance
-        if os.environ.get("ALPACA_API_KEY"):
+        # Alpaca if both key and secret are set, else yfinance
+        if os.environ.get("ALPACA_API_KEY") and os.environ.get("ALPACA_API_SECRET"):
             return "alpaca"
         return "yfinance"
 
@@ -180,6 +182,60 @@ class IntradayProvider:
 
             cols = ["timestamp", "open", "high", "low", "close", "volume"]
             df = df[[c for c in cols if c in df.columns]]
+            return df.tail(lookback_bars)
+        except Exception:
+            return None
+
+    def _fetch_alpaca(self, ticker: str, interval: str,
+                      lookback_bars: int) -> Optional[pd.DataFrame]:
+        """Fetch from Alpaca (requires ALPACA_API_KEY + ALPACA_API_SECRET)."""
+        import requests
+
+        api_key = os.environ.get("ALPACA_API_KEY", "")
+        api_secret = os.environ.get("ALPACA_API_SECRET", "")
+        if not api_key or not api_secret:
+            return None
+
+        headers = {"APCA-API-KEY-ID": api_key, "APCA-API-SECRET-KEY": api_secret}
+        timeframe_map = {
+            "1m": "1Min", "5m": "5Min", "15m": "15Min",
+            "30m": "30Min", "1h": "1Hour",
+        }
+        timeframe = timeframe_map.get(interval, "5Min")
+        interval_minutes = {"1m": 1, "5m": 5, "15m": 15, "30m": 30, "1h": 60}
+        mins = interval_minutes.get(interval, 5)
+
+        from datetime import timedelta
+        start = (datetime.now(timezone.utc) - timedelta(minutes=mins * lookback_bars * 1.2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        try:
+            r = requests.get(
+                f"https://data.alpaca.markets/v2/stocks/{ticker}/bars",
+                headers=headers,
+                params={"timeframe": timeframe, "start": start, "limit": min(lookback_bars, 10000)},
+                timeout=15,
+            )
+            r.raise_for_status()
+            data = r.json()
+
+            if "bars" not in data or not data["bars"]:
+                return None
+
+            rows = []
+            for bar in data["bars"]:
+                rows.append({
+                    "timestamp": pd.Timestamp(bar["t"], tz="UTC"),
+                    "open": float(bar["o"]),
+                    "high": float(bar["h"]),
+                    "low": float(bar["l"]),
+                    "close": float(bar["c"]),
+                    "volume": int(bar["v"]),
+                })
+
+            df = pd.DataFrame(rows)
+            if df.empty:
+                return None
+            df = df.sort_values("timestamp").drop_duplicates(subset="timestamp")
             return df.tail(lookback_bars)
         except Exception:
             return None
