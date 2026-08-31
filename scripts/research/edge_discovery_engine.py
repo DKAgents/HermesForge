@@ -42,6 +42,10 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))  # for timezone_utils
+
+# Pacific Time utility — needed by stage_top_edges()
+from timezone_utils import now_pt
 
 EDGE_CANDIDATES_DIR = REPO_ROOT / "05-Research" / "Edge-Candidates"
 
@@ -1074,7 +1078,7 @@ def scan_earnings_edges() -> list:
         return edges
 
     # Count high-volatility names
-    high_vol = [e for e in earnings if e.get("ticker") in HIGH_VOL_EARNINGS]
+    high_vol = [e for e in earnings if e.get("ticker") in _HIGH_VOL_EARNINGS]
     if len(high_vol) >= 3:
         tickers = [e["ticker"] for e in high_vol[:5]]
         edges.append({
