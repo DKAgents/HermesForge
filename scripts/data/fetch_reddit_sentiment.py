@@ -48,7 +48,13 @@ SUBREDDITS = [
     "StockMarket",
 ]
 
-REDDIT_HOT_URL = "https://www.reddit.com/r/{sub}/hot.json?limit=100"
+REDDIT_HOT_URL = "https://old.reddit.com/r/{sub}/hot.json?limit=100"
+# NOTE: Both www.reddit.com and old.reddit.com .json endpoints now require OAuth
+# as of Aug 2026. Without a REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET in .env,
+# requests return 403. The feed degrades gracefully (empty result dicts).
+# To restore: create a Reddit app at https://www.reddit.com/prefs/apps,
+# set REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET in .env, and switch
+# fetch_subreddit() to use OAuth bearer token flow.
 USER_AGENT = "HermesForge/1.0 research bot"
 REQUEST_TIMEOUT = 30
 REQUEST_DELAY = 1.5  # seconds between subreddit requests (be polite)

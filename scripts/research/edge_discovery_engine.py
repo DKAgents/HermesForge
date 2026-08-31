@@ -1017,6 +1017,143 @@ def scan_github_activity_edges() -> list:
     return edges
 
 
+def scan_onchain_edges() -> list:
+    """Scan on-chain metrics: BTC dominance, altcoin season, blockchain health."""
+    from fetch_crypto_onchain import get_crypto_onchain_summary
+
+    edges = []
+    onchain = _safe_call(get_crypto_onchain_summary)
+    if not onchain:
+        return edges
+
+    # BTC dominance extremes
+    btc_dom = onchain.get("btc_dominance", {})
+    dom_value = btc_dom.get("value", 50)
+    if dom_value > 65:
+        edges.append({
+            "source": "onchain",
+            "edge_type": "btc_dominance_high",
+            "description": f"BTC dominance at {dom_value:.0f}% — historically precedes altcoin rotation",
+            "signal": f"BTC.D = {dom_value:.0f}%, trend: {btc_dom.get('trend','unknown')}",
+            "hypothesis": "BTC dominance above 65% typically precedes capital rotation into altcoins. "
+                         "When BTC.D peaks, altcoins historically outperform over the next 4-8 weeks.",
+            "entry_rules": "Long lagging large-cap alts (ETH, BNB, SOL) with 0.5% risk each.",
+            "exit_rules": "Exit at +15% or when BTC.D falls below 55%.",
+            "score": _score_edge(signal_strength=min(dom_value/80, 1), confidence="medium",
+                                data_quality="daily", actionable=True, historical_precedent="known"),
+            "regime_fit": ["risk_on", "neutral"],
+        })
+
+    # Altcoin season check
+    alt = onchain.get("altcoin_season", {})
+    if alt.get("is_altseason") or alt.get("score", 0) > 75:
+        alts_above = alt.get("alts_above_btc", 0)
+        edges.append({
+            "source": "onchain",
+            "edge_type": "altcoin_season",
+            "description": f"Altcoin season: {alts_above}% of top alts outperforming BTC over 90 days",
+            "signal": f"Alt season score: {alt.get('score','?')}/100",
+            "hypothesis": "Altcoin season favors smaller-cap names. Momentum strategies outperform mean-reversion.",
+            "entry_rules": "Long top-50 winners on pullbacks. Momentum-first, not contrarian.",
+            "exit_rules": "Trailing stop at -8%. Exit when alt season score < 50.",
+            "score": _score_edge(signal_strength=alts_above/100, confidence="medium",
+                                data_quality="daily", actionable=True, historical_precedent="known"),
+            "regime_fit": ["risk_on"],
+        })
+
+    return edges
+
+
+def scan_earnings_edges() -> list:
+    """Scan upcoming earnings for event-driven edges."""
+    from fetch_earnings_calendar import get_earnings_this_week
+
+    edges = []
+    earnings = _safe_call(get_earnings_this_week)
+    if not earnings:
+        return edges
+
+    # Count high-volatility names
+    high_vol = [e for e in earnings if e.get("ticker") in HIGH_VOL_EARNINGS]
+    if len(high_vol) >= 3:
+        tickers = [e["ticker"] for e in high_vol[:5]]
+        edges.append({
+            "source": "earnings",
+            "edge_type": "earnings_cluster",
+            "description": f"{len(high_vol)} high-volatility stocks reporting this week: {', '.join(tickers[:5])}",
+            "signal": f"Earnings cluster: {len(high_vol)} names, peak dates: "
+                     f"{sorted(set(e.get('date','')[:10] for e in high_vol if e.get('date')))}",
+            "hypothesis": "Earnings events create volatility spikes. Pre-earnings IV expansion "
+                         "favors option sellers; post-earnings drift favors momentum.",
+            "entry_rules": "For long candidates: enter drift trades 1 day after earnings beat. "
+                          "For short: enter drift trades 1 day after earnings miss.",
+            "exit_rules": "Hold for 5 trading days or +5% whichever comes first.",
+            "score": _score_edge(signal_strength=min(len(high_vol)/10, 1),
+                                confidence="low", data_quality="daily",
+                                actionable=True, historical_precedent="known"),
+            "regime_fit": ["risk_on", "neutral", "caution"],
+        })
+
+    return edges
+
+
+def scan_intermarket_edges() -> list:
+    """Scan cross-asset relationships for regime signals."""
+    from fetch_intermarket import get_intermarket_summary
+
+    edges = []
+    im = _safe_call(get_intermarket_summary)
+    if not im:
+        return edges
+
+    vix_ts = im.get("vix_term_structure", {})
+    if vix_ts.get("backwardation"):
+        edges.append({
+            "source": "intermarket",
+            "edge_type": "vix_backwardation",
+            "description": "VIX term structure in backwardation — near-term risk premium elevated",
+            "signal": f"VIX={vix_ts.get('VIX','?')}, VIX3M={vix_ts.get('VIX3M','?')}, "
+                     f"spread={vix_ts.get('spread_3m','?')}",
+            "hypothesis": "VIX backwardation signals near-term stress. Historically precedes "
+                         "increased equity volatility. Reduce longs, tighten stops.",
+            "entry_rules": "Reduce position size to 0.5% risk. Tighten stops by 20%.",
+            "exit_rules": "Resume normal sizing when VIX returns to contango for 3+ days.",
+            "score": _score_edge(signal_strength=0.8, confidence="high",
+                                data_quality="daily", actionable=True,
+                                historical_precedent="known"),
+            "regime_fit": ["risk_off", "caution"],
+        })
+
+    # Dollar direction
+    dxy = im.get("dxy", {})
+    dxy_change = dxy.get("change_5d", 0)
+    if abs(dxy_change) > 2:
+        direction = "rising" if dxy_change > 0 else "falling"
+        edges.append({
+            "source": "intermarket",
+            "edge_type": "dollar_break",
+            "description": f"DXY {direction} {abs(dxy_change):.1f}% in 5 days — risk asset signal",
+            "signal": f"DXY={dxy.get('value','?')}, 5d change={dxy_change:+.1f}%",
+            "hypothesis": "Rapid DXY moves signal capital flows. Falling DXY = risk-on for crypto/EM. "
+                         "Rising DXY = risk-off, favors cash/short-duration.",
+            "entry_rules": "If DXY falling: long BTC/ETH with 1% risk. If rising: neutral.",
+            "exit_rules": "Exit when DXY 5d change reverts below 1%.",
+            "score": _score_edge(signal_strength=min(abs(dxy_change)/4, 1),
+                                confidence="medium", data_quality="daily",
+                                actionable=True, historical_precedent="known"),
+            "regime_fit": ["risk_on"] if dxy_change < 0 else ["risk_off"],
+        })
+
+    return edges
+
+
+_HIGH_VOL_EARNINGS = {
+    "NVDA", "AMD", "INTC", "AAPL", "MSFT", "GOOGL", "AMZN", "META",
+    "TSLA", "COIN", "MSTR", "PLTR", "CRM", "ADBE", "ORCL", "NFLX",
+    "BABA", "SQ", "UBER", "SNAP", "DKNG", "RBLX", "AFRM", "HOOD",
+}
+
+
 def _get_current_regime() -> str:
     """Get current overall regime for strategy-regime matching."""
     from fetch_macro import get_vix_signal
@@ -1062,6 +1199,9 @@ ALL_SCANNERS = {
     "strategy_regime": scan_strategy_regime_edges,
     "economic": scan_economic_event_edges,
     "github": scan_github_activity_edges,
+    "onchain": scan_onchain_edges,
+    "earnings": scan_earnings_edges,
+    "intermarket": scan_intermarket_edges,
 }
 
 

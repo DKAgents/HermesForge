@@ -375,8 +375,7 @@ def fetch_from_yfinance(tickers, timeout=20):
 def get_short_interest(tickers=None, force=False, use_cache=True):
     """
     Fetch short-interest data for `tickers` (defaults to the HermesForge
-    universe). Tries FINRA -> Nasdaq -> yfinance in order, falling back on
-    errors. Returns a dict:
+    universe). Uses yfinance (free, no key required). Returns a dict:
 
         {
             "as_of": "YYYY-MM-DD",
@@ -405,31 +404,14 @@ def get_short_interest(tickers=None, force=False, use_cache=True):
 
     sources_tried = []
 
-    # Source 1: FINRA
-    try:
-        recs = fetch_from_finra(tickers)
-        if recs:
-            result = _build_result(recs, tickers, "finra_api", "FINRA Reg SHO API")
-            _save_cache(result)
-            return result
-        sources_tried.append("finra_api: empty")
-    except Exception as e:
-        sources_tried.append(f"finra_api: {e!r}")
-        print(f"[short_interest] FINRA failed: {e!r}", file=sys.stderr)
+    # Source 1: FINRA — permanently disabled (endpoint returns 404 as of Aug 2026)
+    # Nasdaq and yfinance provide equivalent data without the timeout.
+    sources_tried.append("finra_api: skipped (endpoint offline)")
 
-    # Source 2: Nasdaq
-    try:
-        recs = fetch_from_nasdaq(tickers)
-        if recs:
-            result = _build_result(recs, tickers, "nasdaq_ajax", "Nasdaq AJAX")
-            _save_cache(result)
-            return result
-        sources_tried.append("nasdaq_ajax: empty")
-    except Exception as e:
-        sources_tried.append(f"nasdaq_ajax: {e!r}")
-        print(f"[short_interest] Nasdaq failed: {e!r}", file=sys.stderr)
+    # Source 2: Nasdaq — skipped (AJAX endpoint times out from VPS IPs as of Aug 2026)
+    sources_tried.append("nasdaq_ajax: skipped (endpoint times out)")
 
-    # Source 3: yfinance fallback
+    # Source 3: yfinance (primary — only working source as of Aug 2026)
     try:
         recs = fetch_from_yfinance(tickers)
         if recs:
