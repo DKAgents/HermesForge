@@ -31,3 +31,10 @@ On a flag or pennant breakout, enter only if accompanied by a clear volume surge
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid round numbers when placing midpoint stops
+
+- [[RG031-protective-stop-placement-as-an-art]] — Adjust midpoint stops for volatility (see RG031)
+
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See also advance stop placement in point and figure trading

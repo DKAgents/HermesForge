@@ -31,3 +31,8 @@ A trader should require both a closing price filter (R052: close beyond resistan
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[N043-flag-and-pennant-summary-characteristics]] — See N043-flag-and-pennant-summary-characteristics for volume signature patterns that complement breakout filter sequencing
+
+- [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018-head-and-shoulders-bottom-volume-sequence for the classic volume pattern underlying this filter.
