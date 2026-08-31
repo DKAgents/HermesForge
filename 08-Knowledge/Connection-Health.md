@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-08-30T21:29:22Z
+updated: 2026-08-31T01:32:26Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 220 |
-| Connections created | 1 | 111 |
-| Review queue | 55 | 55 |
-| Avg score | 2.7 | — |
+| Notes examined | 5 | 225 |
+| Connections created | 0 | 111 |
+| Review queue | 56 | 56 |
+| Avg score | 2.2 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~3849
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 25 notes, avg degree 0.04
 - `02-Backlog/Stories` — 66 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-08-30T21:29:22Z)
-- **08-Knowledge/Insights/INS-2026-08-01-pivot-stop-placement-vs-3-1-reward-risk-when-rules-conflict.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG031-protective-stop-placement-as-an-art.md** (score 4.0): Note B's principle that stop placement is an art balancing technical factors and money management directly addresses the conflict in Note A, where a rigid pivot stop clashes with risk constraints. Linking them helps the trader see this tension as a normal design challenge requiring judgment.
+## Recent Discoveries (last run: 2026-08-31T01:32:26Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 40: Created 2 connections from 5 notes. Avg score: 1.5.
