@@ -34,3 +34,8 @@ A trader should require explicit heavy-volume confirmation before entering any p
 
 ## Related Notes
 - [[INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea|Volume Confirmation as Binary Entry Gate Reducing False Breakout Risk]]
+
+## Related
+- [[R052-filters-for-confirming-breakouts]] — See traditional breakout confirmation filters for additional entry conditions
+
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational Murphy rule underlying this filter

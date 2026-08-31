@@ -31,3 +31,6 @@ When a secondary-trend pullback occurs within a primary uptrend and a price-base
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[EN086-counter-trend-oscillator-based-trading]] — See EN086-counter-trend-oscillator-based-trading for the base rule that this insight refines with breadth confirmation.
