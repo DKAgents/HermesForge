@@ -35,3 +35,10 @@ When price pulls back into the 33%-67% Fibonacci retracement zone, check ADX dir
 ## Related Notes
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]
+
+## Related
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — See EN041-oscillator-entry-strategy-in-trending-markets for the oscillator entry rules to apply when ADX is falling.
+
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for oscillator confirmation when ADX is falling at retracement zones
+
+- [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for oscillator mechanics underlying the ADX-falling regime preference

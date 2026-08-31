@@ -31,3 +31,6 @@ When a gap forms, immediately check volume: heavy volume on a gap following a co
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN008-volume-confirmation-at-pattern-completion]] — See EN008-volume-confirmation-at-pattern-completion for the foundational volume rule that underpins the gap-type chase/fade discriminator
