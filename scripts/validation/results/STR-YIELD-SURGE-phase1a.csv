@@ -1,0 +1,16 @@
+ticker,date,direction,entry_price,stop_price,target_price,exit_price,exit_reason,r_multiple,bars_held,strategy_id,subperiod,regime,entry_type
+QQQ,2024-10-07,short,477.767,492.2556,456.0341,493.0285,stop,-1.0533,5,STR-YIELD-SURGE,period3_current,yield_surge,yield_regime
+XLP,2024-10-07,long,76.954,75.4243,79.2485,76.6773,time,-0.1809,20,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+XLU,2024-10-07,long,37.7924,36.7708,39.3248,36.7267,stop,-1.0431,20,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+QQQ,2024-10-21,short,490.9673,503.6782,471.9008,508.9243,stop,-1.4127,13,STR-YIELD-SURGE,period3_current,yield_surge,yield_regime
+XLP,2024-10-21,long,77.8031,76.3329,80.0083,75.9045,stop,-1.2914,12,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+XLU,2024-10-21,long,38.8343,37.8006,40.3847,37.7163,stop,-1.0816,6,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+QQQ,2024-12-23,short,519.006,534.5853,495.6372,525.7161,time,-0.4307,20,STR-YIELD-SURGE,period3_current,yield_surge,yield_regime
+XLP,2024-12-23,long,75.8652,74.2252,78.3253,73.3851,stop,-1.5123,11,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+XLU,2024-12-23,long,36.4842,35.3776,38.144,38.3981,target,1.7296,17,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+QQQ,2025-01-02,short,506.4595,522.8383,481.8913,527.5822,stop,-1.2896,12,STR-YIELD-SURGE,period3_current,yield_surge,yield_regime
+XLP,2025-01-02,long,75.3365,73.7125,77.7726,73.3851,stop,-1.2016,5,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+XLU,2025-01-02,long,36.5849,35.6007,38.0612,38.3981,target,1.8423,11,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+QQQ,2026-03-20,short,580.6888,601.3086,549.7592,605.4247,stop,-1.1996,12,STR-YIELD-SURGE,period3_current,yield_surge,yield_regime
+XLP,2026-03-20,long,80.278,77.7437,84.0794,81.8223,time,0.6094,20,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive
+XLU,2026-03-20,long,44.0587,42.4176,46.5203,46.8508,target,1.7014,13,STR-YIELD-SURGE,period3_current,yield_surge,yield_defensive

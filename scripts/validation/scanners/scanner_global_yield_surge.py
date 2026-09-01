@@ -10,8 +10,8 @@ and defensive sectors (XLP, XLU) provide relative safety.
 
 Signal Rules:
   Regime trigger (daily, from cached TNX / VIXINDEX / DXY data):
-    1. TNX yield (US 10Y) risen >= YIELD_RISE_BPS over YIELD_LOOKBACK days
-    2. VIX rising: VIX change > VIX_RISE over same window (fear confirmation)
+    1. TNX yield (US 10Y) risen >= YIELD_RISE over YIELD_LOOKBACK days
+    2. VIX rising: VIX change > VIX_RISE_PCT over same window (fear confirmation)
     3. Optional: DXY > DXY_SMA (dollar strengthening confirms tightening)
 
   When regime active → SHORT QQQ (tech most exposed to rising yields):
@@ -33,9 +33,9 @@ from pathlib import Path
 STRATEGY_ID = "STR-YIELD-SURGE"
 
 # ── Parameters (module-level, monkey-patchable for walk-forward) ──────────────
-YIELD_LOOKBACK = 20           # Days over which to measure yield rise
-YIELD_RISE_BPS = 40.0         # 10Y yield must rise >= this many bps over lookback
-VIX_RISE_PCT = 5.0           # VIX must rise >= this % over same window (fear confirmation)
+YIELD_LOOKBACK = 15           # Days over which to measure yield rise (~2 weeks)
+YIELD_RISE = 0.35             # 10Y yield must rise >= this many pp over lookback (0.35 = 35 bps)
+VIX_RISE_PCT = 3.0           # VIX must rise >= this % over same window (fear confirmation)
 DXY_SMA_PERIOD = 20          # Optional: DXY > this SMA for tightening confirmation
 ATR_PERIOD = 14
 ATR_STOP_MULT = 2.0
@@ -94,12 +94,12 @@ def _load_regime() -> pd.Series:
     Build a date-indexed boolean Series: yield_surge_regime_active.
 
     Conditions:
-      1. TNX yield risen >= YIELD_RISE_BPS over YIELD_LOOKBACK days
+      1. TNX yield risen >= YIELD_RISE over YIELD_LOOKBACK days
       2. VIX risen >= VIX_RISE_PCT % over same window (fear confirmation)
       3. (Optional) DXY > 20-day SMA (dollar strength = tightening)
     """
     global _REGIME_SERIES, _REGIME_KEY
-    key = (YIELD_LOOKBACK, YIELD_RISE_BPS, VIX_RISE_PCT, DXY_SMA_PERIOD)
+    key = (YIELD_LOOKBACK, YIELD_RISE, VIX_RISE_PCT, DXY_SMA_PERIOD)
     if _REGIME_SERIES is not None and _REGIME_KEY == key:
         return _REGIME_SERIES
 
@@ -122,9 +122,9 @@ def _load_regime() -> pd.Series:
     vix = vix.reindex(common_idx).ffill()
     dxy = dxy.reindex(common_idx).ffill() if not dxy.empty else pd.Series(index=common_idx, dtype=float)
 
-    # Condition 1: TNX yield has risen >= YIELD_RISE_BPS over YIELD_LOOKBACK days
+    # Condition 1: TNX yield has risen >= YIELD_RISE over YIELD_LOOKBACK days
     tnx_change = tnx - tnx.shift(YIELD_LOOKBACK)
-    cond_yield_surge = tnx_change >= YIELD_RISE_BPS
+    cond_yield_surge = tnx_change >= YIELD_RISE
 
     # Condition 2: VIX fear confirmation (rising)
     vix_change = (vix - vix.shift(YIELD_LOOKBACK)) / vix.shift(YIELD_LOOKBACK) * 100
@@ -140,20 +140,29 @@ def _load_regime() -> pd.Series:
     regime = cond_yield_surge & cond_vix_fear & cond_dxy
     regime = regime.fillna(False)
 
+    # Filter to valid signal period (post 2019-04-01)
+    regime = regime[regime.index >= pd.Timestamp("2019-04-01")]
+
     _REGIME_SERIES = regime
     _REGIME_KEY = key
     return _REGIME_SERIES
 
 
-def _simulate_exit(closes, entry_idx, entry_price, stop_price, target_price, direction="long", max_bars=MAX_BARS_HELD):
-    """Simulate forward exit: stop, target, or time."""
+def _simulate_exit(closes: np.ndarray, entry_idx: int, entry_price: float,
+                   stop_price: float, target_price: float,
+                   direction: str = "long", max_bars: int = MAX_BARS_HELD):
+    """Simulate forward exit: stop, target, or time.
+    
+    closes: full array of close prices for the ticker.
+    entry_idx: index position in closes where entry occurs.
+    """
     n = len(closes)
     for offset in range(1, max_bars + 1):
         idx = entry_idx + offset
         if idx >= n:
-            last = min(entry_idx + offset - 1, n - 1)
-            return closes[last], "time", offset
-        c = closes[idx]
+            last = n - 1
+            return closes[last], "time", offset - 1
+        c = float(closes[idx])
         if direction == "long":
             if c >= target_price:
                 return c, "target", offset
@@ -165,7 +174,7 @@ def _simulate_exit(closes, entry_idx, entry_price, stop_price, target_price, dir
             if c >= stop_price:
                 return c, "stop", offset
     exit_idx = min(entry_idx + max_bars, n - 1)
-    return closes[exit_idx], "time", max_bars
+    return float(closes[exit_idx]), "time", max_bars
 
 
 def scan(data: dict) -> list:
@@ -181,18 +190,37 @@ def scan(data: dict) -> list:
     if regime.empty:
         return []
 
-    # Get all unique dates from the data dict
-    all_dates = set()
-    for df in data.values():
-        all_dates.update(df.index)
-    all_dates = sorted(all_dates)
+    # Pre-sort all dataframes by index and lowercase columns
+    clean_data = {}
+    for ticker, df in data.items():
+        d = df.copy()
+        d.columns = [c.lower() for c in d.columns]
+        d.sort_index(inplace=True)
+        clean_data[ticker] = d
 
+    # Get regime dates that are also in the data's date range
+    all_stock_dates = set()
+    for df in clean_data.values():
+        all_stock_dates.update(df.index)
+    all_stock_dates = sorted(all_stock_dates)
+
+    # Build a mapping from date -> array index for each ticker that has the date
+    # We need this so _simulate_exit can look forward from the entry position.
+    date_to_idx = {}
+    for ticker, df in clean_data.items():
+        date_to_idx[ticker] = {d: i for i, d in enumerate(df.index)}
+
+    min_start = max(ATR_PERIOD, YIELD_LOOKBACK) + 5
     signals = []
     last_signal_date = None
 
-    for date_idx, current_date in enumerate(all_dates):
-        # Check regime alignment
+    for date_idx, current_date in enumerate(all_stock_dates):
+        if date_idx < min_start:
+            continue
+
+        # Check regime on this date
         if current_date not in regime.index:
+            # Find nearest prior regime value
             prior = regime[regime.index <= current_date]
             if prior.empty:
                 continue
@@ -203,7 +231,7 @@ def scan(data: dict) -> list:
         if not regime_active:
             continue
 
-        # Cooldown: at least REENTRY_COOLDOWN bars between entry batches
+        # Cooldown
         if last_signal_date is not None:
             days_since = (pd.Timestamp(current_date) - pd.Timestamp(last_signal_date)).days
             if days_since < REENTRY_COOLDOWN:
@@ -211,20 +239,24 @@ def scan(data: dict) -> list:
 
         # --- SHORT signals ---
         for ticker in SHORT_TICKERS:
-            df = data.get(ticker)
-            if df is None or len(df) < ATR_PERIOD + 5:
+            df = clean_data.get(ticker)
+            if df is None or len(df) < min_start + 10:
                 continue
 
-            mask = df.index <= current_date
-            if mask.sum() < ATR_PERIOD + 5:
+            tix = date_to_idx.get(ticker)
+            if tix is None or current_date not in tix:
+                continue
+            entry_idx = tix[current_date]
+            if entry_idx < min_start:
                 continue
 
-            df_slice = df[mask]
-            entry_idx = len(df_slice) - 1
-            entry_price = float(df_slice["close"].iloc[-1])
+            entry_price = float(df["close"].iloc[entry_idx])
 
-            atr = _compute_atr(df_slice["high"], df_slice["low"], df_slice["close"])
-            atr_val = float(atr.iloc[-1])
+            # Compute ATR up to and including this bar
+            atr_series = _compute_atr(df["high"].iloc[:entry_idx + 1],
+                                      df["low"].iloc[:entry_idx + 1],
+                                      df["close"].iloc[:entry_idx + 1])
+            atr_val = float(atr_series.iloc[-1])
             if atr_val <= 0 or np.isnan(atr_val):
                 continue
 
@@ -235,9 +267,10 @@ def scan(data: dict) -> list:
                 continue
             target_price = entry_price - MIN_RR * risk
 
-            closes = df_slice["close"].values.astype(float)
+            closes = df["close"].values.astype(float)
             ep, er, bh = _simulate_exit(
-                closes, entry_idx, entry_price, stop_price, target_price, "short"
+                closes, entry_idx, entry_price, stop_price, target_price,
+                direction="short"
             )
             r_mult = (entry_price - ep) / risk
 
@@ -260,20 +293,23 @@ def scan(data: dict) -> list:
 
         # --- LONG (defensive) signals ---
         for ticker in LONG_TICKERS:
-            df = data.get(ticker)
-            if df is None or len(df) < ATR_PERIOD + 5:
+            df = clean_data.get(ticker)
+            if df is None or len(df) < min_start + 10:
                 continue
 
-            mask = df.index <= current_date
-            if mask.sum() < ATR_PERIOD + 5:
+            tix = date_to_idx.get(ticker)
+            if tix is None or current_date not in tix:
+                continue
+            entry_idx = tix[current_date]
+            if entry_idx < min_start:
                 continue
 
-            df_slice = df[mask]
-            entry_idx = len(df_slice) - 1
-            entry_price = float(df_slice["close"].iloc[-1])
+            entry_price = float(df["close"].iloc[entry_idx])
 
-            atr = _compute_atr(df_slice["high"], df_slice["low"], df_slice["close"])
-            atr_val = float(atr.iloc[-1])
+            atr_series = _compute_atr(df["high"].iloc[:entry_idx + 1],
+                                      df["low"].iloc[:entry_idx + 1],
+                                      df["close"].iloc[:entry_idx + 1])
+            atr_val = float(atr_series.iloc[-1])
             if atr_val <= 0 or np.isnan(atr_val):
                 continue
 
@@ -284,9 +320,10 @@ def scan(data: dict) -> list:
                 continue
             target_price = entry_price + MIN_RR * risk
 
-            closes = df_slice["close"].values.astype(float)
+            closes = df["close"].values.astype(float)
             ep, er, bh = _simulate_exit(
-                closes, entry_idx, entry_price, stop_price, target_price, "long"
+                closes, entry_idx, entry_price, stop_price, target_price,
+                direction="long"
             )
             r_mult = (ep - entry_price) / risk
 
@@ -341,7 +378,11 @@ if __name__ == "__main__":
     print(f"  Signals: {len(signals)} ({len(long_sigs)} long, {len(short_sigs)} short)")
     print(f"  Avg R: {avg_r:+.4f}")
     print(f"  Win rate: {win_rate:.1%}")
-    print(f"  Avg win: {np.mean([s['r_multiple'] for s in wins]):+.4f}" if wins else "")
+    if wins:
+        print(f"  Avg win: {np.mean([s['r_multiple'] for s in wins]):+.4f}")
+    if len(r_values) - len(wins) > 0:
+        losses = [s for s in signals if s["r_multiple"] <= 0]
+        print(f"  Avg loss: {np.mean([s['r_multiple'] for s in losses]):+.4f}")
 
     by_year = {}
     for s in signals:
