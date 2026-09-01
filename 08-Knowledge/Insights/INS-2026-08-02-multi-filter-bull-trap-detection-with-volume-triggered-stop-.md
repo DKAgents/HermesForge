@@ -31,3 +31,10 @@ A trader should wait for a suspected breakout to fail the R052 structural filter
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid obvious round numbers when placing volume-triggered stops
+
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the volume validation rule that bull traps violate
+
+- [[RG035-combining-technical-factors-with-money-management-for-stop-p]] — Ensure volume-triggered stops align with technical levels per RG035
