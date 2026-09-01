@@ -21,7 +21,7 @@ Usage:
     python3 maintain_vault.py --report /tmp/r.json  # write JSON report to path
 """
 
-import sys, os, json, argparse, subprocess, hashlib
+import sys, os, json, argparse, subprocess, hashlib, time
 from pathlib import Path
 from datetime import datetime, timezone
 

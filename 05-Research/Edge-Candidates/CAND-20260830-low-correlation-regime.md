@@ -8,8 +8,10 @@ regime_fit: ['risk_on', 'neutral']
 created: 20260830
 processed: 20260831
 notes: REJECT — regime observation (avg corr=0.22), not a codable strategy. No independent entry/exit rules — operational guidance to run existing stock-picking scanners. Removed from pipeline.
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Diversified market: avg correlation 0.22 (stock-picking environment)
 
 ## Source

@@ -8,8 +8,10 @@ regime_fit: ['risk_on']
 created: 20260830
 processed: 20260831
 notes: REJECT — regime-specific position-sizing adjustment for STR-Q (+50% size in risk_on), not a new strategy. Should be handled via existing strategy tuning/risk module, not as a new edge candidate.
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: STR-Q-liquidity-sweep performs well in risk_on regime
 
 ## Source
