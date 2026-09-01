@@ -31,3 +31,8 @@ If a flag or pennant breakout occurs without the required volume surge (R082 vio
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See also stop placement rule for round numbers
+
+- [[RG023-pf-trailing-stop-adjustment]] — See RG023-pf-trailing-stop-adjustment for a P&F trailing stop method that could be applied when volume divergence flags a stop adjustment zone.

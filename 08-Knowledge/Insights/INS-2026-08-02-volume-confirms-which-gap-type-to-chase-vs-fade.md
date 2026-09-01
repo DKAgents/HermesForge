@@ -35,3 +35,6 @@ When a gap forms, immediately check volume: a gap accompanied by a surge in volu
 ## Related Notes
 - [[N144-island-reversal-pattern|Island Reversal Pattern]]
 - [[N161-runaway-gaps|Runaway Gaps]]
+
+## Related
+- [[EN008-volume-confirmation-at-pattern-completion]] — See EN008-volume-confirmation-at-pattern-completion for the general volume confirmation principle underlying gap validation
