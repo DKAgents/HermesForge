@@ -3,7 +3,8 @@
 #
 # Uses CROSSPOST_WEBHOOK_{CHANNEL_ID} env vars to push a copy of the latest
 # message from each source channel to the corresponding follower channel.
-# Only crossposts messages posted by the bot in the last hour.
+# Only crossposts messages posted by the bot in the last 24 hours.
+# State file prevents re-crossposting the same message across runs.
 # Silent when nothing to do.
 #
 # Usage: crosspost_webhook_all.sh [--dry-run]
@@ -16,6 +17,8 @@ if [ "${1:-}" = "--dry-run" ]; then
     DRY_RUN=true
     shift
 fi
+
+STATE_FILE="/root/.hermes/crosspost_state.json"
 
 # All 8 source channels that should be crossposted
 CHANNELS=(
@@ -44,12 +47,11 @@ for CHANNEL_ID in "${CHANNELS[@]}"; do
     WEBHOOK_URL="${!WEBHOOK_VAR:-}"
     
     if [ -z "$WEBHOOK_URL" ]; then
-        continue  # No webhook configured for this channel — skip silently
+        continue  # No webhook configured
     fi
     
     # Fetch the latest bot messages from the source channel (last 24h)
     ONE_DAY_AGO=$(date -u -d '24 hours ago' +%s 2>/dev/null || python3 -c "import time; print(int(time.time() - 86400))")
-    export ONE_DAY_AGO
     
     MESSAGES=$(curl -s -H "Authorization: Bot ${TOKEN}" \
         "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=5" 2>/dev/null)
@@ -59,27 +61,38 @@ for CHANNEL_ID in "${CHANNELS[@]}"; do
     fi
     
     # Find the most recent non-empty bot message within the last 24h
-    # that hasn't been crossposted yet
-    LATEST_MSG=$(echo "$MESSAGES" | python3 -c "
+    # that hasn't been crossposted yet (not in state file)
+    LATEST_MSG=$(python3 -c "
 import json, sys, os
-data = json.load(sys.stdin)
+
+state = {}
+try:
+    with open('$STATE_FILE') as f:
+        state = json.load(f)
+except:
+    pass
+
+data = json.loads(sys.stdin.read())
 if not isinstance(data, list):
+    print()
     sys.exit(0)
-cutoff = int(os.environ.get('ONE_DAY_AGO', 0))
+
+cutoff = int($ONE_DAY_AGO)
 for msg in data:
-    ts = int(msg.get('id', '0')[:10]) if msg.get('id') else 0
-    # Snowflake ID auto-converts to timestamp: (id >> 22) + 1420070400000
     timestamp = (int(msg['id']) >> 22) + 1420070400000
     timestamp_s = int(timestamp / 1000)
     if timestamp_s < cutoff:
+        continue
+    msg_id = msg['id']
+    if msg_id in state:
         continue
     flags = msg.get('flags', 0)
     already = bool(flags & 1)
     content = msg.get('content', '').strip() or (msg.get('embeds') and msg['embeds'])
     if content and not already:
-        print(msg['id'])
+        print(msg_id)
         break
-" ONE_DAY_AGO="$ONE_DAY_AGO" 2>/dev/null)
+" <<< "$MESSAGES" 2>/dev/null)
     
     if [ -z "$LATEST_MSG" ]; then
         SKIPPED=$((SKIPPED + 1))
@@ -101,7 +114,6 @@ for msg in data:
     if msg.get('id') == target:
         content = msg.get('content', '')
         embeds = msg.get('embeds', [])
-        attachments = msg.get('attachments', [])
         result = {'content': content}
         if embeds:
             result['embeds'] = embeds
@@ -122,6 +134,23 @@ for msg in data:
     
     if echo "$RESULT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('id',''))" 2>/dev/null | grep -q .; then
         CROSSPOSTED=$((CROSSPOSTED + 1))
+        # Persist: add this message ID to the state file + prune entries older than 48h
+        python3 -c "
+import json
+state = {}
+try:
+    with open('$STATE_FILE') as f:
+        state = json.load(f)
+except:
+    pass
+state['$LATEST_MSG'] = True
+# Prune entries older than 48h (message ID encodes timestamp)
+now = (int('$LATEST_MSG') >> 22) + 1420070400000
+cutoff = now - (48 * 3600 * 1000)
+cleaned = {k: v for k, v in state.items() if (int(k) >> 22) + 1420070400000 > cutoff}
+with open('$STATE_FILE', 'w') as f:
+    json.dump(cleaned, f)
+" 2>/dev/null
     fi
     
     sleep 0.5  # Rate limit buffer
