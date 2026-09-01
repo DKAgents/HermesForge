@@ -47,9 +47,9 @@ for CHANNEL_ID in "${CHANNELS[@]}"; do
         continue  # No webhook configured for this channel — skip silently
     fi
     
-    # Fetch the latest bot messages from the source channel (last hour)
-    ONE_HOUR_AGO=$(date -u -d '1 hour ago' +%s 2>/dev/null || python3 -c "import time; print(int(time.time() - 3600))")
-    export ONE_HOUR_AGO
+    # Fetch the latest bot messages from the source channel (last 24h)
+    ONE_DAY_AGO=$(date -u -d '24 hours ago' +%s 2>/dev/null || python3 -c "import time; print(int(time.time() - 86400))")
+    export ONE_DAY_AGO
     
     MESSAGES=$(curl -s -H "Authorization: Bot ${TOKEN}" \
         "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=5" 2>/dev/null)
@@ -58,14 +58,14 @@ for CHANNEL_ID in "${CHANNELS[@]}"; do
         continue
     fi
     
-    # Find the most recent non-empty bot message within the last hour
+    # Find the most recent non-empty bot message within the last 24h
     # that hasn't been crossposted yet
     LATEST_MSG=$(echo "$MESSAGES" | python3 -c "
 import json, sys, os
 data = json.load(sys.stdin)
 if not isinstance(data, list):
     sys.exit(0)
-cutoff = int(os.environ.get('ONE_HOUR_AGO', 0))
+cutoff = int(os.environ.get('ONE_DAY_AGO', 0))
 for msg in data:
     ts = int(msg.get('id', '0')[:10]) if msg.get('id') else 0
     # Snowflake ID auto-converts to timestamp: (id >> 22) + 1420070400000
@@ -79,7 +79,7 @@ for msg in data:
     if content and not already:
         print(msg['id'])
         break
-" ONE_HOUR_AGO="$ONE_HOUR_AGO" 2>/dev/null)
+" ONE_DAY_AGO="$ONE_DAY_AGO" 2>/dev/null)
     
     if [ -z "$LATEST_MSG" ]; then
         SKIPPED=$((SKIPPED + 1))
