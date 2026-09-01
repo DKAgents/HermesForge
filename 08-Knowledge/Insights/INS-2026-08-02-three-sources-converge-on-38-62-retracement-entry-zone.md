@@ -34,3 +34,6 @@ A trader should only initiate pullback entries in uptrends when price retraces i
 
 ## Related Notes
 - [[N084-key-fibonacci-ratios-618-1618-2618-382|Key Fibonacci Ratios: .618, 1.618, 2.618, .382]]
+
+## Related
+- [[R026-one-third-and-two-thirds-retracement-parameters]] — See Murphy's one-third to two-thirds retracement rule

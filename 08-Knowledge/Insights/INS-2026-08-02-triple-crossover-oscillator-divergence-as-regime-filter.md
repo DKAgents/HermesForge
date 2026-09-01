@@ -31,3 +31,6 @@ A trader using the 4-9-18 system (N037) should measure the differential oscillat
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for divergence confirmation rules that qualify oscillator compression regimes
