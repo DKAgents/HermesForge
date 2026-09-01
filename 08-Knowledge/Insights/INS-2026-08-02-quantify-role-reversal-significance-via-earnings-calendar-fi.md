@@ -31,3 +31,10 @@ Before entering any trade based on a support-to-resistance or resistance-to-supp
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[N007-weekly-reversal-pattern]] — See N007-weekly-reversal-pattern for timeframe-based significance assessment
+
+- [[N057-weekly-and-monthly-reversal-patterns]] — Filter long-term reversal signals with earnings calendar exclusion to reduce false penetrations
+
+- [[C063-significance-of-penetration-for-role-reversal]] — See C063 for the subjectivity problem this filter solves
