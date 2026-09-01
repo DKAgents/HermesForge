@@ -6,26 +6,21 @@ Edge candidate: CAND-20260901-hormuz-oil-shock
 Source hypothesis: Geopolitical oil supply shocks through the Strait of Hormuz
 create a predictable cross-asset pattern: Energy stocks (XLE, XOM, CVX) benefit
 from the risk premium expansion, while consumer discretionary (XLY) suffers from
-higher gasoline prices → lower disposable income. The effect is amplified when
-rising bond yields (CAND-20260901-global-bond-yield-surge) create a stagflationary
-backdrop.
+higher gasoline prices → lower disposable income.
 
 Signal Rules:
-  Regime trigger (daily, from CL crude oil futures in data dict):
-    1. CL price spikes >= SPIKE_PCT over SPIKE_LOOKBACK days (default: 5% in 2 days)
-    2. Optional: XLE volume > 1.5x 20d average (institutional rotation into energy)
-    3. Optional: VIX rising (fear entering market — confirms shock is being taken seriously)
+  Regime trigger (daily, from CL crude oil futures):
+    1. CL price spikes >= SPIKE_PCT over SPIKE_LOOKBACK days (default: 3.5% in 2 days)
+    2. Optional: VIX rising >= VIX_RISE_PCT (fear confirmation)
+    3. Optional: XLE volume > VOLUME_MULT × 20d average
 
   When regime active → Sector Rotation:
-    LONG: XLE (energy sector), XOM, CVX (major integrated producers)
-      - Entry at close on trigger bar
-      - ATR-based stop below entry
-      - Target: MIN_RR * risk
-      - Max hold: MAX_BARS_HELD (default 20 trading days ~ 1 month)
-
+    LONG: XLE, XOM, CVX (energy)
     SHORT: XLY (consumer discretionary)
-      - Airlines, restaurants, retailers suffer from higher gas prices
-      - Same entry/stop/target logic (inverted for short)
+      - Entry at close on trigger bar
+      - ATR-based stop
+      - Target: MIN_RR * risk
+      - Max hold: MAX_BARS_HELD (default 20 trading days)
 
 Dependencies: pandas, numpy. CL and sector ETFs from main data dict.
 """
@@ -38,9 +33,11 @@ STRATEGY_ID = "STR-OIL-SHOCK"
 
 # ── Parameters (module-level, monkey-patchable for walk-forward) ──────────────
 SPIKE_LOOKBACK = 2            # Days over which to measure oil spike
-SPIKE_PCT = 5.0              # CL must rise >= this % over lookback (e.g., 5% in 2 days)
-VOLUME_MULT = 1.5            # XLE volume must be > this x 20d average (confirmation)
-VIX_RISE_PCT = 3.0           # VIX must rise >= this % over lookback (fear confirmation)
+SPIKE_PCT = 3.5              # CL must rise >= this % over lookback (e.g., 3.5% in 2 days)
+USE_VIX_FILTER = False       # If True, require VIX rising as confirmation
+USE_VOLUME_FILTER = False    # If True, require XLE volume > 1.5x 20d avg
+VOLUME_MULT = 1.5            # XLE volume multiplier (used if USE_VOLUME_FILTER=True)
+VIX_RISE_PCT = 3.0           # VIX rise % threshold
 ATR_PERIOD = 14
 ATR_STOP_MULT = 2.0
 MIN_RR = 1.5
@@ -97,13 +94,11 @@ def _load_regime(data: dict) -> pd.Series:
     """
     Build a date-indexed boolean Series: oil_shock_regime_active.
 
-    Conditions:
-      1. CL crude has risen >= SPIKE_PCT % over SPIKE_LOOKBACK days
-      2. (Optional) XLE volume > VOLUME_MULT * 20d average
-      3. (Optional) VIX rising >= VIX_RISE_PCT % over lookback
+    Primary condition: CL crude has risen >= SPIKE_PCT % over SPIKE_LOOKBACK days.
+    Optional filters: VIX rising, XLE volume surge.
     """
     global _REGIME_SERIES, _REGIME_KEY
-    key = (SPIKE_LOOKBACK, SPIKE_PCT, VOLUME_MULT, VIX_RISE_PCT)
+    key = (SPIKE_LOOKBACK, SPIKE_PCT, USE_VIX_FILTER, USE_VOLUME_FILTER, VIX_RISE_PCT)
     if _REGIME_SERIES is not None and _REGIME_KEY == key:
         return _REGIME_SERIES
 
@@ -122,12 +117,14 @@ def _load_regime(data: dict) -> pd.Series:
         _REGIME_KEY = key
         return _REGIME_SERIES
 
-    # VIX for fear confirmation
-    vix = _load_series("VIXINDEX")
+    # Optional: VIX for fear confirmation
+    vix = _load_series("VIXINDEX") if USE_VIX_FILTER else pd.Series(dtype=float)
 
-    # XLE volume for institutional rotation confirmation
-    xle_vol = _load_series("XLE", col="volume") if "XLE" not in data else \
-        data["XLE"]["volume"] if "volume" in data["XLE"].columns else pd.Series(dtype=float)
+    # Optional: XLE volume for confirmation
+    xle_vol = None
+    if USE_VOLUME_FILTER:
+        xle_vol = _load_series("XLE", col="volume") if "XLE" not in data else \
+            data["XLE"]["volume"] if "volume" in data["XLE"].columns else pd.Series(dtype=float)
 
     # Align to CL index
     common_idx = cl.index
@@ -139,26 +136,22 @@ def _load_regime(data: dict) -> pd.Series:
     cl = cl.reindex(common_idx).ffill()
     if not vix.empty:
         vix = vix.reindex(common_idx).ffill()
-    else:
-        vix = pd.Series(index=common_idx, dtype=float)
     if xle_vol is not None and isinstance(xle_vol, pd.Series) and not xle_vol.empty:
         xle_vol = xle_vol.reindex(common_idx).ffill()
-    else:
-        xle_vol = pd.Series(index=common_idx, dtype=float)
 
     # Condition 1: CL spike
     cl_change = cl.pct_change(periods=SPIKE_LOOKBACK) * 100
     cond_cl_spike = cl_change >= SPIKE_PCT
 
-    # Condition 2: VIX fear confirmation
+    # Condition 2: VIX fear confirmation (only if filter enabled)
     cond_vix = pd.Series(True, index=common_idx)
-    if not vix.empty and vix.notna().sum() > SPIKE_LOOKBACK + 5:
+    if USE_VIX_FILTER and not vix.empty and vix.notna().sum() > SPIKE_LOOKBACK + 5:
         vix_change = vix.pct_change(periods=SPIKE_LOOKBACK) * 100
         cond_vix = vix_change >= VIX_RISE_PCT
 
-    # Condition 3: XLE volume confirmation
+    # Condition 3: XLE volume confirmation (only if filter enabled)
     cond_volume = pd.Series(True, index=common_idx)
-    if not xle_vol.empty and xle_vol.notna().sum() > 25:
+    if USE_VOLUME_FILTER and xle_vol is not None and isinstance(xle_vol, pd.Series) and not xle_vol.empty and xle_vol.notna().sum() > 25:
         vol_ma20 = xle_vol.rolling(20, min_periods=20).mean()
         cond_volume = (xle_vol > vol_ma20 * VOLUME_MULT) & vol_ma20.notna()
 
@@ -166,20 +159,29 @@ def _load_regime(data: dict) -> pd.Series:
     regime = cond_cl_spike & cond_vix & cond_volume
     regime = regime.fillna(False)
 
+    # Filter to valid signal period
+    regime = regime[regime.index >= pd.Timestamp("2019-04-01")]
+
     _REGIME_SERIES = regime
     _REGIME_KEY = key
     return _REGIME_SERIES
 
 
-def _simulate_exit(closes, entry_idx, entry_price, stop_price, target_price, direction="long", max_bars=MAX_BARS_HELD):
-    """Simulate forward exit: stop, target, or time."""
+def _simulate_exit(closes: np.ndarray, entry_idx: int, entry_price: float,
+                   stop_price: float, target_price: float,
+                   direction: str = "long", max_bars: int = MAX_BARS_HELD):
+    """Simulate forward exit: stop, target, or time.
+    
+    closes: full array of close prices for the ticker.
+    entry_idx: index position in closes where entry occurs.
+    """
     n = len(closes)
     for offset in range(1, max_bars + 1):
         idx = entry_idx + offset
         if idx >= n:
-            last = min(entry_idx + offset - 1, n - 1)
-            return closes[last], "time", offset
-        c = closes[idx]
+            last = n - 1
+            return closes[last], "time", offset - 1
+        c = float(closes[idx])
         if direction == "long":
             if c >= target_price:
                 return c, "target", offset
@@ -191,7 +193,7 @@ def _simulate_exit(closes, entry_idx, entry_price, stop_price, target_price, dir
             if c >= stop_price:
                 return c, "stop", offset
     exit_idx = min(entry_idx + max_bars, n - 1)
-    return closes[exit_idx], "time", max_bars
+    return float(closes[exit_idx]), "time", max_bars
 
 
 def scan(data: dict) -> list:
@@ -206,22 +208,33 @@ def scan(data: dict) -> list:
     if regime.empty:
         return []
 
-    # Get all unique dates from the data dict
-    all_dates = set()
-    for df in data.values():
-        all_dates.update(df.index)
-    all_dates = sorted(all_dates)
+    # Clean all data
+    clean_data = {}
+    for ticker, df in data.items():
+        d = df.copy()
+        d.columns = [c.lower() for c in d.columns]
+        d.sort_index(inplace=True)
+        clean_data[ticker] = d
 
+    # Build date-to-index mapping for each ticker
+    date_to_idx = {}
+    for ticker, df in clean_data.items():
+        date_to_idx[ticker] = {d: i for i, d in enumerate(df.index)}
+
+    # Get all stock dates for iteration
+    all_stock_dates = set()
+    for df in clean_data.values():
+        all_stock_dates.update(df.index)
+    all_stock_dates = sorted(all_stock_dates)
+
+    min_start = max(ATR_PERIOD, SPIKE_LOOKBACK) + 5
     signals = []
     last_signal_date = None
 
-    # Pre-compute ATR for CL for logging context (not used in signals)
-    # CL from data dict
-    cl_data = data.get("CL")
-    if cl_data is not None:
-        cl_close = cl_data["close"]
+    for date_idx, current_date in enumerate(all_stock_dates):
+        if date_idx < min_start:
+            continue
 
-    for date_idx, current_date in enumerate(all_dates):
         # Check regime alignment
         if current_date not in regime.index:
             prior = regime[regime.index <= current_date]
@@ -242,20 +255,23 @@ def scan(data: dict) -> list:
 
         # --- LONG signals: Energy sector ---
         for ticker in LONG_TICKERS:
-            df = data.get(ticker)
-            if df is None or len(df) < ATR_PERIOD + 5:
+            df = clean_data.get(ticker)
+            if df is None or len(df) < min_start + 10:
                 continue
 
-            mask = df.index <= current_date
-            if mask.sum() < ATR_PERIOD + 5:
+            tix = date_to_idx.get(ticker)
+            if tix is None or current_date not in tix:
+                continue
+            entry_idx = tix[current_date]
+            if entry_idx < min_start:
                 continue
 
-            df_slice = df[mask]
-            entry_idx = len(df_slice) - 1
-            entry_price = float(df_slice["close"].iloc[-1])
+            entry_price = float(df["close"].iloc[entry_idx])
 
-            atr = _compute_atr(df_slice["high"], df_slice["low"], df_slice["close"])
-            atr_val = float(atr.iloc[-1])
+            atr_series = _compute_atr(df["high"].iloc[:entry_idx + 1],
+                                      df["low"].iloc[:entry_idx + 1],
+                                      df["close"].iloc[:entry_idx + 1])
+            atr_val = float(atr_series.iloc[-1])
             if atr_val <= 0 or np.isnan(atr_val):
                 continue
 
@@ -266,7 +282,7 @@ def scan(data: dict) -> list:
                 continue
             target_price = entry_price + MIN_RR * risk
 
-            closes = df_slice["close"].values.astype(float)
+            closes = df["close"].values.astype(float)
             ep, er, bh = _simulate_exit(
                 closes, entry_idx, entry_price, stop_price, target_price, "long"
             )
@@ -291,20 +307,23 @@ def scan(data: dict) -> list:
 
         # --- SHORT signals: Consumer discretionary ---
         for ticker in SHORT_TICKERS:
-            df = data.get(ticker)
-            if df is None or len(df) < ATR_PERIOD + 5:
+            df = clean_data.get(ticker)
+            if df is None or len(df) < min_start + 10:
                 continue
 
-            mask = df.index <= current_date
-            if mask.sum() < ATR_PERIOD + 5:
+            tix = date_to_idx.get(ticker)
+            if tix is None or current_date not in tix:
+                continue
+            entry_idx = tix[current_date]
+            if entry_idx < min_start:
                 continue
 
-            df_slice = df[mask]
-            entry_idx = len(df_slice) - 1
-            entry_price = float(df_slice["close"].iloc[-1])
+            entry_price = float(df["close"].iloc[entry_idx])
 
-            atr = _compute_atr(df_slice["high"], df_slice["low"], df_slice["close"])
-            atr_val = float(atr.iloc[-1])
+            atr_series = _compute_atr(df["high"].iloc[:entry_idx + 1],
+                                      df["low"].iloc[:entry_idx + 1],
+                                      df["close"].iloc[:entry_idx + 1])
+            atr_val = float(atr_series.iloc[-1])
             if atr_val <= 0 or np.isnan(atr_val):
                 continue
 
@@ -315,7 +334,7 @@ def scan(data: dict) -> list:
                 continue
             target_price = entry_price - MIN_RR * risk
 
-            closes = df_slice["close"].values.astype(float)
+            closes = df["close"].values.astype(float)
             ep, er, bh = _simulate_exit(
                 closes, entry_idx, entry_price, stop_price, target_price, "short"
             )
@@ -372,7 +391,11 @@ if __name__ == "__main__":
     print(f"  Signals: {len(signals)} ({len(long_sigs)} long, {len(short_sigs)} short)")
     print(f"  Avg R: {avg_r:+.4f}")
     print(f"  Win rate: {win_rate:.1%}")
-    print(f"  Avg win: {np.mean([s['r_multiple'] for s in wins]):+.4f}" if wins else "")
+    if wins:
+        print(f"  Avg win: {np.mean([s['r_multiple'] for s in wins]):+.4f}")
+    if len(r_values) - len(wins) > 0:
+        losses = [s for s in signals if s["r_multiple"] <= 0]
+        print(f"  Avg loss: {np.mean([s['r_multiple'] for s in losses]):+.4f}")
 
     by_year = {}
     for s in signals:

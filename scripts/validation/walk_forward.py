@@ -161,6 +161,19 @@ STRATEGY_CONFIGS = {
         "call_mode": "batch",
         "long_only": True,
     },
+    "OS": {
+        "module": "scanner_hormuz_oil_shock",
+        "scan_fn": "scan",
+        "name": "Oil Shock Sector Rotation",
+        "params": {
+            "SPIKE_PCT": [3.0, 3.5, 4.0],
+            "ATR_STOP_MULT": [1.5, 2.0, 2.5],
+            "MIN_RR": [1.0, 1.5, 2.0],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -174,6 +187,7 @@ QUICK_PARAMS = {
     "VIXC": {"IVTS_MAX": [0.92], "VIX_MAX": [20], "MIN_RR": [2.0, 3.0], "MIN_PERSIST_FRAC": [0.6]},
     "LOWCORR": {"CORR_THRESHOLD": [0.25], "ATR_STOP_MULT": [2.0], "MAX_BARS_HELD": [10]},
     "DEBASE": {"ATR_STOP_MULT": [1.5], "PULLBACK_PCT": [0.10], "MIN_RR": [2.0]},
+    "OS": {"SPIKE_PCT": [3.5], "ATR_STOP_MULT": [2.0], "MIN_RR": [1.5]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────
