@@ -65,6 +65,12 @@ from scanners.scanner_lowcorr_regime import scan as scan_lowcorr  # noqa: E402
 # 06-Strategies/Hypotheses/STR-20260825-treasury-debasement-regime.md.
 from scanners.scanner_treasury_debasement import scan as scan_debase  # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-09-01): Oil Shock Sector Rotation —
+# Phase 1A mean_r=+0.183 (p=0.1069), walk-forward OOS mean R=+0.1712 but p=0.2311
+# → deployed WATCH with 0.5% risk. See
+# 06-Strategies/Hypotheses/STR-20260901-oil-shock-sector-rotation.md.
+from scanners.scanner_hormuz_oil_shock import scan as scan_oil_shock  # noqa: E402
+
 # Watch-list scanners (imported but not yet scanning — need status:watch frontmatter)
 from scanners.scanner_l_atr_contraction import scan as scan_l   # noqa: E402
 from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
@@ -91,7 +97,7 @@ _SCANNER_ALIASES = {
     "scan_ag":      scan_ag,      "scan_aj":      scan_aj,
     "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
     "scan_l":       scan_l,       "scan_p":       scan_p,
-    "scan_debase":  scan_debase,
+    "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).

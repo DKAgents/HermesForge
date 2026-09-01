@@ -53,6 +53,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-114 | EPIC-013 | Autonomous pipeline: Low-correlation regime stock picker (Phase 1A positive, deployed WATCH, walk-forward incomplete) | this run |
 | US-071 | EPIC-010 | Paper Trading Performance Report (Discord, cron cb22b038a6d6) | `4dc81e5` |
 | US-115 | EPIC-013 | Autonomous pipeline: Treasury buyback debasement BTC regime trade (Phase 1A p=0.157 SPECULATIVE, walk-forward OOS mean R +0.131 → WATCH, deployed to paper trading at 0.5% risk) | this run |
+| US-120 | EPIC-013 | Autonomous pipeline: Oil shock sector rotation (Phase 1A mean R=+0.183 p=0.1069, walk-forward OOS mean R=+0.171, deployed WATCH at 0.5% risk) | this run |
 
 ---
 

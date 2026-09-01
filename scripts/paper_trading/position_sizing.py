@@ -143,6 +143,7 @@ def size_strategy_vixc(*a, **k): return 0.5  # VIX contango breakout (WATCH)
 # Reduced to 0.5% risk per SOUL.md single-idea ceiling.
 def size_strategy_lowcorr(*a, **k): return 0.5  # Low-correlation regime (WATCH)
 def size_strategy_debase(*a, **k): return 0.5  # Treasury debasement (WATCH, reduced risk)
+def size_strategy_oil_shock(*a, **k): return 0.5  # Oil shock sector rotation (WATCH, reduced risk)
 
 
 SIZING_FUNCTIONS = {
@@ -176,6 +177,7 @@ SIZING_FUNCTIONS = {
     "STR-VIXC-vix-contango-breakout":     size_strategy_vixc,
     "STR-LOWCORR-lowcorr-regime":          size_strategy_lowcorr,
     "STR-DEBASEMENT-treasury-buyback":     size_strategy_debase,
+    "STR-OIL-SHOCK":                       size_strategy_oil_shock,
 }
 
 

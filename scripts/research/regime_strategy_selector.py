@@ -130,6 +130,11 @@ STRATEGY_REGISTRY = {
     "STR-DEBASE": {"name": "Treasury Buyback Debasement Regime", "asset": "crypto", "status": "WATCH",
                    "regime_best": ["risk_on", "neutral", "complacent"], "regime_avoid": ["risk_off"],
                    "base_risk": 0.5, "type": "macro_regime"},
+    # Autonomous-pipeline deployed 2026-09-01 (Phase 1A mean_r=+0.183 p=0.1069,
+    # walk-forward OOS mean R=+0.171 p=0.231 → WATCH with reduced risk).
+    "STR-OIL-SHOCK": {"name": "Oil Shock Sector Rotation", "asset": "stock", "status": "WATCH",
+                      "regime_best": ["caution", "risk_off"], "regime_avoid": ["risk_on"],
+                      "base_risk": 0.5, "type": "macro_overlay"},
 }
 
 
