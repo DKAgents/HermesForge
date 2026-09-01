@@ -34,3 +34,8 @@ In a downtrend, identify where a violated support level and an overhead gap coin
 
 ## Related Notes
 - [[C336-support-level|Support Level]]
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid placing stops at round numbers even when they coincide with technical levels
+
+- [[C245-stop-order]] — See C245-stop-order for stop order mechanics underlying the layered-level placement strategy

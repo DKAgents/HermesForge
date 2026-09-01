@@ -35,3 +35,8 @@ Before fading an oscillator reading in a strong trend, require confirmation from
 ## Related Notes
 - [[INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trend]]
 - [[INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trends]]
+
+## Related
+- [[INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within]] — See INS-2026-08-06-mcclellan-breadth-filter-validates-oscillator-signals-within for the breadth-based filter that solves this false-signal problem
+
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for the rule that prevents false counter-trend signals
