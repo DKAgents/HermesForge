@@ -31,3 +31,8 @@ When commodity prices show a sustained decline, traders should treat a 10-day cr
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[E020-double-crossover-reduces-whipsaws-vs-single-average]] — See E020-double-crossover-reduces-whipsaws-vs-single-average for why the double crossover method already provides a whipsaw-reduced foundation that the commodity stress filter enhances
+
+- [[C123-double-crossover-method]] — Double crossover method provides the base signal filtered by commodity stress
