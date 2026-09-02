@@ -98,6 +98,10 @@ When price violates a significant support level, that level becomes resistance �
 | 2026-07-19 | Strategy created | US-052 Living Strategy Layer; seeded from Murphy S/R notes + INS layer-gap insight |
 
 ## Related
+- [[N057-weekly-and-monthly-reversal-patterns]] — See N057-weekly-and-monthly-reversal-patterns for higher-timeframe reversal confirmation
+
+- [[EX002-nonfailure-swing-reversal-signal]] — See EX002-nonfailure-swing-reversal-signal for Dow Theory timing ambiguity
+
 - [[C095-rectangle-formation-support-and-resistance-role-reversal]] — See C095-rectangle-formation-support-and-resistance-role-reversal for the role reversal principle underpinning this entry strategy
 
 - [[EX001-failure-swing-reversal-signal]] — Confirm role reversal with failure swing pattern
