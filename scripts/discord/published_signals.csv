@@ -23,3 +23,7 @@ STR-I-adaptive-trend_CRM_2026-08-27,STR-I-adaptive-trend,CRM,2026-08-27,2026-08-
 STR-I-adaptive-trend_EL_2026-08-27,STR-I-adaptive-trend,EL,2026-08-27,2026-08-31T07:47:12.248748,stocks
 STR-B-macd-histogram-divergence_NI_2026-08-28,STR-B-macd-histogram-divergence,NI,2026-08-28,2026-09-01T07:47:08.144125,stocks
 STR-B-macd-histogram-divergence_MPC_2026-08-27,STR-B-macd-histogram-divergence,MPC,2026-08-27,2026-09-01T07:47:08.144250,stocks
+STR-B-macd-histogram-divergence_VRTX_2026-09-01,STR-B-macd-histogram-divergence,VRTX,2026-09-01,2026-09-02T07:50:32.045105,stocks
+STR-B-macd-histogram-divergence_WELL_2026-08-28,STR-B-macd-histogram-divergence,WELL,2026-08-28,2026-09-02T07:50:32.045300,stocks
+STR-B-macd-histogram-divergence_PEG_2026-08-31,STR-B-macd-histogram-divergence,PEG,2026-08-31,2026-09-02T07:50:32.045416,stocks
+STR-B-macd-histogram-divergence_DTE_2026-08-31,STR-B-macd-histogram-divergence,DTE,2026-08-31,2026-09-02T07:50:32.045521,stocks
