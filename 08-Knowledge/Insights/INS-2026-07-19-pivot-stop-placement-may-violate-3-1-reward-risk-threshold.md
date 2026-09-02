@@ -34,3 +34,6 @@ Before entering a pivot point breakout per EN071, a trader should calculate the 
 
 ## Related Notes
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+
+## Related
+- [[RG031-protective-stop-placement-as-an-art]] — See RG031 for stop placement as an art balancing technical and money management

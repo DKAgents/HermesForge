@@ -137,6 +137,7 @@ All 6 signals were stopped out. Phase 1B perturbations (ATR-based stop, lower ta
 | 2026-07-26 | Strategy killed at Phase 1A | -1.000 avg R, 0% win rate. No Phase 1B rescue found. |
 
 ## Related
+- [[N057-weekly-and-monthly-reversal-patterns]] — See weekly/monthly reversal patterns for higher-timeframe confirmation filter
 
 - [[REGIME-high-volatility]]
 - [[Discoveries-2026-W32-high-vol]]

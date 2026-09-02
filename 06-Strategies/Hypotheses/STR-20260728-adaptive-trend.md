@@ -325,4 +325,6 @@ Phase 4: Paper trading (60-90 days)
 Phase 5: Live execution with kill-switch criteria
 
 ## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for trendline break as regime confirmation filter
+
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — See oscillator entry for trend confirmation
