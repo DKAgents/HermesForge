@@ -326,6 +326,8 @@ These are the research agenda for paper trading. Each question has a measurable 
 *Strategy created: 2026-07-19 | Schema: ADR-003 v1.0 | Validated: pending*
 
 ## Related
+- [[N066-macd-histogram-construction]] — See N066-macd-histogram-construction for histogram mechanics underlying divergence signals
+
 - [[EN042-macd-crossover-buy-and-sell-signals]] — Contrasts with basic MACD crossover signals
 
 - [[N065-macd-indicator-construction]] — See MACD Indicator Construction for calculation details
