@@ -203,4 +203,6 @@ All 3 signals across the entire universe/history stopped out (AIG -3.75R, GOOGL 
 | 2026-07-26 | Phase 1A scanner built (`scanner_h_first_pullback_trend_swing.py`), registered in `run_phase1a.py`, run against full 216-ticker universe. Result: **KILL** — 0.9 sig/yr, avg R -1.975, 0% win rate, 0/3 sub-periods positive. v1.4 fix did not resolve signal scarcity; confirmation-candle/EMA-zone/volume filter stack identified as the actual bottleneck. | User instruction "Proceed" after v1.4 fold-in confirmation |
 
 ## Related
+- [[R081-volume-should-confirm-price-trend-direction]] — See R081-volume-should-confirm-price-trend-direction for volume confirmation of valid pullbacks
+
 - [[EN068-4060-retracement-zones-for-timing-entries]] — Constrain valid pullbacks to 40-60% retracement zone per Murphy
