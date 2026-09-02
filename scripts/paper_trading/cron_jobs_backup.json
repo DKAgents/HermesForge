@@ -440,15 +440,15 @@
       "schedule_display": "every 60m",
       "repeat": {
         "times": null,
-        "completed": 711
+        "completed": 715
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-02T16:43:05.440411+00:00",
-      "next_run_at": "2026-09-01T20:33:18.760836+00:00",
-      "last_run_at": "2026-09-01T19:33:18.760836+00:00",
+      "next_run_at": "2026-09-02T00:37:22.530698+00:00",
+      "last_run_at": "2026-09-01T23:37:22.530698+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -685,15 +685,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 4881
+        "completed": 4926
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-15T21:34:16.777047+00:00",
-      "next_run_at": "2026-09-01T20:20:00+00:00",
-      "last_run_at": "2026-09-01T20:15:15.762916+00:00",
+      "next_run_at": "2026-09-02T00:05:00+00:00",
+      "last_run_at": "2026-09-02T00:00:38.974005+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -785,15 +785,15 @@
       "schedule_display": "every 240m",
       "repeat": {
         "times": null,
-        "completed": 57
+        "completed": 58
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-23T04:21:34.414647+00:00",
-      "next_run_at": "2026-09-01T22:08:02.186274+00:00",
-      "last_run_at": "2026-09-01T18:08:02.186274+00:00",
+      "next_run_at": "2026-09-02T02:10:51.311083+00:00",
+      "last_run_at": "2026-09-01T22:10:51.311083+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -914,57 +914,6 @@
       "fire_claim": null
     },
     {
-      "id": "027a8460e1e7",
-      "name": "Cron Watchdog [T3]",
-      "prompt": "[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to the user — do NOT use send_message or try to deliver the output yourself. Just produce your report/output as your final response and the system handles the rest. SILENT: If there is genuinely nothing new to report, respond with exactly \"[SILENT]\" (nothing else) to suppress delivery. Never combine [SILENT] with content — either report your findings normally, or say [SILENT] and nothing more.]\n\nYou are the HermesForge Cron Watchdog. Your job: detect failing or stale cron jobs before they silently break.\n\n## Check 1: job health (read jobs.json)\n```\ncat /root/.hermes/cron/jobs.json\n```\nParse as JSON. For each active job, check:\n- last_status: if not \"ok\" and not null → flag\n- last_run_at: if more than 2x the schedule interval has passed since last run → flag\n- For no_agent scripts: if last_run_at is older than 24h → flag\n\n## Check 2: output freshness\nCheck /root/.hermes/cron/output/ for each job_id. If the latest output file is older than the expected cadence, flag.\n\n## Check 3: STR-Q sweep specifically\nCheck if /root/.hermes/cron/output/b9fb0afb1e29/ has output files within the last 10 minutes. STR-Q runs every 5 minutes — if the most recent output is > 15 minutes old, something is wrong.\n\n## Report rules\n- If ALL checks pass: respond \"[SILENT]\" — nothing delivered.\n- If ANY check fails: post a concise alert listing:\n  - Which job(s) failed\n  - What the failure looks like (status, staleness, etc.)\n  - Recommended action\n- Keep the alert under 300 words. Be specific. Name the job ID and the failure mode.\n- Post via the delivery channel only (do not use send_message directly).",
-      "skills": [],
-      "skill": null,
-      "model": "deepseek/deepseek-v4-flash",
-      "provider": "openrouter",
-      "provider_snapshot": null,
-      "model_snapshot": null,
-      "base_url": null,
-      "script": null,
-      "no_agent": false,
-      "monitor_script": null,
-      "monitor_url": null,
-      "monitor_state": null,
-      "context_from": null,
-      "schedule": {
-        "kind": "interval",
-        "minutes": 30,
-        "display": "every 30m"
-      },
-      "schedule_display": "every 30m",
-      "repeat": {
-        "times": null,
-        "completed": 72
-      },
-      "enabled": true,
-      "state": "scheduled",
-      "paused_at": null,
-      "paused_reason": null,
-      "created_at": "2026-08-31T04:21:02.265274+00:00",
-      "next_run_at": "2026-09-01T20:29:22.988057+00:00",
-      "last_run_at": "2026-09-01T19:59:22.988057+00:00",
-      "last_status": "ok",
-      "last_error": null,
-      "last_delivery_error": null,
-      "failure_streak": 0,
-      "deliver": "local",
-      "origin": {
-        "platform": "discord",
-        "chat_id": "1520487239774113914",
-        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
-        "thread_id": "1520487239774113914",
-        "user_id": "1500551729735929866",
-        "scope_id": "1500553453628428361"
-      },
-      "enabled_toolsets": null,
-      "workdir": null,
-      "fire_claim": null
-    },
-    {
       "id": "61cccd31ed5c",
       "name": "Webhook Crosspost All Channels",
       "prompt": "",
@@ -989,19 +938,19 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1
+        "completed": 47
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-09-01T20:14:53.581700+00:00",
-      "next_run_at": "2026-09-01T20:20:00+00:00",
-      "last_run_at": "2026-09-01T20:15:12.423511+00:00",
-      "last_status": "error",
-      "last_error": "Script exited with code 1\nstderr:\n/root/.hermes/scripts/crosspost_webhook_all.sh: line 47: DISCO: unbound variable",
+      "next_run_at": "2026-09-02T00:05:00+00:00",
+      "last_run_at": "2026-09-02T00:00:19.580128+00:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
-      "failure_streak": 1,
+      "failure_streak": 0,
       "deliver": "local",
       "origin": {
         "platform": "discord",
@@ -1014,7 +963,57 @@
       "enabled_toolsets": null,
       "workdir": null,
       "fire_claim": null
+    },
+    {
+      "id": "65dfc591efad",
+      "name": "Cron Watchdog (no-agent)",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "provider_snapshot": null,
+      "model_snapshot": null,
+      "base_url": null,
+      "script": "cron_watchdog.py",
+      "no_agent": true,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/15 * * * *",
+        "display": "*/15 * * * *"
+      },
+      "schedule_display": "*/15 * * * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-09-02T00:01:44.012169+00:00",
+      "next_run_at": "2026-09-02T00:15:00+00:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520487239774113914",
+        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
+        "thread_id": "1520487239774113914",
+        "user_id": "1500551729735929866",
+        "scope_id": "1500553453628428361"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-09-01T20:15:15.763707+00:00"
+  "updated_at": "2026-09-02T00:01:44.017117+00:00"
 }
