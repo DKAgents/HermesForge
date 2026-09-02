@@ -31,3 +31,6 @@ Before entering on a daily MACD or Stochastics crossover, confirm: (1) price is 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — Supplement the stack with weekly trendline break confirmation

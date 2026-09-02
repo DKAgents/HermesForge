@@ -1,3 +1,11 @@
+---
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
+created: 2026-09-02
+---
 |---
 |id: STR-20260901-oil-shock-sector-rotation
 |type: strategy

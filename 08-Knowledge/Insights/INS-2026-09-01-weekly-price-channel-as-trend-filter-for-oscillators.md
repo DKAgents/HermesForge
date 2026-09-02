@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "C130-the-weekly-rule-price-channel-as-trend-following-alternative", "N044-long-term-moving-averages-on-weekly-charts"]
 seed_id: trend_filter_entry
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Weekly Price Channel as Trend Filter for Oscillators
 
 ## Discovery Summary
