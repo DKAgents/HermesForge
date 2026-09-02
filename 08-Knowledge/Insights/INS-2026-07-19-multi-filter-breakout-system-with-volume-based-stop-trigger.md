@@ -33,4 +33,6 @@ On any upside breakout, require at least two of R052's structural filters to be 
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume confirmation rule
+
 - [[R048-head-and-shoulders-bottom-volume-requirements]] — See R048 for volume confirmation rule in head and shoulders bottoms.

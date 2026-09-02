@@ -34,4 +34,8 @@ A trader should require both a structural filter from R052 (e.g., two consecutiv
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[N043-flag-and-pennant-summary-characteristics]] — See N043-flag-and-pennant-summary-characteristics for the canonical volume sequence that validates breakouts
+
+- [[N018-head-and-shoulders-bottom-volume-sequence]] — See head and shoulders bottom volume sequence for pattern-specific breakout confirmation
+
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See volume breakout confirmation rule
