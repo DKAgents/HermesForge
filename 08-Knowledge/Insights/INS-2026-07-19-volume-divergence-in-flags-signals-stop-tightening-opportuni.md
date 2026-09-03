@@ -31,3 +31,6 @@ When a flag or pennant breakout occurs on light volume (violating R082 and match
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021-use-of-advance-stop-orders-in-point-and-figure-trading for stop execution discipline
