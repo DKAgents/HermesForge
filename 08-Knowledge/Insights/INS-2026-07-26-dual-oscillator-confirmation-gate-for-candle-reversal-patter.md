@@ -33,4 +33,8 @@ Only enter a candle reversal trade when the pattern is present AND both RSI (>70
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — Stochastics %D presignal area rule for dual-oscillator gate
+
+- [[C183-filtered-candle-patterns-concept]] — See Filtered Candle Patterns for the underlying oscillator-gate methodology.
+
 - [[N062-macd-divergence-analysis]] — See MACD divergence as a directional momentum filter for reversal patterns
