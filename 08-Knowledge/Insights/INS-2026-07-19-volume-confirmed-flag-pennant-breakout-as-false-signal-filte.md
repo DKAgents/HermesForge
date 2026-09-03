@@ -31,3 +31,8 @@ A trader should only enter a flag or pennant breakout if volume during the conso
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018-head-and-shoulders-bottom-volume-sequence for parallel volume-sequence logic in reversal patterns
+
+- [[N028-bull-trap-false-upside-breakout]] — Bull trap definition and volume pattern

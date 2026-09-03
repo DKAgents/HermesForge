@@ -33,6 +33,12 @@ Before entering on any pattern breakout, require measurable above-average volume
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[INS-2026-08-27-volume-confirmation-reduces-false-breakout-risk-enabling-tig]] — See INS-2026-08-27-volume-confirmation-reduces-false-breakout-risk-enabling-tig for how confirmed breakouts justify tighter stops
+
+- [[N043-flag-and-pennant-summary-characteristics]] — See N043-flag-and-pennant-summary-characteristics for a pattern exemplifying volume confirmation as entry gate
+
+- [[R002-dow-averages-must-confirm-each-other]] — See R002-dow-averages-must-confirm-each-other for macro-level confirmation principle
+
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume confirmation rule
 
 ## Related Notes
