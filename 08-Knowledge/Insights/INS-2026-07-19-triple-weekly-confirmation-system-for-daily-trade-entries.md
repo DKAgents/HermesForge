@@ -33,6 +33,8 @@ Before entering on a daily MACD or Stochastics crossover, require alignment acro
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R117-4-week-rule-as-a-confirming-filter]] — See R117-4-week-rule-as-a-confirming-filter for a specific weekly breakout rule to use as a confirming filter.
+
 - [[R141-combining-weekly-and-daily-chart-signals]] — See R141 for the core principle that weekly signals must filter all daily entries
 
 - [[R042-1-3-penetration-criterion-and-two-day-rule-for-neckline-conf]] — See R042-1-3-penetration-criterion-and-two-day-rule-for-neckline-conf|1-3% penetration and two-day rule for daily entry filter after weekly confirmation
