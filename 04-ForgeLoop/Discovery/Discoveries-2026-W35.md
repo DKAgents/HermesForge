@@ -1,8 +1,8 @@
 ---
 type: discovery-report
 week: 2026-W35
-date: 2026-08-31 21:09 PDT
-insights_found: 13
+date: 2026-09-02 21:08 PDT
+insights_found: 12
 seeds_run: 18
 llm_calls: 18
 tags: [discovery, knowledge-evolution, forge-loop]
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W35
 
-Generated: 2026-08-31 21:09 PDT
+Generated: 2026-09-02 21:08 PDT
 
 ## Summary
 
@@ -18,22 +18,21 @@ Generated: 2026-08-31 21:09 PDT
 |--------|-------|
 | Seeds queried | 18 |
 | LLM synthesis calls | 18 |
-| Insights accepted (actionability ≥ 3) | 13 |
+| Insights accepted (actionability ≥ 3) | 12 |
 
 ## New Insights
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-09-01-earnings-filter-reduces-role-reversal-subjectivity\|Earnings Filter Reduces Role Reversal Su]] | 5/5 | creates_filter | edge-conditions, concepts |
-| [[INS-2026-09-01-volume-confirms-flag-pennant-breakout-validity\|Volume confirms flag/pennant breakout va]] | 4/5 | creates_filter | patterns, rules |
-| [[INS-2026-09-01-rsi-extremes-filter-candlestick-reversal-patterns\|RSI Extremes Filter Candlestick Reversal]] | 4/5 | creates_filter | concepts, indicators |
-| [[INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators\|Weekly Price Channel as Trend Filter for]] | 4/5 | creates_filter | rules, concepts |
-| [[INS-2026-09-01-confluence-of-gap-and-broken-support-tightens-stops-sizes-po\|Confluence of gap and broken support tig]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-01-technical-stop-placement-can-invalidate-3-1-reward-requireme\|Technical stop placement can invalidate ]] | 4/5 | creates_filter | rules, risk-guidelines |
-| [[INS-2026-09-01-trend-strength-refines-retracement-entry-zones\|Trend Strength Refines Retracement Entry]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-01-adx-filters-keltner-breakouts-using-retracement-entries\|ADX Filters Keltner Breakouts Using Retr]] | 4/5 | creates_filter | indicators, edge-conditions |
-| [[INS-2026-09-01-macro-bias-with-relative-strength-stock-selection\|Macro Bias with Relative Strength Stock ]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-01-10-50-crossover-on-commodities-filters-commodity-exporter-st\|10/50 Crossover on Commodities Filters C]] | 4/5 | creates_filter | indicators, rules |
-| [[INS-2026-09-01-volume-confirms-gap-type-at-breakouts\|Volume Confirms Gap Type at Breakouts]] | 4/5 | creates_filter | rules, patterns |
-| [[INS-2026-09-01-replace-triple-crossover-with-smoothed-oscillator-in-ranges\|Replace Triple Crossover with Smoothed O]] | 3/5 | adds_condition | rules, indicators |
-| [[INS-2026-09-01-filtering-trend-pullbacks-with-breadth-oscillator\|Filtering Trend Pullbacks with Breadth O]] | 3/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-03-volume-confirmation-as-prerequisite-for-position-sizing-flex\|Volume confirmation as prerequisite for ]] | 4/5 | adds_condition | rules, indicators |
+| [[INS-2026-09-03-volume-confirmed-flag-and-pennant-breakout-filter\|Volume-Confirmed Flag and Pennant Breako]] | 4/5 | creates_filter | patterns, rules |
+| [[INS-2026-09-03-dual-oscillator-filter-for-candle-reversals\|Dual Oscillator Filter for Candle Revers]] | 4/5 | adds_condition | concepts, indicators |
+| [[INS-2026-09-03-breadth-filter-for-oscillator-entries-in-secondary-trends\|Breadth Filter for Oscillator Entries in]] | 4/5 | creates_filter | concepts, rules |
+| [[INS-2026-09-03-support-resistance-role-reversal-defines-stop-distance-and-p\|Support/Resistance Role-Reversal Defines]] | 4/5 | reveals_sequence | concepts, risk-guidelines |
+| [[INS-2026-09-03-refining-retracement-zones-with-trend-strength-context\|Refining Retracement Zones with Trend-St]] | 4/5 | adds_condition | indicators, rules |
+| [[INS-2026-09-03-intermarket-crb-bond-filter-relative-strength-selection\|Intermarket CRB/Bond filter + relative s]] | 4/5 | creates_filter | indicators, rules |
+| [[INS-2026-09-03-breakaway-gaps-require-volume-confirmation\|Breakaway Gaps Require Volume Confirmati]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-09-03-subjective-penetration-makes-speedline-role-reversal-entries\|Subjective penetration makes speedline r]] | 4/5 | creates_filter | edge-conditions, rules |
+| [[INS-2026-09-03-pivot-point-stop-vs-3-1-reward-risk\|Pivot Point Stop vs. 3:1 Reward/Risk]] | 3/5 | creates_filter | rules, risk-guidelines |
+| [[INS-2026-09-03-trailing-p-f-stops-refine-pivot-point-risk-placement\|Trailing P&F Stops Refine Pivot Point Ri]] | 3/5 | adds_condition | rules, risk-guidelines |
+| [[INS-2026-09-03-commodity-trend-filter-for-10-50-ma-stock-crossovers\|Commodity Trend Filter for 10/50 MA Stoc]] | 3/5 | adds_condition | indicators, rules |

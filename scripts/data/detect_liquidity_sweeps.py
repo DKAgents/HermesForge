@@ -488,18 +488,20 @@ def detect_sweep_at_level(
                     target_price = entry_price + (risk * 3.0)
                     rr = 3.0
                     
-                    # Quality score v3 (2026-08-30 — reweighted from 14-day walk-forward)
-                    # v2 was NOT predictive: winners 58.3 vs losers 59.3 quality.
-                    # But sub-signals ARE predictive:
-                    #   wick_ratio: winners 2.95, losers 11.35 (+275% worse)
-                    #   volume_surge: winners 2.64x, losers 1.97x (+34% better)
-                    #   level_type: swing_high(+0.91R), PDH(+0.91R) >> PDL(+0.59R)
-                    # Fix: wick now PEAKS at 2-4x, penalizes >6x. Vol weight increased.
-                    # Level scores rebased on actual win rates from 1900+ paper trades.
+                    # Quality score v4 (2026-09-03 — recalibrated on deduped signal_ids)
+                    # v3 used raw trades.csv (1,755 closed, 374 duplicates inflating winners).
+                    # Deduped analysis (1,434 unique closed, 1,384 STR-Q) corrects biases:
+                    #   - Duplicated signal_ids avg +1.121R vs clean +0.610R (+84% inflation)
+                    #   - Level weights rebased on actual deduped performance (7 levels, ≥6 trades each)
+                    #   - Edge per level: PDL(+1.300R) > equal_highs(+1.266R) > PDH(+0.867R)
+                    #     > equal_lows(+0.854R) > swing_low(+0.781R) > swing_high(+0.747R)
+                    #     > round_number(+0.346R)
+                    #   - Bad hours filter DROPPED: t=1.04, p>>0.05 (not significant after dedup)
                     LEVEL_SCORES = {
-                        "PDH": 45, "swing_high": 40, "PWH": 38, "PWL": 35,
-                        "round_number": 30, "equal_highs": 25, "swing_low": 25,
-                        "session_high": 20, "session_low": 20, "PDL": 20, "equal_lows": 15,
+                        "PDL": 55, "equal_highs": 53, "PDH": 35, "equal_lows": 24,
+                        "swing_low": 31, "swing_high": 29, "PWH": 30, "PWL": 30,
+                        "round_number": 10, "session_high": 20, "session_low": 20,
+                        "previous_day_high": 25, "previous_day_low": 25,
                     }
                     quality = LEVEL_SCORES.get(level.level_type, 15)
                     quality += 15 if confirmation == "confirmed" else 5  # Confirmation
@@ -600,13 +602,13 @@ def detect_sweep_at_level(
                     target_price = entry_price - (risk * 3.0)
                     rr = 3.0
                     
-                    # Quality score v3 (2026-08-30 — reweighted from 14-day walk-forward). Same formula as bullish path.
-                    # Data-driven weights: level type is strongest predictor (45pts for PDH),
-                    # wick ratio penalty for false sweeps, volume surge bonus for real reversals
+                    # Quality score v4 (2026-09-03 — recalibrated on deduped signal_ids). Same formula as bullish path.
+                    # v3 used raw trades.csv — duplicates inflated winners. Deduped correction applied.
                     LEVEL_SCORES = {
-                        "PDH": 45, "swing_high": 40, "PWH": 38, "PWL": 35,
-                        "round_number": 30, "equal_highs": 25, "swing_low": 25,
-                        "session_high": 20, "session_low": 20, "PDL": 20, "equal_lows": 15,
+                        "PDL": 55, "equal_highs": 53, "PDH": 35, "equal_lows": 24,
+                        "swing_low": 31, "swing_high": 29, "PWH": 30, "PWL": 30,
+                        "round_number": 10, "session_high": 20, "session_low": 20,
+                        "previous_day_high": 25, "previous_day_low": 25,
                     }
                     quality = LEVEL_SCORES.get(level.level_type, 15)
                     quality += 15 if confirmation == "confirmed" else 5  # Confirmation
