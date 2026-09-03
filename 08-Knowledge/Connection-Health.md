@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-03T19:00:34Z
+updated: 2026-09-03T23:03:22Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 335 |
-| Connections created | 3 | 174 |
-| Review queue | 85 | 85 |
-| Avg score | 2.7 | — |
+| Notes examined | 5 | 340 |
+| Connections created | 1 | 175 |
+| Review queue | 86 | 86 |
+| Avg score | 2.5 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4041
+- Total wikilinks in vault: ~4042
 - Total notes: 2054
-- Avg degree per note: 1.967
+- Avg degree per note: 1.968
 - Notes with links: 789 (38.5%)
 - Orphan notes (no links): 1264 (61.5%)
 
@@ -28,14 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 34 notes, avg degree 0.03
 - `02-Backlog/Stories` — 67 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-09-03T19:00:34Z)
-- **08-Knowledge/Insights/INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C183-filtered-candle-patterns-concept.md** (score 5.0): Note A extends the Filtered Candle Patterns concept by adding a dual-oscillator gate (RSI + Stochastics) to further improve reversal signal reliability, making the foundational concept essential context.
-- **08-Knowledge/Insights/INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N082-filtered-candle-patterns-stochastics-d-application.md** (score 5.0): Note B provides the precise Stochastics %D presignal area rule that can serve as the Stochastics component of the dual-oscillator confirmation gate proposed in Note A, making the gate actionable.
-- **08-Knowledge/Insights/INS-2026-07-26-dual-s-r-confluence-tightens-stop-scales-position-size.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C245-stop-order.md** (score 5.0): Note A operationalizes the basic stop order concept by defining a precise stop level using dual S/R confluence, turning a general tool into a concrete, behaviorally-grounded placement rule.
+## Recent Discoveries (last run: 2026-09-03T23:03:22Z)
+- **08-Knowledge/Insights/INS-2026-07-26-pivot-stop-distance-may-invalidate-3-1-reward-risk-ratio.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG023-pf-trailing-stop-adjustment.md** (score 4.0): INS-2026-07-26 identifies a conflict between the technical pivot stop placement (below day's low) and reward/risk targets, while RG023 offers a dynamic trailing rule that could mitigate this conflict over time by adjusting the stop as the trend progresses. This reveals a progression from static entry-stop tension to dynamic trailing management.
 
 ## Reflection Notes
-- Run 63: Created 3 connections from 5 notes. Avg score: 2.4.
 - Run 64: Created 2 connections from 5 notes. Avg score: 2.9.
 - Run 65: Created 5 connections from 5 notes. Avg score: 2.4.
 - Run 66: Created 1 connections from 5 notes. Avg score: 2.4.
 - Run 67: Created 3 connections from 5 notes. Avg score: 2.7.
+- Run 68: Created 1 connections from 5 notes. Avg score: 2.5.
