@@ -46,7 +46,7 @@ import trade_log
 import position_sizing
 
 # Trade ID generation for post attribution
-from trade_id import generate_short_id
+from trade_id import generate_short_id, make_discord_link
 
 # Pacific Time utility for display timestamps
 from timezone_utils import now_pt
@@ -421,6 +421,72 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
     return summary
 
 
+def _post_exit_alert(trade: dict, exit_reason: str, exit_price: float,
+                     r_multiple: float, bars_held: int = 0) -> bool:
+    """Post a STOP/TARGET/TIME exit alert to the trade's Discord channel.
+    
+    Uses the same format as trade_monitor.py for consistency.
+    Returns True if alert was posted, False if skipped (no channel_id)."""
+    channel_id = trade.get("discord_channel_id", "").strip()
+    message_id = trade.get("discord_message_id", "").strip()
+    short_id = trade.get("short_id", "").strip()
+    ticker = trade.get("ticker", "?")
+    direction = trade.get("direction", "long").upper()
+    
+    if not channel_id:
+        return False
+    
+    # Build hyperlink
+    if channel_id and message_id and short_id:
+        link = make_discord_link(short_id, channel_id, message_id)
+    else:
+        link = f"`{short_id}`"
+    
+    def _fmt_price(p):
+        p = float(p)
+        if abs(p) < 1.0:
+            return f"${p:.6f}"
+        elif abs(p) < 100.0:
+            return f"${p:.4f}"
+        else:
+            return f"${p:,.2f}"
+    
+    token = os.environ.get("DISCORD_BOT_TOKEN", "")
+    if not token:
+        return False
+    
+    if exit_reason == "stop":
+        emoji = "🛑"
+        body = f"stopped at {_fmt_price(exit_price)}"
+    elif exit_reason == "target":
+        emoji = "🎯"
+        body = f"target hit at {_fmt_price(exit_price)}"
+    else:
+        emoji = "⏱️"
+        body = f"time stop at {_fmt_price(exit_price)} ({bars_held} bars)"
+    
+    alert = f"{emoji} **{exit_reason.upper()}** | {link} | {ticker} {direction} {body} ({r_multiple:+.1f}R)"
+    
+    url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["curl", "-s", "-X", "POST",
+             "-H", f"Authorization: Bot {token}",
+             "-H", "Content-Type: application/json",
+             "-d", json.dumps({"content": alert}),
+             url],
+            capture_output=True, text=True, timeout=15
+        )
+        response = json.loads(result.stdout)
+        if "id" in response:
+            print(f"  POSTED: {short_id} {exit_reason.upper()} alert → channel {channel_id}")
+            return True
+    except Exception as e:
+        print(f"  Alert post failed for {short_id}: {e}")
+    return False
+
+
 def monitor_exits():
     """
     Check open STR-Q trades and close them if price has hit target/stop/time stop.
@@ -512,6 +578,13 @@ def monitor_exits():
                 trade["exit_price"] = round(exit_price, 6)
                 trade["exit_reason"] = exit_reason
                 trade["r_multiple"] = round(r, 3)
+                
+                # Post exit alert to Discord (STOP/TARGET/TIME)
+                try:
+                    bars = int(elapsed / (5 * 60)) if exit_reason == "time" else 0
+                    _post_exit_alert(trade, exit_reason, exit_price, r, bars_held=bars)
+                except Exception as e:
+                    print(f"  Exit alert error for {ticker}: {e}")
                 
                 result["closed"] += 1
                 result["closures"].append({

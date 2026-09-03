@@ -24,8 +24,54 @@ def _rows() -> list[dict]:
     return trade_log._read_all_rows()
 
 
+def _dedupe_rows(rows: list[dict]) -> list[dict]:
+    """Deduplicate by signal_id — keep the LAST entry for each.
+    
+    Known issue: _write_all_rows() had a bug that created duplicate rows
+    with the same signal_id. This ensures PNL calculations don't double-count.
+    The last row in iteration order (most recently written) is kept.
+    """
+    seen = {}  # signal_id → row
+    for r in rows:
+        sig = r.get("signal_id", "")
+        if not sig:
+            continue
+        # Always keep the most recently encountered row for this signal_id
+        seen[sig] = r
+    return list(seen.values())
+
+
+def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
+    """Build a PNL section for a subset of closed trades."""
+    lines = []
+    if not closed_rows:
+        lines.append(f"**{label}:** No closed trades in period.")
+        return lines
+    
+    r_vals = [float(r.get("r_multiple", 0) or 0) for r in closed_rows]
+    total_r = sum(r_vals)
+    wins = [v for v in r_vals if v > 0]
+    wr = len(wins) / len(r_vals) * 100
+    avg_r = total_r / len(r_vals)
+    
+    # Max drawdown (running peak-to-trough)
+    peak = 0.0
+    cum = 0.0
+    max_dd = 0.0
+    for v in r_vals:
+        cum += v
+        if cum > peak:
+            peak = cum
+        dd = peak - cum
+        if dd > max_dd:
+            max_dd = dd
+    
+    lines.append(f"**{label}:** {len(closed_rows)} trades, {wr:.0f}% win rate, {total_r:+.2f}R total, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
+    return lines
+
+
 def build_report(since_hours: int = 24) -> str:
-    rows = _rows()
+    rows = _dedupe_rows(_rows())
     open_rows = [r for r in rows if r["status"] == "open"]
     closed_rows = [r for r in rows if r["status"] == "closed"]
 
@@ -38,6 +84,22 @@ def build_report(since_hours: int = 24) -> str:
             continue
         if exit_dt >= cutoff:
             recent_closed.append(r)
+
+    # PNL lookback windows: 1 week and 1 month (for trend analysis)
+    now = datetime.datetime.utcnow()
+    week_cutoff = now - datetime.timedelta(days=7)
+    month_cutoff = now - datetime.timedelta(days=30)
+    week_closed = []
+    month_closed = []
+    for r in closed_rows:
+        try:
+            exit_dt = datetime.datetime.fromisoformat(r["exit_date"])
+        except (ValueError, TypeError):
+            continue
+        if exit_dt >= week_cutoff:
+            week_closed.append(r)
+        if exit_dt >= month_cutoff:
+            month_closed.append(r)
 
     lines = ["📈 **Paper Trading Performance Report**\n"]
 
@@ -64,6 +126,12 @@ def build_report(since_hours: int = 24) -> str:
         worst = min(recent_closed, key=lambda r: float(r.get("r_multiple", 0) or 0))
         lines.append(f"  Best: {best['ticker']} ({best['strategy_id']}) {float(best['r_multiple']):+.2f}R")
         lines.append(f"  Worst: {worst['ticker']} ({worst['strategy_id']}) {float(worst['r_multiple']):+.2f}R")
+    lines.append("")
+
+    # --- PNL trend (1-week + 1-month lookback) ---
+    lines.append("**PNL Trend (lookback):**")
+    lines.extend(_build_pnl_section(week_closed, "Last 7 days"))
+    lines.extend(_build_pnl_section(month_closed, "Last 30 days"))
     lines.append("")
 
     # --- Running totals since inception ---
