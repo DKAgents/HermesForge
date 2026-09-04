@@ -31,3 +31,6 @@ Before entering on an oversold oscillator signal in an uptrend, confirm that the
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

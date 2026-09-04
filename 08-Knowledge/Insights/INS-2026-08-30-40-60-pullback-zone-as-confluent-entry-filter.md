@@ -31,3 +31,6 @@ Use the 50% retracement as the prime entry target, with 38% marking the minimum 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

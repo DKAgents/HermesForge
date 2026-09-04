@@ -31,3 +31,6 @@ Trade breakaway gaps only when accompanied by a clear volume surge relative to p
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

@@ -31,3 +31,6 @@ In a downtrend, sell a rally to the previous support-turned-resistance or to the
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 5/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

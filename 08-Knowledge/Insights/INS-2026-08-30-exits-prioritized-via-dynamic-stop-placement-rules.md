@@ -31,3 +31,6 @@ Traders should always combine any entry signal with a pre-planned protective sto
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]

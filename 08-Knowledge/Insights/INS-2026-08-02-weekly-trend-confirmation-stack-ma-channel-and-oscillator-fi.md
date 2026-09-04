@@ -34,3 +34,6 @@ Before entering on a daily MACD or Stochastics crossover, confirm: (1) price is 
 
 ## Related
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — Supplement the stack with weekly trendline break confirmation
+
+## Related Notes
+- [[EN023-trendline-break-confirmation-of-major-trend-change|Trendline Break Confirmation of Major Trend Change]]

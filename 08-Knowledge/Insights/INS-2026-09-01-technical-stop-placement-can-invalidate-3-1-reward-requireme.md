@@ -31,3 +31,6 @@ Before entering any pivot point breakout trade, calculate whether the technical 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["C245-stop-order", "RG035-combining-technical-factors-with-money-management-for-stop-p", "EN071-pivot-point-buy-signal-rules"]
 seed_id: prior_swing_low_stop
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Pivot Point Stop vs. 3:1 Reward/Risk
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Before executing a pivot point buy signal, measure the risk distance to the requ
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

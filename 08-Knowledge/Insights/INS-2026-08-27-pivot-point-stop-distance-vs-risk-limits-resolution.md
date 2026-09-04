@@ -31,3 +31,6 @@ Before entering a pivot point buy signal, measure the distance from the entry st
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

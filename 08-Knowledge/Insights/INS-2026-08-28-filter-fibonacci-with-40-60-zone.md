@@ -31,3 +31,6 @@ Overlay Fibonacci retracements on the prior advance and only take long entries w
 ## Connection Type
 
 **creates_filter** — Actionability score: 5/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

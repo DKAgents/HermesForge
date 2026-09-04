@@ -31,3 +31,9 @@ After taking a long entry per EN071's pivot point rules, replace the static prot
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
+- [[R231-pivot-point-signal-strength-by-time-of-day|Pivot Point Signal Strength by Time of Day]]

@@ -31,3 +31,6 @@ During rising ADX environments, wait for price to retrace 33-67% of the prior tr
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

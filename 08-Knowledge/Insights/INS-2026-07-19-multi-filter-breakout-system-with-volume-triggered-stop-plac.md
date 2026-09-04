@@ -39,3 +39,6 @@ A trader should require both a structural filter from R052 (e.g., two consecutiv
 - [[N018-head-and-shoulders-bottom-volume-sequence]] — See head and shoulders bottom volume sequence for pattern-specific breakout confirmation
 
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See volume breakout confirmation rule
+
+## Related Notes
+- [[N018-head-and-shoulders-bottom-volume-sequence|Head and Shoulders Bottom: Volume Sequence]]

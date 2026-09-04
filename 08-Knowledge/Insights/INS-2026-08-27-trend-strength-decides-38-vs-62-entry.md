@@ -31,3 +31,6 @@ Before a pullback, evaluate trend strength. In a strong uptrend, place long limi
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

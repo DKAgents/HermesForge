@@ -31,3 +31,6 @@ When taking a pivot point buy signal, set the initial protective stop under toda
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

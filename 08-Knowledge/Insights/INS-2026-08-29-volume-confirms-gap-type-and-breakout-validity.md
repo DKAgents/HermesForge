@@ -31,3 +31,6 @@ Before treating any gap as a breakaway signal, confirm that volume is significan
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

@@ -31,3 +31,6 @@ Before entering EN071 pivot point buys, calculate the EN071 stop distance; rejec
 ## Connection Type
 
 **contradicts_assumption** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

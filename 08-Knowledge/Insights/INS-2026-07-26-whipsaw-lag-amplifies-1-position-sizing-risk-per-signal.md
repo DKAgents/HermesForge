@@ -38,3 +38,6 @@ When using the 10/50 crossover, a trader applying 1% position sizing should expl
 - [[RG034-handling-winning-streaks-and-position-sizing]] — See RG034-handling-winning-streaks-and-position-sizing for why increasing size after wins is especially dangerous with lagging systems.
 
 - [[C239-money-management-as-survival-mechanism]] — See C239-money-management-as-survival-mechanism for why this lag amplification threatens survival.
+
+## Related Notes
+- [[R226-equity-curve-management-increase-commitments-after-drawdowns|Equity Curve Management: Increase Commitments After Drawdowns]]

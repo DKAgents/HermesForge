@@ -38,3 +38,6 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 - [[EN070-tight-trendline-break-during-bounce-as-shorting-signal]] — Use tight trendline breaks for entry timing after weekly gate
 
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — Use long-term trendline break on weekly chart as ultimate trend filter
+
+## Related Notes
+- [[EN070-tight-trendline-break-during-bounce-as-shorting-signal|Tight Trendline Break During Bounce as Shorting Signal]]

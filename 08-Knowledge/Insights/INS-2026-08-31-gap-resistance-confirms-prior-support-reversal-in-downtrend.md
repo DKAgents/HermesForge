@@ -30,3 +30,6 @@ When a prior support level is breached in a downtrend and a gap exists near that
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

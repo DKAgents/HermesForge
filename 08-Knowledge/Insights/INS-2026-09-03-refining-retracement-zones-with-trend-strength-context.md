@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C050-secondary-trend-retracement-range", "EN068-4060-retracement-zones-for-timing-entries", "N085-fibonacci-percentage-retracements-38-50-62"]
 seed_id: swing_low_entry_filter
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Refining Retracement Zones with Trend-Strength Context
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Instead of blindly entering anywhere in the 40–60% zone, assess trend strength
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -33,8 +33,14 @@ In the 4-9-18 system, require *both* the (4−9) and (9−18) spread to be posit
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for the basic momentum difference principle underlying spread oscillators
+
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — Apply oscillator entry strategy to these spread-oscillators
 
 - [[N062-macd-divergence-analysis]] — See MACD divergence analysis for interpreting oscillator weakening
 
 - [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for monitoring spread-oscillator momentum before crossovers
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]
+- [[N062-macd-divergence-analysis|MACD Divergence Analysis]]

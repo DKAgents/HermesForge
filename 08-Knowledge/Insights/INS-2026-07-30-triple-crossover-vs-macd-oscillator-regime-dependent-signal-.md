@@ -36,3 +36,6 @@ Before acting on a 4-9-18 triple crossover buy or sell signal, compute the (4-da
 - [[EN027-5-and-20-day-moving-average-crossover]] — See EN027-5-and-20-day-moving-average-crossover for a simpler crossover pair to test regime-detection via oscillator compression
 
 - [[N065-macd-indicator-construction]] — See MACD indicator construction for the oscillator reframing technique
+
+## Related Notes
+- [[N065-macd-indicator-construction|MACD Indicator Construction]]

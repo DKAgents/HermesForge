@@ -42,4 +42,5 @@ Before entering on any pattern breakout, require measurable above-average volume
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational volume confirmation rule
 
 ## Related Notes
+- [[C097-confirmation-principle|Confirmation Principle]]
 - [[INS-2026-08-27-volume-confirmation-reduces-false-breakout-risk-enabling-tig|Volume confirmation reduces false breakout risk, enabling tighter stops]]

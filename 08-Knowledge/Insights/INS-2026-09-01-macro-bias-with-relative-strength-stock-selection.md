@@ -31,3 +31,6 @@ First, determine the trend of the CRB/Bond ratio. If rising, run relative streng
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[R250-sector-rotation-rule-using-relative-strength-lines|Sector Rotation Rule Using Relative Strength Lines]]

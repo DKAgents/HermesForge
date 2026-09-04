@@ -38,3 +38,6 @@ Before acting on a 4-9-18 triple crossover signal, compute the oscillator spread
 - [[N062-macd-divergence-analysis]] — See MACD divergence analysis for classic oscillator weakness signals.
 
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — See Note A for detecting regime weakness to filter oscillator entries
+
+## Related Notes
+- [[N062-macd-divergence-analysis|MACD Divergence Analysis]]

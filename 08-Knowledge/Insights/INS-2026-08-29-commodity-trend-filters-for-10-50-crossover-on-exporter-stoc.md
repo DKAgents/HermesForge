@@ -31,3 +31,6 @@ Before trading a 10/50 crossover signal on stocks or ETFs from commodity-exporti
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-03-commodity-trend-filter-for-10-50-ma-stock-crossovers|Commodity Trend Filter for 10/50 MA Stock Crossovers]]

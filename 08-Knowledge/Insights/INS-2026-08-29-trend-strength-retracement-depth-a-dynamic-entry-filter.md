@@ -31,3 +31,6 @@ Instead of blindly entering on any 40-60% pullback, a trader should favor 38% re
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

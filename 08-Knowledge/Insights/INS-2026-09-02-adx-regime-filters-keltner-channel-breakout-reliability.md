@@ -31,3 +31,7 @@ Only take Keltner Channel breakout signals when ADX is rising; use secondary tre
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
