@@ -33,6 +33,8 @@ Before acting on a 4-9-18 triple crossover buy or sell signal, compute the (4-da
 **adds_condition** — Actionability score: 3/5
 
 ## Related
+- [[EN028-10-and-50-day-moving-average-crossover]] — Apply regime detection oscillator to filter 10/50 crossover signals
+
 - [[EN027-5-and-20-day-moving-average-crossover]] — See EN027-5-and-20-day-moving-average-crossover for a simpler crossover pair to test regime-detection via oscillator compression
 
 - [[N065-macd-indicator-construction]] — See MACD indicator construction for the oscillator reframing technique
