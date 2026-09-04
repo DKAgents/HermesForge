@@ -33,4 +33,8 @@ When a momentum oscillator signals oversold during an uptrend's secondary correc
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See Murphy's zero line crossing rule for the general trend-alignment requirement
+
+- [[EN086-counter-trend-oscillator-based-trading]] — McClellan Oscillator breadth filter for counter-trend oscillator signals
+
 - [[N159-mcclellan-oscillator]] — See N159-mcclellan-oscillator for the oscillator's calculation and standard signals
