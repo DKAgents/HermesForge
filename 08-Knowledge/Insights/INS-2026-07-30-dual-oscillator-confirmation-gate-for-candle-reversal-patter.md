@@ -33,6 +33,8 @@ Only trade candle reversal patterns when both RSI (>70 overbought / <30 oversold
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082 for the single-oscillator Stochastics presignal gate that this dual-oscillator condition builds upon.
+
 - [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for MACD as potential third oscillator filter
 
 - [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for trend-alignment requirement on oscillator signals
