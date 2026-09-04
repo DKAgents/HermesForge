@@ -36,4 +36,6 @@ After a Pivot Point buy signal (EN071) is triggered and the position survives th
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021 for the advance stop order principle underpinning the P&F trailing stop
+
 - [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for optimizing stop frequency via box size
