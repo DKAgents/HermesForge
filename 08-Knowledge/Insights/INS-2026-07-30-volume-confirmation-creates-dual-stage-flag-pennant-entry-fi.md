@@ -33,4 +33,6 @@ A trader should only enter a flag/pennant breakout if (1) volume visibly contrac
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R002-dow-averages-must-confirm-each-other]] — See R002-dow-averages-must-confirm-each-other for the parallel principle of requiring dual confirmation before acting on signals
+
 - [[EN008-volume-confirmation-at-pattern-completion]] — See EN008-volume-confirmation-at-pattern-completion for the foundational Murphy rule that underlies this filter
