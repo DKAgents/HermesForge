@@ -33,6 +33,8 @@ A trader using the 4-9-18 triple crossover system (N037) should calculate the os
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for how histogram momentum divergence precedes the gap compression used as regime filter
+
 - [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for applying overbought/oversold thresholds to triple-crossover oscillator gaps
 
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — Use triple crossover gap as regime filter before applying Murphy's oscillator entry rules

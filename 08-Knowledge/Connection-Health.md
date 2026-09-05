@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-05T19:35:40Z
+updated: 2026-09-05T23:37:47Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,13 +9,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 395 |
-| Connections created | 0 | 191 |
-| Review queue | 100 | 100 |
-| Avg score | 3.0 | — |
+| Notes examined | 5 | 400 |
+| Connections created | 1 | 192 |
+| Review queue | 101 | 101 |
+| Avg score | 3.4 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4189
+- Total wikilinks in vault: ~4190
 - Total notes: 2081
 - Avg degree per note: 2.013
 - Notes with links: 814 (39.2%)
@@ -28,12 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 34 notes, avg degree 0.03
 - `02-Backlog/Stories` — 67 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-09-05T19:35:40Z)
-- (no connections created this run)
+## Recent Discoveries (last run: 2026-09-05T23:37:47Z)
+- **08-Knowledge/Insights/INS-2026-07-31-triple-crossover-oscillator-gap-as-regime-filter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C154-macd-histogram-momentum-warning-signals.md** (score 4.0): Note A proposes using triple-crossover oscillator gaps as a regime filter, while Note B explains that MACD histogram narrowing/expansion precedes crossover signals. Together they reveal a sequential warning system: histogram momentum divergence (B) warns of weakening trends, which manifests as the gap compression described in (A) for regime detection.
 
 ## Reflection Notes
-- Run 74: Created 1 connections from 5 notes. Avg score: 4.4.
 - Run 75: Created 2 connections from 5 notes. Avg score: 4.0.
 - Run 76: Created 1 connections from 5 notes. Avg score: 3.4.
 - Run 77: Created 1 connections from 5 notes. Avg score: 2.6.
 - Run 78: Created 2 connections from 5 notes. Avg score: 3.7.
+- Run 80: Created 1 connections from 5 notes. Avg score: 3.4.
