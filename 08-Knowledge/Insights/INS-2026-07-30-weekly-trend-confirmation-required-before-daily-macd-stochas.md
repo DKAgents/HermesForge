@@ -33,6 +33,10 @@ Before acting on a daily MACD or Stochastics crossover signal, a trader should c
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — Use the Market Analysis Phase checklist to define weekly trend direction.
+
+- [[N065-macd-indicator-construction]] — See N065-macd-indicator-construction for the daily MACD structure that requires weekly trend filtering
+
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for trendline break method of weekly trend definition
 
 - [[N067-macd-histogram-as-early-warning-signal]] — Weekly MACD histogram as trend filter
