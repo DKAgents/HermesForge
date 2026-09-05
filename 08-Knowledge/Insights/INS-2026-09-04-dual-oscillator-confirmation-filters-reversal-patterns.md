@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C149-rsi-vs-stochastics-volatility-comparison", "N165-relative-strength-index-rsi-overboughtoversold-levels", "R177-filtered-candle-patterns-oscillator-alternatives"]
 seed_id: reversal_pattern_oscillator
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Dual Oscillator Confirmation Filters Reversal Patterns
 
 ## Discovery Summary

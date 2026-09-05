@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "EN069-price-gaps-as-support-and-resistance-for-timing", "RG035-combining-technical-factors-with-money-management-for-stop-p"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Using Gaps to Set Stops in Role-Reversal Zones
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When shorting a bounce into a prior support level that has become resistance, us
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

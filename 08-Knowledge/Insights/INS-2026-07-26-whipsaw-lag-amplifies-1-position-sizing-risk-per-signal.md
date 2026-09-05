@@ -44,4 +44,5 @@ When using the 10/50 crossover, a trader applying 1% position sizing should expl
 - [[C239-money-management-as-survival-mechanism]] — See C239-money-management-as-survival-mechanism for why this lag amplification threatens survival.
 
 ## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[R226-equity-curve-management-increase-commitments-after-drawdowns|Equity Curve Management: Increase Commitments After Drawdowns]]

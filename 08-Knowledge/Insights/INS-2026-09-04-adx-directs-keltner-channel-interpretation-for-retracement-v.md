@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX directs Keltner Channel interpretation for retracement vs breakout
 
 ## Discovery Summary

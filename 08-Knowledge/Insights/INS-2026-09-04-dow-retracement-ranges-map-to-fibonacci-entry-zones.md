@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C050-secondary-trend-retracement-range", "EN068-4060-retracement-zones-for-timing-entries", "N085-fibonacci-percentage-retracements-38-50-62"]
 seed_id: swing_low_entry_filter
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Dow retracement ranges map to Fibonacci entry zones
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When entering on pullbacks in an uptrend, prioritize the 50% retracement level a
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

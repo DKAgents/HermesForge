@@ -33,6 +33,8 @@ A trader should require above-average volume at the exact candle of pattern comp
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[N028-bull-trap-false-upside-breakout]] — See N028-bull-trap-false-upside-breakout for the classic bull trap pattern this volume gate is designed to avoid
+
 - [[R002-dow-averages-must-confirm-each-other]] — Confirmation across indices in Dow Theory
 
 - [[R052-filters-for-confirming-breakouts]] — See Murphy's additional breakout filters for layered confirmation beyond volume

@@ -33,6 +33,8 @@ Only act on oscillator oversold buy signals during a primary uptrend when the Mc
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — Validate oscillator signals with breadth oscillator
+
 - [[R145-combining-contrary-opinion-with-technical-tools]] — See R145-combining-contrary-opinion-with-technical-tools for timing oscillator signals with sentiment extremes
 
 - [[EN086-counter-trend-oscillator-based-trading]] — Validate with breadth oscillator
