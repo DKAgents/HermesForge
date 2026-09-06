@@ -36,6 +36,8 @@ JOURNAL_PATH = PAPER_DIR / "trade_journal.jsonl"
 CSV_PATH = PAPER_DIR / "trades.csv"
 MANIFEST_PATH = PAPER_DIR / "trade_journal_manifest.txt"
 
+CROSSPOST_STATE_PATH = pathlib.Path("/root/.hermes/crosspost_state.json")
+
 SNAPSHOT_DIR = PAPER_DIR / "snapshots"
 SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -88,6 +90,8 @@ def create_snapshot() -> dict:
         "date": today,
         "journal_sha256": "",
         "csv_sha256": "",
+        "crosspost_state_sha256": "",
+        "crosspost_state_bytes": 0,
         "journal_rows": 0,
         "manifest": {},
         "offbox_copied": False,
@@ -101,6 +105,9 @@ def create_snapshot() -> dict:
     result["journal_sha256"] = sha256_file(JOURNAL_PATH)
     if CSV_PATH.exists():
         result["csv_sha256"] = sha256_file(CSV_PATH)
+    if CROSSPOST_STATE_PATH.exists():
+        result["crosspost_state_sha256"] = sha256_file(CROSSPOST_STATE_PATH)
+        result["crosspost_state_bytes"] = CROSSPOST_STATE_PATH.stat().st_size
     result["manifest"] = _manifest_record()
 
     # Count journal rows
@@ -117,6 +124,8 @@ def create_snapshot() -> dict:
             shutil.copy2(CSV_PATH, snap_dir / "trades.csv")
         if MANIFEST_PATH.exists():
             shutil.copy2(MANIFEST_PATH, snap_dir / "manifest.txt")
+        if CROSSPOST_STATE_PATH.exists():
+            shutil.copy2(CROSSPOST_STATE_PATH, snap_dir / "crosspost_state.json")
 
         # Write snapshot metadata
         meta = snap_dir / "snapshot.json"
@@ -126,6 +135,8 @@ def create_snapshot() -> dict:
         print(f"Snapshot created: {snap_dir.name}")
         print(f"  journal: {result['journal_rows']} rows, sha256={result['journal_sha256'][:16]}...")
         print(f"  csv: sha256={result['csv_sha256'][:16]}...")
+        if result["crosspost_state_bytes"]:
+            print(f"  crosspost_state: {result['crosspost_state_bytes']} bytes, sha256={result['crosspost_state_sha256'][:16]}...")
     except Exception as e:
         result["error"] = str(e)
         print(f"Snapshot FAILED: {e}")
@@ -278,6 +289,7 @@ def main():
         result = create_snapshot()
         _update_data_manifest("snapshot_last_ok", _now_pt() if "error" not in result else f"FAIL: {result.get('error','')}")
         _update_data_manifest("snapshot_last_rows", str(result.get("journal_rows", 0)))
+        _update_data_manifest("crosspost_state_bytes", str(result.get("crosspost_state_bytes", 0)))
         if result.get("offbox_copied"):
             _update_data_manifest("offbox_last_ok", _now_pt())
 
