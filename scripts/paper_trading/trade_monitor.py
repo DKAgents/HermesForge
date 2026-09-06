@@ -357,6 +357,9 @@ def run(dry_run: bool = False, crypto_only: bool = False, stocks_only: bool = Fa
             continue
         if stocks_only and asset_class != "stock":
             continue
+        # US-125: STR-Q trades are closed by the 5m sweep, not Trade Monitor
+        if trade.get("strategy_id") == "STR-Q-liquidity-sweep":
+            continue
 
         short_id = trade.get("short_id", "?")
         ticker = trade["ticker"]
@@ -402,6 +405,9 @@ def run(dry_run: bool = False, crypto_only: bool = False, stocks_only: bool = Fa
             continue
         if stocks_only and asset_class != "stock":
             continue
+        # US-125: STR-Q trades are closed by the 5m sweep, not Trade Monitor
+        if trade.get("strategy_id") == "STR-Q-liquidity-sweep":
+            continue
 
         short_id = trade.get("short_id", "?")
         ticker = trade["ticker"]
@@ -446,6 +452,7 @@ def run(dry_run: bool = False, crypto_only: bool = False, stocks_only: bool = Fa
                     exit_result["exit_price"],
                     exit_result["exit_reason"],
                     bars_held=exit_result["bars_held"],
+                    closer="trade-monitor-60m",
                 )
         else:
             summary["still_open"] += 1

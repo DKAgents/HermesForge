@@ -428,7 +428,8 @@ def journal_open(signal_id: str, trade_dict: dict) -> str:
 
 def journal_close(signal_id: str, exit_date: str, exit_price: float,
                   exit_reason: str, r_multiple: float,
-                  bars_held: Optional[int] = None) -> str:
+                  bars_held: Optional[int] = None,
+                  closer: str = "") -> str:
     """Append a 'close' event.  Returns the JSON line written."""
     data = {
         "status": "closed",
@@ -439,6 +440,8 @@ def journal_close(signal_id: str, exit_date: str, exit_price: float,
     }
     if bars_held is not None:
         data["bars_held"] = str(bars_held)
+    if closer:
+        data["closer"] = closer
     return JOURNAL.append("close", signal_id, data)
 
 

@@ -35,6 +35,7 @@ FIELDS = [
     "r_multiple", "bars_held", "subperiod", "confirmation_level", "weekly_gate_scaling",
     "chart_path", "notes",
     "discord_message_id", "discord_channel_id", "discord_post_url",
+    "closer",  # US-125: which process closed this trade ("STR-Q-5m-sweep" or "trade-monitor-60m")
 ]
 
 
@@ -253,10 +254,14 @@ def open_trade(trade_dict: dict) -> str:
 
 
 def close_trade(trade_id: str, exit_date: str, exit_price: float, exit_reason: str,
-                 bars_held: Optional[int] = None) -> dict:
+                 bars_held: Optional[int] = None, closer: str = "") -> dict:
     """
     Update the trade's row: mark closed, compute r_multiple.
     Returns the updated row dict. Raises if trade_id not found or already closed.
+
+    US-125: `closer` identifies which process owns this close. Must be set on
+    every close call to enforce single exit authority per strategy.
+    Valid values: "STR-Q-5m-sweep" (intraday sweep), "trade-monitor-60m" (swing monitor).
     """
     rows = _read_all_rows()
     target_row = None
@@ -287,6 +292,7 @@ def close_trade(trade_id: str, exit_date: str, exit_price: float, exit_reason: s
     target_row["r_multiple"] = round(r_multiple, 4)
     if bars_held is not None:
         target_row["bars_held"] = bars_held
+    target_row["closer"] = closer
 
     _write_all_rows(rows)
     # US-123: dual-write to append-only journal (source of truth)
@@ -294,7 +300,7 @@ def close_trade(trade_id: str, exit_date: str, exit_price: float, exit_reason: s
     if sig:
         try:
             journal_close(sig, exit_date, exit_price, exit_reason, r_multiple,
-                          bars_held=bars_held)
+                          bars_held=bars_held, closer=closer)
         except ValueError:
             pass  # journal failure must not block the CSV path
     return target_row

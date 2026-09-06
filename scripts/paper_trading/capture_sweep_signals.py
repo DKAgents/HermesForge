@@ -586,14 +586,14 @@ def monitor_exits():
                 except Exception as e:
                     print(f"  Exit alert error for {ticker}: {e}")
                 
-                # US-123: dual-write to append-only journal
+                # US-123: dual-write to append-only journal (belt-and-suspenders with close_trade)
                 try:
                     from trade_journal import journal_close as _jc
                     sig = trade.get("signal_id", "")
                     if sig:
                         _bars = int(elapsed / (5 * 60)) if exit_reason == "time" else 0
                         _jc(sig, trade.get("exit_date", ""), exit_price,
-                            exit_reason, r, bars_held=_bars)
+                            exit_reason, r, bars_held=_bars, closer="STR-Q-5m-sweep")
                 except ValueError:
                     pass  # journal guard — don't block sweep
                 except Exception:
@@ -611,18 +611,33 @@ def monitor_exits():
         except Exception as e:
             print(f"  Monitor error for {ticker}: {e}")
     
-    # Write updated rows
+    # US-125: use trade_log.close_trade() with explicit closer — the single exit authority for STR-Q
     if result["closed"] > 0:
         for closure in result["closures"]:
-            for row in rows:
-                if row["trade_id"] == closure["trade_id"]:
-                    row["status"] = "closed"
-                    row["exit_date"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-                    row["exit_price"] = closure["exit_price"]
-                    row["exit_reason"] = closure["exit_reason"]
-                    row["r_multiple"] = closure["r_multiple"]
-                    break
-        trade_log._write_all_rows(rows)
+            try:
+                # Compute bars_held for time stops (all other exits: None = auto)
+                bars_val = None
+                if closure["exit_reason"] == "time":
+                    # approximate: timestamp diff from entry
+                    for trade in open_trades:
+                        if trade["trade_id"] == closure["trade_id"]:
+                            try:
+                                entry_ts = datetime.fromisoformat(str(trade.get("entry_date", "")))
+                                elapsed_sec = (datetime.now(timezone.utc) - entry_ts).total_seconds()
+                                bars_val = int(elapsed_sec / (5 * 60))
+                            except Exception:
+                                bars_val = 0
+                            break
+                trade_log.close_trade(
+                    closure["trade_id"],
+                    datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                    closure["exit_price"],
+                    closure["exit_reason"],
+                    bars_held=bars_val,
+                    closer="STR-Q-5m-sweep",
+                )
+            except ValueError as e:
+                print(f"  ⚠️ close_trade refused ({closure['trade_id']}): {e}")
     
     return result
 
