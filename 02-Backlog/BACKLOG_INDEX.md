@@ -90,6 +90,7 @@ Train 0 (Survive) first. No profile/cron DELETE verdicts issued (brief incomplet
 | US-129 | 0 | P1 | product-owner | Investigate Vault Maintenance retention vs RCA/cron evidence |
 | US-130 | 5 | P2 | publisher | Evaluate crosspost job overlap (356f3c vs 61cccd) |
 | US-131 | 0 | P1 | publisher | Protect crosspost_state.json (guard + snapshot class) |
+| US-132 | 2 | Medium | coder | Evaluate Microsoft MarkItDown for document ingestion |
 
 ---
 
