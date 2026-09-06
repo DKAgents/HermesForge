@@ -33,4 +33,6 @@ Before entering any EN071 pivot buy signal, calculate the distance from the entr
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts|RG020 protective sell stops on P&F charts for a potential resolution using smaller box sizes.
+
 - [[RG031-protective-stop-placement-as-an-art]] — See RG031 - Protective Stop Placement as an Art for balancing technical stops and money management
