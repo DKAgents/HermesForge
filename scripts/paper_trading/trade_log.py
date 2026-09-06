@@ -17,6 +17,12 @@ import pathlib
 import datetime
 from typing import Optional
 
+# US-123: Append-only journal — dual-write alongside CSV.
+# The journal is the source of truth; trades.csv is a derived projection.
+from trade_journal import (
+    journal_open, journal_close, journal_update_entry, journal_discord_info,
+)
+
 LOG_PATH = pathlib.Path(__file__).parent / "trades.csv"
 
 FIELDS = [
@@ -162,6 +168,13 @@ def register_discord_info(trade_id: str, message_id: str, channel_id: str,
             if post_url:
                 row["discord_post_url"] = post_url
             _write_all_rows(rows)
+            # US-123: dual-write to append-only journal
+            sig = row.get("signal_id", "")
+            if sig:
+                try:
+                    journal_discord_info(sig, message_id, channel_id, post_url)
+                except ValueError:
+                    pass
             return
     raise ValueError(f"trade_id not found: {trade_id}")
 
@@ -189,6 +202,13 @@ def update_entry_status(trade_id: str, entry_status: str) -> None:
         raise ValueError(f"trade_id not found: {trade_id}")
     target_row["entry_status"] = entry_status
     _write_all_rows(rows)
+    # US-123: dual-write to append-only journal
+    sig = target_row.get("signal_id", "")
+    if sig:
+        try:
+            journal_update_entry(sig, entry_status)
+        except ValueError:
+            pass
 
 
 def open_trade(trade_dict: dict) -> str:
@@ -220,6 +240,14 @@ def open_trade(trade_dict: dict) -> str:
 
     with open(LOG_PATH, "a", newline="") as f:
         csv.DictWriter(f, fieldnames=FIELDS).writerow(row)
+
+    # US-123: dual-write to append-only journal (source of truth)
+    signal_id = row.get("signal_id", "")
+    if signal_id:
+        try:
+            journal_open(signal_id, row)
+        except ValueError:
+            pass  # journal failure must not block the CSV path
 
     return trade_id
 
@@ -261,6 +289,14 @@ def close_trade(trade_id: str, exit_date: str, exit_price: float, exit_reason: s
         target_row["bars_held"] = bars_held
 
     _write_all_rows(rows)
+    # US-123: dual-write to append-only journal (source of truth)
+    sig = target_row.get("signal_id", "")
+    if sig:
+        try:
+            journal_close(sig, exit_date, exit_price, exit_reason, r_multiple,
+                          bars_held=bars_held)
+        except ValueError:
+            pass  # journal failure must not block the CSV path
     return target_row
 
 

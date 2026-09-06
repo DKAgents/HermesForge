@@ -74,6 +74,25 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 
 ---
 
+## Campaign 2026-09-aegis-rebuild (Aegis Rebuild, DEGRADED — filed 2026-09-06)
+
+Read-only T1 campaign. Reports: `reports/campaigns/2026-09-aegis-rebuild/`.
+Train 0 (Survive) first. No profile/cron DELETE verdicts issued (brief incomplete).
+
+| Story | Train | Priority | Owner | Description |
+|-------|-------|----------|-------|-------------|
+| US-123 | 0 | P0 | coder | Append-only trade journal; trades.csv becomes derived projection |
+| US-124 | 0 | P0 | no-agent | Brief-builder: real inventory.yaml + context-budgets + cost-30d |
+| US-125 | 0 | P0 | coder | Single exit authority (STR-Q 5m vs Trade Monitor 60m split) |
+| US-126 | 0 | P0 | no-agent | Snapshots ≥35d + off-box copy + weekly restore drill |
+| US-127 | 3 | P2 | coder | Coded strategy seeder feeding the reject-heavy filter |
+| US-128 | 0 | P1 | no-agent | Fear & Greed freshness check + fail-closed regime gate |
+| US-129 | 0 | P1 | product-owner | Investigate Vault Maintenance retention vs RCA/cron evidence |
+| US-130 | 5 | P2 | publisher | Evaluate crosspost job overlap (356f3c vs 61cccd) |
+| US-131 | 0 | P1 | publisher | Protect crosspost_state.json (guard + snapshot class) |
+
+---
+
 ## Deferred Items (Not Yet User Stories)
 
 These items are known but have not been promoted to user stories yet. They should be assigned US numbers when ready to work.

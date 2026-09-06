@@ -586,6 +586,19 @@ def monitor_exits():
                 except Exception as e:
                     print(f"  Exit alert error for {ticker}: {e}")
                 
+                # US-123: dual-write to append-only journal
+                try:
+                    from trade_journal import journal_close as _jc
+                    sig = trade.get("signal_id", "")
+                    if sig:
+                        _bars = int(elapsed / (5 * 60)) if exit_reason == "time" else 0
+                        _jc(sig, trade.get("exit_date", ""), exit_price,
+                            exit_reason, r, bars_held=_bars)
+                except ValueError:
+                    pass  # journal guard — don't block sweep
+                except Exception:
+                    pass
+                
                 result["closed"] += 1
                 result["closures"].append({
                     "trade_id": trade["trade_id"],
