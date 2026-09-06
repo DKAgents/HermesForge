@@ -386,10 +386,10 @@ def main():
     log_path, _ = write_run_log(summary, args.dry_run)
     print(f"\n  Log written: {log_path}")
 
-    # Purge old cron output (14-day retention) — added 2026-08-30
+    # Purge old cron output (35-day retention — US-133, aligns with snapshot horizon)
     cron_out = Path.home() / ".hermes" / "cron" / "output"
     if cron_out.exists():
-        cutoff_ts = time.time() - (14 * 86400)
+        cutoff_ts = time.time() - (35 * 86400)
         cron_purge = 0
         for f in cron_out.rglob("*"):
             if f.is_file():
