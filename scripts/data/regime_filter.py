@@ -411,6 +411,16 @@ def _compute_fear_greed(as_of=None):
         return result
     result["available"] = True
     result["freshness"], _ = _check_freshness(path, as_of)
+    
+    # US-128: Fail-closed on stale F&G — never make regime decisions on old data
+    if result["freshness"] in ("very_stale", "unavailable"):
+        result["value"] = 50
+        result["classification"] = "Neutral (stale feed)"
+        result["regime"] = "neutral"
+        result["score"] = 0.5
+        result["freshness_fail_closed"] = True  # audit trail
+        return result
+    
     val_col = "value" if "value" in df.columns else df.columns[0]
     cls_col = "classification" if "classification" in df.columns else None
     value = float(df[val_col].iloc[-1])
