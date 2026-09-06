@@ -57,6 +57,19 @@ def _read_all_rows() -> list[dict]:
 
 
 def _write_all_rows(rows: list[dict]) -> None:
+    # Backup the existing log before overwriting (defense against silent truncation)
+    if LOG_PATH.exists() and LOG_PATH.stat().st_size > 1000:
+        import shutil, time
+        bak = LOG_PATH.with_suffix(f".csv.bak.{int(time.time())}")
+        try:
+            shutil.copy2(LOG_PATH, bak)
+            # Keep only the last 20 backups (5-min writes = ~1.5 hours of recovery)
+            import glob
+            existing = sorted(glob.glob(str(LOG_PATH.with_suffix(".csv.bak.*"))))
+            for old in existing[:-20]:
+                pathlib.Path(old).unlink(missing_ok=True)
+        except OSError:
+            pass
     with open(LOG_PATH, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         writer.writeheader()
