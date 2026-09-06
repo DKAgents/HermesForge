@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-06T11:45:10Z
+updated: 2026-09-06T15:47:43Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 415 |
-| Connections created | 1 | 198 |
+| Notes examined | 5 | 420 |
+| Connections created | 0 | 198 |
 | Review queue | 110 | 110 |
-| Avg score | 3.2 | — |
+| Avg score | 1.4 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4255
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Edge-Candidates` — 34 notes, avg degree 0.03
 - `02-Backlog/Stories` — 67 notes, avg degree 0.09
 
-## Recent Discoveries (last run: 2026-09-06T11:45:10Z)
-- **08-Knowledge/Insights/INS-2026-07-31-volume-divergence-triggers-stop-adjustment-in-flag-pennant-b.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note B's rule to avoid stops at round numbers adds a spatial refinement to Note A's volume-based stop adjustment protocol, preventing premature stop-outs when tightening stops.
+## Recent Discoveries (last run: 2026-09-06T15:47:43Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 78: Created 2 connections from 5 notes. Avg score: 3.7.
