@@ -1,5 +1,0 @@
-journal_rows: 321
-sha256: 2d567bc112847635b340b1bac66845c82c340d9d3bb223d8767a842e8d2aeb1c
-last_signal_id: STR-VIXC-vix-contango-breakout_NEAR_2026-09-06
-last_timestamp: 2026-09-06T20:28:46.323602+00:00
-closed_count: 140
