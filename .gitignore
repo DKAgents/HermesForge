@@ -46,3 +46,4 @@ scripts/paper_trading/trade_journal.jsonl
 scripts/paper_trading/trade_journal_manifest.txt
 scripts/paper_trading/trades.csv
 scripts/paper_trading/trades.csv.bak*
+scripts/paper_trading/snapshots/
