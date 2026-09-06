@@ -75,6 +75,12 @@ from scanners.scanner_hormuz_oil_shock import scan as scan_oil_shock  # noqa: E4
 from scanners.scanner_l_atr_contraction import scan as scan_l   # noqa: E402
 from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-09-06): BTC Supply Crunch /
+# Thin-Float Breakout — Phase 1A mean R=+0.256 (p=0.0651), walk-forward OOS
+# mean R=+0.146 (p=0.326) → deployed WATCH with 0.5% risk. See
+# 06-Strategies/Hypotheses/STR-20260906-btc-supply-crunch.md.
+from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -98,6 +104,7 @@ _SCANNER_ALIASES = {
     "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
     "scan_l":       scan_l,       "scan_p":       scan_p,
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
+    "scan_btc_supply": scan_btc_supply,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).

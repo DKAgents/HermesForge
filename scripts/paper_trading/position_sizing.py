@@ -144,6 +144,7 @@ def size_strategy_vixc(*a, **k): return 0.5  # VIX contango breakout (WATCH)
 def size_strategy_lowcorr(*a, **k): return 0.5  # Low-correlation regime (WATCH)
 def size_strategy_debase(*a, **k): return 0.5  # Treasury debasement (WATCH, reduced risk)
 def size_strategy_oil_shock(*a, **k): return 0.5  # Oil shock sector rotation (WATCH, reduced risk)
+def size_strategy_btc_supply(*a, **k): return 0.5  # BTC supply crunch (WATCH, reduced risk)
 
 
 SIZING_FUNCTIONS = {
@@ -178,6 +179,7 @@ SIZING_FUNCTIONS = {
     "STR-LOWCORR-lowcorr-regime":          size_strategy_lowcorr,
     "STR-DEBASEMENT-treasury-buyback":     size_strategy_debase,
     "STR-OIL-SHOCK":                       size_strategy_oil_shock,
+    "STR-20260906-BTC-SUPPLY-CRUNCH":      size_strategy_btc_supply,
 }
 
 

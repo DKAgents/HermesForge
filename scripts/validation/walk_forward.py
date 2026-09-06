@@ -174,6 +174,33 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": False,
         "call_mode": "batch",
     },
+    "SUPPLY": {
+        "module": "scanner_btc_supply_crunch",
+        "scan_fn": "scan",
+        "name": "BTC Supply Crunch Breakout",
+        "params": {
+            "THIN_VOLUME_PCT": [30, 50],
+            "COMPRESSION_THRESHOLD": [0.10, 0.15],
+            "ATR_STOP_MULT": [2.0, 2.5],
+        },
+        "asset_class": "crypto",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+        "long_only": True,
+    },
+    "SENT": {
+        "module": "scanner_equity_crypto_sentiment_divergence",
+        "scan_fn": "scan",
+        "name": "Sentiment Divergence Regime",
+        "params": {
+            "FEAR_VIX_THRESHOLD": [18.0, 22.0],
+            "FG_GREED_THRESHOLD": [60, 70],
+            "DIVERGENCE_SPREAD_MIN": [20, 30],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": True,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -188,6 +215,8 @@ QUICK_PARAMS = {
     "LOWCORR": {"CORR_THRESHOLD": [0.25], "ATR_STOP_MULT": [2.0], "MAX_BARS_HELD": [10]},
     "DEBASE": {"ATR_STOP_MULT": [1.5], "PULLBACK_PCT": [0.10], "MIN_RR": [2.0]},
     "OS": {"SPIKE_PCT": [3.5], "ATR_STOP_MULT": [2.0], "MIN_RR": [1.5]},
+    "SUPPLY": {"THIN_VOLUME_PCT": [50], "COMPRESSION_THRESHOLD": [0.15], "ATR_STOP_MULT": [2.5]},
+    "SENT": {"FEAR_VIX_THRESHOLD": [20.0], "FG_GREED_THRESHOLD": [65], "DIVERGENCE_SPREAD_MIN": [25]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────
