@@ -33,6 +33,10 @@ A trader should require measurable above-average volume at breakout before enter
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[N043-flag-and-pennant-summary-characteristics]] — See N043 for pattern-specific volume confirmation requirements
+
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for momentum confirmation layer
+
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See Murphy's foundational breakout volume rule
 
 - [[N118-hpi-divergence-analysis-warning-of-trend-change]] — See HPI divergence for another pre-price warning signal

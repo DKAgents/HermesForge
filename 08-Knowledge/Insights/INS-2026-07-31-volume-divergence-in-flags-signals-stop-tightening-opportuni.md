@@ -31,3 +31,8 @@ When trading flag or pennant breakouts, if volume does not surge above consolida
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003-protective-stop-placement-relative-to-round-numbers for stop placement when tightening on volume divergence
+
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — Tighten stops on volume-confirmed breakout failure
