@@ -87,10 +87,13 @@ Train 0 (Survive) first. No profile/cron DELETE verdicts issued (brief incomplet
 | US-126 | 0 | P0 | no-agent | Snapshots ≥35d + off-box copy + weekly restore drill |
 | US-127 | 3 | P2 | coder | Coded strategy seeder feeding the reject-heavy filter |
 | US-128 | 0 | P1 | no-agent | Fear & Greed freshness check + fail-closed regime gate |
-| US-129 | 0 | P1 | product-owner | Investigate Vault Maintenance retention vs RCA/cron evidence |
+| US-129 | 0 | P1 | product-owner | ✅ Investigate Vault Maintenance retention vs RCA/cron evidence — 14d gap found, US-133/134/135 filed |
 | US-130 | 5 | P2 | publisher | Evaluate crosspost job overlap (356f3c vs 61cccd) |
 | US-131 | 0 | P1 | publisher | Protect crosspost_state.json (guard + snapshot class) |
 | US-132 | 2 | Medium | coder | Evaluate Microsoft MarkItDown for document ingestion |
+| US-133 | 0 | P1 | coder | Extend cron output retention to ≥35 days (US-129 follow-up) |
+| US-134 | 0 | P2 | coder | Add cron output + maintenance logs to snapshot payload |
+| US-135 | 0 | P3 | coder | Add incident log and guardian decisions to snapshot payload |
 
 ---
 
