@@ -1,0 +1,14 @@
+{
+  "date": "20260906",
+  "journal_sha256": "2d567bc112847635b340b1bac66845c82c340d9d3bb223d8767a842e8d2aeb1c",
+  "csv_sha256": "4265a72077efdc7aba8de1a1d3ac883d7392b2aa0e88c009ff30aa38ce316b67",
+  "journal_rows": 321,
+  "manifest": {
+    "journal_rows": "321",
+    "sha256": "2d567bc112847635b340b1bac66845c82c340d9d3bb223d8767a842e8d2aeb1c",
+    "last_signal_id": "STR-VIXC-vix-contango-breakout_NEAR_2026-09-06",
+    "last_timestamp": "2026-09-06T20:28:46.323602+00:00",
+    "closed_count": "140"
+  },
+  "offbox_copied": false
+}
