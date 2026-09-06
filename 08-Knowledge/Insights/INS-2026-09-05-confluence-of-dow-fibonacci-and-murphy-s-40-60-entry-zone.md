@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C050-secondary-trend-retracement-range", "EN068-4060-retracement-zones-for-timing-entries", "N085-fibonacci-percentage-retracements-38-50-62"]
 seed_id: swing_low_entry_filter
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Confluence of Dow, Fibonacci, and Murphy's 40-60% Entry Zone
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Use the 40-60% retracement zone as the primary entry window; in strong trends ex
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

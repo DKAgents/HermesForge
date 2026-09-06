@@ -27,6 +27,7 @@ Long-term charts do not require adjustment for inflation because markets themsel
 > "Many markets fail at historic resistance levels set several years earlier and then bounce off support levels not seen in several years." — John J. Murphy
 
 ## Related Notes
+- [[INS-2026-09-05-support-resistance-levels-set-stops-and-position-size|Support/Resistance Levels Set Stops and Position Size]]
 - [[C336-support-level|Support Level]]
 - [[C334-resistance-level|Resistance Level]]
 

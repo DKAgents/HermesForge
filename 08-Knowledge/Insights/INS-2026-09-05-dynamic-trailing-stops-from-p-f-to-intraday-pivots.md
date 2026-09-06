@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Dynamic Trailing Stops from P&F to Intraday Pivots
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ After entering a long on EN071's pivot point buy signal above the previous day's
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

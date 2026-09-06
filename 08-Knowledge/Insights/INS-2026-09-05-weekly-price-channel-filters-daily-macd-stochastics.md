@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "C130-the-weekly-rule-price-channel-as-trend-following-alternative", "N044-long-term-moving-averages-on-weekly-charts"]
 seed_id: trend_filter_entry
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Weekly Price Channel Filters Daily MACD/Stochastics
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Define the weekly trend with a price channel (e.g., 4-week high-low breakout) an
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C130-the-weekly-rule-price-channel-as-trend-following-alternative|The Weekly Rule (Price Channel) as Trend-Following Alternative]]

@@ -1,10 +1,48 @@
 [
   {
-    "book": "sshfs-vps-vault-mount",
-    "anchor_index_size": 1,
-    "notes_processed": 1,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "08-Knowledge",
+    "anchor_index_size": 1437,
+    "notes_processed": 1783,
+    "notes_linked": 6,
+    "total_links_added": 7,
+    "sample": [
+      {
+        "note": "INS-2026-09-05-dynamic-trailing-stops-from-p-f-to-intraday-pivots.md",
+        "links": [
+          "RG022-pf-stop-placement-rule",
+          "EN071-pivot-point-buy-signal-rules"
+        ]
+      },
+      {
+        "note": "INS-2026-09-05-weekly-price-channel-filters-daily-macd-stochastics.md",
+        "links": [
+          "C130-the-weekly-rule-price-channel-as-trend-following-alternative"
+        ]
+      },
+      {
+        "note": "INS-2026-09-05-support-resistance-levels-set-stops-and-position-size.md",
+        "links": [
+          "C334-resistance-level"
+        ]
+      },
+      {
+        "note": "INS-2026-09-05-volume-confirms-breakaway-gaps-as-valid-breakouts.md",
+        "links": [
+          "INS-2026-08-28-volume-confirms-breakaway-gap-validity"
+        ]
+      },
+      {
+        "note": "INS-2026-09-05-confluence-of-dow-fibonacci-and-murphy-s-40-60-entry-zone.md",
+        "links": [
+          "C050-secondary-trend-retracement-range"
+        ]
+      },
+      {
+        "note": "C115-no-inflation-adjustment-needed-for-long-term-charts.md",
+        "links": [
+          "INS-2026-09-05-support-resistance-levels-set-stops-and-position-size"
+        ]
+      }
+    ]
   }
 ]

@@ -7,8 +7,11 @@ domains: [concepts, patterns, rules]
 sources: ["N150-price-gaps-types", "R082-breakouts-must-be-accompanied-by-heavy-volume", "C328-gaps"]
 seed_id: gap_continuation_volume
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume confirms breakaway gaps as valid breakouts
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Only enter in the direction of a gap if it is accompanied by significantly heavy
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-28-volume-confirms-breakaway-gap-validity|Volume Confirms Breakaway Gap Validity]]
