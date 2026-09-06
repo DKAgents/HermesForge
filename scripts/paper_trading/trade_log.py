@@ -57,35 +57,61 @@ def _read_all_rows() -> list[dict]:
 
 
 def _write_all_rows(rows: list[dict]) -> None:
-    # Integrity check: detect sudden data loss (>20% drop in row count)
+    """Atomic write: temp file → validate → rename.
+    
+    NEVER truncates the original file before the new write is confirmed.
+    Validates row count hasn't dropped by >20% from the existing file.
+    On failure: raises ValueError, leaves original file untouched.
+    """
+    import shutil, os
+    
     prev_count = 0
     if LOG_PATH.exists():
         try:
             prev_count = sum(1 for _ in open(LOG_PATH)) - 1  # minus header
         except OSError:
-            pass
-        if prev_count > 50 and len(rows) < prev_count * 0.8:
-            import sys
-            print(f"  ⚠️ WARNING: trades.csv shrinking {prev_count}→{len(rows)} rows "
-                  f"({(1 - len(rows)/prev_count)*100:.0f}% drop). Backup preserved.", 
-                  file=sys.stderr)
-    # Backup the existing log before overwriting (defense against silent truncation)
-    if LOG_PATH.exists() and LOG_PATH.stat().st_size > 1000:
-        import shutil, time
-        bak = LOG_PATH.with_suffix(f".csv.bak.{int(time.time())}")
-        try:
-            shutil.copy2(LOG_PATH, bak)
-            # Keep only the last 20 backups (5-min writes = ~1.5 hours of recovery)
-            import glob
-            existing = sorted(glob.glob(str(LOG_PATH.with_suffix(".csv.bak.*"))))
-            for old in existing[:-20]:
-                pathlib.Path(old).unlink(missing_ok=True)
-        except OSError:
-            pass
-    with open(LOG_PATH, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDS)
-        writer.writeheader()
-        writer.writerows(rows)
+            prev_count = 0
+    
+    # � Gate 1: refuse to write if row count dropped >20% and >50 rows
+    if prev_count > 50 and len(rows) < prev_count * 0.8:
+        raise ValueError(
+            f"REFUSED: trades.csv would shrink {prev_count}→{len(rows)} rows "
+            f"({(1 - len(rows)/prev_count)*100:.0f}% drop). "
+            f"Original file preserved. Investigate the caller."
+        )
+    
+    # Gate 2: refuse to write empty rows when file has data
+    if prev_count > 10 and len(rows) == 0:
+        raise ValueError(
+            f"REFUSED: would overwrite {prev_count} rows with empty file. "
+            f"Original file preserved."
+        )
+    
+    # Atomic write: temp file → validate → rename
+    tmp = LOG_PATH.with_suffix(".tmp")
+    try:
+        with open(tmp, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=FIELDS)
+            writer.writeheader()
+            writer.writerows(rows)
+            f.flush()
+            os.fsync(f.fileno())   # force to disk
+        
+        # Verify the temp file is valid
+        with open(tmp, newline="") as f:
+            verify = list(csv.DictReader(f))
+        if len(verify) != len(rows):
+            raise ValueError(
+                f"Write verification failed: wrote {len(rows)} rows, "
+                f"read back {len(verify)} rows. Temp file discarded."
+            )
+        
+        # Atomic replace (rename is atomic on same filesystem)
+        shutil.move(str(tmp), str(LOG_PATH))
+    except Exception:
+        # Clean up temp file on any failure
+        tmp.unlink(missing_ok=True)
+        raise
 
 
 def has_open_trade(strategy_id: str, ticker: str) -> bool:
