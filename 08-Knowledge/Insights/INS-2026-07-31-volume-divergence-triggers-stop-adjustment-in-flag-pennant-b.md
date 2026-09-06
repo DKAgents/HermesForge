@@ -31,3 +31,6 @@ When a flag or pennant breakout occurs on below-average volume, tighten the stop
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid round numbers when adjusting stops based on volume divergence
