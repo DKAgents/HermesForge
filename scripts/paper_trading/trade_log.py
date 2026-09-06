@@ -57,6 +57,18 @@ def _read_all_rows() -> list[dict]:
 
 
 def _write_all_rows(rows: list[dict]) -> None:
+    # Integrity check: detect sudden data loss (>20% drop in row count)
+    prev_count = 0
+    if LOG_PATH.exists():
+        try:
+            prev_count = sum(1 for _ in open(LOG_PATH)) - 1  # minus header
+        except OSError:
+            pass
+        if prev_count > 50 and len(rows) < prev_count * 0.8:
+            import sys
+            print(f"  ⚠️ WARNING: trades.csv shrinking {prev_count}→{len(rows)} rows "
+                  f"({(1 - len(rows)/prev_count)*100:.0f}% drop). Backup preserved.", 
+                  file=sys.stderr)
     # Backup the existing log before overwriting (defense against silent truncation)
     if LOG_PATH.exists() and LOG_PATH.stat().st_size > 1000:
         import shutil, time
