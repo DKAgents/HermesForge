@@ -115,12 +115,12 @@ class TradeJournal:
         if not signal_id:
             _refuse("empty signal_id")
 
-        # ── Guard 2: refuse backward signal_id ──
-        if self._last_signal_id is not None:
-            if signal_id < self._last_signal_id:
-                _refuse(
-                    f"backward signal_id: '{signal_id}' < last '{self._last_signal_id}'"
-                )
+        # ── Guard 2: refuse backward timestamp ──
+        # Note: signal_id sort varies by strategy prefix (STR-Q < STR-VIXC).
+        # Timestamp ordering is the correct chronological invariant.
+        ts = _now_utc_iso()
+        if self._last_timestamp is not None and ts < self._last_timestamp:
+            _refuse(f"backward timestamp: '{ts}' < last '{self._last_timestamp}'")
 
         # ── Guard 3: refuse duplicate close ──
         if event_type == "close" and signal_id in self._closed_signal_ids:
@@ -278,6 +278,7 @@ CSV_FIELDS = [
     "r_multiple", "bars_held", "subperiod", "confirmation_level", "weekly_gate_scaling",
     "chart_path", "notes",
     "discord_message_id", "discord_channel_id", "discord_post_url",
+    "closer",  # US-125: which process closed this trade
 ]
 
 
@@ -550,13 +551,14 @@ def _test():
         except ValueError as e:
             assert "empty" in str(e).lower()
 
-        # ── Test 4: backward signal_id refused ──
-        try:
-            JOURNAL.append("open", "AAA-EARLIER", {"ticker": "X"})
-            assert False, "should have refused backward signal_id"
-        except ValueError as e:
-            assert "backward" in str(e).lower()
-
+        # ── Test 4: different strategy prefixes accepted ──
+        # Signal_ids vary by strategy prefix (STR-Q < STR-VIXC).
+        # Timestamp guard is the correct chronological invariant.
+        sig_q = "STR-Q_TEST_2026-09-06_2300"
+        JOURNAL.append("open", sig_q, {"ticker": "BTC"})
+        rows = JOURNAL.replay()
+        found = [r for r in rows if r.get("ticker") == "BTC" and "STR-Q" in r.get("signal_id","")]
+        assert len(found) >= 1, f"STR-Q not in replay"
         # ── Test 5: mid-write crash leaves journal intact ──
         # (Tested by atomic append — tmp file never becomes live on crash)
         # Verify journal is valid JSONL
@@ -573,7 +575,7 @@ def _test():
             for line in f:
                 k, _, v = line.partition(": ")
                 manifest[k.strip()] = v.strip()
-        assert int(manifest.get("journal_rows", 0)) == 2  # open + close
+        assert int(manifest.get("journal_rows", 0)) == 3  # open1 + close1 + open2 (test 4)
 
         print("✅ All trade_journal.py unit tests passed")
 
