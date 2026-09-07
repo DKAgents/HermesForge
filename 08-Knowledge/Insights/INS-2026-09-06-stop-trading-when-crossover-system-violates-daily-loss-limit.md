@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "EN028-10-and-50-day-moving-average-crossover", "C128-moving-averages-as-oscillators-via-double-crossover"]
 seed_id: drawdown_system_shutdown
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Stop trading when crossover system violates daily loss limits
 
 ## Discovery Summary

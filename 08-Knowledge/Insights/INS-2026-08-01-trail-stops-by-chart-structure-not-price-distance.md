@@ -34,3 +34,8 @@ After a pivot point buy signal from EN071 is triggered, use the current day's lo
 
 ## Related Notes
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
+
+## Related
+- [[N098-parabolic-sar-stop-and-reverse-system]] — Compare with indicator-based trailing stops like Parabolic SAR
+
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021-use-of-advance-stop-orders-in-point-and-figure-trading for the execution discipline behind structural trailing
