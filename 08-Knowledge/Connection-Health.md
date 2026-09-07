@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-07T12:00:19Z
+updated: 2026-09-07T16:04:21Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 445 |
-| Connections created | 1 | 204 |
-| Review queue | 113 | 113 |
-| Avg score | 3.7 | — |
+| Notes examined | 5 | 450 |
+| Connections created | 0 | 204 |
+| Review queue | 115 | 115 |
+| Avg score | 3.6 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4310
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 8 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-07T12:00:19Z)
-- **08-Knowledge/Insights/INS-2026-08-01-use-breadth-oscillator-to-validate-counter-trend-entries-in-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R268-technical-analysis-checklist-market-analysis-phase.md** (score 4.0): The checklist includes a general step to check oscillator overbought/oversold status, while Note A provides a more specific rule: use a breadth oscillator to validate counter-trend entries in primary trends, filtering out false signals from single-stock momentum extremes.
+## Recent Discoveries (last run: 2026-09-07T16:04:21Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 83: Created 1 connections from 5 notes. Avg score: 3.2.
