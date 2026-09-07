@@ -33,4 +33,6 @@ When a secondary-trend pullback occurs within a primary uptrend and a price-base
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — Refine oscillator step with breadth oscillator validation
+
 - [[EN086-counter-trend-oscillator-based-trading]] — See EN086-counter-trend-oscillator-based-trading for the base rule that this insight refines with breadth confirmation.
