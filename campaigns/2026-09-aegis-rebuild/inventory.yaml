@@ -1,3 +1,538 @@
-campaign_id: 2026-09-aegis-rebuild
-hermes_home_aegis: /root/.hermes/profiles/aegis-auditor
-forge_root: /root/HermesForge
+# US-124: HermesForge Inventory & Cost Summary
+# Campaign: 2026-09-aegis-rebuild
+# Generated: 2026-09-07T02:00 UTC (approx)
+# Display TZ: America/Los_Angeles
+# Mode: read-only — no production code changed
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROFILES (13 — 12 active swarm + 1 campaign-only aegis-auditor)
+# ═══════════════════════════════════════════════════════════════════════════════
+profiles:
+  - name: orchestrator
+    soul_bytes: 3425
+    model_floor: T2
+    role: Coordinate Forge Loop, prioritize backlog, delegate to specialists
+    standing: hot  # active in every user session
+
+  - name: architect
+    soul_bytes: 1270
+    model_floor: T2
+    role: Design technical architecture, evaluate trade-offs
+    standing: on-demand
+
+  - name: coder
+    soul_bytes: 2834
+    model_floor: T2
+    role: Implement features, fix bugs, write tests, maintain codebase
+    standing: on-demand
+
+  - name: publisher
+    soul_bytes: 2740
+    model_floor: T2
+    role: Sole owner of embed/chart/alert/template/crosspost files (9 files)
+    standing: on-demand
+    monopoly: true  # governance invariant — never collapse
+
+  - name: risk-guardian
+    soul_bytes: 1507
+    model_floor: T2
+    role: Review all trading logic, enforce 1% position cap, veto power
+    standing: on-demand
+    monopoly: true  # governance invariant — never collapse
+
+  - name: researcher
+    soul_bytes: 1422
+    model_floor: T2/T3
+    role: Market research, strategy discovery, data analysis
+    standing: on-demand
+
+  - name: backtester
+    soul_bytes: 1476
+    model_floor: T2
+    role: Phase-1A/B and walk-forward validation of strategies
+    standing: on-demand
+
+  - name: red-team
+    soul_bytes: 2139
+    model_floor: T2
+    role: Adversarial review — try to break strategies
+    standing: on-demand  # may become periodic, not standing
+
+  - name: product-owner
+    soul_bytes: 1573
+    model_floor: T3
+    role: Backlog grooming, story prioritization
+    standing: on-demand
+
+  - name: documenter
+    soul_bytes: 1404
+    model_floor: T3
+    role: Maintain Obsidian vault knowledge graph
+    standing: on-demand  # may become coder skill after inventory
+
+  - name: trading
+    soul_bytes: 513
+    model_floor: T3
+    role: General-purpose trading assistant
+    standing: on-demand  # surface, not judgment loop
+
+  - name: consulting
+    soul_bytes: 513
+    model_floor: T3
+    role: General-purpose consulting assistant
+    standing: on-demand  # surface, not judgment loop
+
+  - name: aegis-auditor
+    soul_bytes: 556
+    model_floor: T1
+    role: Campaign-only — runs rebuild campaigns when invoked
+    standing: campaign-only
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CRON JOBS (24 — 22 enabled, 2 paused/completed)
+# ═══════════════════════════════════════════════════════════════════════════════
+cron_jobs:
+  # ── Trading Pipeline (5 jobs) ──
+  - id: b9fb0afb1e29
+    name: STR-Q Intraday Sweep Capture
+    schedule: "*/5 * * * *"
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    deliver: local
+    enabled: true
+    category: trading
+
+  - id: 3f49a07a2f04
+    name: Daily Signal Scanner → Discord Publisher
+    schedule: "45 14 * * *"
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    deliver: local
+    script: daily_publish_wrapper.sh
+    enabled: true
+    category: trading
+
+  - id: 4b178ecc02cd
+    name: Paper Trading Capture (A/B/D)
+    schedule: "50 14 * * *"
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    deliver: origin
+    script: capture_signals_wrapper.sh
+    enabled: true
+    category: trading
+
+  - id: d1e07c3f4543
+    name: HermesForge Trade Monitor [T3]
+    schedule: every 60m
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 3000, output: 800}
+    est_cost_30d: 0.17
+    category: trading
+    note: >
+      Monitors open trades for ENTRY/STOP/TARGET/TIME events.
+      Skips STR-Q per ADR-006 (single exit authority).
+
+  - id: cb22b038a6d6
+    name: HermesForge Paper Trading Performance Report [T3]
+    schedule: "0 13 * * *"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 5000, output: 1000}
+    est_cost_30d: 0.01
+    category: trading
+
+  # ── Strategy Pipeline (4 jobs) ──
+  - id: e214a9d8f348
+    name: HermesForge External Edge Discovery [T3]
+    schedule: "0 16 * * 2,4,0"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: "discord:1534834809451450409"
+    enabled: true
+    est_tokens_per_run: {input: 12000, output: 2500}
+    est_cost_30d: 0.01
+    category: strategy
+
+  - id: 2d8dff498d1f
+    name: HermesForge Autonomous Strategy Pipeline [T3]
+    schedule: "0 17 * * 2,4,0"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: "discord:1534834809451450409"
+    enabled: true
+    est_tokens_per_run: {input: 10000, output: 3000}
+    est_cost_30d: 0.01
+    category: strategy
+
+  - id: 9202661b7823
+    name: HermesForge Weekly Research Pipeline [T3]
+    schedule: "0 12 * * 0"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: "discord:1534834809451450409"
+    enabled: true
+    est_tokens_per_run: {input: 10000, output: 2000}
+    est_cost_30d: 0.00  # weekly
+    category: strategy
+
+  - id: 07149d6b05cc
+    name: Weekly Model Assignment Review [T3]
+    schedule: "0 9 * * 1"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    script: model_review.py
+    deliver: "discord:1528549094157586543"
+    enabled: true
+    est_tokens_per_run: {input: 3000, output: 800}
+    est_cost_30d: 0.00  # weekly
+    category: strategy
+
+  # ── Market Intelligence (3 jobs) ──
+  - id: 79c465c541f2
+    name: CRON-001-Market-Intelligence [T3]
+    schedule: "0 13 * * 1-5"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: "discord:1532020053548208328"
+    enabled: true
+    est_tokens_per_run: {input: 12000, output: 3000}
+    est_cost_30d: 0.02
+    category: intelligence
+
+  - id: 232975d5fc83
+    name: HermesForge Connection Discovery [T3]
+    schedule: "0 4 * * *"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    script: discover_connections_wrapper.sh
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 8000, output: 1500}
+    est_cost_30d: 0.01
+    category: intelligence
+
+  - id: 98edbe73d115
+    name: Vault Connection Weaver
+    schedule: every 240m
+    agent: agent
+    model: deepseek/deepseek-v4-pro
+    tier: T2
+    deliver: local
+    enabled: true
+    est_tokens_per_run: {input: 12000, output: 2000}
+    est_cost_30d: 1.18
+    category: intelligence
+    note: >
+      Only T2 cron job. Runs 180×/month at $0.0066/run.
+      Largest single cost item. Candidate for T3 migration if quality holds.
+
+  # ── Infrastructure (6 jobs) ──
+  - id: 9d77b5c75db7
+    name: HermesForge Vault Maintenance [T3]
+    schedule: "0 2 * * *"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 3000, output: 500}
+    est_cost_30d: 0.01
+    category: infra
+
+  - id: df2caa178eaa
+    name: Daily Git Push to GitHub
+    schedule: every day at 3am
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: daily_git_push.sh
+    deliver: local
+    enabled: true
+    category: infra
+
+  - id: 65dfc591efad
+    name: Cron Watchdog (no-agent)
+    schedule: "*/15 * * * *"
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: cron_watchdog.py
+    deliver: local
+    enabled: true
+    category: infra
+
+  - id: 61cccd31ed5c
+    name: Webhook Crosspost All Channels
+    schedule: "*/5 * * * *"
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: crosspost_webhook_all.sh
+    deliver: local
+    enabled: true
+    category: infra
+
+  - id: 291708a04c39
+    name: Trade Journal Daily Snapshot (US-126)
+    schedule: every day at 3am
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: dump_snapshot.sh
+    deliver: local
+    enabled: true
+    category: infra
+
+  - id: dfa4ab05ea77
+    name: Weekly Restore Drill (US-126)
+    schedule: every sunday 8am
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: restore_drill.sh
+    deliver: local
+    enabled: true
+    category: infra
+
+  # ── Content (4 jobs) ──
+  - id: 98a07007974b
+    name: LinkedIn Post Generator [T3]
+    schedule: "30 5 * * 2,4"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: "discord:1518731579067728003"
+    enabled: true
+    est_tokens_per_run: {input: 15000, output: 4000}
+    est_cost_30d: 0.01
+    category: content
+
+  - id: 23471396797f
+    name: STR-Q Position Size Re-eval Check [T3]
+    schedule: every monday 9am
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 3000, output: 500}
+    est_cost_30d: 0.00  # weekly
+    category: content
+
+  - id: e3c306f58545
+    name: Daily F&G Fetch + Freshness Check (US-128)
+    schedule: every day at 11am
+    agent: no-agent
+    model: N/A
+    tier: N/A
+    script: fetch_fg_daily.sh
+    deliver: local
+    enabled: true
+    category: content
+
+  - id: a76bfb516675
+    name: ADR-005 Rollout Readiness Check
+    schedule: "0 14 * * 1"
+    agent: agent
+    model: deepseek/deepseek-v4-flash
+    tier: T3
+    deliver: origin
+    enabled: true
+    est_tokens_per_run: {input: 3000, output: 500}
+    est_cost_30d: 0.00  # weekly
+    category: content
+
+  # ── Paused / Completed ──
+  - id: 356f3c4fb973
+    name: Auto-Crosspost Daily Briefing
+    status: paused
+    reason: US-130 — redundant with 61cccd; stays paused unless rollback required
+    category: paused
+
+  - id: 2b4f6fa206fe
+    name: US-120 Advanced Options Reminder [T3]
+    status: completed
+    reason: one-shot fired 2026-09-02; completed
+    category: completed
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CRON SUMMARY
+# ═══════════════════════════════════════════════════════════════════════════════
+cron_summary:
+  total: 24
+  enabled: 22
+  paused: 1
+  completed: 1
+  by_agent_type:
+    no_agent: 10
+    agent_T3: 11
+    agent_T2: 1
+  by_category:
+    trading: 5
+    strategy: 4
+    intelligence: 3
+    infra: 6
+    content: 4
+    paused_completed: 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DISCORD CHANNELS (8 source + LinkedIn)
+# ═══════════════════════════════════════════════════════════════════════════════
+channels:
+  - id: "1528555538848153640"
+    name: stock-setups
+    purpose: Daily swing stock entries (STR-A, B, D, I, L, V)
+    crosspost: true
+
+  - id: "1528555885310513213"
+    name: crypto-setups
+    purpose: Daily swing crypto entries
+    crosspost: true
+
+  - id: "1532020053548208328"
+    name: daily-market-briefing
+    purpose: Market Intelligence daily briefing (Mon-Fri 13:00)
+    crosspost: true
+
+  - id: "1533332485641998386"
+    name: strategy-status
+    purpose: Strategy status updates
+    crosspost: true
+    note: "No cron job posts here currently — content gap"
+
+  - id: "1534834809451450409"
+    name: strategy-research
+    purpose: Edge discovery, strategy pipeline output, heatmaps
+    crosspost: true
+
+  - id: "1537225420120793088"
+    name: paper-trading
+    purpose: Performance reports, trade entries/exits
+    crosspost: true
+
+  - id: "1540951134200402071"
+    name: day-trade-crypto
+    purpose: STR-Q crypto trade entries + exits
+    crosspost: true
+
+  - id: "1540951208028803142"
+    name: day-trade-stocks
+    purpose: STR-Q stock trade entries + exits
+    crosspost: true
+
+  - id: "1518731579067728003"
+    name: LinkedIn-drafts
+    purpose: LinkedIn post drafts (manual crosspost to LinkedIn)
+    crosspost: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DATA ROOTS — disk usage and retention
+# ═══════════════════════════════════════════════════════════════════════════════
+data_roots:
+  - path: /root/HermesForge/scripts/paper_trading/trades.csv
+    type: file
+    size_kb: 268
+    description: Derived CSV projection — rebuilt from journal
+    retention: indefinite (rebuildable)
+    us126_snapshot: true
+
+  - path: /root/HermesForge/scripts/paper_trading/trade_journal.jsonl
+    type: file
+    size_kb: 1040
+    description: Append-only JSONL journal — source of truth
+    retention: indefinite
+    us126_snapshot: true
+    guard: atomic append + 4 validation gates
+
+  - path: /root/HermesForge/scripts/paper_trading/snapshots
+    type: directory
+    size_mb: 0.9
+    files: 10
+    description: Daily snapshots of journal + CSV + crosspost_state
+    retention: 35 days
+    us126_snapshot: N/A (this IS the snapshot dir)
+
+  - path: /root/.hermes/cron/output
+    type: directory
+    size_mb: 1.9
+    files: 428
+    description: Cron execution records (all 21+ jobs)
+    retention: 35 days (US-133, was 14 days)
+    us126_snapshot: false (US-134 to add)
+
+  - path: /root/.hermes/market_data
+    type: directory
+    size_mb: 61.2
+    files: 1090
+    description: Cached market data (parquet files — VIX, DXY, crypto, F&G, etc.)
+    retention: indefinite (cache, not log)
+    us126_snapshot: false
+
+  - path: /root/.hermes/signal_charts
+    type: directory
+    size_mb: 807.4
+    files: 8497
+    description: Generated chart PNGs for Discord posts
+    retention: 48 hours (purge in daily_publish.py)
+    us126_snapshot: false
+    note: "Bloated — 8K files, 800MB. Long-weekend purge gap."
+
+  - path: /root/.hermes/vault_index
+    type: directory
+    size_mb: 29.8
+    files: 11
+    description: FTS index + ChromaDB embeddings for vault search
+    retention: indefinite (rebuildable)
+    us126_snapshot: false
+
+  - path: /root/.hermes/crosspost_state.json
+    type: file
+    size_kb: 15
+    description: Crosspost dedup state (message IDs)
+    retention: indefinite (48h prune of old entries)
+    us126_snapshot: true
+    guard: atomic write + regression guard (US-131)
+
+  - path: /root/HermesForge
+    type: directory
+    size_mb: 179.4
+    files: 7482
+    description: Full repo — code, docs, vault, ADRs, backlog
+    retention: indefinite (git-tracked, daily push to GitHub)
+    us126_snapshot: false
+
+  - path: /root/.hermes/memory
+    type: directory
+    size: MISSING
+    description: Hermes persistent memory (MEMORY.md, USER.md)
+    retention: Hermes-managed
+    us126_snapshot: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DISK
+# ═══════════════════════════════════════════════════════════════════════════════
+disk:
+  filesystem: /dev/vda2
+  total_gb: 240
+  used_gb: 49
+  avail_gb: 181
+  use_pct: 22
+  largest_single_dir: /root/.hermes/signal_charts (807 MB, 33% of all used space)
+  note: "181 GB free — no disk pressure at current growth rate."
