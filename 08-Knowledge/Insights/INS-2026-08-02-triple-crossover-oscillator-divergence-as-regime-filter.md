@@ -33,4 +33,6 @@ A trader using the 4-9-18 system (N037) should measure the differential oscillat
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[EN041-oscillator-entry-strategy-in-trending-markets]] — See EN041-oscillator-entry-strategy-in-trending-markets for oscillator entry rules applicable in trending regimes
+
 - [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for divergence confirmation rules that qualify oscillator compression regimes
