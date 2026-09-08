@@ -162,11 +162,14 @@ def _copy_offsite(snap_dir: pathlib.Path) -> bool:
                 timeout=60, check=True
             )
         elif dest.startswith("s3://"):
-            # s3://bucket/prefix → aws s3 cp
-            subprocess.run(
-                ["aws", "s3", "cp", "--recursive", str(snap_dir), f"{dest}/{snap_dir.name}/"],
-                timeout=120, check=True
-            )
+            # s3://bucket/prefix → aws s3 cp (supports S3 + Cloudflare R2)
+            cmd = ["aws", "s3", "cp", "--recursive", str(snap_dir),
+                   f"{dest}/{snap_dir.name}/"]
+            endpoint = os.environ.get("OFFSITE_S3_ENDPOINT", "")
+            if endpoint:
+                cmd.insert(2, endpoint)
+                cmd.insert(2, "--endpoint-url")
+            subprocess.run(cmd, timeout=120, check=True)
         elif dest.startswith("/"):
             # Local path (different mount point)
             target = pathlib.Path(dest) / snap_dir.name
