@@ -37,4 +37,6 @@ After entering via a pivot-point buy signal (EN071), a trader should immediately
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021 for advance stop order principle in P&F trading
+
 - [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for box size sensitivity in stop placement
