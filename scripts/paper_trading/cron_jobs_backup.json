@@ -685,15 +685,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 6721
+        "completed": 6722
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-15T21:34:16.777047+00:00",
-      "next_run_at": "2026-09-08T05:40:00+00:00",
-      "last_run_at": "2026-09-08T05:35:29.460848+00:00",
+      "next_run_at": "2026-09-08T05:45:00+00:00",
+      "last_run_at": "2026-09-08T05:40:40.929695+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -765,10 +765,10 @@
     {
       "id": "98edbe73d115",
       "name": "Vault Connection Weaver",
-      "prompt": "Run the Vault Connection Weaver to discover and create high-signal wikilinks across the Obsidian vau...",
+      "prompt": "Run the Vault Connection Weaver to discover and create high-signal wikilinks across the Obsidian vault.\n\nExecute this command in /root/HermesForge:\n  python3 scripts/vault_connection_weaver.py --model deepseek/deepseek-v4-flash --batch 5 --skip-semantic --priority-dirs \"06-Strategies/Hypotheses,08-Knowledge/Insights,08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy\" --commit\n\nReport the results: how many notes were examined, how many connections were created, what the review queue looks like, and any notable discoveries. If the script fails, report the error.",
       "skills": [],
       "skill": null,
-      "model": "deepseek/deepseek-v4-pro",
+      "model": "deepseek/deepseek-v4-flash",
       "provider": "openrouter",
       "provider_snapshot": null,
       "model_snapshot": null,
@@ -944,15 +944,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 1842
+        "completed": 1843
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-09-01T20:14:53.581700+00:00",
-      "next_run_at": "2026-09-08T05:40:00+00:00",
-      "last_run_at": "2026-09-08T05:35:29.142073+00:00",
+      "next_run_at": "2026-09-08T05:45:00+00:00",
+      "last_run_at": "2026-09-08T05:40:29.570141+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -1174,5 +1174,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-09-08T05:35:29.461532+00:00"
+  "updated_at": "2026-09-08T05:45:05.451049+00:00"
 }
