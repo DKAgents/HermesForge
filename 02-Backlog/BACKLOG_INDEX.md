@@ -74,26 +74,36 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 
 ---
 
-## Campaign 2026-09-aegis-rebuild (Aegis Rebuild, DEGRADED — filed 2026-09-06)
+## Campaign 2026-09-aegis-rebuild (Aegis Rebuild — Pass 2 GRADED, filed 2026-09-07)
 
 Read-only T1 campaign. Reports: `reports/campaigns/2026-09-aegis-rebuild/`.
-Train 0 (Survive) first. No profile/cron DELETE verdicts issued (brief incomplete).
+Pass 1 (2026-09-06) was DEGRADED (stub inventory/cost). Pass 2 grades on the real
+`inventory.yaml`/`cost-30d.md` and on-disk state. Train 0 durability has largely
+shipped; its only open items are US-136 (off-box) and US-137 (drill proof), which
+gate any Hermes upgrade. Profile/cron changes are handed to their owners with
+evidence — Aegis does not edit cron defs or live souls.
 
-| Story | Train | Priority | Owner | Description |
-|-------|-------|----------|-------|-------------|
-| US-123 | 0 | P0 | coder | Append-only trade journal; trades.csv becomes derived projection |
-| US-124 | 0 | P0 | no-agent | Brief-builder: real inventory.yaml + context-budgets + cost-30d |
-| US-125 | 0 | P0 | coder | Single exit authority (STR-Q 5m vs Trade Monitor 60m split) |
-| US-126 | 0 | P0 | no-agent | Snapshots ≥35d + off-box copy + weekly restore drill |
-| US-127 | 3 | P2 | coder | Coded strategy seeder feeding the reject-heavy filter |
-| US-128 | 0 | P1 | no-agent | Fear & Greed freshness check + fail-closed regime gate |
-| US-129 | 0 | P1 | product-owner | ✅ Investigate Vault Maintenance retention vs RCA/cron evidence — 14d gap found, US-133/134/135 filed |
-| US-130 | 5 | P2 | publisher | Evaluate crosspost job overlap (356f3c vs 61cccd) |
-| US-131 | 0 | P1 | publisher | Protect crosspost_state.json (guard + snapshot class) |
-| US-132 | 2 | Medium | coder | Evaluate Microsoft MarkItDown for document ingestion |
-| US-133 | 0 | P1 | coder | Extend cron output retention to ≥35 days (US-129 follow-up) |
-| US-134 | 0 | P2 | coder | Add cron output + maintenance logs to snapshot payload |
-| US-135 | 0 | P3 | coder | Add incident log and guardian decisions to snapshot payload |
+| Story | Train | Priority | Owner | Status | Description |
+|-------|-------|----------|-------|--------|-------------|
+| US-123 | 0 | P0 | coder | ✅ shipped | Append-only journal; trades.csv is derived projection (journal 1,687 rows) |
+| US-124 | 0 | P0 | no-agent | ✅ shipped | Brief-builder: real inventory.yaml + cost-30d.md |
+| US-125 | 0 | P0 | coder | ✅ shipped | Single exit authority (`closer` field; ADR-006 STR-Q skip) |
+| US-126 | 0 | P0 | no-agent | ⚠ partial | Snapshots shipped; off-box + drill open (→US-136/137) |
+| US-127 | 3 | P2 | coder | ready | Coded strategy seeder feeding the reject-heavy filter |
+| US-128 | 0 | P1 | no-agent | ready | Fear & Greed freshness + fail-closed regime gate |
+| US-129 | 0 | P1 | product-owner | ✅ shipped | Vault retention audit — 14d gap found, retention → 35d |
+| US-130 | 5 | P2 | publisher | ✅ shipped | Crosspost overlap — `356f3c` paused, `61cccd` sole path |
+| US-131 | 0 | P1 | publisher | ✅ shipped | Protect crosspost_state.json (guard + snapshot class) |
+| US-132 | 2 | Medium | coder | ready | Evaluate Microsoft MarkItDown for document ingestion |
+| US-133 | 0 | P1 | coder | ✅ shipped | Extend cron output retention to 35 days |
+| US-134 | 0 | P2 | coder | ready | Add cron output + maintenance logs to snapshot payload |
+| US-135 | 0 | P3 | coder | ready | Add incident log + guardian decisions to snapshot payload |
+| US-136 | 0 | P1 | no-agent | ready (pass 2) | Activate off-box snapshot copy (offbox_copied=false, path unset) |
+| US-137 | 0 | P1 | no-agent | ready (pass 2) | Capture restore-drill evidence + restore_drill_last_ok |
+| US-138 | 1 | P2 | coder | ready (pass 2) | Right-size Vault Connection Weaver (tier/cadence/toolset allowlist) |
+| US-139 | 1 | P2 | no-agent | ready (pass 2) | Fill context-budgets.md (last stub brief file) |
+| US-140 | 1 | P3 | no-agent | ready (pass 2) | Close signal_charts purge gap (826 MB / 8,497 files) |
+| US-141 | 4 | P3 | product-owner | ready (pass 2) | Swarm diet — documenter→skill, trading/consulting surfaces (evidence-gated) |
 
 ---
 
@@ -120,7 +130,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-109
+- **Next Story Number:** US-142 (US-141 is the highest filed; scan the index — the highest US number, not this field, is authoritative)
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---

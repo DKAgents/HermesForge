@@ -1,9 +1,11 @@
 ---
 type: hermes-release-delta
 campaign: 2026-09-aegis-rebuild
-status: DEGRADED
-generated_utc: 2026-09-06
+status: GRADED
+pass: 2
+generated_utc: 2026-09-07
 display_tz: America/Los_Angeles
+supersedes: pass-1 (DEGRADED)
 ---
 
 # Hermes Release Delta
@@ -62,10 +64,12 @@ concurrency, or memory/notepad-on-by-default — any of which pressures 8 GB RAM
 
 ## Recommendation (sequencing, not implementation)
 
-1. Do **not** run `hermes update` until Train 0 durability lands (journal +
-   snapshots + off-box + restore drill). An upgrade mid-flight on a
-   rewrite-the-world trades.csv is the exact hazard that produced the Sep 1–5
-   loss.
+1. Do **not** run `hermes update` until Train 0 durability fully closes.
+   As of pass 2 the journal + snapshots have shipped (US-123/126), but the
+   off-box copy is inert (`offbox_copied:false`, US-136) and the restore drill
+   has never been observed to pass (US-137). An upgrade on a store with no
+   proven off-box recovery repeats the exact Sep 1–5 hazard class at fleet
+   scale. **US-136 and US-137 are the gate.**
 2. Generate a `hermes update --plan` receipt; attach it to the next campaign
    brief's `hermes-version.md`.
 3. Adopt native primitives one at a time, each PR deleting the workaround it

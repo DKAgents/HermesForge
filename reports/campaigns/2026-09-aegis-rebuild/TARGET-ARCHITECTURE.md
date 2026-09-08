@@ -1,16 +1,29 @@
 ---
 type: target-architecture
 campaign: 2026-09-aegis-rebuild
-status: DEGRADED
-generated_utc: 2026-09-06
+status: GRADED
+pass: 2
+generated_utc: 2026-09-07
 display_tz: America/Los_Angeles
+supersedes: pass-1 (DEGRADED)
 ---
 
 # Target Architecture — HermesForge
 
-Three layers only. Proposals below; Aegis does not implement. Deletions are
-withheld this run (DEGRADED brief) except where an explicit replacement is named
-and evidence is direct.
+Three layers only. Proposals below; Aegis does not implement. Pass 2 grades on
+the real `inventory.yaml` and on-disk state: Train 0 durability has largely
+shipped (US-123/125/126/131/133) — the architecture below now marks what is
+DONE vs OPEN rather than proposing it fresh.
+
+## Status since pass 1 (FACT, verified on disk 2026-09-07)
+
+- Append-only journal + derived CSV: **DONE** (US-123).
+- Single exit authority (`closer` field): **DONE** (US-125).
+- Snapshots with per-file sha256: **DONE** (US-126).
+- crosspost_state guard + snapshot inclusion: **DONE** (US-131).
+- Cron retention 14→35d: **DONE** (US-133).
+- **Off-box copy: OPEN** — code exists, `offbox_copied:false`, path unset → US-136.
+- **Restore drill proof: OPEN** — cron exists, never observed to pass → US-137.
 
 ---
 
@@ -71,30 +84,36 @@ Guidance only; no cron/profile deletions sequenced this run (need US-124).
 
 ## Migration trains (fixed order — do not schedule 4/5 ahead of 0)
 
-**Train 0 — Survive (all filed this run):**
-US-124 (build inventory/cost — unblocks everything), US-123 (journal + derived
-CSV), US-126 (snapshots + off-box + restore drill), US-125 (single exit
-authority), US-128 (F&G fail-closed), US-129 (vault retention audit),
-US-131 (crosspost_state protection).
+**Train 0 — Survive (mostly SHIPPED; 2 items OPEN):**
+DONE: US-123 (journal + derived CSV), US-125 (single exit authority),
+US-126 (snapshots), US-131 (crosspost_state guard), US-133 (retention 35d),
+US-129 (retention audit). OPEN: **US-136 (off-box copy)** and
+**US-137 (restore-drill proof)** — both P1, and both are the gate on any Train-5
+Hermes upgrade. US-128 (F&G fail-closed), US-134/135 (snapshot payload
+expansion) remain queued Train-0 follow-ups.
 
-**Train 1 — Thin runtime (DEFERRED until US-124):**
-per-profile tool allowlists, mechanical crons → no-agent (extend beyond current
-8), weaver cadence decision (measured), worktree prune, context caps.
+**Train 1 — Thin runtime:**
+US-138 (weaver tier/cadence/toolset — the one measured efficiency win),
+US-139 (fill context-budgets.md — unblocks toolset enumeration),
+US-140 (signal_charts purge gap). Souls are already small; the soul-diet lever
+is nearly spent. No cron merges on 8 GB.
 
-**Train 2 — Unify trading I/O (depends on US-123):**
-one persist API adopted by all writers, one exit authority live (US-125), PnL
-recomputed from journal + manifests.
+**Train 2 — Unify trading I/O (largely satisfied by US-123/125):**
+one persist API + one exit authority are live; remaining work is ensuring every
+writer routes through the journal API and PnL recomputes from journal + manifests.
 
 **Train 3 — Strategy factory:**
 US-127 coded seeder; keep reject-heavy filter; red-team + backtester + Risk
 Guardian in the promotion loop.
 
-**Train 4 — Swarm diet (DEFERRED until US-124):**
-fewer standing profiles; Discord is output-only. No profile DELETE without
-inventory evidence.
+**Train 4 — Swarm diet:**
+US-141 (documenter→skill, red-team periodic, trading/consulting as surfaces),
+evidence-gated on US-139 per-profile `/context`. Never collapse publisher or
+risk-guardian.
 
 **Train 5 — Release adopt:**
-US-130 (evaluate crosspost overlap), plus native primitives from the release
-delta that each delete a workaround. Behind a `hermes update --plan` receipt.
+US-130 (crosspost overlap — already actioned: `356f3c` paused) plus native
+primitives from the release delta that each delete a workaround. **Behind a
+`hermes update --plan` receipt AND after US-136/US-137 close Train 0.**
 
 Token-budget table: see `TOKEN-RAM-BUDGET.md`.

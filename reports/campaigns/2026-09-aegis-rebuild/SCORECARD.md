@@ -1,234 +1,234 @@
 ---
 type: campaign-scorecard
 campaign: 2026-09-aegis-rebuild
-status: DEGRADED
+status: GRADED
+pass: 2
 generated_by: aegis-auditor (T1, read-only)
-generated_utc: 2026-09-06
+generated_utc: 2026-09-07
 display_tz: America/Los_Angeles
+supersedes: pass-1 (DEGRADED, 2026-09-06)
 ---
 
-# Aegis Rebuild — SCORECARD (DEGRADED)
+# Aegis Rebuild — SCORECARD (Pass 2, GRADED)
 
 Campaign: `2026-09-aegis-rebuild`
-Mode: **DEGRADED** — the Campaign Brief is incomplete. See "Brief completeness"
-below. No profile or cron `DELETE` verdict is issued in this run; deletions
-require inventory evidence that the brief does not yet supply.
+Mode: **GRADED** — the Campaign Brief is now sufficiently complete to issue
+verdicts. Pass 1 (2026-09-06) was DEGRADED because `inventory.yaml` and
+`cost-30d.md` were stubs; US-124 filled both. This second pass re-scores against
+the real inventory and against the current on-disk state, which has advanced
+materially since pass 1 (US-123/125/126 shipped).
 
 Aegis is T1 read-only. This report proposes; it does not implement. Publisher
 owns publish code; Risk Guardian owns the 1% cap. Neither is touched.
+Facts / Inferences / Proposals are labelled throughout. Times display PT;
+computation UTC.
 
 ---
 
-## Brief completeness
+## Brief completeness (pass 2)
 
-Required pack (per `templates/campaign-brief.md`): GOALS.md, inventory.yaml,
-hermes-version.md, context-budgets.md, cost-30d.md, data-manifest.md,
-failure-log.md, constraints.md, current-adrs.md.
+Required pack: GOALS.md, inventory.yaml, hermes-version.md, context-budgets.md,
+cost-30d.md, data-manifest.md, failure-log.md, constraints.md, current-adrs.md.
 
-| File | State | Effect on campaign |
-|------|-------|--------------------|
-| GOALS.md | present, thin | usable |
-| inventory.yaml | **STUB** — 3 lines, no profiles/crons/data_roots/discord_channels/publisher_owned_files arrays | Phase A partially recovered from hermes-version.md; **no DELETE verdicts** |
-| hermes-version.md | present, rich (profiles + 21 crons + version) | usable — primary Phase A/E source |
-| context-budgets.md | **STUB** — "TODO", no `/context` dumps | Phase D cannot cite per-profile token breakdowns |
-| cost-30d.md | **STUB** — "TODO", no $/token by job | Phase D cost claims are structural, not measured |
-| data-manifest.md | partial — `last_signal_id: unknown`, `fear_greed_last_ok: unknown`, `crosspost_state_bytes` absent | durability findings hold; some baselines unknown |
-| failure-log.md | present | usable |
-| constraints.md | present | usable |
-| current-adrs.md | present (ADR-001..006 listed) | usable |
+| File | State (pass 2) | Change since pass 1 |
+|------|----------------|---------------------|
+| GOALS.md | present | — |
+| inventory.yaml | **COMPLETE** — 13 profiles, 24 crons, 9 channels, data roots, disk | ⬆ was 3-line stub |
+| hermes-version.md | present, rich | — |
+| context-budgets.md | **STILL STUB ("TODO")** | ✗ unchanged — the one remaining gap → US-139 |
+| cost-30d.md | **COMPLETE** — $/token by job, no-agent list, disk | ⬆ was TODO |
+| data-manifest.md | partial — `snapshot_last_ok`/`offbox_last_ok`/`restore_drill_last_ok` still `none`/unknown | ✗ stale vs on-disk reality (see Phase B) |
+| failure-log.md | present | — |
+| constraints.md | present | — |
+| current-adrs.md | present (ADR-001..006) | — |
 
-**Verdict:** 4 of 9 required files are stub/partial. Report is emitted DEGRADED.
-Brief-builder stories filed (US-123, US-124) to produce a real inventory.yaml,
-context-budgets.md, and cost-30d.md before the next campaign or any Train-1
-efficiency work is sequenced.
+**Verdict:** 8 of 9 files usable. Only `context-budgets.md` remains a stub. Per
+principal direction, this is **not** a DEGRADED-wide failure — the campaign
+grades normally and files one narrow story (US-139) to close the last gap.
+Phase D's per-profile *token composition* claims remain inferential until US-139
+lands; every other phase is evidence-graded.
 
-Facts / Inferences / Proposals are labelled throughout.
-
----
-
-## Phase A — Goal trace and inventory verdicts
-
-Source of record: `hermes-version.md` (profiles + 21 crons). Because
-`inventory.yaml` is a stub, toolsets, always-load skills, and writable paths per
-profile are **unknown**; verdicts below are conservative and no mechanism is
-marked DELETE.
-
-Fleet observed (FACT, from version dump):
-
-- 12 profiles: orchestrator, architect, coder, publisher, risk-guardian,
-  researcher, backtester, documenter, product-owner, red-team, trading,
-  consulting. Only `default` (deepseek-v4-pro) and `aegis-auditor`
-  (claude-opus-4.8) have a model shown running/assigned; `red-team` pinned
-  deepseek-v4-flash; the rest show model `—` (INFERENCE: inherit default, or
-  model not surfaced in this dump — unverifiable without inventory.yaml).
-- 21 active crons.
-
-Goal → mechanism → verdict (goals from GOALS.md + invariants):
-
-| Goal | Mechanism (cron / script) | Verdict | Note |
-|------|---------------------------|---------|------|
-| Discover/code/backtest/deploy strategies | Autonomous Strategy Pipeline `2d8dff` (T3), External Edge Discovery `e214a9` (T3), Weekly Research Pipeline `9202661` (T3) | THIN | 0% ship is a filter, not a factory — no coded seeder (Phase C, US-127) |
-| Paper-trade + exit alerts → Discord | Paper Trading Capture `4b178ec` (no-agent), STR-Q Sweep `b9fb0af` (no-agent, */5), Trade Monitor `d1e07c` (T3, 60m), Daily Signal→Publisher `3f49a0` (no-agent), Perf Report `cb22b0` (T3) | REPLACE (I/O layer) | split exit authority: STR-Q 5m vs Trade Monitor 60m (US-125) |
-| Robust trade history | `trade_log.py` v1 fuse | REPLACE | rewrite-the-world persist; no journal/snapshot/offbox/drill (Phase B, US-123/126) |
-| Daily market intelligence | CRON-001 Market Intelligence `79c465` (T3), Auto-Crosspost `356f3c` (no-agent) | KEEP | delivers; verify F&G freshness (US-128) |
-| Self-maintain (vault/connections/watchdog/git) | Vault Maintenance `9d77b5` (T3), Connection Discovery `232975` (T3), Vault Connection Weaver `98edbe` (240m), Cron Watchdog `65dfc5` (no-agent /15), Daily Git Push `df2caa` (no-agent) | THIN | git push is not a data backup; weaver cadence unmeasured; vault-maintenance retention vs RCA evidence unverified (US-126, US-129) |
-| Risk via swarm governance | Risk Guardian profile + ADR-001/005; STR-Q re-eval `23471` (weekly), US-121 re-eval `a76bfb` (ADR-005 readiness) | KEEP | do not touch 1% cap or US-121 gate |
-| LinkedIn content (Dan's voice) | LinkedIn Post Generator `98a07` (T3) | KEEP | in scope, unremarkable |
-| Model routing hygiene | Weekly Model Assignment Review `07149d` (T3, 6/52) | KEEP | |
-| Crosspost fan-out | Webhook Crosspost All `61cccd` (no-agent /5), Auto-Crosspost `356f3c` | THIN | two crosspost jobs — possible overlap; publisher-owned, evaluate not delete (US-130, Train 5) |
-
-Split-brain flags (FACT from failure-log + version dump):
-
-- **Two exit closers.** STR-Q Intraday Sweep (`b9fb0af`, */5) and HermesForge
-  Trade Monitor (`d1e07c`, 60m) both act on open positions. failure-log line 3
-  confirms "Split exit paths: STR-Q 5m vs swing Trade Monitor 60m." → US-125.
-- **Two crosspost jobs.** `356f3c` (Auto-Crosspost Daily Briefing) and `61cccd`
-  (Webhook Crosspost All Channels). Both no-agent, both local-deliver. Overlap
-  is plausible but unverified without inventory. Publisher-owned; evaluate in
-  Train 5, do not merge blindly.
+Note (FACT): `data-manifest.md` is now *stale in the safe direction* — it still
+says snapshots/off-box/drill = none, but snapshots demonstrably exist on disk.
+The manifest should be regenerated; US-136/US-137 write the missing
+`offbox_last_ok`/`restore_drill_last_ok` fields as they land.
 
 ---
 
-## Phase B — Robustness
+## What shipped between pass 1 and pass 2 (FACT, verified on disk)
 
-The dominant risk class. Evidence is direct (read `scripts/paper_trading/trade_log.py`
-read-only) — these findings are FACTS, not inference.
+| Story | Claim | Evidence (2026-09-07 UTC) |
+|-------|-------|---------------------------|
+| US-123 | Append-only journal; CSV becomes derived projection | `trade_journal.py` present; `trade_log.py` dual-writes (`journal_open/close/...` imported, header comment "journal is the source of truth"); `trade_journal.jsonl` = 1,687 rows; manifest carries sha256 + last_signal_id + closed_count=541 |
+| US-125 | Single exit authority (STR-Q 5m vs Trade Monitor 60m) | `trades.csv` schema now has a `closer` field ("STR-Q-5m-sweep" / "trade-monitor-60m"); Trade Monitor note "Skips STR-Q per ADR-006" |
+| US-126 | Snapshots + off-box + restore drill | `scripts/maintenance/snapshot_restore.py` present; 2 daily snapshot dirs with `snapshot.json` (per-file sha256, journal_rows, crosspost_state); snapshot cron `291708a04c39` left 03:00 output |
+| US-133 | Cron retention → 35 days | inventory data_roots: `/root/.hermes/cron/output` retention "35 days (US-133, was 14 days)" |
 
-**B-1 (P0). `trades.csv` is still a rewrite-the-world file.**
-`_write_all_rows()` (trade_log.py:59) does temp→fsync→verify→atomic-rename with a
->20% shrink refusal and an empty-file refusal — a real fuse. BUT every close
-path (`close_trade` :263, `update_entry_status` :191, `register_discord_info`
-:164) rewrites the **entire file**. The fuse caps catastrophic loss; it does not
-make the store append-only. A row-dropping bug within the 20% tolerance, or a
-crash between `shutil.move` steps, still mutates history in place. `trades.csv`
-is the source of truth, not a derived projection — this contradicts the target
-persist contract. → US-123.
-
-**B-2 (P0). No append-only journal.** There is no JSONL/WAL fact log. The v1
-fuse is explicitly "a fuse," per invariants. The truncation on 2026-09-06 (Sep
-1–5 lost, failure-log line 2) is the realized instance of this class. → US-123.
-
-**B-3 (P0). No snapshots, no off-box copy, no restore drill.**
-data-manifest: `snapshot_last_ok: none`, `offbox_last_ok: none`,
-`restore_drill_last_ok: none`. "Backup" today is the Daily Git Push (`df2caa`) —
-git stores the CSV as code, which is not a data-backup regime and did not cover
-the Sep 1–5 window. Numerous ad-hoc `.bak` files exist (`trades.csv.bak`,
-`.bak2`, `.bak.heatfix`, `.bak.1788717923`) — informal, unmanaged, exactly the
-"backup that is only a copy" anti-pattern. → US-126.
-
-**B-4 (P1). `crosspost_state.json` has no stated protection.**
-`crosspost_state_bytes` is absent from data-manifest and no guard is described.
-Same protection class as trades per invariants. Publisher-owned file — Aegis
-does not touch it; story routes to publisher. → US-131.
-
-**B-5 (P1). Vault Maintenance retention vs RCA/cron evidence unverified.**
-`9d77b5` runs daily 02:00. The protocol warns of "vault maintenance purging
-RCA/cron evidence at 14 days." Cannot confirm or deny without inventory. → US-129
-(investigation story).
-
-**B-6 (P2). Unpinned-LLM-cron fail-closed status unverified.** Most crons show
-model `—`. Invariant requires unpinned LLM crons fail closed. Unverifiable
-without inventory.yaml. → folded into US-124 (inventory build).
-
-Robustness questions answered:
-
-- Can a killed process mid-write destroy history? **Reduced but not eliminated**
-  (B-1/B-2). Rename is atomic; the whole-file rewrite model is the residual risk.
-- Last restore drill date? **Never** (data-manifest).
-- Off-box snapshot age? **None exist** (data-manifest).
-- Does Trade Monitor see STR-Q? **Two closers exist** (B, A split-brain).
+The dominant pass-1 P0 (rewrite-the-world trades.csv with no journal) is
+**resolved in class**: the journal is now the append-only source of truth and
+the CSV is explicitly a projection. `_write_all_rows()` still rewrites the whole
+CSV, but that is now acceptable — the CSV is derived and the fuse (temp→fsync→
+verify→rename, >20% shrink + empty refusal) still guards it.
 
 ---
 
-## Phase C — Effectiveness (vs stated goals, not feature count)
+## Phase A — Goal trace and inventory verdicts (GRADED)
 
-- **Strategy pipeline: filter, not factory (FACT).** failure-log line 4:
-  "Strategy pipeline 0% ship (filter, not factory)." The BACKLOG_INDEX shows the
-  pipeline *has* shipped WATCH-tier strategies recently (US-113/114/115/120/122,
-  each deployed WATCH at 0.5% risk with walk-forward OOS). INFERENCE: "0% ship"
-  refers to promotion past WATCH into a funded/scaled tier, or to a specific
-  window; the reject-heavy filter is behaving as designed, but there is no coded
-  *seeder* feeding it — candidate generation is ad-hoc. Keep the reject-heavy
-  filter; add a coded seeder + Risk-Guardian-gated promotion. → US-127.
-- **Exit alert SLA and ownership: split (FACT).** Two closers (Phase A/B).
-  No single exit authority or stated SLA. → US-125.
-- **Dead Discord channels: unverifiable.** `inventory.yaml` lists no channel
-  names; version dump shows numeric channel IDs only. Cannot confirm a
-  `#strategy-status` with no content source. → covered by US-124 inventory build.
-- **Stale feeds disabling regime logic: unverified.** `fear_greed_last_ok:
-  unknown` (data-manifest). If F&G is stale, regime gating silently degrades.
-  → US-128 (F&G freshness check + fail-closed).
-- **Research grounding: not assessed this run** (needs the artifacts the
-  research crons emit; out of scope for a DEGRADED pass).
+Fleet (FACT, `inventory.yaml`): 13 profiles (12 swarm + aegis-auditor),
+24 crons (22 enabled, 1 paused `356f3c`, 1 completed `2b4f6f`), 9 channels.
+Only `orchestrator` is `hot`; all others on-demand/campaign-only.
+
+Goal → mechanism → verdict:
+
+| Goal | Mechanism | Verdict | Note |
+|------|-----------|---------|------|
+| Discover/code/backtest/deploy strategies | Strategy Pipeline `2d8dff`, External Edge `e214a9`, Weekly Research `9202661` (all T3) | THIN | filter works; no coded seeder → US-127 (already filed) |
+| Paper-trade + exit alerts → Discord | Capture `4b178ec`, STR-Q Sweep `b9fb0af`, Trade Monitor `d1e07c`, Signal→Publisher `3f49a0`, Perf Report `cb22b0` | KEEP | exit split resolved by US-125 (`closer` field shipped) |
+| Robust trade history | journal + fuse + snapshots (US-123/126) | KEEP w/ residual | append-only shipped; **off-box copy inert** → US-136; drill unverified → US-137 |
+| Daily market intelligence | Market Intel `79c465` (T3) | KEEP | verify F&G freshness (US-128 filed) |
+| Self-maintain | Vault Maint `9d77b5`, Connection Discovery `232975`, **Weaver `98edbe`**, Watchdog `65dfc5`, Git Push `df2caa` | THIN | weaver is T2 + unrestricted toolset + near-zero recent yield → **US-138** |
+| Risk via swarm governance | risk-guardian + ADR-001/005; STR-Q re-eval `23471`; US-121 gate `a76bfb` | KEEP | 1% cap and US-121 untouched |
+| LinkedIn content | LinkedIn Gen `98a07` (T3) | KEEP | |
+| Crosspost fan-out | Webhook Crosspost `61cccd` + paused `356f3c` | KEEP | overlap already handled — `356f3c` paused under US-130 |
+
+Profile DELETE/THIN verdicts: see Phase F table and **US-141** (documenter→skill,
+red-team periodic, trading/consulting as surfaces; publisher + risk-guardian
+KEEP as monopolies). No hard-DELETE issued — smallest profiles are surfaces
+worth keeping; documenter retirement is gated on its skill replacement existing.
+
+Split-brain status:
+- Two exit closers → **RESOLVED** by US-125 (`closer` ownership field).
+- Two crosspost jobs → **RESOLVED** — `356f3c` is paused (US-130); `61cccd` is
+  the sole active crosspost path.
 
 ---
 
-## Phase D — Token / RAM / context (DEGRADED — no measured data)
+## Phase B — Robustness (GRADED)
 
-context-budgets.md and cost-30d.md are both "TODO." No `/context` dumps, no
-$/token by job. Therefore **all statements here are structural inferences from
-the cron/profile inventory, not measurements.** Full table in `TOKEN-RAM-BUDGET.md`.
+**B-1 (was P0) — trades.csv rewrite-the-world: RESOLVED IN CLASS.** Journal is
+now the append-only source of truth; CSV is a derived projection guarded by the
+fuse. FACT: journal 1,687 rows, manifest sha256 present. Residual: `_write_all_rows`
+still full-rewrites the projection, but a projection rebuild is not history loss.
 
-Structural observations (INFERENCE):
+**B-2 (was P0) — no append-only journal: RESOLVED.** `trade_journal.py` +
+`trade_journal.jsonl` + manifest exist and are written on every open/close.
 
-- 21 crons; 8 already no-agent (capture, sweep, publish, crosspost×2, git push,
-  watchdog, daily signal). Good — the mechanical floor is largely correct.
-- ~9 T3 LLM crons remain (market intel, vault maintenance, connection discovery,
-  model review, trade monitor, weekly research, external edge, strategy
-  pipeline, perf report, LinkedIn, ADR-005 readiness, STR-Q re-evals). Several
-  are candidates for no-agent gather + one reasoning call (perf report, model
-  review) — but this needs measured cost to prioritize. → US-124 unblocks this.
-- Vault Connection Weaver on every-240m: protocol calls out demoting/batching it
-  "unless measured quality requires it." Quality unmeasured → cannot yet justify
-  a cadence change. → deferred to Train 1 pending US-124.
-- 8 GB VPS: do **not** merge unrelated crons into mega-jobs (protocol). No
-  mega-merge proposed.
+**B-3 (was P0) — snapshots/off-box/drill: PARTIALLY RESOLVED.**
+- Snapshots: **SHIPPED** — 2 daily snapshot dirs with per-file sha256.
+- Off-box copy: **NOT ACTIVE (P1)** — `snapshot.json` records
+  `"offbox_copied": false`; `OFFSITE_BACKUP_PATH` is unset in env/`.bashrc`/
+  `.profile`/cron. Code exists (`_copy_offsite`) but is inert. → **US-136.**
+- Restore drill: **UNVERIFIED (P1)** — cron `dfa4ab05ea77` exists (Sunday 08:00)
+  but `~/.hermes/cron/output/dfa4ab05ea77/` does not exist and
+  `restore_drill_last_ok: none`. No drill run has been observed to pass. → **US-137.**
 
-**No Train-1 efficiency story is sequenced ahead of the inventory/cost build.**
-Cutting toolsets or demoting crons without measured `/context` is guessing.
+**B-4 (P1) — crosspost_state.json protection: SHIPPED (US-131).** inventory:
+"atomic write + regression guard (US-131)"; it is included in snapshot payloads
+(`snapshot.json` records `crosspost_state_sha256` + bytes).
+
+**B-5 (P1) — vault-maintenance retention vs evidence: RESOLVED (US-129/133).**
+Cron output retention raised 14→35 days; follow-ups US-134 (cron output into
+snapshot payload) and US-135 (incident log into snapshot payload) filed.
+
+**B-6 — unpinned-LLM-cron fail-closed:** now checkable via inventory. All agent
+crons show a pinned model (`deepseek-v4-flash`, or `-pro` for the weaver). No
+unpinned LLM cron observed. THIN concern retired.
+
+Robustness questions:
+- Killed process mid-write destroys history? **No for the journal** (append-only
+  + fuse). CSV projection is rebuildable.
+- Last restore drill date? **Still never observed** → US-137.
+- Off-box snapshot age? **None — off-box inert** → US-136.
+- Does Trade Monitor see STR-Q? **Split resolved** — `closer` field + ADR-006 skip.
+
+---
+
+## Phase C — Effectiveness (GRADED)
+
+- **Strategy pipeline — filter, not factory (FACT).** BACKLOG_INDEX shows
+  WATCH-tier deploys (US-113/114/115/120/122) at 0.5% risk with walk-forward
+  OOS — the reject-heavy filter works. Still no coded *seeder*; generation is
+  ad-hoc. → US-127 (filed pass 1).
+- **Exit alert ownership — RESOLVED.** `closer` field gives each trade exactly
+  one closer (US-125).
+- **Dead channel `#strategy-status` (FACT).** inventory channel
+  `1533332485641998386` (strategy-status) note: "No cron job posts here
+  currently — content gap." A live channel with no producer. Publisher-owned
+  routing; evaluate whether to retire the channel or give it a producer — folds
+  into publisher's US-118 (channel-routing) rather than a new Aegis story.
+- **Stale feeds / F&G — tracked.** `fear_greed_last_ok: unknown` in manifest;
+  US-128 (F&G freshness + fail-closed) filed pass 1.
+- **Weaver effectiveness (FACT).** 90 runs / 204 lifetime connections; recent
+  examined-notes all `connections_written: 0`. Effectiveness of the single most
+  expensive job is near-zero recently. → US-138.
+
+---
+
+## Phase D — Token / RAM / context (GRADED where measured)
+
+`cost-30d.md` now supplies measured-basis estimates; `context-budgets.md` is
+still TODO so per-profile token *composition* remains inferential (→ US-139).
+Full table: `TOKEN-RAM-BUDGET.md` (refreshed this pass).
+
+Headlines (FACT from `cost-30d.md` + `jobs.json`):
+- Total fleet LLM cron spend ~**$1.45/mo**; +orchestrator sessions ~$0.36 →
+  **~$1.81/mo**. Cost is not the constraint.
+- **Weaver = $1.18/mo = 65% of LLM cron spend**, the only T2 cron, and its
+  `enabled_toolsets` is `None` (inherits all — a Phase-D allowlist violation).
+  This is the clearest efficiency target on evidence. → US-138.
+- 10 of 22 active crons are no-agent (45%). Perf Report `cb22b0` and Model
+  Review `07149d` remain no-agent-gather candidates but at ~$0.01/mo each the
+  saving is negligible; deprioritized.
+- RAM (FACT): `free -h` = 7.7 Gi total, 3.0 Gi used, 4.8 Gi available. Only
+  `orchestrator` is hot; no mega-merge proposed. No RAM pressure.
+- Disk (FACT): 49 G / 240 G (22%). `signal_charts` = 826 MB / 8,497 files, the
+  largest dir, with a weekend purge gap → US-140 (P3, no disk pressure).
 
 ---
 
 ## Phase E — Hermes release delta
 
-Installed: **v0.20.6 (2026.8.27), git install, 5917 commits behind** (FACT,
-hermes-version.md). No `hermes update --plan` receipt in the brief. Full
-analysis in `HERMES-RELEASE-DELTA.md`. Headline: a 5917-commit gap is itself a
-risk — adopt native primitives only where each deletes a Forge workaround, and
-stage the update behind a plan receipt and Train-0 durability. Upgrade success =
-net deletion.
+Installed **v0.20.6, 5917 commits behind** (FACT). Full analysis in
+`HERMES-RELEASE-DELTA.md`. Unchanged from pass 1 in substance: adopt native
+primitives only where each deletes a Forge workaround, stage behind a
+`hermes update --plan` receipt, and **do not upgrade until Train-0 durability is
+fully closed** — which now means US-136 (off-box) + US-137 (drill proof) must
+land first, since an upgrade on an unbacked-off-box store repeats the Sep-6
+hazard class.
 
 ---
 
 ## Phase F/G — Target + trains
 
-See `TARGET-ARCHITECTURE.md`. Train order is fixed; **Train 0 (Survive) first**.
-Stories filed this run are Train 0 durability + brief-builder only. Trains 1–5
-are described but not yet sequenced into stories, pending the real inventory.
+`TARGET-ARCHITECTURE.md` refreshed. Train 0 is now mostly *shipped*; its only
+open items are US-136 (off-box) and US-137 (drill proof) — both P1, both must
+precede any Train-5 Hermes upgrade. Train 1 gains US-138 (weaver), US-139
+(context budgets), US-140 (charts purge). Train 4 gains US-141 (swarm diet).
 
 ---
 
-## Stories filed this campaign
+## Stories (this campaign)
+
+Pass 1 (filed 2026-09-06, unchanged): US-123✔ US-124✔ US-125✔ US-126(partial)
+US-127 US-128 US-129✔ US-130✔ US-131✔ US-132 US-133✔ US-134 US-135.
+(✔ = shipped/closed per on-disk evidence or BACKLOG_INDEX.)
+
+Pass 2 (filed 2026-09-07):
 
 | Story | Train | Pri | Owner | Title |
 |-------|-------|-----|-------|-------|
-| US-123 | 0 | P0 | coder | Append-only trade journal; trades.csv becomes derived projection |
-| US-124 | 0 | P0 | no-agent | Build real inventory.yaml + context-budgets + cost-30d (brief-builder) |
-| US-125 | 0 | P0 | coder | Single exit authority — resolve STR-Q 5m vs Trade Monitor 60m split |
-| US-126 | 0 | P0 | no-agent | On-box snapshots ≥35d + off-box copy + weekly restore drill |
-| US-127 | 3 | P2 | coder | Coded strategy seeder feeding the reject-heavy filter |
-| US-128 | 0 | P1 | no-agent | Fear & Greed freshness check + fail-closed regime gate |
-| US-129 | 0 | P1 | product-owner | Investigate Vault Maintenance retention vs RCA/cron evidence |
-| US-130 | 5 | P2 | publisher | Evaluate crosspost job overlap (356f3c vs 61cccd) |
-| US-131 | 0 | P1 | publisher | Protect crosspost_state.json (guard + snapshot class) |
-
-Train 1/2/4 detailed stories are deferred until US-124 delivers measured
-inventory and cost. No DELETE verdict is issued in this DEGRADED run.
+| US-136 | 0 | P1 | no-agent | Activate off-box snapshot copy (offbox_copied=false) |
+| US-137 | 0 | P1 | no-agent | Capture restore-drill evidence + restore_drill_last_ok |
+| US-138 | 1 | P2 | coder | Right-size Vault Connection Weaver (tier/cadence/toolset allowlist) |
+| US-139 | 1 | P2 | no-agent | Fill context-budgets.md (last stub brief file) |
+| US-140 | 1 | P3 | no-agent | Close signal_charts purge gap (826 MB / 8,497 files) |
+| US-141 | 4 | P3 | product-owner | Swarm diet — documenter→skill, trading/consulting surfaces (evidence-gated) |
 
 ---
 
 ## Do-not-touch
 
-See `DO-NOT-TOUCH.md`. Summary: 1% Risk Guardian cap, US-121 gate, publisher's 9
-files (embed/chart/alert/template/publishing), `trades.csv` (data), live souls,
-cron definitions, `.env`, journals/Parquet, `crosspost_state.json`.
+See `DO-NOT-TOUCH.md`. Unchanged: 1% Risk Guardian cap, US-121 gate, publisher's
+9 files, live souls, cron definitions (Aegis does not edit them — US-138/US-141
+hand cron/profile changes to their owners with evidence attached), `.env`,
+journals/Parquet, `crosspost_state.json`.
