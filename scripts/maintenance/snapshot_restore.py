@@ -141,49 +141,61 @@ def create_snapshot() -> dict:
         result["error"] = str(e)
         print(f"Snapshot FAILED: {e}")
 
-    # Off-box copy
+    # Off-box copy (compressed — single .tar.gz archive)
     result["offbox_copied"] = _copy_offsite(snap_dir)
 
     return result
 
 
 def _copy_offsite(snap_dir: pathlib.Path) -> bool:
-    """Copy snapshot to off-VPS destination if configured."""
+    """Copy snapshot to off-VPS destination as a compressed .tar.gz archive."""
     dest = os.environ.get("OFFSITE_BACKUP_PATH", "")
     if not dest:
         return False
 
+    # Create compressed archive
+    import tarfile
+    archive_path = pathlib.Path(str(snap_dir) + ".tar.gz")
+    try:
+        with tarfile.open(archive_path, "w:gz") as tar:
+            tar.add(snap_dir, arcname=snap_dir.name)
+    except Exception as e:
+        print(f"  ⚠️ Compression failed: {e}")
+        return False
+
     try:
         if dest.startswith("scp://"):
-            # scp://host/path → scp -r <snap_dir> <host>:<path>/
-            target = dest[6:]  # strip scp://
+            target = dest[6:]
             subprocess.run(
-                ["scp", "-r", "-q", str(snap_dir), target],
+                ["scp", "-q", str(archive_path), f"{target}/"],
                 timeout=60, check=True
             )
         elif dest.startswith("s3://"):
-            # s3://bucket/prefix → aws s3 cp (supports S3 + Cloudflare R2)
-            # R2 requires --region auto + endpoint-url. Pass via env.
-            cmd = ["aws", "s3", "cp", "--recursive", "--region", "auto",
-                   str(snap_dir), f"{dest}/{snap_dir.name}/"]
+            cmd = ["aws", "s3", "cp", "--region", "auto",
+                   str(archive_path), f"{dest}/{archive_path.name}"]
             endpoint = os.environ.get("OFFSITE_S3_ENDPOINT", "")
             if endpoint:
                 os.environ["AWS_ENDPOINT_URL_S3"] = endpoint
                 os.environ["AWS_REGION"] = "auto"
             subprocess.run(cmd, timeout=120, check=True)
         elif dest.startswith("/"):
-            # Local path (different mount point)
-            target = pathlib.Path(dest) / snap_dir.name
-            shutil.copytree(snap_dir, target, dirs_exist_ok=True)
+            target = pathlib.Path(dest) / archive_path.name
+            shutil.copy2(archive_path, target)
         else:
             print(f"  ⚠️ Unknown offsite destination scheme: {dest[:30]}...")
             return False
 
-        print(f"  Off-box: copied to {dest}")
+        # Record compressed size for reporting
+        compressed_bytes = archive_path.stat().st_size
+        snap_dir_bytes = sum(f.stat().st_size for f in snap_dir.rglob("*") if f.is_file())
+        ratio = compressed_bytes / max(1, snap_dir_bytes)
+        print(f"  Off-box: {archive_path.name} ({compressed_bytes/1024:.0f}KB, {ratio:.1%}) → {dest}")
         return True
     except Exception as e:
         print(f"  ⚠️ Off-box copy failed: {e}")
         return False
+    finally:
+        archive_path.unlink(missing_ok=True)
 
 
 # ── Restore Drill ────────────────────────────────────────────────────────────
