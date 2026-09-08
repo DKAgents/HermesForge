@@ -33,6 +33,8 @@ Before entering any trade based on a support-to-resistance or resistance-to-supp
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[EX002-nonfailure-swing-reversal-signal]] — See EX002-nonfailure-swing-reversal-signal for interpretation of reversal signals in context of earnings calendar filtering
+
 - [[N007-weekly-reversal-pattern]] — See N007-weekly-reversal-pattern for timeframe-based significance assessment
 
 - [[N057-weekly-and-monthly-reversal-patterns]] — Filter long-term reversal signals with earnings calendar exclusion to reduce false penetrations
