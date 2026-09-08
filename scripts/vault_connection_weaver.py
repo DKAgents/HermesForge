@@ -359,7 +359,7 @@ def load_openrouter_key() -> str:
 
 def llm_evaluate(seed_note: str, seed_summary: str,
                  candidate_path: str, candidate_summary: str,
-                 api_key: str) -> dict:
+                 api_key: str, model: str = "deepseek/deepseek-v4-pro") -> dict:
     """Send candidate pair to LLM for scoring."""
     import urllib.request
 
@@ -384,7 +384,7 @@ Respond as JSON only:
 {{"usefulness": N, "confidence": F, "is_trivial": bool, "is_redundant": bool, "connection_type": "...", "rationale": "...", "suggested_link_text": "..."}}"""
 
     payload = json.dumps({
-        "model": "deepseek/deepseek-v4-pro",
+        "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 800,
         "temperature": 0.3,
@@ -606,6 +606,8 @@ def main():
     parser.add_argument("--health", default=None, help="Health dashboard path")
     parser.add_argument("--priority-dirs", default=None, help="Comma-separated priority dirs")
     parser.add_argument("--commit", action="store_true", help="Git commit after linking")
+    parser.add_argument("--model", default="deepseek/deepseek-v4-pro",
+                        help="LLM model for evaluation (default: T2 v4-pro)")
     args = parser.parse_args()
 
     vault = resolve_vault(args.vault)
@@ -631,6 +633,7 @@ def main():
     print(f"║  Mode: {'DRY-RUN' if args.dry_run else 'LIVE'}")
     print(f"║  Batch: {args.batch} notes")
     print(f"║  LLM: {'yes' if api_key else 'no (FTS5 only)'}")
+    print(f"║  Model: {args.model}")
     print("╚═══════════════════════════════╝")
     print()
 
@@ -743,7 +746,7 @@ def main():
             score = llm_evaluate(
                 seed, get_note_summary(seed_path),
                 candidate["path"], candidate["summary"],
-                api_key
+                api_key, model=args.model
             )
             all_scores.append(score.get("usefulness", 0))
 
