@@ -1,5 +1,5 @@
 ---
-status: staged
+status: processed
 source: web
 edge_type: skewness_managed_anomalies
 composite_score: 68.0
@@ -9,6 +9,13 @@ created: 20260908
 topic: academic
 has_quotes: true
 tags: [academic-paper, factor-investing, skewness, anomaly, cross-section, momentum, value, profitability, stage-3, external]
+pipeline_result: watch
+pipeline_notes: >
+  Phase 1A mean R=+0.079 (p=0.0, t=6.79), friction-flagged. Walk-forward
+  OOS mean R=+0.0457 (p=0.0005, ROBUST EDGE verdict) but 3/5 per-window NO
+  EDGE and tiny effect size. Deployed WATCH with 0.25% risk as STR-20260908-SKEW-PREDICTED.
+  Two other staged candidates (AAII bearish contrarian, CLARITY Act) rejected
+  as not-testable in scanner pipeline (no AAII data / one-time binary event).
 ---
 
 # Edge Candidate: Skewness-Managed Anomaly Portfolios — +5.45%/yr Enhancement to All Factors

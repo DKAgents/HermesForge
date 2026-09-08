@@ -146,6 +146,12 @@ def size_strategy_debase(*a, **k): return 0.5  # Treasury debasement (WATCH, red
 def size_strategy_oil_shock(*a, **k): return 0.5  # Oil shock sector rotation (WATCH, reduced risk)
 def size_strategy_btc_supply(*a, **k): return 0.5  # BTC supply crunch (WATCH, reduced risk)
 
+# Autonomous-pipeline deployed (2026-09-08): Predicted Skewness Factor.
+# Phase 1A mean R=0.079 (p=0.0, t=6.79, friction-flagged). Walk-forward
+# OOS mean R=0.0457 (p=0.0005, ROBUST EDGE verdict) but 3/5 windows NO EDGE
+# and tiny effect size. Deployed WATCH with 0.25% — minimal risk, experimental.
+def size_strategy_skewp(*a, **k): return 0.25  # Predicted skewness factor (WATCH, experimental)
+
 
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
@@ -180,6 +186,7 @@ SIZING_FUNCTIONS = {
     "STR-DEBASEMENT-treasury-buyback":     size_strategy_debase,
     "STR-OIL-SHOCK":                       size_strategy_oil_shock,
     "STR-20260906-BTC-SUPPLY-CRUNCH":      size_strategy_btc_supply,
+    "STR-20260908-SKEW-PREDICTED":         size_strategy_skewp,
 }
 
 

@@ -81,6 +81,14 @@ from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
 # 06-Strategies/Hypotheses/STR-20260906-btc-supply-crunch.md.
 from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-09-08): Predicted Skewness Factor —
+# Gong, Lynch & Ogden (June 2026) cross-sectional skewness forecasting.
+# Phase 1A mean R=+0.079 (p=0.0, t=6.79), walk-forward OOS mean R=+0.0457
+# (p=0.0005, ROBUST EDGE verdict) but 3/5 OOS windows NO EDGE and tiny effect
+# size → deployed WATCH with 0.25% risk. See
+# 06-Strategies/Hypotheses/STR-20260908-predicted-skewness.md.
+from scanners.scanner_skew_predicted import scan as scan_skewp  # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -105,6 +113,7 @@ _SCANNER_ALIASES = {
     "scan_l":       scan_l,       "scan_p":       scan_p,
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
     "scan_btc_supply": scan_btc_supply,
+    "scan_skewp":   scan_skewp,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).

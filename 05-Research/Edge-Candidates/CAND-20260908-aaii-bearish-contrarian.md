@@ -1,7 +1,7 @@
 ---
-status: staged
+status: rejected
 source: web
-edge_type: aaii_bearish_contrarian 
+edge_type: aaii_bearish_contrarian
 composite_score: 55.0
 confidence: medium
 regime_fit: ['caution', 'neutral']
@@ -9,6 +9,11 @@ created: 20260908
 topic: research
 has_quotes: true
 tags: [sentiment, contrarian, aaii, bearish-extreme, retail, equity, external, staged]
+pipeline_result: rejected
+pipeline_notes: >
+  Requires AAII survey data not in our data pipeline. Time-sensitive signal
+  (Aug 26 reading) has already decayed (Sep 8). Not testable with existing
+  yfinance/Hyperliquid data. Deferred until AAII data feed is integrated.
 ---
 
 # Edge Candidate: AAII Bearish Sentiment Extreme — 44.4% Bearish, Historical Contrarian Buy Signal

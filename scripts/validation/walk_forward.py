@@ -201,6 +201,19 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": True,
         "call_mode": "batch",
     },
+    "SKEWP": {
+        "module": "scanner_skew_predicted",
+        "scan_fn": "scan",
+        "name": "Predicted Skewness Factor",
+        "params": {
+            "SKEW_WINDOW": [42, 63, 84],
+            "ATR_STOP_MULT": [1.5, 2.0, 2.5],
+            "QUINTILE": [3, 5],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -217,6 +230,7 @@ QUICK_PARAMS = {
     "OS": {"SPIKE_PCT": [3.5], "ATR_STOP_MULT": [2.0], "MIN_RR": [1.5]},
     "SUPPLY": {"THIN_VOLUME_PCT": [50], "COMPRESSION_THRESHOLD": [0.15], "ATR_STOP_MULT": [2.5]},
     "SENT": {"FEAR_VIX_THRESHOLD": [20.0], "FG_GREED_THRESHOLD": [65], "DIVERGENCE_SPREAD_MIN": [25]},
+    "SKEWP": {"SKEW_WINDOW": [63], "ATR_STOP_MULT": [2.0], "QUINTILE": [5]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────

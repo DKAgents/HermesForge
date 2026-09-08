@@ -1,7 +1,7 @@
 ---
 type: backlog-index
 created: 2026-06-27
-updated: 2026-09-06
+updated: 2026-09-08
 tags: [backlog]
 ---
 
@@ -54,7 +54,8 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-071 | EPIC-010 | Paper Trading Performance Report (Discord, cron cb22b038a6d6) | `4dc81e5` |
 | US-115 | EPIC-013 | Autonomous pipeline: Treasury buyback debasement BTC regime trade (Phase 1A p=0.157 SPECULATIVE, walk-forward OOS mean R +0.131 → WATCH, deployed to paper trading at 0.5% risk) | this run |
 || US-120 | EPIC-013 | Autonomous pipeline: Oil shock sector rotation (Phase 1A mean R=+0.183 p=0.1069, walk-forward OOS mean R=+0.171, deployed WATCH at 0.5% risk) | this run |
-|| US-122 | EPIC-013 | Autonomous pipeline: BTC supply crunch / thin-float breakout (Phase 1A mean R=+0.256 p=0.0651, walk-forward OOS mean R=+0.146, deployed WATCH at 0.5% risk — STR-20260906-BTC-SUPPLY-CRUNCH) | this run |
+| US-122 | EPIC-013 | Autonomous pipeline: BTC supply crunch / thin-float breakout (Phase 1A mean R=+0.256 p=0.0651, walk-forward OOS mean R=+0.146, deployed WATCH at 0.5% risk — STR-20260906-BTC-SUPPLY-CRUNCH) | this run |
+| US-142 | EPIC-013 | Autonomous pipeline: Predicted skewness factor (Phase 1A mean R=+0.079 p=0.0, walk-forward OOS mean R=+0.0457 p=0.0005, deployed WATCH at 0.25% risk — STR-20260908-SKEW-PREDICTED) | this run |
 
 ---
 
@@ -125,12 +126,12 @@ These items are known but have not been promoted to user stories yet. They shoul
 ## Backlog Health
 
 - **Total Epics:** 14 (1 done: EPIC-007, EPIC-010)
-- **Total Stories Defined:** 74 (US-001 to US-115)
-- **Completed (August 2026):** US-071, US-085 to US-096, US-101, US-103 to US-115 (26 stories)
+- **Total Stories Defined:** 75 (US-001 to US-142)
+- **Completed (September 2026):** US-142 (Predicted Skewness Factor deployment)
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-142 (US-141 is the highest filed; scan the index — the highest US number, not this field, is authoritative)
+- **Next Story Number:** US-143
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---

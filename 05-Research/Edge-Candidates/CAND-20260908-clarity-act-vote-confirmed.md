@@ -1,5 +1,5 @@
 ---
-status: staged
+status: rejected
 source: web_updated
 edge_type: clarity_act_binary_catalyst
 composite_score: 55.0
@@ -9,6 +9,11 @@ created: 20260908
 topic: research
 has_quotes: true
 tags: [crypto, regulation, catalyst, legislation, midterms, external, staged, updated-vote-date]
+pipeline_result: rejected
+pipeline_notes: >
+  One-time binary catalyst event (Sep 15 vote), not a repeatable mechanical
+  strategy suitable for scanner/backtest pipeline. Not suitable for Phase 1A
+  backtesting — no historical analogs for U.S. crypto market structure legislation.
 ---
 
 # Edge Candidate: CLARITY Act Senate Vote — September 15, 2026 Binary Crypto Catalyst (UPDATED)

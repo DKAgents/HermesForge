@@ -135,6 +135,13 @@ STRATEGY_REGISTRY = {
     "STR-OIL-SHOCK": {"name": "Oil Shock Sector Rotation", "asset": "stock", "status": "WATCH",
                       "regime_best": ["caution", "risk_off"], "regime_avoid": ["risk_on"],
                       "base_risk": 0.5, "type": "macro_overlay"},
+    # Autonomous-pipeline deployed 2026-09-08 (Gong, Lynch & Ogden skewness-managed).
+    # Phase 1A mean R=+0.079 (p=0.0, friction-flagged). Walk-forward OOS mean R=+0.0457
+    # (p=0.0005, ROBUST EDGE verdict) but 3/5 windows NO EDGE, effect size tiny.
+    # WATCH with 0.25% experimental risk.
+    "STR-SKEWP": {"name": "Predicted Skewness Factor", "asset": "stock", "status": "WATCH",
+                  "regime_best": ["neutral", "caution", "risk_off"], "regime_avoid": ["risk_on"],
+                  "base_risk": 0.25, "type": "factor"},
 }
 
 
