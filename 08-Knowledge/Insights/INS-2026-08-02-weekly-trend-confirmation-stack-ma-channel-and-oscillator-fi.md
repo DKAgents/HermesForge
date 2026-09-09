@@ -33,6 +33,10 @@ Before entering on a daily MACD or Stochastics crossover, confirm: (1) price is 
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[N065-macd-indicator-construction]] — See N065 for MACD construction details
+
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — See R268 for the broader market analysis checklist that encompasses these weekly trend filters
+
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — Supplement the stack with weekly trendline break confirmation
 
 ## Related Notes

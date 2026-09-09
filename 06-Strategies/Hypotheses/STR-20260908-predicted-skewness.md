@@ -7,8 +7,12 @@ asset_class: stock
 regime_best: [neutral, caution, risk_off]
 regime_avoid: [risk_on]
 base_risk: 0.25
+topic: strategies
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # STR-20260908-SKEW-PREDICTED: Cross-Sectional Predicted Skewness Factor
 
 ## Source
