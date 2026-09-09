@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-08T20:24:23Z
+updated: 2026-09-09T00:26:23Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 485 |
-| Connections created | 1 | 213 |
-| Review queue | 125 | 125 |
-| Avg score | 4.1 | — |
+| Notes examined | 5 | 490 |
+| Connections created | 0 | 213 |
+| Review queue | 129 | 129 |
+| Avg score | 4.3 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4356
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-08T20:24:23Z)
-- **08-Knowledge/Insights/INS-2026-08-02-volume-confirmation-creates-binary-entry-filter-reducing-fal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R052-filters-for-confirming-breakouts.md** (score 4.0): Linking Note A's volume-confirmation filter to Note B's comprehensive list of breakout filters provides context that volume is one of several confirmation techniques, helping to evaluate relative importance and combine filters.
+## Recent Discoveries (last run: 2026-09-09T00:26:23Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 93: Created 2 connections from 5 notes. Avg score: 2.0.
