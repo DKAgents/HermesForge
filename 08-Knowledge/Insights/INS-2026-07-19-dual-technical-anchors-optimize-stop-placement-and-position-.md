@@ -36,6 +36,8 @@ In a downtrend, identify both the violated support level (C065) and any nearby u
 - [[C336-support-level|Support Level]]
 
 ## Related
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020 for alternative stop placement using point-and-figure charts
+
 - [[RG031-protective-stop-placement-as-an-art]] — See RG031 for the general art of stop placement that this dual-anchor method exemplifies
 
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid anchoring stops at round-number levels (Murphy rule)

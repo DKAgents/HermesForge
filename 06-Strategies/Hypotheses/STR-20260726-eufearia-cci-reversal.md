@@ -359,3 +359,8 @@ STR-I is the stronger strategy (higher Sharpe and return), but STR-J has a signi
 - [[RG032-3-to-1-reward-to-risk-ratio]]
 - [[RG037-use-protective-stops-to-limit-losses]]
 
+
+## Related
+- [[SECOND-BRAIN-ELEVATION-PLAN]] — See 06-Strategies/STRATEGIES MOC for strategy overview
+
+- [[N057-weekly-and-monthly-reversal-patterns]] — See N057-weekly-and-monthly-reversal-patterns for higher-timeframe confirmation context
