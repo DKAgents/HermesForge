@@ -151,3 +151,6 @@ uses the **correct date-based bucketing** (`period1_bull` 2019-04-01 to
 **Status unchanged: KILL.** Phase 1B tuning (long-only, wider stops 0.25x->0.75x ATR, longer hold 8->14 bars, and two alternative fourth levers — a no-op R:R loosening and a deeper-oversold RSI trigger) failed to rescue this strategy above the ADR-004 KILL floor. The best variant (long-only + wider stop + longer hold, avg R 0.110) still falls under half the required 0.2 avg R. No new production scanner or hypothesis doc was created per the Phase 1B decision rule (no variant reached WATCH). This strategy remains dropped; further tuning of this specific entry/exit skeleton is not recommended — a materially different entry trigger or exit logic (not just parameter perturbation) would be required to revisit RSI mean-reversion as a strategy family.
 
 **Sweep script:** `scripts/validation/phase1b_sensitivity_sweep_e.py` (new file, standalone; does not modify `scanner_e_rsi_mean_reversion.py` or `run_phase1a.py`).
+
+## Related
+- [[EN037-rsi-7030-line-crossings-as-trading-signals]] — See EN037-rsi-7030-line-crossings-as-trading-signals for textbook confirmation of the crossover trigger and additional nuance on divergences.
