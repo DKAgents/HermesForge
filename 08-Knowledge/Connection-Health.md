@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-10T17:02:28Z
+updated: 2026-09-10T21:04:19Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 540 |
-| Connections created | 2 | 232 |
-| Review queue | 157 | 157 |
-| Avg score | 2.5 | — |
+| Notes examined | 5 | 545 |
+| Connections created | 2 | 234 |
+| Review queue | 159 | 159 |
+| Avg score | 4.0 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4445
+- Total wikilinks in vault: ~4447
 - Total notes: 2200
-- Avg degree per note: 2.02
+- Avg degree per note: 2.021
 - Notes with links: 879 (40.0%)
 - Orphan notes (no links): 1320 (60.0%)
 
@@ -28,13 +28,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-10T17:02:28Z)
-- **08-Knowledge/Insights/INS-2026-07-19-volume-divergence-in-flags-signals-stop-tightening-opportuni.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note A suggests tightening stops based on volume divergence in flags, while Note B provides a critical rule for where to place those stops (away from round numbers). Linking them ensures that stop tightening is executed optimally, avoiding premature exits.
-- **08-Knowledge/Insights/INS-2026-07-26-breadth-oscillator-confirms-counter-trend-entry-timing.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN086-counter-trend-oscillator-based-trading.md** (score 4.0): Note A introduces a breadth-based confirmation layer (McClellan oscillator) that conditions the general counter-trend oscillator strategy from Note B, addressing the limitation that single-instrument oscillators can remain extreme in strong trends.
+## Recent Discoveries (last run: 2026-09-10T21:04:19Z)
+- **08-Knowledge/Insights/INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R127-zero-line-crossings-must-align-with-prevailing-trend.md** (score 4.0): Both notes address oscillator signal validation with trend context; Note A focuses on extreme reading filters for reversals, while Note B provides rules for zero-line crossings aligning with trend, together offering complementary perspectives on oscillator usage.
+- **08-Knowledge/Insights/INS-2026-07-26-dual-s-r-confluence-tightens-stop-scales-position-size.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note A defines a precise stop level using dual S/R confluence, while Note B adds a critical condition that stops should not be placed at round numbers, preventing premature stop-outs. Linking them integrates a behavioral risk rule with a technical method.
 
 ## Reflection Notes
-- Run 104: Created 1 connections from 5 notes. Avg score: 3.9.
 - Run 105: Created 3 connections from 5 notes. Avg score: 3.7.
 - Run 106: Created 1 connections from 5 notes. Avg score: 4.2.
 - Run 107: Created 2 connections from 5 notes. Avg score: 4.1.
 - Run 108: Created 2 connections from 5 notes. Avg score: 2.5.
+- Run 109: Created 2 connections from 5 notes. Avg score: 4.0.

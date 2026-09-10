@@ -36,6 +36,8 @@ In a downtrend, when a bounce rallies into a zone where a prior violated support
 - [[C336-support-level|Support Level]]
 
 ## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for round number avoidance when placing stops at dual S/R confluence
+
 - [[C245-stop-order]] — See C245-stop-order for the foundational stop mechanics this confluence technique refines.
 
 - [[RG031-protective-stop-placement-as-an-art]] — See RG031-protective-stop-placement-as-an-art for the volatility principle behind precise stop calibration
