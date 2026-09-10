@@ -214,6 +214,19 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": False,
         "call_mode": "batch",
     },
+    "TRIPLE": {
+        "module": "scanner_macro_triple_headwind",
+        "scan_fn": "scan",
+        "name": "Macro Triple Headwind Defensive Rotation",
+        "params": {
+            "WTI_THRESHOLD": [80, 85, 90],
+            "TENY_THRESHOLD": [3.5, 4.0, 4.5],
+            "STOP_ATR_MULT": [1.5, 2.0, 2.5],
+        },
+        "asset_class": "stock",
+        "long_only_stocks": True,
+        "call_mode": "batch",
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -231,6 +244,7 @@ QUICK_PARAMS = {
     "SUPPLY": {"THIN_VOLUME_PCT": [50], "COMPRESSION_THRESHOLD": [0.15], "ATR_STOP_MULT": [2.5]},
     "SENT": {"FEAR_VIX_THRESHOLD": [20.0], "FG_GREED_THRESHOLD": [65], "DIVERGENCE_SPREAD_MIN": [25]},
     "SKEWP": {"SKEW_WINDOW": [63], "ATR_STOP_MULT": [2.0], "QUINTILE": [5]},
+    "TRIPLE": {"WTI_THRESHOLD": [85], "TENY_THRESHOLD": [4.0], "STOP_ATR_MULT": [2.0]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────

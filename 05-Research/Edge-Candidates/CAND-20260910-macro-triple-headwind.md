@@ -1,14 +1,26 @@
 ---
-status: staged
+status: watch
 source: web
 edge_type: macro_triple_headwind_rotation
 composite_score: 58.0
-confidence: medium
+confidence: low
 regime_fit: ['caution', 'risk_off', 'neutral']
 created: 20260910
 topic: research
 has_quotes: true
-tags: [macro, oil, yields, fed, defensive-rotation, external, staged, escalation-update]
+tags: [macro, oil, yields, fed, defensive-rotation, external, processed, watch]
+notes: |
+  Phase 1A (WTI>$85 + 10Y>4% + 10Y rising): 42 signals on XLU/XLP/XLE,
+  avg R = +0.317, win rate = 54.8%, p = 0.1046 (borderline).
+  Walk-forward in-sample (with costs): avg R = 0.281, p = 0.1423,
+  "POSSIBLE EDGE (low confidence)". OOS could not be evaluated because the
+  optimization sample (30 liquid stocks) excludes XLU/XLP/XLE.
+  Original thresholds (WTI>$95 + 10Y>4.75%) never triggered in our data
+  (TNX data ends 2026-08-14, missing the current Sep 2026 WTI>$100+
+  10Y~4.844% environment). The 2022 analog partially validates the defensive
+  rotation concept with lower thresholds.
+  WATCH — deploy as paper overlay on STR-OIL-SHOCK with reduced risk (0.5%).
+  Revisit after 2026 Q4 when more triple-headwind data accumulates.
 ---
 
 # Edge Candidate: Macro Triple Headwind — WTI >$100 + 10Y Approaching 5% + FOMC Hike Odds >50% — Defensive Rotation Refinement

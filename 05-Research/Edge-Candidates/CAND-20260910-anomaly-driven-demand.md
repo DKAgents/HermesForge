@@ -1,5 +1,5 @@
 ---
-status: staged
+status: backtest_failed
 source: web
 edge_type: anomaly_driven_demand_factor
 composite_score: 62.0
@@ -8,7 +8,15 @@ regime_fit: ['risk_on', 'neutral', 'diversified']
 created: 20260910
 topic: academic
 has_quotes: true
-tags: [academic-paper, factor-investing, anomaly-crowding, cross-section, momentum, value, profitability, external, staged, new-paper]
+tags: [academic-paper, factor-investing, anomaly-crowding, cross-section, momentum, value, profitability, external, processed, backtest-failed]
+notes: |
+  Phase 1A backtest (2019-2026): 65,884 signals across 529 stocks, avg R = -0.001,
+  p-value = 0.7188 (not significant), win rate 49.1%. The proxy ADD score using
+  price/volume-only anomaly signals did not produce a statistically significant edge.
+  Possible reasons: (1) Our proxies (SMA200, momentum, vol, volume) may not capture
+  the full Chen & Zimmermann anomaly set, (2) the ADD effect may require the actual
+  anomaly portfolio membership data, not price proxies, (3) the effect may not
+  replicate in a 529 large/mid-cap universe. KILL per ADR-004.
 ---
 
 # Edge Candidate: Anomaly-Driven Demand (ADD) Factor — Factor Crowding as a Cross-Sectional Signal

@@ -257,6 +257,9 @@ def _create_signal(data: dict, ticker: str, date: pd.Timestamp,
     if risk <= 0:
         return None
 
+    # Subperiod from data
+    subperiod = df_slice["subperiod"].iloc[-1] if "subperiod" in df_slice.columns else "unknown"
+
     # Simulate exit using full data
     exit_price, exit_reason, bars_held = _simulate_exit(
         df, entry_idx, direction, entry_price, stop_price, MAX_BARS_HELD
@@ -284,10 +287,11 @@ def _create_signal(data: dict, ticker: str, date: pd.Timestamp,
         "long_count": add_info.get("long_count", 0),
         "short_count": add_info.get("short_count", 0),
         "rebalance": True,
+        "subperiod": subperiod,
     }
 
 
-def scan(data: dict, **kwargs) -> list:
+def scan(data: dict) -> list:
     """
     Cross-sectional ADD batch scanner. Takes the full stock data dict,
     ranks all tickers by ADD proxy score, and generates signals.
