@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-10T12:59:28Z
+updated: 2026-09-10T17:02:28Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,17 +9,17 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 535 |
-| Connections created | 2 | 230 |
+| Notes examined | 5 | 540 |
+| Connections created | 2 | 232 |
 | Review queue | 157 | 157 |
-| Avg score | 4.1 | — |
+| Avg score | 2.5 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4443
-- Total notes: 2198
-- Avg degree per note: 2.021
+- Total wikilinks in vault: ~4445
+- Total notes: 2200
+- Avg degree per note: 2.02
 - Notes with links: 879 (40.0%)
-- Orphan notes (no links): 1318 (60.0%)
+- Orphan notes (no links): 1320 (60.0%)
 
 ## Weakly Connected Areas
 - `campaigns/2026-09-aegis-rebuild` — 8 notes, avg degree 0.0
@@ -28,13 +28,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-10T12:59:28Z)
-- **08-Knowledge/Insights/INS-2026-07-19-volume-confirmation-as-binary-entry-gate-reducing-position-r.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C097-confirmation-principle.md** (score 4.0): Linking these notes connects the specific volume confirmation strategy (Note A) to Murphy's general confirmation principle (Note B), grounding the strategy in established technical analysis theory and enabling reasoning across both levels of abstraction.
-- **08-Knowledge/Insights/INS-2026-07-19-volume-confirmed-flag-pennant-breakout-as-false-signal-filte.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R052-filters-for-confirming-breakouts.md** (score 5.0): Note A focuses on volume as a key filter for flag/pennant breakouts, while Note B provides additional confirmation criteria (e.g., close beyond resistance, percentage penetration) that can be combined with volume analysis to further reduce false signals, enriching the trading rule set.
+## Recent Discoveries (last run: 2026-09-10T17:02:28Z)
+- **08-Knowledge/Insights/INS-2026-07-19-volume-divergence-in-flags-signals-stop-tightening-opportuni.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note A suggests tightening stops based on volume divergence in flags, while Note B provides a critical rule for where to place those stops (away from round numbers). Linking them ensures that stop tightening is executed optimally, avoiding premature exits.
+- **08-Knowledge/Insights/INS-2026-07-26-breadth-oscillator-confirms-counter-trend-entry-timing.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN086-counter-trend-oscillator-based-trading.md** (score 4.0): Note A introduces a breadth-based confirmation layer (McClellan oscillator) that conditions the general counter-trend oscillator strategy from Note B, addressing the limitation that single-instrument oscillators can remain extreme in strong trends.
 
 ## Reflection Notes
-- Run 103: Created 2 connections from 5 notes. Avg score: 3.5.
 - Run 104: Created 1 connections from 5 notes. Avg score: 3.9.
 - Run 105: Created 3 connections from 5 notes. Avg score: 3.7.
 - Run 106: Created 1 connections from 5 notes. Avg score: 4.2.
 - Run 107: Created 2 connections from 5 notes. Avg score: 4.1.
+- Run 108: Created 2 connections from 5 notes. Avg score: 2.5.

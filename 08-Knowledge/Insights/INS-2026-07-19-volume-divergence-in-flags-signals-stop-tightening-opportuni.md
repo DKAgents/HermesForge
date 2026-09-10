@@ -33,4 +33,6 @@ When a flag or pennant breakout occurs on light volume (violating R082 and match
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for stop placement relative to round numbers when tightening stops
+
 - [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021-use-of-advance-stop-orders-in-point-and-figure-trading for stop execution discipline
