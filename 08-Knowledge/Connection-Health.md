@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-09T20:46:14Z
+updated: 2026-09-10T00:49:40Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,15 +9,15 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 515 |
-| Connections created | 2 | 223 |
-| Review queue | 141 | 141 |
-| Avg score | 3.5 | — |
+| Notes examined | 5 | 520 |
+| Connections created | 1 | 224 |
+| Review queue | 147 | 147 |
+| Avg score | 3.9 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4409
+- Total wikilinks in vault: ~4410
 - Total notes: 2188
-- Avg degree per note: 2.015
+- Avg degree per note: 2.016
 - Notes with links: 870 (39.8%)
 - Orphan notes (no links): 1317 (60.2%)
 
@@ -28,13 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-09T20:46:14Z)
-- **08-Knowledge/Insights/INS-2026-07-19-multi-filter-breakout-system-with-volume-based-stop-trigger.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/patterns/N018-head-and-shoulders-bottom-volume-sequence.md** (score 4.0): Note B provides specific volume sequence rules for head and shoulders bottoms, which can be integrated as an additional filter within Note A's multi-filter breakout system, enhancing validation for that pattern.
-- **06-Strategies/Hypotheses/STR-20260726-rsi-mean-reversion-entry.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN037-rsi-7030-line-crossings-as-trading-signals.md** (score 4.0): Note B explicitly validates the same crossover trigger that Note A proposes, adding authoritative textbook backing and mentions divergence/double-bottom nuances not covered in Note A, which enriches the strategy's context.
+## Recent Discoveries (last run: 2026-09-10T00:49:40Z)
+- **06-Strategies/Hypotheses/STR-20260728-adaptive-trend.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R081-volume-should-confirm-price-trend-direction.md** (score 4.0): Linking volume confirmation to the adaptive trend strategy provides a potential filter to reduce false signals and improve risk-adjusted returns.
 
 ## Reflection Notes
-- Run 99: Created 2 connections from 5 notes. Avg score: 4.0.
 - Run 100: Created 1 connections from 5 notes. Avg score: 4.2.
 - Run 101: Created 2 connections from 5 notes. Avg score: 3.4.
 - Run 102: Created 3 connections from 5 notes. Avg score: 4.2.
 - Run 103: Created 2 connections from 5 notes. Avg score: 3.5.
+- Run 104: Created 1 connections from 5 notes. Avg score: 3.9.
