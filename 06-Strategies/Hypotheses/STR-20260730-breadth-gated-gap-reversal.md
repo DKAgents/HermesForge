@@ -117,6 +117,7 @@ Standalone scanner: `scanner_k_breadth_gap.py` (not added to live registry)
 | 2026-07-30 | Strategy created | First graph-aware discovery cycle — fills transitional regime gap + gap core idea gap |
 
 ## Related
+- [[N057-weekly-and-monthly-reversal-patterns]] — See N057-weekly-and-monthly-reversal-patterns for higher-timeframe confirmation of gap reversals
 
 - [[REGIME-transitional]]
 - [[REGIME-ranging]]

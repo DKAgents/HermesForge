@@ -33,6 +33,8 @@ Before acting on 4-9-18 triple crossover signals, compute the 4-minus-18 MA spre
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[N161-momentum-oscillator-construction]] — See N161 for momentum oscillator construction basis
+
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — Use MA spread oscillator as regime filter before applying oscillator entry in trending markets
 
 - [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for applying divergence logic to the MA spread oscillator.
