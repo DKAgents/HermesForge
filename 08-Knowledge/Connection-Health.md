@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-11T09:12:29Z
+updated: 2026-09-11T13:17:07Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,13 +9,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 560 |
-| Connections created | 1 | 236 |
-| Review queue | 163 | 163 |
-| Avg score | 3.7 | — |
+| Notes examined | 5 | 565 |
+| Connections created | 1 | 237 |
+| Review queue | 167 | 167 |
+| Avg score | 3.5 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4479
+- Total wikilinks in vault: ~4480
 - Total notes: 2212
 - Avg degree per note: 2.025
 - Notes with links: 890 (40.3%)
@@ -28,12 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-11T09:12:29Z)
-- **08-Knowledge/Insights/INS-2026-07-30-crossover-systems-converted-to-oscillators-reveal-regime-wea.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C154-macd-histogram-momentum-warning-signals.md** (score 5.0): Note A describes converting crossover spreads into oscillators to detect regime weakness, and Note B provides the specific warning signals (histogram compression toward zero) that operationalize that detection, enabling a trader to confirm fading momentum before a crossover occurs.
+## Recent Discoveries (last run: 2026-09-11T13:17:07Z)
+- **08-Knowledge/Insights/INS-2026-07-30-dual-oscillator-confirmation-threshold-for-candle-reversal-f.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C183-filtered-candle-patterns-concept.md** (score 5.0): Note B defines the general concept of filtering candle patterns with oscillators, while Note A specifies a concrete improvement by requiring both RSI and stochastics to be simultaneously in extreme zones, thus adding a conditional threshold that enhances signal reliability.
 
 ## Reflection Notes
-- Run 107: Created 2 connections from 5 notes. Avg score: 4.1.
 - Run 108: Created 2 connections from 5 notes. Avg score: 2.5.
 - Run 109: Created 2 connections from 5 notes. Avg score: 4.0.
 - Run 111: Created 1 connections from 5 notes. Avg score: 4.0.
 - Run 112: Created 1 connections from 5 notes. Avg score: 3.7.
+- Run 113: Created 1 connections from 5 notes. Avg score: 3.5.
