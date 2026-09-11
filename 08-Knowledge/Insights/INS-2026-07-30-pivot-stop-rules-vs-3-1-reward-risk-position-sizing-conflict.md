@@ -37,4 +37,6 @@ Before entering a pivot point buy signal per EN071, calculate whether the techni
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related
+- [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for stop placement refinement relative to round numbers
+
 - [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020 for a stop-tightening technique that may reconcile technical and risk constraints.
