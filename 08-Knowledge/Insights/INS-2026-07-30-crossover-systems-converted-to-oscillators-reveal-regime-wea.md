@@ -33,6 +33,8 @@ Before acting on a 4-9-18 triple crossover signal, compute the oscillator spread
 **adds_condition** — Actionability score: 3/5
 
 ## Related
+- [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for earlier warning of oscillator compression
+
 - [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for applying overbought/oversold conditions to crossover oscillators
 
 - [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for the foundational price-difference method underlying crossover oscillators
