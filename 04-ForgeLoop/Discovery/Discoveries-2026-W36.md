@@ -1,8 +1,8 @@
 ---
 type: discovery-report
 week: 2026-W36
-date: 2026-09-08 21:08 PDT
-insights_found: 14
+date: 2026-09-10 21:08 PDT
+insights_found: 11
 seeds_run: 18
 llm_calls: 18
 tags: [discovery, knowledge-evolution, forge-loop]
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W36
 
-Generated: 2026-09-08 21:08 PDT
+Generated: 2026-09-10 21:08 PDT
 
 ## Summary
 
@@ -18,23 +18,20 @@ Generated: 2026-09-08 21:08 PDT
 |--------|-------|
 | Seeds queried | 18 |
 | LLM synthesis calls | 18 |
-| Insights accepted (actionability ≥ 3) | 14 |
+| Insights accepted (actionability ≥ 3) | 11 |
 
 ## New Insights
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-09-09-volume-confirmation-as-a-prerequisite-for-position-sizing-de\|Volume confirmation as a prerequisite fo]] | 4/5 | adds_condition | rules, indicators |
-| [[INS-2026-09-09-volume-confirms-flag-and-pennant-breakouts\|Volume confirms flag and pennant breakou]] | 4/5 | confirms_risk_rule | patterns, rules |
-| [[INS-2026-09-09-volume-based-stop-refinement-for-breakout-trades\|Volume-Based Stop Refinement for Breakou]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-09-dual-oscillator-overbought-oversold-confirmation-for-candle-\|Dual Oscillator Overbought/Oversold Conf]] | 4/5 | creates_filter | concepts, indicators |
-| [[INS-2026-09-09-breadth-oscillator-filters-pullback-entries\|Breadth Oscillator Filters Pullback Entr]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-09-violated-gap-support-becomes-resistance-for-stop-sizing\|Violated Gap Support Becomes Resistance ]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-09-40-60-zone-unifies-dow-and-fibonacci-retracement-logic\|40–60% zone unifies Dow and Fibonacci re]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-09-keltner-pullback-entries-within-dow-retracement-adx-filter\|Keltner Pullback Entries Within Dow Retr]] | 4/5 | creates_filter | indicators, edge-conditions |
-| [[INS-2026-09-09-rs-filtered-sector-rotation-using-crb-bond-signal\|RS-filtered sector rotation using CRB/Bo]] | 4/5 | creates_filter | indicators, rules |
-| [[INS-2026-09-09-filter-10-50-crossover-signals-with-commodity-trend-for-expo\|Filter 10/50 crossover signals with comm]] | 4/5 | creates_filter | indicators, rules |
-| [[INS-2026-09-09-volume-confirmed-breakaway-gaps\|Volume-Confirmed Breakaway Gaps]] | 4/5 | creates_filter | patterns, rules |
-| [[INS-2026-09-09-macd-oscillator-construction-refines-triple-crossover-timing\|MACD oscillator construction refines tri]] | 3/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-09-weekly-price-channel-as-macd-stochastics-trend-filter\|Weekly price channel as MACD/Stochastics]] | 3/5 | creates_filter | rules, concepts |
-| [[INS-2026-09-09-subjective-penetration-undermines-role-reversal-reliability\|Subjective penetration undermines role-r]] | 3/5 | confirms_risk_rule | edge-conditions, concepts |
+| [[INS-2026-09-11-dual-oscillator-extreme-filter-for-candle-patterns\|Dual Oscillator Extreme Filter for Candl]] | 4/5 | creates_filter | concepts, indicators |
+| [[INS-2026-09-11-role-reversal-and-gaps-as-stop-levels-for-position-sizing\|Role Reversal and Gaps as Stop Levels fo]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-11-pivot-point-entry-rules-can-violate-reward-risk-requirements\|Pivot point entry rules can violate rewa]] | 4/5 | adds_condition | rules, risk-guidelines |
+| [[INS-2026-09-11-dynamic-p-f-trailing-stops-enhance-pivot-point-exits\|Dynamic P&F trailing stops enhance pivot]] | 4/5 | reveals_sequence | risk-guidelines, concepts |
+| [[INS-2026-09-11-adx-regime-retracement-keltner-entry\|ADX Regime + Retracement + Keltner Entry]] | 4/5 | creates_filter | indicators, edge-conditions |
+| [[INS-2026-09-11-layer-rs-on-crb-bond-signals-for-sector-entry-timing\|Layer RS on CRB/Bond signals for sector ]] | 4/5 | creates_filter | rules, indicators |
+| [[INS-2026-09-11-10-50-crossover-on-commodities-filters-commodity-exporter-st\|10/50 Crossover on Commodities Filters C]] | 4/5 | creates_filter | indicators, rules |
+| [[INS-2026-09-11-volume-confirm-breakaway-gaps-to-avoid-false-signals\|Volume-Confirm Breakaway Gaps to Avoid F]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-09-11-speedlines-reduce-subjectivity-in-role-reversal\|Speedlines Reduce Subjectivity in Role R]] | 4/5 | resolves_conflict | edge-conditions, concepts |
+| [[INS-2026-09-11-use-double-crossover-oscillator-as-regime-filter-for-triple-\|Use double crossover oscillator as regim]] | 3/5 | creates_filter | concepts, rules |
+| [[INS-2026-09-11-mcclellan-oscillator-refines-secondary-trend-entry-timing\|McClellan Oscillator refines secondary t]] | 3/5 | creates_filter | rules, concepts |
