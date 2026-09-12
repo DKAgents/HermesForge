@@ -50,7 +50,28 @@ Every profile loads all 90 skills even though most need only 3-5:
 
 Total wasted across 11 profiles: ~40 KB of skill descriptions loaded per conversation turn. At 30 turns per session, that's ~1.2 MB of wasted context per session across the swarm.
 
-## Optimization path
+## Post-diet context budgets (US-141 applied, 2026-09-12)
+
+| Profile | Skills kept | Skills removed | Context saved |
+|---------|------------|----------------|---------------|
+| publisher | 2 (social-media, note-taking) | 88 | 3.6 KB/turn |
+| risk-guardian | 3 (devops) | 87 | 3.6 KB/turn |
+| coder | 20 (github, software-dev, devops) | 70 | 2.9 KB/turn |
+| architect | 23 (autonomous-agents, software-dev, github) | 67 | 2.7 KB/turn |
+| backtester | 8 (data-science, mlops) | 82 | 3.4 KB/turn |
+| researcher | 16 (research, data-science, mlops) | 74 | 3.0 KB/turn |
+| product-owner | 1 (note-taking) | 89 | 3.7 KB/turn |
+| trading | 9 (research, data-science) | 81 | 3.3 KB/turn |
+| consulting | 17 (productivity) | 73 | 3.0 KB/turn |
+| documenter | 9 (note-taking, research) | 81 | 3.3 KB/turn |
+| red-team | 10 (software-dev) | 80 | 3.3 KB/turn |
+| orchestrator | 90 (all) | 0 | 0 KB (hot profile) |
+| aegis-auditor | 2 (unchanged) | 0 | 0 KB (already thin) |
+| **Total** | | **886/1170** | **35.8 KB/turn** |
+
+Skill descriptions removed: ~3.5 KB per profile × 11 profiles = 35.8 KB per turn.
+Each profile now loads only the categories relevant to its role.
+Rollback: `cp -r orchestrator/skills <profile>/skills` for any profile.
 
 ### P0 — Toolset allowlists (already started)
 - Publisher: `terminal, read_file, search_files, discord, discord_admin`

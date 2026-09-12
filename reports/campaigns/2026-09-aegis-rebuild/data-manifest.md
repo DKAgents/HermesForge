@@ -15,3 +15,6 @@ weaver_tier_test_verdict: T3_ACCEPTABLE
 context_budgets_last_ok: 2026-09-12 17:30 UTC
 context_budgets_profiles_measured: 13
 context_budgets_wasted_per_turn: ~3.6KB per profile
+swarm_diet_last_ok: 2026-09-12 18:00 UTC
+swarm_diet_skills_removed: 886 across 11 profiles
+swarm_diet_context_saved_per_turn: 35.8 KB
