@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-12T17:31:30Z
+updated: 2026-09-12T21:33:09Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 600 |
-| Connections created | 1 | 243 |
-| Review queue | 170 | 170 |
-| Avg score | 4.0 | — |
+| Notes examined | 5 | 605 |
+| Connections created | 0 | 243 |
+| Review queue | 171 | 171 |
+| Avg score | 4.3 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4520
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-12T17:31:30Z)
-- **08-Knowledge/Insights/INS-2026-07-31-gap-resistance-confluence-determines-stop-distance-and-posit.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG021-use-of-advance-stop-orders-in-point-and-figure-trading.md** (score 4.0): Note A specifies where to place stops (above resistance confluence), while Note B adds the procedural condition that such stops should be placed in advance and periodically reviewed in point-and-figure trading, creating a practical workflow.
+## Recent Discoveries (last run: 2026-09-12T21:33:09Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 113: Created 1 connections from 5 notes. Avg score: 3.5.
