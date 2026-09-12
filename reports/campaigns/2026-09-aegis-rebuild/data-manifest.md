@@ -12,3 +12,6 @@ weaver_tier_test_t3_connections: 4
 weaver_tier_test_t2_avg_usefulness: 4.0
 weaver_tier_test_t3_avg_usefulness: 3.0
 weaver_tier_test_verdict: T3_ACCEPTABLE
+context_budgets_last_ok: 2026-09-12 17:30 UTC
+context_budgets_profiles_measured: 13
+context_budgets_wasted_per_turn: ~3.6KB per profile
