@@ -21,3 +21,5 @@ swarm_diet_context_saved_per_turn: 35.8 KB
 chart_purge_last_ok: 2026-09-12 18:10 UTC
 chart_purge_files_removed: 10322
 chart_purge_bytes_remaining: 111 MB
+hostile_fills_last_ok: 2026-09-12 22:45 UTC
+hostile_fills_records: 23 (7 skip, 7 entry/open, 7 closed, 1 skip_entry)
