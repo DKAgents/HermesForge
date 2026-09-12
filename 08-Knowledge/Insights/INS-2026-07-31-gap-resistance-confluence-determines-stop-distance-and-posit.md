@@ -37,6 +37,8 @@ In a downtrend, sell rallies that reach the convergence of a price gap's lower e
 - [[C334-resistance-level|Resistance Level]]
 
 ## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021 for advance stop order implementation in P&F context.
+
 - [[C063-significance-of-penetration-for-role-reversal]] — See C063 for the condition that role reversal requires significant penetration
 
 - [[R227-support-and-resistance-for-entry-exit-and-stop-placement]] — See general S/R stop placement rule for the foundational principle
