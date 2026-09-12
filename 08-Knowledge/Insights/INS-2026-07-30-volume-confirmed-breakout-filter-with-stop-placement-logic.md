@@ -33,6 +33,8 @@ A trader should only enter on breakouts that satisfy at least one structural fil
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082 for foundational volume confirmation rule
+
 - [[N043-flag-and-pennant-summary-characteristics]] — See N043-flag-and-pennant-summary-characteristics for the volume sequence pattern that validates breakout entries
 
 - [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018-head-and-shoulders-bottom-volume-sequence for pattern-specific volume confirmation example.

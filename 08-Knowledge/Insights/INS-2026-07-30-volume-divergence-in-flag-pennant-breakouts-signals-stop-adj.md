@@ -33,6 +33,8 @@ When a flag or pennant breaks out on below-average volume, immediately tighten t
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018 for volume sequence in head and shoulders bottom patterns
+
 - [[R052-filters-for-confirming-breakouts]] — See breakout confirmation filters for additional validation criteria.
 
 - [[N019-flag-and-pennant-measuring-technique]] — See N019-flag-and-pennant-measuring-technique for target projection to complement stop adjustment
