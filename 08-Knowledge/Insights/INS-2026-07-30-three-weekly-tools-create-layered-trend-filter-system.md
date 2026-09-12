@@ -34,3 +34,6 @@ A trader should require alignment across all three weekly indicators — channel
 
 ## Related Notes
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa|Three-Layer Weekly Confirmation System for Daily Entry Signals]]
+
+## Related
+- [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa]] — See the layered weekly confirmation system for daily entry signals
