@@ -18,3 +18,6 @@ context_budgets_wasted_per_turn: ~3.6KB per profile
 swarm_diet_last_ok: 2026-09-12 18:00 UTC
 swarm_diet_skills_removed: 886 across 11 profiles
 swarm_diet_context_saved_per_turn: 35.8 KB
+chart_purge_last_ok: 2026-09-12 18:10 UTC
+chart_purge_files_removed: 10322
+chart_purge_bytes_remaining: 111 MB

@@ -685,15 +685,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 8014
+        "completed": 8015
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-15T21:34:16.777047+00:00",
-      "next_run_at": "2026-09-12T17:25:00+00:00",
-      "last_run_at": "2026-09-12T17:20:31.478644+00:00",
+      "next_run_at": "2026-09-12T17:30:00+00:00",
+      "last_run_at": "2026-09-12T17:25:13.877161+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -893,15 +893,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 3135
+        "completed": 3136
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-09-01T20:14:53.581700+00:00",
-      "next_run_at": "2026-09-12T17:25:00+00:00",
-      "last_run_at": "2026-09-12T17:20:11.877821+00:00",
+      "next_run_at": "2026-09-12T17:30:00+00:00",
+      "last_run_at": "2026-09-12T17:25:11.882030+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -1121,7 +1121,57 @@
       "enabled_toolsets": null,
       "workdir": null,
       "fire_claim": null
+    },
+    {
+      "id": "f6100e38ac40",
+      "name": "Daily Chart Cache Purge (US-140)",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "provider_snapshot": null,
+      "model_snapshot": null,
+      "base_url": null,
+      "script": "purge_charts_daily.sh",
+      "no_agent": true,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "display": "every day at 3am"
+      },
+      "schedule_display": "every day at 3am",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-09-12T17:27:30.112844+00:00",
+      "next_run_at": "2026-09-13T03:00:00+00:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520487239774113914",
+        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
+        "thread_id": "1520487239774113914",
+        "user_id": "1500551729735929866",
+        "scope_id": "1500553453628428361"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-09-12T17:20:31.479427+00:00"
+  "updated_at": "2026-09-12T17:27:30.118550+00:00"
 }
