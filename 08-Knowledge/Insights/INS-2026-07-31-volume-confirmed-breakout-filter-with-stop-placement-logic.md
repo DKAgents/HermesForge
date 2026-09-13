@@ -33,6 +33,8 @@ A trader should only enter a long breakout when both a price filter (e.g., 2-day
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018 for volume sequence specifics in head and shoulders bottoms
+
 - [[N043-flag-and-pennant-summary-characteristics]] — See flag/pennant pattern for volume confirmation example
 
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See foundational volume rule for breakouts

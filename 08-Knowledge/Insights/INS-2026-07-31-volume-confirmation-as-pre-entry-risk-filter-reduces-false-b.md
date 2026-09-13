@@ -33,6 +33,8 @@ A trader should require heavy volume at upside breakout completion before enteri
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082 for the foundational volume breakout rule that INS-2026-07-31 builds upon
+
 - [[N028-bull-trap-false-upside-breakout]] — See bull trap pattern for volume confirmation context
 
 - [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for general breakout filters that include volume, which this two-stage filter refines.
