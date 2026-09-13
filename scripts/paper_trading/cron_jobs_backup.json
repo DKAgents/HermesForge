@@ -739,15 +739,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 8316
+        "completed": 8317
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-08-15T21:34:16.777047+00:00",
-      "next_run_at": "2026-09-13T18:35:00+00:00",
-      "last_run_at": "2026-09-13T18:31:01.427508+00:00",
+      "next_run_at": "2026-09-13T18:40:00+00:00",
+      "last_run_at": "2026-09-13T18:35:58.311078+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -765,9 +765,9 @@
       "fire_claim": null,
       "failure_streak": 0,
       "last_dispatch": {
-        "scheduled_at": "2026-09-13T18:30:00+00:00",
-        "dispatched_at": "2026-09-13T18:30:51.441439+00:00",
-        "lateness_seconds": 51.4,
+        "scheduled_at": "2026-09-13T18:35:00+00:00",
+        "dispatched_at": "2026-09-13T18:35:52.208687+00:00",
+        "lateness_seconds": 52.2,
         "kind": "on_time"
       }
     },
@@ -965,15 +965,15 @@
       "schedule_display": "*/5 * * * *",
       "repeat": {
         "times": null,
-        "completed": 3437
+        "completed": 3438
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-09-01T20:14:53.581700+00:00",
-      "next_run_at": "2026-09-13T18:35:00+00:00",
-      "last_run_at": "2026-09-13T18:30:54.344320+00:00",
+      "next_run_at": "2026-09-13T18:40:00+00:00",
+      "last_run_at": "2026-09-13T18:35:54.842155+00:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -991,9 +991,9 @@
       "workdir": null,
       "fire_claim": null,
       "last_dispatch": {
-        "scheduled_at": "2026-09-13T18:30:00+00:00",
-        "dispatched_at": "2026-09-13T18:30:51.441439+00:00",
-        "lateness_seconds": 51.4,
+        "scheduled_at": "2026-09-13T18:35:00+00:00",
+        "dispatched_at": "2026-09-13T18:35:52.208687+00:00",
+        "lateness_seconds": 52.2,
         "kind": "on_time"
       }
     },
@@ -1281,7 +1281,58 @@
         "kind": "on_time"
       },
       "fire_claim": null
+    },
+    {
+      "id": "5041c3c5103f",
+      "name": "Hostile Fill Report (US-142)",
+      "prompt": "",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "provider_snapshot": null,
+      "model_snapshot": null,
+      "base_url": null,
+      "script": "hostile_fill_report_daily.sh",
+      "no_agent": true,
+      "monitor_script": null,
+      "monitor_url": null,
+      "monitor_state": null,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 22 * * *",
+        "display": "every day at 22:00"
+      },
+      "schedule_display": "every day at 22:00",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-09-13T18:40:13.023787+00:00",
+      "next_run_at": "2026-09-13T22:00:00+00:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "last_delivery_unverified": null,
+      "failure_streak": 0,
+      "deliver": "local",
+      "origin": {
+        "platform": "discord",
+        "chat_id": "1520487239774113914",
+        "chat_name": "DKAgents / #talk-to-bot / Main Bot",
+        "thread_id": "1520487239774113914",
+        "user_id": "1500551729735929866",
+        "scope_id": "1500553453628428361"
+      },
+      "enabled_toolsets": null,
+      "workdir": null
     }
   ],
-  "updated_at": "2026-09-13T18:31:01.448215+00:00"
+  "updated_at": "2026-09-13T18:40:13.026877+00:00"
 }
