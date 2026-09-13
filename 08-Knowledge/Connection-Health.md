@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-13T09:39:43Z
+updated: 2026-09-13T13:41:22Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,9 +9,9 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 620 |
-| Connections created | 1 | 247 |
-| Review queue | 175 | 175 |
+| Notes examined | 5 | 625 |
+| Connections created | 0 | 247 |
+| Review queue | 178 | 178 |
 | Avg score | 4.0 | — |
 
 ## Graph Density Signals
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-13T09:39:43Z)
-- **08-Knowledge/Insights/INS-2026-07-31-volume-divergence-in-flags-signals-stop-tightening-opportuni.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG023-pf-trailing-stop-adjustment.md** (score 4.0): Note A describes a volume divergence rule for flag/pennant breakouts that identifies potential false signals (bull traps); linking to RG023 provides a specific trailing stop adjustment technique that could be applied when such a weak-volume breakout occurs, helping to protect profits or limit losses in that scenario.
+## Recent Discoveries (last run: 2026-09-13T13:41:22Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 119: Created 2 connections from 5 notes. Avg score: 4.0.
