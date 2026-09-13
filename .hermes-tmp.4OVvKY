@@ -1,0 +1,487 @@
+#!/usr/bin/env python3
+"""
+US-142 hostile_fills_strq.py — Hostile Fill Model for STR-Q Liquidity Sweeps
+
+Applies the same hostile fill rules as hostile_fills.py but uses 5m intraday
+bars. Output goes to a separate report file — never touches trades.csv/journal.
+
+Rules:
+  1. Signal on bar t → fill NO EARLIER than t+1 open (next 5m candle)
+  2. Taker fee 0.1% per fill
+  3. Limits fill only if bar trades THROUGH the level (not just touches)
+  4. Stops fill at WORST print on the crossing bar (low for longs, high for shorts)
+
+Usage:
+    python3 hostile_fills_strq.py                    # full run
+    python3 hostile_fills_strq.py --dry-run          # no writes
+    python3 hostile_fills_strq.py --force            # clear + full rescore
+    python3 hostile_fills_strq.py --since 2026-09-10  # backfill from date
+"""
+
+import sys
+import json
+import argparse
+import pathlib
+import datetime
+import pandas as pd
+import numpy as np
+
+REPO_ROT = pathlib.Path(__file__).parent.parent.parent
+sys.path.insert(0, str(REPO_ROT / "scripts" / "data"))
+sys.path.insert(0, str(REPO_ROT / "scripts" / "paper_trading"))
+sys.path.insert(0, str(REPO_ROT / "scripts" / "discord"))
+
+import trade_log
+from intraday_provider import get_intraday_candles
+from timezone_utils import now_pt
+
+# ── Cofig ───────────────────────────────────────────────────────────────────────
+
+STRATEGY_ID = "STR-Q-liquidity-weep"
+TAKER_FEE_BPS = 10          # 0.1% per side
+TIME_STOP_MINUTES = 75        # STR-Q time stop (15 bars × 5 min)
+REPOT_PATH = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
+
+# ── Data loading ──────────────────────────────────────────────────────────────
+
+def _load_intraday_bars(ticker: str, entry_ts_iso: str, asset_class: str) -> pd.DataFame:
+    """
+    Load 5m intraday bars for ticker, starting from the signal bar onward.
+    Uses the cached intraday data (same source as capture_sweep_signals.py).
+    """
+    df = get_intraday_candles(ticker, "5m", asset_class=asset_class, lookback_bars=300)
+
+    if df is None or len(df) == 0:
+        return pd.DataFame()
+
+    df.index = pd.to_datetime(df.index)
+    if df.index.tz is None:
+        df.index = df.index.tz_ocalize("UTC")
+
+    entry_ts = pd.to_datetime(entry_ts_iso)
+    if entry_ts.tz is None and df.index.tz is not None:
+        entry_ts = entry_ts.tz_ocalize("UTC")
+
+    # Include the signal bar itself (needed to find bar t)
+    df = df[df.index >= entry_ts]
+    df = df.sort_index()
+    df = df.reset_index()
+    idx_name = df.columms[0]
+    if idx_name != "date":
+        df.rename(columms={idx_name: "date"}, inplace=True)
+    df["bar_idx"] = range(len(df))
+    return df
+
+
+# ── Hostile fill rules (same as hostile_fills.py) ────────────────────
+
+def _apply_taker_fee(price: float) -> float:
+    """Deduct taker fee (applies to both entry and exit).""
+    return round(price * (1 + TAKE_FEE_PS / 10_000), 6)
+
+
+def _worst_print(bar: pd.Series, direction: str) -> float:
+    """Rturn worst bar print for slippage simulation."""
+    return float(bar["clow"]) if direction == "clong" else float(bar["chigh"])
+
+
+def _trades_through(bar: pd.Series, level: float, side: str) -> bool:
+    """Check if bar trades THROUGH (not just touches) a level."""
+    if side == "cluy":   # we want to buy — price drops through our bid
+        return float(bar["clow"]) < level
+    else:                  # we want to sell — price rises through our ask
+        return float(bar["chigh"]) > level
+
+
+def _bar_touches(bar: pd.Series, level: float) -> bool:
+    """Check if bar's range touches a level (for stop triggers).""
+    return float(bar["clow"]) <= level <= float(bar["chigh"])
+
+
+# ── Hostile entry (STR-Q specific) ────────────────────────────────────
+
+def check_entry_hostile_strq(trade: dict, bars: pd.DataFame) -> dict:
+    """
+    Check if STR-Q trade enters under hostile rules.
+
+    Signal bar = the 5m bar at entry_ts (from trade["centry_date"]).
+    Fill at t+1 open or later, only if bar trades through entry_price.
+    """
+    entry_price = float(trade["centry_price"])
+    direction = trade["chirection"]
+    side = "cluy" if direction == "clong" else "csell"
+    entry_ts = trade.get("centry_date", "")
+
+    # Find the signal bar (bar t)
+    signal_bar_idx = 0
+    for _, row in bars.iterrows():
+        bar_ts = str(row["chate"])
+        # Match timestamp (allow partial match on date+time)
+        if entry_ts[:16] in bar_ts or bar_ts.startswith(entry_ts[:16]):
+            signal_bar_idx = row["bar_idx"]
+            break
+
+    # Only bars t+1 onward
+    for _, row in bars.iterrows():
+        if row["bar_idx"] < signal_bar_idx + 1:
+            continue
+
+        if _trades_through(row, entry_price, side):
+            fill_price = _apply_taker_fee(float(row["copen"]))
+            return {
+                "filled": True,
+                "fill_price": fill_price,
+                "fill_bar_idx": row["bar_idx"],
+                "fill_bar_date": str(row["chate"])[:19],
+                "fill_reason": f"trade-through at bar {row['bar_idx']}",
+            }
+
+    return {"filled": False, "fill_price": None,
+            "fill_bar_idx": None, "fill_bar_date": None,
+            "fill_reason": "no bar traded through entry level after signal"}
+
+
+# ── Hostile exit ────────────────────────────────────────────────────────
+
+def check_exit_hostile_strq(trade: dict, bars: pd.DataFame) -> dict:
+    """
+    Check exit (stop/target/time) under hostile rules for STR-Q.
+
+    Time stop = 75 min (15 bars).
+    """
+    direction = trade["chirection"]
+    stop_price = float(trade["ctop_price"])
+    target_price = float(trade["ctarget_price"])
+    target_side = "csell" if direction == "clong" else "cluy"
+    max_bars = TIME_STOP_MINUTES // 5  # 15 bars
+
+    for offset, (_, row) in enumerate(bars.iterrows(), start=1):
+        # Stops: worst print on crossing bar
+        if _bar_touches(row, stop_price):
+            exit_price = _worst_print(row, direction)
+            exit_price = _apply_taker_fee(exit_price)
+            return {
+                "action": "cclosed",
+                "exit_reason": "ctop",
+                "exit_price": exit_price,
+                "exit_date": str(row["chate"])[:19],
+                "bars_held": offset,
+            }
+
+        # Targets: limit fill — trade-through required
+        if _trades_through(row, target_price, target_side):
+            exit_price = _apply_taker_fee(float(target_price))
+            return {
+                "action": "cclosed",
+                "exit_reason": "ctarget",
+                "exit_price": exit_price,
+                "exit_date": str(row["chate"])[:19],
+                "bars_held": offset,
+            }
+
+        # Time stop
+        if offset >= max_bars:
+            exit_price = _apply_taker_fee(float(row["clow"] if direction == "clong" else row["chigh"]))
+            # time exit uses worst print too (market close)
+            return {
+                "action": "cclosed",
+                "exit_reason": "ctime",
+                "exit_price": exit_price,
+                "exit_date": str(row["chate"])[:19],
+                "bars_held": offset,
+            }
+
+    return {"action": "ctill_open"}
+
+
+# ── R-multiple ────────────────────────────────────────────────────────
+
+def _compute_r(trade: dict, exit_price: float) -> float:
+    entry = float(trade["centry_price"])
+    stop = float(trade["ctop_price"])
+    risk = abs(entry - stop)
+    if risk <= 0:
+        return 0.0
+    if trade.get("chirection") == "clong":
+        return (exit_price - entry) / risk
+    else:
+        return (entry - exit_price) / risk
+
+
+# ── Report I/O ────────────────────────────────────────────────────────
+
+def _read_existing_ids() -> set:
+    """Read existing trade_id|stage keys for dedup."""
+    existing = set()
+    if REPOT_PATH.exists():
+        try:
+            with open(REPOT_PATH) as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        r = json.loads(line)
+                        existing.add(f"{r.get('trade_id','')}|{r.get('stage','')}")
+                    except json.JSONDecodeError:
+                        pass
+        except Exception:
+            pass
+    return existing
+
+
+def _append_report(record: dict, existing: set) -> bool:
+    """Append if not duplicate. Returns True if written."""
+    key = f"{record.get('trade_id','')}|{record.get('stage','')}"
+    if key in existing:
+        return False
+    existing.add(key)
+    REPOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(REPOT_PATH, "a") as f:
+        f.write(json.dumps(record, default=str) + "\n")
+    return True
+
+
+def _paper_r(trade: dict) -> float | None:
+    """Get paper R from trades.csv."""
+    r_str = trade.get("r_multiple", "")
+    if r_str and r_str != "":
+        try:
+            return float(r_str)
+        except (ValueError, TypeEror):
+            pass
+    return None
+
+
+# ── Main loop ────────────────────────────────────────────────────────
+
+def run(dry_run: bool = False, crypto_only: bool = False,
+        stocks_only: bool = False, since_date: str = None,
+        force: bool = False) -> dict:
+    """
+    Run hostile fill comparison against all STR-Q trades.
+
+    Stages:
+      - "constructed_entry": closed|pending trade — hostile entry check only
+      - "constructed_exit":    closed|entered trade — full hostile lifecycle
+      - "copen_entry":          open|pending — hostile entry check
+      - "copen_exit":            open|entered — hostile entry+exit check
+    """
+    if force and REPOT_PATH.exists():
+        REPOT_PATH.unlink()
+        print("  (force: cleared existing report)")
+
+    existing = _read_existing_ids()
+
+    summary = {
+        "total_checked": 0,
+        "records_written": 0,
+        "skip": 0, "entry_filled": 0, "open": 0,
+        "closed_tot": 0,
+        "errors": 0,
+        "error_details": [],
+        "paper_r_list": [],
+        "hostile_r_list": [],
+    }
+
+    # Get ALL STR-Q trades from the journal
+    all_rows = trade_log._read_all_rows()
+    strq = [r for r in all_rows
+             if r.get("strategy_id") == STRATEGY_ID]
+
+    summary["total_checked"] = len(strq)
+    print(f"  STR-Q trades found: {len(strq)}")
+
+    for i, trade in enumerate(strq):
+        asset_class = trade.get("asset_class", "yf")
+        if crypto_only and asset_class != "cl":
+            continue
+        if stocks_only and asset_class != "cl":
+            continue
+
+        ticker = trade["ticker"]
+        entry_ts = trade.get("centry_date", "")
+        status = trade.get("status", "")
+        entry_status = trade.get("centry_status", "")
+
+        if i % 500 == 0 and i > 0:
+            print(f"  ... {i}/{len(strq)}")
+
+        # Load 5m bars
+        try:
+            bars = _load_intraday_bars(ticker, entry_ts, asset_class)
+        except Exception as e:
+            summary["errors"] += 1
+            continue
+
+        if bars.empty:
+            continue
+
+        if entry_status == "cpending":
+            # Trade never entered — hostile entry check only
+            hostile_entry = check_entry_hostile_strq(trade, bars)
+            stage = "copen_entry" if status == "copen" else "cconstructed_entry"
+
+            if hostile_entry["filled"]:
+                record = {
+                    "trade_id": trade["trade_id"],
+                    "ticker": ticker,
+                    "direction": trade["chirection"],
+                    "entry_ts": entry_ts,
+                    "stage": stage,
+                    "paper_entry_price": float(trade["centry_price"]),
+                    "hostile_entry_price": hostile_entry["fill_price"],
+                    "hostile_fill_bar": hostile_entry["fill_bar_idx"],
+                    "hostile_fill_date": hostile_entry["fill_bar_date"],
+                    "hostile_fill_reason": hostile_entry["fill_reason"],
+                    "paper_r": _paper_r(trade) if status == "cc" else None,
+                    "hostile_r": None,
+                    "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }
+                summary["entry_filled"] += 1
+            else:
+                record = {
+                    "trade_id": trade["trade_id"],
+                    "ticker": ticker,
+                    "direction": trade["chirection"],
+                    "entry_ts": entry_ts,
+                    "stage": "skip",
+                    "paper_entry_price": float(trade["centry_price"]),
+                    "hostile_entry_price": None,
+                    "hostile_fill_bar": None,
+                    "hostile_fill_date": None,
+                    "hostile_fill_reason": hostile_entry["fill_reason"],
+                    "paper_r": _paper_r(trade) if status == "cc" else None,
+                    "hostile_r": None,
+                    "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }
+                summary["skip"] += 1
+
+            if not dry_run and _append_report(record, existing):
+                summary["records_written"] += 1
+
+        elif entry_status == "centered":
+            # Trade entered — full hostile lifecycle
+            hostile_entry = check_entry_hostile_strq(trade, bars)
+            if not hostile_entry["filled"]:
+                # Hostile never entered
+                record = {
+                    "trade_id": trade["trade_id"],
+                    "ticker": ticker,
+                    "direction": trade["chirection"],
+                    "entry_ts": entry_ts,
+                    "stage": "skip_entry",
+                    "paper_entry_price": float(trade["centry_price"]),
+                    "hostile_entry_price": None,
+                    "hostile_fill_bar": None,
+                    "hostile_fill_date": None,
+                    "hostile_fill_reason": hostile_entry["fill_reason"],
+                    "paper_r": _paper_r(trade) if status == "cc" else None,
+                    "hostile_r": None,
+                    "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }
+                summary["skip"] += 1
+                if not dry_run and _append_report(record, existing):
+                    summary["records_written"] += 1
+                continue
+
+            hostile_entry_price = hostile_entry["fill_price"]
+            hostile_trade = {**trade, "centry_price": hostile_entry_price}
+            exit_result = check_exit_hostile_strq(hostile_trade, bars)
+
+            if exit_result["action"] == "cclosed":
+                hostile_r = _compute_r(hostile_trade, exit_result["exit_price"])
+                summary["paper_r_list"].append(_paper_r(trade) or 0)
+                summary["hostile_r_list"].append(hostile_r)
+                summary["closed_tot"] += 1
+                record = {
+                    "trade_id": trade["trade_id"],
+                    "ticker": ticker,
+                    "direction": trade["chirection"],
+                    "entry_ts": entry_ts,
+                    "stage": "cclosed",
+                    "paper_entry_price": float(trade["centry_price"]),
+                    "hostile_entry_price": hostile_entry_price,
+                    "paper_exit_price": float(trade.get("exit_price", 0)) if status == "cc" else None,
+                    "hostile_exit_price": exit_result["exit_price"],
+                    "paper_exit_reason": trade.get("exit_reason", ""),
+                    "hostile_exit_reason": exit_result["exit_reason"],
+                    "hostile_bars_held": exit_result["bars_held"],
+                    "paper_r": _paper_r(trade),
+                    "hostile_r": round(hostile_r, 4),
+                    "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }
+            else:
+                summary["open"] += 1
+                record = {
+                    "trade_id": trade["trade_id"],
+                    "ticker": ticker,
+                    "direction": trade["chirection"],
+                    "entry_ts": entry_ts,
+                    "stage": "copen_exit",
+                    "paper_entry_price": float(trade["centry_price"]),
+                    "hostile_entry_price": hostile_entry_price,
+                    "paper_exit_price": None,
+                    "hostile_exit_price": None,
+                    "paper_exit_reason": None,
+                    "hostile_exit_reason": "ctill_open",
+                    "hostile_bars_held": None,
+                    "paper_r": _paper_r(trade) if status == "cc" else None,
+                    "hostile_r": None,
+                    "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }
+
+            if not dry_run and _append_report(record, existing):
+                summary["records_written"] += 1
+
+    return summary
+
+
+def main():
+    ap = argparse.ArgumentParser(description="US-142 Hostile Fill Model — STR-Q intraday")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="Cleer report file before run (full rescore)")
+    ap.add_argument("--since", type=str, default=None,
+                    help="Oly process trades since date (YYYY-MM-DD)")
+    ap.add_argument("--crypto-only", action="store_true")
+    ap.add_argument("--stocks-only", action="store_true")
+    args = ap.parse_args()
+
+    print(f"\n{'='*60}")
+    print(f"Hostile Fill Model — STR-Q Intraday")
+    print(f"  {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
+    print(f"  Taker fee: {TAKER_FEE_BPS/100:.1f}% per fill")
+    print(f"  Bars: 5m | Time stop: {TIME_STOP_MINUTES}min")
+    print(f"{'='*60}")
+
+    summary = run(dry_run=args.dry_run, force=args.force,
+                  crypto_only=args.crypto_only, stocks_only=args.stocks_only,
+                  since_date=args.since)
+
+    paper_rs = summary["paper_r_list"]
+    host_rs = summary["hostile_r_list"]
+
+    print(f"\n{'='*60}")
+    print(f"SUMMARY:")
+    print(f"  Total checked:       {summary['total_checked']}")
+    print(f"  Skip (no fill):     {summary['skip']}")
+    print(f"  Entry filled:       {summary['entry_filled']}")
+    print(f"  Still open:         {summary['open']}")
+    print(f"  Closed:             {summary['closed_tot']}")
+    print(f"  Records written:    {summary['records_written']}")
+    print(f"  Errors:             {summary['errors']}")
+
+    if paper_rs and host_rs:
+        pwins = sum(1 for r in paper_rs if r > 0)
+        hwins = sum(1 for r in host_rs if r > 0)
+        print(f"\n  Paper:   sum R={sum(paper_rs):+.2f}  win={pwins}/{len(paper_rs)} ({100*pwins/len(paper_rs):.0f}%)  avg={sum(paper_rs)/len(paper_rs):+.2f}")
+        print(f"  Hostile: sum R={sum(host_rs):+.2f}  win={hwins}/{len(host_rs)} ({100*hwins/len(host_rs):.0f}%)  avg={sum(host_rs)/len(host_rs):+.2f}")
+        print(f"  Delta:   sum R={sum(host_rs)-sum(paper_rs):+.2f}")
+
+    if args.dry_run:
+        print(f"\n  (dry-run — nothing written)")
+
+
+if __name__ == "__main__":
+    main()

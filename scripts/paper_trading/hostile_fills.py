@@ -302,10 +302,12 @@ def run(
     crypto_only: bool = False,
     stocks_only: bool = False,
     since_date: str = None,
+    force: bool = False,
 ) -> dict:
     """
     Run hostile fill comparison against all pending + entered paper trades.
     Writes comparison records to hostile_fill_report.jsonl.
+    If force=True, clears the report file before writing (full rescore).
     """
     summary = {
         "pending_checked": 0,
@@ -321,9 +323,18 @@ def run(
 
     # ── Check pending trades (hostile entry model) ──────────────────────────
     pending = trade_log.get_pending_trades()
-    summary["pending_checked"] = len(pending)
+    # Also include closed|pending trades — paper closed them without entry
+    # (time-stop, cancellation, etc.). Hostile model scores them for entry only.
+    all_rows = trade_log._read_all_rows()
+    closed_pending = [r for r in all_rows
+                      if r.get("status") == "closed"
+                      and r.get("entry_status") == "pending"]
+    # Combine: pending first, then closed_pending
+    all_entry_candidates = pending + closed_pending
+    summary["pending_checked"] = len(all_entry_candidates)
+    summary["pending_closed_from_pending"] = len(closed_pending)
 
-    for trade in pending:
+    for trade in all_entry_candidates:
         asset_class = trade.get("asset_class", "stock")
         if crypto_only and asset_class != "crypto":
             continue
@@ -335,6 +346,17 @@ def run(
         ticker = trade["ticker"]
         short_id = trade.get("short_id", "?")
         entry_date = trade.get("entry_date", "")
+        # Fallback: extract date from signal_id (daily/swing trades encode it there)
+        if not entry_date:
+            sig = trade.get("signal_id", "")
+            parts = sig.rsplit("_", 2)
+            if len(parts) >= 2:
+                # Check last segment first (most likely the date)
+                candidate = parts[-1]
+                if not (len(candidate) == 10 and candidate[4] == "-"):
+                    candidate = parts[-2]
+                if len(candidate) == 10 and candidate[4] == "-":
+                    entry_date = candidate
 
         # Filter by since_date if provided
         if since_date and entry_date < since_date:
@@ -419,6 +441,17 @@ def run(
         ticker = trade["ticker"]
         short_id = trade.get("short_id", "?")
         entry_date = trade.get("entry_date", "")
+        # Fallback: extract date from signal_id (daily/swing trades encode it there)
+        if not entry_date:
+            sig = trade.get("signal_id", "")
+            parts = sig.rsplit("_", 2)
+            if len(parts) >= 2:
+                # Check last segment first (most likely the date)
+                candidate = parts[-1]
+                if not (len(candidate) == 10 and candidate[4] == "-"):
+                    candidate = parts[-2]
+                if len(candidate) == 10 and candidate[4] == "-":
+                    entry_date = candidate
 
         if since_date and entry_date < since_date:
             continue
@@ -524,7 +557,14 @@ def main():
     ap.add_argument("--stocks-only", action="store_true")
     ap.add_argument("--since", type=str, default=None,
                     help="Only process trades since date (YYYY-MM-DD)")
+    ap.add_argument("--force", action="store_true",
+                    help="Clear report file before run (full rescore, bypass dedup)")
     args = ap.parse_args()
+
+    if args.force:
+        if REPORT_PATH.exists():
+            REPORT_PATH.unlink()
+            print(f"  (force: cleared existing report)")
 
     print(f"\n{'='*60}")
     print(f"Hostile Fill Model — {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
