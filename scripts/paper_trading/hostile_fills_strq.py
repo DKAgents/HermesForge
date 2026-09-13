@@ -40,7 +40,7 @@ from intraday_provider import get_intraday_candles
 # ── Config ───────────────────────────────────────────────────────────────────────
 TAKER_FEE_BPS = 10           # 0.1% = 10 bps per fill (entry + exit = 0.2% round-trip)
 MAX_BARS_HELD = 15           # 75 minutes at 5m resolution
-LOOKBACK_BARS = 300          # how many bars to fetch for context
+LOOKBACK_BARS = 1000          # ~3.5 days of 5m bars — covers recent STR-Q
 STRATEGY_ID = "STR-Q-liquidity-sweep"
 REPORT_PATH = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
 
@@ -83,18 +83,17 @@ def _bar_touches(bar: pd.Series, level: float) -> bool:
     return float(bar["low"]) <= level <= float(bar["high"])
 
 
-def _compute_r(trade: dict, exit_price: float) -> float:
-    """Compute R-multiple from entry_price, stop_price, and realised exit price."""
-    entry = float(trade["entry_price"])
-    stop = float(trade["stop_price"])
-    risk = abs(entry - stop)
+def _compute_r(paper_entry: float, paper_stop: float, direction: str,
+               exit_price: float) -> float:
+    """Compute R-multiple using paper entry+stop for risk, realized exit for P&L.
+    Hostile entry slippage affects P&L direction but risk is fixed by trade setup."""
+    risk = abs(paper_entry - paper_stop)
     if risk <= 0:
         return 0.0
-    direction = trade.get("direction", "long")
     if direction == "long":
-        return (exit_price - entry) / risk
+        return (exit_price - paper_entry) / risk
     else:
-        return (entry - exit_price) / risk
+        return (paper_entry - exit_price) / risk
 
 
 # ── Data loading ───────────────────────────────────────────────────────────────
@@ -168,8 +167,14 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
 
     signal_bar_idx = _find_signal_bar(bars, trade["entry_date"])
     if signal_bar_idx is None:
-        # Fallback: use bar 0 as the signal bar
-        signal_bar_idx = 0
+        # Signal bar not in the cached bar window — can't determine t+1
+        return {
+            "filled": False,
+            "fill_price": None,
+            "fill_bar_idx": None,
+            "fill_bar_date": None,
+            "fill_reason": "signal bar not in cached data (outside 300-bar window)",
+        }
 
     # Scan bars from t+1 onward
     for _, row in bars.iterrows():
@@ -449,7 +454,11 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         exit_result = check_exit_hostile(hostile_trade, bars, entry_bar_idx)
 
         if exit_result["action"] == "closed":
-            hostile_r = _compute_r(hostile_trade, exit_result["exit_price"])
+            hostile_r = _compute_r(
+                paper_entry=float(trade["entry_price"]),
+                paper_stop=float(trade["stop_price"]),
+                direction=trade["direction"],
+                exit_price=exit_result["exit_price"])
             record = {
                 "trade_id": trade_id,
                 "ticker": ticker,
