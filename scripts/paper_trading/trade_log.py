@@ -36,6 +36,12 @@ FIELDS = [
     "chart_path", "notes",
     "discord_message_id", "discord_channel_id", "discord_post_url",
     "closer",  # US-125: which process closed this trade ("STR-Q-5m-sweep" or "trade-monitor-60m")
+    "regime_stock",
+    "regime_crypto",
+    "regime_overall",
+    "vix",
+    "dxy",
+    "fear_greed",
 ]
 
 
