@@ -34,3 +34,6 @@ Before entering any role-reversal trade (whether from a violated support level p
 
 ## Related Notes
 - [[C336-support-level|Support Level]]
+
+## Related
+- [[C336-support-level]] — See C336-support-level for the support definition underlying role-reversal entries
