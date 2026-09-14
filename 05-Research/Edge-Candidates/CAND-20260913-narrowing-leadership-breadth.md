@@ -21,8 +21,9 @@ phase1a_results:
     as standalone with tighter entry filter. Recommend re-testing RSP long-only signal
     with 10-week MA < ratio (not ratio < MA) as a separate edge candidate.
 tags: [breadth, equal-weight, leadership, divergence, external, macro, backtest_failed]
+topic: research
+has_quotes: false
 ---
-
 # Edge Candidate: Narrowing Leadership Breadth Divergence — Equal-Weight vs Cap-Weight Gap Signal
 
 ## Source

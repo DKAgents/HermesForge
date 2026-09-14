@@ -33,6 +33,8 @@ A trader should require both a closing price filter (R052: close beyond resistan
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for Murphy's volume confirmation rule
+
 - [[N043-flag-and-pennant-summary-characteristics]] — See N043-flag-and-pennant-summary-characteristics for volume signature patterns that complement breakout filter sequencing
 
 - [[N018-head-and-shoulders-bottom-volume-sequence]] — See N018-head-and-shoulders-bottom-volume-sequence for the classic volume pattern underlying this filter.
