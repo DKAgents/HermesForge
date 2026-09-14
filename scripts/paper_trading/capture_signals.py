@@ -13,12 +13,20 @@ Usage:
     python3 capture_signals.py               # actually opens trades
     python3 capture_signals.py --stocks-only
     python3 capture_signals.py --crypto-only
+    python3 capture_signals.py --enable-t1   # enable T1 discovery scanners
 """
 
 import sys
 import json
 import argparse
 import pathlib
+import os
+
+# ── T1 Discovery Gate (default OFF) ──────────────────────────────────────
+# T1-01/02/03 are Phase 1A candidates only — NOT accepted as edges.
+# They must NOT write to the operational paper journal or trades.csv.
+# Set T1_ENABLED=true in environment or pass --enable-t1 to activate.
+T1_ENABLED = os.environ.get("HERMESFORGE_T1_ENABLED", "").lower() in ("1", "true", "yes")
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
@@ -91,9 +99,17 @@ from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: 
 from scanners.scanner_skew_predicted import scan as scan_skewp  # noqa: E402
 
 # T1 Discovery strategies (Aegis Rebuild 2026-09-13)
-from scanner_t1_01_outside_day import scan as scan_t1_01    # noqa: E402
-from scanner_t1_02_adx_pullback import scan as scan_t1_02    # noqa: E402
-from scanner_t1_03_gap_continuation import scan as scan_t1_03  # noqa: E402
+# GATED behind T1_ENABLED — default OFF. Phase 1A candidates only.
+# These must NOT write to the operational paper journal or trades.csv
+# unless explicitly enabled.
+if T1_ENABLED:
+    from scanner_t1_01_outside_day import scan as scan_t1_01    # noqa: E402
+    from scanner_t1_02_adx_pullback import scan as scan_t1_02    # noqa: E402
+    from scanner_t1_03_gap_continuation import scan as scan_t1_03  # noqa: E402
+else:
+    scan_t1_01 = None  # type: ignore
+    scan_t1_02 = None  # type: ignore
+    scan_t1_03 = None  # type: ignore
 
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
@@ -120,11 +136,15 @@ _SCANNER_ALIASES = {
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
     "scan_btc_supply": scan_btc_supply,
     "scan_skewp":   scan_skewp,
-    # T1 Discovery strategies (Aegis Rebuild 2026-09-13)
-    "scan_t1_01":   scan_t1_01,
-    "scan_t1_02":   scan_t1_02,
-    "scan_t1_03":   scan_t1_03,
 }
+
+# T1 Discovery aliases — only populated when T1_ENABLED
+if T1_ENABLED:
+    _SCANNER_ALIASES.update({
+        "scan_t1_01":   scan_t1_01,
+        "scan_t1_02":   scan_t1_02,
+        "scan_t1_03":   scan_t1_03,
+    })
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).
 # Populated from frontmatter: ``scan_mode: batch``.
@@ -530,7 +550,14 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="Show what would be opened without writing to trades.csv")
     ap.add_argument("--stocks-only", action="store_true")
     ap.add_argument("--crypto-only", action="store_true")
+    ap.add_argument("--enable-t1", action="store_true",
+                    help="Enable T1 discovery scanners (Phase 1A candidates — NOT operational edges)")
     args = ap.parse_args()
+
+    # Gate: set T1_ENABLED globally so imports resolve
+    global T1_ENABLED
+    if args.enable_t1:
+        T1_ENABLED = True
 
     include_stocks = not args.crypto_only
     include_crypto = not args.stocks_only
