@@ -23,6 +23,7 @@ import pathlib
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "scanners"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "research"))
 
@@ -89,6 +90,11 @@ from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: 
 # 06-Strategies/Hypotheses/STR-20260908-predicted-skewness.md.
 from scanners.scanner_skew_predicted import scan as scan_skewp  # noqa: E402
 
+# T1 Discovery strategies (Aegis Rebuild 2026-09-13)
+from scanner_t1_01_outside_day import scan as scan_t1_01    # noqa: E402
+from scanner_t1_02_adx_pullback import scan as scan_t1_02    # noqa: E402
+from scanner_t1_03_gap_continuation import scan as scan_t1_03  # noqa: E402
+
 import trade_log  # noqa: E402
 import position_sizing  # noqa: E402
 from fetch_crypto_data import load_all as load_all_crypto  # noqa: E402
@@ -114,6 +120,10 @@ _SCANNER_ALIASES = {
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
     "scan_btc_supply": scan_btc_supply,
     "scan_skewp":   scan_skewp,
+    # T1 Discovery strategies (Aegis Rebuild 2026-09-13)
+    "scan_t1_01":   scan_t1_01,
+    "scan_t1_02":   scan_t1_02,
+    "scan_t1_03":   scan_t1_03,
 }
 
 # Batch-mode strategies (cross-sectional scanners that take the full data dict).
