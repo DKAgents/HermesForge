@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-14T17:55:08Z
+updated: 2026-09-14T21:56:52Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 660 |
-| Connections created | 1 | 251 |
-| Review queue | 184 | 184 |
-| Avg score | 4.0 | — |
+| Notes examined | 5 | 665 |
+| Connections created | 0 | 251 |
+| Review queue | 188 | 188 |
+| Avg score | 4.1 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4612
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-14T17:55:08Z)
-- **08-Knowledge/Insights/INS-2026-08-01-volume-confirmed-breakout-filter-with-stop-placement-logic.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R082-breakouts-must-be-accompanied-by-heavy-volume.md** (score 5.0): This connection directly links Murphy's foundational rule on volume-confirmed breakouts to the seed's multi-layered breakout validation system, providing authoritative support for the volume filter and enhancing the seed's credibility and applicability.
+## Recent Discoveries (last run: 2026-09-14T21:56:52Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 123: Created 2 connections from 5 notes. Avg score: 4.6.
