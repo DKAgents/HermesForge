@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-15T06:00:50Z
+updated: 2026-09-15T10:03:38Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 675 |
-| Connections created | 1 | 254 |
-| Review queue | 189 | 189 |
-| Avg score | 3.9 | — |
+| Notes examined | 5 | 680 |
+| Connections created | 0 | 254 |
+| Review queue | 191 | 191 |
+| Avg score | 3.8 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4695
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-15T06:00:50Z)
-- **08-Knowledge/Insights/INS-2026-08-02-mcclellan-breadth-confirms-secondary-trend-vs-oscillator-noi.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N159-mcclellan-oscillator.md** (score 4.0): The seed note applies the McClellan Oscillator's overbought/oversold thresholds (from N159) to the context of secondary trends, clarifying when oscillator signals are unreliable. Linking them grounds the abstract discovery in the concrete indicator definition, aiding retrieval and future reasoning about breadth-based trend confirmation.
+## Recent Discoveries (last run: 2026-09-15T10:03:38Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 126: Created 2 connections from 5 notes. Avg score: 4.0.
