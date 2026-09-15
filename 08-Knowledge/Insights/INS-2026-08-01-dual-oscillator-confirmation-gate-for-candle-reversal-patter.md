@@ -38,3 +38,6 @@ A trader should require both RSI (above 70 or below 30 per N165) and Stochastics
 - [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082-filtered-candle-patterns-stochastics-d-application for Stochastics presignal area definition
 
 - [[C183-filtered-candle-patterns-concept]] — See C183-filtered-candle-patterns-concept for the foundational filtering concept
+
+## Related Notes
+- [[INS-2026-09-08-dual-oscillator-filter-for-candle-reversal-patterns|Dual Oscillator Filter for Candle Reversal Patterns]]

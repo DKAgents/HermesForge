@@ -31,3 +31,6 @@ Before acting on any daily MACD or Stochastics crossover, a trader should requir
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]

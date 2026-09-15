@@ -31,3 +31,6 @@ When ADX is rising, enter on Keltner Channel breakouts; when ADX is falling, fad
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-07-adx-filters-keltner-channel-breakouts-by-trend-validity|ADX filters Keltner Channel breakouts by trend validity]]

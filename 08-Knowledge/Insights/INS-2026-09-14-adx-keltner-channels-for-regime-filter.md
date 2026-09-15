@@ -7,8 +7,11 @@ domains: [concepts, edge_conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX + Keltner Channels for Regime Filter
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Trade Keltner Channel breakouts (e.g., price closing outside the bands) only whe
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-07-adx-filters-keltner-channel-breakouts-by-trend-validity|ADX filters Keltner Channel breakouts by trend validity]]

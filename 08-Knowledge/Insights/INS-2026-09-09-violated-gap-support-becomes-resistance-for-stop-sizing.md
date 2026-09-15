@@ -31,3 +31,6 @@ When a previous gap support is violated, sell into a rally toward its lower edge
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-01-technical-stop-placement-can-invalidate-3-1-reward-requireme|Technical stop placement can invalidate 3:1 reward requirement]]

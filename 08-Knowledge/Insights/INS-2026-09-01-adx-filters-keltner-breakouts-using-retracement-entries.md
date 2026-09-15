@@ -33,4 +33,5 @@ Only trade Keltner Channel breakouts when ADX is rising, and enter on pullbacks 
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-07-adx-filters-keltner-channel-breakouts-by-trend-validity|ADX filters Keltner Channel breakouts by trend validity]]
 - [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]

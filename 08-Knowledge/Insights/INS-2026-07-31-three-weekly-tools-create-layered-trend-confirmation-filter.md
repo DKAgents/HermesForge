@@ -34,3 +34,6 @@ A trader should only take daily MACD or Stochastics buy signals when price is ab
 
 ## Related
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — See Murphy's weekly trendline break rule for validating the layered confirmation approach
+
+## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]

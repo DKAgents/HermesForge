@@ -33,6 +33,7 @@ A trader should require both RSI and Stochastics to be in overbought or oversold
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-08-dual-oscillator-filter-for-candle-reversal-patterns|Dual Oscillator Filter for Candle Reversal Patterns]]
 - [[INS-2026-07-26-dual-oscillator-confirmation-gate-for-candle-reversal-patter|Dual-Oscillator Confirmation Gate for Candle Reversal Patterns]]
 
 ## Related

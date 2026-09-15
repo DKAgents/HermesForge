@@ -33,4 +33,5 @@ A trader should use volume level at pattern breakout as a position-sizing input:
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]
 - [[C097-confirmation-principle|Confirmation Principle]]

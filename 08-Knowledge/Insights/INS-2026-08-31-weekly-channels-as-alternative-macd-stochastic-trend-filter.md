@@ -30,3 +30,6 @@ A trader should only act on daily MACD or Stochastic crossover signals when pric
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]

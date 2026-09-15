@@ -31,3 +31,6 @@ Only act on candle reversal patterns when both RSI (>70 overbought or <30 overso
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-08-dual-oscillator-filter-for-candle-reversal-patterns|Dual Oscillator Filter for Candle Reversal Patterns]]

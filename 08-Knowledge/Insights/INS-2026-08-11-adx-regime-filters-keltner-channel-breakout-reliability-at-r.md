@@ -33,5 +33,6 @@ At Fibonacci/Dow retracement zones (33-67% of prior move), only trade Keltner Ch
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-07-adx-filters-keltner-channel-breakouts-by-trend-validity|ADX filters Keltner Channel breakouts by trend validity]]
 - [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]
 - [[INS-2026-08-01-adx-regime-filter-for-keltner-channel-breakout-validity|ADX Regime Filter for Keltner Channel Breakout Validity]]

@@ -7,8 +7,11 @@ domains: [channel breakouts, crossover systems, moving averages, multi-timeframe
 sources: ["R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "C130-the-weekly-rule-price-channel-as-trend-following-alternative", "N044-long-term-moving-averages-on-weekly-charts"]
 seed_id: trend_filter_entry
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Weekly Rule Complements MACD/Stochastics Trend Filtering
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Before acting on any daily MACD or Stochastics crossover, confirm the weekly tre
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-09-weekly-price-channel-as-macd-stochastics-trend-filter|Weekly price channel as MACD/Stochastics trend filter]]

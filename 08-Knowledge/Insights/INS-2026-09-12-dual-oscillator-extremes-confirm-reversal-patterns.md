@@ -31,3 +31,6 @@ Before entering a trade based on a candle reversal pattern, confirm that both RS
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-08-dual-oscillator-filter-for-candle-reversal-patterns|Dual Oscillator Filter for Candle Reversal Patterns]]

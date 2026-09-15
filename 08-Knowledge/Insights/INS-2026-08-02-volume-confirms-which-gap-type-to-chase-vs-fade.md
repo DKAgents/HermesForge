@@ -33,6 +33,7 @@ When a gap forms, immediately check volume: a gap accompanied by a surge in volu
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]
 - [[N144-island-reversal-pattern|Island Reversal Pattern]]
 - [[N161-runaway-gaps|Runaway Gaps]]
 

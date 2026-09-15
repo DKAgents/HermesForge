@@ -42,4 +42,5 @@ Before entering on a daily MACD or Stochastics crossover, require alignment acro
 - [[R042-1-3-penetration-criterion-and-two-day-rule-for-neckline-conf]] — See R042-1-3-penetration-criterion-and-two-day-rule-for-neckline-conf|1-3% penetration and two-day rule for daily entry filter after weekly confirmation
 
 ## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]
 - [[INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators|Weekly Price Channel as Trend Filter for Oscillators]]

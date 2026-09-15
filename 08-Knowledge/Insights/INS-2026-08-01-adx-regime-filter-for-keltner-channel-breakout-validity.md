@@ -34,3 +34,6 @@ A trader should require ADX to be rising before entering Keltner Channel breakou
 
 ## Related
 - [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for complementary breakout confirmation techniques to combine with ADX regime filtering
+
+## Related Notes
+- [[INS-2026-09-07-adx-filters-keltner-channel-breakouts-by-trend-validity|ADX filters Keltner Channel breakouts by trend validity]]

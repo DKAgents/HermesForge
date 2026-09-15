@@ -40,4 +40,5 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — Use long-term trendline break on weekly chart as ultimate trend filter
 
 ## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]
 - [[EN070-tight-trendline-break-during-bounce-as-shorting-signal|Tight Trendline Break During Bounce as Shorting Signal]]

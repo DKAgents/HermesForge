@@ -31,3 +31,6 @@ A trader should only enter on a candle reversal pattern when both RSI (>70 or <3
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-08-dual-oscillator-filter-for-candle-reversal-patterns|Dual Oscillator Filter for Candle Reversal Patterns]]

@@ -31,3 +31,7 @@ Before taking a pivot point buy signal per EN071, calculate the stop distance to
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-01-technical-stop-placement-can-invalidate-3-1-reward-requireme|Technical stop placement can invalidate 3:1 reward requirement]]
+- [[INS-2026-09-04-stop-placement-conflict-technical-level-vs-pivot-rule|Stop placement conflict: technical level vs pivot rule]]

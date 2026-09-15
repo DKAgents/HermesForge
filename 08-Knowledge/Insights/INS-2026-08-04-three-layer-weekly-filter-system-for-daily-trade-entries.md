@@ -33,4 +33,5 @@ A trader should require at least two of three weekly confirmations (MACD/Stochas
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]
 - [[INS-2026-08-02-weekly-trend-confirmation-stack-ma-channel-and-oscillator-fi|Weekly Trend Confirmation Stack: MA, Channel, and Oscillator Filters]]
