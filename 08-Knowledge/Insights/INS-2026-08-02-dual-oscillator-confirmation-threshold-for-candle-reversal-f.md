@@ -33,6 +33,10 @@ A trader should only act on a candle reversal pattern when both RSI (above 70 or
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for MACD as an additional oscillator in dual confirmation
+
+- [[N082-filtered-candle-patterns-stochastics-d-application]] — See N082 for Stochastics %D presignal area thresholds
+
 - [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for trend-alignment constraint on oscillator signals
 
 - [[C183-filtered-candle-patterns-concept]] — See dual-oscillator confirmation for higher-quality filtered candle signals
