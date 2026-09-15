@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-15T14:07:10Z
+updated: 2026-09-15T18:08:36Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,17 +9,17 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 685 |
-| Connections created | 1 | 255 |
+| Notes examined | 5 | 690 |
+| Connections created | 0 | 255 |
 | Review queue | 194 | 194 |
-| Avg score | 4.3 | — |
+| Avg score | 3.6 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4696
-- Total notes: 2274
-- Avg degree per note: 2.065
+- Total notes: 2276
+- Avg degree per note: 2.063
 - Notes with links: 937 (41.2%)
-- Orphan notes (no links): 1336 (58.8%)
+- Orphan notes (no links): 1338 (58.8%)
 
 ## Weakly Connected Areas
 - `campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-15T14:07:10Z)
-- **08-Knowledge/Insights/INS-2026-08-02-pivot-stop-rules-vs-3-1-r-r-conflict-detection.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG003-protective-stop-placement-relative-to-round-numbers.md** (score 4.0): Note A examines conflicts between pivot-based stop mechanics and risk/reward constraints; Note B provides an additional rule to avoid round numbers, which could influence where those stops are actually placed, adding a condition to the stop placement decision.
+## Recent Discoveries (last run: 2026-09-15T18:08:36Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 128: Created 1 connections from 5 notes. Avg score: 4.4.
