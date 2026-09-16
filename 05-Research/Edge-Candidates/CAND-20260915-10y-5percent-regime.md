@@ -15,8 +15,10 @@ composite_score: 68.0
 confidence: medium
 regime_fit: ['caution', 'risk_off']
 created: 20260915
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: 10Y Treasury Yield Breaches 5% — First Time Since 2007 — Regime Transition Confirmed
 
 ## Source

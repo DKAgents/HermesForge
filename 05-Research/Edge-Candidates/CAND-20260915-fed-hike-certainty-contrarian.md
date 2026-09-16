@@ -15,8 +15,10 @@ composite_score: 60.0
 confidence: medium
 regime_fit: ['neutral', 'caution']
 created: 20260915
+topic: research
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Fed Hike Certainty (94%) — Pre-FOMC Pricing Extreme Resolution Pattern
 
 ## Source
