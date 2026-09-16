@@ -36,6 +36,8 @@ In a downtrend, identify where a prior violated support level (C065) and an unfi
 - [[C336-support-level|Support Level]]
 
 ## Related
+- [[R226-equity-curve-management-increase-commitments-after-drawdowns]] — See R226 for context on adjusting position size after equity dips
+
 - [[RG034-handling-winning-streaks-and-position-sizing]] — See RG034 for why position sizing must not increase after wins despite correct stop placement
 
 - [[C239-money-management-as-survival-mechanism]] — See C239-money-management-as-survival-mechanism for the survival principle behind position sizing.
