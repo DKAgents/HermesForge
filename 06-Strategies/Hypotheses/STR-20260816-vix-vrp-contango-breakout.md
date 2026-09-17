@@ -158,6 +158,7 @@ spread+commission+gap costs):**
   regime → tighten `VIX_MAX` or add a hard VIX-slope filter.
 
 ## Related
+- [[R052-filters-for-confirming-breakouts]] — See R052 for breakout confirmation filters applicable to VIX contango strategy
 
 - Edge candidate: [[CAND-20260816-vix-contango-persistence]]
 - Related (existing): the engine's VRP-extreme scanner; this strategy adds the
