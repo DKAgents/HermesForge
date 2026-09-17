@@ -152,6 +152,11 @@ def size_strategy_btc_supply(*a, **k): return 0.5  # BTC supply crunch (WATCH, r
 # and tiny effect size. Deployed WATCH with 0.25% — minimal risk, experimental.
 def size_strategy_skewp(*a, **k): return 0.25  # Predicted skewness factor (WATCH, experimental)
 
+# Autonomous-pipeline deployed (2026-09-17): Crypto Post-Capitulation Bounce.
+# Phase 1A mean R=+0.143 (p=0.125, SPECULATIVE). Walk-forward OOS mean R=+0.106
+# (p=0.418, NO EDGE overall). Deployed WATCH with 0.25% — minimal risk, experimental.
+def size_strategy_cap_bottom(*a, **k): return 0.25  # Crypto cap bounce (WATCH, reduced risk)
+
 
 SIZING_FUNCTIONS = {
     "STR-A-ma-pullback-fibonacci":       size_strategy_a,
@@ -187,6 +192,7 @@ SIZING_FUNCTIONS = {
     "STR-OIL-SHOCK":                       size_strategy_oil_shock,
     "STR-20260906-BTC-SUPPLY-CRUNCH":      size_strategy_btc_supply,
     "STR-20260908-SKEW-PREDICTED":         size_strategy_skewp,
+    "STR-20260917-CAP-BOTTOM":             size_strategy_cap_bottom,
 }
 
 

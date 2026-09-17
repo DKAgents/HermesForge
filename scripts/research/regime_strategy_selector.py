@@ -142,6 +142,11 @@ STRATEGY_REGISTRY = {
     "STR-SKEWP": {"name": "Predicted Skewness Factor", "asset": "stock", "status": "WATCH",
                   "regime_best": ["neutral", "caution", "risk_off"], "regime_avoid": ["risk_on"],
                   "base_risk": 0.25, "type": "factor"},
+    # Autonomous-pipeline deployed 2026-09-17 (Phase 1A mean R=+0.143 p=0.125 SPECULATIVE,
+    # walk-forward OOS mean R=+0.106 p=0.418 → NO EDGE overall, deployed WATCH reduced risk).
+    "STR-CAP-BOTTOM": {"name": "Crypto Post-Capitulation Bounce", "asset": "crypto", "status": "WATCH",
+                       "regime_best": ["neutral", "caution", "risk_off"], "regime_avoid": ["risk_on"],
+                       "base_risk": 0.25, "type": "mean_reversion"},
 }
 
 

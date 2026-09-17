@@ -98,6 +98,13 @@ from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: 
 # 06-Strategies/Hypotheses/STR-20260908-predicted-skewness.md.
 from scanners.scanner_skew_predicted import scan as scan_skewp  # noqa: E402
 
+# Autonomous-pipeline deployed strategy (2026-09-17): Crypto Post-Capitulation Bounce —
+# Phase 1A mean R=+0.143 (p=0.125, SPECULATIVE), walk-forward OOS mean R=+0.106
+# (p=0.418, NO EDGE overall, but 2023 OOS FRAGILE EDGE p=0.06) → deployed WATCH
+# with 0.25% risk. See
+# 06-Strategies/Hypotheses/STR-20260917-CAP-BOTTOM.md.
+from scanners.scanner_crypto_post_cap_bottom import scan as scan_cap_bottom  # noqa: E402
+
 # T1 Discovery strategies (Aegis Rebuild 2026-09-13)
 # GATED behind T1_ENABLED — default OFF. Phase 1A candidates only.
 # These must NOT write to the operational paper journal or trades.csv
@@ -136,6 +143,7 @@ _SCANNER_ALIASES = {
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
     "scan_btc_supply": scan_btc_supply,
     "scan_skewp":   scan_skewp,
+    "scan_cap_bottom": scan_cap_bottom,
 }
 
 # T1 Discovery aliases — only populated when T1_ENABLED

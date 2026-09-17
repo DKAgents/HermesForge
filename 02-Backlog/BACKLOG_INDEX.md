@@ -55,7 +55,8 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-115 | EPIC-013 | Autonomous pipeline: Treasury buyback debasement BTC regime trade (Phase 1A p=0.157 SPECULATIVE, walk-forward OOS mean R +0.131 → WATCH, deployed to paper trading at 0.5% risk) | this run |
 || US-120 | EPIC-013 | Autonomous pipeline: Oil shock sector rotation (Phase 1A mean R=+0.183 p=0.1069, walk-forward OOS mean R=+0.171, deployed WATCH at 0.5% risk) | this run |
 | US-122 | EPIC-013 | Autonomous pipeline: BTC supply crunch / thin-float breakout (Phase 1A mean R=+0.256 p=0.0651, walk-forward OOS mean R=+0.146, deployed WATCH at 0.5% risk — STR-20260906-BTC-SUPPLY-CRUNCH) | this run |
-| US-142 | EPIC-013 | Autonomous pipeline: Predicted skewness factor (Phase 1A mean R=+0.079 p=0.0, walk-forward OOS mean R=+0.0457 p=0.0005, deployed WATCH at 0.25% risk — STR-20260908-SKEW-PREDICTED) | this run |
+|| US-142 | EPIC-013 | Autonomous pipeline: Predicted skewness factor (Phase 1A mean R=+0.079 p=0.0, walk-forward OOS mean R=+0.0457 p=0.0005, deployed WATCH at 0.25% risk — STR-20260908-SKEW-PREDICTED) | this run |
+|| US-143 | EPIC-013 | Autonomous pipeline: Crypto post-capitulation bounce (Phase 1A mean R=+0.143 p=0.125 SPECULATIVE, walk-forward OOS mean R=+0.106 p=0.418 NO EDGE, deployed WATCH at 0.25% risk — STR-20260917-CAP-BOTTOM) | this run |
 
 ---
 
@@ -126,12 +127,12 @@ These items are known but have not been promoted to user stories yet. They shoul
 ## Backlog Health
 
 - **Total Epics:** 14 (1 done: EPIC-007, EPIC-010)
-- **Total Stories Defined:** 75 (US-001 to US-142)
-- **Completed (September 2026):** US-142 (Predicted Skewness Factor deployment)
+- **Total Stories Defined:** 76 (US-001 to US-143)
+- **Completed (September 2026):** US-142, US-143
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
-- **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-010 (Auto Paper Trading), EPIC-013 (Closed Loop)
+- **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-143
+- **Next Story Number:** US-144
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---

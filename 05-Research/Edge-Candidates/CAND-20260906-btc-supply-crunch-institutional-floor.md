@@ -9,7 +9,12 @@ regime_fit: ['neutral', 'risk_on']
 created: 20260906
 topic: research
 has_quotes: true
-tags: [crypto, bitcoin, etf, supply-crunch, institutional, external, staged]
+tags: [crypto, bitcoin, etf, supply-crunch, institutional, external, staged, processed]
+post_clarity_act_note: >
+  CLARITY Act failure (Sep 15, 50-49) invalidated the $77K institutional floor.
+  BTC broke to $75K. Support re-established at $75K.
+  CAND-20260917-crypto-post-cap-bottom.md provides updated framework.
+  Maintain WATCH status with reduced risk (0.25%).
 ---
 
 # Edge Candidate: BTC Supply Crunch Paradox — $3.8B ETF Inflows, 7-Year Low Volume, Oscillating at $80K

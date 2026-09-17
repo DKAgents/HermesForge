@@ -227,6 +227,20 @@ STRATEGY_CONFIGS = {
         "long_only_stocks": True,
         "call_mode": "batch",
     },
+    "CAPBOT": {
+        "module": "scanner_crypto_post_cap_bottom",
+        "scan_fn": "scan",
+        "name": "Crypto Post-Capitulation Bounce",
+        "params": {
+            "DROP_PCT": [0.03, 0.04, 0.05],
+            "ATR_STOP_MULT": [1.0, 1.5, 2.0],
+            "RECOVERY_FRACTION": [0.30, 0.40, 0.50],
+        },
+        "asset_class": "crypto",
+        "long_only_stocks": False,
+        "call_mode": "batch",
+        "long_only": True,
+    },
 }
 
 # Quick mode: smaller parameter grid for faster runs
@@ -245,6 +259,7 @@ QUICK_PARAMS = {
     "SENT": {"FEAR_VIX_THRESHOLD": [20.0], "FG_GREED_THRESHOLD": [65], "DIVERGENCE_SPREAD_MIN": [25]},
     "SKEWP": {"SKEW_WINDOW": [63], "ATR_STOP_MULT": [2.0], "QUINTILE": [5]},
     "TRIPLE": {"WTI_THRESHOLD": [85], "TENY_THRESHOLD": [4.0], "STOP_ATR_MULT": [2.0]},
+    "CAPBOT": {"DROP_PCT": [0.04], "ATR_STOP_MULT": [1.5], "RECOVERY_FRACTION": [0.40]},
 }
 
 # ── Walk-Forward Windows ──────────────────────────────────────────────────────
