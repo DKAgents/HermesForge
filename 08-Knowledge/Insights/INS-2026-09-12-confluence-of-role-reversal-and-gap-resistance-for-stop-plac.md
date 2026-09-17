@@ -31,3 +31,6 @@ Identify short setups where a broken support level and an overhead gap align; pl
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

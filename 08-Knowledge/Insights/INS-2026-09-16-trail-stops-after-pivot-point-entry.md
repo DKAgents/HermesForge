@@ -7,8 +7,11 @@ domains: [indicators, patterns, risk-guidelines, trading-rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Trail Stops After Pivot Point Entry
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ After a pivot point buy signal executes, do not keep the stop fixed at the initi
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

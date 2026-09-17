@@ -42,3 +42,6 @@ Before acting on 4-9-18 triple crossover signals, compute the 4-minus-18 MA spre
 - [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for momentum divergence warnings using a spread of MAs, analogous to the triple crossover oscillator.
 
 - [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for overbought/oversold thresholds on oscillator spread
+
+## Related Notes
+- [[N161-momentum-oscillator-construction|Momentum Oscillator Construction]]

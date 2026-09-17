@@ -31,3 +31,6 @@ Instead of trying to judge penetration significance in real-time, wait for the f
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

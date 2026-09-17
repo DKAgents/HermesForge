@@ -31,3 +31,6 @@ Use Fibonacci retracement levels to time entries only in the 38-50% range of the
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

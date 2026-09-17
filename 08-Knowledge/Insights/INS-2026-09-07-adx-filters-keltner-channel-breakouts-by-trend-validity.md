@@ -31,3 +31,6 @@ Before taking a Keltner Channel breakout trade, check ADX direction — if ADX i
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

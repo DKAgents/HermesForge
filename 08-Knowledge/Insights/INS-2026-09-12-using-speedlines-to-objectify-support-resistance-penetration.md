@@ -31,3 +31,6 @@ Before entering a short on a bounce to former support-turned-resistance, confirm
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

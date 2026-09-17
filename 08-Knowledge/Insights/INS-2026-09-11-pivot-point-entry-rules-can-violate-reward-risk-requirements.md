@@ -31,3 +31,6 @@ Before placing the EN071 buy stop, calculate whether the distance to the next id
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

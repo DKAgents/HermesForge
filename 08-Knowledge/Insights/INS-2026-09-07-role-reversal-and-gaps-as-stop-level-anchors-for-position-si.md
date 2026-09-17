@@ -31,3 +31,6 @@ A trader should explicitly map recent role-reversal levels and unfilled gaps as 
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 5/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

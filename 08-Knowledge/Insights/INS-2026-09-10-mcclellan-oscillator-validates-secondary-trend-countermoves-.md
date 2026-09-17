@@ -31,3 +31,6 @@ Before fading an overbought/oversold signal in a trending market per EN041, chec
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

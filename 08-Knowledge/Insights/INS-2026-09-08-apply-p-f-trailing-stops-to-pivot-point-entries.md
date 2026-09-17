@@ -31,3 +31,7 @@ After a pivot point buy signal triggers, replace the static protective stop with
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

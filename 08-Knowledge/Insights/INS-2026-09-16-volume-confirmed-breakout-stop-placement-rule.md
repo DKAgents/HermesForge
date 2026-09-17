@@ -7,8 +7,11 @@ domains: [indicators, patterns, risk management, rules]
 sources: ["N013-volume-as-a-filter-for-false-breakouts", "R052-filters-for-confirming-breakouts", "N028-bull-trap-false-upside-breakout"]
 seed_id: breakout_volume_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume-Confirmed Breakout Stop Placement Rule
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When entering a breakout, place a sell stop below the breakout bar's low or the 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-20-multi-filter-breakout-system-with-volume-based-stop-logic|Multi-Filter Breakout System With Volume-Based Stop Logic]]

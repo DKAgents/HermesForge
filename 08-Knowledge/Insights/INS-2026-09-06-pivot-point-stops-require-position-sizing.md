@@ -31,3 +31,6 @@ When taking a pivot point buy signal, immediately measure the distance from entr
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

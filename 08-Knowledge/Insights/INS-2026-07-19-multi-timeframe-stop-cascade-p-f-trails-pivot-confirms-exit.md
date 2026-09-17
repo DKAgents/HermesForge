@@ -36,4 +36,6 @@ On a pivot point buy signal per EN071, place the initial protective stop below t
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related
+- [[N098-parabolic-sar-stop-and-reverse-system]] — See N098-parabolic-sar-stop-and-reverse-system for classic trailing stop structure
+
 - [[RG035-combining-technical-factors-with-money-management-for-stop-p]] — See RG035 for money management constraints on stop placement

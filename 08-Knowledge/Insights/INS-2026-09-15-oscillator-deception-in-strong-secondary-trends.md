@@ -31,3 +31,6 @@ Do not take an oversold buy signal in a primary uptrend until breadth indicators
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

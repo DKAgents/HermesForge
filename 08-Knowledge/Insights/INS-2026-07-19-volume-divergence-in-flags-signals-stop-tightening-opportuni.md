@@ -36,3 +36,6 @@ When a flag or pennant breakout occurs on light volume (violating R082 and match
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for stop placement relative to round numbers when tightening stops
 
 - [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021-use-of-advance-stop-orders-in-point-and-figure-trading for stop execution discipline
+
+## Related Notes
+- [[RG003-protective-stop-placement-relative-to-round-numbers|Protective Stop Placement Relative to Round Numbers]]

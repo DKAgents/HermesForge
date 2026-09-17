@@ -31,3 +31,6 @@ When executing a pivot point buy per EN071, trail the protective sell stop upwar
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

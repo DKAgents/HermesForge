@@ -31,3 +31,7 @@ Before entering a pivot-point breakout, calculate the stop distance from the cur
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C245-stop-order|Stop Order]]

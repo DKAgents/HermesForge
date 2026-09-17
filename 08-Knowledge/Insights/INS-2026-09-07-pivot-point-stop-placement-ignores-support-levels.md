@@ -31,3 +31,7 @@ When executing EN071 pivot point longs, always verify that the prescribed stop (
 ## Connection Type
 
 **contradicts_assumption** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

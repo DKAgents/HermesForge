@@ -31,3 +31,6 @@ Before acting on a pivot point buy signal, compute the stop distance from the en
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 3/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

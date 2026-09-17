@@ -36,3 +36,7 @@ Before entering any EN071 pivot buy signal, calculate the distance from the entr
 - [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts|RG020 protective sell stops on P&F charts for a potential resolution using smaller box sizes.
 
 - [[RG031-protective-stop-placement-as-an-art]] — See RG031 - Protective Stop Placement as an Art for balancing technical stops and money management
+
+## Related Notes
+- [[RG020-protective-sell-stops-on-point-and-figure-charts|Protective Sell Stops on Point and Figure Charts]]
+- [[R146-smaller-box-size-for-short-term-trading-and-re-entry|Smaller Box Size for Short-Term Trading and Re-Entry]]

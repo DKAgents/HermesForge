@@ -31,3 +31,6 @@ Before acting on a CRB/Bond ratio signal, confirm that the target sector (e.g., 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[R250-sector-rotation-rule-using-relative-strength-lines|Sector Rotation Rule Using Relative Strength Lines]]

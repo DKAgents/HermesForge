@@ -31,3 +31,7 @@ Trail stops using the specific structural anchor of the latest O-column in P&F u
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C243-market-order|Market Order]]
+- [[C245-stop-order|Stop Order]]

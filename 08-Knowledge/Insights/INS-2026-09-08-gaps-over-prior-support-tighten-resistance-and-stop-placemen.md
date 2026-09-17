@@ -31,3 +31,6 @@ When shorting a pullback to a prior support now acting as resistance, look for a
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

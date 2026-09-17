@@ -31,3 +31,6 @@ When a pivot point breakout entry is triggered (per EN071), replace the static i
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

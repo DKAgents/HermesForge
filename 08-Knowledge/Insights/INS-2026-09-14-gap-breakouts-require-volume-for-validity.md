@@ -31,3 +31,6 @@ Traders should only enter on gap breakouts (up or down) if the gap day shows sig
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

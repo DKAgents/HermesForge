@@ -31,3 +31,6 @@ Filter bullish reversal candle patterns by requiring both RSI (<30) and Stochast
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[N083-bullish-reversal-candle-pattern-library|Bullish Reversal Candle Pattern Library]]

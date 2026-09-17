@@ -31,3 +31,6 @@ Before taking an oversold buy signal in an uptrend based on a momentum oscillato
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

@@ -31,3 +31,7 @@ Before executing a pivot point buy stop entry, compute the stop distance, projec
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
