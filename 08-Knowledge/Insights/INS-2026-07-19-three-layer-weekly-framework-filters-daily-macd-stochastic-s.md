@@ -37,6 +37,8 @@ Before taking a daily MACD or Stochastics crossover signal, a trader should chec
 - [[INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas|Weekly Trend Confirmation Required Before Daily MACD/Stochastics Entry]]
 
 ## Related
+- [[N066-macd-histogram-construction]] — See MACD construction details for indicator parameter context in weekly filtering
+
 - [[EN028-10-and-50-day-moving-average-crossover]] — See EN028-10-and-50-day-moving-average-crossover for daily crossover signal that requires weekly confirmation from the three-layer framework
 
 - [[N047-commonly-used-moving-average-combinations]] — See N047-commonly-used-moving-average-combinations for the 10/40-week MA as a standard combination

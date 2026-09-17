@@ -1,7 +1,7 @@
 ---
 type: discovery-report
 week: 2026-W37
-date: 2026-09-15 21:06 PDT
+date: 2026-09-16 21:07 PDT
 insights_found: 13
 seeds_run: 18
 llm_calls: 18
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W37
 
-Generated: 2026-09-15 21:06 PDT
+Generated: 2026-09-16 21:07 PDT
 
 ## Summary
 
@@ -24,16 +24,16 @@ Generated: 2026-09-15 21:06 PDT
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-09-16-earnings-filter-for-role-reversal-entry-setups\|Earnings Filter for Role-Reversal Entry ]] | 5/5 | adds_condition | edge-conditions, concepts |
-| [[INS-2026-09-16-volume-divergence-stop-adjustment-from-flag-patterns\|Volume divergence stop adjustment from f]] | 4/5 | creates_filter | patterns, rules |
-| [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule\|Volume-Confirmed Breakout Stop Placement]] | 4/5 | creates_filter | indicators, patterns |
-| [[INS-2026-09-16-dual-oscillator-confirmation-for-candle-patterns\|Dual Oscillator Confirmation for Candle ]] | 4/5 | creates_filter | concepts, indicators |
-| [[INS-2026-09-16-mcclellan-vs-secondary-trend-oscillator-false-signals\|McClellan vs secondary trend: oscillator]] | 4/5 | adds_condition | indicators, concepts |
-| [[INS-2026-09-16-combine-support-resistance-levels-with-risk-based-position-s\|Combine support/resistance levels with r]] | 4/5 | reveals_sequence | concepts, rules |
-| [[INS-2026-09-16-refine-entry-retracements-with-trend-strength\|Refine entry retracements with trend str]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-16-adx-filter-for-keltner-channel-breakout-signals\|ADX filter for Keltner Channel breakout ]] | 4/5 | adds_condition | indicators, edge-conditions |
-| [[INS-2026-09-16-combine-crb-bond-ratio-with-relative-strength-for-sector-rot\|Combine CRB/Bond ratio with relative str]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-16-commodity-deflation-filters-10-50-stock-crossover\|Commodity Deflation Filters 10/50 Stock ]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-16-gap-volume-confirmation-for-valid-breakouts\|Gap volume confirmation for valid breako]] | 4/5 | adds_condition | patterns, rules |
-| [[INS-2026-09-16-10-50-crossover-confirms-murphy-risk-limit-interaction\|10/50 Crossover Confirms Murphy Risk Lim]] | 3/5 | contradicts_assumption | indicators, edge-conditions |
-| [[INS-2026-09-16-trail-stops-after-pivot-point-entry\|Trail Stops After Pivot Point Entry]] | 3/5 | adds_condition | indicators, patterns |
+| [[INS-2026-09-17-volume-confirmation-aligns-with-false-breakout-filter\|Volume Confirmation Aligns with False Br]] | 4/5 | confirms_risk_rule | rules, indicators |
+| [[INS-2026-09-17-crossover-systems-fail-in-ranging-markets-add-regime-filter\|Crossover Systems Fail in Ranging Market]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-17-confirming-breakouts-and-placing-stops-with-volume-confirmat\|Confirming Breakouts and Placing Stops w]] | 4/5 | confirms_risk_rule | indicators, patterns |
+| [[INS-2026-09-17-dual-oscillator-confirmation-strengthens-candle-reversal-fil\|Dual Oscillator Confirmation Strengthens]] | 4/5 | adds_condition | indicators, patterns |
+| [[INS-2026-09-17-technical-levels-determine-stop-distance-and-position-size\|Technical Levels Determine Stop Distance]] | 4/5 | reveals_sequence | concepts, rules |
+| [[INS-2026-09-17-pivot-point-stop-and-3-1-r-r-conflict\|Pivot Point Stop and 3:1 R/R Conflict]] | 4/5 | resolves_conflict | concepts, risk-guidelines |
+| [[INS-2026-09-17-stop-placement-reinforces-exit-priority-over-entry\|Stop placement reinforces exit priority ]] | 4/5 | confirms_risk_rule | risk-guidelines, concepts |
+| [[INS-2026-09-17-40-60-retracement-entry-zone-from-dow-and-fibonacci\|40-60% Retracement Entry Zone from Dow a]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-17-adx-gating-for-keltner-channel-and-retracement-signals\|ADX Gating for Keltner Channel and Retra]] | 4/5 | adds_condition | indicators, edge-conditions |
+| [[INS-2026-09-17-crb-bond-ratio-filters-rs-sector-selection\|CRB/Bond Ratio Filters RS Sector Selecti]] | 4/5 | adds_condition | indicators, rules |
+| [[INS-2026-09-17-commodity-breakdown-confirms-death-cross-sell-signals\|Commodity Breakdown Confirms Death Cross]] | 4/5 | adds_condition | indicators, rules |
+| [[INS-2026-09-17-breakaway-gaps-need-volume-confirmation\|Breakaway gaps need volume confirmation]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-09-17-mcclellan-oscillator-with-secondary-trend-entry\|McClellan Oscillator with Secondary Tren]] | 3/5 | adds_condition | indicators, concepts |

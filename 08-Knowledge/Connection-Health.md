@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-17T02:30:27Z
+updated: 2026-09-17T06:35:23Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,17 +9,17 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 730 |
-| Connections created | 3 | 263 |
-| Review queue | 209 | 209 |
-| Avg score | 4.0 | — |
+| Notes examined | 5 | 735 |
+| Connections created | 2 | 265 |
+| Review queue | 214 | 214 |
+| Avg score | 3.8 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4795
-- Total notes: 2291
-- Avg degree per note: 2.093
-- Notes with links: 950 (41.5%)
-- Orphan notes (no links): 1340 (58.5%)
+- Total wikilinks in vault: ~4836
+- Total notes: 2304
+- Avg degree per note: 2.099
+- Notes with links: 963 (41.8%)
+- Orphan notes (no links): 1340 (58.2%)
 
 ## Weakly Connected Areas
 - `campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
@@ -28,14 +28,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-17T02:30:27Z)
-- **06-Strategies/Hypotheses/STR-20260726-selling-climax-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EX002-nonfailure-swing-reversal-signal.md** (score 4.0): The nonfailure swing reversal signal provides a classical technical definition of a reversal pattern that could refine or validate the selling climax reversal hypothesis, especially regarding confirmation criteria and false signals. Linking them allows cross-referencing between a specific strategy and a foundational Dow theory concept, aiding in future pattern recognition and risk assessment.
-- **06-Strategies/Hypotheses/STR-20260726-selling-climax-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EX001-failure-swing-reversal-signal.md** (score 4.0): The failure swing reversal signal provides a classical Dow Theory framework that can validate or enhance the selling climax reversal hypothesis, making the link useful for strategy development and refinement.
-- **08-Knowledge/Insights/INS-2026-07-19-multi-timeframe-stop-cascade-p-f-trails-pivot-confirms-exit.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N098-parabolic-sar-stop-and-reverse-system.md** (score 4.0): Note A describes a multi-timeframe stop cascade combining intraday and P&F trailing stops, while Note B documents the classic Parabolic SAR system; linking them provides a direct reference to a foundational stop-and-reverse method that could inform or contrast with A's more dynamic stop management approach.
+## Recent Discoveries (last run: 2026-09-17T06:35:23Z)
+- **08-Knowledge/Insights/INS-2026-07-19-three-layer-weekly-framework-filters-daily-macd-stochastic-s.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N066-macd-histogram-construction.md** (score 4.0): This connection links the MACD indicator's construction details (from Murphy's reference) to the weekly-filter framework that uses MACD signals, providing the technical foundation needed to understand how the indicator's parameters (12/26/9) are applied in the multi-layer weekly context. It bridges indicator mechanics with trading system rules, enhancing retrieval when exploring MACD-based strategies.
+- **06-Strategies/Hypotheses/STR-20260730-breadth-gated-gap-reversal.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EX002-nonfailure-swing-reversal-signal.md** (score 4.0): EX002 describes a classic reversal signal that could serve as an additional confirmation or filter for the breadth-gated gap reversal strategy, improving entry precision.
 
 ## Reflection Notes
-- Run 137: Created 1 connections from 5 notes. Avg score: 4.3.
 - Run 139: Created 1 connections from 5 notes. Avg score: 4.7.
 - Run 140: Created 3 connections from 5 notes. Avg score: 4.6.
 - Run 144: Created 1 connections from 5 notes. Avg score: 4.2.
 - Run 146: Created 3 connections from 5 notes. Avg score: 4.0.
+- Run 147: Created 2 connections from 5 notes. Avg score: 3.8.
