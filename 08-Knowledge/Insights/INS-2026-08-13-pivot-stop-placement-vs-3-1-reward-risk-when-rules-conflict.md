@@ -33,5 +33,6 @@ Before placing the EN071 pivot buy stop, calculate whether the distance from ent
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[C245-stop-order|Stop Order]]

@@ -33,6 +33,7 @@ Before placing the pivot point buy stop per EN071, calculate the distance from e
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[C336-support-level|Support Level]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

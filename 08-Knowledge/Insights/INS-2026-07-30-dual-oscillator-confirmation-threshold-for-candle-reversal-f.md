@@ -33,6 +33,8 @@ Only act on candle reversal patterns when BOTH RSI (above 70 or below 30) AND st
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for trend-alignment filter on oscillator signals
+
 - [[C183-filtered-candle-patterns-concept]] — for dual oscillator confirmation threshold
 
 - [[N062-macd-divergence-analysis]] — See MACD divergence as potential third oscillator confirmation

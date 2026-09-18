@@ -33,4 +33,5 @@ Traders should always combine any entry signal with a pre-planned protective sto
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]

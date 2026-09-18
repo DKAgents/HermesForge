@@ -33,5 +33,6 @@ After entering a long on EN071's pivot point buy signal above the previous day's
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

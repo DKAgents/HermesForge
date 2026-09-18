@@ -40,5 +40,6 @@ If a flag or pennant breakout occurs without the required volume surge (R082 vio
 - [[RG023-pf-trailing-stop-adjustment]] — See RG023-pf-trailing-stop-adjustment for a P&F trailing stop method that could be applied when volume divergence flags a stop adjustment zone.
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[INS-2026-07-30-volume-divergence-in-flag-pennant-breakouts-signals-stop-adj|Volume Divergence in Flag/Pennant Breakouts Signals Stop Adjustment]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
