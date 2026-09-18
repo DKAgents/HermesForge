@@ -37,6 +37,8 @@ In a downtrend, when a price gap's lower end and a prior violated support level 
 - [[C334-resistance-level|Resistance Level]]
 
 ## Related
+- [[RG020-protective-sell-stops-on-point-and-figure-charts]] — See RG020-protective-sell-stops-on-point-and-figure-charts for alternative stop placement precision via box size
+
 - [[RG031-protective-stop-placement-as-an-art]] — See RG031 for the general art of stop placement that this layered zone technique refines
 
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid round numbers when setting stops at confluent resistance zones
