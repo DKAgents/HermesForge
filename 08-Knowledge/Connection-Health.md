@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-18T18:55:58Z
+updated: 2026-09-18T22:58:38Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 780 |
-| Connections created | 1 | 269 |
-| Review queue | 223 | 223 |
-| Avg score | 4.2 | — |
+| Notes examined | 5 | 785 |
+| Connections created | 0 | 269 |
+| Review queue | 224 | 224 |
+| Avg score | 3.5 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~4903
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-18T18:55:58Z)
-- **08-Knowledge/Insights/INS-2026-07-30-layered-s-r-zones-drive-precise-stop-placement-and-position-.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG020-protective-sell-stops-on-point-and-figure-charts.md** (score 4.0): Both notes address stop placement precision, but from different chart types (candlestick vs. point-and-figure) and mechanisms (S/R zones vs. box size). Linking them enriches reasoning about stop placement across methodologies, though the connection is not immediately obvious.
+## Recent Discoveries (last run: 2026-09-18T22:58:38Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 147: Created 2 connections from 5 notes. Avg score: 3.8.
