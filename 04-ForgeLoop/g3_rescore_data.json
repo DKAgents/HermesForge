@@ -1,0 +1,2235 @@
+{
+  "results": [
+    {
+      "file": "NARROW_LEAD_BREADTH-phase1a.csv",
+      "strategy_id": "NARROW_LEAD_BREADTH-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 462,
+        "gross_avg_r": -0.0879,
+        "net_avg_r": -0.0964,
+        "gross_pf": 0.7559,
+        "net_pf": 0.736,
+        "gross_wr": 0.4351,
+        "net_wr": 0.4351,
+        "total_cost_drag": 0.0085,
+        "edge_retention": 1.0962,
+        "total_gross_r": -40.6105,
+        "total_net_r": -44.5176
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260726-eufearia-cci-reversal-phase1a.csv",
+      "strategy_id": "STR-20260726-eufearia-cci-reversal-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 25068,
+        "gross_avg_r": 0.0169,
+        "net_avg_r": 0.0079,
+        "gross_pf": 1.0263,
+        "net_pf": 1.0122,
+        "gross_wr": 0.3284,
+        "net_wr": 0.3283,
+        "total_cost_drag": 0.009,
+        "edge_retention": 0.4692,
+        "total_gross_r": 422.76,
+        "total_net_r": 198.3605
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260726-first-pullback-trend-swing-phase1a.csv",
+      "strategy_id": "STR-20260726-first-pullback-trend-swing-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3,
+        "gross_avg_r": -1.9755,
+        "net_avg_r": -1.9866,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0112,
+        "edge_retention": 1.0056,
+        "total_gross_r": -5.9264,
+        "total_net_r": -5.9599
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260728-adaptive-trend-phase1a.csv",
+      "strategy_id": "STR-20260728-adaptive-trend-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1730,
+        "gross_avg_r": 0.2313,
+        "net_avg_r": 0.2288,
+        "gross_pf": 1.5905,
+        "net_pf": 1.5821,
+        "gross_wr": 0.4324,
+        "net_wr": 0.4324,
+        "total_cost_drag": 0.0025,
+        "edge_retention": 0.9892,
+        "total_gross_r": 400.17,
+        "total_net_r": 395.858
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-20260814-SECTOR-MOMENTUM-phase1a.csv",
+      "strategy_id": "STR-20260814-SECTOR-MOMENTUM-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2689,
+        "gross_avg_r": 0.0072,
+        "net_avg_r": 0.0001,
+        "gross_pf": 1.0096,
+        "net_pf": 1.0002,
+        "gross_wr": 0.4451,
+        "net_wr": 0.4448,
+        "total_cost_drag": 0.0071,
+        "edge_retention": 0.0192,
+        "total_gross_r": 19.4045,
+        "total_net_r": 0.3726
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260816-CRYPTO-FG-CONTRARIAN-phase1a.csv",
+      "strategy_id": "STR-20260816-CRYPTO-FG-CONTRARIAN-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 2494,
+        "gross_avg_r": -0.0186,
+        "net_avg_r": -0.0336,
+        "gross_pf": 0.9775,
+        "net_pf": 0.9598,
+        "gross_wr": 0.3893,
+        "net_wr": 0.3885,
+        "total_cost_drag": 0.015,
+        "edge_retention": 1.8061,
+        "total_gross_r": -46.4067,
+        "total_net_r": -83.817
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260816-VIX-VRP-CONTANGO-phase1a.csv",
+      "strategy_id": "STR-20260816-VIX-VRP-CONTANGO-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15518,
+        "gross_avg_r": 0.0928,
+        "net_avg_r": 0.0901,
+        "gross_pf": 1.3504,
+        "net_pf": 1.3386,
+        "gross_wr": 0.5563,
+        "net_wr": 0.5555,
+        "total_cost_drag": 0.0027,
+        "edge_retention": 0.9707,
+        "total_gross_r": 1439.5871,
+        "total_net_r": 1397.4197
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-20260903-BTC-LEVERAGE-FLUSH-phase1a.csv",
+      "strategy_id": "STR-20260903-BTC-LEVERAGE-FLUSH-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 144,
+        "gross_avg_r": -0.3947,
+        "net_avg_r": -0.4268,
+        "gross_pf": 0.5456,
+        "net_pf": 0.5204,
+        "gross_wr": 0.3333,
+        "net_wr": 0.3264,
+        "total_cost_drag": 0.0322,
+        "edge_retention": 1.0815,
+        "total_gross_r": -56.8308,
+        "total_net_r": -61.4605
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-20260906-BTC-SUPPLY-CRUNCH-phase1a.csv",
+      "strategy_id": "STR-20260906-BTC-SUPPLY-CRUNCH-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 65,
+        "gross_avg_r": 0.2559,
+        "net_avg_r": 0.2388,
+        "gross_pf": 1.791,
+        "net_pf": 1.7196,
+        "gross_wr": 0.5385,
+        "net_wr": 0.5231,
+        "total_cost_drag": 0.0171,
+        "edge_retention": 0.9331,
+        "total_gross_r": 16.6354,
+        "total_net_r": 15.5223
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-20260906-SENTIMENT-DIVERGENCE-phase1a.csv",
+      "strategy_id": "STR-20260906-SENTIMENT-DIVERGENCE-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 47,
+        "gross_avg_r": 2.6776,
+        "net_avg_r": 2.6736,
+        "gross_pf": 79.63,
+        "net_pf": 78.9282,
+        "gross_wr": 0.9362,
+        "net_wr": 0.9362,
+        "total_cost_drag": 0.004,
+        "edge_retention": 0.9985,
+        "total_gross_r": 125.8473,
+        "total_net_r": 125.6593
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-A-ma-pullback-fibonacci-phase1a.csv",
+      "strategy_id": "STR-A-ma-pullback-fibonacci-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1123,
+        "gross_avg_r": 0.0867,
+        "net_avg_r": 0.0694,
+        "gross_pf": 1.064,
+        "net_pf": 1.0508,
+        "gross_wr": 0.3945,
+        "net_wr": 0.3945,
+        "total_cost_drag": 0.0173,
+        "edge_retention": 0.8006,
+        "total_gross_r": 97.3348,
+        "total_net_r": 77.9237
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AA-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-AA-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 25772,
+        "gross_avg_r": 0.3491,
+        "net_avg_r": 0.3425,
+        "gross_pf": 1.7863,
+        "net_pf": 1.7654,
+        "gross_wr": 0.5183,
+        "net_wr": 0.5178,
+        "total_cost_drag": 0.0067,
+        "edge_retention": 0.9809,
+        "total_gross_r": 8997.789,
+        "total_net_r": 8825.665
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AA-stocks-phase1a.csv",
+      "strategy_id": "STR-AA-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2167,
+        "gross_avg_r": 0.2046,
+        "net_avg_r": 0.1993,
+        "gross_pf": 1.386,
+        "net_pf": 1.3739,
+        "gross_wr": 0.4329,
+        "net_wr": 0.4329,
+        "total_cost_drag": 0.0053,
+        "edge_retention": 0.9743,
+        "total_gross_r": 443.329,
+        "total_net_r": 431.9349
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AB-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-AB-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 8216,
+        "gross_avg_r": 0.147,
+        "net_avg_r": 0.144,
+        "gross_pf": 1.3963,
+        "net_pf": 1.3865,
+        "gross_wr": 0.5189,
+        "net_wr": 0.5183,
+        "total_cost_drag": 0.0031,
+        "edge_retention": 0.9791,
+        "total_gross_r": 1208.103,
+        "total_net_r": 1182.8544
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AB-stocks-phase1a.csv",
+      "strategy_id": "STR-AB-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 230,
+        "gross_avg_r": 0.251,
+        "net_avg_r": 0.2478,
+        "gross_pf": 1.7222,
+        "net_pf": 1.7102,
+        "gross_wr": 0.5304,
+        "net_wr": 0.5304,
+        "total_cost_drag": 0.0032,
+        "edge_retention": 0.9874,
+        "total_gross_r": 57.724,
+        "total_net_r": 56.9962
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AC-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-AC-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 22241,
+        "gross_avg_r": 0.3494,
+        "net_avg_r": 0.3427,
+        "gross_pf": 1.7914,
+        "net_pf": 1.7703,
+        "gross_wr": 0.5188,
+        "net_wr": 0.5185,
+        "total_cost_drag": 0.0067,
+        "edge_retention": 0.9808,
+        "total_gross_r": 7771.568,
+        "total_net_r": 7622.1001
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AC-stocks-phase1a.csv",
+      "strategy_id": "STR-AC-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1466,
+        "gross_avg_r": 0.229,
+        "net_avg_r": 0.2238,
+        "gross_pf": 1.4426,
+        "net_pf": 1.4302,
+        "gross_wr": 0.4413,
+        "net_wr": 0.4413,
+        "total_cost_drag": 0.0052,
+        "edge_retention": 0.9775,
+        "total_gross_r": 335.71,
+        "total_net_r": 328.1458
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AD-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-AD-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 5014,
+        "gross_avg_r": 0.1974,
+        "net_avg_r": 0.1891,
+        "gross_pf": 1.3409,
+        "net_pf": 1.3237,
+        "gross_wr": 0.3853,
+        "net_wr": 0.3853,
+        "total_cost_drag": 0.0083,
+        "edge_retention": 0.9579,
+        "total_gross_r": 989.549,
+        "total_net_r": 947.9096
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AD-stocks-phase1a.csv",
+      "strategy_id": "STR-AD-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1326,
+        "gross_avg_r": 0.306,
+        "net_avg_r": 0.3015,
+        "gross_pf": 1.7339,
+        "net_pf": 1.7195,
+        "gross_wr": 0.5264,
+        "net_wr": 0.5264,
+        "total_cost_drag": 0.0045,
+        "edge_retention": 0.9854,
+        "total_gross_r": 405.697,
+        "total_net_r": 399.7643
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-ADD-FACTOR-phase1a.csv",
+      "strategy_id": "STR-ADD-FACTOR-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 65884,
+        "gross_avg_r": -0.0011,
+        "net_avg_r": -0.0053,
+        "gross_pf": 0.9965,
+        "net_pf": 0.9826,
+        "gross_wr": 0.4906,
+        "net_wr": 0.4887,
+        "total_cost_drag": 0.0042,
+        "edge_retention": 4.9827,
+        "total_gross_r": -69.4202,
+        "total_net_r": -345.9025
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-AE-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-AE-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 7544,
+        "gross_avg_r": 0.2743,
+        "net_avg_r": 0.2681,
+        "gross_pf": 1.526,
+        "net_pf": 1.5104,
+        "gross_wr": 0.4609,
+        "net_wr": 0.4608,
+        "total_cost_drag": 0.0063,
+        "edge_retention": 0.977,
+        "total_gross_r": 2069.696,
+        "total_net_r": 2022.1735
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AE-stocks-phase1a.csv",
+      "strategy_id": "STR-AE-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2178,
+        "gross_avg_r": 0.1936,
+        "net_avg_r": 0.1915,
+        "gross_pf": 1.7223,
+        "net_pf": 1.7123,
+        "gross_wr": 0.5748,
+        "net_wr": 0.5748,
+        "total_cost_drag": 0.0021,
+        "edge_retention": 0.9894,
+        "total_gross_r": 421.6,
+        "total_net_r": 417.1216
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AF-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-AF-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 32360,
+        "gross_avg_r": 0.2872,
+        "net_avg_r": 0.2803,
+        "gross_pf": 1.6863,
+        "net_pf": 1.6642,
+        "gross_wr": 0.5235,
+        "net_wr": 0.5229,
+        "total_cost_drag": 0.0069,
+        "edge_retention": 0.9759,
+        "total_gross_r": 9292.611,
+        "total_net_r": 9069.0344
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AF-stocks-phase1a.csv",
+      "strategy_id": "STR-AF-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 7195,
+        "gross_avg_r": 0.1637,
+        "net_avg_r": 0.1545,
+        "gross_pf": 1.2925,
+        "net_pf": 1.2734,
+        "gross_wr": 0.4215,
+        "net_wr": 0.4213,
+        "total_cost_drag": 0.0093,
+        "edge_retention": 0.9435,
+        "total_gross_r": 1178.072,
+        "total_net_r": 1111.4595
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AG-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-AG-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 70186,
+        "gross_avg_r": 0.1958,
+        "net_avg_r": 0.1904,
+        "gross_pf": 1.4826,
+        "net_pf": 1.4647,
+        "gross_wr": 0.5122,
+        "net_wr": 0.5118,
+        "total_cost_drag": 0.0054,
+        "edge_retention": 0.9722,
+        "total_gross_r": 13743.718,
+        "total_net_r": 13361.7696
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AG-stocks-phase1a.csv",
+      "strategy_id": "STR-AG-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1271,
+        "gross_avg_r": 0.2787,
+        "net_avg_r": 0.2757,
+        "gross_pf": 1.8143,
+        "net_pf": 1.8025,
+        "gross_wr": 0.572,
+        "net_wr": 0.572,
+        "total_cost_drag": 0.003,
+        "edge_retention": 0.9894,
+        "total_gross_r": 354.207,
+        "total_net_r": 350.454
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AH-stocks-phase1a.csv",
+      "strategy_id": "STR-AH-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 118,
+        "gross_avg_r": 0.4639,
+        "net_avg_r": 0.4607,
+        "gross_pf": 3.5199,
+        "net_pf": 3.4909,
+        "gross_wr": 0.7034,
+        "net_wr": 0.6949,
+        "total_cost_drag": 0.0031,
+        "edge_retention": 0.9932,
+        "total_gross_r": 54.735,
+        "total_net_r": 54.3637
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AI-stocks-phase1a.csv",
+      "strategy_id": "STR-AI-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 264,
+        "gross_avg_r": 0.3932,
+        "net_avg_r": 0.3884,
+        "gross_pf": 1.8849,
+        "net_pf": 1.8694,
+        "gross_wr": 0.4962,
+        "net_wr": 0.4962,
+        "total_cost_drag": 0.0048,
+        "edge_retention": 0.9878,
+        "total_gross_r": 103.794,
+        "total_net_r": 102.5245
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AJ-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-AJ-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 13241,
+        "gross_avg_r": 0.2242,
+        "net_avg_r": 0.2196,
+        "gross_pf": 1.491,
+        "net_pf": 1.4783,
+        "gross_wr": 0.4866,
+        "net_wr": 0.486,
+        "total_cost_drag": 0.0046,
+        "edge_retention": 0.9794,
+        "total_gross_r": 2968.856,
+        "total_net_r": 2907.7685
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-AJ-stocks-phase1a.csv",
+      "strategy_id": "STR-AJ-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 501,
+        "gross_avg_r": 0.4633,
+        "net_avg_r": 0.4585,
+        "gross_pf": 2.1632,
+        "net_pf": 2.1449,
+        "gross_wr": 0.5489,
+        "net_wr": 0.5489,
+        "total_cost_drag": 0.0048,
+        "edge_retention": 0.9896,
+        "total_gross_r": 232.123,
+        "total_net_r": 229.7088
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-macd-histogram-divergence-phase1a.csv",
+      "strategy_id": "STR-B-macd-histogram-divergence-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3126,
+        "gross_avg_r": 0.8795,
+        "net_avg_r": 0.8581,
+        "gross_pf": 1.9284,
+        "net_pf": 1.8948,
+        "gross_wr": 0.4671,
+        "net_wr": 0.4651,
+        "total_cost_drag": 0.0214,
+        "edge_retention": 0.9757,
+        "total_gross_r": 2749.3468,
+        "total_net_r": 2682.5695
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-baseline_8bar.csv",
+      "strategy_id": "STR-B-phase1b-baseline_8bar",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 561,
+        "gross_avg_r": 0.5536,
+        "net_avg_r": 0.5309,
+        "gross_pf": 1.5122,
+        "net_pf": 1.485,
+        "gross_wr": 0.4242,
+        "net_wr": 0.4225,
+        "total_cost_drag": 0.0227,
+        "edge_retention": 0.9589,
+        "total_gross_r": 310.5605,
+        "total_net_r": 297.8092
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-combined_best.csv",
+      "strategy_id": "STR-B-phase1b-combined_best",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 288,
+        "gross_avg_r": 0.7558,
+        "net_avg_r": 0.7336,
+        "gross_pf": 1.6112,
+        "net_pf": 1.5863,
+        "gross_wr": 0.3333,
+        "net_wr": 0.3333,
+        "total_cost_drag": 0.0221,
+        "edge_retention": 0.9707,
+        "total_gross_r": 217.6573,
+        "total_net_r": 211.29
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-long_only.csv",
+      "strategy_id": "STR-B-phase1b-long_only",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 113,
+        "gross_avg_r": 0.8101,
+        "net_avg_r": 0.7916,
+        "gross_pf": 1.9478,
+        "net_pf": 1.9145,
+        "gross_wr": 0.469,
+        "net_wr": 0.469,
+        "total_cost_drag": 0.0185,
+        "edge_retention": 0.9771,
+        "total_gross_r": 91.5433,
+        "total_net_r": 89.4491
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-maturity_cap_30.csv",
+      "strategy_id": "STR-B-phase1b-maturity_cap_30",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 287,
+        "gross_avg_r": 0.5977,
+        "net_avg_r": 0.576,
+        "gross_pf": 1.5564,
+        "net_pf": 1.5298,
+        "gross_wr": 0.439,
+        "net_wr": 0.4355,
+        "total_cost_drag": 0.0218,
+        "edge_retention": 0.9636,
+        "total_gross_r": 171.5542,
+        "total_net_r": 165.3067
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-maturity_cap_40.csv",
+      "strategy_id": "STR-B-phase1b-maturity_cap_40",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 389,
+        "gross_avg_r": 0.6338,
+        "net_avg_r": 0.6114,
+        "gross_pf": 1.6085,
+        "net_pf": 1.5796,
+        "gross_wr": 0.4344,
+        "net_wr": 0.4319,
+        "total_cost_drag": 0.0224,
+        "edge_retention": 0.9646,
+        "total_gross_r": 246.5614,
+        "total_net_r": 237.8442
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-regime_aware.csv",
+      "strategy_id": "STR-B-phase1b-regime_aware",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 416,
+        "gross_avg_r": 0.7145,
+        "net_avg_r": 0.6923,
+        "gross_pf": 1.7311,
+        "net_pf": 1.6991,
+        "gross_wr": 0.4447,
+        "net_wr": 0.4423,
+        "total_cost_drag": 0.0222,
+        "edge_retention": 0.9689,
+        "total_gross_r": 297.2261,
+        "total_net_r": 287.9948
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-short_only.csv",
+      "strategy_id": "STR-B-phase1b-short_only",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 448,
+        "gross_avg_r": 0.4889,
+        "net_avg_r": 0.4651,
+        "gross_pf": 1.4296,
+        "net_pf": 1.4036,
+        "gross_wr": 0.4129,
+        "net_wr": 0.4107,
+        "total_cost_drag": 0.0238,
+        "edge_retention": 0.9513,
+        "total_gross_r": 219.0172,
+        "total_net_r": 208.3601
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-time_stop_12.csv",
+      "strategy_id": "STR-B-phase1b-time_stop_12",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 561,
+        "gross_avg_r": 0.4702,
+        "net_avg_r": 0.4475,
+        "gross_pf": 1.3684,
+        "net_pf": 1.3465,
+        "gross_wr": 0.3387,
+        "net_wr": 0.3387,
+        "total_cost_drag": 0.0227,
+        "edge_retention": 0.9517,
+        "total_gross_r": 263.7754,
+        "total_net_r": 251.0241
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-time_stop_16.csv",
+      "strategy_id": "STR-B-phase1b-time_stop_16",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 561,
+        "gross_avg_r": 0.4751,
+        "net_avg_r": 0.4524,
+        "gross_pf": 1.3464,
+        "net_pf": 1.326,
+        "gross_wr": 0.2941,
+        "net_wr": 0.2941,
+        "total_cost_drag": 0.0227,
+        "edge_retention": 0.9522,
+        "total_gross_r": 266.5364,
+        "total_net_r": 253.7851
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-phase1b-time_stop_24.csv",
+      "strategy_id": "STR-B-phase1b-time_stop_24",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 561,
+        "gross_avg_r": 0.5822,
+        "net_avg_r": 0.5595,
+        "gross_pf": 1.4039,
+        "net_pf": 1.3837,
+        "gross_wr": 0.2656,
+        "net_wr": 0.2656,
+        "total_cost_drag": 0.0227,
+        "edge_retention": 0.961,
+        "total_gross_r": 326.6149,
+        "total_net_r": 313.8636
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-B-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-B-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2955,
+        "gross_avg_r": 0.1695,
+        "net_avg_r": 0.1597,
+        "gross_pf": 1.3115,
+        "net_pf": 1.2903,
+        "gross_wr": 0.4183,
+        "net_wr": 0.4183,
+        "total_cost_drag": 0.0099,
+        "edge_retention": 0.9419,
+        "total_gross_r": 500.997,
+        "total_net_r": 471.8881
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-BTC-DOM-phase1a.csv",
+      "strategy_id": "STR-BTC-DOM-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 106,
+        "gross_avg_r": -0.4927,
+        "net_avg_r": -0.5175,
+        "gross_pf": 0.2564,
+        "net_pf": 0.2389,
+        "gross_wr": 0.2925,
+        "net_wr": 0.2736,
+        "total_cost_drag": 0.0249,
+        "edge_retention": 1.0505,
+        "total_gross_r": -52.2232,
+        "total_net_r": -54.8603
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-C-breakout-volume-phase1a.csv",
+      "strategy_id": "STR-C-breakout-volume-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 12106,
+        "gross_avg_r": -17552521279.9123,
+        "net_avg_r": -17552521279.9273,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.4293,
+        "net_wr": 0.429,
+        "total_cost_drag": 0.0151,
+        "edge_retention": 1.0,
+        "total_gross_r": -212490822614617.7,
+        "total_net_r": -212490822614800.22
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-CAP-BOTTOM-CRYPTO-CAPITULATION-BOUNCE-phase1a.csv",
+      "strategy_id": "STR-CAP-BOTTOM-CRYPTO-CAPITULATION-BOUNCE-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 139,
+        "gross_avg_r": 0.1432,
+        "net_avg_r": 0.1308,
+        "gross_pf": 1.3537,
+        "net_pf": 1.3186,
+        "gross_wr": 0.554,
+        "net_wr": 0.554,
+        "total_cost_drag": 0.0124,
+        "edge_retention": 0.9133,
+        "total_gross_r": 19.9094,
+        "total_net_r": 18.1828
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-D-sr-role-reversal-phase1a.csv",
+      "strategy_id": "STR-D-sr-role-reversal-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2402,
+        "gross_avg_r": 0.0548,
+        "net_avg_r": 0.0469,
+        "gross_pf": 1.0822,
+        "net_pf": 1.0699,
+        "gross_wr": 0.4625,
+        "net_wr": 0.4621,
+        "total_cost_drag": 0.0079,
+        "edge_retention": 0.8558,
+        "total_gross_r": 131.743,
+        "total_net_r": 112.7475
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-DEBASEMENT-phase1a.csv",
+      "strategy_id": "STR-DEBASEMENT-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 65,
+        "gross_avg_r": 0.3018,
+        "net_avg_r": 0.2776,
+        "gross_pf": 1.5047,
+        "net_pf": 1.4548,
+        "gross_wr": 0.4769,
+        "net_wr": 0.4769,
+        "total_cost_drag": 0.0242,
+        "edge_retention": 0.9198,
+        "total_gross_r": 19.6163,
+        "total_net_r": 18.0434
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-E-rsi-mean-reversion-phase1a.csv",
+      "strategy_id": "STR-E-rsi-mean-reversion-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 29039,
+        "gross_avg_r": -0.0631,
+        "net_avg_r": -0.0727,
+        "gross_pf": 0.9195,
+        "net_pf": 0.9079,
+        "gross_wr": 0.4082,
+        "net_wr": 0.4075,
+        "total_cost_drag": 0.0096,
+        "edge_retention": 1.1527,
+        "total_gross_r": -1831.5417,
+        "total_net_r": -2111.2719
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-F-bollinger-squeeze-breakout-phase1a.csv",
+      "strategy_id": "STR-F-bollinger-squeeze-breakout-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1466,
+        "gross_avg_r": -0.0478,
+        "net_avg_r": -0.051,
+        "gross_pf": 0.8646,
+        "net_pf": 0.8563,
+        "gross_wr": 0.4823,
+        "net_wr": 0.4816,
+        "total_cost_drag": 0.0032,
+        "edge_retention": 1.0666,
+        "total_gross_r": -70.08,
+        "total_net_r": -74.7462
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-FOMC-CERTAINTY-phase1a.csv",
+      "strategy_id": "STR-FOMC-CERTAINTY-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 59,
+        "gross_avg_r": 0.0241,
+        "net_avg_r": 0.013,
+        "gross_pf": 1.0524,
+        "net_pf": 1.028,
+        "gross_wr": 0.4746,
+        "net_wr": 0.4746,
+        "total_cost_drag": 0.0111,
+        "edge_retention": 0.541,
+        "total_gross_r": 1.4206,
+        "total_net_r": 0.7686
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-G-relative-strength-rotation-phase1a.csv",
+      "strategy_id": "STR-G-relative-strength-rotation-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 21733,
+        "gross_avg_r": 0.9474,
+        "net_avg_r": 0.9212,
+        "gross_pf": 3.1443,
+        "net_pf": 3.0719,
+        "gross_wr": 0.5181,
+        "net_wr": 0.517,
+        "total_cost_drag": 0.0262,
+        "edge_retention": 0.9723,
+        "total_gross_r": 20589.753,
+        "total_net_r": 20019.9381
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-GOLD-LEAD-phase1a.csv",
+      "strategy_id": "STR-GOLD-LEAD-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 20,
+        "gross_avg_r": -0.2747,
+        "net_avg_r": -0.2895,
+        "gross_pf": 0.6713,
+        "net_pf": 0.658,
+        "gross_wr": 0.25,
+        "net_wr": 0.25,
+        "total_cost_drag": 0.0148,
+        "edge_retention": 1.054,
+        "total_gross_r": -5.4942,
+        "total_net_r": -5.7907
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-crypto-equity.csv",
+      "strategy_id": "STR-I-phase1b2-crypto-equity",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 2171,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-crypto-rebalances.csv",
+      "strategy_id": "STR-I-phase1b2-crypto-rebalances",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 72,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-crypto-trades.csv",
+      "strategy_id": "STR-I-phase1b2-crypto-trades",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 373,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-stocks-equity.csv",
+      "strategy_id": "STR-I-phase1b2-stocks-equity",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1648,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-stocks-rebalances.csv",
+      "strategy_id": "STR-I-phase1b2-stocks-rebalances",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 79,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-I-phase1b2-stocks-trades.csv",
+      "strategy_id": "STR-I-phase1b2-stocks-trades",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 238,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-J-phase1b2-stocks-equity.csv",
+      "strategy_id": "STR-J-phase1b2-stocks-equity",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1648,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-J-phase1b2-stocks-rebalances.csv",
+      "strategy_id": "STR-J-phase1b2-stocks-rebalances",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 79,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-J-phase1b2-stocks-trades.csv",
+      "strategy_id": "STR-J-phase1b2-stocks-trades",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 159,
+        "gross_avg_r": 0.0,
+        "net_avg_r": 0.0,
+        "gross_pf": 0.0,
+        "net_pf": 0.0,
+        "gross_wr": 0.0,
+        "net_wr": 0.0,
+        "total_cost_drag": 0.0,
+        "edge_retention": 0,
+        "total_gross_r": 0.0,
+        "total_net_r": 0.0
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-NVDA-LEAD-phase1a.csv",
+      "strategy_id": "STR-NVDA-LEAD-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 70,
+        "gross_avg_r": -0.1707,
+        "net_avg_r": -0.1802,
+        "gross_pf": 0.6979,
+        "net_pf": 0.6844,
+        "gross_wr": 0.3857,
+        "net_wr": 0.3857,
+        "total_cost_drag": 0.0095,
+        "edge_retention": 1.0558,
+        "total_gross_r": -11.9467,
+        "total_net_r": -12.6129
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-OIL-SHOCK-phase1a.csv",
+      "strategy_id": "STR-OIL-SHOCK-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 148,
+        "gross_avg_r": 0.1835,
+        "net_avg_r": 0.1793,
+        "gross_pf": 1.3384,
+        "net_pf": 1.3294,
+        "gross_wr": 0.5203,
+        "net_wr": 0.5203,
+        "total_cost_drag": 0.0042,
+        "edge_retention": 0.9771,
+        "total_gross_r": 27.153,
+        "total_net_r": 26.5322
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-OP-MR-CRYPTO-MEAN-REVERSION-phase1a.csv",
+      "strategy_id": "STR-OP-MR-CRYPTO-MEAN-REVERSION-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 1,
+        "gross_avg_r": 1.1216,
+        "net_avg_r": 1.1012,
+        "gross_pf": 1121600000.0,
+        "net_pf": 1101184724.1867,
+        "gross_wr": 1.0,
+        "net_wr": 1.0,
+        "total_cost_drag": 0.0204,
+        "edge_retention": 0.9818,
+        "total_gross_r": 1.1216,
+        "total_net_r": 1.1012
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-Q-crypto-phase1a.csv",
+      "strategy_id": "STR-Q-crypto-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 237,
+        "gross_avg_r": 0.8432,
+        "net_avg_r": -0.9271,
+        "gross_pf": 2.8325,
+        "net_pf": 0.395,
+        "gross_wr": 0.5105,
+        "net_wr": 0.4051,
+        "total_cost_drag": 1.7703,
+        "edge_retention": -1.0995,
+        "total_gross_r": 199.835,
+        "total_net_r": -219.7274
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-Q-mae-mfe-deep.csv",
+      "strategy_id": "STR-Q-mae-mfe-deep",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 696,
+        "gross_avg_r": 0.5973,
+        "net_avg_r": 0.4415,
+        "gross_pf": 2.2145,
+        "net_pf": 1.7815,
+        "gross_wr": 0.4713,
+        "net_wr": 0.467,
+        "total_cost_drag": 0.1559,
+        "edge_retention": 0.7391,
+        "total_gross_r": 415.751,
+        "total_net_r": 307.2759
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Q-optimized-stops-backtest.csv",
+      "strategy_id": "STR-Q-optimized-stops-backtest",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 696,
+        "gross_avg_r": 0.8084,
+        "net_avg_r": 0.6052,
+        "gross_pf": 2.7225,
+        "net_pf": 2.0917,
+        "gross_wr": 0.5072,
+        "net_wr": 0.5057,
+        "total_cost_drag": 0.2032,
+        "edge_retention": 0.7486,
+        "total_gross_r": 562.619,
+        "total_net_r": 421.2044
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Q-phase1b-segment-trades.csv",
+      "strategy_id": "STR-Q-phase1b-segment-trades",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 450,
+        "gross_avg_r": 0.817,
+        "net_avg_r": -0.0438,
+        "gross_pf": 2.9141,
+        "net_pf": 0.9523,
+        "gross_wr": 0.5289,
+        "net_wr": 0.4689,
+        "total_cost_drag": 0.8608,
+        "edge_retention": -0.0536,
+        "total_gross_r": 367.672,
+        "total_net_r": -19.699
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-Q-stocks-deep-phase1a.csv",
+      "strategy_id": "STR-Q-stocks-deep-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 826,
+        "gross_avg_r": 0.5875,
+        "net_avg_r": 0.4269,
+        "gross_pf": 2.1779,
+        "net_pf": 1.7413,
+        "gross_wr": 0.4625,
+        "net_wr": 0.4564,
+        "total_cost_drag": 0.1607,
+        "edge_retention": 0.7266,
+        "total_gross_r": 485.28,
+        "total_net_r": 352.5819
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Q-stocks-phase1a.csv",
+      "strategy_id": "STR-Q-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 313,
+        "gross_avg_r": 0.8641,
+        "net_avg_r": 0.6704,
+        "gross_pf": 3.1711,
+        "net_pf": 2.3934,
+        "gross_wr": 0.5463,
+        "net_wr": 0.5304,
+        "total_cost_drag": 0.1937,
+        "edge_retention": 0.7758,
+        "total_gross_r": 270.456,
+        "total_net_r": 209.8229
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-R-crypto-phase1a.csv",
+      "strategy_id": "STR-R-crypto-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 280,
+        "gross_avg_r": 0.1719,
+        "net_avg_r": 0.158,
+        "gross_pf": 1.2962,
+        "net_pf": 1.2679,
+        "gross_wr": 0.2929,
+        "net_wr": 0.2929,
+        "total_cost_drag": 0.0139,
+        "edge_retention": 0.9192,
+        "total_gross_r": 48.135,
+        "total_net_r": 44.2446
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-R-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-R-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15838,
+        "gross_avg_r": 0.1323,
+        "net_avg_r": 0.1265,
+        "gross_pf": 1.233,
+        "net_pf": 1.2212,
+        "gross_wr": 0.387,
+        "net_wr": 0.3866,
+        "total_cost_drag": 0.0059,
+        "edge_retention": 0.9557,
+        "total_gross_r": 2095.873,
+        "total_net_r": 2002.9615
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-R-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-R-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 4588,
+        "gross_avg_r": 0.2735,
+        "net_avg_r": 0.2664,
+        "gross_pf": 1.5437,
+        "net_pf": 1.5256,
+        "gross_wr": 0.4688,
+        "net_wr": 0.4686,
+        "total_cost_drag": 0.0071,
+        "edge_retention": 0.9741,
+        "total_gross_r": 1254.731,
+        "total_net_r": 1222.1899
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-R-stocks-phase1a.csv",
+      "strategy_id": "STR-R-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 510,
+        "gross_avg_r": 0.242,
+        "net_avg_r": 0.2359,
+        "gross_pf": 1.4403,
+        "net_pf": 1.4262,
+        "gross_wr": 0.3569,
+        "net_wr": 0.3549,
+        "total_cost_drag": 0.0061,
+        "edge_retention": 0.9749,
+        "total_gross_r": 123.421,
+        "total_net_r": 120.3228
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-S-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-S-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1180,
+        "gross_avg_r": 0.0817,
+        "net_avg_r": 0.0787,
+        "gross_pf": 1.1995,
+        "net_pf": 1.1914,
+        "gross_wr": 0.4771,
+        "net_wr": 0.4763,
+        "total_cost_drag": 0.003,
+        "edge_retention": 0.9632,
+        "total_gross_r": 96.427,
+        "total_net_r": 92.8827
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-S-stocks-phase1a.csv",
+      "strategy_id": "STR-S-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 51,
+        "gross_avg_r": 0.0529,
+        "net_avg_r": 0.0498,
+        "gross_pf": 1.1216,
+        "net_pf": 1.114,
+        "gross_wr": 0.5098,
+        "net_wr": 0.5098,
+        "total_cost_drag": 0.0031,
+        "edge_retention": 0.9408,
+        "total_gross_r": 2.697,
+        "total_net_r": 2.5373
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-SKEW-PRED-phase1a.csv",
+      "strategy_id": "STR-SKEW-PRED-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 17214,
+        "gross_avg_r": 0.0786,
+        "net_avg_r": 0.0746,
+        "gross_pf": 1.147,
+        "net_pf": 1.139,
+        "gross_wr": 0.4062,
+        "net_wr": 0.4059,
+        "total_cost_drag": 0.0039,
+        "edge_retention": 0.9499,
+        "total_gross_r": 1352.3196,
+        "total_net_r": 1284.5325
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-T-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-T-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 8549,
+        "gross_avg_r": 0.108,
+        "net_avg_r": 0.1049,
+        "gross_pf": 1.3646,
+        "net_pf": 1.3523,
+        "gross_wr": 0.563,
+        "net_wr": 0.5619,
+        "total_cost_drag": 0.0031,
+        "edge_retention": 0.9716,
+        "total_gross_r": 922.887,
+        "total_net_r": 896.6519
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-T-stocks-phase1a.csv",
+      "strategy_id": "STR-T-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 294,
+        "gross_avg_r": 0.2481,
+        "net_avg_r": 0.2455,
+        "gross_pf": 1.9853,
+        "net_pf": 1.9717,
+        "gross_wr": 0.6361,
+        "net_wr": 0.6361,
+        "total_cost_drag": 0.0025,
+        "edge_retention": 0.9897,
+        "total_gross_r": 72.936,
+        "total_net_r": 72.188
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-TRIPLE-HEADWIND-phase1a.csv",
+      "strategy_id": "STR-TRIPLE-HEADWIND-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 42,
+        "gross_avg_r": 0.3168,
+        "net_avg_r": 0.3109,
+        "gross_pf": 1.7601,
+        "net_pf": 1.7403,
+        "gross_wr": 0.5476,
+        "net_wr": 0.5476,
+        "total_cost_drag": 0.0059,
+        "edge_retention": 0.9813,
+        "total_gross_r": 13.3055,
+        "total_net_r": 13.0565
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-U-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-U-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2321,
+        "gross_avg_r": 0.0585,
+        "net_avg_r": 0.0563,
+        "gross_pf": 1.202,
+        "net_pf": 1.1937,
+        "gross_wr": 0.5459,
+        "net_wr": 0.5459,
+        "total_cost_drag": 0.0022,
+        "edge_retention": 0.9623,
+        "total_gross_r": 135.834,
+        "total_net_r": 130.719
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-U-stocks-phase1a.csv",
+      "strategy_id": "STR-U-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 86,
+        "gross_avg_r": 0.1647,
+        "net_avg_r": 0.1621,
+        "gross_pf": 1.7034,
+        "net_pf": 1.6898,
+        "gross_wr": 0.6279,
+        "net_wr": 0.6279,
+        "total_cost_drag": 0.0026,
+        "edge_retention": 0.9844,
+        "total_gross_r": 14.166,
+        "total_net_r": 13.9446
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-V-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-V-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 26500,
+        "gross_avg_r": 0.1285,
+        "net_avg_r": 0.1251,
+        "gross_pf": 1.3335,
+        "net_pf": 1.323,
+        "gross_wr": 0.5057,
+        "net_wr": 0.5052,
+        "total_cost_drag": 0.0034,
+        "edge_retention": 0.9733,
+        "total_gross_r": 3406.249,
+        "total_net_r": 3315.3681
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-V-stocks-phase1a.csv",
+      "strategy_id": "STR-V-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 776,
+        "gross_avg_r": 0.2404,
+        "net_avg_r": 0.2374,
+        "gross_pf": 1.6822,
+        "net_pf": 1.671,
+        "gross_wr": 0.5631,
+        "net_wr": 0.5631,
+        "total_cost_drag": 0.003,
+        "edge_retention": 0.9877,
+        "total_gross_r": 186.536,
+        "total_net_r": 184.2341
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-W-stocks-phase1a-v2.csv",
+      "strategy_id": "STR-W-stocks-phase1a-v2",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 659,
+        "gross_avg_r": 0.215,
+        "net_avg_r": 0.2116,
+        "gross_pf": 1.6235,
+        "net_pf": 1.611,
+        "gross_wr": 0.5857,
+        "net_wr": 0.5857,
+        "total_cost_drag": 0.0034,
+        "edge_retention": 0.9841,
+        "total_gross_r": 141.675,
+        "total_net_r": 139.4184
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-W-stocks-phase1a.csv",
+      "strategy_id": "STR-W-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 16644,
+        "gross_avg_r": 0.1541,
+        "net_avg_r": 0.1512,
+        "gross_pf": 1.4058,
+        "net_pf": 1.3965,
+        "gross_wr": 0.5478,
+        "net_wr": 0.5478,
+        "total_cost_drag": 0.0029,
+        "edge_retention": 0.9809,
+        "total_gross_r": 2564.793,
+        "total_net_r": 2515.7552
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-X-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-X-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 22135,
+        "gross_avg_r": 0.3617,
+        "net_avg_r": 0.3549,
+        "gross_pf": 1.7595,
+        "net_pf": 1.7398,
+        "gross_wr": 0.5001,
+        "net_wr": 0.4998,
+        "total_cost_drag": 0.0068,
+        "edge_retention": 0.9813,
+        "total_gross_r": 8005.738,
+        "total_net_r": 7856.2608
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-X-stocks-phase1a.csv",
+      "strategy_id": "STR-X-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 1607,
+        "gross_avg_r": 0.2746,
+        "net_avg_r": 0.2701,
+        "gross_pf": 1.6388,
+        "net_pf": 1.6249,
+        "gross_wr": 0.5053,
+        "net_wr": 0.504,
+        "total_cost_drag": 0.0045,
+        "edge_retention": 0.9837,
+        "total_gross_r": 441.257,
+        "total_net_r": 434.0793
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-Y-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 7268,
+        "gross_avg_r": 0.3588,
+        "net_avg_r": 0.3529,
+        "gross_pf": 1.796,
+        "net_pf": 1.7777,
+        "gross_wr": 0.5117,
+        "net_wr": 0.5111,
+        "total_cost_drag": 0.0059,
+        "edge_retention": 0.9836,
+        "total_gross_r": 2607.869,
+        "total_net_r": 2565.1041
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-stocks-phase1a.csv",
+      "strategy_id": "STR-Y-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 241,
+        "gross_avg_r": 0.1843,
+        "net_avg_r": 0.1801,
+        "gross_pf": 1.3523,
+        "net_pf": 1.3429,
+        "gross_wr": 0.444,
+        "net_wr": 0.444,
+        "total_cost_drag": 0.0041,
+        "edge_retention": 0.9775,
+        "total_gross_r": 44.41,
+        "total_net_r": 43.4127
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-20-1.0.csv",
+      "strategy_id": "STR-Y-sweep-20-1.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15223,
+        "gross_avg_r": 0.2093,
+        "net_avg_r": 0.2011,
+        "gross_pf": 1.3197,
+        "net_pf": 1.3047,
+        "gross_wr": 0.3371,
+        "net_wr": 0.3369,
+        "total_cost_drag": 0.0082,
+        "edge_retention": 0.961,
+        "total_gross_r": 3185.452,
+        "total_net_r": 3061.2643
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-20-1.5.csv",
+      "strategy_id": "STR-Y-sweep-20-1.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15223,
+        "gross_avg_r": 0.2112,
+        "net_avg_r": 0.2058,
+        "gross_pf": 1.3754,
+        "net_pf": 1.3636,
+        "gross_wr": 0.4108,
+        "net_wr": 0.4104,
+        "total_cost_drag": 0.0054,
+        "edge_retention": 0.9742,
+        "total_gross_r": 3215.084,
+        "total_net_r": 3132.2922
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-20-2.0.csv",
+      "strategy_id": "STR-Y-sweep-20-2.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15223,
+        "gross_avg_r": 0.1954,
+        "net_avg_r": 0.1913,
+        "gross_pf": 1.4137,
+        "net_pf": 1.4032,
+        "gross_wr": 0.4736,
+        "net_wr": 0.4732,
+        "total_cost_drag": 0.0041,
+        "edge_retention": 0.9791,
+        "total_gross_r": 2974.866,
+        "total_net_r": 2912.7722
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-20-2.5.csv",
+      "strategy_id": "STR-Y-sweep-20-2.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15223,
+        "gross_avg_r": 0.1756,
+        "net_avg_r": 0.1724,
+        "gross_pf": 1.4396,
+        "net_pf": 1.4298,
+        "gross_wr": 0.5178,
+        "net_wr": 0.5172,
+        "total_cost_drag": 0.0033,
+        "edge_retention": 0.9814,
+        "total_gross_r": 2673.803,
+        "total_net_r": 2624.128
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-22-1.0.csv",
+      "strategy_id": "STR-Y-sweep-22-1.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 11072,
+        "gross_avg_r": 0.2238,
+        "net_avg_r": 0.2157,
+        "gross_pf": 1.3444,
+        "net_pf": 1.3292,
+        "gross_wr": 0.3413,
+        "net_wr": 0.3411,
+        "total_cost_drag": 0.0081,
+        "edge_retention": 0.9638,
+        "total_gross_r": 2477.688,
+        "total_net_r": 2388.0939
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-22-1.5.csv",
+      "strategy_id": "STR-Y-sweep-22-1.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 11072,
+        "gross_avg_r": 0.2186,
+        "net_avg_r": 0.2132,
+        "gross_pf": 1.3914,
+        "net_pf": 1.3796,
+        "gross_wr": 0.4146,
+        "net_wr": 0.4144,
+        "total_cost_drag": 0.0054,
+        "edge_retention": 0.9753,
+        "total_gross_r": 2420.429,
+        "total_net_r": 2360.6996
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-22-2.0.csv",
+      "strategy_id": "STR-Y-sweep-22-2.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 11072,
+        "gross_avg_r": 0.2059,
+        "net_avg_r": 0.2018,
+        "gross_pf": 1.4405,
+        "net_pf": 1.4299,
+        "gross_wr": 0.4786,
+        "net_wr": 0.4782,
+        "total_cost_drag": 0.004,
+        "edge_retention": 0.9803,
+        "total_gross_r": 2279.568,
+        "total_net_r": 2234.771
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-22-2.5.csv",
+      "strategy_id": "STR-Y-sweep-22-2.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 11072,
+        "gross_avg_r": 0.181,
+        "net_avg_r": 0.1777,
+        "gross_pf": 1.4571,
+        "net_pf": 1.4472,
+        "gross_wr": 0.5204,
+        "net_wr": 0.5199,
+        "total_cost_drag": 0.0032,
+        "edge_retention": 0.9821,
+        "total_gross_r": 2003.76,
+        "total_net_r": 1967.9224
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-25-1.0.csv",
+      "strategy_id": "STR-Y-sweep-25-1.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 6477,
+        "gross_avg_r": 0.1926,
+        "net_avg_r": 0.1846,
+        "gross_pf": 1.2935,
+        "net_pf": 1.2791,
+        "gross_wr": 0.3346,
+        "net_wr": 0.3343,
+        "total_cost_drag": 0.008,
+        "edge_retention": 0.9587,
+        "total_gross_r": 1247.331,
+        "total_net_r": 1195.8272
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-25-1.5.csv",
+      "strategy_id": "STR-Y-sweep-25-1.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 6477,
+        "gross_avg_r": 0.1976,
+        "net_avg_r": 0.1923,
+        "gross_pf": 1.3521,
+        "net_pf": 1.3408,
+        "gross_wr": 0.4111,
+        "net_wr": 0.4107,
+        "total_cost_drag": 0.0053,
+        "edge_retention": 0.9732,
+        "total_gross_r": 1279.574,
+        "total_net_r": 1245.2382
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-25-2.0.csv",
+      "strategy_id": "STR-Y-sweep-25-2.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 6477,
+        "gross_avg_r": 0.1896,
+        "net_avg_r": 0.1856,
+        "gross_pf": 1.4055,
+        "net_pf": 1.3952,
+        "gross_wr": 0.4754,
+        "net_wr": 0.4748,
+        "total_cost_drag": 0.004,
+        "edge_retention": 0.979,
+        "total_gross_r": 1227.804,
+        "total_net_r": 1202.0521
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-25-2.5.csv",
+      "strategy_id": "STR-Y-sweep-25-2.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 6477,
+        "gross_avg_r": 0.1734,
+        "net_avg_r": 0.1702,
+        "gross_pf": 1.4421,
+        "net_pf": 1.4323,
+        "gross_wr": 0.52,
+        "net_wr": 0.5194,
+        "total_cost_drag": 0.0032,
+        "edge_retention": 0.9817,
+        "total_gross_r": 1122.809,
+        "total_net_r": 1102.2075
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-28-1.0.csv",
+      "strategy_id": "STR-Y-sweep-28-1.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3618,
+        "gross_avg_r": 0.1611,
+        "net_avg_r": 0.1533,
+        "gross_pf": 1.2446,
+        "net_pf": 1.2309,
+        "gross_wr": 0.3303,
+        "net_wr": 0.3297,
+        "total_cost_drag": 0.0078,
+        "edge_retention": 0.9518,
+        "total_gross_r": 582.794,
+        "total_net_r": 554.7151
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-28-1.5.csv",
+      "strategy_id": "STR-Y-sweep-28-1.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3618,
+        "gross_avg_r": 0.1564,
+        "net_avg_r": 0.1513,
+        "gross_pf": 1.2774,
+        "net_pf": 1.2668,
+        "gross_wr": 0.4057,
+        "net_wr": 0.4055,
+        "total_cost_drag": 0.0052,
+        "edge_retention": 0.9669,
+        "total_gross_r": 566.018,
+        "total_net_r": 547.2987
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-28-2.0.csv",
+      "strategy_id": "STR-Y-sweep-28-2.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3618,
+        "gross_avg_r": 0.1506,
+        "net_avg_r": 0.1467,
+        "gross_pf": 1.3226,
+        "net_pf": 1.3129,
+        "gross_wr": 0.4713,
+        "net_wr": 0.4707,
+        "total_cost_drag": 0.0039,
+        "edge_retention": 0.9742,
+        "total_gross_r": 544.764,
+        "total_net_r": 530.7245
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-28-2.5.csv",
+      "strategy_id": "STR-Y-sweep-28-2.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3618,
+        "gross_avg_r": 0.1401,
+        "net_avg_r": 0.137,
+        "gross_pf": 1.3605,
+        "net_pf": 1.3511,
+        "gross_wr": 0.5163,
+        "net_wr": 0.5163,
+        "total_cost_drag": 0.0031,
+        "edge_retention": 0.9778,
+        "total_gross_r": 506.75,
+        "total_net_r": 495.5184
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-30-1.0.csv",
+      "strategy_id": "STR-Y-sweep-30-1.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2377,
+        "gross_avg_r": 0.1736,
+        "net_avg_r": 0.1661,
+        "gross_pf": 1.2651,
+        "net_pf": 1.2516,
+        "gross_wr": 0.3349,
+        "net_wr": 0.3345,
+        "total_cost_drag": 0.0076,
+        "edge_retention": 0.9564,
+        "total_gross_r": 412.741,
+        "total_net_r": 394.7282
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-30-1.5.csv",
+      "strategy_id": "STR-Y-sweep-30-1.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2377,
+        "gross_avg_r": 0.1474,
+        "net_avg_r": 0.1424,
+        "gross_pf": 1.2617,
+        "net_pf": 1.2514,
+        "gross_wr": 0.4039,
+        "net_wr": 0.4039,
+        "total_cost_drag": 0.0051,
+        "edge_retention": 0.9657,
+        "total_gross_r": 350.448,
+        "total_net_r": 338.4395
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-30-2.0.csv",
+      "strategy_id": "STR-Y-sweep-30-2.0",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2377,
+        "gross_avg_r": 0.1459,
+        "net_avg_r": 0.1422,
+        "gross_pf": 1.3149,
+        "net_pf": 1.3054,
+        "gross_wr": 0.4695,
+        "net_wr": 0.4695,
+        "total_cost_drag": 0.0038,
+        "edge_retention": 0.974,
+        "total_gross_r": 346.921,
+        "total_net_r": 337.9146
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Y-sweep-30-2.5.csv",
+      "strategy_id": "STR-Y-sweep-30-2.5",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 2377,
+        "gross_avg_r": 0.136,
+        "net_avg_r": 0.133,
+        "gross_pf": 1.3522,
+        "net_pf": 1.343,
+        "gross_wr": 0.5128,
+        "net_wr": 0.5128,
+        "total_cost_drag": 0.003,
+        "edge_retention": 0.9777,
+        "total_gross_r": 323.288,
+        "total_net_r": 316.0829
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-YIELD-SURGE-phase1a.csv",
+      "strategy_id": "STR-YIELD-SURGE-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 15,
+        "gross_avg_r": -0.3876,
+        "net_avg_r": -0.3951,
+        "gross_pf": 0.5029,
+        "net_pf": 0.497,
+        "gross_wr": 0.2667,
+        "net_wr": 0.2667,
+        "total_cost_drag": 0.0075,
+        "edge_retention": 1.0194,
+        "total_gross_r": -5.8141,
+        "total_net_r": -5.9267
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "STR-Z-stocks-phase1a-v3.csv",
+      "strategy_id": "STR-Z-stocks-phase1a-v3",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 16006,
+        "gross_avg_r": 0.3224,
+        "net_avg_r": 0.3174,
+        "gross_pf": 1.8113,
+        "net_pf": 1.7937,
+        "gross_wr": 0.5453,
+        "net_wr": 0.5448,
+        "total_cost_drag": 0.0051,
+        "edge_retention": 0.9843,
+        "total_gross_r": 5161.008,
+        "total_net_r": 5080.1427
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "STR-Z-stocks-phase1a.csv",
+      "strategy_id": "STR-Z-stocks-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 976,
+        "gross_avg_r": 0.2219,
+        "net_avg_r": 0.217,
+        "gross_pf": 1.4284,
+        "net_pf": 1.4168,
+        "gross_wr": 0.4467,
+        "net_wr": 0.4467,
+        "total_cost_drag": 0.0049,
+        "edge_retention": 0.9779,
+        "total_gross_r": 216.55,
+        "total_net_r": 211.7664
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "scanner_crypto_deleveraging_breakout-phase1a.csv",
+      "strategy_id": "scanner_crypto_deleveraging_breakout-phase1a",
+      "csv_asset": "crypto",
+      "stats": {
+        "trades": 1166,
+        "gross_avg_r": -0.0316,
+        "net_avg_r": -0.0465,
+        "gross_pf": 0.9339,
+        "net_pf": 0.9048,
+        "gross_wr": 0.3611,
+        "net_wr": 0.3576,
+        "total_cost_drag": 0.0149,
+        "edge_retention": 1.4701,
+        "total_gross_r": -36.9022,
+        "total_net_r": -54.2505
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "scanner_lowcorr_regime-phase1a.csv",
+      "strategy_id": "scanner_lowcorr_regime-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 31464,
+        "gross_avg_r": 0.0919,
+        "net_avg_r": 0.0872,
+        "gross_pf": 1.2448,
+        "net_pf": 1.2309,
+        "gross_wr": 0.5055,
+        "net_wr": 0.5044,
+        "total_cost_drag": 0.0047,
+        "edge_retention": 0.9492,
+        "total_gross_r": 2890.9111,
+        "total_net_r": 2744.1784
+      },
+      "g3_pass": true
+    },
+    {
+      "file": "scanner_overnight_drift-phase1a.csv",
+      "strategy_id": "scanner_overnight_drift-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 17844,
+        "gross_avg_r": -0.0198,
+        "net_avg_r": -0.0249,
+        "gross_pf": 0.9695,
+        "net_pf": 0.962,
+        "gross_wr": 0.3174,
+        "net_wr": 0.3174,
+        "total_cost_drag": 0.005,
+        "edge_retention": 1.2544,
+        "total_gross_r": -354.1203,
+        "total_net_r": -444.2044
+      },
+      "g3_pass": false
+    },
+    {
+      "file": "scanner_skew_crosssectional-phase1a.csv",
+      "strategy_id": "scanner_skew_crosssectional-phase1a",
+      "csv_asset": "stock",
+      "stats": {
+        "trades": 3622,
+        "gross_avg_r": -0.001,
+        "net_avg_r": -0.0101,
+        "gross_pf": 0.9965,
+        "net_pf": 0.9632,
+        "gross_wr": 0.4983,
+        "net_wr": 0.4942,
+        "total_cost_drag": 0.0091,
+        "edge_retention": 10.589,
+        "total_gross_r": -3.4548,
+        "total_net_r": -36.5829
+      },
+      "g3_pass": false
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "total": 117,
+    "pass": 87,
+    "fail": 30,
+    "empty": 0,
+    "errors": 0
+  }
+}

@@ -1,7 +1,7 @@
 ---
 type: discovery-report
 week: 2026-W37
-date: 2026-09-17 21:09 PDT
+date: 2026-09-18 21:08 PDT
 insights_found: 14
 seeds_run: 18
 llm_calls: 18
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W37
 
-Generated: 2026-09-17 21:09 PDT
+Generated: 2026-09-18 21:08 PDT
 
 ## Summary
 
@@ -24,17 +24,17 @@ Generated: 2026-09-17 21:09 PDT
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-09-18-volume-confirmed-false-breakout-stop-placement\|Volume-Confirmed False Breakout Stop Pla]] | 4/5 | reveals_sequence | indicators, patterns |
-| [[INS-2026-09-18-rsi-stochastics-confluence-for-candle-pattern-filters\|RSI-Stochastics Confluence for Candle Pa]] | 4/5 | creates_filter | indicators, patterns |
-| [[INS-2026-09-18-secondary-trends-improve-oscillator-entry-timing\|Secondary trends improve oscillator entr]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-18-support-resistance-levels-drive-position-sizing-via-stops\|Support/Resistance Levels Drive Position]] | 4/5 | confirms_risk_rule | concepts, rules |
-| [[INS-2026-09-18-pivot-stop-vs-3-1-reward-risk-conflict\|Pivot stop vs 3:1 reward/risk conflict]] | 4/5 | resolves_conflict | concepts, risk-guidelines |
-| [[INS-2026-09-18-exit-placement-logic-from-p-f-trailing-stops-for-pivot-syste\|Exit placement logic from P&F trailing s]] | 4/5 | resolves_conflict | risk-guidelines, concepts |
-| [[INS-2026-09-18-50-retracement-murphy-s-ideal-entry-point\|50% Retracement: Murphy's Ideal Entry Po]] | 4/5 | confirms_risk_rule | concepts, rules |
-| [[INS-2026-09-18-adx-regime-filters-keltner-channel-use\|ADX Regime Filters Keltner Channel Use]] | 4/5 | creates_filter | edge-conditions, indicators |
-| [[INS-2026-09-18-crb-bond-ratio-plus-relative-strength-for-rotation\|CRB/Bond ratio plus relative strength fo]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-18-filter-ma-crossover-with-commodity-trend\|Filter MA crossover with commodity trend]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-18-gap-volume-confirms-breakout-validity\|Gap Volume Confirms Breakout Validity]] | 4/5 | adds_condition | patterns, rules |
-| [[INS-2026-09-18-earnings-filter-reduces-subjectivity-in-role-reversal-trades\|Earnings filter reduces subjectivity in ]] | 4/5 | adds_condition | edge-conditions, concepts |
-| [[INS-2026-09-18-10-50-crossover-as-oscillator-for-macd-style-signals\|10/50 Crossover as Oscillator for MACD-s]] | 3/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-18-10-50-crossover-reduces-whipsaws-with-lag-trade-off\|10/50 Crossover Reduces Whipsaws with La]] | 3/5 | confirms_risk_rule | indicators, edge-conditions |
+| [[INS-2026-09-19-50-retracement-as-ideal-entry-zone\|50% Retracement as Ideal Entry Zone]] | 5/5 | confirms_risk_rule | concepts, rules |
+| [[INS-2026-09-19-volume-divergence-in-trends-tighten-stops-on-weak-breakouts\|Volume Divergence in Trends: Tighten Sto]] | 4/5 | adds_condition | patterns, indicators |
+| [[INS-2026-09-19-volume-confirmed-breakout-stops-false-trap-avoidance\|Volume-Confirmed Breakout Stops: False T]] | 4/5 | creates_filter | Indicators, Patterns |
+| [[INS-2026-09-19-dual-oscillator-confirmation-for-candle-reversals\|Dual Oscillator Confirmation for Candle ]] | 4/5 | adds_condition | concepts, indicators |
+| [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries\|Weekly Trend Filter Enhances Price Chann]] | 4/5 | adds_condition | indicators, patterns |
+| [[INS-2026-09-19-counter-trend-oscillator-signals-inside-secondary-trends\|Counter-Trend Oscillator Signals Inside ]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-19-s-r-levels-dictate-stop-distance-and-position-size\|S/R levels dictate stop distance and pos]] | 4/5 | reveals_sequence | concepts, rules |
+| [[INS-2026-09-19-pivot-stop-conflict-with-money-management-risk-limits\|Pivot stop conflict with money managemen]] | 4/5 | creates_filter | concepts, risk-guidelines |
+| [[INS-2026-09-19-trailing-stops-as-exit-strategy-p-f-and-pivot-points\|Trailing Stops as Exit Strategy: P&F and]] | 4/5 | confirms_risk_rule | risk-guidelines, concepts |
+| [[INS-2026-09-19-crb-bond-filter-relative-strength-rotation\|CRB/Bond Filter + Relative Strength Rota]] | 4/5 | reveals_sequence | indicators, rules |
+| [[INS-2026-09-19-commodity-trends-filter-for-10-50-crossover-signals\|Commodity Trends Filter for 10/50 Crosso]] | 4/5 | creates_filter | indicators, rules |
+| [[INS-2026-09-19-gap-types-need-volume-confirmation-to-distinguish-chase-vs-f\|Gap types need volume confirmation to di]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-09-19-volume-confirmation-as-pre-entry-risk-filter\|Volume Confirmation as Pre-Entry Risk Fi]] | 3/5 | confirms_risk_rule | rules, indicators |
+| [[INS-2026-09-19-subjectivity-undermines-role-reversal-rules\|Subjectivity undermines role-reversal ru]] | 3/5 | adds_condition | edge-conditions, concepts |
