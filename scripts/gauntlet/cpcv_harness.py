@@ -390,8 +390,10 @@ def compute_dsr(
 
     # Variance of the maximum
     # V[max] ≈ (π²/6) / log(n_trials) ... more precisely:
-    # V[max] ≈ N^{-1} * (1 - (Z * Z1) / (Z²))
-    v_max = (1.0 - (Z * Z1) / (Z * Z)) / n_trials if abs(Z) > 1e-15 else 0.0
+    # V[max] ≈ 1 / (N * φ(Z)²) — variance of the maximum order statistic
+    # φ(Z) is the standard normal PDF evaluated at Z
+    _phi_z = math.exp(-0.5 * Z * Z) / math.sqrt(2.0 * math.pi)
+    v_max = 1.0 / (n_trials * _phi_z * _phi_z) if abs(Z) > 1e-15 and _phi_z > 1e-15 else 1e-15
 
     if v_max <= 0.0:
         v_max = 1e-15
