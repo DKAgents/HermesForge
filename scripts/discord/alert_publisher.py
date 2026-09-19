@@ -25,6 +25,30 @@ from timezone_utils import now_pt
 import config
 
 
+# ── Gauntlet G3 cost adjustment ───────────────────────────────────────────
+def _estimated_net_r(signal_dict: dict) -> str:
+    """Compute expected net R after venue-correct costs for alert display."""
+    try:
+        entry = float(signal_dict.get("entry_price", 0))
+        stop = float(signal_dict.get("stop_price", 0))
+        target = float(signal_dict.get("target_price", 0))
+    except (ValueError, TypeError):
+        return "N/A"
+    if entry <= 0 or stop <= 0:
+        return "N/A"
+    risk_pct = abs(entry - stop) / entry
+    if risk_pct <= 0:
+        return "N/A"
+    ac = signal_dict.get("asset_class", signal_dict.get("publish_channel", "crypto"))
+    venue_cost_bps = 2.0 if ac == "stock" else 12.0
+    cost_drag_r = (venue_cost_bps / 10000.0) / risk_pct
+    reward = abs(target - entry)
+    risk = abs(entry - stop)
+    gross_rr = reward / risk if risk else 0
+    net_rr = gross_rr - cost_drag_r
+    return f"{net_rr:+.2f}R ({'stocks' if ac=='stock' else 'crypto'}, {venue_cost_bps:.0f}bps cost)"
+
+
 # ---------------------------------------------------------------------------
 # Quality tier + key conditions: strategy-specific, built only from fields
 # the scanners actually emit (see scripts/validation/scanners/*.py)
@@ -283,7 +307,8 @@ def format_alert(signal_dict: dict) -> str:
         f"Chart: <{tv_url}>\n\n"
         f"📍 Entry:  {entry_str}\n"
         f"🛑 Stop:   {stop_str}  ({stop_pct:.1f}% risk)\n"
-        f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n\n"
+        f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n"
+        f"⚡ Net R (est. after costs): {_estimated_net_r(signal_dict)}\n\n"
         f"**Regime:** {regime_str}\n\n"
         f"**Key Conditions:** ({met_ratio} met)\n{conditions_block}\n\n"
         f"_Posted: {now}_"

@@ -24,6 +24,17 @@ def _rows() -> list[dict]:
     return trade_log._read_all_rows()
 
 
+def _get_r(trade: dict) -> float:
+    """Return cost-adjusted R when available, otherwise raw r_multiple."""
+    val = trade.get("gauntlet_r", None)
+    if val is None or val == "" or val == '':
+        val = trade.get("r_multiple", 0)
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return 0.0
+
+
 def _dedupe_rows(rows: list[dict]) -> list[dict]:
     """Deduplicate by signal_id — keep the LAST entry for each.
     
@@ -48,7 +59,7 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
         lines.append(f"**{label}:** No closed trades in period.")
         return lines
     
-    r_vals = [float(r.get("r_multiple", 0) or 0) for r in closed_rows]
+    r_vals = [_get_r(r) for r in closed_rows]
     total_r = sum(r_vals)
     wins = [v for v in r_vals if v > 0]
     wr = len(wins) / len(r_vals) * 100
@@ -117,15 +128,15 @@ def build_report(since_hours: int = 24) -> str:
     # --- Recently closed ---
     lines.append(f"**Closed (last {since_hours}h):** {len(recent_closed)}")
     if recent_closed:
-        wins = [r for r in recent_closed if float(r.get("r_multiple", 0) or 0) > 0]
+        wins = [r for r in recent_closed if _get_r(r) > 0]
         win_rate = len(wins) / len(recent_closed) * 100
-        avg_r = sum(float(r.get("r_multiple", 0) or 0) for r in recent_closed) / len(recent_closed)
+        avg_r = sum(_get_r(r) for r in recent_closed) / len(recent_closed)
         lines.append(f"  Win rate: {win_rate:.0f}% ({len(wins)}/{len(recent_closed)}) | Avg R: {avg_r:+.2f}")
 
-        best = max(recent_closed, key=lambda r: float(r.get("r_multiple", 0) or 0))
-        worst = min(recent_closed, key=lambda r: float(r.get("r_multiple", 0) or 0))
-        lines.append(f"  Best: {best['ticker']} ({best['strategy_id']}) {float(best['r_multiple']):+.2f}R")
-        lines.append(f"  Worst: {worst['ticker']} ({worst['strategy_id']}) {float(worst['r_multiple']):+.2f}R")
+        best = max(recent_closed, key=lambda r: _get_r(r))
+        worst = min(recent_closed, key=lambda r: _get_r(r))
+        lines.append(f"  Best: {best['ticker']} ({best['strategy_id']}) {float(best['r_multiple']):+.2f}R (gauntlet: {_get_r(best):+.2f}R)")
+        lines.append(f"  Worst: {worst['ticker']} ({worst['strategy_id']}) {float(worst['r_multiple']):+.2f}R (gauntlet: {_get_r(worst):+.2f}R)")
     lines.append("")
 
     # --- PNL trend (1-week + 1-month lookback) ---
@@ -141,7 +152,7 @@ def build_report(since_hours: int = 24) -> str:
         lines.append("  No closed trades yet.")
     else:
         # Overall summary
-        all_r = [float(r.get("r_multiple", 0) or 0) for r in closed_rows]
+        all_r = [_get_r(r) for r in closed_rows]
         total_r = sum(all_r)
         wins = [r for r in all_r if r > 0]
         wr = len(wins) / len(all_r) * 100
@@ -166,7 +177,7 @@ def build_report(since_hours: int = 24) -> str:
         for r in closed_rows:
             by_strategy_all.setdefault(r["strategy_id"], []).append(r)
         for sid, trades in sorted(by_strategy_all.items()):
-            r_vals = [float(t.get("r_multiple", 0) or 0) for t in trades]
+            r_vals = [_get_r(t) for t in trades]
             t_wins = [v for v in r_vals if v > 0]
             t_wr = len(t_wins) / len(r_vals) * 100
             t_avg = sum(r_vals) / len(r_vals)
@@ -180,7 +191,7 @@ def build_report(since_hours: int = 24) -> str:
         for r in closed_rows:
             by_class.setdefault(r.get("asset_class", "unknown"), []).append(r)
         for ac, trades in sorted(by_class.items()):
-            r_vals = [float(t.get("r_multiple", 0) or 0) for t in trades]
+            r_vals = [_get_r(t) for t in trades]
             t_wins = [v for v in r_vals if v > 0]
             t_wr = len(t_wins) / len(r_vals) * 100
             t_total = sum(r_vals)
@@ -197,7 +208,7 @@ def build_report(since_hours: int = 24) -> str:
             if len(trades) < 3:
                 continue
             # Compute worst drawdown period for this strategy
-            r_seq = [(t.get("exit_date", ""), float(t.get("r_multiple", 0) or 0)) for t in trades]
+            r_seq = [(t.get("exit_date", ""), _get_r(t)) for t in trades]
             r_seq.sort(key=lambda x: x[0])
             peak, cum, worst_dd, worst_start, worst_end = 0, 0, 0, "", ""
             for d, r in r_seq:
