@@ -513,6 +513,26 @@ def publish_signal(signal_dict: dict, asset_class: str,
     if "asset_class" not in signal_dict:
         signal_dict["asset_class"] = asset_class
 
+    # ── G3 Execution Realism: simulate fill against live L2 book ────────────
+    if asset_class == "crypto" and not signal_dict.get("_g3_applied"):
+        try:
+            import pathlib as _pl2
+            import sys as _sys
+            _sys.path.insert(0, str(_pl2.Path(__file__).parent.parent / "gauntlet"))
+            from l2_fetcher import get_gauntlet_entry
+            g3 = get_gauntlet_entry(signal_dict, size_usd=1000)
+            if not g3.get("error"):
+                signal_dict["gauntlet_realistic_entry"] = g3["realistic_entry"]
+                signal_dict["gauntlet_pessimistic_entry"] = g3["pessimistic_entry"]
+                signal_dict["gauntlet_realistic_slip"] = g3["realistic_slippage_bps"]
+                signal_dict["gauntlet_pessimistic_slip"] = g3["pessimistic_slippage_bps"]
+                signal_dict["gauntlet_book_mid"] = g3["book_mid"]
+                # Adjust entry price to realistic fill for ALL downstream consumers
+                signal_dict["entry_price"] = g3["realistic_entry"]
+                signal_dict["_g3_applied"] = True
+        except Exception:
+            pass  # G3 failure is non-blocking
+
     # ── Generate chart ──
     chart_path = None
     try:
