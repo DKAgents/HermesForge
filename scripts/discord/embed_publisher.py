@@ -32,6 +32,30 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "paper_trading"))
 from trade_id import generate_short_id, make_discord_url, get_strategy_code
 import trade_log
 
+
+# ── Gauntlet G3 net R estimate (for embed fields) ──────────────────────────
+def _estimated_net_r_embed(signal_dict: dict) -> str:
+    """Short net R string for embed inline field display."""
+    try:
+        entry = float(signal_dict.get("entry_price", 0))
+        stop = float(signal_dict.get("stop_price", 0))
+        target = float(signal_dict.get("target_price", 0))
+    except (ValueError, TypeError):
+        return "N/A"
+    if entry <= 0 or stop <= 0:
+        return "N/A"
+    risk_pct = abs(entry - stop) / entry
+    if risk_pct <= 0:
+        return "N/A"
+    ac = signal_dict.get("asset_class", signal_dict.get("publish_channel", "crypto"))
+    venue_cost_bps = 2.0 if ac == "stock" else 12.0
+    cost_drag_r = (venue_cost_bps / 10000.0) / risk_pct
+    reward = abs(target - entry)
+    risk = abs(entry - stop)
+    gross_rr = reward / risk if risk else 0
+    net_rr = gross_rr - cost_drag_r
+    return f"{net_rr:+.2f}R"
+
 logger = logging.getLogger(__name__)
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -370,6 +394,7 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
         {"name": "🛑 Stop", "value": f"{stop_str} ({stop_pct:.1f}% risk)", "inline": True},
         {"name": "🎯 Target", "value": target_str, "inline": True},
         {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
+        {"name": "⚡ Net R (est.)", "value": _estimated_net_r_embed(signal_dict), "inline": True},
         {"name": "Regime", "value": regime_str, "inline": True},
         {"name": "Confidence", "value": f"{tier_tag} ({met_ratio})", "inline": True},
         {"name": "Key Conditions", "value": conditions_text, "inline": False},
