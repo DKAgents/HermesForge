@@ -54,6 +54,14 @@ from timezone_utils import now_pt
 # Centralized publisher (ensures chart + TradingView + consistent template + routing)
 from embed_publisher import publish_signal, build_sweep_embed
 
+# G3 execution realism: live L2 fill simulation
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "gauntlet"))
+try:
+    from l2_fetcher import get_gauntlet_entry
+    _G3_ENABLED = True
+except ImportError:
+    _G3_ENABLED = False
+
 # US-108: Import tiered filter for equal_lows exclusion on stocks
 from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLUDED_STOCK_LEVEL_TYPES
 
@@ -201,6 +209,21 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         "confirmation": sweep.confirmation,
         "sweep_direction": sweep.direction,
     }
+
+    # G3 execution realism: simulate fill against live L2 book
+    if _G3_ENABLED and asset_class == "crypto":
+        try:
+            g3 = get_gauntlet_entry(signal_dict, size_usd=1000)
+            if not g3.get("error"):
+                signal_dict["gauntlet_realistic_entry"] = g3["realistic_entry"]
+                signal_dict["gauntlet_pessimistic_entry"] = g3["pessimistic_entry"]
+                signal_dict["gauntlet_realistic_slip"] = g3["realistic_slippage_bps"]
+                signal_dict["gauntlet_pessimistic_slip"] = g3["pessimistic_slippage_bps"]
+                signal_dict["gauntlet_book_mid"] = g3["book_mid"]
+                # Adjust entry price to realistic fill
+                signal_dict["entry_price"] = g3["realistic_entry"]
+        except Exception as e:
+            pass  # G3 failure is non-blocking — post with optimistic entry
 
     # Build the standardized embed (same template as daily signals)
     embed = build_sweep_embed(signal_dict)

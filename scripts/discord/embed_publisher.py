@@ -568,6 +568,22 @@ def publish_signal(signal_dict: dict, asset_class: str,
     return {**result, "channel_id": channel_id, "chart_path": chart_path}
 
 
+# ── G3 fill field builder ────────────────────────────────────────────────────
+
+def _build_g3_fill_field(signal_dict: dict) -> dict:
+    """Build embed field showing G3 fill simulation results if available."""
+    pessimistic_slip = signal_dict.get("gauntlet_pessimistic_slip")
+    
+    if pessimistic_slip is not None:
+        slip_str = f"{pessimistic_slip:.1f} bps"
+        book_mid = signal_dict.get("gauntlet_book_mid")
+        if book_mid:
+            slip_str += f" (mid: ${book_mid:,.2f})"
+        return {"name": "⚡ G3 Fill", "value": f"Sim: {slip_str}", "inline": True}
+    
+    return {"name": "⚡ G3 Fill", "value": "N/A", "inline": True}
+
+
 # ── STR-Q sweep embed builder ────────────────────────────────────────────────
 # Builds a standardized embed for STR-Q sweep signals using the same field
 # template as daily signals, then passes it to publish_signal().
@@ -630,6 +646,7 @@ def build_sweep_embed(signal_dict: dict) -> dict:
             {"name": "🛑 Stop", "value": f"{_fmt(stop)} ({stop_pct:.1f}% risk)", "inline": True},
             {"name": "🎯 Target", "value": _fmt(target), "inline": True},
             {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
+            _build_g3_fill_field(signal_dict),
             {"name": "Confidence", "value": f"{tier} ({conf_label})", "inline": True},
             {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
             {"name": "Key Conditions", "value": conditions_text, "inline": False},
