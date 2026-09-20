@@ -33,9 +33,10 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
-# G3: per-asset eligibility
+# G3: per-asset eligibility + position management
 try:
     from asset_eligibility import is_eligible
+    from position_manager import approve_position, check_drawdown_breaker
     _ELIGIBILITY_ENABLED = True
 except ImportError:
     _ELIGIBILITY_ENABLED = False
@@ -376,6 +377,13 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                         summary["skipped_ineligible"] += 1
                         print(f"  SKIP: {strategy_id}/{ticker} not in eligible list")
                         continue
+                    
+                    # Position manager: drawdown breaker check
+                    if _ELIGIBILITY_ENABLED:
+                        breaker = check_drawdown_breaker([], 100000)
+                        if breaker["tier"] >= 3:
+                            print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
+                            continue
                     try:
                         trade_id = trade_log.open_trade(trade_dict)
                         summary["opened"] += 1
@@ -506,6 +514,13 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     summary["skipped_ineligible"] += 1
                     print(f"  SKIP: {strategy_id}/{ticker} not in eligible list")
                     continue
+                
+                # Position manager: drawdown breaker check
+                if _ELIGIBILITY_ENABLED:
+                    breaker = check_drawdown_breaker([], 100000)
+                    if breaker["tier"] >= 3:
+                        print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
+                        continue
                 try:
                     trade_id = trade_log.open_trade(trade_dict)
                     summary["opened"] += 1
