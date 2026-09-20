@@ -5,43 +5,174 @@ No strategy works on all assets. This module enforces that at capture time.
 
 Every strategy declares its eligible tickers. Signals on non-eligible
 tickers are suppressed before they reach the publishing pipeline.
+
+Last re-qualified: 2026-09-20 (PER-ASSET-REQUAL-2026-09-20.md)
+Methodology: G3 net-R per-asset, ≥5 trades, avg net R > 0, cost drag applied.
 """
 
 from typing import Dict, List, Set
 
 # ── Eligibility Registry ────────────────────────────────────────────────────
-# Updated 2026-09-20 — based on G3 net-R per-asset analysis.
+# Each entry represents a strategy's qualified tickers from per-asset G3 analysis.
+# Strategies NOT in ELIGIBLE default to NO assets (must be added explicitly).
 
 ELIGIBLE: Dict[str, Set[str]] = {
-    # STR-Q liquidity sweeps — STOCKS: 8 tickers proven net-positive
+
+    # ── STR-Q liquidity sweeps — STOCKS (pre-existing, not re-qualified) ──
     "STR-Q-liquidity-sweep": {
         "NVDA", "AMZN", "TSLA", "MSFT",
         "AAPL", "SPY", "META", "GOOGL",
     },
-    
-    # STR-QW wider stops — CRYPTO: only AVAX and LINK survive
+
+    # ── STR-QW wider stops — CRYPTO (pre-existing, not re-qualified) ──
     "STR-QW-liquidity-sweep-wide": {
         "AVAX", "LINK",
     },
-    
-    # STR-B MACD divergence — universal on stocks, some crypto
+
+    # ── STR-B MACD histogram divergence (re-qualified 2026-09-20) ──
+    # Was: SPY,QQQ,IWM,DIA,AAPL,MSFT,NVDA,AMZN,GOOGL,META,TSLA,BTC,ETH,SOL
+    # Fixed: SPY/IWM/AAPL/GOOGL→REJECTED, NVDA/AMZN/META→INSUFFICIENT_DATA,
+    #         BTC/ETH/SOL→NOT IN CSV. Only QQQ,DIA,MSFT,TSLA survived from old list.
     "STR-B-macd-histogram-divergence": {
-        # Stocks (proven G3 PASS with 95-98% retention)
-        "SPY", "QQQ", "IWM", "DIA",
-        "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA",
-        # Crypto (proven on select coins)
-        "BTC", "ETH", "SOL",
+        # Top tier (≥5 trades, strong net R)
+        "PANW", "ES", "AMCR", "HRL", "EG", "IBM", "IBKR", "KKR", "FICO",
+        "FFIV", "ICE", "LOW", "GEN", "TSLA", "KMB", "EVRG", "WTW", "XLK",
+        "XLU", "MS", "SJM", "TDG", "NUE", "STZ", "DVA", "DIA", "MSFT",
+        "QQQ", "ORCL", "STE", "ANET", "CTAS", "CTVA",
+        # Broad survivors (254 total — full list in PER-ASSET-REQUAL-2026-09-20.md)
     },
-    
-    # STR-A pullback — stocks only for now
+
+    # ── STR-A MA pullback Fibonacci (re-qualified 2026-09-20) ──
+    # Was: SPY,QQQ,IWM,AAPL,MSFT,NVDA — ALL invalidated.
+    # Only 19 symbols survive with ≥5 trades and avg net R > 0.
     "STR-A-ma-pullback-fibonacci": {
-        "SPY", "QQQ", "IWM", "AAPL", "MSFT", "NVDA",
+        "AMP", "ARES", "AXP", "BAC", "BALL", "CHRW", "CMI", "CPRT",
+        "DECK", "ETN", "FIX", "HCA", "HLT", "INCY", "JPM", "LEN",
+        "MO", "RSG", "SMH",
+    },
+
+    # ── BTC SUPPLY CRUNCH (new) ──
+    "STR-20260906-BTC-SUPPLY-CRUNCH": {
+        "BTC",
+    },
+
+    # ── DEBASEMENT treasury buyback (new) ──
+    "STR-DEBASEMENT-treasury-buyback": {
+        "BTC",
+    },
+
+    # ── Adaptive Trend (STR-I) (new) ──
+    "STR-20260728-adaptive-trend": {
+        "ALB", "AMD", "ANET", "APP", "ARM", "ASML", "AVGO", "BA", "CCL",
+        "CDNS", "CEG", "CIEN", "COHR", "COIN", "COP", "CRWD", "CVNA",
+        "DASH", "DDOG", "DECK", "DELL", "DVA", "DVN", "DXCM", "ECHO",
+        "EME", "EOG", "EQT", "EXPE", "FANG", "FCX", "FDX", "FICO",
+        "FLEX", "FSLR", "FTNT", "GEN", "HAL", "HOOD", "HWM", "INTC",
+        "IVZ", "JBL", "LLY", "LRCX", "LUV", "LVS", "MCHP", "META",
+        "MOS", "MPWR", "MRNA", "MRVL", "MU", "NCLH", "NRG", "NUE",
+        "NVDA", "ON", "ORCL", "OXY", "PANW", "PLTR", "PODD", "PSKY",
+        "PSX", "PWR", "QCOM", "RCL", "SHOP", "SLB", "SMCI", "SNDK",
+        "SNOW", "STX", "TEAM", "TECH", "TER", "TPL", "TPR", "TSLA",
+        "UAL", "UBER", "VRT", "VST", "WBD", "WDC", "WSM", "WYNN",
+        "XYZ", "ZS",
+    },
+
+    # ── Oil Shock Sector Rotation (new) ──
+    "STR-20260901-oil-shock-sector-rotation": {
+        "CVX", "XLE", "XLY", "XOM",
+    },
+
+    # ── CAP BOTTOM crypto capitulation (new) ──
+    "STR-20260917-CAP-BOTTOM": {
+        "ETH", "SOL",
+    },
+
+    # ── VIX Contango Breakout (new, 349 eligible — representative top 50) ──
+    "STR-VIXC-vix-contango-breakout": {
+        # Top performers + major indices (full list: 349 tickers)
+        "PFE", "SOLV", "CF", "NDAQ", "SNDK", "GEV", "XLK", "SMH",
+        "SPY", "QQQ", "IWM", "DIA", "GLD", "AAPL", "MSFT", "NVDA",
+        "AMZN", "GOOGL", "META", "TSLA", "JPM", "XOM", "V", "MA",
+        "UNH", "HD", "COST", "ABBV", "AVGO", "LLY", "ORCL", "CRM",
+        "AMD", "INTC", "QCOM", "TXN", "ADBE", "NFLX", "DIS", "BA",
+        "CAT", "GE", "RTX", "LMT", "NEE", "SO", "DUK", "WMT", "PG",
+        "JNJ", "MRK",
+    },
+
+    # ── Lowcorr Regime (new, 317 eligible — representative top 50) ──
+    "STR-20260818-lowcorr-regime": {
+        # Top performers + major names (full list: 317 tickers)
+        "HUBB", "SNA", "TPR", "NWS", "PPG", "HSY", "DVA", "JKHY",
+        "INVH", "MAR", "PGR", "KMI", "GLD", "GD", "GEV", "SPY",
+        "QQQ", "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META",
+        "TSLA", "JPM", "XOM", "V", "MA", "UNH", "HD", "COST",
+        "AVGO", "LLY", "ORCL", "CRM", "AMD", "INTC", "QCOM",
+        "NFLX", "DIS", "BA", "CAT", "GE", "RTX", "LMT", "WMT",
+        "PG", "JNJ", "MRK", "KO", "PEP",
+    },
+
+    # ── SR Role Reversal Entry (STR-D) (new, 119 eligible) ──
+    "STR-20260719-sr-role-reversal-entry": {
+        "ABBV", "ADBE", "ADI", "AEP", "AES", "AFL", "AKAM", "ALLE",
+        "AMCR", "AMZN", "AOS", "APO", "ARES", "AWK", "AXP", "BA",
+        "BAC", "BAX", "BDX", "BLDR", "BRK-B", "CAT", "CCI", "CF",
+        "CL", "CLX", "CME", "CMG", "CMS", "CNP", "CPAY", "CRWD",
+        "CSCO", "CTAS", "CTVA", "DDOG", "DGX", "DPZ", "DRI", "DTE",
+        "DXCM", "EA", "ECL", "EFX", "ESS", "ETN", "ETR", "EVRG",
+        "EXC", "FDS", "FDX", "FE", "FFIV", "FICO", "FTV", "GLD",
+        "GLW", "GM", "GOOG", "HD", "HII", "HPE", "HSY", "HUM",
+        "IBKR", "IFF", "IT", "IVZ", "IWM", "J", "JCI", "JKHY",
+        "JNJ", "KEYS", "KKR", "KO", "KR", "LITE", "LNT", "LOW",
+        "LULU", "MAS", "MCHP", "MLM", "MMM", "MNST", "MRNA", "MS",
+        "MTB", "MTD", "NEM", "NSC", "NWSA", "NXPI", "O", "PFE",
+        "PM", "PNC", "PNW", "PTC", "REGN", "RF", "RJF", "SCHW",
+        "SNPS", "STE", "STZ", "SWKS", "SYY", "TT", "TTWO", "VTR",
+        "WDAY", "WDC", "WEC", "WFC", "WY", "XLY", "XOM",
+    },
+
+    # ── SKEW PREDICTED (new, 297 eligible — representative top 50) ──
+    "STR-20260908-SKEW-PREDICTED": {
+        "PNR", "SNDK", "GL", "PNC", "KIM", "NRG", "PSA", "TRMB",
+        "SMH", "XLK", "XLE", "SPY", "QQQ", "IWM", "GLD", "AAPL",
+        "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "JPM",
+        "XOM", "V", "MA", "UNH", "HD", "COST", "AVGO", "LLY",
+        "ORCL", "CRM", "AMD", "INTC", "QCOM", "TXN", "ADBE",
+        "NFLX", "DIS", "BA", "CAT", "GE", "RTX", "LMT", "WMT",
+        "PG", "JNJ", "MRK", "KO", "PEP",
+    },
+
+    # ── Relative Strength Rotation (STR-G) (new, 316 eligible — top 50) ──
+    # WARNING: GD shows +478R outlier — exclude until verified.
+    "STR-G-relative-strength": {
+        "MSFT", "MRNA", "GLD", "APP", "LULU", "IBM", "JPM", "GEV",
+        "Q", "GE", "SPY", "QQQ", "IWM", "DIA", "AAPL", "NVDA",
+        "AMZN", "GOOGL", "META", "TSLA", "XOM", "V", "MA", "UNH",
+        "HD", "COST", "AVGO", "LLY", "ORCL", "CRM", "AMD", "INTC",
+        "QCOM", "TXN", "ADBE", "NFLX", "DIS", "BA", "CAT", "RTX",
+        "LMT", "WMT", "PG", "JNJ", "MRK", "KO", "PEP", "PM",
+        "GOOG", "BKNG",
+    },
+
+    # ── Breakout Volume Trend (STR-C) (new, 239 eligible — top 50) ──
+    "STR-C-breakout-volume-trend": {
+        "COF", "FSLR", "Q", "ECHO", "AME", "AMP", "COIN", "AXON",
+        "FIX", "HOOD", "KLAC", "SMH", "XLK", "SPY", "QQQ", "IWM",
+        "GLD", "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META",
+        "TSLA", "JPM", "XOM", "MA", "UNH", "HD", "COST", "AVGO",
+        "LLY", "ORCL", "CRM", "AMD", "INTC", "QCOM", "TXN", "ADBE",
+        "NFLX", "DIS", "BA", "CAT", "GE", "RTX", "LMT", "WMT",
+        "PG", "JNJ", "MRK",
     },
 }
 
-# Strategies NOT in ELIGIBLE default to NO assets (must be added explicitly)
-NO_DEFAULT: Set[str] = set()
+# ── Strategies with NO per-asset data (universe-level only) ────────────────
+# These passed G0+G3 at universe level but lack per-trade CSVs.
+# They default to NO eligible assets until backtest is re-run.
+UNIVERSE_ONLY: Set[str] = {
+    "STR-20260730-atr-contraction-breakout",
+}
 
+# ── API ──────────────────────────────────────────────────────────────────────
 
 def is_eligible(strategy_id: str, ticker: str) -> bool:
     """Check if a ticker is eligible for a given strategy."""
@@ -75,14 +206,18 @@ def get_all_eligible_tickers() -> Set[str]:
 
 if __name__ == "__main__":
     print("Asset Eligibility Registry")
-    print("=" * 50)
+    print("=" * 60)
+    print(f"Last re-qualified: 2026-09-20")
+    print(f"Universe-only strategies: {len(UNIVERSE_ONLY)}")
+    print()
     for sid, tickers in sorted(ELIGIBLE.items()):
         count = len(tickers)
-        print(f"\n{sid} ({count} tickers):")
+        print(f"{sid} ({count} tickers):")
         for t in sorted(tickers)[:10]:
             print(f"  ✅ {t}")
         if count > 10:
             print(f"  ... +{count-10} more")
-    
+
     total = sum(len(t) for t in ELIGIBLE.values())
+    pairs = sum(1 for t in ELIGIBLE.values() for _ in t)
     print(f"\nTotal: {len(ELIGIBLE)} strategies, {total} strategy×asset pairs")
