@@ -1,254 +1,243 @@
-#!/usr/bin/env python3
 """
-scanner_l_atr_contraction.py — STR-L: ATR Contraction Breakout
+scanner_l_atr_contraction.py
+Strategy L — ATR Contraction Breakout
 
-Standalone scanner for Phase 1A validation. NOT added to live registry.
+Entry logic (long-only):
+  - ATR(14) is at its lowest level in trailing 120 bars
+  - ADX(14) < 18 (non-trending confirmation)
+  - Price closes above highest high of trailing 20 bars
+  - Volume on breakout bar > 1.5x average 20-day volume
+  - Price above 200-day SMA (trend filter)
 
-Entry: ATR at 120-bar low + ADX < 18 (low-vol regime) + breakout above
-       20-bar high with volume > 1.5x average + price above SMA200
-Exit: Stop at breakout day low, trailing stop at 2x ATR, time stop 20 bars
-Direction: Long-only
-Regime: Low-volatility (contraction -> expansion inflection)
+Exit simulation (forward scan up to 20 bars):
+  - Stop: breakout bar low
+  - No fixed target — trailing stop only
+  - Trailing stop: ATR(14) × 2.0 below highest close since entry
+  - Time stop: 20 bars
 
-Usage: python3 scanner_l_atr_contraction.py [--json]
+Output fields per signal:
+  ticker, date, entry_price, stop_price, target_price, direction,
+  exit_price, exit_reason, bars_held, r_multiple, subperiod, strategy_id
 """
 
-import sys
-import pathlib
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
-STRATEGY_ID = "STR-L-atr-contraction-breakout"
-ATR_PERIOD = 14
-ATR_LOOKBACK = 120
-ADX_THRESHOLD = 18
-RANGE_LOOKBACK = 20
-VOLUME_MULT = 1.5
-SMA_PERIOD = 200
-TRAILING_ATR_MULT = 2.0
-TIME_STOP_BARS = 20
-MIN_RR = 1.0
+STRATEGY_ID = "STR-ATR-CONTRACTION-perasset"
+ATR_PERIOD    = 14
+ATR_LOW_LOOKBACK = 120
+ADX_PERIOD    = 14
+ADX_MAX       = 18
+BREAKOUT_LOOKBACK = 20
+VOLUME_MULT   = 1.5
+SMA_PERIOD    = 200
+TRAIL_ATR_MULT = 2.0
+MAX_HOLD      = 20
+MIN_BARS      = max(ATR_LOW_LOOKBACK, SMA_PERIOD) + 10
 
-CACHE_DIR = pathlib.Path.home() / ".hermes" / "market_data"
+
+def _subperiod(date) -> str:
+    """Assign a calendar sub-period label (quarter)."""
+    ts = pd.Timestamp(str(date))
+    return f"{ts.year}-Q{ts.quarter}"
 
 
-def compute_atr(df: pd.DataFrame, period=ATR_PERIOD) -> pd.Series:
+def _compute_atr(df: pd.DataFrame, period: int = ATR_PERIOD) -> pd.Series:
     """Compute Average True Range."""
-    high = df['high']
-    low = df['low']
-    close = df['close']
+    high, low, close = df["high"], df["low"], df["close"]
     prev_close = close.shift(1)
-    
-    tr = pd.concat([
-        high - low,
-        (high - prev_close).abs(),
-        (low - prev_close).abs(),
-    ], axis=1).max(axis=1)
-    
-    return tr.rolling(window=period, min_periods=1).mean()
+    tr1 = high - low
+    tr2 = (high - prev_close).abs()
+    tr3 = (low - prev_close).abs()
+    true_range = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+    return true_range.rolling(period).mean()
 
 
-def compute_adx(df: pd.DataFrame, period=14) -> pd.Series:
-    """Compute ADX (Average Directional Index)."""
-    high = df['high']
-    low = df['low']
-    close = df['close']
-    
-    # Directional Movement
-    up_move = high.diff()
-    down_move = -low.diff()
-    
-    plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0)
-    minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0)
-    
-    plus_dm = pd.Series(plus_dm, index=df.index)
-    minus_dm = pd.Series(minus_dm, index=df.index)
-    
-    atr = compute_atr(df, period)
-    
-    plus_di = 100 * (plus_dm.rolling(window=period, min_periods=1).mean() / atr)
-    minus_di = 100 * (minus_dm.rolling(window=period, min_periods=1).mean() / atr)
-    
-    dx = 100 * (plus_di - minus_di).abs() / (plus_di + minus_di).replace(0, np.nan)
-    adx = dx.rolling(window=period, min_periods=1).mean()
-    
-    return adx
+def _compute_adx(df: pd.DataFrame, period: int = ADX_PERIOD) -> pd.Series:
+    """Compute ADX."""
+    high, low, close = df["high"], df["low"], df["close"]
+    prev_close = close.shift(1)
+    up_move = high - high.shift(1)
+    down_move = low.shift(1) - low
+    plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0.0)
+    minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0.0)
+    tr = _compute_atr(df, 1) * period  # raw TR * period for Wilder smoothing
+    # Use smoothed TR
+    atr_series = _compute_atr(df, period)
+    plus_di = 100 * pd.Series(plus_dm, index=df.index).rolling(period).mean() / atr_series
+    minus_di = 100 * pd.Series(minus_dm, index=df.index).rolling(period).mean() / atr_series
+    # Handle zero division
+    plus_di = plus_di.fillna(0).replace([np.inf, -np.inf], 0)
+    minus_di = minus_di.fillna(0).replace([np.inf, -np.inf], 0)
+    dx = 100 * (plus_di - minus_di).abs() / (plus_di + minus_di)
+    dx = dx.fillna(0).replace([np.inf, -np.inf], 0)
+    return dx.rolling(period).mean()
 
 
-def scan_ticker(df: pd.DataFrame, ticker: str) -> list:
-    """Scan a single ticker for ATR contraction breakout signals."""
-    signals = []
-    
-    if len(df) < max(SMA_PERIOD, ATR_LOOKBACK) + 10:
-        return signals
-    
-    atr = compute_atr(df)
-    adx = compute_adx(df)
-    sma = df['close'].rolling(window=SMA_PERIOD).mean()
-    volume_avg = df['volume'].rolling(window=20).mean()
-    
-    for i in range(ATR_LOOKBACK, len(df) - TIME_STOP_BARS):
-        # 1. ATR at 120-bar low (prolonged low-volatility)
-        atr_window = atr.iloc[i - ATR_LOOKBACK:i]
-        if atr.iloc[i] > atr_window.min():
+def _simulate_exit(
+    df: pd.DataFrame,
+    entry_idx: int,
+    entry_price: float,
+    stop_price: float,
+    atr_at_entry: float,
+) -> dict:
+    """
+    Walk forward from the bar after entry for up to MAX_HOLD bars.
+    Trailing stop: highest close since entry - (ATR * TRAIL_ATR_MULT).
+    Initial stop is breakout bar low.
+    """
+    risk = entry_price - stop_price
+    if risk <= 0:
+        return dict(exit_price=entry_price, exit_reason="invalid", bars_held=0, r_multiple=0.0)
+
+    n = len(df)
+    current_stop = stop_price
+    highest_close = entry_price
+
+    for offset in range(1, MAX_HOLD + 1):
+        bar_idx = entry_idx + offset
+        if bar_idx >= n:
+            last_close = df["close"].iloc[bar_idx - 1] if bar_idx > 0 else entry_price
+            r_mult = (last_close - entry_price) / risk
+            return dict(exit_price=round(last_close, 4), exit_reason="time",
+                       bars_held=offset, r_multiple=round(r_mult, 3))
+
+        close = df["close"].iloc[bar_idx]
+        high = df["high"].iloc[bar_idx]
+        low = df["low"].iloc[bar_idx]
+
+        # Update highest close since entry
+        if close > highest_close:
+            highest_close = close
+
+        # Update trailing stop: highest_close - ATR * multiplier
+        # Use a constant ATR for simplicity (at_entry ATR as baseline)
+        # In practice ATR should be recalculated, but for backtest simplicity:
+        trail_stop = highest_close - (atr_at_entry * TRAIL_ATR_MULT)
+        if trail_stop > current_stop:
+            current_stop = trail_stop
+
+        # Check if stopped out
+        if low <= current_stop:
+            exit_price = round(current_stop, 4)  # assume exit at stop level
+            if exit_price < entry_price:
+                r_mult = (exit_price - entry_price) / risk
+            else:
+                r_mult = (exit_price - entry_price) / risk
+            return dict(exit_price=exit_price, exit_reason="stop",
+                       bars_held=offset, r_multiple=round(r_mult, 3))
+
+    # Time stop
+    last_close = df["close"].iloc[entry_idx + MAX_HOLD] if entry_idx + MAX_HOLD < n else df["close"].iloc[-1]
+    r_mult = (last_close - entry_price) / risk
+    return dict(exit_price=round(last_close, 4), exit_reason="time",
+               bars_held=MAX_HOLD, r_multiple=round(r_mult, 3))
+
+
+def scan(df: pd.DataFrame, ticker: str) -> list[dict]:
+    """Scan a price DataFrame for ATR Contraction Breakout signals."""
+    df = df.copy()
+    df.columns = df.columns.str.lower()
+    required = {"open", "high", "low", "close", "volume"}
+    if not required.issubset(df.columns):
+        raise ValueError(f"DataFrame missing columns: {required - set(df.columns)}")
+    df = df.sort_index()
+
+    if len(df) < MIN_BARS:
+        return []
+
+    # Compute indicators
+    atr = _compute_atr(df, ATR_PERIOD)
+    adx = _compute_adx(df, ADX_PERIOD)
+    sma200 = df["close"].rolling(SMA_PERIOD).mean()
+    avg_vol_20 = df["volume"].rolling(BREAKOUT_LOOKBACK).mean()
+    highest_high_20 = df["high"].rolling(BREAKOUT_LOOKBACK).apply(
+        lambda x: x.iloc[:-1].max() if len(x) >= 2 else np.nan, raw=False
+    )
+    atr_120_low = atr.rolling(ATR_LOW_LOOKBACK).min()
+
+    signals: list[dict] = []
+
+    for i in range(MIN_BARS, len(df)):
+        date = df.index[i]
+        close = df["close"].iloc[i]
+        high = df["high"].iloc[i]
+        low = df["low"].iloc[i]
+        vol = df["volume"].iloc[i]
+
+        # Filter checks
+        if pd.isna(atr.iloc[i]) or pd.isna(adx.iloc[i]) or pd.isna(sma200.iloc[i]):
             continue
-        
-        # 2. ADX < 18 (confirmed non-trending regime)
-        if pd.isna(adx.iloc[i]) or adx.iloc[i] > ADX_THRESHOLD:
+        if pd.isna(highest_high_20.iloc[i]) or pd.isna(atr_120_low.iloc[i]):
             continue
-        
-        # 3. Price above SMA200 (long-only filter)
-        if pd.isna(sma.iloc[i]) or df['close'].iloc[i] < sma.iloc[i]:
+        if pd.isna(avg_vol_20.iloc[i]):
             continue
-        
-        # 4. Breakout above 20-bar high
-        range_high = df['high'].iloc[i - RANGE_LOOKBACK:i].max()
-        if df['close'].iloc[i] <= range_high:
+
+        # 1. ATR at 120-bar low
+        if not np.isclose(atr.iloc[i], atr_120_low.iloc[i], rtol=1e-9):
             continue
-        
-        # 5. Volume confirmation
-        if pd.isna(volume_avg.iloc[i]) or df['volume'].iloc[i] < VOLUME_MULT * volume_avg.iloc[i]:
+
+        # 2. ADX < 18
+        if adx.iloc[i] >= ADX_MAX:
             continue
-        
-        # Entry confirmed — simulate trade
-        entry_price = df['close'].iloc[i]
-        stop_price = df['low'].iloc[i]
-        
+
+        # 3. Breakout: close above prior 20-bar highest high
+        prior_highest = highest_high_20.iloc[i]
+        if pd.isna(prior_highest) or close <= prior_highest:
+            continue
+
+        # 4. Volume confirmation
+        if vol < avg_vol_20.iloc[i] * VOLUME_MULT:
+            continue
+
+        # 5. Above 200 SMA
+        if close <= sma200.iloc[i]:
+            continue
+
+        entry_price = close
+        stop_price = low  # breakout bar low
         if stop_price >= entry_price:
             continue
-        
+
+        atr_val = atr.iloc[i]
         risk = entry_price - stop_price
-        if risk <= 0:
-            continue
-        
-        # Simulate with trailing stop
-        exit_price = None
-        exit_reason = None
-        exit_date = None
-        highest_close = entry_price
-        
-        entry_idx = i
-        
-        for j in range(i + 1, min(i + TIME_STOP_BARS + 1, len(df))):
-            bar = df.iloc[j]
-            
-            # Update highest close
-            if bar['close'] > highest_close:
-                highest_close = bar['close']
-            
-            # Compute trailing stop
-            current_atr = atr.iloc[j]
-            trailing_stop = highest_close - TRAILING_ATR_MULT * current_atr
-            
-            # Check stop (use max of initial stop and trailing stop)
-            effective_stop = max(stop_price, trailing_stop)
-            
-            if bar['low'] <= effective_stop:
-                exit_price = effective_stop
-                exit_reason = 'trailing_stop' if effective_stop > stop_price else 'stop'
-                exit_date = df.index[j]
-                break
-            
-            # Check if we should update trailing stop to be above initial stop
-            if trailing_stop > stop_price:
-                stop_price = trailing_stop
-        
-        if exit_price is None:
-            # Time stop
-            last_idx = min(i + TIME_STOP_BARS, len(df) - 1)
-            exit_price = df['close'].iloc[last_idx]
-            exit_reason = 'time'
-            exit_date = df.index[last_idx]
-        
-        r_multiple = (exit_price - entry_price) / risk
-        
-        signals.append({
-            'ticker': ticker,
-            'date': df.index[i].strftime('%Y-%m-%d'),
-            'entry_price': round(entry_price, 2),
-            'stop_price': round(stop_price, 2),
-            'exit_price': round(exit_price, 2),
-            'exit_reason': exit_reason,
-            'r_multiple': round(r_multiple, 3),
-            'atr_at_entry': round(atr.iloc[i], 4),
-            'adx_at_entry': round(adx.iloc[i], 1),
-            'volume_ratio': round(df['volume'].iloc[i] / volume_avg.iloc[i], 2),
-            'range_high': round(range_high, 2),
-            'subperiod': df.iloc[i].get('subperiod', 'unknown'),
-        })
-    
+
+        exit_info = _simulate_exit(df, i, entry_price, stop_price, atr_val)
+
+        ts = pd.Timestamp(str(date))
+        date_val = ts.date()
+
+        signals.append(dict(
+            ticker=ticker,
+            date=date_val,
+            entry_price=round(entry_price, 4),
+            stop_price=round(stop_price, 4),
+            target_price=None,  # no fixed target
+            direction="long",
+            subperiod=_subperiod(ts),
+            strategy_id=STRATEGY_ID,
+            **exit_info,
+        ))
+
     return signals
 
 
-def scan(data: dict, **kwargs) -> list:
-    """Main scan function."""
-    all_signals = []
-    for ticker, df in data.items():
-        signals = scan_ticker(df, ticker)
-        all_signals.extend(signals)
-    return all_signals
-
-
 if __name__ == "__main__":
-    import json as json_module
-    import argparse
-    
-    parser = argparse.ArgumentParser(description="STR-L ATR Contraction Breakout Scanner")
-    parser.add_argument("--json", action="store_true", help="Output as JSON")
-    args = parser.parse_args()
-    
-    sys.path.insert(0, str(pathlib.Path(__file__).parent))
-    from universe import get_universe
-    
-    universe = get_universe()
-    data = {}
-    for ticker in universe:
-        path = CACHE_DIR / f"{ticker}.parquet"
-        if path.exists():
-            data[ticker] = pd.read_parquet(path)
-    
-    print(f"Loaded {len(data)} tickers")
-    
-    signals = scan(data)
-    
-    if signals:
-        df = pd.DataFrame(signals)
-        total = len(df)
-        dates = pd.to_datetime(df['date'])
-        years = (dates.max() - dates.min()).days / 365.25
-        sig_per_year = total / years if years > 0 else 0
-        avg_r = df['r_multiple'].mean()
-        win_rate = (df['r_multiple'] > 0).mean() * 100
-        
-        exit_counts = df['exit_reason'].value_counts()
-        
-        print(f"\n{'='*60}")
-        print(f"STR-L ATR Contraction Breakout — Phase 1A Results")
-        print(f"{'='*60}")
-        print(f"Total signals: {total}")
-        print(f"Signals/year: {sig_per_year:.1f}")
-        print(f"Avg R: {avg_r:.3f}")
-        print(f"Win rate: {win_rate:.1f}%")
-        print(f"\nSub-periods:")
-        for sp in df['subperiod'].unique():
-            sp_r = df[df['subperiod'] == sp]['r_multiple'].mean()
-            sp_n = len(df[df['subperiod'] == sp])
-            print(f"  {sp}: {sp_n} signals, avg R {sp_r:.3f}")
-        print(f"\nExit breakdown:")
-        for reason, count in exit_counts.items():
-            print(f"  {reason}: {count} ({count/total*100:.1f}%)")
-        
-        if args.json:
-            print(f"\n--- JSON ---")
-            print(json_module.dumps({
-                'signals_found': total,
-                'signals_per_year': round(sig_per_year, 1),
-                'avg_r': round(avg_r, 3),
-                'win_rate': round(win_rate, 1),
-                'exit_breakdown': exit_counts.to_dict(),
-            }, indent=2))
-    else:
-        print("No signals found.")
-        if args.json:
-            print(f"\n--- JSON ---")
-            print(json_module.dumps({'signals_found': 0}))
+    import sys
+    test_ticker = "AAPL"
+    cache_path = Path.home() / ".hermes" / "market_data" / f"{test_ticker}.parquet"
+    if not cache_path.exists():
+        print(f"[ERROR] Cache file not found: {cache_path}", file=sys.stderr)
+        sys.exit(1)
+    test_df = pd.read_parquet(cache_path)
+    test_df.columns = test_df.columns.str.lower()
+    print(f"Loaded {test_ticker}: {len(test_df)} bars  ({test_df.index[0]} -> {test_df.index[-1]})")
+    results = scan(test_df, test_ticker)
+    print(f"\nATR Contraction Breakout signals found: {len(results)}")
+    if results:
+        print("\nFirst 3 signals:")
+        for sig in results[:3]:
+            for k, v in sig.items():
+                print(f"  {k:25s}: {v}")
+            print()

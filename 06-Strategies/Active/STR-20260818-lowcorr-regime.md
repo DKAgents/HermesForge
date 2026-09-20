@@ -7,8 +7,9 @@ source: HermesForge Strategies
 created: 2026-08-24
 ---
 ---
-status: watch
+status: active
 created: 2026-08-18
+promoted_date: 2026-09-20
 strategy_id: STR-LOWCORR-lowcorr-regime
 source: autonomous-pipeline
 candidate: CAND-20260814-low-correlation-regime

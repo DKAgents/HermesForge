@@ -1,7 +1,7 @@
 ---
 id: STR-20260816-vix-vrp-contango-breakout
 type: strategy
-status: watch
+status: active
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -10,6 +10,7 @@ core_idea: breakout
 confidence: medium
 publish_enabled: false
 publish_channel: stocks
+promoted_date: 2026-09-20
 evidence_links:
   - CAND-20260816-vix-contango-persistence
 last_reviewed: 2026-08-16

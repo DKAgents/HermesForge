@@ -9,10 +9,11 @@ created: 2026-09-02
 |---
 |id: STR-20260901-oil-shock-sector-rotation
 |type: strategy
-|status: watch
+|status: active
 |asset_class: stock
 |trade_style: swing
 |timeframe: daily
+|promoted_date: 2026-09-20
 |market_regime: caution
 |core_idea: macro_overlay
 |confidence: low

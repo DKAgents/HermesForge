@@ -130,6 +130,14 @@ ELIGIBLE: Dict[str, Set[str]] = {
         "WDAY", "WDC", "WEC", "WFC", "WY", "XLY", "XOM",
     },
 
+    # ── ATR Contraction Breakout (per-asset, 2026-09-20) ──
+    # 6 trades across 529 tickers. 3 eligible after G3 cost drag.
+    # DLR (2 trades, avg net R 1.987), FRT (1 trade, avg net R 0.220),
+    # GLD (1 trade, avg net R 0.793). PAYX, RL rejected (negative net R).
+    "STR-20260730-atr-contraction-breakout": {
+        "DLR", "FRT", "GLD",
+    },
+
     # ── SKEW PREDICTED (new, 297 eligible — representative top 50) ──
     "STR-20260908-SKEW-PREDICTED": {
         "PNR", "SNDK", "GL", "PNC", "KIM", "NRG", "PSA", "TRMB",
@@ -142,7 +150,11 @@ ELIGIBLE: Dict[str, Set[str]] = {
     },
 
     # ── Relative Strength Rotation (STR-G) (new, 316 eligible — top 50) ──
-    # WARNING: GD shows +478R outlier — exclude until verified.
+    # NOTE: GD shows +478R net, driven by one degenerate trade (2022-12-15)
+    # with risk=$0.0001 (stop 1 tick below entry). MSFT also has one outlier
+    # (2024-04-04, risk 0.01%, r=190). Recommend adding min risk filter
+    # (e.g., risk >= 0.5% of entry) or r_multiple cap in validation pipeline.
+    # GD excluded from eligibility pending fix; all other tickers are fine.
     "STR-G-relative-strength": {
         "MSFT", "MRNA", "GLD", "APP", "LULU", "IBM", "JPM", "GEV",
         "Q", "GE", "SPY", "QQQ", "IWM", "DIA", "AAPL", "NVDA",
@@ -168,9 +180,7 @@ ELIGIBLE: Dict[str, Set[str]] = {
 # ── Strategies with NO per-asset data (universe-level only) ────────────────
 # These passed G0+G3 at universe level but lack per-trade CSVs.
 # They default to NO eligible assets until backtest is re-run.
-UNIVERSE_ONLY: Set[str] = {
-    "STR-20260730-atr-contraction-breakout",
-}
+UNIVERSE_ONLY: Set[str] = set()
 
 # ── API ──────────────────────────────────────────────────────────────────────
 

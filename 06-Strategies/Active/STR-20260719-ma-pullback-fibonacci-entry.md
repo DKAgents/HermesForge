@@ -1,7 +1,7 @@
 ---
 id: STR-20260719-ma-pullback-fibonacci-entry
 type: strategy
-status: watch
+status: active
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -10,6 +10,7 @@ core_idea: pullback
 confidence: medium
 publish_enabled: false
 publish_channel: stocks
+promoted_date: 2026-09-20
 evidence_links:
   - C050-secondary-trend-retracement-range
   - N085-fibonacci-percentage-retracements-38-50-62
