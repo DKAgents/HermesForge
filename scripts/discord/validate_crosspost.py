@@ -66,4 +66,13 @@ if __name__ == "__main__":
     if validate(msg, channel_id):
         print("ok", flush=True)
     else:
+        # Report which markers are missing
+        markers = RULES.get(channel_id, [])
+        text = msg.get("content", "") or ""
+        for embed in msg.get("embeds", []):
+            text += " " + (embed.get("title", "") or "")
+            text += " " + (embed.get("description", "") or "")
+        missing = [m for m in markers if m not in text]
+        msg_id = msg.get("id", "?")
+        print(f"BLOCKED msg {msg_id} in channel {channel_id}: missing {missing}", file=sys.stderr)
         print("skip", flush=True)

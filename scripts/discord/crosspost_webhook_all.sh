@@ -97,6 +97,8 @@ for msg in data:
             input=json.dumps(msg), capture_output=True, text=True
         )
         if check.stdout.strip() != 'ok':
+            if check.stderr.strip():
+                print(check.stderr.strip(), file=sys.stderr)
             continue
         print(msg_id)
         break
