@@ -7,8 +7,11 @@ domains: [Indicators, Patterns, Risk Guidelines, Trading Rules]
 sources: ["N013-volume-as-a-filter-for-false-breakouts", "R052-filters-for-confirming-breakouts", "N028-bull-trap-false-upside-breakout"]
 seed_id: breakout_volume_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume-Confirmed Breakout Stops: False Trap Avoidance
 
 ## Discovery Summary

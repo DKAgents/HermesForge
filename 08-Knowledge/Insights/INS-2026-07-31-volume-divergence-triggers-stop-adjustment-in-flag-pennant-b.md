@@ -33,4 +33,6 @@ When a flag or pennant breakout occurs on below-average volume, tighten the stop
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021 for pre-planned stop orders in point-and-figure, complementing volume-based stop adjustments
+
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — Avoid round numbers when adjusting stops based on volume divergence

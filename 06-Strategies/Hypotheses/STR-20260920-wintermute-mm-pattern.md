@@ -11,8 +11,11 @@ last_reviewed: 2026-09-20
 hypothesis_id: HYP-11
 gates_passed: [G0, G3]
 fee_tier_assumed: taker
+topic: strategies
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # Wintermute MM Pattern (HYP-11)
 
 ## Thesis

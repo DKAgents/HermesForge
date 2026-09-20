@@ -13,8 +13,11 @@ parent_strategy: STR-Q-liquidity-sweep
 gates_passed: [G0]
 gates_failed: [G3]
 eligible_assets: [AVAX, LINK]
+topic: strategies
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # STR-QW: Liquidity Sweep — Wider Stops (HYP-12)
 
 ## Thesis

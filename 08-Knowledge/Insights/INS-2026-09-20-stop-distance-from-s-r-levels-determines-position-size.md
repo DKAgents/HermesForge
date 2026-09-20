@@ -1,26 +1,23 @@
 ---
 type: insight
-date: 2026-09-19
+date: 2026-09-20
 actionability: 4
 connection_type: reveals_sequence
 domains: [concepts, risk-guidelines, rules]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "EN069-price-gaps-as-support-and-resistance-for-timing", "RG035-combining-technical-factors-with-money-management-for-stop-p"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
-topic: knowledge
-confidence: high
-has_quotes: false
-source: unknown
 ---
-# S/R levels dictate stop distance and position size
+
+# Stop Distance from S/R Levels Determines Position Size
 
 ## Discovery Summary
 
-In a downtrend, previous support becomes resistance (C065), and price gaps also serve as support/resistance levels (EN069). These technical levels are used to place protective stops—above resistance for shorts (RG035). The stop distance then determines maximum position size via money management rules (RG035), creating a sequential workflow from level identification to risk-controlled trade sizing.
+C065 (previous support as resistance) and EN069 (gaps as support/resistance) provide specific technical levels for placing protective stops as per RG035, which requires stops at valid technical levels. The stop distance from these levels then dictates position size using the 5% risk rule, directly linking Murphy's concept of support/resistance with money management.
 
 ## Trading Implication
 
-Identify support/resistance levels from role reversal and gaps, set stop-loss accordingly, then compute position size to keep risk within account limits (e.g., 5% of total capital).
+Identify a specific S/R level (e.g., a prior support turned resistance in a downtrend or a gap), place your stop at that level, then size your position so that the maximum loss equals your predefined risk (e.g., 5% of account on the full position).
 
 ## Supporting Notes
 
