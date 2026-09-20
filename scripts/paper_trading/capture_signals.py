@@ -31,6 +31,14 @@ T1_ENABLED = os.environ.get("HERMESFORGE_T1_ENABLED", "").lower() in ("1", "true
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
+
+# G3: per-asset eligibility
+try:
+    from asset_eligibility import is_eligible
+    _ELIGIBILITY_ENABLED = True
+except ImportError:
+    _ELIGIBILITY_ENABLED = False
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "scanners"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "research"))
@@ -362,6 +370,12 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     summary["opened_trades"].append(trade_dict)
                     print(f"  WOULD OPEN: {strategy_id}/{ticker} @ {entry_price} ({entry_date})")
                 else:
+                    # Per-asset eligibility check
+                    if _ELIGIBILITY_ENABLED and not is_eligible(strategy_id, ticker):
+                        summary.setdefault("skipped_ineligible", 0)
+                        summary["skipped_ineligible"] += 1
+                        print(f"  SKIP: {strategy_id}/{ticker} not in eligible list")
+                        continue
                     try:
                         trade_id = trade_log.open_trade(trade_dict)
                         summary["opened"] += 1
@@ -486,6 +500,12 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                 summary["opened_trades"].append(trade_dict)
                 print(f"  WOULD OPEN: {strategy_id}/{ticker} @ {entry_price} ({entry_date})")
             else:
+                # Per-asset eligibility check
+                if _ELIGIBILITY_ENABLED and not is_eligible(strategy_id, ticker):
+                    summary.setdefault("skipped_ineligible", 0)
+                    summary["skipped_ineligible"] += 1
+                    print(f"  SKIP: {strategy_id}/{ticker} not in eligible list")
+                    continue
                 try:
                     trade_id = trade_log.open_trade(trade_dict)
                     summary["opened"] += 1

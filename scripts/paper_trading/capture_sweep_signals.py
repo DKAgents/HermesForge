@@ -59,6 +59,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "gauntlet"))
 try:
     from l2_fetcher import get_gauntlet_entry
     from asset_eligibility import is_eligible
+    from position_manager import approve_position, check_drawdown_breaker
     _G3_ENABLED = True
 except ImportError:
     _G3_ENABLED = False
@@ -338,6 +339,33 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             summary["skipped_ineligible"] += 1
             print(f"  SKIPPED: {symbol} not in {STRATEGY_ID} eligible list")
             return
+        
+        # Position manager: cluster exposure + drawdown breaker
+        if _G3_ENABLED:
+            # Simple equity tracking (paper trading — fixed account)
+            current_equity = EXAMPLE_ACCOUNT_SIZE
+            # Load open positions from trade_log
+            open_positions = trade_log.get_open_trades()
+            
+            # Check drawdown breaker first
+            breaker = check_drawdown_breaker([], current_equity)
+            if breaker["tier"] >= 3:
+                print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
+                return
+            elif breaker["tier"] >= 2:
+                if STRATEGY_ID not in {"STR-B-macd-histogram-divergence",}:
+                    print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — discretionary only")
+                    return
+            
+            approval = approve_position(
+                STRATEGY_ID, symbol, EXAMPLE_ACCOUNT_SIZE * RISK_PCT / 100, direction,
+                open_positions, current_equity
+            )
+            if not approval.get("approved", True):
+                print(f"  BLOCKED: {approval.get('rejection_reason', 'unknown')}")
+                return
+            if approval.get("size_reduced"):
+                print(f"  SIZED: reduced to {approval.get('approved_size', RISK_PCT)}% (was {RISK_PCT}%)")
         try:
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
