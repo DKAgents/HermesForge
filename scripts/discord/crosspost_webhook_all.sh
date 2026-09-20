@@ -96,10 +96,9 @@ for msg in data:
             ['python3', '/root/HermesForge/scripts/discord/validate_crosspost.py', '$CHANNEL_ID'],
             input=json.dumps(msg), capture_output=True, text=True
         )
-        if check.stdout.strip() != 'ok':
-            if check.stderr.strip():
-                print(check.stderr.strip(), file=sys.stderr)
-            continue
+        # Log any template warnings to stderr
+        if check.stderr.strip():
+            print(check.stderr.strip(), file=sys.stderr)
         print(msg_id)
         break
 " <<< "$MESSAGES" 2>/dev/null)

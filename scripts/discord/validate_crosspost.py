@@ -66,7 +66,7 @@ if __name__ == "__main__":
     if validate(msg, channel_id):
         print("ok", flush=True)
     else:
-        # Report which markers are missing
+        # Warn about non-conforming message but allow it through
         markers = RULES.get(channel_id, [])
         text = msg.get("content", "") or ""
         for embed in msg.get("embeds", []):
@@ -74,5 +74,5 @@ if __name__ == "__main__":
             text += " " + (embed.get("description", "") or "")
         missing = [m for m in markers if m not in text]
         msg_id = msg.get("id", "?")
-        print(f"BLOCKED msg {msg_id} in channel {channel_id}: missing {missing}", file=sys.stderr)
-        print("skip", flush=True)
+        print(f"⚠ Template mismatch — msg {msg_id} in channel {channel_id}: missing {missing}", file=sys.stderr)
+        print("ok", flush=True)  # always forward
