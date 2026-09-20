@@ -8,7 +8,7 @@ by strategy and asset class. No editorializing on small sample sizes --
 states counts plainly per the user's evidence-based analysis preference.
 
 Usage:
-    python3 performance_report.py [--since-hours N]
+    python3 performance_report.py [--since-hours N] [--since-date YYYY-MM-DD]
 """
 
 import sys
@@ -18,6 +18,9 @@ import datetime
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import trade_log
+
+# ── Gauntlet go-live: first date trades were captured with cost-adjusted fills ──
+GAUNTLET_CUTOVER = datetime.date(2026, 9, 14)
 
 
 def _rows() -> list[dict]:
@@ -81,10 +84,33 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
     return lines
 
 
-def build_report(since_hours: int = 24) -> str:
+def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
     rows = _dedupe_rows(_rows())
     open_rows = [r for r in rows if r["status"] == "open"]
-    closed_rows = [r for r in rows if r["status"] == "closed"]
+    
+    # Filter closed rows by gauntlet cutover if specified
+    if since_date is None:
+        since_date = GAUNTLET_CUTOVER
+    closed_rows = []
+    skipped_pre_gauntlet = 0
+    for r in rows:
+        if r["status"] != "closed":
+            continue
+        try:
+            exit_dt = datetime.datetime.fromisoformat(r["exit_date"]).date()
+        except (ValueError, TypeError):
+            # Try entry_date as fallback
+            try:
+                entry = r.get("entry_date", "")
+                if " " in entry:
+                    entry = entry.split(" ")[0]
+                exit_dt = datetime.date.fromisoformat(entry)
+            except (ValueError, TypeError):
+                exit_dt = None
+        if exit_dt is None or exit_dt < since_date:
+            skipped_pre_gauntlet += 1
+            continue
+        closed_rows.append(r)
 
     cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=since_hours)
     recent_closed = []
@@ -145,8 +171,11 @@ def build_report(since_hours: int = 24) -> str:
     lines.extend(_build_pnl_section(month_closed, "Last 30 days"))
     lines.append("")
 
-    # --- Running totals since inception ---
-    lines.append("**Running Totals (since inception):**")
+    # --- Running totals since gauntlet go-live ---
+    cutover_str = since_date.isoformat()
+    lines.append(f"**Running Totals (since {cutover_str} — gauntlet go-live):**")
+    if skipped_pre_gauntlet:
+        lines.append(f"  _(+{skipped_pre_gauntlet} pre-gauntlet trades excluded)_")
     by_strategy_all = {}
     if not closed_rows:
         lines.append("  No closed trades yet.")
@@ -298,11 +327,20 @@ def post_to_discord(report_text: str, channel_id: str, dry_run: bool = False) ->
 def main():
     ap = argparse.ArgumentParser(description="HermesForge paper trading performance report")
     ap.add_argument("--since-hours", type=int, default=24)
+    ap.add_argument("--since-date", type=str, default=None,
+                    help="Only include trades on or after this date (YYYY-MM-DD). Default: 2026-09-14 (gauntlet go-live)")
+    ap.add_argument("--all", action="store_true", help="Include all trades since inception (override since-date)")
     ap.add_argument("--post", metavar="CHANNEL_ID", help="Post report to Discord channel")
     ap.add_argument("--dry-run", action="store_true", help="Show what would be posted without posting")
     args = ap.parse_args()
+    
+    since_date = None
+    if not args.all:
+        if args.since_date:
+            since_date = datetime.date.fromisoformat(args.since_date)
+        # else: use default GAUNTLET_CUTOVER inside build_report
 
-    report = build_report(since_hours=args.since_hours)
+    report = build_report(since_hours=args.since_hours, since_date=since_date)
 
     if args.post:
         result = post_to_discord(report, args.post, dry_run=args.dry_run)
