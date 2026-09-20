@@ -43,6 +43,14 @@ from detect_liquidity_sweeps import (
 from intraday_provider import get_intraday_candles
 
 import trade_log
+
+# Jev prefilter (US-150)
+try:
+    sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
+    from jev_prefilter import prefilter_signal as _jev_prefilter
+    _JEV_ENABLED = True
+except ImportError:
+    _JEV_ENABLED = False
 import position_sizing
 
 # Trade ID generation for post attribution
@@ -366,6 +374,18 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 return
             if approval.get("size_reduced"):
                 print(f"  SIZED: reduced to {approval.get('approved_size', RISK_PCT)}% (was {RISK_PCT}%)")
+        # Jev prefilter: gate intraday signal before paper trading (US-150)
+        if _JEV_ENABLED:
+            try:
+                jev_result = _jev_prefilter(trade_dict)
+                if not jev_result.approved:
+                    summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
+                    print(f"  JEV REJECT: {symbol} ({jev_result.confidence:.0%})")
+                    return
+                elif jev_result.confidence < 0.55:
+                    print(f"  JEV MARGINAL: {symbol} ({jev_result.confidence:.0%})")
+            except Exception as e:
+                print(f"  JEV ERROR (allowing): {e}")
         try:
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
