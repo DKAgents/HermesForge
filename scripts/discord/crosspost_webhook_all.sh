@@ -63,7 +63,7 @@ for CHANNEL_ID in "${CHANNELS[@]}"; do
     # Find the most recent non-empty bot message within the last 24h
     # that hasn't been crossposted yet (not in state file)
     LATEST_MSG=$(python3 -c "
-import json, sys, os
+import json, sys, os, subprocess
 
 state = {}
 try:
@@ -90,6 +90,14 @@ for msg in data:
     already = bool(flags & 1)
     content = msg.get('content', '').strip() or (msg.get('embeds') and msg['embeds'])
     if content and not already:
+        # US-148: template validation before forwarding
+        import subprocess
+        check = subprocess.run(
+            ['python3', '/root/HermesForge/scripts/discord/validate_crosspost.py', '$CHANNEL_ID'],
+            input=json.dumps(msg), capture_output=True, text=True
+        )
+        if check.stdout.strip() != 'ok':
+            continue
         print(msg_id)
         break
 " <<< "$MESSAGES" 2>/dev/null)
