@@ -23,7 +23,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
-DEFAULT_MODEL = "jev-latest"
+DEFAULT_MODEL = "jev-1.13.0"
 MAX_RETRIES = 3
 RETRY_DELAY = 1.0
 

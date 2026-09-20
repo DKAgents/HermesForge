@@ -254,7 +254,8 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         return False
 
 
-def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, summary: dict) -> None:
+def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, summary: dict,
+                     jev_off: bool = False, jev_shadow: bool = False) -> None:
     """Process detected sweeps and open trades."""
     # US-108: Filter equal_lows on stocks (34.6% WR, overestimated in small sample)
     filtered_sweeps = _filter_valid_sweeps(sweeps, asset_type, strategy_id=STRATEGY_ID)
@@ -375,19 +376,28 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             if approval.get("size_reduced"):
                 print(f"  SIZED: reduced to {approval.get('approved_size', RISK_PCT)}% (was {RISK_PCT}%)")
         # Jev prefilter: gate intraday signal before paper trading (US-150 §2b)
-        if _JEV_ENABLED:
+        jev_action = "allow"
+        if _JEV_ENABLED and not jev_off:
             try:
                 jev_result = _jev_prefilter(trade_dict)
-                if jev_result.tier == "rejected":
+                if jev_shadow:
+                    print(f"  JEV SHADOW: {symbol} tier={jev_result.tier} conf={jev_result.confidence:.0%}")
+                    jev_action = "allow"
+                elif jev_result.tier == "rejected":
                     summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                     print(f"  JEV REJECT: {symbol} ({jev_result.confidence:.0%})")
-                    return
+                    jev_action = "skip"
                 elif jev_result.tier == "marginal":
                     print(f"  JEV MARGINAL: {symbol} ({jev_result.confidence:.0%}) — paper only")
+                    jev_action = "allow"
             except Exception as e:
                 summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                 print(f"  JEV ERROR (fail-closed): {symbol} — {e}")
-                return
+                jev_action = "skip"
+        elif jev_off:
+            jev_action = "allow"
+        if jev_action == "skip":
+            return
         try:
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
@@ -405,7 +415,8 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             summary["skipped_already_open"] += 1
 
 
-def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True) -> dict:
+def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True,
+         jev_off: bool = False, jev_shadow: bool = False) -> dict:
     """Main capture loop."""
     summary = {
         "scanned": 0,
@@ -455,7 +466,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                             print(f"  {symbol}: {s.direction} sweep at {s.level_type} "
                                   f"Q={s.quality_score}/100 ({s.confirmation})")
                         
-                        _process_sweeps(recent_sweeps, symbol, "crypto", dry_run, summary)
+                        _process_sweeps(recent_sweeps, symbol, "crypto", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow)
             except Exception as e:
                 summary["errors"] += 1
                 print(f"  {symbol}: ERROR - {e}")
@@ -493,7 +504,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                                 print(f"  {symbol}: {s.direction} sweep at {s.level_type} "
                                       f"Q={s.quality_score}/100 ({s.confirmation})")
                             
-                            _process_sweeps(recent_sweeps, symbol, "stock", dry_run, summary)
+                            _process_sweeps(recent_sweeps, symbol, "stock", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow)
                 except Exception as e:
                     summary["errors"] += 1
                     print(f"  {symbol}: ERROR - {e}")
@@ -728,6 +739,10 @@ def main():
     ap.add_argument("--stocks-only", action="store_true")
     ap.add_argument("--crypto-only", action="store_true")
     ap.add_argument("--monitor-only", action="store_true", help="Only monitor open trades for exits")
+    ap.add_argument("--jev-off", action="store_true",
+                    help="Skip Jev entirely and block live open_trade (paper only)")
+    ap.add_argument("--jev-shadow", action="store_true",
+                    help="Run Jev, log the tier, but use old heuristic for action decisions")
     args = ap.parse_args()
     
     if args.monitor_only:
@@ -750,7 +765,7 @@ def main():
         print(f"  Checked {exit_result['checked']} open trades, closed {exit_result['closed']}")
     
     # Capture new signals
-    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto)
+    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto, jev_off=args.jev_off, jev_shadow=args.jev_shadow)
     
     print(f"\n{'='*50}")
     print(f"SUMMARY: {summary['scanned']} scanned, {summary['signals_found']} sweeps found, "

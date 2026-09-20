@@ -264,7 +264,8 @@ def _get_risk_pct(strategy_id: str, signal_dict: dict) -> float:
 
 def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                        dry_run: bool, summary: dict, regime: dict = None,
-                       strategy_directives: dict = None) -> None:
+                       strategy_directives: dict = None,
+                       jev_off: bool = False, jev_shadow: bool = False) -> None:
     """Shared scan+capture loop, used for both stock and crypto data sources."""
     for strategy_id, scan_fn in PAPER_STRATEGIES.items():
         # Check regime-aware strategy directives
@@ -393,19 +394,28 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                             print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
                             continue
                     # Jev prefilter: gate signal before paper trading (US-150 §2b)
-                    if _JEV_ENABLED:
+                    jev_action = "allow"  # default: pre-Jev behavior
+                    if _JEV_ENABLED and not jev_off:
                         try:
                             jev_result = _jev_prefilter(trade_dict)
-                            if jev_result.tier == "rejected":
+                            if jev_shadow:
+                                print(f"  JEV SHADOW: {strategy_id}/{ticker} tier={jev_result.tier} conf={jev_result.confidence:.0%}")
+                                jev_action = "allow"  # shadow mode: log but don't block
+                            elif jev_result.tier == "rejected":
                                 summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                                 print(f"  JEV REJECT: {strategy_id}/{ticker} ({jev_result.confidence:.0%})")
-                                continue
+                                jev_action = "skip"
                             elif jev_result.tier == "marginal":
                                 print(f"  JEV MARGINAL: {strategy_id}/{ticker} ({jev_result.confidence:.0%}) — paper only")
+                                jev_action = "allow"
                         except Exception as e:
                             summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                             print(f"  JEV ERROR (fail-closed): {strategy_id}/{ticker} — {e}")
-                            continue
+                            jev_action = "skip"
+                    elif jev_off:
+                        jev_action = "allow"  # --jev-off: skip Jev, paper only (no live entries)
+                    if jev_action == "skip":
+                        continue
                     try:
                         trade_id = trade_log.open_trade(trade_dict)
                         summary["opened"] += 1
@@ -543,18 +553,29 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     if breaker["tier"] >= 3:
                         print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
                         continue
-                # Jev prefilter: gate signal before paper trading (US-150)
-                if _JEV_ENABLED:
+                # Jev prefilter: gate signal before paper trading (US-150 §2b)
+                jev_action2 = "allow"
+                if _JEV_ENABLED and not jev_off:
                     try:
                         jev_result = _jev_prefilter(trade_dict)
-                        if not jev_result.approved:
+                        if jev_shadow:
+                            print(f"  JEV SHADOW: {strategy_id}/{ticker} tier={jev_result.tier} conf={jev_result.confidence:.0%}")
+                            jev_action2 = "allow"
+                        elif jev_result.tier == "rejected":
                             summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                             print(f"  JEV REJECT: {strategy_id}/{ticker} ({jev_result.confidence:.0%})")
-                            continue
-                        elif jev_result.confidence < 0.55:
-                            print(f"  JEV MARGINAL: {strategy_id}/{ticker} ({jev_result.confidence:.0%})")
+                            jev_action2 = "skip"
+                        elif jev_result.tier == "marginal":
+                            print(f"  JEV MARGINAL: {strategy_id}/{ticker} ({jev_result.confidence:.0%}) — paper only")
+                            jev_action2 = "allow"
                     except Exception as e:
-                        print(f"  JEV ERROR (allowing): {e}")
+                        summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
+                        print(f"  JEV ERROR (fail-closed): {strategy_id}/{ticker} — {e}")
+                        jev_action2 = "skip"
+                elif jev_off:
+                    jev_action2 = "allow"
+                if jev_action2 == "skip":
+                    continue
                 try:
                     trade_id = trade_log.open_trade(trade_dict)
                     summary["opened"] += 1
@@ -606,7 +627,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         stock_data = load_all_stocks()
         if stock_data:
             print(f"Loaded {len(stock_data)} stock tickers.")
-            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime, strategy_directives)
+            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime, strategy_directives, jev_off=args.jev_off, jev_shadow=args.jev_shadow)
         else:
             print("No cached stock data found (run fetch_data.py first) -- skipping stocks.")
 
@@ -629,6 +650,10 @@ def main():
     ap.add_argument("--crypto-only", action="store_true")
     ap.add_argument("--enable-t1", action="store_true",
                     help="Enable T1 discovery scanners (Phase 1A candidates — NOT operational edges)")
+    ap.add_argument("--jev-off", action="store_true",
+                    help="Skip Jev entirely and block live open_trade (paper only)")
+    ap.add_argument("--jev-shadow", action="store_true",
+                    help="Run Jev, log the tier, but use old heuristic for action decisions")
     args = ap.parse_args()
 
     # Gate: set T1_ENABLED globally so imports resolve

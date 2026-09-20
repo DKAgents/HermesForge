@@ -31,8 +31,9 @@ class DecayResult:
     strategy_id: str
     decay_probability: float        # 0-1, probability strategy is decaying
     confidence: float               # model confidence
-    recommendation: str             # "demote", "watch", "healthy"
+    recommendation: str             # "demote", "watch", "healthy", "unknown"
     details: dict[str, Any] = field(default_factory=dict)
+    jev_error: bool = False         # True if Jev was unreachable → leave last state
 
 
 def _load_recent_trades(csv_path: Path, n: int = 100) -> list[dict]:
@@ -152,7 +153,7 @@ def check_decay(strategy_id: str, trades_csv: Optional[Path] = None,
     except Exception as e:
         details["decay_probability"] = None
         reasons.append(f"Decay check failed: {e}")
-        prob = 0.5  # neutral on error
+        prob = None  # unknown, not neutral
 
     # Question 2: Drawdown vs breakdown
     try:
@@ -168,11 +169,23 @@ def check_decay(strategy_id: str, trades_csv: Optional[Path] = None,
         details["breakdown_probability"] = dd_prob
     except Exception as e:
         details["breakdown_probability"] = None
-        dd_prob = 0.5
+        dd_prob = None
+
+    # ── Decision: fail-closed on Jev error (US-150 §7) ──
+    # If either check failed (API down, timeout), leave last state.
+    if prob is None or dd_prob is None:
+        return DecayResult(
+            strategy_id=strategy_id,
+            decay_probability=0.0,
+            confidence=0.0,
+            recommendation="unknown",   # leave last state + alert
+            details=details,
+            jev_error=True,
+        )
 
     # Composite decision
-    decay_prob = details.get("decay_probability", 0.5) or 0.5
-    breakdown_prob = details.get("breakdown_probability", 0.5) or 0.5
+    decay_prob = prob
+    breakdown_prob = dd_prob
 
     # Recommendation
     if decay_prob > 0.70 and breakdown_prob > 0.60:
@@ -209,10 +222,11 @@ def check_all_active(jev: Optional[JevClient] = None) -> dict[str, DecayResult]:
         except Exception as e:
             results[strategy_id] = DecayResult(
                 strategy_id=strategy_id,
-                decay_probability=0.5,
+                decay_probability=0.0,
                 confidence=0,
-                recommendation="watch",
+                recommendation="unknown",   # leave last state
                 details={"error": str(e)},
+                jev_error=True,
             )
 
     return results
