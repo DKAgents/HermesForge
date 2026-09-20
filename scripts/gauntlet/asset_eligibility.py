@@ -135,14 +135,6 @@ ELIGIBLE: Dict[str, Set[str]] = {
         "WDAY", "WDC", "WEC", "WFC", "WY", "XLY", "XOM",
     },
 
-    # ── ATR Contraction Breakout (per-asset, 2026-09-20) ──
-    # 6 trades across 529 tickers. 3 eligible after G3 cost drag.
-    # DLR (2 trades, avg net R 1.987), FRT (1 trade, avg net R 0.220),
-    # GLD (1 trade, avg net R 0.793). PAYX, RL rejected (negative net R).
-    "STR-20260730-atr-contraction-breakout": {
-        "DLR", "FRT", "GLD",
-    },
-
     # ── SKEW PREDICTED (new, 297 eligible — representative top 50) ──
     "STR-20260908-SKEW-PREDICTED": {
         "PNR", "SNDK", "GL", "PNC", "KIM", "NRG", "PSA", "TRMB",

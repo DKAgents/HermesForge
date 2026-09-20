@@ -1,7 +1,0 @@
-ticker,date,entry_price,stop_price,target_price,direction,subperiod,strategy_id,exit_price,exit_reason,bars_held,r_multiple
-DLR,2021-06-02,128.6602,126.9642,,long,2021-Q2,STR-ATR-CONTRACTION-perasset,132.0807,stop,10,2.017
-DLR,2021-06-03,129.2172,127.7208,,long,2021-Q2,STR-ATR-CONTRACTION-perasset,132.2434,stop,9,2.022
-FRT,2021-06-02,95.6543,93.4444,,long,2021-Q2,STR-ATR-CONTRACTION-perasset,96.1778,stop,11,0.237
-GLD,2025-08-29,318.07,314.64,,long,2025-Q3,STR-ATR-CONTRACTION-perasset,320.9157,stop,1,0.83
-PAYX,2021-06-10,89.2076,88.0753,,long,2021-Q2,STR-ATR-CONTRACTION-perasset,88.0753,stop,2,-1.0
-RL,2021-10-29,115.6949,113.1294,,long,2021-Q4,STR-ATR-CONTRACTION-perasset,113.1294,stop,2,-1.0
