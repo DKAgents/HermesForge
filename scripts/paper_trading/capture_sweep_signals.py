@@ -58,6 +58,7 @@ from embed_publisher import publish_signal, build_sweep_embed
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "gauntlet"))
 try:
     from l2_fetcher import get_gauntlet_entry
+    from asset_eligibility import is_eligible
     _G3_ENABLED = True
 except ImportError:
     _G3_ENABLED = False
@@ -331,6 +332,12 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
         print(f"    Stop: ${stop_price:.2f} | Target: ${target_price:.2f} | R:R 3:1")
         print(f"    {trade_dict['notes']}")
     else:
+        # Per-asset eligibility check: suppress non-eligible tickers
+        if _G3_ENABLED and not is_eligible(STRATEGY_ID, symbol):
+            summary.setdefault("skipped_ineligible", 0)
+            summary["skipped_ineligible"] += 1
+            print(f"  SKIPPED: {symbol} not in {STRATEGY_ID} eligible list")
+            return
         try:
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
