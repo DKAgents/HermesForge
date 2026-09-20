@@ -67,9 +67,12 @@ def _load_vix_historical() -> pd.DataFrame | None:
         import yfinance as yf
         vix = yf.download("^VIX", start="2018-01-01", progress=False)
         if vix is not None and not vix.empty:
-            df = vix[["Close"]].copy().rename(columns={"Close": "close"})
-            df.index = pd.to_datetime(df.index)
-            df["close"] = df["close"].astype(float)
+            # yfinance >=0.2.50 returns MultiIndex columns
+            if isinstance(vix.columns, pd.MultiIndex):
+                close_series = vix.xs("Close", axis=1, level=0).squeeze()
+            else:
+                close_series = vix["Close"].squeeze()
+            df = pd.DataFrame({"close": close_series.astype(float)}, index=pd.to_datetime(close_series.index))
             return df
     except Exception as e:
         print(f"  [VIXFG] Failed to fetch VIX: {e}")
