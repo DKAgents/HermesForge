@@ -587,7 +587,8 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     summary["error_details"].append(str(e))
 
 
-def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True) -> dict:
+def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True,
+         jev_off: bool = False, jev_shadow: bool = False) -> dict:
     summary = {
         "signals_found": 0,
         "opened": 0,
@@ -627,7 +628,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         stock_data = load_all_stocks()
         if stock_data:
             print(f"Loaded {len(stock_data)} stock tickers.")
-            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime, strategy_directives, jev_off=args.jev_off, jev_shadow=args.jev_shadow)
+            _scan_and_capture(stock_data, "stock", "yfinance", dry_run, summary, regime, strategy_directives, jev_off=jev_off, jev_shadow=jev_shadow)
         else:
             print("No cached stock data found (run fetch_data.py first) -- skipping stocks.")
 
@@ -636,7 +637,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
         crypto_data = load_all_crypto()
         if crypto_data:
             print(f"Loaded {len(crypto_data)} crypto symbols.")
-            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary, regime, strategy_directives)
+            _scan_and_capture(crypto_data, "crypto", "hyperliquid", dry_run, summary, regime, strategy_directives, jev_off=jev_off, jev_shadow=jev_shadow)
         else:
             print("No cached crypto data found (run fetch_crypto_data.py first) -- skipping crypto.")
 
@@ -664,7 +665,7 @@ def main():
     include_stocks = not args.crypto_only
     include_crypto = not args.stocks_only
 
-    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto)
+    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto, jev_off=args.jev_off, jev_shadow=args.jev_shadow)
 
     print(f"\n{'='*60}")
     print(f"SUMMARY: {summary['signals_found']} signals found, "
