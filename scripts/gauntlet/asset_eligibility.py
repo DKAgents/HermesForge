@@ -61,6 +61,11 @@ ELIGIBLE: Dict[str, Set[str]] = {
         "BTC",
     },
 
+    # ── Triple RSI Mean Reversion (HYP-13) ──
+    "STR-TRSI-triple-rsi-mean-reversion": {
+        "SPY",
+    },
+
     # ── Adaptive Trend (STR-I) (new) ──
     "STR-20260728-adaptive-trend": {
         "ALB", "AMD", "ANET", "APP", "ARM", "ASML", "AVGO", "BA", "CCL",
