@@ -374,18 +374,20 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 return
             if approval.get("size_reduced"):
                 print(f"  SIZED: reduced to {approval.get('approved_size', RISK_PCT)}% (was {RISK_PCT}%)")
-        # Jev prefilter: gate intraday signal before paper trading (US-150)
+        # Jev prefilter: gate intraday signal before paper trading (US-150 §2b)
         if _JEV_ENABLED:
             try:
                 jev_result = _jev_prefilter(trade_dict)
-                if not jev_result.approved:
+                if jev_result.tier == "rejected":
                     summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                     print(f"  JEV REJECT: {symbol} ({jev_result.confidence:.0%})")
                     return
-                elif jev_result.confidence < 0.55:
-                    print(f"  JEV MARGINAL: {symbol} ({jev_result.confidence:.0%})")
+                elif jev_result.tier == "marginal":
+                    print(f"  JEV MARGINAL: {symbol} ({jev_result.confidence:.0%}) — paper only")
             except Exception as e:
-                print(f"  JEV ERROR (allowing): {e}")
+                summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
+                print(f"  JEV ERROR (fail-closed): {symbol} — {e}")
+                return
         try:
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1

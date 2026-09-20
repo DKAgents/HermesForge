@@ -392,18 +392,20 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                         if breaker["tier"] >= 3:
                             print(f"  BLOCKED: drawdown breaker tier {breaker['tier']} — all flat")
                             continue
-                    # Jev prefilter: gate signal before paper trading (US-150)
+                    # Jev prefilter: gate signal before paper trading (US-150 §2b)
                     if _JEV_ENABLED:
                         try:
                             jev_result = _jev_prefilter(trade_dict)
-                            if not jev_result.approved:
+                            if jev_result.tier == "rejected":
                                 summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                                 print(f"  JEV REJECT: {strategy_id}/{ticker} ({jev_result.confidence:.0%})")
                                 continue
-                            elif jev_result.confidence < 0.55:
-                                print(f"  JEV MARGINAL: {strategy_id}/{ticker} ({jev_result.confidence:.0%})")
+                            elif jev_result.tier == "marginal":
+                                print(f"  JEV MARGINAL: {strategy_id}/{ticker} ({jev_result.confidence:.0%}) — paper only")
                         except Exception as e:
-                            print(f"  JEV ERROR (allowing): {e}")
+                            summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
+                            print(f"  JEV ERROR (fail-closed): {strategy_id}/{ticker} — {e}")
+                            continue
                     try:
                         trade_id = trade_log.open_trade(trade_dict)
                         summary["opened"] += 1
