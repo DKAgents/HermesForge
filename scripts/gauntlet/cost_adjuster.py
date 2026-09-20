@@ -26,6 +26,11 @@ VENUE_COSTS: Dict[str, float] = {
 DEFAULT_COST = 12.0  # conservative: assume crypto perps if asset_class unknown
 
 
+# ── Risk controls ────────────────────────────────────────────────────
+MIN_RISK_PCT = 0.005          # 0.5% — trades with tighter stops are noise
+MAX_R_MULTIPLE = 50.0         # cap outlier r_multiples from near-zero risk
+
+
 def compute_cost_drag(entry_price: float, stop_price: float,
                       asset_class: Optional[str] = None) -> float:
     """
@@ -35,13 +40,15 @@ def compute_cost_drag(entry_price: float, stop_price: float,
     where risk_pct = |entry - stop| / entry
 
     Returns cost drag as a positive number (subtract from gross R).
+    Returns float('inf') when risk_pct is below MIN_RISK_PCT — the trade
+    is too noisy to cost-adjust meaningfully (degenerate stop distance).
     """
     if entry_price <= 0 or stop_price <= 0:
         return 0.0
 
     risk_pct = abs(entry_price - stop_price) / entry_price
-    if risk_pct <= 0:
-        return 0.0
+    if risk_pct < MIN_RISK_PCT:
+        return float('inf')
 
     venue_cost_bps = VENUE_COSTS.get(asset_class or "", DEFAULT_COST)
     return (venue_cost_bps / 10000.0) / risk_pct
@@ -94,6 +101,10 @@ def adjust_trade(entry_price: float, stop_price: float,
         gr = gross_bps / 10000 / risk_pct if risk_pct > 0 else 0
     else:
         gr = 0.0
+
+    # Cap degenerate r_multiples from near-zero risk trades
+    if abs(gr) > MAX_R_MULTIPLE:
+        gr = MAX_R_MULTIPLE if gr > 0 else -MAX_R_MULTIPLE
 
     return AdjustedTrade(
         gross_r=gr,

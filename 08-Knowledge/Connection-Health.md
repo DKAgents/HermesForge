@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-20T15:20:58Z
+updated: 2026-09-20T19:23:43Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,31 +9,33 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 835 |
-| Connections created | 1 | 271 |
-| Review queue | 230 | 230 |
-| Avg score | 3.1 | — |
+| Notes examined | 5 | 840 |
+| Connections created | 3 | 274 |
+| Review queue | 233 | 233 |
+| Avg score | 3.6 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~4999
-- Total notes: 2359
-- Avg degree per note: 2.119
-- Notes with links: 1006 (42.7%)
-- Orphan notes (no links): 1352 (57.3%)
+- Total wikilinks in vault: ~5002
+- Total notes: 2365
+- Avg degree per note: 2.115
+- Notes with links: 1007 (42.6%)
+- Orphan notes (no links): 1357 (57.4%)
 
 ## Weakly Connected Areas
 - `campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
-- `04-ForgeLoop` — 31 notes, avg degree 0.0
+- `04-ForgeLoop` — 32 notes, avg degree 0.0
 - `04-ForgeLoop/Maintenance` — 66 notes, avg degree 0.0
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-20T15:20:58Z)
-- **08-Knowledge/Insights/INS-2026-07-31-volume-divergence-triggers-stop-adjustment-in-flag-pennant-b.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/risk-guidelines/RG021-use-of-advance-stop-orders-in-point-and-figure-trading.md** (score 4.0): Both notes address stop-loss management but in different charting contexts (flag/pennant vs. point-and-figure). Linking them reinforces the general principle of pre-planned, volume-confirmed stop adjustments, adding cross-system validity to the rule.
+## Recent Discoveries (last run: 2026-09-20T19:23:43Z)
+- **06-Strategies/Hypotheses/STR-2026-09-20-buy-when-ema20-crosses-above-ema50-with-price-above-ema200.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN028-10-and-50-day-moving-average-crossover.md** (score 4.0): Both notes describe moving average crossover strategies, but with different periods and conditions; linking them allows for comparison of classic vs. modified EMA rules.
+- **06-Strategies/Hypotheses/STR-2026-09-20-buy-when-ema20-crosses-above-ema50-with-price-above-ema200.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN027-5-and-20-day-moving-average-crossover.md** (score 4.0): Both notes describe moving average crossover strategies, with Note A applying a specific EMA20/50/200 variant to SOL and Note B providing the classic 5/20-day crossover rule from Murphy. Linking them grounds the backtested strategy in established technical analysis literature, aiding comparison of parameter choices and validation.
+- **06-Strategies/Hypotheses/STR-2026-09-20-buy-when-ema20-crosses-above-ema50-with-price-above-ema200.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C123-double-crossover-method.md** (score 4.0): Note A implements the classic double crossover method described in Note B, but adds an additional filter (price above EMA200) to reduce false signals, making it a specific variant worth cross-referencing.
 
 ## Reflection Notes
-- Run 150: Created 1 connections from 5 notes. Avg score: 3.2.
 - Run 155: Created 1 connections from 5 notes. Avg score: 4.3.
 - Run 156: Created 1 connections from 5 notes. Avg score: 4.2.
 - Run 163: Created 1 connections from 5 notes. Avg score: 3.9.
 - Run 167: Created 1 connections from 5 notes. Avg score: 3.1.
+- Run 168: Created 3 connections from 5 notes. Avg score: 3.6.

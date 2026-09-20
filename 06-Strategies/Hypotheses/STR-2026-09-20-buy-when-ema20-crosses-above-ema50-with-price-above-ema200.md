@@ -72,3 +72,10 @@ SOL
 
 ---
 *Sourced by X Strategy Scout on 2026-09-20*
+
+## Related
+- [[C123-double-crossover-method]] — See C123-double-crossover-method for the classic double crossover method underlying this strategy
+
+- [[EN027-5-and-20-day-moving-average-crossover]] — See EN027-5-and-20-day-moving-average-crossover for the classic double-crossover rule
+
+- [[EN028-10-and-50-day-moving-average-crossover]] — See EN028 for classic double crossover comparison
