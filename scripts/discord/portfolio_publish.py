@@ -45,7 +45,6 @@ from scanners.scanner_b_macd_divergence import scan as scan_b
 from scanners.scanner_d_sr_reversal import scan as scan_d
 from scanners.scanner_i_adaptive_trend import scan as scan_i
 from scanners.scanner_j_eufearia_cci import scan as scan_j
-from scanners.scanner_l_atr_contraction import scan_ticker as scan_l_ticker
 from scanners.scanner_p_crosssectional import scan as scan_p
 
 from regime_detector import (
@@ -87,14 +86,6 @@ SCANNER_REGISTRY = {
         "default_confidence": "high",
         "scanner_kwargs": {},  # long_only set dynamically per asset_class
         "disabled_asset_classes": ["crypto"],  # KILLED on crypto per ADR-004 Amendment 1
-    },
-    "STR-L-atr-contraction": {
-        "scan_fn": scan_l_ticker,
-        "call_mode": "per_ticker",
-        "note_id": "STR-20260730-atr-contraction-breakout",
-        "name": "ATR Contraction",
-        "default_confidence": "medium",
-        "scanner_kwargs": {},
     },
     "STR-P-crosssectional": {
         "scan_fn": scan_p,

@@ -1,0 +1,9 @@
+ticker,date,direction,entry_price,stop_price,target_price,exit_price,exit_reason,r_multiple,bars_held,subperiod,strategy_id,vix,fear_greed,divergence_gap,vix_wow_change,fg_wow_change
+SPY,2019-06-06,long,255.2648,253.3919,260.8834,258.9395,fg_recovery,1.9621,3,period1_bull,STR-VIXFG-DIVERGENCE,15.93,34,14.74,-1.37,-39.0
+SPY,2019-07-12,long,270.7816,266.4743,283.7034,265.5487,stop,-1.2149,14,period1_bull,STR-VIXFG-DIVERGENCE,12.39,33,18.02,-0.89,-34.0
+SPY,2019-07-16,long,269.998,266.2731,281.1727,265.5487,stop,-1.1945,12,period1_bull,STR-VIXFG-DIVERGENCE,12.86,34,18.45,-1.23,-50.0
+SPY,2019-09-19,long,271.1688,266.0923,286.3985,265.3273,stop,-1.1507,8,period1_bull,STR-VIXFG-DIVERGENCE,14.05,31,14.01,-0.17,-8.0
+SPY,2019-11-20,long,281.1887,277.9233,290.9851,281.1887,time,0.0,20,period1_bull,STR-VIXFG-DIVERGENCE,12.78,32,16.54,-0.22,-6.0
+SPY,2024-07-08,long,541.095,533.0635,565.1896,547.1853,fg_recovery,0.7583,5,period3_current,STR-VIXFG-DIVERGENCE,12.37,28,13.04,-0.07,-19.0
+SPY,2024-08-20,long,544.4276,529.0087,590.6841,546.4642,fg_recovery,0.1321,4,period3_current,STR-VIXFG-DIVERGENCE,15.88,30,10.8,-2.24,-1.0
+SPY,2024-08-29,long,544.0865,531.9278,580.5628,526.5562,stop,-1.4418,5,period3_current,STR-VIXFG-DIVERGENCE,15.65,29,10.07,-1.9,-10.0
