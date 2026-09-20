@@ -38,7 +38,7 @@ def _load_api_key() -> Optional[str]:
         for line in env_file.read_text().split('\n'):
             line = line.strip()
             if line.startswith("TYPESAFE_API_KEY="):
-                return line.split("=", 1)[1].strip().strip('"').strip("'")
+                key = line.split("=", 1)[1].strip().strip('"').strip("'")
     return None
 
 
