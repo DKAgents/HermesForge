@@ -42,6 +42,8 @@ FIELDS = [
     "vix",
     "dxy",
     "fear_greed",
+    "gauntlet_r",
+    "cost_drag_r",
 ]
 
 
