@@ -135,16 +135,23 @@ def extract_strategy_spec(text: str) -> dict:
         if re.search(rf"\b{ticker}\b", text):
             spec["instruments"].append(ticker)
 
-    # Entry conditions — capture sentences near entry keywords
+    # Entry conditions — capture sentences near entry keywords (expanded for natural language)
     entry_sentences = re.findall(
-        r"[^.!?\n]{0,200}\b(?:entry|buy|long|signal|cross|crossover|trigger)\b[^.!?\n]{0,200}",
+        r"[^.!?\n]{0,200}\b(?:entry|buy|long|signal|cross|crossover|trigger"
+        r"|setup|pattern|breakout|reversal|pullback|sweep|breaker|mitigation"
+        r"|inside\s*bar|engulfing|doji|hammer|pin\s*bar"
+        r"|condition|rule|criterion|filter|check|confirmation"
+        r"|buy\b|sell\b|open\b)(?:\s|ing|s|ed)?\b[^.!?\n]{0,200}",
         text, re.IGNORECASE
     )
     spec["entry"] = [s.strip()[:120] for s in entry_sentences[:3]]
 
-    # Exit conditions
+    # Exit conditions — expanded for natural language
     exit_sentences = re.findall(
-        r"[^.!?\n]{0,200}\b(?:exit|stop|target|take profit|TP|SL|close)\b[^.!?\n]{0,200}",
+        r"[^.!?\n]{0,200}\b(?:exit|stop|target|take[- ]?profit|TP\d?|SL"
+        r"|close\b|sell\b|cover\b|liquidate|flat"
+        r"|trailing|reverse|opposite|crossover|EMA\s*cross"
+        r"|risk|ATR|time\s*stop|invalidation)(?:\s|ing|s|ed)?\b[^.!?\n]{0,200}",
         text, re.IGNORECASE
     )
     spec["exit"] = [s.strip()[:120] for s in exit_sentences[:3]]
@@ -361,13 +368,34 @@ def write_scout_report(candidates: list[dict], queries_run: int, total_read: int
 # ── Main ─────────────────────────────────────────────────────────────────
 
 def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
-         threshold: int = DEFAULT_THRESHOLD):
+         threshold: int = DEFAULT_THRESHOLD, priority_file: str = ""):
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     print(f"🔍 X Strategy Scout — {today}")
     print(f"   Threshold: {threshold}, Max candidates: {max_candidates}")
     if dry_run:
         print("   🧪 DRY RUN — no files will be written")
+    if priority_file:
+        print(f"   📎 Priority file: {priority_file}")
     print()
+
+    # Phase 0: Deep-read priority URLs from Edge Discovery
+    priority_tweets = []
+    if priority_file:
+        pf = Path(priority_file)
+        if pf.exists():
+            urls = [l.split("#")[0].strip() for l in pf.read_text().split('\n')
+                    if l.strip() and 'x.com/' in l and '/status/' in l]
+            print(f"  📎 Edge Discovery candidates: {len(urls)} URLs")
+            for url in urls[:8]:  # cap at 8 deep-reads
+                post_id = url.rstrip('/').split('/status/')[-1].split('?')[0]
+                if post_id.isdigit():
+                    full = xurl_read(post_id)
+                    if full and full.get("text"):
+                        full["_query"] = "edge-discovery"
+                        full["_priority"] = True
+                        priority_tweets.append(full)
+                        print(f"    ✅ Deep-read: {post_id}")
+            print()
 
     # Phase 1: Search + score from snippets
     all_tweets = []  # (tweet_dict, query)
@@ -380,26 +408,34 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
             tweet["_query"] = query
         all_tweets.extend(tweets)
 
-    # Deduplicate by ID
+    # Deduplicate by ID, priority tweets override search results
     seen = set()
     unique_tweets = []
+    for t in priority_tweets:  # priority first
+        tid = t.get("id")
+        if tid and tid not in seen:
+            seen.add(tid)
+            unique_tweets.append(t)
     for t in all_tweets:
         tid = t.get("id")
         if tid and tid not in seen:
             seen.add(tid)
             unique_tweets.append(t)
 
-    print(f"\n  Deduplicated: {len(unique_tweets)} unique tweets\n")
+    print(f"\n  Deduplicated: {len(unique_tweets)} unique tweets "
+          f"(+{len(priority_tweets)} priority)\n")
 
     # Score each tweet
     scored = []
     for tweet in unique_tweets:
         text = tweet.get("text", "")
         score, breakdown = score_tweet(text)
-        if score >= threshold:
+        is_priority = tweet.get("_priority", False)
+        if score >= threshold or is_priority:
             scored.append((score, breakdown, tweet))
 
-    scored.sort(key=lambda x: x[0], reverse=True)
+    # Sort: priority tweets first, then by score
+    scored.sort(key=lambda x: (not x[2].get("_priority", False), -x[0]))
     print(f"  Scored >= {threshold}: {len(scored)} candidates")
     for score, bd, tw in scored[:10]:
         author = tw.get("author_id", "?")
@@ -481,11 +517,17 @@ if __name__ == "__main__":
     dry_run = "--dry-run" in sys.argv
     max_candidates = MAX_CANDIDATES
     threshold = DEFAULT_THRESHOLD
+    priority_file = ""
 
     for i, arg in enumerate(sys.argv):
         if arg == "--max-candidates" and i + 1 < len(sys.argv):
             max_candidates = int(sys.argv[i + 1])
         if arg == "--threshold" and i + 1 < len(sys.argv):
             threshold = int(sys.argv[i + 1])
+        if arg.startswith("--priority-file="):
+            priority_file = arg.split("=", 1)[1]
+        elif arg == "--priority-file" and i + 1 < len(sys.argv):
+            priority_file = sys.argv[i + 1]
 
-    main(dry_run=dry_run, max_candidates=max_candidates, threshold=threshold)
+    main(dry_run=dry_run, max_candidates=max_candidates,
+         threshold=threshold, priority_file=priority_file)
