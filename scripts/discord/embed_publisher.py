@@ -394,7 +394,7 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
         {"name": "🛑 Stop", "value": f"{stop_str} ({stop_pct:.1f}% risk)", "inline": True},
         {"name": "🎯 Target", "value": target_str, "inline": True},
         {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
-        {"name": "⚡ Net R (est.)", "value": _estimated_net_r_embed(signal_dict), "inline": True},
+        {"name": "Net R (after costs)", "value": _estimated_net_r_embed(signal_dict), "inline": True},
         {"name": "Regime", "value": regime_str, "inline": True},
         {"name": "Confidence", "value": f"{tier_tag} ({met_ratio})", "inline": True},
         {"name": "Key Conditions", "value": conditions_text, "inline": False},
@@ -402,11 +402,11 @@ def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> di
     ]
 
     embed = {
-        "title": f"📊 {strategy_name} v{version}",
+        "title": f"📊 [GAUNTLET] {strategy_name} v{version}",
         "description": f"**{ticker}** | {direction_label} | Daily | [TradingView Chart]({tv_url}){id_line}",
         "color": color,
         "fields": fields,
-        "footer": {"text": "HermesForge Signal Pipeline"},
+        "footer": {"text": "HermesForge Gauntlet • Pessimistic fills + cost-adjusted returns"},
         "timestamp": now_pt().isoformat(),
     }
 
@@ -654,7 +654,7 @@ def build_sweep_embed(signal_dict: dict) -> dict:
 
     # Build the standardized embed — same field order as daily signals
     embed = {
-        "title": f"📊 STR-Q Liquidity Sweep — {ticker}",
+        "title": f"📊 [GAUNTLET] STR-Q Liquidity Sweep — {ticker}",
         "description": (
             f"{direction_emoji} **{direction_label}** | Intraday 5m | "
             f"Sweep: {signal_dict.get('sweep_direction', direction)} at **{level_type}**{id_str}\n"
@@ -687,7 +687,7 @@ def build_sweep_embed(signal_dict: dict) -> dict:
                 f"• 5-minute intraday execution → precise timing, post-sweep entry"
             ), "inline": False},
         ],
-        "footer": {"text": "HermesForge STR-Q Intraday Pipeline"},
+        "footer": {"text": "HermesForge Gauntlet • STR-Q Intraday • Pessimistic fills + cost-adjusted"},
         "timestamp": now_pt().isoformat(),
     }
 

@@ -308,7 +308,7 @@ def format_alert(signal_dict: dict) -> str:
         f"📍 Entry:  {entry_str}\n"
         f"🛑 Stop:   {stop_str}  ({stop_pct:.1f}% risk)\n"
         f"🎯 Target: {target_str}  (R:R {rr:.1f}:1)\n"
-        f"⚡ Net R (est. after costs): {_estimated_net_r(signal_dict)}\n\n"
+        f"⚡ Net R (after costs): {_estimated_net_r(signal_dict)}\n\n"
         f"**Regime:** {regime_str}\n\n"
         f"**Key Conditions:** ({met_ratio} met)\n{conditions_block}\n\n"
         f"_Posted: {now}_"
