@@ -18,10 +18,20 @@ from typing import Dict, List, Set
 
 ELIGIBLE: Dict[str, Set[str]] = {
 
-    # ── STR-Q liquidity sweeps — STOCKS (pre-existing, not re-qualified) ──
+    # ── STR-Q liquidity sweeps — STOCKS + CRYPTO (re-qualified 2026-09-21) ──
+    # Stocks: 8 original (pre-existing, not re-qualified)
+    # Crypto: 27 assets from post-gauntlet ledger (≥5 trades, avg net R > 0)
+    #   Top: UNI +1.13R, AAVE +1.06R, DOT +0.97R, XPL +0.85R
+    #   Rejected: SUI(-0.02R), BNB(-0.26R), BTC(-0.31R), PAXG(-1.15R), TRX(-1.53R)
     "STR-Q-liquidity-sweep": {
+        # Stocks (8)
         "NVDA", "AMZN", "TSLA", "MSFT",
         "AAPL", "SPY", "META", "GOOGL",
+        # Crypto (27)
+        "UNI", "AAVE", "ARB", "ENA", "ONDO", "XPL", "FARTCOIN",
+        "DOT", "CRV", "NEAR", "PUMP", "JUP", "ADA", "BCH",
+        "SOL", "APT", "AVAX", "HYPE", "ZEC", "DOGE", "LTC",
+        "WLD", "XRP", "LINK", "OP", "TRUMP", "ETH",
     },
 
     # ── STR-QW wider stops — CRYPTO (pre-existing, not re-qualified) ──
