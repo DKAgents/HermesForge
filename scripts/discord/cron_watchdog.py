@@ -11,7 +11,7 @@ with open(env_file) as ef:
             k, _, v = line.partition("=")
             os.environ[k.strip()] = v.strip().strip('"').strip("'")
 
-WEBHOOK = os.environ.get("CROSSPOST_WEBHOOK_1532020053548208328", "")
+WEBHOOK = os.environ.get("CROSSPOST_WEBHOOK_1533332485641998386", "")  # strategy-status, not briefing
 if not WEBHOOK:
     exit(0)
 
