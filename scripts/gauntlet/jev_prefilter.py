@@ -47,6 +47,7 @@ Usage:
 from dataclasses import dataclass, field
 from typing import Any, Optional
 from jev_client import JevClient
+from jev_performance_tracker import get_performance_context
 
 # ── US-150 §2b: tier thresholds ───────────────────────────────────────
 APPROVED_THRESHOLD = 0.75   # composite >= 0.75 → paper + live eligible
@@ -103,6 +104,12 @@ def prefilter_signal(signal: dict, market_context: Optional[dict] = None,
         },
         "market": market_context or {},
     }
+    
+    # ── Feedback loop: include historical performance for this strategy ──
+    strategy_id = signal.get("strategy_id", "unknown")
+    perf_ctx = get_performance_context(strategy_id)
+    if perf_ctx.get("available"):
+        state["historical_performance"] = perf_ctx
 
     nouls = {}
     reasons = []
@@ -111,8 +118,11 @@ def prefilter_signal(signal: dict, market_context: Optional[dict] = None,
     try:
         prob = jev.noul(
             state=state,
-            instructions="Based on the signal details and market context, is this a valid, "
-                         "non-spurious trading setup worth paper-trading?",
+            instructions="Based on the signal details, market context, and historical "
+                         "performance data (if available), is this a valid, non-spurious "
+                         "trading setup worth paper-trading? A strategy with strong "
+                         "historical win rate and positive avg R should be given more "
+                         "benefit of doubt on marginal signals.",
             true_criteria="Valid: the setup matches the strategy's edge, market context "
                          "supports it, risk/reward is reasonable",
             false_criteria="Invalid: likely noise, wrong market conditions, unrealistic "
