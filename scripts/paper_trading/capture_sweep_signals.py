@@ -390,6 +390,9 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 elif jev_result.tier == "marginal":
                     print(f"  JEV MARGINAL: {symbol} ({jev_result.confidence:.0%}) — paper only")
                     jev_action = "allow"
+                # Record Jev score in trade dict for ML feedback loop
+                if jev_action == "allow" and not jev_shadow:
+                    trade_dict["jev_score"] = round(jev_result.confidence, 4)
             except Exception as e:
                 summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                 print(f"  JEV ERROR (fail-closed): {symbol} — {e}")

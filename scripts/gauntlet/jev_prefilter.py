@@ -61,9 +61,10 @@ def _get_ml_predictor() -> MLPredictor:
     return _ml_predictor
 
 # ── US-150 §2b: tier thresholds ───────────────────────────────────────
+# Tuned by jev_threshold_tuner.py (ML-driven, auto-adjusted)
 APPROVED_THRESHOLD = 0.75   # composite >= 0.75 → paper + live eligible
-MARGINAL_THRESHOLD = 0.60   # 0.60 <= comp < 0.75 → paper only, never live
-# Below 0.60 → rejected outright
+MARGINAL_THRESHOLD = 0.40   # 0.40 <= comp < 0.75 → paper only, never live
+# Below 0.40 → rejected outright
 
 
 @dataclass
