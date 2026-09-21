@@ -34,16 +34,22 @@ import csv
 import os
 import hashlib
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 import numpy as np
 
 TRADES_CSV = os.path.join(os.path.dirname(__file__), "..", "paper_trading", "trades.csv")
 
+# ── Gauntlet cutover: only train on post-gauntlet trades (cost-adjusted fills) ──
+# Pre-gauntlet trades used optimistic fills — contaminated data
+GAUNTLET_CUTOVER = datetime(2026, 9, 14, tzinfo=timezone.utc)
 
-def _load_rows() -> list[dict]:
-    """Load all closed trades with parsable fields."""
+
+def _load_rows(since_date: Optional[datetime] = None) -> list[dict]:
+    """Load all closed trades with parsable fields, optionally filtered by date."""
+    if since_date is None:
+        since_date = GAUNTLET_CUTOVER
     path = os.path.normpath(TRADES_CSV)
     if not os.path.exists(path):
         return []
@@ -60,6 +66,19 @@ def _load_rows() -> list[dict]:
             except (ValueError, TypeError):
                 continue
             row["_r"] = r
+            
+            # Filter by cutoff date
+            if since_date is not None:
+                try:
+                    raw = row["exit_date"].replace(" ", "T").replace("Z", "+00:00")
+                    exit_dt = datetime.fromisoformat(raw)
+                    if exit_dt.tzinfo is None:
+                        exit_dt = exit_dt.replace(tzinfo=timezone.utc)
+                    if exit_dt < since_date:
+                        continue  # Skip pre-cutoff trades
+                except (ValueError, KeyError):
+                    pass  # Can't parse date — include anyway
+            
             rows.append(row)
     
     return rows
