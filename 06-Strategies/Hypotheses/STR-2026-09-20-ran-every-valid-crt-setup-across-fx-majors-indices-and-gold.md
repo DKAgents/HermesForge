@@ -15,8 +15,10 @@ scout_score: 44
 scout_date: 2026-09-20
 gates_passed: []
 eligible_assets: []
+topic: strategies
+has_quotes: false
+tags: []
 ---
-
 # Ran every valid CRT setup across FX majors, indices and gold on the 4H. 📊
 Using  (HYP-15)
 

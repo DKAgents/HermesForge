@@ -34,3 +34,6 @@ Before acting on any daily MACD or Stochastics crossover, a trader should requir
 
 ## Related Notes
 - [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]
+
+## Related
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter]] — See INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter for the weekly channel breakout as a specific filter in the layered system.

@@ -15,8 +15,10 @@ scout_score: 49
 scout_date: 2026-09-20
 gates_passed: []
 eligible_assets: []
+topic: strategies
+has_quotes: false
+tags: []
 ---
-
 # buy when EMA20 crosses above EMA50, with price above EMA200 (HYP-14)
 
 ## Thesis

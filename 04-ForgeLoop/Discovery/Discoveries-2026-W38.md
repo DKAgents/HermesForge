@@ -1,8 +1,8 @@
 ---
 type: discovery-report
 week: 2026-W38
-date: 2026-09-19 21:07 PDT
-insights_found: 13
+date: 2026-09-20 21:07 PDT
+insights_found: 16
 seeds_run: 18
 llm_calls: 18
 tags: [discovery, knowledge-evolution, forge-loop]
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W38
 
-Generated: 2026-09-19 21:07 PDT
+Generated: 2026-09-20 21:07 PDT
 
 ## Summary
 
@@ -18,22 +18,25 @@ Generated: 2026-09-19 21:07 PDT
 |--------|-------|
 | Seeds queried | 18 |
 | LLM synthesis calls | 18 |
-| Insights accepted (actionability ≥ 3) | 13 |
+| Insights accepted (actionability ≥ 3) | 16 |
 
 ## New Insights
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-09-20-volume-confirmed-breakouts-as-position-sizing-trigger\|Volume-Confirmed Breakouts as Position S]] | 4/5 | adds_condition | trading_rules, indicators |
-| [[INS-2026-09-20-volume-confirmed-breakouts-avoid-bull-trap-stops\|Volume-Confirmed Breakouts Avoid Bull-Tr]] | 4/5 | adds_condition | indicators, patterns |
-| [[INS-2026-09-20-rsi-filter-enhances-candle-reversal-confirmation\|RSI Filter Enhances Candle Reversal Conf]] | 4/5 | adds_condition | indicators, patterns |
-| [[INS-2026-09-20-stop-distance-from-s-r-levels-determines-position-size\|Stop Distance from S/R Levels Determines]] | 4/5 | reveals_sequence | concepts, rules |
-| [[INS-2026-09-20-double-crossover-and-1-position-sizing-interplay\|Double Crossover and 1% Position Sizing ]] | 4/5 | adds_condition | indicators, edge-conditions |
-| [[INS-2026-09-20-exits-over-entries-stop-placement-mirrors-murphy-s-exit-prio\|Exits Over Entries: Stop Placement Mirro]] | 4/5 | resolves_conflict | risk-guidelines, concepts |
-| [[INS-2026-09-20-murphy-40-60-retracement-refines-fib-50-entry\|Murphy 40-60% Retracement Refines Fib 50]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-20-adx-filters-keltner-use-with-retracement-entries\|ADX filters Keltner use with retracement]] | 4/5 | creates_filter | indicators, edge-conditions |
-| [[INS-2026-09-20-rsi-sector-strength-enhances-crb-bond-rotation-signals\|RSI Sector Strength Enhances CRB/Bond Ro]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-20-commodity-trends-as-leading-filter-for-10-50-crossover\|Commodity Trends as Leading Filter for 1]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-09-20-volume-confirms-gap-type-for-valid-signals\|Volume Confirms Gap Type for Valid Signa]] | 4/5 | adds_condition | patterns, rules |
-| [[INS-2026-09-20-earnings-calendar-filter-for-role-reversal-entries\|Earnings Calendar Filter for Role-Revers]] | 4/5 | adds_condition | concepts, rules |
-| [[INS-2026-09-20-oscillator-entries-require-secondary-trend-confirmation\|Oscillator entries require secondary tre]] | 3/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-21-volume-confirmation-as-breakout-validity-filter\|Volume Confirmation as Breakout Validity]] | 4/5 | confirms_risk_rule | rules, indicators |
+| [[INS-2026-09-21-rsi-confirms-reversal-patterns-only-in-overbought-oversold-z\|RSI Confirms Reversal Patterns Only in O]] | 4/5 | adds_condition | indicators, patterns |
+| [[INS-2026-09-21-weekly-price-channel-as-trend-filter-for-macd-stochastics\|Weekly Price Channel as Trend Filter for]] | 4/5 | adds_condition | rules, concepts |
+| [[INS-2026-09-21-gap-s-r-determines-position-size-via-stop\|Gap S/R Determines Position Size via Sto]] | 4/5 | reveals_sequence | concepts, rules |
+| [[INS-2026-09-21-double-crossover-oscillator-confirms-murphy-s-stop-trading-p\|Double Crossover Oscillator Confirms Mur]] | 4/5 | confirms_risk_rule | indicators, rules |
+| [[INS-2026-09-21-crossover-confirms-position-sizing-limits-not-conflict\|Crossover Confirms Position Sizing, Limi]] | 4/5 | adds_condition | indicators, risk guidelines |
+| [[INS-2026-09-21-murphy-s-40-60-retracement-zone-for-entries\|Murphy's 40-60% retracement zone for ent]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-21-adx-filters-keltner-channel-reliability-regime\|ADX Filters Keltner Channel Reliability ]] | 4/5 | adds_condition | indicators, edge-conditions |
+| [[INS-2026-09-21-crb-bond-ratio-triggers-sector-rotation-with-rs-filter\|CRB/Bond Ratio Triggers Sector Rotation ]] | 4/5 | adds_condition | indicators, rules |
+| [[INS-2026-09-21-commodity-collapse-confirms-10-50-death-cross-sell\|Commodity Collapse Confirms 10/50 Death ]] | 4/5 | confirms_risk_rule | indicators, rules |
+| [[INS-2026-09-21-volume-confirms-gap-type-validity\|Volume Confirms Gap Type Validity]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-09-21-earnings-filter-resolves-subjectivity-in-support-resistance-\|Earnings Filter Resolves Subjectivity in]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-21-volume-based-stop-placement-for-false-breakouts\|Volume-based stop placement for false br]] | 3/5 | adds_condition | indicators, rules |
+| [[INS-2026-09-21-counter-trend-oscillator-entries-require-secondary-trend-fil\|Counter-Trend Oscillator Entries Require]] | 3/5 | adds_condition | concepts, rules |
+| [[INS-2026-09-21-pivot-stop-vs-3-1-ratio-conflict-filter\|Pivot stop vs 3:1 ratio conflict filter]] | 3/5 | creates_filter | concepts, risk-guidelines |
+| [[INS-2026-09-21-exits-matter-pivot-stops-and-p-f-trailing\|Exits Matter: Pivot Stops and P&F Traili]] | 3/5 | confirms_risk_rule | risk-guidelines, concepts |

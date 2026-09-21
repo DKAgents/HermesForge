@@ -13,8 +13,10 @@ source: "@QuantifiedStrat (Oddmund Grotte)"
 source_url: "https://x.com/quantifiedstrat/status/2101295243115000032"
 gates_passed: [G0, G3]
 eligible_assets: [SPY]
+topic: strategies
+has_quotes: false
+tags: []
 ---
-
 # Triple RSI Mean Reversion (HYP-13)
 
 ## Thesis
