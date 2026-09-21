@@ -48,6 +48,17 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 from jev_client import JevClient
 from jev_performance_tracker import get_performance_context
+from jev_ml_predictor import MLPredictor
+
+# ── Lazy-init ML predictor (trained on first use, cached to disk) ────
+_ml_predictor: Optional[MLPredictor] = None
+
+
+def _get_ml_predictor() -> MLPredictor:
+    global _ml_predictor
+    if _ml_predictor is None:
+        _ml_predictor = MLPredictor()
+    return _ml_predictor
 
 # ── US-150 §2b: tier thresholds ───────────────────────────────────────
 APPROVED_THRESHOLD = 0.75   # composite >= 0.75 → paper + live eligible
@@ -110,6 +121,12 @@ def prefilter_signal(signal: dict, market_context: Optional[dict] = None,
     perf_ctx = get_performance_context(strategy_id)
     if perf_ctx.get("available"):
         state["historical_performance"] = perf_ctx
+    
+    # ── ML prediction: what does the model expect for this signal? ──
+    ml = _get_ml_predictor()
+    ml_pred = ml.predict_signal(signal)
+    if ml_pred.get("available"):
+        state["ml_prediction"] = ml_pred
 
     nouls = {}
     reasons = []
