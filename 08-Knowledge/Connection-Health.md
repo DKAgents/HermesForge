@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-21T07:29:32Z
+updated: 2026-09-21T11:31:33Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 855 |
-| Connections created | 1 | 276 |
-| Review queue | 238 | 238 |
-| Avg score | 4.4 | — |
+| Notes examined | 5 | 860 |
+| Connections created | 0 | 276 |
+| Review queue | 241 | 241 |
+| Avg score | 4.2 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5055
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-21T07:29:32Z)
-- **08-Knowledge/Insights/INS-2026-08-01-three-weekly-tools-combine-into-layered-trend-filter-system.md** → **08-Knowledge/Insights/INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter.md** (score 5.0): Both notes derive from the same R142/C130/N044 insights and collectively define a layered weekly trend filtering system for daily MACD/Stochastic signals; linking them clarifies the specific role of the weekly channel breakout within the broader system.
+## Recent Discoveries (last run: 2026-09-21T11:31:33Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 163: Created 1 connections from 5 notes. Avg score: 3.9.
