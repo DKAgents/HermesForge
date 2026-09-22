@@ -528,7 +528,21 @@ def publish_signal(signal_dict: dict, asset_class: str,
                 signal_dict["gauntlet_pessimistic_slip"] = g3["pessimistic_slippage_bps"]
                 signal_dict["gauntlet_book_mid"] = g3["book_mid"]
                 # Adjust entry price to realistic fill for ALL downstream consumers
-                signal_dict["entry_price"] = g3["realistic_entry"]
+                # Keep original entry for stop/target/R:R calculations
+                signal_dict["gauntlet_entry_price"] = g3["realistic_entry"]
+                signal_dict["original_entry_price"] = signal_dict.get("entry_price", g3["realistic_entry"])
+                
+                # SAFEGUARD: never let G3 entry cross the stop price
+                # If realistic fill is beyond stop, the trade would be dead on arrival
+                direction = signal_dict.get("direction", "long")
+                stop_price = signal_dict.get("stop_price", 0)
+                realistic = g3["realistic_entry"]
+                if direction == "long" and realistic <= stop_price:
+                    signal_dict["entry_price"] = signal_dict["original_entry_price"]
+                elif direction == "short" and realistic >= stop_price:
+                    signal_dict["entry_price"] = signal_dict["original_entry_price"]
+                else:
+                    signal_dict["entry_price"] = realistic
                 signal_dict["_g3_applied"] = True
         except Exception:
             pass  # G3 failure is non-blocking
