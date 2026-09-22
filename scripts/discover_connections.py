@@ -585,6 +585,11 @@ def main():
             print(f"\n  Reached LLM call limit ({args.limit}), stopping.")
             break
 
+        # Skip exhausted seeds
+        if seed.get('exhausted'):
+            print(f"\n  [{seed['id']}] SKIPPED (exhausted: {seed.get('exhausted_reason', 'topic saturated')})")
+            continue
+
         # Gather candidates
         candidate_groups = run_seed(seed, state, args)
         seeds_run += 1

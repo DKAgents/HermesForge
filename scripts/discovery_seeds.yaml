@@ -74,6 +74,8 @@ seeds:
     query: "prior swing low high stop loss reward risk ratio 3 to 1"
     domains: [rules, risk]
     priority: high
+    exhausted: true  # 44 insights generated (Jul-Sep 2026), topic saturated
+    exhausted_reason: "44 insights produced. LLM now returns null — topic exhausted."
     description: "Connecting stop placement rules to 3:1 reward/risk requirement — when do they conflict?"
 
   # ── Intermarket + Stock Selection ──────────────────────────────────────────
