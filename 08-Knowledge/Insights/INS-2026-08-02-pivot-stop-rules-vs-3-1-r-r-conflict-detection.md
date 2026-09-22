@@ -36,4 +36,6 @@ Before entering any pivot point buy signal per EN071, calculate the distance fro
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related
+- [[RG021-use-of-advance-stop-orders-in-point-and-figure-trading]] — See RG021 for advance stop placement as alternative to pivot-based stops
+
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for additional stop placement guideline to avoid round numbers
