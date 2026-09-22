@@ -245,6 +245,15 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
         if result.get("status") == "ok":
             channel_id = result.get("channel_id", "?")
             print(f"  📢 Discord alert posted to channel {channel_id}")
+            # Explicitly register Discord info in trade log — do NOT rely on
+            # publish_signal's internal call, which silently swallows errors
+            trade_id = signal_dict.get("trade_id", "")
+            msg_id = result.get("message_id", "")
+            if trade_id and msg_id:
+                try:
+                    trade_log.register_discord_info(trade_id, msg_id, str(channel_id))
+                except Exception as e:
+                    print(f"  ⚠️ Failed to register Discord info: {e}")
             return True
         else:
             print(f"  ⚠️ Discord post failed: {result.get('response', 'unknown error')[:200]}")
@@ -612,8 +621,11 @@ def monitor_exits():
                 continue
             
             current_price = float(df["close"].iloc[-1])
-            current_high = float(df["high"].iloc[-1])
-            current_low = float(df["low"].iloc[-1])
+            # Check ALL bars in lookback, not just the current one
+            # A stop/target may have been hit on a previous bar and the
+            # exit monitor missed it because it only runs every 5 min
+            current_high = float(df["high"].max())
+            current_low = float(df["low"].min())
             
             exit_reason = None
             exit_price = None
