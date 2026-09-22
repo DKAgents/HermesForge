@@ -102,3 +102,6 @@ The **direction asymmetry** favors a short XLE / long XLY pairs trade because:
 
 ## Priority
 LOW-MEDIUM — This is a mean-reversion opportunity in an extreme-but-not-crisis dispersion. Market can remain dispersed longer than a mean-reversion trader can stay solvent. Weekly monitoring recommended.
+
+## Related Notes
+- [[README|Edge Candidates]]
