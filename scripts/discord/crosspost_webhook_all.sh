@@ -99,7 +99,9 @@ for msg in data:
         # Log any template warnings to stderr
         if check.stderr.strip():
             print(check.stderr.strip(), file=sys.stderr)
-        print(msg_id)
+        # Only forward if validator says ok
+        if check.stdout.strip() == 'ok':
+            print(msg_id)
         break
 " <<< "$MESSAGES" 2>/dev/null)
     

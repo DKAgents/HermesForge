@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""cron_watchdog.py — Silent health check. Webhook alert ONLY on failure."""
-import json, os, time, pathlib, subprocess, datetime
+"""cron_watchdog.py — Silent health check. Posts to source server channel (not follower)."""
+import json, os, time, pathlib, subprocess, datetime, urllib.request
 
 # Load env
 env_file = os.path.expanduser("~/.hermes/.env")
@@ -11,19 +11,28 @@ with open(env_file) as ef:
             k, _, v = line.partition("=")
             os.environ[k.strip()] = v.strip().strip('"').strip("'")
 
-WEBHOOK = os.environ.get("CROSSPOST_WEBHOOK_1533332485641998386", "")  # strategy-status, not briefing
-if not WEBHOOK:
+TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
+CHANNEL_ID = "1533332485641998386"  # Source server strategy-status
+
+if not TOKEN:
     exit(0)
 
 def alert(msg):
-    """Post a one-line Discord alert via webhook."""
-    payload = json.dumps({"content": msg})
-    subprocess.run([
-        "curl", "-s", "-X", "POST",
-        "-H", "Content-Type: application/json",
-        "-d", payload,
-        WEBHOOK
-    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
+    """Post alert to source server strategy-status via Discord API."""
+    payload = json.dumps({"content": msg}).encode()
+    req = urllib.request.Request(
+        f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages",
+        data=payload,
+        headers={
+            "Authorization": f"Bot {TOKEN}",
+            "Content-Type": "application/json"
+        }
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            pass
+    except:
+        pass
 
 errors = []
 
