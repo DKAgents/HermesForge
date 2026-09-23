@@ -16,21 +16,29 @@ import json
 RULES = {
     "1528555538848153640": ["Trade ID:", "[GAUNTLET]"],   # stock-setups
     "1528555885310513213": ["Trade ID:", "[GAUNTLET]"],   # crypto-setups
-    "1532020053548208328": [],   # daily-market-briefing — any format ok
-    "1533332485641998386": [],   # strategy-status
-    "1534834809451450409": [],   # strategy-research
-    "1537225420120793088": [],   # paper-trading
+    "1532020053548208328": ["# Daily Market Briefing"],   # daily-market-briefing
+    "1533332485641998386": [None],   # strategy-status — any real content OK, but must pass blacklist
+    "1534834809451450409": [None],   # strategy-research
+    "1537225420120793088": [None],   # paper-trading
     "1540951134200402071": ["Trade ID:", "[GAUNTLET]"],   # day-trade-crypto
     "1540951208028803142": ["Trade ID:", "[GAUNTLET]"],   # day-trade-stocks
 }
 
+# Global blacklist: messages matching any of these patterns are NEVER forwarded
+GLOBAL_BLACKLIST = [
+    "Cronjob Response:",     # Cron wrapper headers
+    "**Job ID:**",           # Cron metadata
+    "**Run Time:**",         # Cron metadata
+    "Cron Job:",             # Cron headers (alternate format)
+    "Watchdog Alert",        # Watchdog alerts
+    "stopped retrying",      # Tool guardrail errors
+    "same_tool_failure",     # Tool guardrail errors
+]
+
 
 def validate(msg: dict, channel_id: str) -> bool:
-    markers = RULES.get(channel_id, [])
-    if not markers:
-        return True  # No validation for this channel
-
-    # Gather all text: content + embed titles/descriptions/footers
+    """Check if message should be crossposted. Returns False to skip."""
+    # ── Global blacklist: never forward cron metadata or error messages ──
     text = msg.get("content", "") or ""
     for embed in msg.get("embeds", []):
         text += " " + (embed.get("title", "") or "")
@@ -39,6 +47,20 @@ def validate(msg: dict, channel_id: str) -> bool:
         if isinstance(footer, dict):
             text += " " + (footer.get("text", "") or "")
 
+    for pattern in GLOBAL_BLACKLIST:
+        if pattern.lower() in text.lower():
+            return False
+
+    # ── Per-channel markers ──
+    markers = RULES.get(channel_id, [])
+    if not markers:
+        return True  # No rules for this channel, just blacklist
+
+    # None marker = any real content OK (blacklist handles filtering)
+    if markers == [None]:
+        return bool(text.strip())
+
+    # Specific markers must all be present
     for marker in markers:
         if marker not in text:
             return False
@@ -66,13 +88,7 @@ if __name__ == "__main__":
     if validate(msg, channel_id):
         print("ok", flush=True)
     else:
-        # Warn about non-conforming message but allow it through
-        markers = RULES.get(channel_id, [])
-        text = msg.get("content", "") or ""
-        for embed in msg.get("embeds", []):
-            text += " " + (embed.get("title", "") or "")
-            text += " " + (embed.get("description", "") or "")
-        missing = [m for m in markers if m not in text]
         msg_id = msg.get("id", "?")
-        print(f"⚠ Template mismatch — msg {msg_id} in channel {channel_id}: missing {missing}", file=sys.stderr)
-        print("ok", flush=True)  # always forward
+        content_preview = (msg.get("content", "") or "")[:60]
+        print(f"⛔ Crosspost BLOCKED — msg {msg_id} in channel {channel_id}: {content_preview}", file=sys.stderr)
+        print("skip", flush=True)
