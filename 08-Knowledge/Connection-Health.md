@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-09-23T08:05:31Z
+updated: 2026-09-23T12:09:42Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 915 |
-| Connections created | 1 | 280 |
+| Notes examined | 5 | 920 |
+| Connections created | 0 | 280 |
 | Review queue | 251 | 251 |
-| Avg score | 4.3 | — |
+| Avg score | 3.5 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5172
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `04-ForgeLoop/Decay` — 9 notes, avg degree 0.0
 - `05-Research/Market-Intelligence` — 19 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-09-23T08:05:31Z)
-- **08-Knowledge/Insights/INS-2026-08-02-weekly-trend-confirmation-stack-ma-channel-and-oscillator-fi.md** → **08-Knowledge/Insights/INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries.md** (score 5.0): Note B explicitly builds on the layered weekly trend confirmation stack from Note A, providing a concrete trading rule that applies the weekly price channel as a filter for daily MACD/Stochastics entries, thus extending the sequence of insights.
+## Recent Discoveries (last run: 2026-09-23T12:09:42Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 171: Created 1 connections from 5 notes. Avg score: 4.4.
