@@ -33,6 +33,8 @@ Before entering on a daily MACD or Stochastics crossover, confirm: (1) price is 
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries]] — See INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries for practical application of the weekly trend stack
+
 - [[N065-macd-indicator-construction]] — See N065 for MACD construction details
 
 - [[R268-technical-analysis-checklist-market-analysis-phase]] — See R268 for the broader market analysis checklist that encompasses these weekly trend filters
@@ -40,4 +42,5 @@ Before entering on a daily MACD or Stochastics crossover, confirm: (1) price is 
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — Supplement the stack with weekly trendline break confirmation
 
 ## Related Notes
+- [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries|Weekly Trend Filter Enhances Price Channel Breakout Entries]]
 - [[EN023-trendline-break-confirmation-of-major-trend-change|Trendline Break Confirmation of Major Trend Change]]

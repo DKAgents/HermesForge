@@ -33,4 +33,5 @@ Before taking a MACD or Stochastic crossover signal on a daily chart, confirm tr
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries|Weekly Trend Filter Enhances Price Channel Breakout Entries]]
 - [[E019-weekly-chart-signals-as-filters-for-short-term-timing|Weekly Chart Signals as Filters for Short-Term Timing]]

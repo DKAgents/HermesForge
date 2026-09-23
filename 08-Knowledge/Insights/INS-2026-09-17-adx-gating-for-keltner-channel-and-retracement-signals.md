@@ -31,3 +31,6 @@ A trader should enter long on a Keltner Channel lower-band touch or a 50% retrac
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -36,3 +36,6 @@ Before acting on a 4-9-18 triple crossover buy or sell signal, compute both MA-d
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — See INS-2026-07-19-triple-crossover-oscillator-divergence-as-regime-filter for regime confirmation before applying oscillator entry rules
 
 - [[N062-macd-divergence-analysis]] — See N062-macd-divergence-analysis for classic divergence conditions that validate regime signals
+
+## Related Notes
+- [[INS-2026-09-22-triple-crossover-signals-fail-in-ranging-markets-use-oscilla|Triple Crossover Signals Fail in Ranging Markets; Use Oscillator Filter]]

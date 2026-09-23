@@ -31,3 +31,6 @@ Before acting on a daily MACD or Stochastics crossover, confirm that price is ab
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries|Weekly Trend Filter Enhances Price Channel Breakout Entries]]

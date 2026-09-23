@@ -31,3 +31,7 @@ When trading gaps, only act on breakaway or runaway gaps that are accompanied by
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-20-volume-confirms-gap-type-for-valid-signals|Volume Confirms Gap Type for Valid Signals]]
+- [[N161-runaway-gaps|Runaway Gaps]]

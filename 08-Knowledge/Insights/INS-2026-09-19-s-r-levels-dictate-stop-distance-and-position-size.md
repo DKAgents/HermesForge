@@ -31,3 +31,6 @@ Identify support/resistance levels from role reversal and gaps, set stop-loss ac
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

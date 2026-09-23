@@ -31,3 +31,6 @@ In an uptrend, wait for a pullback to retrace approximately 50% (within the 40â€
 ## Connection Type
 
 **confirms_risk_rule** â€” Actionability score: 5/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

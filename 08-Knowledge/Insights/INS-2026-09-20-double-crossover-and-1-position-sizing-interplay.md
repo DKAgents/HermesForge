@@ -31,3 +31,6 @@ When using the 10/50 crossover, apply HermesForge's 1% risk per trade, but set y
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N140-average-true-range-atr-definition|Average True Range (ATR) Definition]]

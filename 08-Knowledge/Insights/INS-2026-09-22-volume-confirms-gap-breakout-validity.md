@@ -7,8 +7,11 @@ domains: [concepts, patterns, rules]
 sources: ["N150-price-gaps-types", "R082-breakouts-must-be-accompanied-by-heavy-volume", "C328-gaps"]
 seed_id: gap_continuation_volume
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume confirms gap breakout validity
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Require above-average volume on a gap to trade it as a breakaway or runaway gap;
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N161-runaway-gaps|Runaway Gaps]]

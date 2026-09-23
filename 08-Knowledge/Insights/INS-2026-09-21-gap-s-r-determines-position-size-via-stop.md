@@ -31,3 +31,6 @@ For a short trade, identify a gap or a former support turned resistance (C065), 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

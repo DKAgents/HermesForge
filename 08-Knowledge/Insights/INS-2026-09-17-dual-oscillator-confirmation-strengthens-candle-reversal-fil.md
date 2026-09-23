@@ -31,3 +31,6 @@ When a reversal candlestick pattern appears, only take the trade if both RSI and
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N083-bullish-reversal-candle-pattern-library|Bullish Reversal Candle Pattern Library]]

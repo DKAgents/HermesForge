@@ -31,3 +31,6 @@ Before using an oscillator to enter a counter-trend trade, verify that the pullb
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

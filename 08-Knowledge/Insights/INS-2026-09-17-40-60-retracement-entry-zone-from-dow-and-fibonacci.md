@@ -31,3 +31,6 @@ In an uptrend, enter long only on pullbacks that retrace 40-60% of the prior adv
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

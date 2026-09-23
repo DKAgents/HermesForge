@@ -31,3 +31,6 @@ Use the 10/50 crossover only when willing to tolerate delayed exits; pair it wit
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[EN026-single-moving-average-buy-and-sell-signals|Single Moving Average Buy and Sell Signals]]

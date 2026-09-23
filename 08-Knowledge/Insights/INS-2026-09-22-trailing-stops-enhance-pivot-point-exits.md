@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Trailing stops enhance pivot point exits
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ After a pivot point buy stop is triggered, do not keep the stop at the initial l
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

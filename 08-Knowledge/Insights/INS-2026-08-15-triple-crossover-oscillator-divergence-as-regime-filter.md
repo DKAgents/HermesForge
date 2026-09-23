@@ -31,3 +31,6 @@ Calculate the 4-9 and 9-18 MA differences as oscillators; only act on triple cro
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-09-22-triple-crossover-signals-fail-in-ranging-markets-use-oscilla|Triple Crossover Signals Fail in Ranging Markets; Use Oscillator Filter]]

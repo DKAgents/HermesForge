@@ -31,3 +31,7 @@ Trader should overlay P&F trailing stop methodology onto pivot point systems: af
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -40,3 +40,6 @@ Before acting on a daily MACD or Stochastics crossover signal, a trader should c
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for trendline break method of weekly trend definition
 
 - [[N067-macd-histogram-as-early-warning-signal]] — Weekly MACD histogram as trend filter
+
+## Related Notes
+- [[INS-2026-09-19-weekly-trend-filter-enhances-price-channel-breakout-entries|Weekly Trend Filter Enhances Price Channel Breakout Entries]]

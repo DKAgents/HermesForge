@@ -31,3 +31,7 @@ For a long entry in a downtrend, place a stop below the prior support-turned-res
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[RG035-combining-technical-factors-with-money-management-for-stop-p|Combining Technical Factors with Money Management for Stop Placement]]
+- [[C334-resistance-level|Resistance Level]]

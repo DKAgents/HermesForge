@@ -31,3 +31,7 @@ When designing any strategy, first define the stop-exit logic (trailing or fixed
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[C245-stop-order|Stop Order]]

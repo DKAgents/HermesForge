@@ -31,3 +31,6 @@ Before executing a pivot point breakout, calculate the dollar risk from the spec
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -33,5 +33,6 @@ Trail stops using the specific structural anchor of the latest O-column in P&F u
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-20-exits-over-entries-stop-placement-mirrors-murphy-s-exit-prio|Exits Over Entries: Stop Placement Mirrors Murphy's Exit Priority]]
 - [[C243-market-order|Market Order]]
 - [[C245-stop-order|Stop Order]]

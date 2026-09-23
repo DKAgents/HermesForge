@@ -31,3 +31,6 @@ Before acting on a pivot point buy signal, calculate the stop distance and verif
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

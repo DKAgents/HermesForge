@@ -31,3 +31,6 @@ Trade breakaway gaps only when accompanied by above-average volume; ignore low-v
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N150-price-gaps-types|Price Gaps Types]]
