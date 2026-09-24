@@ -167,7 +167,7 @@ def get_trade_by_short_id(short_id: str) -> Optional[dict]:
 
 
 def register_discord_info(trade_id: str, message_id: str, channel_id: str,
-                          post_url: str = "") -> None:
+                          post_url: str = "", short_id: str = "") -> None:
     """Update a trade's Discord message info after the setup embed is posted."""
     rows = _read_all_rows()
     for row in rows:
@@ -176,6 +176,8 @@ def register_discord_info(trade_id: str, message_id: str, channel_id: str,
             row["discord_channel_id"] = channel_id
             if post_url:
                 row["discord_post_url"] = post_url
+            if short_id:
+                row["short_id"] = short_id
             _write_all_rows(rows)
             # US-123: dual-write to append-only journal
             sig = row.get("signal_id", "")

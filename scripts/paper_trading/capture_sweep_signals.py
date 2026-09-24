@@ -251,7 +251,8 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
             msg_id = result.get("message_id", "")
             if trade_id and msg_id:
                 try:
-                    trade_log.register_discord_info(trade_id, msg_id, str(channel_id))
+                    trade_log.register_discord_info(trade_id, msg_id, str(channel_id),
+                                                   short_id=signal_dict.get("short_id", ""))
                 except Exception as e:
                     print(f"  ⚠️ Failed to register Discord info: {e}")
             return True

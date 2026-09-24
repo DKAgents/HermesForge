@@ -597,7 +597,7 @@ def publish_signal(signal_dict: dict, asset_class: str,
                     post_url = make_discord_url(channel_id, result["message_id"])
                     trade_log.register_discord_info(trade_id, result["message_id"], channel_id, post_url)
         except Exception as e:
-            logger.debug(f"Trade log registration failed: {e}")
+            print(f"  ⚠️ Trade log registration failed: {e}")
 
     return {**result, "channel_id": channel_id, "chart_path": chart_path}
 
