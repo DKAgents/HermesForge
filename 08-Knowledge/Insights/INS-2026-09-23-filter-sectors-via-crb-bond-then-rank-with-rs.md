@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["N112-relative-strength-analysis-for-sector-rotation", "R249-sector-rotation-based-on-crbbond-ratio", "C340-relative-strength-analysis-for-stocks-and-sectors"]
 seed_id: intermarket_sector_rotation
 tags: [insight, discovery, knowledge-evolution]
+topic: knowledge
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Filter sectors via CRB/Bond then rank with RS
 
 ## Discovery Summary
