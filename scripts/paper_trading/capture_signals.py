@@ -98,7 +98,6 @@ from scanners.scanner_treasury_debasement import scan as scan_debase  # noqa: E4
 from scanners.scanner_hormuz_oil_shock import scan as scan_oil_shock  # noqa: E402
 
 # Watch-list scanners (imported but not yet scanning — need status:watch frontmatter)
-from scanners.scanner_l_atr_contraction import scan as scan_l   # noqa: E402
 from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-09-06): BTC Supply Crunch /
@@ -156,7 +155,7 @@ _SCANNER_ALIASES = {
     "scan_ae":      scan_ae,      "scan_af":      scan_af,
     "scan_ag":      scan_ag,      "scan_aj":      scan_aj,
     "scan_vixc":    scan_vixc,    "scan_lowcorr": scan_lowcorr,
-    "scan_l":       scan_l,       "scan_p":       scan_p,
+    "scan_p":       scan_p,
     "scan_debase":  scan_debase,   "scan_oil_shock": scan_oil_shock,
     "scan_btc_supply": scan_btc_supply,
     "scan_skewp":   scan_skewp,
