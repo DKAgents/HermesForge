@@ -95,11 +95,16 @@ SCANNER_REGISTRY = {
         "default_confidence": "low",
         "scanner_kwargs": {},
     },
+    "STR-D-sr-role-reversal": {
+        "scan_fn": scan_d,
+        "call_mode": "per_ticker",
+        "note_id": "STR-20260719-sr-role-reversal-entry",
+        "name": "SR Role Reversal",
+        "default_confidence": "medium",
+        "scanner_kwargs": {},
+        "disabled_asset_classes": [],  # Re-enabled for crypto per US-157
+    },
 }
-
-# Near-miss scanner (disabled — STR-D killed in walk-forward, ADR-004 Amendment 1)
-# NEAR_MISS_SCANNER = "STR-D-sr-role-reversal"
-NEAR_MISS_SCANNER = None
 
 # ── Per-ticker signal recency window ──────────────────────────────────────────
 # Event-driven per-ticker scanners (STR-B MACD divergence, STR-I AdaptiveTrend,
