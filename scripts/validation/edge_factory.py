@@ -64,31 +64,71 @@ def get_cycle_queries(cycle_index: int) -> list:
 # ── Search X via web search (no X API needed) ─────────────────────────────
 def search_x(query: str, max_results: int = 8) -> list[dict]:
     """Search X/Twitter via web. Returns list of {title, url, snippet}."""
-    try:
-        encoded = urllib.parse.quote(f"site:twitter.com OR site:x.com {query}")
-        url = f"https://html.duckduckgo.com/html/?q={encoded}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as r:
-            html = r.read().decode()
-        
-        results = []
-        # Parse DuckDuckGo HTML results
-        for match in re.finditer(
-            r'<a[^>]*class="result__a"[^>]*href="([^"]+)"[^>]*>(.*?)</a>.*?'
-            r'<a[^>]*class="result__snippet"[^>]*>(.*?)</a>',
-            html, re.DOTALL
-        ):
-            url = match.group(1)
-            title = re.sub(r'<[^>]+>', '', match.group(2)).strip()
-            snippet = re.sub(r'<[^>]+>', '', match.group(3)).strip()
-            if 'twitter.com' in url or 'x.com' in url:
-                results.append({"title": title, "url": url, "snippet": snippet})
-            if len(results) >= max_results:
+    all_results = []
+    
+    # Try multiple search engines (some may rate-limit)
+    for search_url, parser in [
+        (_search_google, "google"),
+        (_search_bing, "bing"),
+    ]:
+        try:
+            results = search_url(query, max_results)
+            all_results.extend(results)
+            if len(all_results) >= max_results:
                 break
-        return results
-    except Exception as e:
-        print(f"    Search error: {e}")
-        return []
+        except Exception as e:
+            continue
+    
+    return all_results[:max_results]
+
+
+def _search_google(query: str, max_results: int) -> list[dict]:
+    """Search via Google."""
+    import urllib.request, urllib.parse
+    encoded = urllib.parse.quote(f'site:twitter.com OR site:x.com {query}')
+    url = f'https://www.google.com/search?q={encoded}&num={max_results}'
+    req = urllib.request.Request(url, headers={
+        'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'
+    })
+    with urllib.request.urlopen(req, timeout=15) as r:
+        html = r.read().decode(errors='replace')
+    
+    results = []
+    # Google result links
+    for match in re.finditer(
+        r'<a[^>]*href="/url\?q=(https?://[^"&]+)',
+        html
+    ):
+        url = urllib.parse.unquote(match.group(1))
+        if ('twitter.com' in url or 'x.com' in url) and url not in {r['url'] for r in results}:
+            results.append({"title": url.split('/')[-1], "url": url, "snippet": ""})
+        if len(results) >= max_results:
+            break
+    return results
+
+
+def _search_bing(query: str, max_results: int) -> list[dict]:
+    """Search via Bing."""
+    import urllib.request, urllib.parse
+    encoded = urllib.parse.quote(f'site:twitter.com OR site:x.com {query}')
+    url = f'https://www.bing.com/search?q={encoded}&count={max_results}'
+    req = urllib.request.Request(url, headers={
+        'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'
+    })
+    with urllib.request.urlopen(req, timeout=15) as r:
+        html = r.read().decode(errors='replace')
+    
+    results = []
+    for match in re.finditer(
+        r'<a[^>]*href="(https?://(?:twitter\.com|x\.com)[^"]+)"',
+        html
+    ):
+        url = match.group(1)
+        if url not in {r['url'] for r in results}:
+            results.append({"title": url.split('/')[-1], "url": url, "snippet": ""})
+        if len(results) >= max_results:
+            break
+    return results
 
 
 # ── Rule Extraction ─────────────────────────────────────────────────────
