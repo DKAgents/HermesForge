@@ -33,6 +33,8 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter]] — See INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter for alternative weekly channel filter approach
+
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — See foundational oscillator entry rule that this gate refines.
 
 - [[EN070-tight-trendline-break-during-bounce-as-shorting-signal]] — Use tight trendline breaks for entry timing after weekly gate
