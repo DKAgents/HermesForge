@@ -27,7 +27,7 @@ conventions.
 | `03-ADRs/` | Architecture Decision Records |
 | `04-ForgeLoop/` | Forge loop outputs + `Discovery/` (weekly `Discoveries-*.md`) |
 | `04-Strategies/` | Strategy notes (phase1a results, T1 discoveries, STR-Q variants) |
-| `05-Proposals/` | Proposals (e.g. PROP-001 gauntlet) |
+| `trading/proposals/` | Proposals (e.g. PROP-001 gauntlet) |
 | `05-Research/` | Research + `Strategy-Validation/` |
 | `06-Strategies/` | Hypotheses, Active, Backtests, Live, Regimes, Failure-Modes, Deprecated |
 | `07-Risk/` | Risk rules, incident log |
@@ -112,7 +112,7 @@ One vault, **two roots**:
 │
 └── trading/       ← research, strategy, risk, knowledge
     ├── strategies/       (merge 04-Strategies + 06-Strategies)
-    ├── research/         (05-Research + 05-Proposals)
+    ├── research/         (05-Research + trading/proposals)
     ├── risk/             (07-Risk)
     ├── knowledge/        (08-Knowledge + legacy vault/research)
     ├── journal/          (09-Journal)

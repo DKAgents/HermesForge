@@ -71,7 +71,7 @@ All scripts live under `/root/.hermes/scripts/`.
 | `03-ADRs/` | Architecture Decision Records | Architect, Orchestrator |
 | `04-ForgeLoop/` | Forge loop outputs + `Discovery/` | Orchestrator, Documenter |
 | `04-Strategies/` | Strategy notes (phase1a, T1, STR-Q variants) | Researcher, Backtester |
-| `05-Proposals/` | Proposals (PROP-001 gauntlet) | Architect, Orchestrator |
+| `trading/proposals/` | Proposals (PROP-001 gauntlet) | Architect, Orchestrator |
 | `05-Research/` | Research + `Strategy-Validation/` | Researcher |
 | `06-Strategies/` | `Hypotheses/`, `Active/`, `Backtests/`, `Live/`, `Regimes/`, `Failure-Modes/`, `Deprecated/` | Researcher, Backtester, Coder (`capture_signals.py` reads `Hypotheses/`) |
 | `07-Risk/` | Risk rules, incident log | Risk Guardian |
@@ -201,7 +201,7 @@ All scripts live under `/root/.hermes/scripts/`.
 | Pair | Conflict |
 |---|---|
 | `04-ForgeLoop/` vs `04-Strategies/` | Both claim "04" — process output vs trading ideas |
-| `05-Proposals/` vs `05-Research/` | Both claim "05" — proposals vs research |
+| `trading/proposals/` vs `05-Research/` | Proposals vs research (now separated) |
 | `06-Strategies/Hypotheses/` vs `06-Strategies/Active/` | `Active/` is a ghost — 4 files with `status: active` but never used by any scanner |
 
 ### Dead paths
@@ -248,7 +248,7 @@ gate. Double-gated.
    silently dropped by the loader due to dual YAML blocks — not by any gate.
 3. **`.env` in git index**: the repo-root `.env` is tracked, though it's a
    1-line placeholder. No `.gitignore` protection.
-4. **Number collisions**: `04-ForgeLoop` vs `04-Strategies`, `05-Proposals`
+4. **Number collisions**: `04-ForgeLoop` vs `04-Strategies`, `trading/proposals/`
    vs `05-Research` — same prefix, different purposes.
 5. **Secrets all in one file**: `/root/.hermes/.env` (0600) holds every key
    for the entire system. No vault, no encryption at rest.

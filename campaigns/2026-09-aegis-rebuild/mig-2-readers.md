@@ -26,11 +26,11 @@ eight numbered vault directories.
 | `scripts/validation/run_phase1a_batch.py` | `04-Strategies/` | Reads phase1a results |
 | (No other active readers — `full-audit.md` and `lu-08-vault-map.md` in `campaigns/` document this directory but do not execute against it) |
 
-## 05-Proposals
+## trading/proposals/
 
 | Script | Path referenced | Operation |
 |---|---|---|
-| (No active readers — only `full-audit.md` and `lu-08-vault-map.md` in `campaigns/` document it) |
+| (No active readers — only campaign audit docs reference it) |
 
 ## 05-Research
 
@@ -106,6 +106,6 @@ eight numbered vault directories.
 - **14 scripts** read from one or more of the 8 numbered vault directories.
 - **3 of the 5 "known" readers actually touch vault dirs** — `capture_signals.py` and `discover_connections.py` confirmed; `jev_performance_tracker.py`, `live_performance_tracker.py`, and `performance_report.py` do not (they read `trades.csv` only).
 - The heaviest reader is `discover_connections.py` (4 vault dirs).
-- `05-Proposals/` has zero active script readers — it exists only as a documentation bucket.
+- `trading/proposals/` has zero active script readers — it exists only as a documentation bucket.
 - `04-Strategies/` has only one active reader (`run_phase1a_batch.py`).
 - `06-Strategies/` and `08-Knowledge/` are the most heavily read directories (9 readers each).
