@@ -86,19 +86,38 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
 
 def _hostile_strq_r_str() -> str:
     """Read cumulative hostile STR-Q R from the hostile fill jsonl file.
-    Returns a formatted string like '+362.50R' or 'unavailable' on error."""
+    Returns a formatted string with sum, record count, date range, and frozen
+    scoreboard reference.  Returns 'hostile file sum: unavailable' on error."""
     try:
         import json, pathlib
         jsonl = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
         if not jsonl.exists():
-            return "unavailable"
+            return "hostile file sum: unavailable"
         total = 0.0
+        count = 0
+        mindate = ""
+        maxdate = ""
         with open(jsonl) as f:
             for line in f:
-                total += float(json.loads(line).get("hostile_r", 0) or 0)
-        return f"{total:+.2f}R"
+                r = json.loads(line)
+                hr = r.get("hostile_r")
+                if hr is None:
+                    continue
+                total += float(hr)
+                count += 1
+                d = (r.get("entry_date") or "")[:10]
+                if d:
+                    if not mindate or d < mindate:
+                        mindate = d
+                    if not maxdate or d > maxdate:
+                        maxdate = d
+        if count == 0:
+            return "hostile file sum: unavailable"
+        return (f"STR-Q hostile file sum: {total:+.0f}R on {count} rows"
+                f", {mindate} to {maxdate}."
+                f"  Frozen reconciled scoreboard remains -104R.")
     except Exception:
-        return "unavailable"
+        return "hostile file sum: unavailable"
 
 
 def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
@@ -215,7 +234,7 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             if dd > max_dd:
                 max_dd = dd
         lines.append(f"  Total: {len(closed_rows)} trades, {wr:.0f}% win, {total_r:+.2f}R realized, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
-        lines.append(f"  STR-Q hostile R (realistic fills): {_hostile_strq_r_str()}")
+        lines.append(f"  {_hostile_strq_r_str()}")
 
         # By strategy
         lines.append("")
