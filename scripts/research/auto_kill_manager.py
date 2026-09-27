@@ -245,9 +245,11 @@ def print_report(results: dict):
     for a in sorted(results["actions"], key=lambda x: x.get("mean_r", 0)):
         action = a.get("action", "?")
         emoji = {"KILL": "🔴", "WATCH": "🟡", "RUN": "✅", "insufficient_data": "⚪"}.get(action, "?")
+        reasons = "; ".join(a.get("kill_reasons") or a.get("watch_reasons") or [])
+        extra = f" | {reasons}" if reasons else ""
         print(f"  {emoji} {a['strategy_id']}: {a.get('trades', 0)} trades, "
               f"mean={a.get('mean_r', 0):+.2f}R, WR={a.get('win_rate', 0):.0f}%, "
-              f"PF={a.get('profit_factor', 0)}")
+              f"PF={a.get('profit_factor', 0)}{extra}")
 
 
 if __name__ == "__main__":
