@@ -33,6 +33,10 @@ Before executing an oscillator-based oversold buy in an uptrend (EN041), require
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R305-oscillators-and-trend-importance]] — See R305-oscillators-and-trend-importance for foundational rule on oscillator trend reliance
+
+- [[R138-trend-direction-determines-oscillator-signal-validity]] — See R138-trend-direction-determines-oscillator-signal-validity for the rule that trend direction governs oscillator signal validity.
+
 - [[RG017-overboughtoversold-readings-in-strong-trends]] — See RG017-overboughtoversold-readings-in-strong-trends for why oscillators fail in strong trends
 
 - [[R127-zero-line-crossings-must-align-with-prevailing-trend]] — See R127-zero-line-crossings-must-align-with-prevailing-trend for the trend-alignment rule that prevents false counter-trend signals.

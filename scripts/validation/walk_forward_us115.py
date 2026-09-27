@@ -23,7 +23,7 @@ from scipy import stats as sp_stats
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 RESULTS_DIR = os.path.expanduser("~/HermesForge/scripts/validation/results")
-OUTPUT_PATH = os.path.expanduser("~/HermesForge/04-ForgeLoop/AUDIT-backtester-US115-v3.md")
+OUTPUT_PATH = os.path.expanduser("~/HermesForge/code/forge-loop/AUDIT-backtester-US115-v3.md")
 
 # v3 scanners (market_structure-based)
 V3_STRATS = ["STR-X", "STR-Z", "STR-AA", "STR-AC", "STR-AD", "STR-AE", "STR-AF", "STR-Y", "STR-R", "STR-B"]

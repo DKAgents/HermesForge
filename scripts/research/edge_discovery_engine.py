@@ -47,7 +47,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))  # for timezone_utils
 # Pacific Time utility — needed by stage_top_edges()
 from timezone_utils import now_pt
 
-EDGE_CANDIDATES_DIR = REPO_ROOT / "05-Research" / "Edge-Candidates"
+EDGE_CANDIDATES_DIR = REPO_ROOT / "trading" / "research" / "Edge-Candidates"
 
 
 def _safe_call(fn, *args, **kwargs):

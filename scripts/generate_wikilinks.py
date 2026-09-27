@@ -10,7 +10,7 @@ Safe to re-run — only adds links not already present. Dry-run mode available.
 
 Usage:
     python3 generate_wikilinks.py <book_folder>
-    python3 generate_wikilinks.py /root/HermesForge/08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy
+    python3 generate_wikilinks.py /root/HermesForge/trading/knowledge/Trading-Systems/technical-analysis-financial-markets-murphy
     python3 generate_wikilinks.py --all
     python3 generate_wikilinks.py --dry-run <book_folder>
 """
@@ -183,7 +183,7 @@ def main():
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
-    base = Path('/root/HermesForge/08-Knowledge/Trading-Systems')
+    base = Path('/root/HermesForge/trading/knowledge/Trading-Systems')
 
     if args.all:
         book_dirs = [d for d in base.iterdir() if d.is_dir()]

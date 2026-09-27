@@ -20,13 +20,13 @@ from pathlib import Path
 from collections import defaultdict
 
 VAULT_ROOT = Path('/root/HermesForge')
-MURPHY_DIR = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems' / 'technical-analysis-financial-markets-murphy'
+MURPHY_DIR = VAULT_ROOT / 'trading/knowledge' / 'Trading-Systems' / 'technical-analysis-financial-markets-murphy'
 
 SCAN_DIRS = [
-    VAULT_ROOT / '08-Knowledge',
-    VAULT_ROOT / '07-Risk',
-    VAULT_ROOT / '06-Strategies',
-    VAULT_ROOT / '09-Journal',
+    VAULT_ROOT / 'trading/knowledge',
+    VAULT_ROOT / 'trading/risk',
+    VAULT_ROOT / 'trading/strategies',
+    VAULT_ROOT / 'trading/journal',
 ]
 
 REPORT_THRESHOLD = 0.90   # report duplicates above this

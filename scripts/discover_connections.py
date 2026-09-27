@@ -9,7 +9,7 @@ Pipeline:
   2. For each seed: run FTS + semantic search → collect candidate note pairs
   3. Cross-cluster filter: deprioritize same-subfolder pairs (obvious), elevate cross-domain pairs
   4. LLM synthesis: T2 model evaluates each candidate group for actionability
-  5. Write accepted insights (actionability ≥ 3) to 08-Knowledge/Insights/
+  5. Write accepted insights (actionability ≥ 3) to trading/knowledge/Insights/
   6. Write weekly discovery report to 04-ForgeLoop/Discovery/
 
 Usage:
@@ -44,8 +44,8 @@ import yaml  # after env load
 
 VAULT_ROOT   = Path('/root/HermesForge')
 SCRIPTS_DIR  = VAULT_ROOT / 'scripts'
-INSIGHTS_DIR = VAULT_ROOT / '08-Knowledge' / 'Insights'
-DISCOVERY_DIR = VAULT_ROOT / '04-ForgeLoop' / 'Discovery'
+INSIGHTS_DIR = VAULT_ROOT / 'trading/knowledge' / 'Insights'
+DISCOVERY_DIR = VAULT_ROOT / 'code' / 'forge-loop' / 'Discovery'
 INDEX_DIR    = Path('/root/.hermes/vault_index')
 SEEDS_FILE   = SCRIPTS_DIR / 'discovery_seeds.yaml'
 STATE_FILE   = INDEX_DIR / 'discovery_state.json'
@@ -247,7 +247,7 @@ tags: [insight, discovery, knowledge-evolution]
 
 def _check_strategy_updates(insight: dict, insight_path: str):
     """If insight is semantically close to a strategy thesis, write a pending-update suggestion."""
-    STRATEGIES_DIR = VAULT_ROOT / '06-Strategies'
+    STRATEGIES_DIR = VAULT_ROOT / 'trading/strategies'
     PENDING_DIR    = STRATEGIES_DIR / 'Pending-Updates'
     STRATEGY_DIRS_LOCAL  = [STRATEGIES_DIR / 'Active', STRATEGIES_DIR / 'Hypotheses']
     SIMILARITY_THRESHOLD = 0.70

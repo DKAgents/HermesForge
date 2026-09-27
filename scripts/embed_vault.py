@@ -19,13 +19,13 @@ from pathlib import Path
 from datetime import datetime
 
 VAULT_ROOT  = Path('/root/HermesForge')
-BOOKS_DIR   = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems'
+BOOKS_DIR   = VAULT_ROOT / 'trading/knowledge' / 'Trading-Systems'
 VAULT_DIRS  = [
     VAULT_ROOT / '00-Meta',
     VAULT_ROOT / '03-ADRs',
-    VAULT_ROOT / '07-Risk',
-    VAULT_ROOT / '08-Knowledge' / 'Learnings',
-    VAULT_ROOT / '08-Knowledge' / 'Skills',
+    VAULT_ROOT / 'trading' / 'risk',
+    VAULT_ROOT / 'trading/knowledge' / 'Learnings',
+    VAULT_ROOT / 'trading/knowledge' / 'Skills',
 ]
 CHROMA_DIR  = Path('/root/.hermes/vault_index/chroma')
 MODEL_NAME  = 'all-MiniLM-L6-v2'

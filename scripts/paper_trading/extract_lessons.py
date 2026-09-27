@@ -34,8 +34,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import trade_log
 
 VAULT_ROOT = pathlib.Path(__file__).parent.parent.parent
-LESSONS_DIR = VAULT_ROOT / "09-Journal" / "Lessons"
-PENDING_UPDATES_DIR = VAULT_ROOT / "06-Strategies" / "Pending-Updates"
+LESSONS_DIR = VAULT_ROOT / "trading/journal" / "Lessons"
+PENDING_UPDATES_DIR = VAULT_ROOT / "trading/strategies" / "Pending-Updates"
 
 CONFIRM_R_THRESHOLD = 1.5
 CONTRADICT_R_THRESHOLD = -0.8

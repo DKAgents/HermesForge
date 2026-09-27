@@ -15,7 +15,7 @@ bundled Obsidian skill conventions (read_file, write_file, patch, search_files).
 Usage:
   python3 vault_connection_weaver.py --batch 5 --dry-run
   python3 vault_connection_weaver.py --batch 5 --commit
-  python3 vault_connection_weaver.py --batch 3 --priority-dirs 06-Strategies,07-Risk
+  python3 vault_connection_weaver.py --batch 3 --priority-dirs 06-Strategies,trading/risk
 """
 
 import argparse
@@ -538,7 +538,7 @@ def count_wikilinks(vault: Path) -> dict:
 
 def update_health_dashboard(vault: Path, run_report: dict, state: dict):
     """Update the Connection Health dashboard note."""
-    health_path = vault / "08-Knowledge" / "Connection-Health.md"
+    health_path = vault / "trading/knowledge" / "Connection-Health.md"
     stats = count_wikilinks(vault)
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -614,7 +614,7 @@ def main():
     if args.health:
         health_path = Path(args.health)
     else:
-        health_path = vault / "08-Knowledge" / "Connection-Health.md"
+        health_path = vault / "trading/knowledge" / "Connection-Health.md"
 
     state_file = Path(args.state)
     state_file.parent.mkdir(parents=True, exist_ok=True)
@@ -847,7 +847,7 @@ def main():
     # pipeline's unrelated staged changes are not swept into this commit.
     if args.commit and not args.dry_run:
         try:
-            health_rel = "08-Knowledge/Connection-Health.md"
+            health_rel = "trading/knowledge/Connection-Health.md"
             if run_report["connections_created"] > 0:
                 subprocess.run(["git", "add", "-A"], cwd=str(vault), check=True)
                 subprocess.run(

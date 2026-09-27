@@ -4,7 +4,7 @@ import csv
 from collections import defaultdict, Counter
 
 CSV_PATH = "/root/HermesForge/scripts/validation/results/STR-Q-stocks-deep-phase1a.csv"
-OUT_PATH = "/root/HermesForge/06-Strategies/Backtests/STR-Q-mae-mfe-analysis.md"
+OUT_PATH = "/root/HermesForge/trading/strategies/Backtests/STR-Q-mae-mfe-analysis.md"
 
 rows = []
 with open(CSV_PATH) as f:

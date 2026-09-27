@@ -76,25 +76,25 @@ from scanners.scanner_aj_intermarket import scan as scan_aj       # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-08-16): VIX term-structure
 # contango breakout — walk-forward validated OOS ROBUST EDGE (see
-# 06-Strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md).
+# trading/strategies/Hypotheses/STR-20260816-vix-vrp-contango-breakout.md).
 from scanners.scanner_vix_vrp_contango import scan as scan_vixc  # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-08-18): Low-correlation regime
 # stock picker — Phase 1A positive (mean_r=0.092, p=0.0, all 3 sub-periods
 # positive). Deployed WATCH with 0.5% risk. See
-# 06-Strategies/Hypotheses/STR-20260818-lowcorr-regime.md.
+# trading/strategies/Hypotheses/STR-20260818-lowcorr-regime.md.
 from scanners.scanner_lowcorr_regime import scan as scan_lowcorr  # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-08-25): Treasury Buyback /
 # Dollar Debasement regime trade — Phase 1A positive (p=0.157), walk-forward
 # OOS mean R > 0 but not significant → deployed WATCH with 0.5% risk. See
-# 06-Strategies/Hypotheses/STR-20260825-treasury-debasement-regime.md.
+# trading/strategies/Hypotheses/STR-20260825-treasury-debasement-regime.md.
 from scanners.scanner_treasury_debasement import scan as scan_debase  # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-09-01): Oil Shock Sector Rotation —
 # Phase 1A mean_r=+0.183 (p=0.1069), walk-forward OOS mean R=+0.1712 but p=0.2311
 # → deployed WATCH with 0.5% risk. See
-# 06-Strategies/Hypotheses/STR-20260901-oil-shock-sector-rotation.md.
+# trading/strategies/Hypotheses/STR-20260901-oil-shock-sector-rotation.md.
 from scanners.scanner_hormuz_oil_shock import scan as scan_oil_shock  # noqa: E402
 
 # Watch-list scanners (imported but not yet scanning — need status:watch frontmatter)
@@ -103,7 +103,7 @@ from scanners.scanner_p_crosssectional import scan as scan_p     # noqa: E402
 # Autonomous-pipeline deployed strategy (2026-09-06): BTC Supply Crunch /
 # Thin-Float Breakout — Phase 1A mean R=+0.256 (p=0.0651), walk-forward OOS
 # mean R=+0.146 (p=0.326) → deployed WATCH with 0.5% risk. See
-# 06-Strategies/Hypotheses/STR-20260906-btc-supply-crunch.md.
+# trading/strategies/Hypotheses/STR-20260906-btc-supply-crunch.md.
 from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-09-08): Predicted Skewness Factor —
@@ -111,14 +111,14 @@ from scanners.scanner_btc_supply_crunch import scan as scan_btc_supply  # noqa: 
 # Phase 1A mean R=+0.079 (p=0.0, t=6.79), walk-forward OOS mean R=+0.0457
 # (p=0.0005, ROBUST EDGE verdict) but 3/5 OOS windows NO EDGE and tiny effect
 # size → deployed WATCH with 0.25% risk. See
-# 06-Strategies/Hypotheses/STR-20260908-predicted-skewness.md.
+# trading/strategies/Hypotheses/STR-20260908-predicted-skewness.md.
 from scanners.scanner_skew_predicted import scan as scan_skewp  # noqa: E402
 
 # Autonomous-pipeline deployed strategy (2026-09-17): Crypto Post-Capitulation Bounce —
 # Phase 1A mean R=+0.143 (p=0.125, SPECULATIVE), walk-forward OOS mean R=+0.106
 # (p=0.418, NO EDGE overall, but 2023 OOS FRAGILE EDGE p=0.06) → deployed WATCH
 # with 0.25% risk. See
-# 06-Strategies/Hypotheses/STR-20260917-CAP-BOTTOM.md.
+# trading/strategies/Hypotheses/STR-20260917-CAP-BOTTOM.md.
 from scanners.scanner_crypto_post_cap_bottom import scan as scan_cap_bottom  # noqa: E402
 
 # T1 Discovery strategies (Aegis Rebuild 2026-09-13)
@@ -190,7 +190,7 @@ def _discover_strategies(vault_root: str = ".") -> dict:
     import yaml, importlib, re
     from pathlib import Path
 
-    hypotheses_dir = Path(vault_root) / "06-Strategies" / "Hypotheses"
+    hypotheses_dir = Path(vault_root) / "trading/strategies" / "Hypotheses"
     if not hypotheses_dir.is_dir():
         return {}
 

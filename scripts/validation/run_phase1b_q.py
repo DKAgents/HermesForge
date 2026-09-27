@@ -39,7 +39,7 @@ import fetch_intraday_stocks
 
 # ── Constants ────────────────────────────────────────────────────────────────
 RESULTS_DIR = REPO_ROOT / "scripts" / "validation" / "results"
-BACKTESTS_DIR = REPO_ROOT / "06-Strategies" / "Backtests"
+BACKTESTS_DIR = REPO_ROOT / "trading/strategies" / "Backtests"
 
 IS_RATIO = 0.60
 OOS_RATIO = 0.40

@@ -14,8 +14,8 @@ sys.path.insert(0, "/root/HermesForge/scripts/gauntlet")
 from decay_watch import check_decay
 
 TRADES_CSV = "/root/HermesForge/scripts/paper_trading/trades.csv"
-ACTIVE_DIR = "/root/HermesForge/06-Strategies/Active"
-HYPOTHESES_DIR = "/root/HermesForge/06-Strategies/Hypotheses"
+ACTIVE_DIR = "/root/HermesForge/trading/strategies/Active"
+HYPOTHESES_DIR = "/root/HermesForge/trading/strategies/Hypotheses"
 
 
 def extract_strategy_id(md_path: str) -> str | None:

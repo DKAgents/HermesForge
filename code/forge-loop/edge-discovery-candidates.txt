@@ -1,0 +1,11 @@
+# Edge Discovery Candidates — X/Twitter URLs
+# Scanned: 2026-09-27
+# These will be picked up by the nightly X Strategy Scout for deep thread reading.
+
+https://x.com/RHerman/status/2103545070666338777  # Trend Rebalance Map [Herman] - NQ, 83.33% win rate on Sep 6-25 update
+https://x.com/RHerman/status/2098064118024372294  # Original 80.99% win rate strategy thread, 121 trades, PF 2.73, +$4,541 on NQ
+https://x.com/0xTrackmind/status/2096304527771107784  # Quant paper: weeding out false alpha, torture-test framework, systematic approach
+https://x.com/AlphaWizarDD/status/2102290472278601761  # Momentum ETF strategy beating Nifty 43% vs 7.22%, 18-month backtest
+https://x.com/wannabechamp/status/2101669161932112267  # Dan Cheung breakthrough: execution consistency over prediction, 3-month focus
+https://x.com/jason_coder0/status/2102252046993043567  # 7 ChatGPT prompts for automated stock trading (124.5K views, 91 replies)
+https://x.com/virattt  # Virat Singh — Added Jev to AI Hedge Fund for frontier trading decisions

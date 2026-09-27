@@ -40,7 +40,7 @@ TIER_RANK = {"T4": 0, "T3": 1, "T2": 2}
 
 REQUIRED_FIELDS = ["stage", "tier", "consumes", "produces", "downstream_allowed"]
 
-LOG_PATH = "/root/HermesForge/07-Risk/Governance/handoff_audit_log.jsonl"
+LOG_PATH = "/root/HermesForge/trading/risk/Governance/handoff_audit_log.jsonl"
 
 
 def validate(contract: dict) -> list[str]:

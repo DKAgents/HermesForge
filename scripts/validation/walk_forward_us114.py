@@ -27,7 +27,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 # ── Config ──────────────────────────────────────────────────────────────────
 RESULTS_DIR = os.path.expanduser("~/HermesForge/scripts/validation/results")
-OUTPUT_PATH = os.path.expanduser("~/HermesForge/04-ForgeLoop/AUDIT-backtester-US114.md")
+OUTPUT_PATH = os.path.expanduser("~/HermesForge/code/forge-loop/AUDIT-backtester-US114.md")
 
 TARGET_STRATS = [
     "STR-R", "STR-S", "STR-T", "STR-U", "STR-V", "STR-W",

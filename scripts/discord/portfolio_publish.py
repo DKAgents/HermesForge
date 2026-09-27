@@ -58,7 +58,7 @@ from alert_publisher import publish_signal
 from chart_generator import generate_setup_chart
 from trade_id import generate_short_id
 
-STRATEGIES_DIR = REPO_ROOT / "06-Strategies" / "Hypotheses"
+STRATEGIES_DIR = REPO_ROOT / "trading/strategies" / "Hypotheses"
 CHART_OUTPUT_DIR = pathlib.Path.home() / ".hermes" / "signal_charts"
 
 # ── Scanner Registry ─────────────────────────────────────────────────────────

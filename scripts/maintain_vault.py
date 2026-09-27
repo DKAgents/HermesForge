@@ -32,14 +32,14 @@ CHECKPOINT    = INDEX_DIR / 'checkpoint.json'
 DEDUP_REPORT  = INDEX_DIR / 'dedup_report.json'
 LOG_DIR       = VAULT_ROOT / 'code' / 'forge-loop' / 'Maintenance'
 
-MURPHY_DIR    = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems' / 'technical-analysis-financial-markets-murphy'
+MURPHY_DIR    = VAULT_ROOT / 'trading/knowledge' / 'Trading-Systems' / 'technical-analysis-financial-markets-murphy'
 
 # All directories that are part of "the vault" for maintenance purposes
 VAULT_DIRS = [
-    VAULT_ROOT / '08-Knowledge',
+    VAULT_ROOT / 'trading/knowledge',
     VAULT_ROOT / 'trading/risk',
     VAULT_ROOT / 'trading' / 'research',
-    VAULT_ROOT / '06-Strategies',
+    VAULT_ROOT / 'trading/strategies',
     VAULT_ROOT / 'trading/journal',
     VAULT_ROOT / '00-Meta',
     VAULT_ROOT / '03-ADRs',

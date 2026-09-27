@@ -24,11 +24,11 @@ VAULT_ROOT = Path('/root/HermesForge')
 
 # Which directories to scan when running in --all mode
 SCAN_DIRS = [
-    VAULT_ROOT / '08-Knowledge',
-    VAULT_ROOT / '07-Risk',
-    VAULT_ROOT / '05-Research',
-    VAULT_ROOT / '06-Strategies',
-    VAULT_ROOT / '09-Journal',
+    VAULT_ROOT / 'trading/knowledge',
+    VAULT_ROOT / 'trading/risk',
+    VAULT_ROOT / 'trading' / 'research',
+    VAULT_ROOT / 'trading/strategies',
+    VAULT_ROOT / 'trading/journal',
     VAULT_ROOT / '00-Meta',
     VAULT_ROOT / '03-ADRs',
 ]
@@ -59,13 +59,13 @@ def _guess_source(path: Path) -> str:
     s = str(path)
     if 'murphy' in s.lower():
         return 'Murphy - Technical Analysis of the Financial Markets'
-    if '07-Risk' in s:
+    if 'trading/risk' in s:
         return 'HermesForge Risk Framework'
     if '03-ADRs' in s:
         return 'HermesForge ADR'
-    if '06-Strategies' in s:
+    if 'trading/strategies' in s:
         return 'HermesForge Strategies'
-    if '09-Journal' in s:
+    if 'trading/journal' in s:
         return 'HermesForge Journal'
     return 'unknown'
 

@@ -21,7 +21,7 @@ from pathlib import Path
 from datetime import date
 
 VAULT_ROOT      = Path('/root/HermesForge')
-STRATEGIES_DIR  = VAULT_ROOT / '06-Strategies'
+STRATEGIES_DIR  = VAULT_ROOT / 'trading/strategies'
 STRATEGY_DIRS   = [
     STRATEGIES_DIR / 'Active',
     STRATEGIES_DIR / 'Hypotheses',
@@ -71,8 +71,8 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
 def collect_vault_note_stems() -> set[str]:
     """Return set of all vault note stems (filename without .md) for wikilink validation."""
     stems = set()
-    for d in [VAULT_ROOT / '08-Knowledge', VAULT_ROOT / '07-Risk',
-              VAULT_ROOT / '06-Strategies', VAULT_ROOT / '03-ADRs']:
+    for d in [VAULT_ROOT / 'trading/knowledge', VAULT_ROOT / 'trading/risk',
+              VAULT_ROOT / 'trading/strategies', VAULT_ROOT / '03-ADRs']:
         if d.exists():
             for f in d.rglob('*.md'):
                 stems.add(f.stem)

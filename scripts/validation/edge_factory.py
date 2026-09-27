@@ -16,8 +16,8 @@ import urllib.request
 
 PROJECT_ROOT = Path("/root/HermesForge")
 CACHE_DIR = Path("/root/.hermes/market_data")
-HYP_DIR = PROJECT_ROOT / "06-Strategies" / "Hypotheses"
-RESULTS_DIR = PROJECT_ROOT / "04-ForgeLoop" / "edge-factory-results"
+HYP_DIR = PROJECT_ROOT / "trading/strategies" / "Hypotheses"
+RESULTS_DIR = PROJECT_ROOT / "code" / "forge-loop" / "edge-factory-results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── X Search Queries (rotated per cycle to maximize diversity) ────────────

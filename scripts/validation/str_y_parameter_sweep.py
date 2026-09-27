@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 SCRIPT_DIR = pathlib.Path(__file__).parent
 REPO_ROOT = SCRIPT_DIR.parent.parent
 RESULTS_DIR = SCRIPT_DIR / "results"
-FORGE_LOOP_DIR = REPO_ROOT / "04-ForgeLoop"
+FORGE_LOOP_DIR = REPO_ROOT / "code" / "forge-loop"
 
 # Ensure the validation dir is on sys.path so we can import project modules
 sys.path.insert(0, str(SCRIPT_DIR))

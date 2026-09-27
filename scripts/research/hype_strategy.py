@@ -674,7 +674,7 @@ def build_markdown_report(results: dict) -> str:
 # Output / main
 # ═════════════════════════════════════════════════════════════════════════════
 
-REPORT_DIR = REPO_ROOT / "05-Research" / "Strategy-Validation"
+REPORT_DIR = REPO_ROOT / "trading" / "research" / "Strategy-Validation"
 MD_PATH  = REPORT_DIR / "STR-H-Hype-WalkForward.md"
 JSON_PATH = REPORT_DIR / "STR-H-results.json"
 

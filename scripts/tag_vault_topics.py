@@ -6,8 +6,8 @@ Safe to re-run — skips notes that already have a topic: field.
 
 Usage:
     python3 tag_vault_topics.py <book_folder>
-    python3 tag_vault_topics.py /root/HermesForge/08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy
-    python3 tag_vault_topics.py --all   # all books under 08-Knowledge/Trading-Systems/
+    python3 tag_vault_topics.py /root/HermesForge/trading/knowledge/Trading-Systems/technical-analysis-financial-markets-murphy
+    python3 tag_vault_topics.py --all   # all books under trading/knowledge/Trading-Systems/
     python3 tag_vault_topics.py --dry-run <book_folder>
 """
 
@@ -184,11 +184,11 @@ def process_book(book_dir: Path, dry_run: bool = False) -> dict:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('book_dir', nargs='?', help='Path to book folder')
-    parser.add_argument('--all', action='store_true', help='Process all books under 08-Knowledge/Trading-Systems/')
+    parser.add_argument('--all', action='store_true', help='Process all books under trading/knowledge/Trading-Systems/')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
-    base = Path('/root/HermesForge/08-Knowledge/Trading-Systems')
+    base = Path('/root/HermesForge/trading/knowledge/Trading-Systems')
 
     if args.all:
         book_dirs = [d for d in base.iterdir() if d.is_dir()]

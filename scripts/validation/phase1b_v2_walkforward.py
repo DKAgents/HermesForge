@@ -7,7 +7,7 @@ from pathlib import Path
 import json
 
 CSV = "/root/HermesForge/scripts/validation/results/STR-Q-stocks-deep-phase1a.csv"
-OUT = "/root/HermesForge/06-Strategies/Backtests/STR-Q-phase1b-v2.md"
+OUT = "/root/HermesForge/trading/strategies/Backtests/STR-Q-phase1b-v2.md"
 
 df = pd.read_csv(CSV)
 print(f"Total trades: {len(df)}")

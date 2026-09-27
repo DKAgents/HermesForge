@@ -4,7 +4,7 @@ Build FTS5 full-text search index over all vault notes.
 Creates ~/.hermes/vault_index/vault.db (SQLite + FTS5).
 
 Re-running is safe: uses file mtime + content hash to skip unchanged notes.
-Indexes all books under 08-Knowledge/Trading-Systems/.
+Indexes all books under trading/knowledge/Trading-Systems/.
 
 Usage:
     python3 build_index.py                    # index all books
@@ -18,13 +18,13 @@ from pathlib import Path
 from datetime import datetime
 
 VAULT_ROOT  = Path('/root/HermesForge')
-BOOKS_DIR   = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems'
+BOOKS_DIR   = VAULT_ROOT / 'trading/knowledge' / 'Trading-Systems'
 VAULT_DIRS  = [                          # additional vault sections to index
     VAULT_ROOT / '00-Meta',
     VAULT_ROOT / '03-ADRs',
-    VAULT_ROOT / '07-Risk',
-    VAULT_ROOT / '08-Knowledge' / 'Learnings',
-    VAULT_ROOT / '08-Knowledge' / 'Skills',
+    VAULT_ROOT / 'trading' / 'risk',
+    VAULT_ROOT / 'trading/knowledge' / 'Learnings',
+    VAULT_ROOT / 'trading/knowledge' / 'Skills',
 ]
 INDEX_DIR   = Path('/root/.hermes/vault_index')
 INDEX_PATH  = INDEX_DIR / 'vault.db'

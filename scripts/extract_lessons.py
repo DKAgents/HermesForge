@@ -9,7 +9,7 @@ Pipeline:
   1. Parse input (JSON backtest result, JSON trade log, or free-text)
   2. Call T2 LLM to extract a structured lesson conforming to the Lesson schema
   3. Resolve wikilinks against existing vault notes
-  4. Write lesson note to 09-Journal/Lessons/YYYY-MM/
+  4. Write lesson note to trading/journal/Lessons/YYYY-MM/
   5. If outcome is contradicts/refines → write pending-update for related strategy
   6. If outcome is confirms → increment confirmation_count on related vault notes
   7. Update lesson-seeds.yaml for the Discovery Engine (AC9)
@@ -37,10 +37,10 @@ if _env_file.exists():
 
 VAULT_ROOT      = Path('/root/HermesForge')
 SCRIPTS_DIR     = VAULT_ROOT / 'scripts'
-LESSONS_DIR     = VAULT_ROOT / '09-Journal' / 'Lessons'
-STRATEGIES_DIR  = VAULT_ROOT / '06-Strategies'
+LESSONS_DIR     = VAULT_ROOT / 'trading/journal' / 'Lessons'
+STRATEGIES_DIR  = VAULT_ROOT / 'trading/strategies'
 PENDING_DIR     = STRATEGIES_DIR / 'Pending-Updates'
-KNOWLEDGE_DIR   = VAULT_ROOT / '08-Knowledge'
+KNOWLEDGE_DIR   = VAULT_ROOT / 'trading/knowledge'
 LESSON_SEEDS    = SCRIPTS_DIR / 'lesson_seeds.yaml'
 
 OPENROUTER_URL  = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
@@ -84,7 +84,7 @@ def llm_call(messages: list[dict], max_tokens: int = MAX_TOKENS) -> str:
 def collect_vault_stems() -> dict[str, Path]:
     """Return dict of {stem: path} for all vault notes."""
     stems = {}
-    for d in [KNOWLEDGE_DIR, VAULT_ROOT / '07-Risk', VAULT_ROOT / '06-Strategies',
+    for d in [KNOWLEDGE_DIR, VAULT_ROOT / 'trading/risk', VAULT_ROOT / 'trading/strategies',
               VAULT_ROOT / '03-ADRs']:
         if d.exists():
             for f in d.rglob('*.md'):

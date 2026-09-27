@@ -36,6 +36,10 @@ Before acting on an oversold oscillator signal in an uptrend, verify the McClell
 - [[INS-2026-08-22-use-breadth-oscillator-to-filter-counter-trend-oscillator-si|Use Breadth Oscillator to Filter Counter-Trend Oscillator Signals]]
 
 ## Related
+- [[R305-oscillators-and-trend-importance]] — See R305-oscillators-and-trend-importance for the underlying rule on oscillator usage within trends.
+
+- [[C050-secondary-trend-retracement-range]] — See C050-secondary-trend-retracement-range for context on secondary trend retracements that align with breadth oscillator extremes
+
 - [[EN086-counter-trend-oscillator-based-trading]] — See EN086-counter-trend-oscillator-based-trading for the basic oscillator strategy this insight warns against and improves upon with breadth filters.
 
 - [[INS-2026-08-22-use-breadth-oscillator-to-filter-counter-trend-oscillator-si]] — See INS-2026-08-22 for McClellan Oscillator filter implementation

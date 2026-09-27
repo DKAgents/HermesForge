@@ -37,8 +37,8 @@ AUTO_HYP_THRESHOLD = 40          # score to auto-generate HYP note (lower than s
 MAX_CANDIDATES = 5               # max HYP notes per run
 
 PROJECT_ROOT = Path("/root/HermesForge")
-HYP_DIR = PROJECT_ROOT / "06-Strategies" / "Hypotheses"
-FORGE_DIR = PROJECT_ROOT / "04-ForgeLoop"
+HYP_DIR = PROJECT_ROOT / "trading/strategies" / "Hypotheses"
+FORGE_DIR = PROJECT_ROOT / "code" / "forge-loop"
 SOURCES_SCRIPT = Path("/root/.hermes/skills/research/grounded-citations/scripts/sources.py")
 
 # ── Scoring ─────────────────────────────────────────────────────────────

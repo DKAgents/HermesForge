@@ -7,7 +7,7 @@ import subprocess, sys
 from pathlib import Path
 
 PROJECT_ROOT = Path("/root/HermesForge")
-CANDIDATES_FILE = PROJECT_ROOT / "04-ForgeLoop" / "edge-discovery-candidates.txt"
+CANDIDATES_FILE = PROJECT_ROOT / "code" / "forge-loop" / "edge-discovery-candidates.txt"
 
 # Build command with optional priority URLs from Edge Discovery
 cmd = [
@@ -28,7 +28,7 @@ if result.stderr:
     print(result.stderr, file=sys.stderr)
 
 # Check for generated HYP notes
-hyp_dir = PROJECT_ROOT / "06-Strategies" / "Hypotheses"
+hyp_dir = PROJECT_ROOT / "trading/strategies" / "Hypotheses"
 new_hyps = sorted(hyp_dir.glob("STR-*.md"), key=lambda p: p.stat().st_mtime, reverse=True)[:3]
 if new_hyps:
     print("\n📁 New HYP notes:")
