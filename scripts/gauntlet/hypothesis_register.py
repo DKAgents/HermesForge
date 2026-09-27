@@ -208,6 +208,7 @@ def register(
     venue: str,
     timeframe: str,
     primitives: List[str],
+    holding_class: str = "",
 ) -> Dict[str, Any]:
     """
     Register a new hypothesis.
@@ -234,6 +235,9 @@ def register(
             f"Use get('{hypothesis_id}') to retrieve it."
         )
 
+    allowed = {"scalp", "day", "swing", "position"}
+    if holding_class and holding_class not in allowed:
+        raise ValueError(f"holding_class must be one of {sorted(allowed)}")
     timestamp = datetime.now(timezone.utc).isoformat()
 
     entry = {
@@ -244,6 +248,7 @@ def register(
         "tier": tier,
         "venue": venue,
         "timeframe": timeframe,
+        "holding_class": holding_class,
         "primitives": primitives,
         "registered_at": timestamp,
         "trials": [],
