@@ -41,6 +41,8 @@ __pycache__/
 
 # Ignore Smart Environment folder
 .smart-env
+# Secrets — all live in /root/.hermes/.env; repo-root .env is a placeholder
+.env
 # US-123: append-only journal data (code stores manifests, not live data)
 scripts/paper_trading/trade_journal.jsonl
 scripts/paper_trading/trade_journal_manifest.txt
