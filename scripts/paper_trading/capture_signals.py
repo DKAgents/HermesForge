@@ -219,6 +219,13 @@ def _discover_strategies(vault_root: str = ".") -> dict:
             # Auto-skip killed, hypothesis, and unknown strategies
             continue
 
+        # US-157 (LU-06b): status:watch entries must pass a hostile-fill gate
+        # before they may scan or open a paper trade. Live strategies are
+        # unaffected (existing STR-Q/STR-B/STR-I behavior preserved).
+        if status == "watch" and not fm.get("hostile_pass"):
+            print(f"  ⏭  {f.stem}: status=watch without hostile_pass:true — skipping")
+            continue
+
         strategy_id = fm.get("strategy_id", "")
         if not strategy_id:
             # Infer from id field (e.g. "STR-B-macd-histogram-divergence")
