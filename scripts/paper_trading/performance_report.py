@@ -84,6 +84,23 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
     return lines
 
 
+def _hostile_strq_r_str() -> str:
+    """Read cumulative hostile STR-Q R from the hostile fill jsonl file.
+    Returns a formatted string like '+362.50R' or 'unavailable' on error."""
+    try:
+        import json, pathlib
+        jsonl = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
+        if not jsonl.exists():
+            return "unavailable"
+        total = 0.0
+        with open(jsonl) as f:
+            for line in f:
+                total += float(json.loads(line).get("hostile_r", 0) or 0)
+        return f"{total:+.2f}R"
+    except Exception:
+        return "unavailable"
+
+
 def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
     rows = _dedupe_rows(_rows())
     open_rows = [r for r in rows if r["status"] == "open"]
@@ -198,6 +215,7 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             if dd > max_dd:
                 max_dd = dd
         lines.append(f"  Total: {len(closed_rows)} trades, {wr:.0f}% win, {total_r:+.2f}R realized, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
+        lines.append(f"  STR-Q hostile R (realistic fills): {_hostile_strq_r_str()}")
 
         # By strategy
         lines.append("")
