@@ -30,17 +30,17 @@ SCRIPTS_DIR   = VAULT_ROOT / 'scripts'
 INDEX_DIR     = Path('/root/.hermes/vault_index')
 CHECKPOINT    = INDEX_DIR / 'checkpoint.json'
 DEDUP_REPORT  = INDEX_DIR / 'dedup_report.json'
-LOG_DIR       = VAULT_ROOT / '04-ForgeLoop' / 'Maintenance'
+LOG_DIR       = VAULT_ROOT / 'code' / 'forge-loop' / 'Maintenance'
 
 MURPHY_DIR    = VAULT_ROOT / '08-Knowledge' / 'Trading-Systems' / 'technical-analysis-financial-markets-murphy'
 
 # All directories that are part of "the vault" for maintenance purposes
 VAULT_DIRS = [
     VAULT_ROOT / '08-Knowledge',
-    VAULT_ROOT / '07-Risk',
-    VAULT_ROOT / '05-Research',
+    VAULT_ROOT / 'trading/risk',
+    VAULT_ROOT / 'trading' / 'research',
     VAULT_ROOT / '06-Strategies',
-    VAULT_ROOT / '09-Journal',
+    VAULT_ROOT / 'trading/journal',
     VAULT_ROOT / '00-Meta',
     VAULT_ROOT / '03-ADRs',
 ]
@@ -351,7 +351,7 @@ def main():
     # ── Step 7: Lesson extraction (optional — fires when new paper trade logs appear) ──
     # Checks for any new files in 09-Journal/ that look like trade logs (JSON)
     new_trade_logs = [f for f in changed_files
-                      if '09-Journal' in str(f) and f.suffix == '.json'
+                      if 'trading/journal' in str(f) and f.suffix == '.json'
                       and 'trade' in f.name.lower()]
     if new_trade_logs:
         print(f"\nStep 7 — Auto-extracting lessons from {len(new_trade_logs)} new trade log(s)...")
