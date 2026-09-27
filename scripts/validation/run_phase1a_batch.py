@@ -2,7 +2,7 @@
 """
 Batch-run Phase 1A for all 13 untested scanners.
 Captures signal count + first 10 signals per asset type.
-Writes results to /root/HermesForge/04-Strategies/phase1a-results.md
+Writes results to /root/HermesForge/trading/strategy-catalog/phase1a-results.md
 """
 import sys
 import os
@@ -14,7 +14,7 @@ STOCK_SYMBOLS = ["SPY", "QQQ", "AAPL", "NVDA", "TSLA", "AMZN", "MSFT", "GOOGL", 
 CRYPTO_SYMBOLS = ["BTC", "ETH", "SOL", "AAVE", "ADA", "DOT", "BNB", "LINK"]
 
 SCANNERS_DIR = Path("/root/HermesForge/scripts/validation/scanners")
-OUTPUT_PATH = Path("/root/HermesForge/04-Strategies/phase1a-results.md")
+OUTPUT_PATH = Path("/root/HermesForge/trading/strategy-catalog/phase1a-results.md")
 
 SCANNER_NAMES = [
     "scanner_t_head_shoulders",
