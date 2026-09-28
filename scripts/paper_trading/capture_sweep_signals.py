@@ -422,6 +422,18 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                         trade_dict["entry_price_booked"] = g3["realistic_entry"]
                 except Exception:
                     pass
+            try:
+                from portfolio_risk_guard import check_trade_allowed
+            except ImportError:
+                from scripts.paper_trading.portfolio_risk_guard import check_trade_allowed
+            allowed, reason = check_trade_allowed(
+                STRATEGY_ID, symbol, asset_type,
+                float(trade_dict.get('position_size_pct') or trade_dict.get('risk_pct') or 0),
+            )
+            if not allowed:
+                summary['skipped_heat'] = summary.get('skipped_heat', 0) + 1
+                print(f'  HEAT SKIP: {symbol} {reason}')
+                continue
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
             trade_dict["trade_id"] = trade_id
