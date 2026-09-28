@@ -112,3 +112,10 @@ When the Discovery Engine (US-051) finds an insight with similarity > 0.7 to a s
 - `scripts/validate_strategy.py` — Automated validation tool
 - `Templates/Strategy-Template.md` — Strategy authoring template
 - US-052: Living Strategy Layer (backlog story)
+
+## Related
+- [[N037-triple-crossover-method-4-9-18-day-moving-average]] — See ADR-003 for how this indicator fits the strategy schema
+
+- [[N038-double-crossover-method-5-and-20-day-combination]] — See N038-double-crossover-method-5-and-20-day-combination as example evidence for a strategy using this indicator
+
+- [[EN028-10-and-50-day-moving-average-crossover]] — See EN028-10-and-50-day-moving-average-crossover as an example strategy rule for ADR-003 schema validation.

@@ -31,3 +31,6 @@ Before acting on any support-turned-resistance or resistance-turned-support entr
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-27-earnings-filter-to-resolve-subjectivity-in-role-reversal|Earnings filter to resolve subjectivity in role-reversal]]

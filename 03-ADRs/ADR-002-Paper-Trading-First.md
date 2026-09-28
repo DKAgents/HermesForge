@@ -45,3 +45,8 @@ All trading functionality MUST start in paper trading mode. No strategy may be d
 
 ## Review Date
 2027-01-01 — revisit after 6 months of paper trading results
+
+## Related
+- [[ADR-004-Phase1-Validation-Framework]] — See ADR-004 for strategy validation prerequisites before paper trading.
+
+- [[RISK_RULES]] — See RISK_RULES.md for risk guardian approval criteria

@@ -7,8 +7,11 @@ domains: [trading_concepts, trading_rules, volume_indicators]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "N013-volume-as-a-filter-for-false-breakouts", "C324-confirmation"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume-Confirmed Breakouts Filter Entries and Flag Reversals
 
 ## Discovery Summary

@@ -33,4 +33,5 @@ Before acting on any role-reversal signal (whether at a price support/resistance
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-27-earnings-filter-to-resolve-subjectivity-in-role-reversal|Earnings filter to resolve subjectivity in role-reversal]]
 - [[C334-resistance-level|Resistance Level]]

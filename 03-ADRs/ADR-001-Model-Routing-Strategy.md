@@ -244,3 +244,10 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 2026-10-17 (3 months) — review after Phase 2 ModelRouter skill is built and 90 days of
 routing data is available. Evaluate: actual cost savings, routing accuracy, any quality
 incidents from downgraded model calls.
+
+## Related
+- [[ADR-005-Stage-Based-Model-Floors-and-Red-Team]] — See ADR-005 for extension of routing with stage-based floors and red team review.
+
+- [[SECOND-BRAIN-ELEVATION-PLAN]] — See ADR-001-Model-Routing-Strategy for the routing logic that powers automated agent decisions
+
+- [[RISK_RULES]] — See 07-Risk/RISK_RULES.md for risk-based model tier constraints

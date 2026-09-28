@@ -31,3 +31,6 @@ Only take 4-9-18 triple crossover buy signals when the MACD histogram is above z
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-25-triple-crossover-with-macd-oscillator-filter|Triple crossover with MACD oscillator filter]]
