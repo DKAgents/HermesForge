@@ -433,7 +433,7 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             if not allowed:
                 summary['skipped_heat'] = summary.get('skipped_heat', 0) + 1
                 print(f'  HEAT SKIP: {symbol} {reason}')
-                continue
+                return
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
             trade_dict["trade_id"] = trade_id
