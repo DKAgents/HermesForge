@@ -231,7 +231,8 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
                 signal_dict["gauntlet_pessimistic_slip"] = g3["pessimistic_slippage_bps"]
                 signal_dict["gauntlet_book_mid"] = g3["book_mid"]
                 # Adjust entry price to realistic fill
-                signal_dict["entry_price"] = g3["realistic_entry"]
+                if "entry_price_booked" not in signal_dict:
+                    signal_dict["entry_price"] = g3["realistic_entry"]
         except Exception as e:
             pass  # G3 failure is non-blocking — post with optimistic entry
 
@@ -412,6 +413,15 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
         if jev_action == "skip":
             return
         try:
+            if _G3_ENABLED and asset_type == "crypto":
+                try:
+                    g3 = get_gauntlet_entry(trade_dict, size_usd=1000)
+                    if not g3.get("error"):
+                        trade_dict["gauntlet_realistic_entry"] = g3["realistic_entry"]
+                        trade_dict["entry_price"] = g3["realistic_entry"]
+                        trade_dict["entry_price_booked"] = g3["realistic_entry"]
+                except Exception:
+                    pass
             trade_id = trade_log.open_trade(trade_dict)
             summary["opened"] += 1
             trade_dict["trade_id"] = trade_id
