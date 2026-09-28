@@ -635,6 +635,12 @@ def monitor_exits():
             # Check ALL bars in lookback, not just the current one
             # A stop/target may have been hit on a previous bar and the
             # exit monitor missed it because it only runs every 5 min
+            if "timestamp" in df.columns and entry_date:
+                opened = pd.to_datetime(entry_date, utc=True)
+                bars = pd.to_datetime(df['timestamp'], utc=True)
+                df = df.loc[bars >= opened]
+                if len(df) == 0:
+                    continue
             current_high = float(df["high"].max())
             current_low = float(df["low"].min())
             
