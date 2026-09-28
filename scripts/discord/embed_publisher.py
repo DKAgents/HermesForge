@@ -447,6 +447,7 @@ DISCORD_CRYPTO_SETUPS_CHANNEL = "1528555885310513213"
 # Day trading setups: intraday bars, same-day holds (STR-Q sweep, etc.)
 DISCORD_DAYTRADE_STOCK_CHANNEL = "1540951208028803142"
 DISCORD_DAYTRADE_CRYPTO_CHANNEL = "1540951134200402071"
+DISCORD_PAPER_TRADING_CHANNEL = "1537225420120793088"
 
 # Day-of-week colors (shared between daily and sweep)
 DAY_COLORS = {
@@ -474,6 +475,55 @@ def _route_channel(asset_class: str, timeframe: str = "daily") -> str:
     if asset_class == "crypto":
         return DISCORD_CRYPTO_SETUPS_CHANNEL
     return DISCORD_STOCK_SETUPS_CHANNEL
+
+
+def publish_performance_report(dry_run: bool = False, crosspost: bool = True) -> dict:
+    """Run performance_report.py and post the result as a Discord embed.
+
+    Posts to DISCORD_PAPER_TRADING_CHANNEL (#paper-trading).
+
+    Returns {status, message_id, channel_id} or {status: error, ...}.
+    """
+    import pathlib as _pl
+    import subprocess as _sp
+
+    repo_root = _pl.Path(__file__).parent.parent.parent
+    report_script = repo_root / "scripts" / "paper_trading" / "performance_report.py"
+
+    # ── Run the report ──
+    proc = _sp.run(
+        ["python3", str(report_script)],
+        capture_output=True, text=True, timeout=60,
+        cwd=str(repo_root),
+    )
+    if proc.returncode != 0:
+        error_msg = (proc.stderr or proc.stdout or "Unknown error")[:500]
+        return {"status": "error", "error": error_msg}
+
+    report_text = (proc.stdout + proc.stderr).strip()
+    if not report_text:
+        return {"status": "error", "error": "Report produced empty output"}
+
+    # ── Build embed ──
+    color = _get_day_color()
+    embed = {
+        "title": "📈 Paper Trading Performance Report",
+        "description": report_text,
+        "color": color,
+        "footer": {
+            "text": f"HemesForge Gauntlet • Paper Trading • Crossposted to follower servers"
+        },
+        "timestamp": now_pt().isoformat(),
+    }
+
+    # ── Post to paper-trading channel ──
+    if dry_run:
+        return {"status": "ok", "message_id": "dry_run",
+                "channel_id": DISCORD_PAPER_TRADING_CHANNEL, "embed": embed}
+
+    payload = {"embeds": [embed]}
+    result = _post_to_discord(DISCORD_PAPER_TRADING_CHANNEL, payload, crosspost=crosspost)
+    return {**result, "channel_id": DISCORD_PAPER_TRADING_CHANNEL}
 
 
 def publish_signal(signal_dict: dict, asset_class: str,
