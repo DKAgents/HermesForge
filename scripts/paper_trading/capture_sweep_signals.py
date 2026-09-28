@@ -610,6 +610,11 @@ def _post_exit_alert(trade: dict, exit_reason: str, exit_price: float,
             return True
     except Exception as e:
         print(f"  Alert post failed for {short_id}: {e}")
+        try:
+            from run_log import log_line
+            log_line('exit_alert', str(e))
+        except Exception:
+            pass
     return False
 
 
