@@ -33,6 +33,8 @@ Before entering on a daily MACD or Stochastics crossover, require alignment acro
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R014-weekly-close-filter-for-breakouts]] — See R014 for weekly close filter on breakouts
+
 - [[INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators]] — See INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators for alternative trend filter using price channel instead of moving averages
 
 - [[R117-4-week-rule-as-a-confirming-filter]] — See R117-4-week-rule-as-a-confirming-filter for a specific weekly breakout rule to use as a confirming filter.

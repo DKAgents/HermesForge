@@ -5,22 +5,19 @@ has_quotes: false
 tags: []
 source: HermesForge Strategies
 created: 2026-08-24
----
----
-status: active
-created: 2026-08-18
-promoted_date: 2026-09-20
+status: hypothesis
+demotion_date: 2026-09-29
+demotion_reason: "Decay check failed — fallback heuristic: consecutive negative avg-R windows detected. Jev classification unreachable (jev_error). Trailing 100-trade PF: inf, but non-overlapping 20-trade avg-R windows showed ≥2 consecutive negative windows in strategy history."
+demotion_source: jev_decay_fallback
 strategy_id: STR-LOWCORR-lowcorr-regime
-source: autonomous-pipeline
+source_strategy: autonomous-pipeline
 candidate: CAND-20260814-low-correlation-regime
+promoted_date: 2026-09-20
 tags: [strategy, stock, regime, correlation, autonomous-pipeline]
-topic: strategies
-confidence: high
-has_quotes: false
 scanner_module: scanner_lowcorr_regime
 scanner_alias: scan_lowcorr
-
-scan_mode: batch---
+scan_mode: batch
+---
 # STR-LOWCORR: Low-Correlation Regime Stock Picker
 
 ## Origin
