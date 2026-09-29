@@ -33,6 +33,8 @@ Before entering on any pattern breakout, require measurable above-average volume
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[R080-heavy-volume-on-downside-moves-as-bearish-confirmation]] — See R080 for bearish volume confirmation rule
+
 - [[C097-confirmation-principle]] — See C097-confirmation-principle for the general concept underpinning this volume confirmation approach.
 
 - [[INS-2026-08-27-volume-confirmation-reduces-false-breakout-risk-enabling-tig]] — See INS-2026-08-27-volume-confirmation-reduces-false-breakout-risk-enabling-tig for how confirmed breakouts justify tighter stops
