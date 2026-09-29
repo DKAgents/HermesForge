@@ -809,26 +809,20 @@ def delete_crossposted_messages(channel_id: str) -> int:
 def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = None,
                      crosspost: bool = False) -> dict:
     """Post a message to Discord via Bot API. Returns {status, message_id}.
-    If crosspost=True and a webhook is configured for this channel, posts
-    a copy via webhook to the follower server. If no webhook is configured,
-    falls back to native announcement channel crosspost.
-    """
+    Error body included in result for debugging."""
     url = f"{API_BASE}/channels/{channel_id}/messages"
 
     if chart_path and os.path.exists(chart_path):
-        # Multipart: upload chart + embed. Use filename=chart.png to match
-        # the embed's attachment://chart.png reference.
         cmd = [
-            "curl", "-s", "-X", "POST",
+            "curl", "-s", "-w", "\n%{http_code}", "-X", "POST",
             "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
             "-F", f"payload_json={json.dumps(payload)}",
             "-F", f"files[0]=@{chart_path};filename=chart.png;type=image/png",
             url,
         ]
     else:
-        # JSON only (no file)
         cmd = [
-            "curl", "-s", "-X", "POST",
+            "curl", "-s", "-w", "\n%{http_code}", "-X", "POST",
             "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
             "-H", "Content-Type: application/json",
             "-d", json.dumps(payload),
@@ -836,28 +830,36 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
         ]
 
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    stdout = result.stdout.strip()
+    
+    if not stdout:
+        return {"status": "error", "http_code": "no_output"}
+    
+    lines = stdout.rsplit("\n", 1)
+    body = lines[0] if len(lines) > 1 else stdout
+    http_code = lines[1] if len(lines) > 1 else "0"
 
     try:
-        response = json.loads(result.stdout)
-        if "id" in response:
-            msg_id = response["id"]
-            if crosspost:
-                # Try webhook crosspost first (no tombstones in follower server)
-                wx = _get_crossposter(channel_id)
-                if wx:
-                    # Post copy via webhook (without chart — webhooks can't upload files this way)
-                    webhook_payload = dict(payload)
-                    # Remove image attachment reference if present (webhook can't access bot's uploaded file)
-                    # The chart image won't appear in the webhook copy — this is a known limitation
-                    wx.post(webhook_payload)
-                else:
-                    # Fall back to native crosspost (may leave tombstones when deleted)
-                    _crosspost_message(channel_id, msg_id)
-            return {"status": "ok", "message_id": msg_id}
-        else:
-            return {"status": "error", "response": result.stdout[:500]}
-    except (json.JSONDecodeError, KeyError):
-        return {"status": "error", "response": result.stdout[:500]}
+        response = json.loads(body)
+    except json.JSONDecodeError:
+        return {"status": "error", "http_code": http_code, "raw_body": body[:500]}
+
+    if "id" in response:
+        msg_id = response["id"]
+        if crosspost:
+            wx = _get_crossposter(channel_id)
+            if wx:
+                webhook_payload = dict(payload)
+                wx.post(webhook_payload)
+            else:
+                _crosspost_message(channel_id, msg_id)
+        return {"status": "ok", "message_id": msg_id, "http_code": http_code}
+    
+    # Discord error response
+    error_code = response.get("code", 0)
+    error_msg = response.get("message", "Unknown")
+    return {"status": "error", "http_code": http_code, 
+            "discord_code": error_code, "discord_message": error_msg}
 
 
 def _crosspost_message(channel_id: str, message_id: str) -> dict:
