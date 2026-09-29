@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["C366-secondary-trends", "EN041-oscillator-entry-strategy-in-trending-markets", "RG017-overboughtoversold-readings-in-strong-trends"]
 seed_id: oscillator_trending_market
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Oscillator failure in strong trends: counter-trend risk
 
 ## Discovery Summary

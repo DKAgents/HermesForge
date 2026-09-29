@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C149-rsi-vs-stochastics-volatility-comparison", "N165-relative-strength-index-rsi-overboughtoversold-levels", "EN036-rsi-divergence-confirmation"]
 seed_id: reversal_pattern_oscillator
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # RSI Divergence Confirms Reversal at Extremes
 
 ## Discovery Summary

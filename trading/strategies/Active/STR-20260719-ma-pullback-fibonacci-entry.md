@@ -178,6 +178,8 @@ Murphy warns that Fibonacci tools should be secondary inputs precisely because t
 | 2026-07-19 | Strategy created | US-052 schema; revised instructions from pre-build critical review |
 
 ## Related
+- [[N039-double-crossover-method-10-and-50-day-combination-for-stocks]] — See N039 for double crossover method using 10 and 50-day MAs
+
 - [[EN027-5-and-20-day-moving-average-crossover]] — See 5/20 crossover for entry confirmation filter
 
 - [[EN085-counter-trend-retracement-trading]] — See general retracement rule
