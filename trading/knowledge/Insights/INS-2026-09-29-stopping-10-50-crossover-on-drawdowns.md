@@ -7,8 +7,11 @@ domains: [indicators, risk-guidelines, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "EN028-10-and-50-day-moving-average-crossover", "RG033-handling-drawdowns-and-losing-streaks"]
 seed_id: drawdown_system_shutdown
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Stopping 10/50 Crossover on Drawdowns
 
 ## Discovery Summary

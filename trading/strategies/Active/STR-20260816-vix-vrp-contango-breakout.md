@@ -159,6 +159,8 @@ spread+commission+gap costs):**
   regime → tighten `VIX_MAX` or add a hard VIX-slope filter.
 
 ## Related
+- [[R014-weekly-close-filter-for-breakouts]] — See R014-weekly-close-filter-for-breakouts for weekly close confirmation of VIX contango breakouts.
+
 - [[R052-filters-for-confirming-breakouts]] — See R052 for breakout confirmation filters applicable to VIX contango strategy
 
 - Edge candidate: [[CAND-20260816-vix-contango-persistence]]

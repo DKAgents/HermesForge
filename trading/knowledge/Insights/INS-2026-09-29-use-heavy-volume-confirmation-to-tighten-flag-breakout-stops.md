@@ -7,8 +7,11 @@ domains: [patterns, trading rules, volume indicators]
 sources: ["N043-flag-and-pennant-summary-characteristics", "R082-breakouts-must-be-accompanied-by-heavy-volume", "N013-volume-as-a-filter-for-false-breakouts"]
 seed_id: vol_diverge_stop
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Use Heavy Volume Confirmation to Tighten Flag Breakout Stops
 
 ## Discovery Summary
