@@ -33,6 +33,12 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[C050-secondary-trend-retracement-range]] — See C050-secondary-trend-retracement-range for pullback entry context within weekly trend
+
+- [[R138-trend-direction-determines-oscillator-signal-validity]] — See R138 for the foundational principle of trend-filtered oscillator signals
+
+- [[C048-dows-three-tier-trend-classification]] — See C048 for Dow's trend classification that underpins multi-timeframe filtering
+
 - [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter]] — See INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter for alternative weekly channel filter approach
 
 - [[EN041-oscillator-entry-strategy-in-trending-markets]] — See foundational oscillator entry rule that this gate refines.
