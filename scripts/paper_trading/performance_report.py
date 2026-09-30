@@ -123,6 +123,118 @@ def _hostile_strq_r_str() -> str:
         return "Pessimistic R: unavailable"
 
 
+def _simulate_portfolio_managed(closed_rows: list) -> dict:
+    """Replay closed trades chronologically through the portfolio risk guard.
+    Returns stats on which trades would be accepted vs rejected under
+    the current production limits (8 pos, 7% heat, 3 sector, 5 asset class).
+
+    Returns:
+        {accepted_count, rejected_count, accepted_r, rejected_r, accepted_by_strategy, rejected_by_strategy,
+         rejected_reasons: {reason: count}, peak_heat, peak_positions, bottleneck_strategies}
+    """
+    try:
+        from portfolio_risk_guard import MAX_CONCURRENT_POSITIONS, MAX_PORTFOLIO_HEAT_PCT, MAX_SAME_SECTOR, MAX_SAME_ASSET_CLASS, _get_sector
+    except ImportError:
+        return {"error": "portfolio_risk_guard not importable"}
+
+    # Sort chronologically by entry date
+    sorted_trades = sorted(closed_rows, key=lambda r: r.get("entry_date", ""))
+
+    # State tracking — simulate portfolio state as trades are opened/closed
+    open_positions = []  # list of (exit_date, position_size_pct, ticker, asset_class, sector)
+    accepted = []
+    rejected = []
+    rejected_reasons = {}
+    peak_heat = 0.0
+    peak_positions = 0
+
+    for row in sorted_trades:
+        # First, process any positions that closed before this entry date
+        entry_date = row.get("entry_date", "")
+        open_positions = [p for p in open_positions if p[0] >= entry_date]
+
+        # Current portfolio state
+        current_positions = len(open_positions)
+        current_heat = sum(float(p[1]) for p in open_positions)
+        risk_pct = float(row.get("position_size_pct", 0) or 0)
+
+        # Sector tracking
+        ticker = row.get("ticker", "")
+        asset_class = row.get("asset_class", "stock")
+        new_sector = _get_sector(ticker, asset_class)
+
+        sector_counts = {}
+        asset_class_counts = {}
+        for p in open_positions:
+            s = p[4]
+            sector_counts[s] = sector_counts.get(s, 0) + 1
+            ac = p[3]
+            asset_class_counts[ac] = asset_class_counts.get(ac, 0) + 1
+
+        # Check gates
+        reason = None
+        if current_positions >= MAX_CONCURRENT_POSITIONS:
+            reason = f"max positions ({current_positions}/{MAX_CONCURRENT_POSITIONS})"
+        elif current_heat + risk_pct > MAX_PORTFOLIO_HEAT_PCT:
+            reason = f"heat limit ({current_heat:.1f}% + {risk_pct:.1f}% > {MAX_PORTFOLIO_HEAT_PCT}%)"
+        elif sector_counts.get(new_sector, 0) >= MAX_SAME_SECTOR:
+            reason = f"sector limit: {new_sector} ({sector_counts.get(new_sector, 0)}/{MAX_SAME_SECTOR})"
+        elif asset_class_counts.get(asset_class, 0) >= MAX_SAME_ASSET_CLASS:
+            reason = f"asset class limit: {asset_class} ({asset_class_counts.get(asset_class, 0)}/{MAX_SAME_ASSET_CLASS})"
+
+        if reason:
+            rejected.append(row)
+            rejected_reasons[reason] = rejected_reasons.get(reason, 0) + 1
+        else:
+            accepted.append(row)
+            exit_date = row.get("exit_date", "2099-12-31")
+            # Add to simulated open positions
+            open_positions.append((exit_date, risk_pct, ticker, asset_class, new_sector))
+            current_heat += risk_pct
+            current_positions += 1
+
+        if current_heat > peak_heat:
+            peak_heat = current_heat
+        if current_positions > peak_positions:
+            peak_positions = current_positions
+
+    # Calculate R values
+    accepted_r = sum(_get_r(r) for r in accepted)
+    rejected_r = sum(_get_r(r) for r in rejected)
+
+    # By strategy
+    accepted_by_strategy = {}
+    rejected_by_strategy = {}
+    for r in accepted:
+        sid = r.get("strategy_id", "unknown")
+        accepted_by_strategy[sid] = accepted_by_strategy.get(sid, 0) + 1
+    for r in rejected:
+        sid = r.get("strategy_id", "unknown")
+        rejected_by_strategy[sid] = rejected_by_strategy.get(sid, 0) + 1
+
+    # Bottleneck: which strategies get rejected most?
+    bottleneck = sorted(rejected_by_strategy.items(), key=lambda x: -x[1])[:5]
+
+    return {
+        "accepted_count": len(accepted),
+        "rejected_count": len(rejected),
+        "accepted_r": accepted_r,
+        "rejected_r": rejected_r,
+        "accepted_by_strategy": accepted_by_strategy,
+        "rejected_by_strategy": rejected_by_strategy,
+        "rejected_reasons": rejected_reasons,
+        "peak_heat": round(peak_heat, 2),
+        "peak_positions": peak_positions,
+        "bottleneck": bottleneck,
+        "limits": {
+            "max_positions": MAX_CONCURRENT_POSITIONS,
+            "max_heat_pct": MAX_PORTFOLIO_HEAT_PCT,
+            "max_same_sector": MAX_SAME_SECTOR,
+            "max_same_asset_class": MAX_SAME_ASSET_CLASS,
+        }
+    }
+
+
 def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
     rows = _dedupe_rows(_rows())
     open_rows = [r for r in rows if r["status"] == "open"]
@@ -268,6 +380,55 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             t_wr = len(t_wins) / len(r_vals) * 100
             t_total = sum(r_vals)
             lines.append(f"  • {ac}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R")
+
+    # --- Portfolio-Managed Simulation ---
+    if closed_rows and len(closed_rows) >= 10:
+        lines.append("")
+        lines.append("**📊 Portfolio-Managed View** _(simulated: same trades, gated by portfolio risk limits):_")
+        sim = _simulate_portfolio_managed(closed_rows)
+        if "error" in sim:
+            lines.append(f"  Simulation unavailable: {sim['error']}")
+        else:
+            limits = sim["limits"]
+            lines.append(f"  Limits: {limits['max_positions']} concurrent positions, {limits['max_heat_pct']}% max heat, "
+                        f"{limits['max_same_sector']} per sector, {limits['max_same_asset_class']} per asset class")
+            lines.append("")
+            ac_r = sim["accepted_r"]
+            rej_r = sim["rejected_r"]
+            ac_count = sim["accepted_count"]
+            rej_count = sim["rejected_count"]
+            total_count = ac_count + rej_count
+            lines.append(f"  Accepted: {ac_count}/{total_count} trades ({ac_count/total_count*100:.0f}%), {ac_r:+.2f}R")
+            lines.append(f"  Rejected: {rej_count}/{total_count} trades ({rej_count/total_count*100:.0f}%), {rej_r:+.2f}R")
+            lines.append(f"  Peak heat: {sim['peak_heat']}%  |  Peak positions: {sim['peak_positions']}")
+            lines.append("")
+            # Rejection reasons
+            if sim["rejected_reasons"]:
+                lines.append("  **Rejection reasons:**")
+                for reason, count in sorted(sim["rejected_reasons"].items(), key=lambda x: -x[1]):
+                    lines.append(f"    • {reason}: {count} trades")
+            # Bottleneck strategies
+            if sim["bottleneck"]:
+                lines.append("  **Most rejected strategies:**")
+                for sid, count in sim["bottleneck"]:
+                    lines.append(f"    • {sid}: {count} rejected")
+
+        lines.append("")
+        lines.append("**📈 Portfolio Impact — Managed vs Unmanaged:**")
+        if "error" in sim:
+            lines.append("  Simulation unavailable")
+        else:
+            lines.append(f"  Unmanaged: {len(closed_rows)} trades, {sum(_get_r(r) for r in closed_rows):+.2f}R")
+            lines.append(f"  Managed:   {sim['accepted_count']} trades, {sim['accepted_r']:+.2f}R")
+            # Efficiency: R per trade
+            unmanaged_rpt = sum(_get_r(r) for r in closed_rows) / len(closed_rows) if closed_rows else 0
+            managed_rpt = sim['accepted_r'] / sim['accepted_count'] if sim['accepted_count'] else 0
+            lines.append(f"  R/trade:   {managed_rpt:+.3f}R managed vs {unmanaged_rpt:+.3f}R unmanaged")
+            lines.append(f"  Efficiency gain: managed trades average {managed_rpt - unmanaged_rpt:+.3f}R more per trade")
+            lines.append(f"  Total R given up: {sim['rejected_r']:+.2f}R across {sim['rejected_count']} rejected trades")
+            lines.append(f"  _(Portfolio limits: {limits['max_positions']} pos, {limits['max_heat_pct']}% heat, "
+                        f"{limits['max_same_sector']} sector, {limits['max_same_asset_class']} asset class)_")
+        # End of managed section
 
     # --- Strategy correlation (need 5+ closed trades per strategy) ---
     if closed_rows and len(by_strategy_all) >= 2:

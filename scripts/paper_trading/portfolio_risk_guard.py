@@ -28,27 +28,25 @@ import trade_log
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
-# ── Configuration (Testing Phase — loosened for data collection) ─────────────
-# These limits are deliberately loose during the strategy validation phase.
-# Once we have 50+ closed trades and know which strategies work, tighten to:
-#   MAX_CONCURRENT_POSITIONS=8, MAX_PORTFOLIO_HEAT_PCT=7.0,
-#   MAX_SAME_SECTOR=3, MAX_SAME_ASSET_CLASS=5, DAILY_MAX_STOPS=3
+# ── Configuration (Production) ────────────────────────────────────────────
+# Tightened limits for portfolio heat management per ADR review.
+# Previous testing-phase values: 15 pos, 15% heat, sector/asset disabled.
 
 # Max concurrent open positions across all strategies
-MAX_CONCURRENT_POSITIONS = 15
+MAX_CONCURRENT_POSITIONS = 8
 
 # Max aggregate portfolio heat (% of account at risk across all open trades)
-MAX_PORTFOLIO_HEAT_PCT = 15.0
+MAX_PORTFOLIO_HEAT_PCT = 7.0
 
-# Max trades in the same sector (disabled during testing — set high)
-MAX_SAME_SECTOR = 999
+# Max trades in the same sector
+MAX_SAME_SECTOR = 3
 
-# Max trades in the same asset class (disabled during testing)
-MAX_SAME_ASSET_CLASS = 999
+# Max trades in the same asset class
+MAX_SAME_ASSET_CLASS = 5
 
-# Circuit breaker: disabled during testing (set high so it never trips)
-DAILY_MAX_STOPS = 999
-CIRCUIT_BREAKER_HOURS = 0  # No cool-down
+# Circuit breaker: max consecutive stops before cooling off
+DAILY_MAX_STOPS = 3
+CIRCUIT_BREAKER_HOURS = 4  # Hours to pause after hitting DAILY_MAX_STOPS
 
 # ── Sector classification ────────────────────────────────────────────────────
 

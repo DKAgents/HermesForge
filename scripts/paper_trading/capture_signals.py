@@ -422,6 +422,21 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                         jev_action = "allow"  # --jev-off: skip Jev, paper only (no live entries)
                     if jev_action == "skip":
                         continue
+                    # US-111: Portfolio Risk Guard
+                    try:
+                        from portfolio_risk_guard import check_trade_allowed
+                        risk_pct = trade_dict.get("position_size_pct", 1.0)
+                        ticker2 = trade_dict.get("ticker", "")
+                        ac2 = trade_dict.get("asset_class", "stock")
+                        allowed, port_reason = check_trade_allowed(
+                            strategy_id, ticker2, ac2, risk_pct
+                        )
+                        if not allowed:
+                            summary["skipped_portfolio"] = summary.get("skipped_portfolio", 0) + 1
+                            print(f"  PORTFOLIO BLOCK: {strategy_id}/{ticker2} — {port_reason}")
+                            continue
+                    except ImportError:
+                        pass
                     try:
                         trade_id = trade_log.open_trade(trade_dict)
                         summary["opened"] += 1
@@ -470,10 +485,18 @@ def _scan_and_capture(data: dict, asset_class: str, data_source: str,
                     if mult != 1.0:
                         print(f"  Regime adjustment: risk {mult:.1f}x → {risk_pct}%")
 
-            # US-111: Portfolio Risk Guard — DISABLED during testing phase
-            # Re-enable once we have 50+ closed trades for strategy validation.
-            # See portfolio_risk_guard.py for production limits (8 pos, 7% heat, 3 sector, circuit breaker).
-            pass  # Risk guard disabled — let all trades through for data collection
+            # US-111: Portfolio Risk Guard
+            try:
+                from portfolio_risk_guard import check_trade_allowed, record_stop_loss
+                allowed, port_reason = check_trade_allowed(
+                    strategy_id, ticker, asset_class, risk_pct
+                )
+                if not allowed:
+                    summary["skipped_portfolio"] = summary.get("skipped_portfolio", 0) + 1
+                    print(f"  PORTFOLIO BLOCK: {strategy_id}/{ticker} — {port_reason}")
+                    continue
+            except ImportError:
+                pass  # No risk guard available, allow all
 
             entry_price = latest["entry_price"]
             stop_price = latest["stop_price"]
