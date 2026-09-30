@@ -85,14 +85,15 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
 
 
 def _hostile_strq_r_str() -> str:
-    """Read cumulative hostile STR-Q R from the hostile fill jsonl file.
-    Returns a formatted string with sum, record count, date range, and frozen
-    scoreboard reference.  Returns 'hostile file sum: unavailable' on error."""
+    """Read cumulative hostile STR-Q R from the hostile fill jsonl file,
+    filtered to post-gauntlet entries only (>= 2026-09-14).
+    Returns a formatted string with sum, record count, and date range.
+    Returns 'Pessimistic R: unavailable' on error."""
     try:
         import json, pathlib
         jsonl = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
         if not jsonl.exists():
-            return "hostile file sum: unavailable"
+            return "Pessimistic R: unavailable"
         total = 0.0
         count = 0
         mindate = ""
@@ -103,21 +104,23 @@ def _hostile_strq_r_str() -> str:
                 hr = r.get("hostile_r")
                 if hr is None:
                     continue
+                d = (r.get("entry_date") or "")[:10]
+                # Only include post-gauntlet entries
+                if d < "2026-09-14":
+                    continue
                 total += float(hr)
                 count += 1
-                d = (r.get("entry_date") or "")[:10]
                 if d:
                     if not mindate or d < mindate:
                         mindate = d
                     if not maxdate or d > maxdate:
                         maxdate = d
         if count == 0:
-            return "hostile file sum: unavailable"
-        return (f"STR-Q hostile file sum: {total:+.0f}R on {count} rows"
-                f", {mindate} to {maxdate}."
-                f"  Frozen reconciled scoreboard remains -104R.")
+            return "Pessimistic R: unavailable"
+        return (f"Pessimistic R (worst-case L2 order-book fills): {total:+.0f}R"
+                f" on {count} rows, {mindate} to {maxdate}")
     except Exception:
-        return "hostile file sum: unavailable"
+        return "Pessimistic R: unavailable"
 
 
 def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
@@ -212,6 +215,8 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
     lines.append(f"**Running Totals (since {cutover_str} — gauntlet go-live):**")
     if skipped_pre_gauntlet:
         lines.append(f"  _(+{skipped_pre_gauntlet} pre-gauntlet trades excluded)_")
+    lines.append("")
+    lines.append("**Optimistic R** _(cost-adjusted fills — mid-price minus typical slippage + venue costs, ~12 bps crypto / ~2 bps stocks):_")
     by_strategy_all = {}
     if not closed_rows:
         lines.append("  No closed trades yet.")
@@ -234,7 +239,8 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             if dd > max_dd:
                 max_dd = dd
         lines.append(f"  Total: {len(closed_rows)} trades, {wr:.0f}% win, {total_r:+.2f}R realized, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
-        lines.append(f"  {_hostile_strq_r_str()}")
+        lines.append("")
+        lines.append(f"  **{_hostile_strq_r_str()}** _(worst-case L2 order-book fill — simulates market order absorption against actual order book depth)_")
 
         # By strategy
         lines.append("")
