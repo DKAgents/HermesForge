@@ -33,6 +33,8 @@ A trader should require above-average volume at the exact candle of pattern comp
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R080-heavy-volume-on-downside-moves-as-bearish-confirmation]] — See R080-heavy-volume-on-downside-moves-as-bearish-confirmation for bearish volume confirmation rule
+
 - [[N028-bull-trap-false-upside-breakout]] — See N028-bull-trap-false-upside-breakout for the classic bull trap pattern this volume gate is designed to avoid
 
 - [[R002-dow-averages-must-confirm-each-other]] — Confirmation across indices in Dow Theory
