@@ -7,8 +7,11 @@ domains: [indicators, risk management, trading rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Pivot entries need trailing stop exits
 
 ## Discovery Summary

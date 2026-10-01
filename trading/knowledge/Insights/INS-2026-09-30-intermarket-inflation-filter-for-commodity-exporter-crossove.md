@@ -7,8 +7,11 @@ domains: [edge-conditions, indicators, intermarket analysis, rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "E040-commodity-exporters-and-deflation-risk", "R310-adjusting-long-term-charts-for-inflation"]
 seed_id: commodity_inflation_stock
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Intermarket inflation filter for commodity-exporter crossovers
 
 ## Discovery Summary

@@ -40,3 +40,6 @@ When escalating to human, the Risk Guardian sends a Discord message with:
 - High: Human must respond within 4 hours  
 - Medium: Human must respond within 24 hours
 - Low: Logged, no response required
+
+## Related
+- [[INCIDENT_LOG]] — See 07-Risk/INCIDENT_LOG.md for records of escalated incidents

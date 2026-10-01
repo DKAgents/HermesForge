@@ -7,8 +7,11 @@ domains: [indicators, rules]
 sources: ["N112-relative-strength-analysis-for-sector-rotation", "R249-sector-rotation-based-on-crbbond-ratio"]
 seed_id: intermarket_sector_rotation
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Combine intermarket signal with RS for sector rotation
 
 ## Discovery Summary
