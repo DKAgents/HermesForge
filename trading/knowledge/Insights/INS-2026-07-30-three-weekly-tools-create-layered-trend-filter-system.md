@@ -36,4 +36,10 @@ A trader should require alignment across all three weekly indicators — channel
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa|Three-Layer Weekly Confirmation System for Daily Entry Signals]]
 
 ## Related
+- [[N149-donchians-weekly-rule]] — See N149-donchians-weekly-rule for Donchian weekly breakout context
+
+- [[C311-trend-following-systems]] — See Murphy's trend-following systems for foundational concepts
+
+- [[C048-dows-three-tier-trend-classification]] — See C048 for the underlying Dow theory trend classification framework.
+
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa]] — See the layered weekly confirmation system for daily entry signals

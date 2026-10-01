@@ -1,8 +1,8 @@
 crosspost_state_bytes: 676
 snapshot_last_ok: 2026-09-30 20:00:29 UTC-07:00
 snapshot_last_rows: 36401
-fear_greed_last_ok: 2026-09-30
-fear_greed_last_value: 71 (Greed)
+fear_greed_last_ok: 2026-10-01
+fear_greed_last_value: 74 (Greed)
 restore_drill_last_ok: FAIL
 restore_drill_last_rows: 8204
 offbox_last_ok: 2026-09-30 20:00:29 UTC-07:00
