@@ -31,3 +31,6 @@ Trader should not rely on a wide stop under a flag/pennant breakout if volume do
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]

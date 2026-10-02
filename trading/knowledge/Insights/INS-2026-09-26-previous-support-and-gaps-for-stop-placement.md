@@ -31,3 +31,6 @@ In a downtrend, sell into the prior support level (now resistance) or the lower 
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

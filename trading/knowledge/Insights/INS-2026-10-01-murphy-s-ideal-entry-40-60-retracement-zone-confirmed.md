@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C050-secondary-trend-retracement-range", "EN068-4060-retracement-zones-for-timing-entries", "N085-fibonacci-percentage-retracements-38-50-62"]
 seed_id: swing_low_entry_filter
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Murphy's Ideal Entry: 40-60% Retracement Zone Confirmed
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Traders should wait for pullbacks in uptrends to reach the 40-60% (or 38.2-61.8%
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

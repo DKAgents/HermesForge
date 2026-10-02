@@ -30,3 +30,7 @@ When a support level is broken in a downtrend, use that level as the stop for sh
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

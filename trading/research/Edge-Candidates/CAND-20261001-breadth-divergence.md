@@ -7,8 +7,10 @@ composite_score: 69.2
 confidence: medium
 regime_fit: ['risk_on', 'caution']
 created: 20261001
+topic: general
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: BEARISH divergence: price moving one way, breadth the other
 
 ## Source

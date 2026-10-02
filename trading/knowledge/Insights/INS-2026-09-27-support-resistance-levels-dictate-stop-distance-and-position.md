@@ -31,3 +31,6 @@ A trader should first identify potential support/resistance levels from prior vi
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

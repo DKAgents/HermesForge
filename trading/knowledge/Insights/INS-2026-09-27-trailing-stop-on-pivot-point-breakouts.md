@@ -31,3 +31,7 @@ After a pivot point buy stop is elected and the trade moves in your favor, trail
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

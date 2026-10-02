@@ -31,3 +31,6 @@ Before acting on any pivot-point buy signal, first define the stop level using p
 ## Connection Type
 
 **contradicts_assumption** — Actionability score: 4/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]

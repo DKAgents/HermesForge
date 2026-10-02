@@ -7,8 +7,10 @@ composite_score: 72.7
 confidence: medium
 regime_fit: ['risk_off']
 created: 20261001
+topic: general
+has_quotes: false
+tags: []
 ---
-
 # Edge Candidate: Volatility risk premium extreme: +5.9% (VIX overestimating fear)
 
 ## Source

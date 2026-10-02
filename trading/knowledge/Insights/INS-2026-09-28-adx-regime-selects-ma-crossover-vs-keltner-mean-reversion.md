@@ -31,3 +31,6 @@ Check ADX first: take MA crossovers and secondary-retracement entries only when 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-08-28-adx-filters-keltner-channel-entries-by-retracement-depth|ADX filters Keltner Channel entries by retracement depth]]

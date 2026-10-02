@@ -31,3 +31,6 @@ Only trade breakaway or runaway gaps if accompanied by significantly above-avera
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N150-price-gaps-types|Price Gaps Types]]

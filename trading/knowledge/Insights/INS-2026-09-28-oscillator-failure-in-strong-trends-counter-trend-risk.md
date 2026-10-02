@@ -31,3 +31,6 @@ In a strong secondary trend, do not take counter-trend trades based on overbough
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[R125-overbought-and-oversold-oscillator-readings|Overbought and Oversold Oscillator Readings]]

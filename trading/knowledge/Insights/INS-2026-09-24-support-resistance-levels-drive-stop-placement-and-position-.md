@@ -33,4 +33,7 @@ In a downtrend, locate previous support levels and gap lower edges as resistance
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[RG035-combining-technical-factors-with-money-management-for-stop-p|Combining Technical Factors with Money Management for Stop Placement]]
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]
 - [[INS-2026-09-22-s-r-stop-distance-determines-position-size|S/R Stop Distance Determines Position Size]]

@@ -31,3 +31,6 @@ In a primary uptrend, wait for a secondary correction confirmed by a McClellan O
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

@@ -31,3 +31,6 @@ Assess current volatility (e.g., via ATR) before trading RSI divergence: in high
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[EN036-rsi-divergence-confirmation|RSI Divergence Confirmation]]

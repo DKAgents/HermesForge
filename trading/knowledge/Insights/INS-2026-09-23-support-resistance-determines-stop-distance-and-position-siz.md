@@ -31,3 +31,6 @@ When trading short in a downtrend, set stop just above the former support level 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

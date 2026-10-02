@@ -33,4 +33,5 @@ Enter upside breakouts only when heavy volume confirms the move. If you entered 
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-29-use-heavy-volume-confirmation-to-tighten-flag-breakout-stops|Use Heavy Volume Confirmation to Tighten Flag Breakout Stops]]
 - [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]

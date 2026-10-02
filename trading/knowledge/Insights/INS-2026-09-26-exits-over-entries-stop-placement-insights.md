@@ -31,3 +31,8 @@ Traders should prioritize mastering stop placement techniques (e.g., P&F column-
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[C245-stop-order|Stop Order]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

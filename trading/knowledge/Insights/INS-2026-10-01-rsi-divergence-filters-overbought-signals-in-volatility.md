@@ -7,8 +7,11 @@ domains: [concepts, indicators, rules]
 sources: ["C149-rsi-vs-stochastics-volatility-comparison", "N165-relative-strength-index-rsi-overboughtoversold-levels", "EN036-rsi-divergence-confirmation"]
 seed_id: reversal_pattern_oscillator
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # RSI divergence filters overbought signals in volatility
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ In volatile markets, only enter reversal trades when RSI is at extreme levels (N
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN036-rsi-divergence-confirmation|RSI Divergence Confirmation]]

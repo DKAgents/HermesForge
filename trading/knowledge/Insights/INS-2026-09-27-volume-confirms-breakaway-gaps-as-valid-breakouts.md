@@ -31,3 +31,6 @@ Only enter trades on breakaway gaps if the gap is accompanied by a significant i
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N150-price-gaps-types|Price Gaps Types]]

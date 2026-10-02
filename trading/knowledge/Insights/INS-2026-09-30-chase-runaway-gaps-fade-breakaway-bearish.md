@@ -31,3 +31,6 @@ When a gap occurs, classify it using N150's criteria: if it is a runaway gap (mi
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

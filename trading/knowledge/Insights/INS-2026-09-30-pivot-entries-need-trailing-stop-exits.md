@@ -31,3 +31,7 @@ When executing a pivot point buy signal from EN071, immediately apply a trailing
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 3/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,7 @@ After entering on a pivot point buy signal, trail the protective stop using the 
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

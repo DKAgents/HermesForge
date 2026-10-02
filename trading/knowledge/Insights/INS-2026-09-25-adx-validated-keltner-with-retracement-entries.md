@@ -31,3 +31,6 @@ In trending markets (rising ADX), wait for a secondary retracement to 33-66% of 
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -7,8 +7,11 @@ domains: [indicators, patterns, trading rules]
 sources: ["N043-flag-and-pennant-summary-characteristics", "R082-breakouts-must-be-accompanied-by-heavy-volume", "N013-volume-as-a-filter-for-false-breakouts"]
 seed_id: vol_diverge_stop
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Tighten stops when volume fails to confirm trend breakouts
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ When a flag/pennant or trend continuation move lacks volume confirmation, treat 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N136-pennant-continuation-pattern|Pennant Continuation Pattern]]

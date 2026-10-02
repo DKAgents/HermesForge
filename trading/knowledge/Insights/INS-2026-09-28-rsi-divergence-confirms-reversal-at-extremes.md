@@ -31,3 +31,6 @@ Wait for RSI price divergence to confirm a reversal after RSI enters extreme zon
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[EN036-rsi-divergence-confirmation|RSI Divergence Confirmation]]
