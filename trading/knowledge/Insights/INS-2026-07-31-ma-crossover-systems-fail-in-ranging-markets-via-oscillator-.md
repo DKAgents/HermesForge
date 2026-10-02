@@ -33,6 +33,8 @@ Before applying the 4-9-18 or any triple crossover system, traders should comput
 **adds_condition** — Actionability score: 3/5
 
 ## Related
+- [[N039-double-crossover-method-10-and-50-day-combination-for-stocks]] — See INS-2026-07-31-ma-crossover-systems-fail-in-ranging-markets-via-oscillator- for risk of whipsaw in ranging markets
+
 - [[N036-exponentially-smoothed-moving-average]] — See N036 for how EMA crossovers also fail in ranging markets
 
 - [[N047-commonly-used-moving-average-combinations]] — See N047 for the standard MA pairs (4-9, 9-18) that become oscillator traps in ranges

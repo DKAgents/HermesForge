@@ -80,6 +80,15 @@
       "p_value": 1.0,
       "hit_rate": 0,
       "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-10-02",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
     }
   ],
   "STR-I": [
@@ -163,6 +172,15 @@
       "p_value": 0.0254,
       "hit_rate": 0.46,
       "verdict": "ROBUST EDGE"
+    },
+    {
+      "date": "2026-10-02",
+      "n_signals": 63,
+      "mean_r": 0.4639,
+      "sharpe_proxy": 1.054,
+      "p_value": 0.0157,
+      "hit_rate": 0.476,
+      "verdict": "ROBUST EDGE"
     }
   ],
   "STR-P": [
@@ -245,6 +263,15 @@
       "sharpe_proxy": 0.088,
       "p_value": 0.6096,
       "hit_rate": 0.355,
+      "verdict": "NO EDGE"
+    },
+    {
+      "date": "2026-10-02",
+      "n_signals": 400,
+      "mean_r": 0.0504,
+      "sharpe_proxy": 0.087,
+      "p_value": 0.6167,
+      "hit_rate": 0.367,
       "verdict": "NO EDGE"
     }
   ],
