@@ -103,7 +103,15 @@ def _run_strategy(strategy_key: str, stock_data: dict, crypto_data: dict) -> dic
 
     # Import module
     import importlib
-    module = importlib.import_module(config["module"])
+    try:
+        module = importlib.import_module(config["module"])
+    except (ModuleNotFoundError, ImportError) as e:
+        return {
+            "strategy": f"STR-{strategy_key}",
+            "name": config["name"],
+            "status": config["status"],
+            "error": f"module not found: {e}",
+        }
 
     # Select data
     data = crypto_data if asset_class == "crypto" else stock_data
