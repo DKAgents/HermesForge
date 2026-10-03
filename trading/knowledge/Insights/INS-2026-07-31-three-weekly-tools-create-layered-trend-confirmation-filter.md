@@ -33,6 +33,10 @@ A trader should only take daily MACD or Stochastics buy signals when price is ab
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[C048-dows-three-tier-trend-classification]] — See C048 for the theoretical foundation of multi-timeframe trend analysis
+
+- [[R014-weekly-close-filter-for-breakouts]] — See R014-weekly-close-filter-for-breakouts for weekly close validation of channel breakouts
+
 - [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter]] — See INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter for alternative weekly filter using channel breakout
 
 - [[EN023-trendline-break-confirmation-of-major-trend-change]] — See Murphy's weekly trendline break rule for validating the layered confirmation approach
