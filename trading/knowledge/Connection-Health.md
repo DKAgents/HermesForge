@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-03T04:36:47Z
+updated: 2026-10-03T08:38:47Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1185 |
-| Connections created | 1 | 318 |
-| Review queue | 323 | 323 |
-| Avg score | 3.5 | — |
+| Notes examined | 5 | 1190 |
+| Connections created | 0 | 318 |
+| Review queue | 324 | 324 |
+| Avg score | 2.8 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5529
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Maintenance` — 82 notes, avg degree 0.0
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-03T04:36:47Z)
-- **trading/knowledge/Insights/INS-2026-07-31-volume-confirmation-as-pre-entry-risk-filter-reduces-false-b.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R318-2-day-rule-for-trendline-breaks.md** (score 4.0): Volume confirmation and the 2-day rule together form a multi-factor filter that reduces false breakouts more effectively than either alone.
+## Recent Discoveries (last run: 2026-10-03T08:38:47Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 232: Created 2 connections from 5 notes. Avg score: 2.9.
