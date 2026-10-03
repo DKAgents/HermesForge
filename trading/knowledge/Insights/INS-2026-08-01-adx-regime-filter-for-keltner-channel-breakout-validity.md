@@ -33,6 +33,10 @@ A trader should require ADX to be rising before entering Keltner Channel breakou
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[C285-keltner-channels-vs-starc-bands-contrasting-use]] — See C285 for comparison with STARC bands and alternative breakout contexts
+
+- [[R014-weekly-close-filter-for-breakouts]] — See R014-weekly-close-filter-for-breakouts for additional breakout confirmation condition
+
 - [[R052-filters-for-confirming-breakouts]] — See R052-filters-for-confirming-breakouts for complementary breakout confirmation techniques to combine with ADX regime filtering
 
 ## Related Notes
