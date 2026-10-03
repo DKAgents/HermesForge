@@ -33,6 +33,8 @@ A trader should require heavy volume at upside breakout completion before enteri
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R318-2-day-rule-for-trendline-breaks]] — See R318-2-day-rule-for-trendline-breaks for time-based confirmation filter
+
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082 for the foundational volume breakout rule that INS-2026-07-31 builds upon
 
 - [[N028-bull-trap-false-upside-breakout]] — See bull trap pattern for volume confirmation context

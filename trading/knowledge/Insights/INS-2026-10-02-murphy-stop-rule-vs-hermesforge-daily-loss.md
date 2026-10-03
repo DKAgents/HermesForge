@@ -7,8 +7,11 @@ domains: [risk_guidelines, trading_rules]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "EN028-10-and-50-day-moving-average-crossover", "RG033-handling-drawdowns-and-losing-streaks"]
 seed_id: drawdown_system_shutdown
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: Murphy - Technical Analysis of the Financial Markets
 ---
-
 # Murphy stop rule vs HermesForge daily loss
 
 ## Discovery Summary

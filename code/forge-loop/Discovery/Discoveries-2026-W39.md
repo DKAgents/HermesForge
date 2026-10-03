@@ -1,7 +1,7 @@
 ---
 type: discovery-report
 week: 2026-W39
-date: 2026-10-01 21:07 PDT
+date: 2026-10-02 21:06 PDT
 insights_found: 10
 seeds_run: 17
 llm_calls: 17
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W39
 
-Generated: 2026-10-01 21:07 PDT
+Generated: 2026-10-02 21:06 PDT
 
 ## Summary
 
@@ -24,13 +24,13 @@ Generated: 2026-10-01 21:07 PDT
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-10-02-volume-divergence-signals-stop-tightening-in-trends\|Volume Divergence Signals Stop Tightenin]] | 4/5 | adds_condition | patterns, rules |
-| [[INS-2026-10-02-murphy-stop-rule-vs-hermesforge-daily-loss\|Murphy stop rule vs HermesForge daily lo]] | 4/5 | adds_condition | trading_rules, risk_guidelines |
-| [[INS-2026-10-02-pivot-entries-matter-less-than-trailing-stops\|Pivot entries matter less than trailing ]] | 4/5 | confirms_risk_rule | risk-guidelines, concepts |
-| [[INS-2026-10-02-adx-filters-keltner-channel-midline-reliability\|ADX filters Keltner Channel midline reli]] | 4/5 | adds_condition | indicators, edge-conditions |
-| [[INS-2026-10-02-intermarket-filter-for-relative-strength-sector-rotation\|Intermarket filter for relative strength]] | 4/5 | reveals_sequence | indicators, rules |
-| [[INS-2026-10-02-weekly-reversal-confirms-role-reversal-penetration\|Weekly reversal confirms role-reversal p]] | 4/5 | resolves_conflict | edge-conditions, concepts |
-| [[INS-2026-10-02-volume-confirmation-and-sizing-limits\|Volume Confirmation and Sizing Limits]] | 3/5 | adds_condition | rules, concepts |
-| [[INS-2026-10-02-oscillator-lies-avoid-counter-trend-in-strong-trends\|Oscillator lies: avoid counter-trend in ]] | 3/5 | confirms_risk_rule | concepts, rules |
-| [[INS-2026-10-02-s-r-flip-sets-stop-size-via-murphy\|S/R flip sets stop, size via Murphy]] | 3/5 | confirms_risk_rule | concepts, rules |
-| [[INS-2026-10-02-gap-type-determines-chase-vs-fade-strategy\|Gap type determines chase vs fade strate]] | 3/5 | resolves_conflict | patterns, indicators |
+| [[INS-2026-10-03-earnings-filter-for-role-reversal-and-weak-support\|Earnings filter for role-reversal and we]] | 5/5 | adds_condition | edge-conditions, concepts |
+| [[INS-2026-10-03-weekly-trend-filter-for-daily-entries-using-mas-and-oscillat\|Weekly Trend Filter for Daily Entries Us]] | 4/5 | creates_filter | rules, indicators |
+| [[INS-2026-10-03-avoid-counter-trend-oscillator-trades-in-strong-trends\|Avoid counter-trend oscillator trades in]] | 4/5 | confirms_risk_rule | concepts, rules |
+| [[INS-2026-10-03-support-resistance-role-reversal-sets-stop-distance-and-posi\|Support/resistance role reversal sets st]] | 4/5 | confirms_risk_rule | concepts, rules |
+| [[INS-2026-10-03-ideal-pullback-entry-40-60-retrace-with-fibonacci-50\|Ideal Pullback Entry: 40-60% Retrace wit]] | 4/5 | creates_filter | concepts, rules |
+| [[INS-2026-10-03-intermarket-filter-enhances-sector-rs-rotation\|Intermarket Filter Enhances Sector RS Ro]] | 4/5 | adds_condition | indicators, rules |
+| [[INS-2026-10-03-inflation-adjusted-crossover-for-commodity-deflation\|Inflation-Adjusted Crossover for Commodi]] | 4/5 | adds_condition | indicators, edge-conditions |
+| [[INS-2026-10-03-gap-type-dictates-chase-vs-fade-strategy\|Gap type dictates chase vs fade strategy]] | 4/5 | adds_condition | patterns, indicators |
+| [[INS-2026-10-03-volume-confirms-flag-pennant-breakouts\|Volume confirms flag/pennant breakouts]] | 3/5 | adds_condition | patterns, rules |
+| [[INS-2026-10-03-adx-regime-filters-keltner-channel-strategy\|ADX Regime Filters Keltner Channel Strat]] | 3/5 | adds_condition | indicators, edge-conditions |

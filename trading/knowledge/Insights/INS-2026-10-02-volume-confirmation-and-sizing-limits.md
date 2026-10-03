@@ -7,8 +7,11 @@ domains: [concepts, rules]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "C324-confirmation"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume Confirmation and Sizing Limits
 
 ## Discovery Summary
