@@ -39,7 +39,7 @@ def _load_api_key() -> Optional[str]:
             line = line.strip()
             if line.startswith("TYPESAFE_API_KEY="):
                 key = line.split("=", 1)[1].strip().strip('"').strip("'")
-    return None
+    return key
 
 
 class JevError(Exception):
