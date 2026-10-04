@@ -233,6 +233,7 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 
 ## Change Log
 
+- **2026-10-04**: Quarterly T1 review completed (early, 13 days ahead of Oct 17 deadline). Zero T1 calls in 2.5 months — triggers are appropriately restrictive. $55.37 saved via T3 migration ($5.72/month actual spend). 91% of all calls on T3, 9% on T2. All triggers kept, model assignments unchanged. Next review: 2027-01-17.
 - **2026-08-23**: T2 tier switched from `z-ai/glm-5.2` to `deepseek/deepseek-v4-pro` per explicit user (Dan Keseloff) instruction. Rationale: GLM-5.2 price increased 45% since adoption ($0.67→$0.97 input, $2.10→$3.04 output); DeepSeek V4 Pro at $0.41/$0.83 is less than half the price with strong reasoning and 1M context window. Expected savings: ~$14/month (~$172/year, 7.9% cost reduction). User reviewed full OpenRouter model landscape (422 models), actual usage stats (729 sessions, 781M tokens, $181.61/month), and approved the switch. Hermes global default updated via `hermes config set model.default deepseek/deepseek-v4-pro`. Vault Connection Weaver and Discovery Engine scripts updated to use the new T2 model. T3 (deepseek-v4-flash) and T1 (claude-opus-4.8) unchanged. Follow-up: monitor quality of build/research/synthesis tasks on DeepSeek V4 Pro for regressions vs GLM-5.2 baseline.
 - **2026-08-24**: T1 escalation triggers formalized. Replaced vague "use sparingly" guidance with 10 concrete triggers, each with a specific why-Opus rationale and estimated frequency. Added escalation protocol: flag → approve → dispatch → log → quarterly review. T1 redefined from "a tier" to "a safety valve — not a default, not a cron model, not a profile floor." Total estimated T1 cost: <$2/month at 0-3 invocations. Also: all 9 unassigned cron jobs migrated from `glm-5.2` (default) to T3 `deepseek-v4-flash` for ~$22-27/month additional savings. Fleet now 100% ADR-001 compliant (zero jobs on default). Combined T2+T3 savings: ~$36-41/month (~$435-495/year).
 - **2026-07-26**: T2 tier and hard floor switched from `anthropic/claude-sonnet-5` to `z-ai/glm-5.2` per explicit user (Dan Keseloff) instruction. Rationale given: cost (GLM-5.2 ~$0.67/$2.10 vs Sonnet-5 $2-3/$10-15 per 1M tokens) and consolidating on OpenRouter. User explicitly approved relaxing the risk-guardian/orchestrator/architect/coder hard floor to allow this. Follow-up: monitor risk-guardian/orchestrator/architect/coder output quality on GLM-5.2 for regressions vs. the Sonnet-5 baseline; escalate back to T1/Sonnet-class model if quality issues surface. Cron job `27a6aa851a96` (Sonnet-5 pricing reminder, Aug 25-28 2026) is now stale for T2 purposes but left in place — revisit at that date.
@@ -244,6 +245,46 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 2026-10-17 (3 months) — review after Phase 2 ModelRouter skill is built and 90 days of
 routing data is available. Evaluate: actual cost savings, routing accuracy, any quality
 incidents from downgraded model calls.
+
+**Next review: 2027-01-17** (quarterly thereafter)
+
+---
+
+## Quarterly Review — 2026-10-04 (early)
+
+### T1 Usage
+- **Zero T1 (Claude Opus 4.8) calls** across the entire 2.5-month monitoring period
+- No T1 escalation directory exists — zero escalations triggered
+- Estimated budget: 0-3 invocations/month → actual: 0. Within range.
+- **Assessment**: Triggers are appropriately restrictive. No false negatives identified.
+
+### Cost Savings
+- **$55.37 saved** by migrating T3 workloads to `deepseek/deepseek-v4-flash` (vs running them on T2 `v4-pro` pricing)
+- Monthly spend: ~$5.72 (Aug-Oct average)
+- Distribution: 1,446 T3 calls (91%) vs 143 T2 calls (9%) — fully ADR-001 compliant
+- T3 cost: ~$0.005/call average. T2 cost: ~$0.036/call average. 7x cost difference per call.
+
+### Trigger Evaluation
+All 10 triggers remain relevant. Notable:
+
+| # | Trigger | Status | Notes |
+|---|---------|--------|-------|
+| 1 | Multi-agent deadlock | No incidents | Swarm resolved all disputes internally |
+| 3 | ADR drafting | Not invoked | ADR-001 updates handled at T2 |
+| 9 | Systemic refactor | Not invoked | Hermes v0.21.5 update handled without T1 |
+| 6 | Risk escalation | No incidents | No live drawdowns crossed guard thresholds |
+
+### Quality Assessment
+- No quality regressions observed from T2→T3 migration
+- No cron job failures attributed to model quality (all errors are script/token/permission issues)
+- Paper trading reports, daily briefings, and signal capture all functioning correctly on T3
+
+### Decisions
+1. **Keep all 10 triggers** — no changes needed. Restrictiveness is correct.
+2. **Keep T1 model as `claude-opus-4.8`** — no compelling alternatives at similar capability.
+3. **Keep T2 as `deepseek/deepseek-v4-pro`** — cost and quality both acceptable.
+4. **Keep T3 as `deepseek/deepseek-v4-flash`** — primary workhorse, 91% of all calls.
+5. **Next review: 2027-01-17** (quarterly cadence).
 
 ## Related
 - [[ADR-005-Stage-Based-Model-Floors-and-Red-Team]] — See ADR-005 for extension of routing with stage-based floors and red team review.
