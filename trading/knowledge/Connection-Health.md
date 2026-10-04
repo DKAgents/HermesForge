@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-03T20:47:51Z
+updated: 2026-10-04T00:50:34Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1205 |
+| Notes examined | 5 | 1210 |
 | Connections created | 0 | 320 |
-| Review queue | 328 | 328 |
-| Avg score | 3.0 | — |
+| Review queue | 329 | 329 |
+| Avg score | 3.9 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5531
@@ -28,7 +28,7 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Maintenance` — 82 notes, avg degree 0.0
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-03T20:47:51Z)
+## Recent Discoveries (last run: 2026-10-04T00:50:34Z)
 - (no connections created this run)
 
 ## Reflection Notes
