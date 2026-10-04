@@ -7,8 +7,11 @@ domains: [edge-conditions, indicators, rules]
 sources: ["R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "N044-long-term-moving-averages-on-weekly-charts", "E019-weekly-chart-signals-as-filters-for-short-term-timing"]
 seed_id: trend_filter_entry
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Weekly Trend Filter for Daily Entries Using MAs and Oscillators
 
 ## Discovery Summary

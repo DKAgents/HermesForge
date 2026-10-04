@@ -7,8 +7,11 @@ domains: [indicators, patterns, rules]
 sources: ["N150-price-gaps-types", "N007-runaway-gap-as-measuring-tool", "EX006-breakaway-gap-bearish-signal"]
 seed_id: gap_continuation_volume
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Gap type dictates chase vs fade strategy
 
 ## Discovery Summary

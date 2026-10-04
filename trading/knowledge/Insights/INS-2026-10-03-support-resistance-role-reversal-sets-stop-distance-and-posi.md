@@ -7,8 +7,11 @@ domains: [concepts, risk management, rules]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "R312-reversal-of-roles-supportresistance"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Support/resistance role reversal sets stop distance and position size
 
 ## Discovery Summary

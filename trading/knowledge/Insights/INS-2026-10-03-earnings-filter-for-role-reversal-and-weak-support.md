@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, patterns]
 sources: ["E005-subjectivity-in-defining-significant-penetration", "C065-previous-support-as-future-resistance-in-downtrend", "N007-weekly-reversal-pattern"]
 seed_id: lesson-a-c8b706
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Earnings filter for role-reversal and weak support
 
 ## Discovery Summary
