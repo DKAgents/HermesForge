@@ -36,6 +36,12 @@ Before acting on any daily MACD or Stochastics crossover, a trader should requir
 - [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter|Weekly Channel Breakout as MACD/Stochastic Trend Filter]]
 
 ## Related
+- [[C366-secondary-trends]] — See C366-secondary-trends for context on counter-trend moves within primary trend defined by weekly filters
+
+- [[C050-secondary-trend-retracement-range]] — See C050-secondary-trend-retracement-range for retracement levels within the layered filter
+
+- [[C048-dows-three-tier-trend-classification]] — See also C048-dows-three-tier-trend-classification for the theoretical basis of multi-timeframe trend filtering
+
 - [[C311-trend-following-systems]] — See C311-trend-following-systems for foundational trend-following concepts that underpin this layered filter approach
 
 - [[INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter]] — See INS-2026-09-08-weekly-channel-breakout-as-macd-stochastic-trend-filter for the weekly channel breakout as a specific filter in the layered system.
