@@ -83,7 +83,19 @@ QUICK_QUESTIONS = {
 
 
 def extract_text(url: str, timeout: int = 15) -> str:
-    """Fetch and extract readable text from a URL."""
+    """Fetch and extract readable text from a URL using Hermes web_extract."""
+    # Route 1: Try Hermes web_extract (handles JS, paywalls, Cloudflare better)
+    try:
+        from hermes_tools import web_extract
+        result = web_extract([url], char_limit=8000)
+        for r in result.get("results", []):
+            if r.get("content") and not r.get("error"):
+                return r["content"][:8000]
+    except Exception:
+        pass
+
+    # Route 2: Raw HTTP fallback
+    import re
     req = Request(url, headers={
         "User-Agent": "Mozilla/5.0 (compatible; HermesForge/1.0; research bot)"
     })
@@ -93,16 +105,10 @@ def extract_text(url: str, timeout: int = 15) -> str:
     except Exception as e:
         return f"[FETCH ERROR: {e}]"
 
-    # Crude text extraction: strip tags
-    import re
-    # Remove scripts and styles
     html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
     html = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL)
-    # Remove tags
     text = re.sub(r'<[^>]+>', ' ', html)
-    # Collapse whitespace
     text = re.sub(r'\s+', ' ', text).strip()
-    # Truncate for JEV (token budget)
     return text[:8000]
 
 
