@@ -284,7 +284,7 @@ All 10 triggers remain relevant. Notable:
 2. **Keep T1 model as `claude-opus-4.8`** — no compelling alternatives at similar capability.
 3. **Keep T2 as `deepseek/deepseek-v4-pro`** — cost and quality both acceptable.
 4. **Keep T3 as `deepseek/deepseek-v4-flash`** — primary workhorse, 91% of all calls.
-5. **Next review: 2027-01-17** (quarterly cadence).
+5. **Next review: 2026-11-17** (monthly T1 trigger + model landscape check; full ADR review quarterly). Rationale: models evolve rapidly (2 T2 switches in 3 months), trading pipeline under active development — monthly cadence catches stale model assignments faster.
 
 ## Related
 - [[ADR-005-Stage-Based-Model-Floors-and-Red-Team]] — See ADR-005 for extension of routing with stage-based floors and red team review.
