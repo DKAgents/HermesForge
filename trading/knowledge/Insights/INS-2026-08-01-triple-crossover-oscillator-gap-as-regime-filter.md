@@ -33,6 +33,8 @@ A trader using the 4-9-18 triple crossover system (N037) should measure the spre
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[N170-momentum-measurement]] — See N170 for momentum measurement fundamentals
+
 - [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for early momentum divergence warnings that may reinforce regime filtering.
 
 - [[C152-macd-overbought-and-oversold-conditions]] — See C152-macd-overbought-and-oversold-conditions for how oscillator gap regime filtering can qualify MACD extreme signals

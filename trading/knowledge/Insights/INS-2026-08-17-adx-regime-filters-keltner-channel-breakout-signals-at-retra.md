@@ -33,4 +33,5 @@ Only take Keltner Channel midline-bounce entries during 33-67% retracements when
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-02-adx-filters-keltner-channel-midline-reliability|ADX filters Keltner Channel midline reliability]]
 - [[INS-2026-08-01-adx-regime-filter-for-keltner-channel-breakout-validity|ADX Regime Filter for Keltner Channel Breakout Validity]]

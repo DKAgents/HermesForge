@@ -7,8 +7,11 @@ domains: [indicators, patterns, rules]
 sources: ["N150-price-gaps-types", "N007-runaway-gap-as-measuring-tool", "EX006-breakaway-gap-bearish-signal"]
 seed_id: gap_continuation_volume
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Gap Type Determines Chase vs Fade
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Upon identifying a gap, classify it using N150: if it's a breakaway gap (especia
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-30-chase-runaway-gaps-fade-breakaway-bearish|Chase Runaway Gaps, Fade Breakaway Bearish]]

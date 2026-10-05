@@ -31,3 +31,6 @@ When trading 10/50-day crossovers on stocks from commodity-exporting nations, fi
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-04-inflation-adjusted-crossover-with-commodity-deflation-filter|Inflation-adjusted crossover with commodity deflation filter]]

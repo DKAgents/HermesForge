@@ -62,7 +62,7 @@ Fix is applied to working tree but needs commit + push.
 - [x] _load_api_key() returns key from .env file when no env var set
 - [x] JevClient() initializes in execute_code (no shell env) from .env
 - [x] No behavior change when key IS in env (early return path unchanged)
-- [ ] Git commit + push applied
+- [x] Git commit + push applied (2204d9dc)
 
 ## Related
 - US-155: Secrets Not In History (TYPESAFE key echo'd in CLI shell — likely needed because of this bug)

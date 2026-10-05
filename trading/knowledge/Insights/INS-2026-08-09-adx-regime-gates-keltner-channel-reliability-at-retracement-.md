@@ -31,3 +31,6 @@ At a secondary retracement into the Keltner Channel EMA (within the 33-67% retra
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-02-adx-filters-keltner-channel-midline-reliability|ADX filters Keltner Channel midline reliability]]
