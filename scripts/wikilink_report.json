@@ -1,10 +1,47 @@
 [
   {
-    "book": "Backtests",
-    "anchor_index_size": 11,
-    "notes_processed": 25,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "Insights",
+    "anchor_index_size": 565,
+    "notes_processed": 843,
+    "notes_linked": 6,
+    "total_links_added": 6,
+    "sample": [
+      {
+        "note": "INS-2026-09-16-commodity-deflation-filters-10-50-stock-crossover.md",
+        "links": [
+          "INS-2026-10-04-inflation-adjusted-crossover-with-commodity-deflation-filter"
+        ]
+      },
+      {
+        "note": "INS-2026-08-01-commodity-exporter-stress-triggers-ma-crossover-exit-signals.md",
+        "links": [
+          "INS-2026-09-30-double-crossover-reduces-whipsaws-confirms-rule"
+        ]
+      },
+      {
+        "note": "INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra.md",
+        "links": [
+          "INS-2026-10-02-adx-filters-keltner-channel-midline-reliability"
+        ]
+      },
+      {
+        "note": "INS-2026-10-04-gap-type-determines-chase-vs-fade.md",
+        "links": [
+          "INS-2026-09-30-chase-runaway-gaps-fade-breakaway-bearish"
+        ]
+      },
+      {
+        "note": "INS-2026-08-18-adx-regime-selects-between-keltner-breakouts-and-retracement.md",
+        "links": [
+          "INS-2026-10-04-fibonacci-retracement-zones-for-pullback-entries"
+        ]
+      },
+      {
+        "note": "INS-2026-08-09-adx-regime-gates-keltner-channel-reliability-at-retracement-.md",
+        "links": [
+          "INS-2026-10-02-adx-filters-keltner-channel-midline-reliability"
+        ]
+      }
+    ]
   }
 ]
