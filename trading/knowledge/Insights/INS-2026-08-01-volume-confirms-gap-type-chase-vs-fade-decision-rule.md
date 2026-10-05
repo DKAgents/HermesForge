@@ -33,4 +33,6 @@ When a gap forms, immediately check volume: heavy volume on a gap following a co
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[R080-heavy-volume-on-downside-moves-as-bearish-confirmation]] — See R080 for bearish volume confirmation on downside gaps
+
 - [[EN008-volume-confirmation-at-pattern-completion]] — See EN008-volume-confirmation-at-pattern-completion for the foundational volume rule that underpins the gap-type chase/fade discriminator
