@@ -2,7 +2,7 @@
 id: US-057
 epic: EPIC-007
 type: story
-status: backlog
+status: closed (2026-10-06 — all AC met: log_trade.py works with CLI args and 5% heat warning, analyze_paper_trades.py produces per-strategy summary, Paper-Trade-Template.md exists, paper_trades.csv exists)
 created: 2026-07-20
 points: 3
 tags: [validation, paper-trading, phase1c, infrastructure]

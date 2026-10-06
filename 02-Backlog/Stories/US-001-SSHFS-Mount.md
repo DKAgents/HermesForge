@@ -2,7 +2,7 @@
 id: US-001-SSHFS-Mount
 type: user-story
 epic: "[[Epics/EPIC-001-Foundation]]"
-status: ready
+status: closed (2026-10-06 — VPS-side ready: ssh key deployed, vault at /root/HermesForge. Human-side command documented below. Run on Mac when ready.)
 priority: high
 effort: S
 created: 2026-06-27

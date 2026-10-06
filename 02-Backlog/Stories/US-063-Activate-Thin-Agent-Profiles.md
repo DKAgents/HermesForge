@@ -2,7 +2,7 @@
 id: US-063
 epic: EPIC-001
 type: story
-status: backlog
+status: closed (2026-10-06 — all 3 profiles already had full SOUL.md definitions: risk-guardian with veto/risk rules, product-owner with backlog grooming/AC standards, documenter with scope/archiving rules)
 created: 2026-07-20
 points: 3
 tags: [agents, soul, activation, profiles]

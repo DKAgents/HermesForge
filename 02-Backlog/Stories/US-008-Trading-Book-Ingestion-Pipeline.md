@@ -2,7 +2,7 @@
 id: US-008
 type: user-story
 epic: EPIC-001
-status: backlog
+status: closed (2026-10-06 — full skill built: extract_book.py v2 (chapter-aware), write_notes.py v2 (6 subfolders), run_synthesis_v2.py, dedup_notes.py, quality pipeline. Deps installed: pymupdf, pymupdf4llm, ebooklib, html2text. Murphy run battle-tested with 1,000+ notes.)
 priority: high
 effort: L
 created: 2026-07-18

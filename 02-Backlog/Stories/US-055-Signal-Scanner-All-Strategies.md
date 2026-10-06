@@ -2,7 +2,7 @@
 id: US-055
 epic: EPIC-007
 type: story
-status: backlog
+status: closed (2026-10-06 — all 4 core scanners built: scanner_a_ma_pullback (332L), scanner_b_macd_divergence (657L), scanner_c_breakout_volume (235L), scanner_d_sr_reversal (320L). Phase 1A CSVs generated. 68+ scanner modules total.)
 created: 2026-07-20
 points: 8
 tags: [validation, scanner, phase1a, strategies]
