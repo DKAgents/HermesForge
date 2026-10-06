@@ -50,7 +50,7 @@ def needs_refresh(symbol: str) -> bool:
 def fetch_symbol(symbol: str, start_date: str = "2019-01-01") -> pd.DataFrame:
     """Fetch daily candles for a Hyperliquid coin symbol, returns scanner-compatible DataFrame."""
     start_ms = int(pd.Timestamp(start_date).timestamp() * 1000)
-    end_ms = int(datetime.datetime.utcnow().timestamp() * 1000)
+    end_ms = int(datetime.datetime.now(datetime.UTC).timestamp() * 1000)
 
     resp = requests.post(
         HYPERLIQUID_INFO_URL,

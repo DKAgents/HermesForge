@@ -52,9 +52,7 @@ MONITORED = {
           "status": "LIVE", "asset_class": "stock", "call_mode": "per_ticker", "long_only": True},
     "P": {"module": "scanner_p_crosssectional", "scan_fn": "scan", "name": "Cross-Sectional Factor",
           "status": "WATCH", "asset_class": "crypto", "call_mode": "batch", "long_only": False},
-    "L": {"module": "scanner_l_atr_contraction", "scan_fn": "scan_ticker", "name": "ATR Contraction",
-          "status": "WATCH", "asset_class": "stock", "call_mode": "per_ticker", "long_only": True},
-}
+    }
 
 # Decay history file
 HISTORY_FILE = REPO_ROOT / "data" / "decay_history.json"

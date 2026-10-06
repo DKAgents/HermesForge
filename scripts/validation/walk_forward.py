@@ -83,18 +83,7 @@ STRATEGY_CONFIGS = {
         "asset_class": "both",
         "long_only_stocks": True,
     },
-    "L": {
-        "module": "scanner_l_atr_contraction",
-        "scan_fn": "scan_ticker",
-        "name": "ATR Contraction",
-        "params": {
-            "ATR_LOOKBACK": [60, 90, 120],
-            "ADX_THRESHOLD": [15, 18, 22],
-            "TRAILING_ATR_MULT": [1.5, 2.0, 2.5],
-        },
-        "asset_class": "stock",
-        "long_only_stocks": True,
-    },
+    # STR-L (scanner_l_atr_contraction) removed 2026-09-20 per ADR-004 (1.4 sig/yr)
     "D": {
         "module": "scanner_d_sr_reversal",
         "scan_fn": "scan",
@@ -248,7 +237,6 @@ QUICK_PARAMS = {
     "B": {"MACD_FAST": [12], "ATR_STOP_MULT": [0.3, 0.5, 0.7], "MATURITY_BARS": [15]},
     "I": {"LOOKBACK": [10, 20], "ENTRY_THRESHOLD": [0.15, 0.20], "ATR_MULTIPLIER": [2.0, 2.5]},
     "J": {"CHANNEL_LENGTH": [10], "ATR_STOP_MULTIPLIER": [1.0, 1.5], "MAX_BARS_HELD": [10]},
-    "L": {"ATR_LOOKBACK": [120], "ADX_THRESHOLD": [18], "TRAILING_ATR_MULT": [2.0]},
     "D": {"ATR_STOP_MULT": [1.0], "MIN_RR": [3.0], "MAX_HOLD": [8]},
     "P": {"ATR_STOP_MULT": [1.5], "QUINTILE": [5], "MAX_BARS_HELD": [21]},
     "VIXC": {"IVTS_MAX": [0.92], "VIX_MAX": [20], "MIN_RR": [2.0, 3.0], "MIN_PERSIST_FRAC": [0.6]},
@@ -807,7 +795,7 @@ def run_all_strategies(quick: bool = False, verbose: bool = True) -> dict:
     print("-" * 70)
 
     all_results = {}
-    for strategy_id in ["B", "I", "J", "L", "D", "P"]:
+    for strategy_id in ["B", "I", "J", "D", "P"]:
         print(f"\n{'='*70}")
         print(f"Strategy {strategy_id}: {STRATEGY_CONFIGS[strategy_id]['name']}")
         print(f"{'='*70}")
