@@ -2,7 +2,7 @@
 id: US-118
 type: user-story
 epic: EPIC-009
-status: pending
+status: closed (2026-10-06 — validate_crosspost.py exists as validation layer; code-level routing guard in embed_publisher.py fixed in 464198b; channel routing is correct)
 priority: low
 effort: M
 created: 2026-08-17

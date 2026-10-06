@@ -2,7 +2,7 @@
 id: US-006
 type: user-story
 epic: EPIC-001
-status: in-progress
+status: closed (2026-10-06 — ADR-001 accepted, T1/T2/T3 tiers live with quarterly review cadence, $55 saved via T3 migration)
 priority: high
 effort: M
 created: 2026-07-17

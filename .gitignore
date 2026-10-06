@@ -50,3 +50,4 @@ scripts/paper_trading/trades.csv
 scripts/paper_trading/trades.csv.bak*
 scripts/paper_trading/snapshots/
 .hermes-tmp*
+04-ForgeLoop/edge-factory-results/

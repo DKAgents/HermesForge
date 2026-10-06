@@ -2,7 +2,7 @@
 id: US-119
 type: user-story
 epic: EPIC-009
-status: in-progress
+status: closed (2026-10-06 — all 3 monitoring scripts built: check_liquidations.py, check_funding_extremes.py, check_oi_spikes.py; AC items complete)
 priority: high
 effort: L
 created: 2026-08-17

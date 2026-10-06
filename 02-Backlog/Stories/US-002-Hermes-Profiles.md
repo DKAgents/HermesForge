@@ -2,7 +2,7 @@
 id: US-002
 type: story
 epic: EPIC-001
-status: in-progress
+status: closed (2026-10-06 — ADR-001 fully implemented: 28 cron jobs tiered, all profiles assigned, fleet 100% compliant)
 priority: high
 created: 2026-06-27
 updated: 2026-06-27

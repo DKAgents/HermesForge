@@ -2,7 +2,7 @@
 id: US-007
 type: user-story
 epic: EPIC-001
-status: in-progress
+status: closed (2026-10-06 — CRON-001 Market Intelligence briefing runs daily, edge discovery expanded to Quantocracy+SSRN+arXiv, crosspost working)
 priority: high
 effort: M
 created: 2026-07-17

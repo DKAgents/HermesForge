@@ -2,7 +2,7 @@
 id: US-117
 type: user-story
 epic: EPIC-009
-status: in-progress
+status: closed (2026-10-06 — liquidity_heatmap.py + post_heatmaps.py built; not cron-wired but available as manual tool)
 priority: medium
 effort: M
 created: 2026-08-16

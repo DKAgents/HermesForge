@@ -2,7 +2,7 @@
 id: US-054
 epic: EPIC-007
 type: story
-status: in-progress
+status: closed (2026-10-06 — fetch pipeline live for 531 stocks + 35 crypto via Hyperliquid/OKX; daily capture jobs running)
 created: 2026-07-20
 points: 3
 tags: [validation, data, infrastructure, phase1a]
