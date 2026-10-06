@@ -7,8 +7,11 @@ domains: [indicators, rules]
 sources: ["N013-volume-as-a-filter-for-false-breakouts", "R052-filters-for-confirming-breakouts"]
 seed_id: breakout_volume_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Breakout confirmation with volume filter and stop placement
 
 ## Discovery Summary

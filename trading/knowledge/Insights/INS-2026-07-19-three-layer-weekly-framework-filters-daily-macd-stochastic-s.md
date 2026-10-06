@@ -37,6 +37,10 @@ Before taking a daily MACD or Stochastics crossover signal, a trader should chec
 - [[INS-2026-07-30-weekly-trend-confirmation-required-before-daily-macd-stochas|Weekly Trend Confirmation Required Before Daily MACD/Stochastics Entry]]
 
 ## Related
+- [[C128-moving-averages-as-oscillators-via-double-crossover]] — See C128 for the oscillator interpretation of the 10/40-week MA crossover used as trend filter
+
+- [[N175-macd-moving-average-convergencedivergence]] — See N175 for MACD indicator explanation
+
 - [[N066-macd-histogram-construction]] — See MACD construction details for indicator parameter context in weekly filtering
 
 - [[EN028-10-and-50-day-moving-average-crossover]] — See EN028-10-and-50-day-moving-average-crossover for daily crossover signal that requires weekly confirmation from the three-layer framework

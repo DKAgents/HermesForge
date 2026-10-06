@@ -1,8 +1,8 @@
 ---
 type: discovery-report
 week: 2026-W40
-date: 2026-10-04 21:07 PDT
-insights_found: 4
+date: 2026-10-05 21:06 PDT
+insights_found: 6
 seeds_run: 17
 llm_calls: 16
 tags: [discovery, knowledge-evolution, forge-loop]
@@ -10,7 +10,7 @@ tags: [discovery, knowledge-evolution, forge-loop]
 
 # Discovery Report — 2026-W40
 
-Generated: 2026-10-04 21:07 PDT
+Generated: 2026-10-05 21:06 PDT
 
 ## Summary
 
@@ -18,13 +18,15 @@ Generated: 2026-10-04 21:07 PDT
 |--------|-------|
 | Seeds queried | 17 |
 | LLM synthesis calls | 16 |
-| Insights accepted (actionability ≥ 3) | 4 |
+| Insights accepted (actionability ≥ 3) | 6 |
 
 ## New Insights
 
 | Insight | Actionability | Type | Domains |
 |---------|---------------|------|---------|
-| [[INS-2026-10-05-breakout-confirmation-with-volume-filter-and-stop-placement\|Breakout confirmation with volume filter]] | 4/5 | adds_condition | indicators, rules |
-| [[INS-2026-10-05-flipped-s-r-levels-for-position-sizing\|Flipped S/R levels for position sizing]] | 4/5 | confirms_risk_rule | concepts, risk guidelines |
-| [[INS-2026-10-05-earnings-filter-for-role-reversal-penetration\|Earnings filter for role-reversal penetr]] | 4/5 | adds_condition | edge-conditions, concepts |
-| [[INS-2026-10-05-volume-divergence-tightens-stops-in-flag-penant\|Volume divergence tightens stops in flag]] | 3/5 | adds_condition | patterns, rules |
+| [[INS-2026-10-06-volume-confirmed-breakouts-adjust-trailing-stops\|Volume-confirmed breakouts adjust traili]] | 4/5 | adds_condition | patterns, rules |
+| [[INS-2026-10-06-exits-anchor-pivot-buy-signals-via-trailing-stops\|Exits Anchor Pivot Buy Signals via Trail]] | 4/5 | adds_condition | risk-guidelines, concepts |
+| [[INS-2026-10-06-40-60-retracement-zone-for-entry-timing\|40-60% retracement zone for entry timing]] | 4/5 | adds_condition | concepts, rules |
+| [[INS-2026-10-06-earnings-filter-reduces-subjectivity-in-role-reversal-penetr\|Earnings filter reduces subjectivity in ]] | 4/5 | creates_filter | edge-conditions, concepts |
+| [[INS-2026-10-06-volume-time-filter-for-trendline-breaks\|Volume + Time Filter for Trendline Break]] | 3/5 | adds_condition | rules, rules |
+| [[INS-2026-10-06-adx-filters-ma-crossover-reliability\|ADX filters MA crossover reliability]] | 3/5 | creates_filter | indicators, edge-conditions |
