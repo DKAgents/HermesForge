@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-05T21:27:28Z
+updated: 2026-10-06T01:29:41Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1265 |
-| Connections created | 1 | 336 |
-| Review queue | 351 | 351 |
-| Avg score | 3.4 | — |
+| Notes examined | 5 | 1270 |
+| Connections created | 0 | 336 |
+| Review queue | 354 | 354 |
+| Avg score | 3.1 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5591
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-05T21:27:28Z)
-- **trading/knowledge/Insights/INS-2026-08-01-volume-confirms-gap-type-chase-vs-fade-decision-rule.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R080-heavy-volume-on-downside-moves-as-bearish-confirmation.md** (score 4.0): Note A's volume-based gap discrimination can be applied specifically to downside gaps, where heavy volume on a downside gap aligns with R080's bearish confirmation, reinforcing the chase decision.
+## Recent Discoveries (last run: 2026-10-06T01:29:41Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 245: Created 1 connections from 5 notes. Avg score: 3.1.
