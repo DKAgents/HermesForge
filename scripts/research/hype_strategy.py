@@ -473,7 +473,7 @@ def run_walk_forward():
     results = {
         "strategy_id": STRATEGY_ID,
         "strategy_name": "Hype / Momentum Ignition (crypto-only, long)",
-        "generated_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "generated_at": datetime.datetime.now(datetime.UTC).isoformat() + "Z",
         "config": {
             "vol_spike_lookback": VOL_SPIKE_LOOKBACK,
             "vol_spike_mult": VOL_SPIKE_MULT,

@@ -204,7 +204,7 @@ def main():
                  else [d for d in BOOKS_DIR.iterdir() if d.is_dir()])
     vault_extra = [] if args.book else [d for d in VAULT_DIRS if d.exists()]
 
-    t0 = datetime.utcnow()
+    t0 = datetime.now(datetime.UTC)
     total = 0
     for bd in book_dirs:
         if not bd.exists():
@@ -218,7 +218,7 @@ def main():
         n = embed_book(col, model, vdir, force=args.force)
         total += n
 
-    elapsed = (datetime.utcnow() - t0).total_seconds()
+    elapsed = (datetime.now(datetime.UTC) - t0).total_seconds()
     print(f"\nDone. {total} notes embedded in {elapsed:.1f}s")
     show_stats(col)
 

@@ -170,7 +170,7 @@ def run_attribution() -> dict:
     ]
     
     results = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(datetime.UTC).isoformat(),
         "total_trades": len(df),
         "closed_trades": len(df[df["status"] == "closed"]),
         "dimensions": {},

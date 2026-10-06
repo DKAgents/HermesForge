@@ -167,7 +167,7 @@ def run_kill_analysis() -> dict:
     strategies = closed["strategy_id"].unique()
     
     results = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(datetime.UTC).isoformat(),
         "total_strategies": len(strategies),
         "total_closed_trades": len(closed),
         "actions": [],

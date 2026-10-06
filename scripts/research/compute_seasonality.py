@@ -69,7 +69,7 @@ def compute_seasonality() -> dict:
     from fetch_crypto_data import load_all as load_crypto
     
     results = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(datetime.UTC).isoformat(),
     }
     
     # Stock benchmarks
@@ -156,7 +156,7 @@ def compute_seasonality() -> dict:
             results["strategy_by_dow"] = by_dow
     
     # Current month assessment
-    current_month = datetime.utcnow().month
+    current_month = datetime.now(datetime.UTC).month
     results["current_month"] = {
         "month": current_month,
         "name": datetime(2020, current_month, 1).strftime("%B"),

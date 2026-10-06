@@ -182,7 +182,7 @@ def index_note(conn: sqlite3.Connection, filepath: Path, book_slug: str, force: 
     fm.setdefault('ingested_at', '')
     fm.setdefault('body', '')
 
-    now = datetime.utcnow().isoformat()
+    now = datetime.now(datetime.UTC).isoformat()
     if row:
         conn.execute("""
             UPDATE notes SET title=?, concept_type=?, topic=?, confidence=?,
@@ -280,7 +280,7 @@ def main():
 
     # Update meta
     conn.execute("INSERT OR REPLACE INTO index_meta VALUES ('last_indexed', ?)",
-                 (datetime.utcnow().isoformat(),))
+                 (datetime.now(datetime.UTC).isoformat(),))
     conn.commit()
 
     print(f"\nDone. {total_indexed} notes indexed/updated.")

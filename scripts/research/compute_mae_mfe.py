@@ -122,7 +122,7 @@ def compute_excursion_analysis() -> dict:
     crypto_data = load_crypto()
     
     results = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(datetime.UTC).isoformat(),
         "total_closed": len(closed),
         "trades_analyzed": 0,
         "trades": [],
