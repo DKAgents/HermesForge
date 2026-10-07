@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-07T14:08:49Z
+updated: 2026-10-07T18:12:51Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1305 |
-| Connections created | 2 | 348 |
-| Review queue | 369 | 369 |
-| Avg score | 2.1 | — |
+| Notes examined | 5 | 1310 |
+| Connections created | 0 | 348 |
+| Review queue | 370 | 370 |
+| Avg score | 3.7 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5655
@@ -28,9 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-07T14:08:49Z)
-- **trading/knowledge/Insights/INS-2026-07-19-triple-weekly-confirmation-system-for-daily-trade-entries.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R012-time-filter-for-trendline-breaks-two-day-rule.md** (score 4.0): The two-day rule adds a time-based confirmation filter for trendline breaks, which can strengthen the weekly price channel breakout component of the triple confirmation system by reducing whipsaws.
-- **trading/knowledge/Insights/INS-2026-10-05-breakout-confirmation-with-volume-filter-and-stop-placement.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R082-breakouts-must-be-accompanied-by-heavy-volume.md** (score 4.0): Note B states the exact volume breakout rule that Note A's protocol uses as its first filter, making the connection a direct reference to the foundational principle behind the volume filter step.
+## Recent Discoveries (last run: 2026-10-07T18:12:51Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 253: Created 1 connections from 5 notes. Avg score: 3.4.
