@@ -33,6 +33,8 @@ Before entering on a daily MACD or Stochastics crossover, require alignment acro
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[E019-weekly-chart-signals-as-filters-for-short-term-timing]] — See E019 for the principle of weekly filters for short-term timing
+
 - [[R014-weekly-close-filter-for-breakouts]] — See R014 for weekly close filter on breakouts
 
 - [[INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators]] — See INS-2026-09-01-weekly-price-channel-as-trend-filter-for-oscillators for alternative trend filter using price channel instead of moving averages

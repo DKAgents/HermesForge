@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-06T21:44:54Z
+updated: 2026-10-07T01:47:36Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,13 +9,13 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1285 |
-| Connections created | 2 | 338 |
-| Review queue | 359 | 359 |
-| Avg score | 3.8 | — |
+| Notes examined | 5 | 1290 |
+| Connections created | 1 | 339 |
+| Review queue | 362 | 362 |
+| Avg score | 3.1 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~5611
+- Total wikilinks in vault: ~5612
 - Total notes: 2641
 - Avg degree per note: 2.125
 - Notes with links: 1160 (43.9%)
@@ -28,13 +28,12 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-06T21:44:54Z)
-- **trading/knowledge/Insights/INS-2026-07-19-three-layer-weekly-framework-filters-daily-macd-stochastic-s.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/indicators/N175-macd-moving-average-convergencedivergence.md** (score 4.0): Note B provides the foundational explanation of the MACD indicator, which is a key component of the three-layer weekly framework described in Note A; linking them allows for deeper understanding of the signal generation.
-- **trading/knowledge/Insights/INS-2026-07-19-three-layer-weekly-framework-filters-daily-macd-stochastic-s.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C128-moving-averages-as-oscillators-via-double-crossover.md** (score 4.0): Note A uses the 10/40-week moving average crossover as a weekly trend filter, which is precisely the double-crossover oscillator concept described in Note B; linking provides theoretical grounding for the filter.
+## Recent Discoveries (last run: 2026-10-07T01:47:36Z)
+- **trading/knowledge/Insights/INS-2026-07-19-triple-weekly-confirmation-system-for-daily-trade-entries.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/edge-conditions/E019-weekly-chart-signals-as-filters-for-short-term-timing.md** (score 4.0): Note B provides the general principle of using weekly chart signals as filters for short-term timing, which directly underpins the specific triple weekly confirmation system detailed in Note A.
 
 ## Reflection Notes
-- Run 246: Created 3 connections from 5 notes. Avg score: 2.2.
 - Run 247: Created 3 connections from 5 notes. Avg score: 3.6.
 - Run 250: Created 2 connections from 5 notes. Avg score: 3.7.
 - Run 253: Created 1 connections from 5 notes. Avg score: 3.4.
 - Run 257: Created 2 connections from 5 notes. Avg score: 3.8.
+- Run 258: Created 1 connections from 5 notes. Avg score: 3.1.
