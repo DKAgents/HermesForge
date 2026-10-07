@@ -31,3 +31,6 @@ Only trade Keltner Channel breakouts when ADX is above 25, indicating a strong t
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

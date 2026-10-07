@@ -31,3 +31,6 @@ Before entering a daily trade based on MACD or stochastic signals, confirm the w
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[E019-weekly-chart-signals-as-filters-for-short-term-timing|Weekly Chart Signals as Filters for Short-Term Timing]]

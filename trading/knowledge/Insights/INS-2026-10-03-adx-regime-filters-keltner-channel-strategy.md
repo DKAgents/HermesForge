@@ -31,3 +31,6 @@ Traders should first check ADX level; if >25, use Keltner channel breakouts with
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

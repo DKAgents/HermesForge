@@ -42,3 +42,6 @@ In an uptrend, place limit buy orders specifically in the 40-50% retracement zon
 - [[R298-dow-theory-buy-and-sell-signals]] — See R298-dow-theory-buy-and-sell-signals for distinction between retracement zones and actual Dow Theory signal triggers
 
 - [[N003-fibonacci-retracement-levels-38-and-62]] — See N003-fibonacci-retracement-levels-38-and-62 for Murphy's original Fibonacci retracement definition
+
+## Related Notes
+- [[R027-combined-retracement-zones-dow-fibonacci|Combined Retracement Zones (Dow + Fibonacci)]]

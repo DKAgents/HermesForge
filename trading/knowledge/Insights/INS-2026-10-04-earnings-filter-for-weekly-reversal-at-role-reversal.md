@@ -31,3 +31,7 @@ Before entering a weekly reversal pattern at a support-turned-resistance level, 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]
+- [[N007-weekly-reversal-pattern|Weekly Reversal Pattern]]

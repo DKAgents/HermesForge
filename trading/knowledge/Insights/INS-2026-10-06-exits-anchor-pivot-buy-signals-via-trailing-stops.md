@@ -7,8 +7,11 @@ domains: [concepts, risk-guidelines, rules]
 sources: ["RG023-pf-trailing-stop-adjustment", "C245-stop-order", "EN071-pivot-point-buy-signal-rules"]
 seed_id: system_exit_design
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Exits Anchor Pivot Buy Signals via Trailing Stops
 
 ## Discovery Summary

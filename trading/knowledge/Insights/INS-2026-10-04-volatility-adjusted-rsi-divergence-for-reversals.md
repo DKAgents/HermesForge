@@ -31,3 +31,6 @@ When identifying reversal patterns, prioritize RSI divergence signals that occur
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[EN036-rsi-divergence-confirmation|RSI Divergence Confirmation]]

@@ -7,8 +7,11 @@ domains: [rules]
 sources: ["EN008-volume-confirmation-at-pattern-completion", "EN008-volume-confirmation-at-pattern-completion", "R012-time-filter-for-trendline-breaks-two-day-rule"]
 seed_id: vol_confirm_risk
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Volume + Time Filter for Trendline Breaks
 
 ## Discovery Summary

@@ -31,3 +31,6 @@ Only take oscillator-based entries in the direction of the primary trend; ignore
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

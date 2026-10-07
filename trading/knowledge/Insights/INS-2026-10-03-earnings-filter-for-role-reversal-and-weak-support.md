@@ -31,3 +31,7 @@ Do not enter a role-reversal trade at a prior support-turned-resistance level (C
 ## Connection Type
 
 **adds_condition** — Actionability score: 5/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]
+- [[N007-weekly-reversal-pattern|Weekly Reversal Pattern]]

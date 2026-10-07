@@ -30,3 +30,6 @@ Traders should only enter breakout trades after volume confirms the breakout (pe
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related
+- [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082 for the volume breakout rule

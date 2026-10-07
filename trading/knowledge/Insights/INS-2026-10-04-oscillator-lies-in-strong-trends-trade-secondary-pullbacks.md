@@ -31,3 +31,6 @@ Traders should ignore overbought/oversold readings in strong trends for counter-
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

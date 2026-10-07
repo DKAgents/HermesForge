@@ -31,3 +31,7 @@ Enter short only after a weekly reversal pattern that closes beyond previous sup
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[N007-weekly-reversal-pattern|Weekly Reversal Pattern]]

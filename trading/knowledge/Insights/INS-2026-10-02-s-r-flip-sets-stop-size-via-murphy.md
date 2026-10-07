@@ -30,3 +30,6 @@ After a support breakdown, place your stop just above the old support level (now
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

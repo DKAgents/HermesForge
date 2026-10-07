@@ -31,3 +31,6 @@ When trading in the direction of the trend, set your stop just beyond the flippe
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

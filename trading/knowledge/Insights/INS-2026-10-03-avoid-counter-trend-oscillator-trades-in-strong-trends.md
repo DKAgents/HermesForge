@@ -31,3 +31,6 @@ When a strong trend is present, ignore overbought/oversold oscillator readings f
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[R125-overbought-and-oversold-oscillator-readings|Overbought and Oversold Oscillator Readings]]

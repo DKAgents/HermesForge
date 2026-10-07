@@ -30,3 +30,6 @@ In a downtrend, identify the last major support zone above price; after it break
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

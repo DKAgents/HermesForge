@@ -46,4 +46,5 @@ A trader using the 4-9-18 triple crossover system (N037) should measure the spre
 - [[N062-macd-divergence-analysis]] — See MACD Divergence Analysis for classic oscillator divergence signals
 
 ## Related Notes
+- [[N170-momentum-measurement|Momentum Measurement]]
 - [[N062-macd-divergence-analysis|MACD Divergence Analysis]]
