@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-08T14:53:23Z
+updated: 2026-10-08T19:01:02Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1335 |
-| Connections created | 1 | 352 |
-| Review queue | 374 | 374 |
-| Avg score | 2.1 | — |
+| Notes examined | 5 | 1340 |
+| Connections created | 0 | 352 |
+| Review queue | 375 | 375 |
+| Avg score | 2.3 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5692
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-08T14:53:23Z)
-- **trading/knowledge/Insights/INS-2026-10-08-adx-filtered-keltner-retracement-in-secondary-trends.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C048-dows-three-tier-trend-classification.md** (score 4.0): C048's three-tier trend classification provides a structural framework for defining 'secondary trends,' which is the context in which the ADX-filtered Keltner retracement strategy operates, making the connection useful for understanding when the strategy applies.
+## Recent Discoveries (last run: 2026-10-08T19:01:02Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 261: Created 2 connections from 5 notes. Avg score: 2.1.
