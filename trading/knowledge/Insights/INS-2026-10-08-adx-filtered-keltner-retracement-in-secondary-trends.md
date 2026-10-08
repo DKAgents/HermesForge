@@ -28,3 +28,6 @@ In a high-ADX trend, take longs near the Keltner lower band within the secondary
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related
+- [[C048-dows-three-tier-trend-classification]] — See C048 for definition of secondary trend context
