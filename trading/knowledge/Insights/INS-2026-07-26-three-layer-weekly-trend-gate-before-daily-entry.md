@@ -33,6 +33,8 @@ Before taking any daily MACD or Stochastics crossover signal, a trader should fi
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[C366-secondary-trends]] — See C366-secondary-trends for the underlying trend hierarchy
+
 - [[C050-secondary-trend-retracement-range]] — See C050-secondary-trend-retracement-range for pullback entry context within weekly trend
 
 - [[R138-trend-direction-determines-oscillator-signal-validity]] — See R138 for the foundational principle of trend-filtered oscillator signals

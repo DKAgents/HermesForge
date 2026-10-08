@@ -1,5 +1,5 @@
-crosspost_state_bytes: 379
-snapshot_last_ok: 2026-10-06 20:00:24 UTC-07:00
+crosspost_state_bytes: 487
+snapshot_last_ok: 2026-10-07 20:00:24 UTC-07:00
 snapshot_last_rows: 36412
 fear_greed_last_ok: 2026-10-07
 fear_greed_last_value: 71 (Greed)
