@@ -36,6 +36,8 @@ In a downtrend, when a bounce rallies into a zone where a prior violated support
 - [[C336-support-level|Support Level]]
 
 ## Related
+- [[C359-price-forecasting-vs-money-management]] — See C359 for the distinction between price forecasting and money management that underlies this stop placement technique.
+
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003 for round number avoidance when placing stops at dual S/R confluence
 
 - [[C245-stop-order]] — See C245-stop-order for the foundational stop mechanics this confluence technique refines.

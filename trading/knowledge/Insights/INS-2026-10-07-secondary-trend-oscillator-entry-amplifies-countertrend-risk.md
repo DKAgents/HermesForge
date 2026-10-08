@@ -7,8 +7,11 @@ domains: [concepts, rules]
 sources: ["C366-secondary-trends", "EN041-oscillator-entry-strategy-in-trending-markets"]
 seed_id: oscillator_trending_market
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Secondary trend oscillator entry amplifies countertrend risk
 
 ## Discovery Summary
