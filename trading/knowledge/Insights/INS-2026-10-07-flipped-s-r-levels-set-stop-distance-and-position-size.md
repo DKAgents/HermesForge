@@ -31,3 +31,6 @@ In an uptrend, place protective stops below broken resistance now acting as supp
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-22-s-r-stop-distance-determines-position-size|S/R Stop Distance Determines Position Size]]

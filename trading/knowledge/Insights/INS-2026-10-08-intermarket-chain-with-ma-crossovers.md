@@ -7,8 +7,11 @@ domains: [concepts, indicators]
 sources: ["N039-double-crossover-method-10-and-50-day-combination-for-stocks", "N039-double-crossover-method-10-and-50-day-combination-for-stocks", "N037-triple-crossover-method-4-9-18-day-moving-average"]
 seed_id: commodity_inflation_stock
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Intermarket Chain with MA Crossovers
 
 ## Discovery Summary

@@ -31,3 +31,6 @@ After a pivot point buy signal, set an initial stop at the prior pivot low and t
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 3/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

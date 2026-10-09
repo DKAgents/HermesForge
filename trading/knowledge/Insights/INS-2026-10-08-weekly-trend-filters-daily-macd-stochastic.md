@@ -7,8 +7,11 @@ domains: [rules]
 sources: ["R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "R142-weekly-signals-as-trend-filters-for-macd-and-stochastics", "R304-moving-averages-applied-to-long-term-charts"]
 seed_id: trend_filter_entry
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Weekly trend filters daily MACD/Stochastic
 
 ## Discovery Summary

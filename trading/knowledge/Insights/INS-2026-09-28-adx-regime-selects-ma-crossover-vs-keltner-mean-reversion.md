@@ -33,4 +33,5 @@ Check ADX first: take MA crossovers and secondary-retracement entries only when 
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-08-28-adx-filters-keltner-channel-entries-by-retracement-depth|ADX filters Keltner Channel entries by retracement depth]]

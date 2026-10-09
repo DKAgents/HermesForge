@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, fundamental events, trading rules]
 sources: ["E005-subjectivity-in-defining-significant-penetration", "C065-previous-support-as-future-resistance-in-downtrend"]
 seed_id: lesson-a-c8b706
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Earnings filter before support-resistance role-reversal entries
 
 ## Discovery Summary

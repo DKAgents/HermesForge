@@ -7,8 +7,11 @@ domains: [concepts, risk_guidelines]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "C065-previous-support-as-future-resistance-in-downtrend", "C064-previous-peaks-as-future-support-in-uptrend"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Role Reversal for Stop Placement and Position Sizing
 
 ## Discovery Summary
@@ -28,3 +31,7 @@ When entering a short in a downtrend, place your stop just above the prior suppo
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]
+- [[C334-resistance-level|Resistance Level]]

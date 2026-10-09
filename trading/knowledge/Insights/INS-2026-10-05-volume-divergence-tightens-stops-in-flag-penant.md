@@ -31,3 +31,6 @@ During a flag or pennant consolidation, if volume is shrinking relative to the p
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-10-07-volume-divergence-tightens-stop-on-flag-pennant-trades|Volume divergence tightens stop on flag/pennant trades]]
