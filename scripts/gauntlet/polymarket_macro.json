@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08T12:30:26.443716+00:00",
+  "updated": "2026-10-09T12:30:26.483506+00:00",
   "markets": [
     {
       "label": "Federal Reserve rate cut",
@@ -8,7 +8,7 @@
           "name": "Fed rate cut by...?",
           "yes_pct": 5.5,
           "no_pct": 94.5,
-          "volume": 2600.0
+          "volume": 2900.0
         },
         {
           "name": "Fed rate cut by...?",
@@ -42,15 +42,15 @@
       "markets": [
         {
           "name": "Japan recession in 2026?",
-          "yes_pct": 5.0,
-          "no_pct": 95.0,
+          "yes_pct": 4.0,
+          "no_pct": 96.0,
           "volume": 4300.0
         },
         {
           "name": "UK Recession in 2026?",
           "yes_pct": 7.0,
           "no_pct": 93.0,
-          "volume": 15300.0
+          "volume": 15600.0
         },
         {
           "name": "US recession by end of 2026?",
@@ -65,34 +65,34 @@
       "label": "CPI inflation",
       "markets": [
         {
-          "name": "Brazil Annual Inflation 2026",
-          "yes_pct": 24.3,
-          "no_pct": 75.7,
-          "volume": 30800.0
+          "name": "Canada Annual Inflation 2026",
+          "yes_pct": 14.3,
+          "no_pct": 85.7,
+          "volume": 16000.0
         },
         {
-          "name": "September Inflation US - Monthly",
-          "yes_pct": 11.5,
-          "no_pct": 88.5,
-          "volume": 10000.0
+          "name": "Japan Core CPI YoY in 2026",
+          "yes_pct": 0.6,
+          "no_pct": 99.4,
+          "volume": 1500.0
         },
         {
-          "name": "September Inflation China - Annual",
-          "yes_pct": 25.7,
-          "no_pct": 74.4,
-          "volume": 4200.0
+          "name": "Argentina Monthly Inflation - September",
+          "yes_pct": 61.5,
+          "no_pct": 38.5,
+          "volume": 17200.0
+        },
+        {
+          "name": "U.K. Annual Inflation 2026",
+          "yes_pct": 1.4,
+          "no_pct": 98.6,
+          "volume": 23700.0
         },
         {
           "name": "September Inflation UK - Annual",
           "yes_pct": 18.7,
           "no_pct": 81.3,
-          "volume": 3400.0
-        },
-        {
-          "name": "China Annual Inflation 2026",
-          "yes_pct": 45.5,
-          "no_pct": 54.5,
-          "volume": 20800.0
+          "volume": 3600.0
         }
       ],
       "count": 5
@@ -101,28 +101,28 @@
       "label": "S&P 500 price",
       "markets": [
         {
+          "name": "What will S&P 500 (SPX) hit by end of December?",
+          "yes_pct": 5.5,
+          "no_pct": 94.5,
+          "volume": 6200.0
+        },
+        {
+          "name": "SpaceX IPO: Officially added to S&P 500 in 2026?",
+          "yes_pct": 1.4,
+          "no_pct": 98.6,
+          "volume": 28300.0
+        },
+        {
+          "name": "What will S&P 500 (SPX) close at end of 2026?",
+          "yes_pct": 18.0,
+          "no_pct": 82.0,
+          "volume": 2800.0
+        },
+        {
           "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
           "yes_pct": 67.0,
           "no_pct": 33.0,
           "volume": 200300.0
-        },
-        {
-          "name": "What will S&P 500 (SPX) hit by end of December?",
-          "yes_pct": 6.5,
-          "no_pct": 93.5,
-          "volume": 6000.0
-        },
-        {
-          "name": "What will S&P 500 (SPX) close at end of 2026?",
-          "yes_pct": 17.5,
-          "no_pct": 82.5,
-          "volume": 2800.0
-        },
-        {
-          "name": "Which companies added to S&P 500 in Q1 2026?",
-          "yes_pct": 0.0,
-          "no_pct": 100.0,
-          "volume": 356600.0
         }
       ],
       "count": 4
@@ -131,10 +131,10 @@
       "label": "Bitcoin price",
       "markets": [
         {
-          "name": "Bitcoin price on October 8?",
-          "yes_pct": 68.5,
-          "no_pct": 31.5,
-          "volume": 13900.0
+          "name": "Bitcoin price on October 9?",
+          "yes_pct": 72.5,
+          "no_pct": 27.5,
+          "volume": 24400.0
         },
         {
           "name": "Bitcoin Price - July 15, 5PM ET",
@@ -143,10 +143,10 @@
           "volume": 99000.0
         },
         {
-          "name": "Bitcoin price on October 7?",
-          "yes_pct": 100.0,
-          "no_pct": 0.0,
-          "volume": 24500.0
+          "name": "Bitcoin price on October 8?",
+          "yes_pct": 0.0,
+          "no_pct": 100.0,
+          "volume": 33100.0
         },
         {
           "name": "Bitcoin price on February 23?",
@@ -155,10 +155,10 @@
           "volume": 146000.0
         },
         {
-          "name": "Bitcoin price on October 9?",
-          "yes_pct": 40.5,
-          "no_pct": 59.5,
-          "volume": 1000.0
+          "name": "Bitcoin price on October 10?",
+          "yes_pct": 54.5,
+          "no_pct": 45.5,
+          "volume": 2400.0
         }
       ],
       "count": 5
@@ -209,28 +209,28 @@
           "volume": 165800.0
         },
         {
-          "name": "How high will 30-year Treasury yield go before 2027?",
-          "yes_pct": 100.0,
-          "no_pct": 0.0,
-          "volume": 12600.0
-        },
-        {
           "name": "How high will 5-year Treasury yield go before 2027?",
           "yes_pct": 100.0,
           "no_pct": 0.0,
           "volume": 2700.0
         },
         {
-          "name": "How low will 30-year Treasury yield get before 2027?",
-          "yes_pct": 9.0,
-          "no_pct": 91.0,
-          "volume": 7000.0
+          "name": "How high will 30-year Treasury yield go before 2027?",
+          "yes_pct": 100.0,
+          "no_pct": 0.0,
+          "volume": 12600.0
         },
         {
-          "name": "How low will 5-year Treasury yield get before 2027?",
-          "yes_pct": 3.4,
-          "no_pct": 96.6,
-          "volume": 9900.0
+          "name": "How low will 30-year Treasury yield get in October?",
+          "yes_pct": 35.5,
+          "no_pct": 64.5,
+          "volume": 725.0
+        },
+        {
+          "name": "How high will 10-year Treasury yield go in October?",
+          "yes_pct": 29.5,
+          "no_pct": 70.5,
+          "volume": 2200.0
         }
       ],
       "count": 5
