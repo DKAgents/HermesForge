@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-09T11:16:16Z
+updated: 2026-10-09T15:19:51Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1360 |
-| Connections created | 1 | 353 |
-| Review queue | 384 | 384 |
-| Avg score | 4.1 | — |
+| Notes examined | 5 | 1365 |
+| Connections created | 0 | 353 |
+| Review queue | 385 | 385 |
+| Avg score | 3.8 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~5711
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 17 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-09T11:16:16Z)
-- **trading/knowledge/Insights/INS-2026-07-30-three-weekly-tools-create-layered-trend-filter-system.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/concepts/C366-secondary-trends.md** (score 4.0): C366 on secondary trends provides the theoretical framework for why the weekly tools in Note A are effective: secondary trends (weeks to months) are the ideal timeframe for confirming daily signals, directly supporting the layered filter system's reliance on weekly charts.
+## Recent Discoveries (last run: 2026-10-09T15:19:51Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 263: Created 1 connections from 5 notes. Avg score: 2.3.
