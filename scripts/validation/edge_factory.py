@@ -7,12 +7,20 @@ backtests against cached OHLCV data, and ranks viable edges.
 
 Generates 10+ new testable theses per day (3+ per 4h cycle).
 """
-import json, os, re, subprocess, sys, time, csv
+import json, os, re, shutil, subprocess, sys, time, csv
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 from collections import defaultdict
-import urllib.request
+
+# Ensure nvm/node binaries on PATH for xurl (cron shells lack it)
+_nvm_root = Path.home() / ".nvm" / "versions" / "node"
+if _nvm_root.exists():
+    for _v in sorted(_nvm_root.iterdir(), reverse=True):
+        _bin = _v / "bin"
+        if _bin.is_dir():
+            os.environ["PATH"] = str(_bin) + ":" + os.environ.get("PATH", "")
+            break
 
 PROJECT_ROOT = Path("/root/HermesForge")
 CACHE_DIR = Path("/root/.hermes/market_data")
@@ -66,18 +74,12 @@ def search_x(query: str, max_results: int = 8) -> list[dict]:
     """Search X/Twitter via web. Returns list of {title, url, snippet}."""
     all_results = []
     
-    # Try multiple search engines (some may rate-limit)
-    for search_url, parser in [
-        (_search_google, "google"),
-        (_search_bing, "bing"),
-    ]:
-        try:
-            results = search_url(query, max_results)
-            all_results.extend(results)
-            if len(all_results) >= max_results:
-                break
-        except Exception as e:
-            continue
+    # xurl search (direct X API, works, requires nvm PATH)
+    try:
+        results = _search_xurl(query, max_results)
+        all_results.extend(results)
+    except Exception:
+        pass
     
     return all_results[:max_results]
 
@@ -147,53 +149,43 @@ def jev_score_snippets(snippets: list[dict], min_relevance: float = 0.40) -> lis
     return relevant if relevant else scored[:5]  # Fallback: top 5 unfiltered
 
 
-def _search_google(query: str, max_results: int) -> list[dict]:
-    """Search via Google."""
-    import urllib.request, urllib.parse
-    encoded = urllib.parse.quote(f'site:twitter.com OR site:x.com {query}')
-    url = f'https://www.google.com/search?q={encoded}&num={max_results}'
-    req = urllib.request.Request(url, headers={
-        'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'
-    })
-    with urllib.request.urlopen(req, timeout=15) as r:
-        html = r.read().decode(errors='replace')
-    
-    results = []
-    # Google result links
-    for match in re.finditer(
-        r'<a[^>]*href="/url\?q=(https?://[^"&]+)',
-        html
-    ):
-        url = urllib.parse.unquote(match.group(1))
-        if ('twitter.com' in url or 'x.com' in url) and url not in {r['url'] for r in results}:
-            results.append({"title": url.split('/')[-1], "url": url, "snippet": ""})
-        if len(results) >= max_results:
+def _search_xurl(query: str, max_results: int) -> list[dict]:
+    """Search X/Twitter via xurl CLI (works, requires nvm PATH)."""
+    import shutil
+    xurl_path = shutil.which("xurl")
+    if not xurl_path:
+        # Try nvm path
+        for p in Path.home().glob(".nvm/versions/node/*/bin/xurl"):
+            xurl_path = str(p)
             break
-    return results
-
-
-def _search_bing(query: str, max_results: int) -> list[dict]:
-    """Search via Bing."""
-    import urllib.request, urllib.parse
-    encoded = urllib.parse.quote(f'site:twitter.com OR site:x.com {query}')
-    url = f'https://www.bing.com/search?q={encoded}&count={max_results}'
-    req = urllib.request.Request(url, headers={
-        'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'
-    })
-    with urllib.request.urlopen(req, timeout=15) as r:
-        html = r.read().decode(errors='replace')
+    if not xurl_path:
+        return []
     
-    results = []
-    for match in re.finditer(
-        r'<a[^>]*href="(https?://(?:twitter\.com|x\.com)[^"]+)"',
-        html
-    ):
-        url = match.group(1)
-        if url not in {r['url'] for r in results}:
-            results.append({"title": url.split('/')[-1], "url": url, "snippet": ""})
-        if len(results) >= max_results:
-            break
-    return results
+    try:
+        result = subprocess.run(
+            [xurl_path, "search", query, "-n", str(max_results)],
+            capture_output=True, text=True, timeout=15
+        )
+        if result.returncode != 0:
+            return []
+        data = json.loads(result.stdout)
+        tweets = data.get("data", data if isinstance(data, list) else [])
+        if isinstance(tweets, dict):
+            tweets = tweets.get("tweets", tweets.get("data", []))
+        if not isinstance(tweets, list):
+            return []
+        
+        results = []
+        for t in tweets:
+            if isinstance(t, dict):
+                url = t.get("url", f"https://x.com/i/status/{t.get('id', '')}")
+                text = t.get("text", t.get("full_text", ""))[:300]
+                results.append({"title": text[:80], "url": url, "snippet": text})
+            if len(results) >= max_results:
+                break
+        return results
+    except Exception:
+        return []
 
 
 # ── Rule Extraction ─────────────────────────────────────────────────────
@@ -435,7 +427,7 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
     # US-156: JEV relevance pre-filter — score and filter before expensive extraction
     raw_count = len(all_candidates)
     if raw_count > 0:
-        all_candidates = jev_score_snippets(all_candidates, min_relevance=0.40)
+        all_candidates = jev_score_snippets(all_candidates, min_relevance=0.25)
         print(f"  JEV filter: {raw_count} → {len(all_candidates)} relevant snippets")
     
     # Extract rules from filtered candidates

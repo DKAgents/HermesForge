@@ -3,10 +3,19 @@
 Wrapper for x-strategy-scout cron: runs scout, outputs summary for delivery.
 US-146: reads Edge Discovery candidate URLs for prioritized deep-read.
 """
-import subprocess, sys
+import subprocess, sys, os
 from pathlib import Path
 
 PROJECT_ROOT = Path("/root/HermesForge")
+
+# Ensure nvm/node binaries are on PATH for xurl
+_nvm_bin = Path.home() / ".nvm" / "versions" / "node"
+if _nvm_bin.exists():
+    for _v in sorted(_nvm_bin.iterdir(), reverse=True):
+        _bin_dir = _v / "bin"
+        if _bin_dir.is_dir():
+            os.environ["PATH"] = str(_bin_dir) + ":" + os.environ.get("PATH", "")
+            break
 CANDIDATES_FILE = PROJECT_ROOT / "code" / "forge-loop" / "edge-discovery-candidates.txt"
 
 # Build command with optional priority URLs from Edge Discovery
