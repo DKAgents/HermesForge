@@ -404,6 +404,21 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 # Record Jev score in trade dict for ML feedback loop
                 if jev_action == "allow" and not jev_shadow:
                     trade_dict["jev_score"] = round(jev_result.confidence, 4)
+                    # US-156: Dynamic position sizing based on JEV confidence
+                    # Higher confidence → larger size; marginal signals → reduced size
+                    jev_conf = jev_result.confidence
+                    if jev_conf >= 0.85:
+                        modulated_risk = 1.5  # High conviction
+                    elif jev_conf >= 0.65:
+                        modulated_risk = 1.0  # Standard
+                    else:
+                        modulated_risk = 0.5  # Marginal — reduced size
+                    if modulated_risk != trade_dict["position_size_pct"]:
+                        trade_dict["position_size_pct"] = modulated_risk
+                        trade_dict["position_size_units"] = _calculate_position_size(
+                            trade_dict["entry_price"], trade_dict["stop_price"], modulated_risk
+                        )
+                        print(f"  JEV SIZING: {symbol} conf={jev_conf:.0%} → {modulated_risk}% risk")
             except Exception as e:
                 summary["skipped_jev"] = summary.get("skipped_jev", 0) + 1
                 print(f"  JEV ERROR (fail-closed): {symbol} — {e}")

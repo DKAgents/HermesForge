@@ -82,6 +82,71 @@ def search_x(query: str, max_results: int = 8) -> list[dict]:
     return all_results[:max_results]
 
 
+# ── JEV Relevance Pre-Filter ────────────────────────────────────────────
+_JEV_API_KEY = None
+
+def _get_jev_client():
+    """Lazy-load JevClient with API key from env."""
+    global _JEV_API_KEY
+    if _JEV_API_KEY is None:
+        env_path = Path.home() / ".hermes" / ".env"
+        _JEV_API_KEY = ""
+        if env_path.exists():
+            for line in env_path.read_text().splitlines():
+                if line.strip().startswith("TYPESAFE_API_KEY="):
+                    _JEV_API_KEY = line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+                    break
+        if not _JEV_API_KEY:
+            _JEV_API_KEY = os.environ.get("TYPESAFE_API_KEY", "")
+    
+    if not _JEV_API_KEY:
+        return None
+    
+    gauntlet_path = str(PROJECT_ROOT / "scripts" / "gauntlet")
+    if gauntlet_path not in sys.path:
+        sys.path.insert(0, gauntlet_path)
+    from jev_client import JevClient
+    return JevClient(api_key=_JEV_API_KEY)
+
+
+def jev_score_snippets(snippets: list[dict], min_relevance: float = 0.40) -> list[dict]:
+    """Use JEV to score search result snippets for trading strategy relevance.
+    
+    Returns snippets with relevance >= min_relevance, sorted by score descending.
+    On JEV failure, returns all snippets unfiltered (fail-open for discovery).
+    """
+    if not snippets:
+        return []
+    
+    jev = _get_jev_client()
+    if jev is None:
+        return snippets  # No JEV available — pass through unfiltered
+    
+    scored = []
+    for s in snippets:
+        snippet = (s.get("snippet", "") or s.get("title", ""))[:500]
+        if not snippet.strip():
+            scored.append({**s, "jev_score": 0.0})
+            continue
+        
+        try:
+            result = jev.score(
+                snippet,
+                "Does this text describe a specific trading strategy with entry/exit rules?",
+                ["no", "vaguely", "somewhat", "yes_clearly"]
+            )
+            score = result.get("score", 0) / 3.0  # Normalize 0-3 to 0.0-1.0
+            scored.append({**s, "jev_score": round(score, 3)})
+        except Exception:
+            scored.append({**s, "jev_score": 0.5})  # Fail-open: keep it
+    
+    # Filter and sort
+    relevant = [s for s in scored if s["jev_score"] >= min_relevance]
+    relevant.sort(key=lambda x: x["jev_score"], reverse=True)
+    
+    return relevant if relevant else scored[:5]  # Fallback: top 5 unfiltered
+
+
 def _search_google(query: str, max_results: int) -> list[dict]:
     """Search via Google."""
     import urllib.request, urllib.parse
@@ -365,20 +430,30 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
             if r["url"] in seen_urls:
                 continue
             seen_urls.add(r["url"])
-            
-            rules = extract_trading_rules(r["snippet"])
-            if not rules:
-                continue
-            
-            rules["source_url"] = r["url"]
-            rules["source_title"] = r["title"][:120]
-            all_candidates.append(rules)
+            all_candidates.append(r)
     
-    print(f"\n  Candidates with extractable rules: {len(all_candidates)}")
+    # US-156: JEV relevance pre-filter — score and filter before expensive extraction
+    raw_count = len(all_candidates)
+    if raw_count > 0:
+        all_candidates = jev_score_snippets(all_candidates, min_relevance=0.40)
+        print(f"  JEV filter: {raw_count} → {len(all_candidates)} relevant snippets")
+    
+    # Extract rules from filtered candidates
+    candidates_with_rules = []
+    for r in all_candidates:
+        rules = extract_trading_rules(r.get("snippet", ""))
+        if not rules:
+            continue
+        rules["source_url"] = r.get("url", "")
+        rules["source_title"] = (r.get("title", "") or "")[:120]
+        rules["jev_score"] = r.get("jev_score", 0)
+        candidates_with_rules.append(rules)
+    
+    print(f"\n  Candidates with extractable rules: {len(candidates_with_rules)}")
     
     # Backtest top candidates (up to 5 per cycle to stay fast)
     backtested = []
-    for rules in all_candidates[:5]:
+    for rules in candidates_with_rules[:5]:
         ticker = "BTC"  # Default, could be inferred from snippet
         bt = quick_backtest(rules, ticker)
         rules["backtest"] = bt
@@ -398,7 +473,7 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M")
     result_file = RESULTS_DIR / f"cycle_{timestamp}.json"
     with open(result_file, "w") as f:
-        json.dump({"cycle": cycle_index, "candidates": len(all_candidates),
+        json.dump({"cycle": cycle_index, "candidates": len(candidates_with_rules),
                    "backtested": len(backtested), "viable": len(viable),
                    "results": [{"title": r["source_title"], "direction": r["direction"],
                                 "confidence": r["confidence"], "backtest": r["backtest"]}
