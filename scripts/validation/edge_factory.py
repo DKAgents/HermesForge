@@ -337,7 +337,12 @@ def _fetch_reddit(max_results: int = 3) -> list[dict]:
 
 # ── Rule Extraction ─────────────────────────────────────────────────────
 def extract_trading_rules(snippet: str) -> Optional[dict]:
-    """Extract testable trading rules from text snippet."""
+    """Extract testable trading rules from text snippet.
+    
+    Handles multiple source types: tweets (keyword-dense), blog posts (narrative),
+    academic papers (dense), GitHub repos (technical). Lower confidence floor
+    to capture candidates from all sources.
+    """
     rules = {
         "direction": "long",
         "entry_conditions": [],
@@ -349,20 +354,28 @@ def extract_trading_rules(snippet: str) -> Optional[dict]:
     }
     
     text = snippet.lower()
+    if not text.strip():
+        return None
     
-    # Direction
-    if any(w in text for w in ["short", "sell", "bearish", "put"]):
+    # ── Direction ─────────────────────────────────────────────────────
+    short_signals = ["short", "sell", "bearish", "put", "downside", "decline"]
+    long_signals = ["long", "buy", "bullish", "call", "upside", "rally", "uptrend"]
+    short_count = sum(1 for w in short_signals if w in text)
+    long_count = sum(1 for w in long_signals if w in text)
+    if short_count > long_count:
         rules["direction"] = "short"
     
-    # Entry conditions
+    # ── Entry conditions (tweet patterns + academic/blog patterns) ──────
     entry_patterns = [
-        (r"rsi\s*(?:below|under|<\s*)\s*(\d+)", "RSI oversold"),
-        (r"rsi\s*(?:above|over|>\s*)\s*(\d+)", "RSI overbought"),
+        # Classic tweet patterns
+        (r"rsi\s*(?:below|under|<\s*|cross.*under)\s*(\d+)", "RSI oversold"),
+        (r"rsi\s*(?:above|over|>\s*|cross.*above)\s*(\d+)", "RSI overbought"),
         (r"macd\s*cross", "MACD crossover"),
         (r"ema\s*(\d+)\s*cross", "EMA crossover"),
         (r"sma\s*(\d+)\s*cross", "SMA crossover"),
+        (r"moving\s*average\s*cross", "MA crossover"),
         (r"bounce\s*(?:off|from)", "Support/resistance bounce"),
-        (r"break\s*(?:out|above|below)", "Breakout"),
+        (r"break\s*(?:out|above|below|through)", "Breakout"),
         (r"pullback\s*(?:to|toward)", "Pullback"),
         (r"retest\s*(?:of|at)", "Retest"),
         (r"fvg|fair\s*value\s*gap", "Fair Value Gap"),
@@ -370,52 +383,96 @@ def extract_trading_rules(snippet: str) -> Optional[dict]:
         (r"breaker\s*block", "Breaker Block"),
         (r"liquidity\s*(?:sweep|grab)", "Liquidity Sweep"),
         (r"inducement|induce", "Inducement"),
+        # Academic/blog patterns
+        (r"momentum|trend.*follow", "Momentum / Trend following"),
+        (r"mean.reversion|revert", "Mean reversion"),
+        (r"volatility|vol\s|vix", "Volatility-based"),
+        (r"carry\s*trade|roll\s*yield", "Carry trade"),
+        (r"value\s*factor|value\s*invest", "Value factor"),
+        (r"statistical\s*arbitrage|stat\s*arb", "Statistical arbitrage"),
+        (r"pairs?\s*trad", "Pairs trade"),
+        (r"regime\s*(?:switch|change|filter)", "Regime filter"),
+        (r"seasonal|calendar|time.*day|day.*week", "Seasonal pattern"),
+        (r"sentiment|fear.*greed", "Sentiment-based"),
     ]
     
     for pattern, label in entry_patterns:
         if re.search(pattern, text):
             rules["entry_conditions"].append(label)
     
-    # Indicators
-    if "rsi" in text: rules["indicators"].append("RSI")
-    if "macd" in text: rules["indicators"].append("MACD")
-    if "ema" in text: rules["indicators"].append("EMA")
-    if "sma" in text: rules["indicators"].append("SMA")
-    if "volume" in text: rules["indicators"].append("Volume")
-    if "atr" in text: rules["indicators"].append("ATR")
-    if "bollinger" in text: rules["indicators"].append("Bollinger")
-    if "vwap" in text: rules["indicators"].append("VWAP")
+    # ── Indicators ────────────────────────────────────────────────────
+    indicator_map = {
+        "rsi": "RSI", "macd": "MACD", "ema": "EMA", "sma": "SMA",
+        "volume": "Volume", "atr": "ATR", "bollinger": "Bollinger",
+        "vwap": "VWAP", "stochastic": "Stochastics", "adx": "ADX",
+        "ichimoku": "Ichimoku", "obv": "OBV", "cci": "CCI",
+        "supertrend": "SuperTrend", "pivot": "Pivot Points",
+    }
+    for keyword, label in indicator_map.items():
+        if keyword in text:
+            rules["indicators"].append(label)
     
-    # Stop conditions
+    # ── Stop conditions ───────────────────────────────────────────────
+    stop_signals = []
     if "atr" in text:
-        rules["stop_conditions"].append("ATR-based stop")
-    if any(w in text for w in ["swing low", "swing high"]):
-        rules["stop_conditions"].append("Swing level stop")
-    if "structure" in text:
-        rules["stop_conditions"].append("Structure-based stop")
+        stop_signals.append("ATR-based stop")
+    if "trailing" in text and ("stop" in text or "exit" in text):
+        stop_signals.append("Trailing stop")
+    if any(w in text for w in ["swing low", "swing high", "recent low", "recent high"]):
+        stop_signals.append("Swing level stop")
+    if "structure" in text or "support" in text:
+        stop_signals.append("Structure-based stop")
+    if "time stop" in text or "max hold" in text or "time exit" in text:
+        stop_signals.append("Time stop")
+    if re.search(r"(\d+)%\s*stop", text):
+        stop_signals.append("Percentage stop")
+    rules["stop_conditions"] = stop_signals
     
-    # Target conditions
+    # ── Target conditions ─────────────────────────────────────────────
+    target_signals = []
     if re.search(r"(\d+):1\s*(?:rr|risk.*reward)", text):
-        rules["target_conditions"].append("Fixed R:R target")
-    if "swing high" in text or "resistance" in text:
-        rules["target_conditions"].append("Swing level target")
+        target_signals.append("Fixed R:R target")
+    if "swing high" in text or "resistance" in text or "prior high" in text:
+        target_signals.append("Swing level target")
+    if "take profit" in text or "profit target" in text:
+        target_signals.append("Take profit level")
+    if "trailing" in text and "target" in text:
+        target_signals.append("Trailing target")
+    rules["target_conditions"] = target_signals
     
-    # Timeframe
-    for tf in ["1m", "5m", "15m", "1h", "4h", "daily", "weekly"]:
-        if tf in text:
+    # ── Timeframe ─────────────────────────────────────────────────────
+    tf_map = {"1m": "1m", "5m": "5m", "15m": "15m", "1h": "1h",
+              "4h": "4h", "daily": "daily", "weekly": "weekly", "monthly": "monthly",
+              "intraday": "intraday", "eod": "daily", "end of day": "daily"}
+    for keyword, tf in tf_map.items():
+        if keyword in text:
             rules["timeframe"] = tf
             break
     
-    # Confidence — based on how many concrete rules extracted
+    # ── Confidence — generous scoring to capture multi-source candidates ──
+    # Base score from concrete rules found
     rules["confidence"] = min(
-        len(rules["entry_conditions"]) * 15 +
-        len(rules["indicators"]) * 5 +
-        len(rules["stop_conditions"]) * 10 +
-        len(rules["target_conditions"]) * 10,
+        len(rules["entry_conditions"]) * 12 +
+        len(rules["indicators"]) * 4 +
+        len(rules["stop_conditions"]) * 8 +
+        len(rules["target_conditions"]) * 8,
         100
     )
     
-    if rules["confidence"] < 30:
+    # Bonus: if text contains strategy/edge language, bump baseline
+    strategy_keywords = ["strategy", "edge", "alpha", "factor", "signal",
+                         "trade", "backtest", "sharpe", "profit factor",
+                         "outperform", "predict", "portfolio", "allocation"]
+    if any(w in text for w in strategy_keywords):
+        rules["confidence"] = max(rules["confidence"], 10)
+    
+    # Bonus: if indicators present but no entry rules, still keep it
+    if len(rules["indicators"]) >= 2 and len(rules["entry_conditions"]) == 0:
+        rules["entry_conditions"].append("Indicator-based entry")
+        rules["confidence"] = max(rules["confidence"], 12)
+    
+    # Floor lowered for multi-source: capture blog/paper/repo text
+    if rules["confidence"] < 15:
         return None
     
     return rules
@@ -425,17 +482,30 @@ def extract_trading_rules(snippet: str) -> Optional[dict]:
 def quick_backtest(rules: dict, ticker: str = "BTC") -> dict:
     """Run a quick backtest against cached data."""
     try:
-        # Load cached data
-        data_file = CACHE_DIR / f"{ticker}_1d.csv"
-        if not data_file.exists():
-            # Try crypto cache
-            data_file = CACHE_DIR / f"{ticker}.csv"
-        if not data_file.exists():
-            return {"error": f"No cached data for {ticker}"}
-        
-        df = None
+        # Load cached data — try multiple formats
         import pandas as pd
-        df = pd.read_csv(data_file, index_col=0, parse_dates=True)
+        df = None
+        for candidate in [
+            CACHE_DIR / f"{ticker}_1d.csv",
+            CACHE_DIR / f"{ticker}.csv",
+            CACHE_DIR / f"{ticker}_1d.parquet",
+            CACHE_DIR / f"{ticker}.parquet",
+            CACHE_DIR / f"{ticker}_5m_hyperliquid.parquet",
+            CACHE_DIR / f"{ticker}_5m_alpaca.parquet",
+        ]:
+            if candidate.exists():
+                if candidate.suffix == '.parquet':
+                    df = pd.read_parquet(candidate)
+                    # Set timestamp as index if present
+                    if 'timestamp' in df.columns:
+                        df = df.set_index('timestamp')
+                        df.index = pd.to_datetime(df.index)
+                else:
+                    df = pd.read_csv(candidate, index_col=0, parse_dates=True)
+                break
+        
+        if df is None:
+            return {"error": f"No cached data for {ticker}"}
         
         if len(df) < 100:
             return {"error": f"Insufficient data for {ticker}: {len(df)} bars"}
