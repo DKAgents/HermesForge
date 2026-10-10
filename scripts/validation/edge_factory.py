@@ -8,6 +8,8 @@ backtests against cached OHLCV data, and ranks viable edges.
 Generates 10+ new testable theses per day (3+ per 4h cycle).
 """
 import json, os, re, shutil, subprocess, sys, time, csv
+import urllib.request, urllib.parse
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -183,6 +185,151 @@ def _search_xurl(query: str, max_results: int) -> list[dict]:
                 results.append({"title": text[:80], "url": url, "snippet": text})
             if len(results) >= max_results:
                 break
+        return results
+    except Exception:
+        return []
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Multi-Source Discovery — Quantocracy, arXiv, GitHub, RSS feeds
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ── RSS Feed Sources ─────────────────────────────────────────────────────
+RSS_FEEDS = [
+    ("Quantocracy", "https://quantocracy.com/feed/"),
+    ("Quantifiable Edges", "https://quantifiableedges.com/feed/"),
+    ("Robot Wealth", "https://robotwealth.com/feed/"),
+    ("Newfound Research", "https://blog.thinknewfound.com/feed/"),
+    ("Allocate Smartly", "https://allocatesmartly.com/feed/"),
+    ("Macro Tourist", "https://macrotourist.com/feed/"),
+    ("Factor Research", "https://www.factorresearch.com/feed/"),
+    ("Epsilon Theory", "https://www.epsilontheory.com/feed/"),
+]
+
+def _fetch_rss_feed(name: str, url: str, max_items: int = 3) -> list[dict]:
+    """Fetch RSS feed and extract titles + links + descriptions."""
+    try:
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'
+        })
+        with urllib.request.urlopen(req, timeout=15) as r:
+            xml_data = r.read()
+        root = ET.fromstring(xml_data)
+        results = []
+        # Support both RSS 2.0 and Atom formats
+        items = root.findall('.//item') or root.findall('.//{http://www.w3.org/2005/Atom}entry')
+        for item in items[:max_items]:
+            title = (item.findtext('title') or '').strip()
+            link = (item.findtext('link') or item.findtext('{http://www.w3.org/2005/Atom}link') or '')
+            desc = (item.findtext('description') or item.findtext('summary') or item.findtext('{http://www.w3.org/2005/Atom}summary') or '')
+            if '{' in link:  # Atom link may be in href attribute
+                import re as _re; m = _re.search(r'href="([^"]+)"', link)
+                link = m.group(1) if m else link
+            desc_text = re.sub(r'<[^>]+>', '', desc).strip()[:500]
+            if link and (title or desc_text):
+                results.append({
+                    "title": f"[{name}] {title[:100]}",
+                    "url": link,
+                    "snippet": desc_text or title,
+                    "source": name,
+                })
+        return results
+    except Exception as e:
+        return []
+
+
+# ── arXiv q-fin Fetcher ──────────────────────────────────────────────────
+ARXIV_QUERIES = [
+    "quantitative trading strategy",
+    "statistical arbitrage",
+    "machine learning trading",
+    "factor investing",
+    "market microstructure strategy",
+]
+
+def _fetch_arxiv(query: str, max_results: int = 3) -> list[dict]:
+    """Search arXiv q-fin for recent trading papers."""
+    try:
+        encoded = urllib.parse.quote(query)
+        url = f"http://export.arxiv.org/api/query?search_query=all:{encoded}+AND+cat:q-fin*&start=0&max_results={max_results}&sortBy=submittedDate&sortOrder=descending"
+        req = urllib.request.Request(url, headers={'User-Agent': 'HermesForge/1.0'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            xml_data = r.read()
+        root = ET.fromstring(xml_data)
+        results = []
+        ns = {'atom': 'http://www.w3.org/2005/Atom'}
+        for entry in root.findall('atom:entry', ns)[:max_results]:
+            title = (entry.findtext('atom:title', '', ns) or '').strip()
+            summary = (entry.findtext('atom:summary', '', ns) or '').strip()[:600]
+            link = entry.find('atom:id', ns)
+            url = link.text.strip() if link is not None and link.text else ''
+            if url:
+                results.append({
+                    "title": f"[arXiv] {title[:100]}",
+                    "url": url,
+                    "snippet": summary,
+                    "source": "arXiv",
+                })
+        return results
+    except Exception:
+        return []
+
+
+# ── GitHub Code Search ───────────────────────────────────────────────────
+GITHUB_QUERIES = [
+    "strategy backtest python language:python pushed:>2026-01-01",
+    "trading bot python backtest language:python pushed:>2026-01-01",
+]
+
+def _fetch_github(query: str, max_results: int = 3) -> list[dict]:
+    """Search GitHub for executable trading strategy repos."""
+    import urllib.request, urllib.parse
+    try:
+        encoded = urllib.parse.quote(query)
+        url = f"https://api.github.com/search/repositories?q={encoded}&sort=updated&order=desc&per_page={max_results}"
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'HermesForge/1.0',
+            'Accept': 'application/vnd.github.v3+json',
+        })
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+        results = []
+        for item in data.get('items', [])[:max_results]:
+            results.append({
+                "title": f"[GitHub] {item.get('full_name', '')}",
+                "url": item.get('html_url', ''),
+                "snippet": (item.get('description', '') or '')[:500],
+                "source": "GitHub",
+            })
+        return results
+    except Exception:
+        return []
+
+
+# ── Reddit r/algotrading ─────────────────────────────────────────────────
+def _fetch_reddit(max_results: int = 3) -> list[dict]:
+    """Fetch top posts from r/algotrading (JSON feed, no auth)."""
+    import urllib.request
+    try:
+        url = "https://www.reddit.com/r/algotrading/top.json?t=week&limit=10"
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'HermesForge/1.0 (research bot)'
+        })
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+        results = []
+        for post in data.get('data', {}).get('children', [])[:max_results]:
+            pdata = post.get('data', {})
+            title = pdata.get('title', '')
+            selftext = (pdata.get('selftext', '') or '')[:600]
+            url = f"https://reddit.com{pdata.get('permalink', '')}"
+            if title:
+                results.append({
+                    "title": f"[Reddit] {title[:100]}",
+                    "url": url,
+                    "snippet": selftext or title,
+                    "source": "Reddit",
+                })
         return results
     except Exception:
         return []
@@ -414,13 +561,50 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
     seen_urls = set()
     
     for query in queries:
-        print(f"  Searching: {query[:60]}...")
+        print(f"  [X] Searching: {query[:60]}...")
         results = search_x(query, max_results=6)
         print(f"    → {len(results)} results")
-        
         for r in results:
-            if r["url"] in seen_urls:
-                continue
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
+    # ── RSS feeds ──
+    for name, feed_url in RSS_FEEDS:
+        print(f"  [RSS] {name}...")
+        results = _fetch_rss_feed(name, feed_url, max_items=2)
+        print(f"    → {len(results)} items")
+        for r in results:
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
+    # ── arXiv ──
+    for query in ARXIV_QUERIES[:2]:  # 2 queries per cycle to stay fast
+        print(f"  [arXiv] {query[:60]}...")
+        results = _fetch_arxiv(query, max_results=2)
+        print(f"    → {len(results)} papers")
+        for r in results:
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
+    # ── GitHub ──
+    for query in GITHUB_QUERIES:
+        print(f"  [GitHub] {query[:60]}...")
+        results = _fetch_github(query, max_results=2)
+        print(f"    → {len(results)} repos")
+        for r in results:
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
+    # ── Reddit ──
+    print(f"  [Reddit] r/algotrading...")
+    reddit_results = _fetch_reddit(max_results=3)
+    print(f"    → {len(reddit_results)} posts")
+    for r in reddit_results:
+        if r["url"] not in seen_urls:
             seen_urls.add(r["url"])
             all_candidates.append(r)
     
