@@ -78,6 +78,17 @@ from sweep_timing_filter import _filter_valid_sweeps, PREMIUM_LEVEL_TYPES, EXCLU
 # US-111: Portfolio risk guard
 from portfolio_risk_guard import check_trade_allowed, record_stop_loss
 
+# US-162: Live trading
+_LIVE_ENABLED = False
+try:
+    sys.path.insert(0, str(REPO_ROOT / "scripts" / "live_trading"))
+    from live_executor import LiveExecutor
+    from live_risk_manager import LiveRiskManager
+    from live_trade_log import open_trade as live_open_trade, close_trade as live_close_trade
+    _LIVE_ENABLED = True
+except ImportError:
+    pass
+
 STRATEGY_ID = "STR-Q-liquidity-sweep"
 EXAMPLE_ACCOUNT_SIZE = 100_000
 
@@ -807,6 +818,8 @@ def main():
                     help="Skip Jev entirely and block live open_trade (paper only)")
     ap.add_argument("--jev-shadow", action="store_true",
                     help="Run Jev, log the tier, but use old heuristic for action decisions")
+    ap.add_argument("--live", action="store_true",
+                    help="Execute APPROVED signals on Hyperliquid mainnet (real money)")
     args = ap.parse_args()
     
     if args.monitor_only:
