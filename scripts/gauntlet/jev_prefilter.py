@@ -62,9 +62,9 @@ def _get_ml_predictor() -> MLPredictor:
 
 # ── US-150 §2b: tier thresholds ───────────────────────────────────────
 # Tuned by jev_threshold_tuner.py (ML-driven, auto-adjusted)
-APPROVED_THRESHOLD = 0.75   # composite >= 0.75 → paper + live eligible
-MARGINAL_THRESHOLD = 0.30   # 0.30 <= comp < 0.75 → paper only, never live
-# Below 0.30 → rejected outright
+APPROVED_THRESHOLD = 0.40   # composite >= 0.40 → paper + live eligible (tuned 2026-10-10: 5m sweep signals score 39-57%)
+MARGINAL_THRESHOLD = 0.25   # 0.25 <= comp < 0.40 → paper only, never live
+# Below 0.25 → rejected outright
 
 
 @dataclass
@@ -123,11 +123,14 @@ def prefilter_signal(signal: dict, market_context: Optional[dict] = None,
     if perf_ctx.get("available"):
         state["historical_performance"] = perf_ctx
     
-    # ── ML prediction: what does the model expect for this signal? ──
-    ml = _get_ml_predictor()
-    ml_pred = ml.predict_signal(signal)
-    if ml_pred.get("available"):
-        state["ml_prediction"] = ml_pred
+    # ── ML prediction: disabled pending STR-Q-specific training ────
+    # The current model is trained on all strategies (VIXC, B, D, DEBASEMENT)
+    # and its features are dominated by strategy-type one-hot encodings
+    # that don't apply to STR-Q. Re-enable after per-strategy training.
+    # ml = _get_ml_predictor()
+    # ml_pred = ml.predict_signal(signal)
+    # if ml_pred.get("available"):
+    #     state["ml_prediction"] = ml_pred
 
     nouls = {}
     reasons = []
