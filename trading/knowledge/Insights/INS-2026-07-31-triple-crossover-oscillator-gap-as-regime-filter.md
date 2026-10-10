@@ -33,6 +33,8 @@ A trader using the 4-9-18 triple crossover system (N037) should calculate the os
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[N170-momentum-measurement]] — See N170-momentum-measurement for foundational momentum context
+
 - [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for the foundational oscillator formula underlying this gap-based regime filter.
 
 - [[C154-macd-histogram-momentum-warning-signals]] — See C154-macd-histogram-momentum-warning-signals for how histogram momentum divergence precedes the gap compression used as regime filter
