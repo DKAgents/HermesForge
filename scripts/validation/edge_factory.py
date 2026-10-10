@@ -519,13 +519,19 @@ def quick_backtest(rules: dict, ticker: str = "BTC") -> dict:
         for i in range(50, len(close) - 1):
             entry_triggered = False
             
-            # Check entry conditions
-            if "RSI oversold" in rules["entry_conditions"]:
-                # Approximate RSI oversold
+            # ── Precompute common indicators for this bar ─────────────
+            def _ema(series, span):
+                return pd.Series(series[:i+1]).ewm(span=span).mean().iloc[-1]
+            def _sma(series, period):
+                return pd.Series(series[:i+1]).rolling(period).mean().iloc[-1]
+            
+            # ── RSI-based patterns ──────────────────────────────────
+            if "RSI oversold" in rules["entry_conditions"] or \
+               "Mean reversion" in str(rules["entry_conditions"]):
                 delta = close[i] - close[i-1]
                 gain = max(delta, 0)
                 loss = max(-delta, 0)
-                if loss > gain * 3:  # rough oversold
+                if loss > gain * 3:  # rough oversold approximation
                     entry_triggered = True
             
             if "RSI overbought" in rules["entry_conditions"]:
@@ -535,24 +541,95 @@ def quick_backtest(rules: dict, ticker: str = "BTC") -> dict:
                 if gain > loss * 3:
                     entry_triggered = True
             
-            if "MACD crossover" in rules["entry_conditions"]:
-                ema12 = pd.Series(close[:i+1]).ewm(span=12).mean().iloc[-1]
-                ema26 = pd.Series(close[:i+1]).ewm(span=26).mean().iloc[-1]
-                prev_ema12 = pd.Series(close[:i]).ewm(span=12).mean().iloc[-1]
-                prev_ema26 = pd.Series(close[:i]).ewm(span=26).mean().iloc[-1]
-                if (prev_ema12 < prev_ema26 and ema12 > ema26) or \
-                   (prev_ema12 > prev_ema26 and ema12 < ema26):
+            # ── MA crossover patterns ───────────────────────────────
+            if any(p in str(rules["entry_conditions"]) for p in
+                   ["MACD crossover", "MA crossover", "EMA crossover", "SMA crossover",
+                    "Momentum", "Indicator-based entry"]):
+                ema12 = _ema(close, 12)
+                ema26 = _ema(close, 26)
+                prev_ema12 = _ema(close[:i], 12)
+                prev_ema26 = _ema(close[:i], 26)
+                if (prev_ema12 < prev_ema26 and ema12 > ema26):
+                    if rules["direction"] == "long":
+                        entry_triggered = True
+                elif (prev_ema12 > prev_ema26 and ema12 < ema26):
+                    if rules["direction"] == "short":
+                        entry_triggered = True
+            
+            # ── Breakout patterns ───────────────────────────────────
+            if "Breakout" in rules["entry_conditions"] or \
+               "Momentum" in str(rules["entry_conditions"]):
+                lookback = 20
+                if rules["direction"] == "long" and close[i] > max(high[i-lookback:i]):
+                    entry_triggered = True
+                elif rules["direction"] == "short" and close[i] < min(low[i-lookback:i]):
                     entry_triggered = True
             
-            if "Breakout" in rules["entry_conditions"]:
+            # ── Pullback / Support bounce ───────────────────────────
+            if any(p in str(rules["entry_conditions"]) for p in
+                   ["Support/resistance bounce", "Pullback"]):
                 lookback = 20
-                if close[i] > max(high[i-lookback:i]):
+                if rules["direction"] == "long":
+                    if close[i] > min(low[i-lookback:i]) * 1.01 and \
+                       low[i] <= min(low[i-lookback:i]) * 1.005:
+                        entry_triggered = True
+                else:
+                    if close[i] < max(high[i-lookback:i]) * 0.99 and \
+                       high[i] >= max(high[i-lookback:i]) * 0.995:
+                        entry_triggered = True
+            
+            # ── Volatility-based / Bollinger squeeze ────────────────
+            if "Volatility-based" in rules["entry_conditions"] or \
+               "Bollinger" in str(rules["indicators"]):
+                sma20 = _sma(close, 20)
+                std20 = pd.Series(close[:i+1]).rolling(20).std().iloc[-1]
+                bb_width = (std20 * 2) / sma20 if sma20 > 0 else 0
+                # Squeeze: BB width in bottom quartile, then breakout
+                if bb_width < 0.02:
+                    if rules["direction"] == "long" and close[i] > sma20 * 1.005:
+                        entry_triggered = True
+                    elif rules["direction"] == "short" and close[i] < sma20 * 0.995:
+                        entry_triggered = True
+            
+            # ── Mean reversion (price extreme) ──────────────────────
+            if "Mean reversion" in str(rules["entry_conditions"]) and not entry_triggered:
+                lookback = 20
+                sma20 = _sma(close, 20)
+                std20 = pd.Series(close[:i+1]).rolling(20).std().iloc[-1]
+                zscore = (close[i] - sma20) / std20 if std20 > 0 else 0
+                if rules["direction"] == "long" and zscore < -1.5:
+                    entry_triggered = True
+                elif rules["direction"] == "short" and zscore > 1.5:
                     entry_triggered = True
             
-            if "Support/resistance bounce" in rules["entry_conditions"]:
-                lookback = 20
-                if close[i] > min(low[i-lookback:i]) * 1.01 and \
-                   low[i] <= min(low[i-lookback:i]) * 1.005:
+            # ── Seasonal pattern (day-of-week effect) ───────────────
+            if "Seasonal pattern" in rules["entry_conditions"]:
+                try:
+                    dow = pd.Timestamp(df.index[i]).dayofweek
+                    # Monday entry, Friday exit (common seasonal)
+                    if dow == 0:
+                        entry_triggered = True
+                except:
+                    pass
+            
+            # ── Trend following: price above rising MA ──────────────
+            if "Momentum" in str(rules["entry_conditions"]) and not entry_triggered:
+                sma50 = _sma(close, min(50, i))
+                prev_sma50 = _sma(close[:i], min(50, i-1)) if i > 50 else sma50
+                if rules["direction"] == "long" and close[i] > sma50 and sma50 > prev_sma50:
+                    entry_triggered = True
+                elif rules["direction"] == "short" and close[i] < sma50 and sma50 < prev_sma50:
+                    entry_triggered = True
+            
+            # ── Fallback: if no specific pattern fired but we have rules, use MA cross ──
+            if not entry_triggered and len(rules["entry_conditions"]) > 0:
+                ema5 = _ema(close, 5)
+                ema20 = _ema(close, 20)
+                prev_ema5 = _ema(close[:i], 5)
+                prev_ema20 = _ema(close[:i], 20)
+                if rules["direction"] == "long" and prev_ema5 <= prev_ema20 and ema5 > ema20:
+                    entry_triggered = True
+                elif rules["direction"] == "short" and prev_ema5 >= prev_ema20 and ema5 < ema20:
                     entry_triggered = True
             
             if not entry_triggered:
