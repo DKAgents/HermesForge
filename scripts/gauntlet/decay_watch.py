@@ -22,6 +22,7 @@ PF_WINDOW = 100
 AVG_R_WINDOW = 20
 AVG_R_THRESHOLD = 0.0
 AVG_R_CONSECUTIVE = 2
+AVG_R_LOOKBACK_WINDOWS = 10  # Only check the most recent N windows (~200 trades)
 
 SLIPPAGE_WINDOW = 20
 SLIPPAGE_RATIO = 2.0
@@ -70,16 +71,20 @@ def check_decay(
             },
         }
 
-    # ── 2. Consecutive negative avg-R windows ────────────────────────────────
+    # ── 2. Consecutive negative avg-R windows (most-recent-first) ────────────
+    # Scan from the END (most recent windows) — "trailing" means recent performance,
+    # not historical drawdowns from the strategy's early learning period.
     avg_r_values = _compute_avg_r_windows(trades, avg_r_window)
+    # Only check trailing windows — cap at most recent N windows
+    recent_windows = [w for w in avg_r_values if w != 0.0][-AVG_R_LOOKBACK_WINDOWS:]
     negative_streak = 0
-    for avg_r in avg_r_values:
+    for avg_r in reversed(recent_windows):
         if avg_r < AVG_R_THRESHOLD:
             negative_streak += 1
             if negative_streak >= avg_r_consecutive:
                 return {
                     "healthy": False,
-                    "trigger": f"trailing-{avg_r_window}-trade avg R < 0 for {avg_r_consecutive} consecutive windows",
+                    "trigger": f"trailing-{avg_r_window}-trade avg R < 0 for {avg_r_consecutive} consecutive windows (last {AVG_R_LOOKBACK_WINDOWS} non-empty windows)",
                     "metrics": {
                         "trailing_pf": round(trailing_pf, 4) if trailing_pf != float("inf") else "inf",
                         "avg_r_windows": [round(r, 4) for r in avg_r_values],
