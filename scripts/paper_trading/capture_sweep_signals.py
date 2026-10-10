@@ -277,7 +277,7 @@ def _post_str_q_alert(trade_dict: dict, sweep) -> bool:
 
 
 def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, summary: dict,
-                     jev_off: bool = False, jev_shadow: bool = False) -> None:
+                     jev_off: bool = False, jev_shadow: bool = False, live_mode: bool = False) -> None:
     """Process detected sweeps and open trades."""
     # US-108: Filter equal_lows on stocks (34.6% WR, overestimated in small sample)
     filtered_sweeps = _filter_valid_sweeps(sweeps, asset_type, strategy_id=STRATEGY_ID)
@@ -415,6 +415,7 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
                 # Record Jev score in trade dict for ML feedback loop
                 if jev_action == "allow" and not jev_shadow:
                     trade_dict["jev_score"] = round(jev_result.confidence, 4)
+                    trade_dict["jev_tier"] = jev_result.tier
                     # US-156: Dynamic position sizing based on JEV confidence
                     # Higher confidence → larger size; marginal signals → reduced size
                     jev_conf = jev_result.confidence
@@ -472,12 +473,60 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
 
             # US-108: Post Discord alert to #stock-setups or #crypto-setups
             _post_str_q_alert(trade_dict, sweep)
+
+            # US-162: Live execution — only for APPROVED crypto signals
+            if live_mode and _LIVE_ENABLED and asset_type == "crypto":
+                jev_tier = trade_dict.get("jev_tier", "marginal")
+                if jev_tier == "approved":
+                    size_usd = EXAMPLE_ACCOUNT_SIZE * float(trade_dict["position_size_pct"]) / 100
+                    
+                    # Live risk check
+                    from live_risk_manager import LiveRiskManager
+                    rm = LiveRiskManager()
+                    live_positions = []
+                    try:
+                        from live_trade_log import get_open_trades as live_get_open
+                        live_positions = live_get_open()
+                    except Exception:
+                        pass
+                    live_exposure = sum(float(p.get("size_usd", 0) or 0) for p in live_positions)
+                    
+                    risk_check = rm.check_trade(size_usd, live_positions, live_exposure)
+                    if not risk_check.allowed:
+                        print(f"  🔴 LIVE BLOCKED: {symbol} — {risk_check.reason}")
+                        summary.setdefault("live_blocked", 0)
+                        summary["live_blocked"] += 1
+                    else:
+                        try:
+                            ex = LiveExecutor()
+                            result_live = ex.open_position(
+                                symbol, direction, size_usd,
+                                stop_loss_pct=abs(entry_price - stop_price) / entry_price
+                            )
+                            if result_live.success:
+                                trade_dict["live_order_id"] = result_live.order_id
+                                trade_dict["live_filled_price"] = result_live.filled_price
+                                trade_dict["size_usd"] = round(size_usd, 2)
+                                live_open_trade(trade_dict)
+                                print(f"  💰 LIVE: {symbol} {direction} ${size_usd:.0f} @ {result_live.filled_price}")
+                                summary.setdefault("live_opened", 0)
+                                summary["live_opened"] += 1
+                            else:
+                                print(f"  🔴 LIVE FAILED: {symbol} — {result_live.error}")
+                                summary.setdefault("live_failed", 0)
+                                summary["live_failed"] += 1
+                        except Exception as e:
+                            print(f"  🔴 LIVE ERROR: {symbol} — {e}")
+                            summary.setdefault("live_errors", 0)
+                            summary["live_errors"] += 1
+                else:
+                    print(f"  📋 PAPER ONLY: {symbol} (tier={jev_tier}, not approved for live)")
         except ValueError as e:
             summary["skipped_already_open"] += 1
 
 
 def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: bool = True,
-         jev_off: bool = False, jev_shadow: bool = False) -> dict:
+         jev_off: bool = False, jev_shadow: bool = False, live_mode: bool = False) -> dict:
     """Main capture loop."""
     summary = {
         "scanned": 0,
@@ -527,7 +576,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                             print(f"  {symbol}: {s.direction} sweep at {s.level_type} "
                                   f"Q={s.quality_score}/100 ({s.confirmation})")
                         
-                        _process_sweeps(recent_sweeps, symbol, "crypto", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow)
+                        _process_sweeps(recent_sweeps, symbol, "crypto", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow, live_mode=live_mode)
             except Exception as e:
                 summary["errors"] += 1
                 print(f"  {symbol}: ERROR - {e}")
@@ -565,7 +614,7 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
                                 print(f"  {symbol}: {s.direction} sweep at {s.level_type} "
                                       f"Q={s.quality_score}/100 ({s.confirmation})")
                             
-                            _process_sweeps(recent_sweeps, symbol, "stock", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow)
+                            _process_sweeps(recent_sweeps, symbol, "stock", dry_run, summary, jev_off=jev_off, jev_shadow=jev_shadow, live_mode=live_mode)
                 except Exception as e:
                     summary["errors"] += 1
                     print(f"  {symbol}: ERROR - {e}")
@@ -842,7 +891,9 @@ def main():
         print(f"  Checked {exit_result['checked']} open trades, closed {exit_result['closed']}")
     
     # Capture new signals
-    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks, include_crypto=include_crypto, jev_off=args.jev_off, jev_shadow=args.jev_shadow)
+    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks,
+                        include_crypto=include_crypto, jev_off=args.jev_off,
+                        jev_shadow=args.jev_shadow, live_mode=args.live)
     
     print(f"\n{'='*50}")
     print(f"SUMMARY: {summary['scanned']} scanned, {summary['signals_found']} sweeps found, "
