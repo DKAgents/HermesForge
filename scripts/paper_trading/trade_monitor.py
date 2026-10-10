@@ -67,10 +67,32 @@ MAX_BARS_HELD = {
     "STR-I-adaptive-trend": 120,  # 120 bars per scanner code
     "STR-L-atr-contraction": 20,
     "STR-P-crosssectional": 21,  # monthly rebalance cycle
+    "STR-VIXC-vix-contango-breakout": 12,  # daily bars
+    "STR-DEBASEMENT-treasury-buyback": 21,
+    "STR-OIL-SHOCK": 20,  # ~1 month max hold
 }
+
+# Safety threshold: force-close trades as time-expired when data is unavailable
+# for longer than this many calendar days (regardless of bars).
+DATA_UNAVAILABLE_TIMEOUT_DAYS = 5
 
 
 # ── Price data loading ───────────────────────────────────────────────────────
+
+def _parse_entry_date(entry_date: str):
+    """Parse entry_date string to datetime, returning None if invalid/empty."""
+    if not entry_date or not entry_date.strip():
+        return None
+    try:
+        dt = pd.to_datetime(entry_date)
+        if pd.isna(dt):
+            return None
+        if dt.tz is None:
+            dt = dt.tz_localize("UTC")
+        return dt.to_pydatetime()
+    except Exception:
+        return None
+
 
 def _load_bars_since(ticker: str, entry_date: str, asset_class: str = "stock") -> pd.DataFrame:
     """Load cached OHLC bars for ticker strictly after entry_date."""
@@ -367,6 +389,20 @@ def run(dry_run: bool = False, crypto_only: bool = False, stocks_only: bool = Fa
         try:
             bars = _load_bars_since(ticker, trade["entry_date"], asset_class)
         except FileNotFoundError as e:
+            # Safety net: if data is unavailable and trade is old enough, force time-stop
+            entry_dt = _parse_entry_date(trade.get("entry_date", ""))
+            if entry_dt is not None:
+                days_since_entry = (datetime.datetime.now(datetime.timezone.utc) - entry_dt).days
+                if days_since_entry > DATA_UNAVAILABLE_TIMEOUT_DAYS:
+                    print(f"  ⏱️ FORCE TIME-STOP: {short_id} — {ticker} (data unavailable {days_since_entry}d, >{DATA_UNAVAILABLE_TIMEOUT_DAYS}d threshold)")
+                    if not dry_run:
+                        trade_log.close_trade(
+                            trade["trade_id"], datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
+                            float(trade.get("entry_price", 0) or 0), "time_data_unavailable",
+                            bars_held=days_since_entry, closer="trade-monitor-60m",
+                        )
+                    summary["time_stopped"] += 1
+                    continue
             summary["errors"] += 1
             summary["error_details"].append(f"{short_id}: {e}")
             continue
@@ -415,6 +451,20 @@ def run(dry_run: bool = False, crypto_only: bool = False, stocks_only: bool = Fa
         try:
             bars = _load_bars_since(ticker, trade["entry_date"], asset_class)
         except FileNotFoundError as e:
+            # Safety net: if data is unavailable and trade is old enough, force time-stop
+            entry_dt = _parse_entry_date(trade.get("entry_date", ""))
+            if entry_dt is not None:
+                days_since_entry = (datetime.datetime.now(datetime.timezone.utc) - entry_dt).days
+                if days_since_entry > DATA_UNAVAILABLE_TIMEOUT_DAYS:
+                    print(f"  ⏱️ FORCE TIME-STOP: {short_id} — {ticker} (data unavailable {days_since_entry}d, >{DATA_UNAVAILABLE_TIMEOUT_DAYS}d threshold)")
+                    if not dry_run:
+                        trade_log.close_trade(
+                            trade["trade_id"], datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
+                            float(trade.get("entry_price", 0) or 0), "time_data_unavailable",
+                            bars_held=days_since_entry, closer="trade-monitor-60m",
+                        )
+                    summary["time_stopped"] += 1
+                    continue
             summary["errors"] += 1
             summary["error_details"].append(f"{short_id}: {e}")
             continue
