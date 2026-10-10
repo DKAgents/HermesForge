@@ -73,7 +73,15 @@ class LiveExecutor:
         return "PAUSED=true" in content or "true" in content.lower()
 
     def _init_exchange(self) -> bool:
-        """Initialize Hyperliquid exchange client. Returns False on failure."""
+        """Initialize Hyperliquid exchange client.
+
+        Two modes (in priority order):
+        1. AGENT MODE (HYPERLIQUID_AGENT_KEY + HYPERLIQUID_ACCOUNT):
+           Agent key signs trades, main account owns funds.
+           Agent CAN trade, CANNOT withdraw. Safe for servers.
+        2. DIRECT MODE (HYPERLIQUID_PRIVATE_KEY):
+           Full custody. Use only for testing with small amounts.
+        """
         if self._exchange is not None:
             return True
 
@@ -81,25 +89,53 @@ class LiveExecutor:
             logger.warning("Kill switch active — live trading blocked")
             return False
 
-        private_key = os.environ.get("HYPERLIQUID_PRIVATE_KEY", "")
-        if not private_key:
-            logger.error("HYPERLIQUID_PRIVATE_KEY not set")
-            return False
+        # ── Agent mode (preferred) ──
+        agent_key = os.environ.get("HYPERLIQUID_AGENT_KEY", "")
+        main_account = os.environ.get("HYPERLIQUID_ACCOUNT", "")
 
-        try:
-            account = eth_account.Account.from_key(private_key)
-            self._address = account.address
-            self._exchange = Exchange(
-                account,
-                base_url=MAINNET_URL,
-                account_address=self._address,
-            )
-            self._info = Info(base_url=MAINNET_URL)
-            logger.info(f"Live executor initialized: {self._address[:8]}...")
-            return True
-        except Exception as e:
-            logger.error(f"Failed to init exchange: {e}")
-            return False
+        if agent_key and main_account:
+            try:
+                agent_acct = eth_account.Account.from_key(agent_key)
+                self._address = main_account  # main account owns the funds
+                self._exchange = Exchange(
+                    agent_acct,  # agent signs orders
+                    base_url=MAINNET_URL,
+                    account_address=main_account,  # main account receives fills
+                )
+                self._info = Info(base_url=MAINNET_URL)
+                logger.info(
+                    f"Live executor (agent mode): "
+                    f"agent={agent_acct.address[:8]}... → main={main_account[:8]}..."
+                )
+                return True
+            except Exception as e:
+                logger.error(f"Agent init failed: {e}")
+
+        # ── Direct mode (fallback) ──
+        private_key = os.environ.get("HYPERLIQUID_PRIVATE_KEY", "")
+        if private_key:
+            try:
+                account = eth_account.Account.from_key(private_key)
+                self._address = account.address
+                self._exchange = Exchange(
+                    account,
+                    base_url=MAINNET_URL,
+                    account_address=self._address,
+                )
+                self._info = Info(base_url=MAINNET_URL)
+                logger.warning(
+                    f"Live executor (DIRECT mode — full custody): {self._address[:8]}..."
+                )
+                return True
+            except Exception as e:
+                logger.error(f"Direct init failed: {e}")
+                return False
+
+        logger.error(
+            "No credentials set. Set HYPERLIQUID_AGENT_KEY + HYPERLIQUID_ACCOUNT "
+            "(agent mode, recommended) or HYPERLIQUID_PRIVATE_KEY (direct mode, testing only)"
+        )
+        return False
 
     # ── Account Info ──────────────────────────────────────────────────
     def get_account_value(self) -> Optional[float]:
