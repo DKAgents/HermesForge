@@ -24,7 +24,7 @@ import argparse
 import pathlib
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
@@ -69,7 +69,7 @@ def compute_seasonality() -> dict:
     from fetch_crypto_data import load_all as load_crypto
     
     results = {
-        "timestamp": datetime.now(datetime.UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
     
     # Stock benchmarks
@@ -156,7 +156,7 @@ def compute_seasonality() -> dict:
             results["strategy_by_dow"] = by_dow
     
     # Current month assessment
-    current_month = datetime.now(datetime.UTC).month
+    current_month = datetime.now(timezone.utc).month
     results["current_month"] = {
         "month": current_month,
         "name": datetime(2020, current_month, 1).strftime("%B"),

@@ -29,7 +29,7 @@ import argparse
 import pathlib
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 TRADES_PATH = REPO_ROOT / "scripts" / "paper_trading" / "trades.csv"
@@ -122,7 +122,7 @@ def compute_excursion_analysis() -> dict:
     crypto_data = load_crypto()
     
     results = {
-        "timestamp": datetime.now(datetime.UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_closed": len(closed),
         "trades_analyzed": 0,
         "trades": [],

@@ -15,7 +15,7 @@ Usage:
 
 import sqlite3, sys, re, json, hashlib, argparse
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 VAULT_ROOT  = Path('/root/HermesForge')
 BOOKS_DIR   = VAULT_ROOT / 'trading/knowledge' / 'Trading-Systems'
@@ -182,7 +182,7 @@ def index_note(conn: sqlite3.Connection, filepath: Path, book_slug: str, force: 
     fm.setdefault('ingested_at', '')
     fm.setdefault('body', '')
 
-    now = datetime.now(datetime.UTC).isoformat()
+    now = datetime.now(timezone.utc).isoformat()
     if row:
         conn.execute("""
             UPDATE notes SET title=?, concept_type=?, topic=?, confidence=?,
@@ -280,7 +280,7 @@ def main():
 
     # Update meta
     conn.execute("INSERT OR REPLACE INTO index_meta VALUES ('last_indexed', ?)",
-                 (datetime.now(datetime.UTC).isoformat(),))
+                 (datetime.now(timezone.utc).isoformat(),))
     conn.commit()
 
     print(f"\nDone. {total_indexed} notes indexed/updated.")

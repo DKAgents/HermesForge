@@ -35,7 +35,7 @@ import argparse
 import pathlib
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 TRADES_PATH = REPO_ROOT / "scripts" / "paper_trading" / "trades.csv"
@@ -167,7 +167,7 @@ def run_kill_analysis() -> dict:
     strategies = closed["strategy_id"].unique()
     
     results = {
-        "timestamp": datetime.now(datetime.UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_strategies": len(strategies),
         "total_closed_trades": len(closed),
         "actions": [],

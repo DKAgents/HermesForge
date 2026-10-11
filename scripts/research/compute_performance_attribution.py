@@ -30,7 +30,7 @@ import argparse
 import pathlib
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 from statistics import NormalDist
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
@@ -170,7 +170,7 @@ def run_attribution() -> dict:
     ]
     
     results = {
-        "timestamp": datetime.now(datetime.UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_trades": len(df),
         "closed_trades": len(df[df["status"] == "closed"]),
         "dimensions": {},
