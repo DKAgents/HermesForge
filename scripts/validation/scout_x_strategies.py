@@ -188,7 +188,7 @@ def xurl_search(query: str, n: int = 10) -> list[dict]:
             if isinstance(tweets, list):
                 return tweets
         return []
-    except (json.JSONDecodeError, subprocess.TimeoutExpired) as e:
+    except (json.JSONDecodeError, subprocess.TimeoutExpired, FileNotFoundError) as e:
         print(f"  ⚠ xurl search error: {e}", file=sys.stderr)
         return []
 
@@ -206,7 +206,7 @@ def xurl_read(post_id: str) -> Optional[dict]:
         if isinstance(data, dict) and "data" in data:
             return data["data"]
         return None
-    except (json.JSONDecodeError, subprocess.TimeoutExpired):
+    except (json.JSONDecodeError, subprocess.TimeoutExpired, FileNotFoundError):
         return None
 
 
