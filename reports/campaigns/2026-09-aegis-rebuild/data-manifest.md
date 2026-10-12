@@ -1,10 +1,10 @@
-crosspost_state_bytes: 406
-snapshot_last_ok: 2026-10-09 20:00:24 UTC-07:00
-snapshot_last_rows: 36412
-fear_greed_last_ok: 2026-10-10
-fear_greed_last_value: 64 (Greed)
+crosspost_state_bytes: 1972
+snapshot_last_ok: 2026-10-11 20:00:24 UTC-07:00
+snapshot_last_rows: 36608
+fear_greed_last_ok: 2026-10-11
+fear_greed_last_value: 61 (Greed)
 restore_drill_last_ok: FAIL
-restore_drill_last_rows: 8610
+restore_drill_last_rows: 8629
 offbox_last_ok: 2026-10-05 20:00:47 UTC-07:00
 weaver_tier_test_last_ok: 2026-09-07 22:45 UTC
 weaver_tier_test_t2_connections: 4

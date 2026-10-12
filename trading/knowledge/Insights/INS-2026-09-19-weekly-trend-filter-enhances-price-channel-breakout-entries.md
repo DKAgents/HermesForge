@@ -31,3 +31,6 @@ Before entering daily MACD or Stochastics signals, confirm the weekly price chan
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-09-weekly-trend-filter-for-daily-macd-stochastic-entries|Weekly trend filter for daily MACD/Stochastic entries]]

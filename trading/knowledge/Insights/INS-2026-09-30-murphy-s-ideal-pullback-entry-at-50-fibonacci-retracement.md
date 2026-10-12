@@ -33,4 +33,5 @@ On pullbacks in uptrends, set limit orders specifically at the 50% Fibonacci ret
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

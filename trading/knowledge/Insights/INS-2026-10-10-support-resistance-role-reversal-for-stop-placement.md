@@ -7,8 +7,11 @@ domains: [concepts, risk_guidelines]
 sources: ["C065-previous-support-as-future-resistance-in-downtrend", "C065-previous-support-as-future-resistance-in-downtrend", "C064-previous-peaks-as-future-support-in-uptrend"]
 seed_id: support_stop_sizing
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Support/Resistance Role Reversal for Stop Placement
 
 ## Discovery Summary

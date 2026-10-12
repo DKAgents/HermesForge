@@ -31,3 +31,6 @@ A trader should avoid acting on triple crossover signals during confirmed rangin
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-09-22-triple-crossover-signals-fail-in-ranging-markets-use-oscilla|Triple Crossover Signals Fail in Ranging Markets; Use Oscillator Filter]]

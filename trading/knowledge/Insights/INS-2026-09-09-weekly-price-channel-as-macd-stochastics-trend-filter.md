@@ -31,3 +31,6 @@ Before acting on any daily MACD or Stochastics crossover, first confirm whether 
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-10-09-weekly-trend-filter-for-daily-macd-stochastic-entries|Weekly trend filter for daily MACD/Stochastic entries]]

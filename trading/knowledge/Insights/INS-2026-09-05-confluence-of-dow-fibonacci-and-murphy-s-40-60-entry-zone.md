@@ -33,4 +33,5 @@ Use the 40-60% retracement zone as the primary entry window; in strong trends ex
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

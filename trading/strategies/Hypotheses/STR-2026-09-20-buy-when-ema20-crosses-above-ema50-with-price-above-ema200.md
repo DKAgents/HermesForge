@@ -76,6 +76,8 @@ SOL
 *Sourced by X Strategy Scout on 2026-09-20*
 
 ## Related
+- [[N039-double-crossover-method-10-and-50-day-combination-for-stocks]] — See N039 for classic 10/50-day double-crossover context
+
 - [[EN088-double-crossover-method-moving-averages]] — See EN088-double-crossover-method-moving-averages for the general double crossover method
 
 - [[C123-double-crossover-method]] — See C123-double-crossover-method for the classic double crossover method underlying this strategy

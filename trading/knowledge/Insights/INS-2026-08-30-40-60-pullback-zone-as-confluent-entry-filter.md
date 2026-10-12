@@ -33,4 +33,5 @@ Use the 50% retracement as the prime entry target, with 38% marking the minimum 
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -33,4 +33,5 @@ When a flag or pennant breakout occurs on below-average volume (violating R082),
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

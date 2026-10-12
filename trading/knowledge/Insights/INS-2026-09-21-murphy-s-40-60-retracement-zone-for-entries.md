@@ -33,5 +33,6 @@ When entering on pullbacks in an uptrend or bounces in a downtrend, wait for a r
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[INS-2026-09-09-keltner-pullback-entries-within-dow-retracement-adx-filter|Keltner Pullback Entries Within Dow Retracement + ADX Filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

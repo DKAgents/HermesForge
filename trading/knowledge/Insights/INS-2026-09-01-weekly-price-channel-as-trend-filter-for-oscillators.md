@@ -31,3 +31,6 @@ Use a weekly price channel (e.g., 4-week high/low breakout) to determine the tre
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-09-weekly-trend-filter-for-daily-macd-stochastic-entries|Weekly trend filter for daily MACD/Stochastic entries]]

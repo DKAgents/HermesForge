@@ -33,4 +33,5 @@ When using Keltner Channels, only take long breakouts when ADX is rising and abo
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

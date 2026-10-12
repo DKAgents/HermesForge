@@ -1,0 +1,34 @@
+{
+  "cycle": 0,
+  "candidates": 2,
+  "backtested": 2,
+  "viable": 2,
+  "results": [
+    {
+      "title": "[GitHub] AnthonWinther/Trading_bot",
+      "direction": "long",
+      "confidence": 32,
+      "backtest": {
+        "signals": 553,
+        "win_rate": 49.9,
+        "mean_r": 0.018,
+        "max_r": 0.49,
+        "min_r": -0.46,
+        "total_r": 9.9
+      }
+    },
+    {
+      "title": "[Robot Wealth] Resourcing a Triangulated Stat Arb Operation as a Solo Trader",
+      "direction": "long",
+      "confidence": 40,
+      "backtest": {
+        "signals": 30,
+        "win_rate": 56.7,
+        "mean_r": 0.029,
+        "max_r": 0.44,
+        "min_r": -0.23,
+        "total_r": 0.9
+      }
+    }
+  ]
+}

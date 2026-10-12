@@ -7,8 +7,11 @@ domains: [concepts, edge-conditions, indicators]
 sources: ["N190-keltner-channels", "E036-adx-based-indicator-selection", "C050-secondary-trend-retracement-range"]
 seed_id: ma_crossover_adx_regime
 tags: [insight, discovery, knowledge-evolution]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # ADX regime drives Keltner Channel use and retracement targets
 
 ## Discovery Summary
@@ -28,3 +31,6 @@ Traders should measure ADX first: if above 25, trade Keltner Channel breakouts; 
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
