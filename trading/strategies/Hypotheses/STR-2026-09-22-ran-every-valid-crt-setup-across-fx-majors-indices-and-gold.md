@@ -71,3 +71,6 @@ TBD
 
 ---
 *Sourced by X Strategy Scout on 2026-09-22*
+
+## Related
+- [[ADR-003-Strategy-Schema]] — See ADR-003-Strategy-Schema for how to structure this backtest as a living strategy.
