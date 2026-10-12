@@ -37,6 +37,10 @@ Before fading an oscillator reading in a strong trend, require confirmation from
 - [[INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within|McClellan Breadth Filter Validates Oscillator Signals Within Primary Trends]]
 
 ## Related
+- [[C048-dows-three-tier-trend-classification]] — See Dow's three-tier trend classification for definition of secondary trends
+
+- [[C050-secondary-trend-retracement-range]] — See C050 for secondary trend retracement range context
+
 - [[INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within]] — See INS-2026-08-08-mcclellan-breadth-filter-validates-oscillator-signals-within for breadth filter validation context
 
 - [[N159-mcclellan-oscillator]] — See N159-mcclellan-oscillator for the indicator's overbought/oversold thresholds referenced in this breadth analysis
