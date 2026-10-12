@@ -1,0 +1,21 @@
+{
+  "cycle": 0,
+  "candidates": 1,
+  "backtested": 1,
+  "viable": 1,
+  "results": [
+    {
+      "title": "[Robot Wealth] Resourcing a Triangulated Stat Arb Operation as a Solo Trader",
+      "direction": "long",
+      "confidence": 40,
+      "backtest": {
+        "signals": 30,
+        "win_rate": 56.7,
+        "mean_r": 0.029,
+        "max_r": 0.44,
+        "min_r": -0.23,
+        "total_r": 0.9
+      }
+    }
+  ]
+}

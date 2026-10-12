@@ -36,6 +36,8 @@ A trader should require explicit heavy-volume confirmation before entering any p
 - [[INS-2026-07-30-volume-confirmation-as-binary-entry-gate-reducing-false-brea|Volume Confirmation as Binary Entry Gate Reducing False Breakout Risk]]
 
 ## Related
+- [[R080-heavy-volume-on-downside-moves-as-bearish-confirmation]] — See R080 for bearish volume confirmation context
+
 - [[R052-filters-for-confirming-breakouts]] — See traditional breakout confirmation filters for additional entry conditions
 
 - [[R082-breakouts-must-be-accompanied-by-heavy-volume]] — See R082-breakouts-must-be-accompanied-by-heavy-volume for the foundational Murphy rule underlying this filter
