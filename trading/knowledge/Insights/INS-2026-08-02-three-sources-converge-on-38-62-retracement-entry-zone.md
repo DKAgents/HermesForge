@@ -36,6 +36,8 @@ A trader should only initiate pullback entries in uptrends when price retraces i
 - [[N084-key-fibonacci-ratios-618-1618-2618-382|Key Fibonacci Ratios: .618, 1.618, 2.618, .382]]
 
 ## Related
+- [[C347-percentage-retracements]] — See C347 for Murphy's percentage retracements rule
+
 - [[N084-key-fibonacci-ratios-618-1618-2618-382]] — See N084 for derivation of Fibonacci retracement ratios
 
 - [[EN066-three-breakout-entry-approaches]] — See EN066-three-breakout-entry-approaches for when a pullback entry after breakout may align with the retracement zone
