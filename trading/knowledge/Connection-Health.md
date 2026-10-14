@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-14T13:04:25Z
+updated: 2026-10-14T17:07:13Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,9 +9,9 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1510 |
-| Connections created | 1 | 366 |
-| Review queue | 437 | 437 |
+| Notes examined | 5 | 1515 |
+| Connections created | 0 | 366 |
+| Review queue | 439 | 439 |
 | Avg score | 3.1 | — |
 
 ## Graph Density Signals
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 21 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-14T13:04:25Z)
-- **trading/knowledge/Insights/INS-2026-08-02-volume-confirms-which-gap-type-to-chase-vs-fade.md** → **08-Knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R080-heavy-volume-on-downside-moves-as-bearish-confirmation.md** (score 4.0): Note A's volume validation for gap types aligns with Note B's general rule that heavy volume on downside moves confirms bearishness, providing a specific application of the rule to gap analysis.
+## Recent Discoveries (last run: 2026-10-14T17:07:13Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 292: Created 1 connections from 5 notes. Avg score: 2.3.
