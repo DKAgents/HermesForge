@@ -36,3 +36,6 @@ Before entering a pivot-point buy signal per EN071, calculate the distance from 
 - [[RG023-pf-trailing-stop-adjustment]] — Trailing stop method that can later reduce the pivot stop's reward/risk constraint
 
 - [[RG003-protective-stop-placement-relative-to-round-numbers]] — See RG003-protective-stop-placement-relative-to-round-numbers for round-number constraint on pivot stops
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,6 @@ When a pivot-point buy signal fires, measure the distance to the protective stop
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,6 @@ After entering on an EN071 pivot-point buy signal, abandon the static intraday p
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

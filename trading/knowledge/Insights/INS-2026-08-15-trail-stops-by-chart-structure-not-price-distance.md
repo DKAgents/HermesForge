@@ -33,5 +33,6 @@ After a pivot-point buy signal is confirmed per EN071, trail the protective stop
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[C243-market-order|Market Order]]
 - [[C245-stop-order|Stop Order]]

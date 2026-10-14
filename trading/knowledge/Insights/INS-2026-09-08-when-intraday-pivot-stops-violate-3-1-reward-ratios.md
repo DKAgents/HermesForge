@@ -33,5 +33,6 @@ Before entering a pivot-point breakout, calculate the stop distance from the cur
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[C336-support-level|Support Level]]
 - [[C245-stop-order|Stop Order]]

@@ -33,5 +33,6 @@ A trader entering on a pivot-point buy signal (EN071) should immediately set a h
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[C243-market-order|Market Order]]
 - [[C245-stop-order|Stop Order]]

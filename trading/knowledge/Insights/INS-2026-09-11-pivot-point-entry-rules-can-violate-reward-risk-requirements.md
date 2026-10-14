@@ -33,4 +33,5 @@ Before placing the EN071 buy stop, calculate whether the distance to the next id
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[C334-resistance-level|Resistance Level]]

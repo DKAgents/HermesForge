@@ -31,3 +31,6 @@ After entering on an EN071 pivot-point buy signal, switch from the initial below
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

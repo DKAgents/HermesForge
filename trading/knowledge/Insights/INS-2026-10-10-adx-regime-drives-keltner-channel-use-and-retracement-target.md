@@ -33,4 +33,5 @@ Traders should measure ADX first: if above 25, trade Keltner Channel breakouts; 
 **creates_filter** — Actionability score: 3/5
 
 ## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]

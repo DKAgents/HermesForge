@@ -31,3 +31,6 @@ After a valid EN071 pivot-point buy signal, immediately place a protective stop-
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
