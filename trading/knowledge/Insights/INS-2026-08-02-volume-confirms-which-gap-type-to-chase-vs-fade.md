@@ -38,6 +38,8 @@ When a gap forms, immediately check volume: a gap accompanied by a surge in volu
 - [[N161-runaway-gaps|Runaway Gaps]]
 
 ## Related
+- [[R080-heavy-volume-on-downside-moves-as-bearish-confirmation]] — See R080 for volume confirmation on downside gaps
+
 - [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals]] — See INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals for application of volume filter to breakaway gaps
 
 - [[R002-dow-averages-must-confirm-each-other]] — See R002-dow-averages-must-confirm-each-other for broader trend confirmation before acting on volume-validated gaps
