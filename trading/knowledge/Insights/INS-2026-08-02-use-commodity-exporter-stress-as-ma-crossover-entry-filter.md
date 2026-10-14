@@ -33,6 +33,10 @@ When commodity prices show a sustained decline, traders should treat a 10-day cr
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[EN088-double-crossover-method-moving-averages]] — See EN088-double-crossover-method-moving-averages for the baseline MA crossover signal
+
+- [[R323-triple-crossover-method-moving-averages]] — See R323 for the triple crossover method that this filter can be applied to
+
 - [[EN027-5-and-20-day-moving-average-crossover]] — See EN027-5-and-20-day-moving-average-crossover for an alternative crossover timeframe that could also benefit from the commodity stress filter.
 
 - [[E020-double-crossover-reduces-whipsaws-vs-single-average]] — See E020-double-crossover-reduces-whipsaws-vs-single-average for why the double crossover method already provides a whipsaw-reduced foundation that the commodity stress filter enhances
