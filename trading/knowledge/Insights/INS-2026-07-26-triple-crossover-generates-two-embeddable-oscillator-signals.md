@@ -33,6 +33,8 @@ In the 4-9-18 system, require *both* the (4−9) and (9−18) spread to be posit
 **creates_filter** — Actionability score: 3/5
 
 ## Related
+- [[N170-momentum-measurement]] — See N170-momentum-measurement for classification of these oscillators as momentum indicators
+
 - [[C152-macd-overbought-and-oversold-conditions]] — See C152 for overbought/oversold interpretation of these embeddable oscillators
 
 - [[N161-momentum-oscillator-construction]] — See N161-momentum-oscillator-construction for the basic momentum difference principle underlying spread oscillators
