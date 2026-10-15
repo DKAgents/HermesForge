@@ -33,6 +33,7 @@ When price pulls back into the 33%-67% Fibonacci retracement zone, check ADX dir
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]
 - [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[INS-2026-09-08-adx-validates-when-keltner-channels-are-actionable|ADX validates when Keltner Channels are actionable]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -31,3 +31,6 @@ In an uptrend, wait for pullbacks to reach the 38-50% Fibonacci retracement zone
 ## Connection Type
 
 **creates_filter** — Actionability score: 5/5
+
+## Related Notes
+- [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]

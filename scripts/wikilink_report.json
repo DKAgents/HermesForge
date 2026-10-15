@@ -1,10 +1,23 @@
 [
   {
-    "book": "sshfs-vps-vault-mount",
-    "anchor_index_size": 1,
-    "notes_processed": 1,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "Insights",
+    "anchor_index_size": 613,
+    "notes_processed": 912,
+    "notes_linked": 2,
+    "total_links_added": 2,
+    "sample": [
+      {
+        "note": "INS-2026-10-15-adx-confirmed-keltner-retracement-filters.md",
+        "links": [
+          "INS-2026-10-07-secondary-trend-retracement-zone-entry-filter"
+        ]
+      },
+      {
+        "note": "INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries.md",
+        "links": [
+          "INS-2026-10-07-secondary-trend-retracement-zone-entry-filter"
+        ]
+      }
+    ]
   }
 ]

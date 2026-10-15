@@ -33,5 +33,6 @@ When entering a short in a downtrend, place your stop just above the prior suppo
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-15-previous-resistance-becomes-support-in-uptrend|Previous resistance becomes support in uptrend]]
 - [[C336-support-level|Support Level]]
 - [[C334-resistance-level|Resistance Level]]

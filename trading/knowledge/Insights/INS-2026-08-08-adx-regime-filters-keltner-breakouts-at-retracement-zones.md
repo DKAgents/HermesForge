@@ -33,6 +33,7 @@ Only take Keltner Channel breakout signals when ADX is rising AND price is withi
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]
 - [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-08-17-adx-regime-filters-keltner-channel-breakout-signals-at-retra|ADX Regime Filters Keltner Channel Breakout Signals at Retracements]]

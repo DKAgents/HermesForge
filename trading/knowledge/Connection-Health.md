@@ -2,8 +2,11 @@
 type: connection-health
 updated: 2026-10-15T17:23:59Z
 tags: [connection-weaver, knowledge-graph, dashboard]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Connection Health Dashboard
 
 ## Run Summary
@@ -37,3 +40,6 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - Run 301: Created 3 connections from 5 notes. Avg score: 4.0.
 - Run 302: Created 1 connections from 5 notes. Avg score: 3.1.
 - Run 308: Created 1 connections from 5 notes. Avg score: 4.4.
+
+## Related Notes
+- [[N170-momentum-measurement|Momentum Measurement]]

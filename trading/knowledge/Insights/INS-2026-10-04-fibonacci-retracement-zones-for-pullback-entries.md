@@ -31,3 +31,6 @@ When entering on pullbacks in an uptrend, wait for price to reach the 50% Fibona
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]

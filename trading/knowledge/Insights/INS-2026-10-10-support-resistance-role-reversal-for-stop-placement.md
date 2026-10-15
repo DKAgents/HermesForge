@@ -31,3 +31,6 @@ When shorting a downtrend, set stop-loss slightly above the former support (now 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-15-previous-resistance-becomes-support-in-uptrend|Previous resistance becomes support in uptrend]]

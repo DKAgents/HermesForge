@@ -33,4 +33,5 @@ A trader should activate Keltner Channel breakout entries only when ADX is risin
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]
 - [[INS-2026-10-04-fibonacci-retracement-zones-for-pullback-entries|Fibonacci retracement zones for pullback entries]]
