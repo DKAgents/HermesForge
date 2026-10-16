@@ -36,6 +36,8 @@ A trader should require alignment across all three weekly indicators — channel
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa|Three-Layer Weekly Confirmation System for Daily Entry Signals]]
 
 ## Related
+- [[C050-secondary-trend-retracement-range]] — See C050 for retracement ranges that affect weekly filter reliability
+
 - [[C366-secondary-trends]] — See C366-secondary-trends for theoretical basis of weekly timeframe confirmation
 
 - [[N149-donchians-weekly-rule]] — See N149-donchians-weekly-rule for Donchian weekly breakout context
