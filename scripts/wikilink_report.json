@@ -1,10 +1,23 @@
 [
   {
     "book": "knowledge",
-    "anchor_index_size": 1736,
-    "notes_processed": 2176,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "anchor_index_size": 1740,
+    "notes_processed": 2180,
+    "notes_linked": 2,
+    "total_links_added": 2,
+    "sample": [
+      {
+        "note": "Connection-Health.md",
+        "links": [
+          "C050-secondary-trend-retracement-range"
+        ]
+      },
+      {
+        "note": "INS-2026-10-16-secondary-pullbacks-with-oscillators-confirm-counter-trend-r.md",
+        "links": [
+          "EN041-oscillator-entry-strategy-in-trending-markets"
+        ]
+      }
+    ]
   }
 ]
