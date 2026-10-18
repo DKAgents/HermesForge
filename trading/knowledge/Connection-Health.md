@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-18T01:56:40Z
+updated: 2026-10-18T05:58:49Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,26 +9,26 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1595 |
+| Notes examined | 5 | 1600 |
 | Connections created | 0 | 368 |
-| Review queue | 470 | 470 |
-| Avg score | 4.1 | — |
+| Review queue | 474 | 474 |
+| Avg score | 4.2 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~5963
-- Total notes: 2732
-- Avg degree per note: 2.183
-- Notes with links: 1235 (45.2%)
-- Orphan notes (no links): 1497 (54.8%)
+- Total wikilinks in vault: ~5992
+- Total notes: 2742
+- Avg degree per note: 2.185
+- Notes with links: 1244 (45.4%)
+- Orphan notes (no links): 1498 (54.6%)
 
 ## Weakly Connected Areas
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 - `code/forge-loop` — 44 notes, avg degree 0.0
-- `code/forge-loop/Maintenance` — 100 notes, avg degree 0.0
+- `code/forge-loop/Maintenance` — 101 notes, avg degree 0.0
 - `code/forge-loop/Decay` — 21 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-18T01:56:40Z)
+## Recent Discoveries (last run: 2026-10-18T05:58:49Z)
 - (no connections created this run)
 
 ## Reflection Notes
