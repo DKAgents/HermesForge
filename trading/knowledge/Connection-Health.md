@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-19T06:16:11Z
+updated: 2026-10-19T10:19:01Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1625 |
-| Connections created | 1 | 369 |
+| Notes examined | 5 | 1630 |
+| Connections created | 0 | 369 |
 | Review queue | 484 | 484 |
-| Avg score | 2.2 | — |
+| Avg score | 1.0 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~6014
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 21 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-19T06:16:11Z)
-- **trading/strategies/Hypotheses/STR-2026-09-20-ran-every-valid-crt-setup-across-fx-majors-indices-and-gold.md** → **03-ADRs/ADR-003-Strategy-Schema.md** (score 4.0): Note A provides concrete backtest results for a specific CRT strategy, while Note B defines the schema for structuring and validating such strategies; linking them allows the schema to reference this real-world example for validation rules and evidence traceability.
+## Recent Discoveries (last run: 2026-10-19T10:19:01Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 301: Created 3 connections from 5 notes. Avg score: 4.0.
