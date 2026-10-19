@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T12:30:25.718116+00:00",
+  "updated": "2026-10-19T12:30:26.028908+00:00",
   "markets": [
     {
       "label": "Federal Reserve rate cut",
@@ -42,14 +42,14 @@
       "markets": [
         {
           "name": "Japan recession in 2026?",
-          "yes_pct": 4.5,
-          "no_pct": 95.5,
+          "yes_pct": 4.0,
+          "no_pct": 96.0,
           "volume": 4300.0
         },
         {
           "name": "UK Recession in 2026?",
-          "yes_pct": 6.5,
-          "no_pct": 93.5,
+          "yes_pct": 6.0,
+          "no_pct": 94.0,
           "volume": 15600.0
         },
         {
@@ -65,34 +65,34 @@
       "label": "CPI inflation",
       "markets": [
         {
-          "name": "October Inflation China - Annual",
-          "yes_pct": 5.1,
-          "no_pct": 95.0,
-          "volume": 1200.0
+          "name": "Japan Core CPI YoY in 2026",
+          "yes_pct": 0.1,
+          "no_pct": 100.0,
+          "volume": 1600.0
         },
         {
-          "name": "China Annual Inflation 2026",
-          "yes_pct": 49.5,
-          "no_pct": 50.5,
-          "volume": 23500.0
+          "name": "Argentina Monthly Inflation - October",
+          "yes_pct": 10.5,
+          "no_pct": 89.5,
+          "volume": 360.0
         },
         {
-          "name": "October Inflation US - Monthly",
-          "yes_pct": 7.5,
-          "no_pct": 92.5,
-          "volume": 722.0
-        },
-        {
-          "name": "U.K. Annual Inflation 2026",
-          "yes_pct": 1.1,
-          "no_pct": 99.0,
-          "volume": 24000.0
+          "name": "October Inflation US - Annual",
+          "yes_pct": 0.4,
+          "no_pct": 99.7,
+          "volume": 642.0
         },
         {
           "name": "Brazil Annual Inflation 2026",
-          "yes_pct": 14.3,
-          "no_pct": 85.7,
-          "volume": 32299.999999999996
+          "yes_pct": 10.4,
+          "no_pct": 89.6,
+          "volume": 32500.0
+        },
+        {
+          "name": "Core CPI MoM - October 2026",
+          "yes_pct": 17.5,
+          "no_pct": 82.5,
+          "volume": 567.0
         }
       ],
       "count": 5
@@ -101,31 +101,25 @@
       "label": "S&P 500 price",
       "markets": [
         {
+          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
+          "yes_pct": 69.0,
+          "no_pct": 31.0,
+          "volume": 201800.0
+        },
+        {
           "name": "What will S&P 500 (SPX) hit by end of December?",
           "yes_pct": 6.5,
           "no_pct": 93.5,
           "volume": 6200.0
         },
         {
-          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
-          "yes_pct": 69.0,
-          "no_pct": 31.0,
-          "volume": 201100.0
-        },
-        {
-          "name": "SpaceX IPO: Officially added to S&P 500 in 2026?",
-          "yes_pct": 2.1,
-          "no_pct": 98.0,
-          "volume": 30500.0
-        },
-        {
-          "name": "What will S&P 500 (SPX) close at end of 2026?",
-          "yes_pct": 22.5,
-          "no_pct": 77.5,
-          "volume": 3100.0
+          "name": "Which companies added to S&P 500 in Q1 2026?",
+          "yes_pct": 0.0,
+          "no_pct": 100.0,
+          "volume": 356600.0
         }
       ],
-      "count": 4
+      "count": 3
     },
     {
       "label": "Bitcoin price",
@@ -137,28 +131,28 @@
           "volume": 99000.0
         },
         {
+          "name": "Bitcoin price on October 19?",
+          "yes_pct": 19.0,
+          "no_pct": 81.0,
+          "volume": 14200.0
+        },
+        {
           "name": "Bitcoin price on February 23?",
           "yes_pct": 100.0,
           "no_pct": 0.0,
           "volume": 146000.0
         },
         {
-          "name": "Bitcoin price on October 18?",
-          "yes_pct": 44.0,
-          "no_pct": 56.0,
-          "volume": 27300.0
-        },
-        {
-          "name": "Bitcoin price on October 19?",
-          "yes_pct": 40.0,
-          "no_pct": 60.0,
-          "volume": 930.0
-        },
-        {
           "name": "Bitcoin price on October 20?",
-          "yes_pct": 33.5,
-          "no_pct": 66.5,
-          "volume": 1500.0
+          "yes_pct": 29.5,
+          "no_pct": 70.5,
+          "volume": 6900.0
+        },
+        {
+          "name": "Bitcoin price on October 18?",
+          "yes_pct": 100.0,
+          "no_pct": 0.0,
+          "volume": 29900.0
         }
       ],
       "count": 5
@@ -203,22 +197,10 @@
       "label": "Treasury yield",
       "markets": [
         {
-          "name": "How low will 5-year Treasury yield get before 2027?",
-          "yes_pct": 3.5,
-          "no_pct": 96.5,
-          "volume": 12500.0
-        },
-        {
-          "name": "How low will 10-year Treasury yield get before 2027?",
-          "yes_pct": 1.4,
-          "no_pct": 98.6,
-          "volume": 40800.0
-        },
-        {
-          "name": "How low will 30-year Treasury yield get before 2027?",
-          "yes_pct": 14.5,
-          "no_pct": 85.5,
-          "volume": 13100.0
+          "name": "How high will 10-year Treasury yield go before 2027?",
+          "yes_pct": 100.0,
+          "no_pct": 0.0,
+          "volume": 165800.0
         },
         {
           "name": "How high will 30-year Treasury yield go before 2027?",
@@ -227,10 +209,22 @@
           "volume": 12600.0
         },
         {
-          "name": "How high will 5-year Treasury yield go before 2027?",
-          "yes_pct": 100.0,
-          "no_pct": 0.0,
-          "volume": 2700.0
+          "name": "How low will 10-year Treasury yield get before 2027?",
+          "yes_pct": 1.4,
+          "no_pct": 98.6,
+          "volume": 40800.0
+        },
+        {
+          "name": "How low will 5-year Treasury yield get before 2027?",
+          "yes_pct": 3.1,
+          "no_pct": 96.9,
+          "volume": 12600.0
+        },
+        {
+          "name": "How low will 30-year Treasury yield get before 2027?",
+          "yes_pct": 14.5,
+          "no_pct": 85.5,
+          "volume": 13100.0
         }
       ],
       "count": 5
