@@ -116,6 +116,33 @@
       "p_value": 1.0,
       "hit_rate": 0,
       "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 0,
+      "mean_r": 0,
+      "sharpe_proxy": 0,
+      "p_value": 1.0,
+      "hit_rate": 0,
+      "verdict": "NO SIGNALS"
     }
   ],
   "STR-I": [
@@ -229,6 +256,33 @@
     },
     {
       "date": "2026-10-15",
+      "n_signals": 63,
+      "mean_r": 0.463,
+      "sharpe_proxy": 1.052,
+      "p_value": 0.0159,
+      "hit_rate": 0.476,
+      "verdict": "ROBUST EDGE"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 63,
+      "mean_r": 0.463,
+      "sharpe_proxy": 1.052,
+      "p_value": 0.0159,
+      "hit_rate": 0.476,
+      "verdict": "ROBUST EDGE"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 63,
+      "mean_r": 0.463,
+      "sharpe_proxy": 1.052,
+      "p_value": 0.0159,
+      "hit_rate": 0.476,
+      "verdict": "ROBUST EDGE"
+    },
+    {
+      "date": "2026-10-18",
       "n_signals": 63,
       "mean_r": 0.463,
       "sharpe_proxy": 1.052,
@@ -352,6 +406,33 @@
       "mean_r": -0.0094,
       "sharpe_proxy": -0.02,
       "p_value": 0.9064,
+      "hit_rate": 0.37,
+      "verdict": "NO EDGE"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 414,
+      "mean_r": -0.0136,
+      "sharpe_proxy": -0.029,
+      "p_value": 0.8648,
+      "hit_rate": 0.37,
+      "verdict": "NO EDGE"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 414,
+      "mean_r": -0.0136,
+      "sharpe_proxy": -0.029,
+      "p_value": 0.8648,
+      "hit_rate": 0.37,
+      "verdict": "NO EDGE"
+    },
+    {
+      "date": "2026-10-18",
+      "n_signals": 414,
+      "mean_r": -0.0136,
+      "sharpe_proxy": -0.029,
+      "p_value": 0.8648,
       "hit_rate": 0.37,
       "verdict": "NO EDGE"
     }

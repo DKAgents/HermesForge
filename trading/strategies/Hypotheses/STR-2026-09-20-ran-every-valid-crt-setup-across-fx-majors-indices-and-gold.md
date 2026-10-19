@@ -71,3 +71,6 @@ TBD
 
 ---
 *Sourced by X Strategy Scout on 2026-09-20*
+
+## Related
+- [[ADR-003-Strategy-Schema]] — See ADR-003 for schema requirements to formalize this CRT backtest as a validated strategy
