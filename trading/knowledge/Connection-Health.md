@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-10-21T18:54:56Z
+updated: 2026-10-21T22:56:36Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 1690 |
+| Notes examined | 5 | 1695 |
 | Connections created | 0 | 369 |
-| Review queue | 500 | 500 |
-| Avg score | 3.7 | — |
+| Review queue | 501 | 501 |
+| Avg score | 4.0 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~6042
@@ -28,7 +28,7 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `code/forge-loop/Decay` — 21 notes, avg degree 0.0
 - `04-ForgeLoop/Decay` — 25 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-10-21T18:54:56Z)
+## Recent Discoveries (last run: 2026-10-21T22:56:36Z)
 - (no connections created this run)
 
 ## Reflection Notes
