@@ -102,7 +102,7 @@ for msg in data:
         # Only forward if validator says ok
         if check.stdout.strip() == 'ok':
             print(msg_id)
-        break
+            break
 " <<< "$MESSAGES" 2>/dev/null)
     
     if [ -z "$LATEST_MSG" ]; then
