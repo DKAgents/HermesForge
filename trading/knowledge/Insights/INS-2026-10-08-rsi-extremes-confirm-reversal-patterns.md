@@ -30,3 +30,6 @@ When a reversal pattern forms, enter only if RSI is at an overbought (>70) or ov
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C149-rsi-vs-stochastics-volatility-comparison|RSI vs. Stochastics Volatility Comparison]]

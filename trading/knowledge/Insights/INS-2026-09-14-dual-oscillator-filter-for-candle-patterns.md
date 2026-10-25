@@ -31,3 +31,6 @@ When a candle reversal pattern appears, only take the trade if both RSI and Stoc
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C149-rsi-vs-stochastics-volatility-comparison|RSI vs. Stochastics Volatility Comparison]]

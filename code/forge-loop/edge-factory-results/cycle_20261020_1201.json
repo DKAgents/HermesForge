@@ -1,0 +1,47 @@
+{
+  "cycle": 0,
+  "candidates": 3,
+  "backtested": 3,
+  "viable": 3,
+  "results": [
+    {
+      "title": "[Robot Wealth] Resourcing a Triangulated Stat Arb Operation as a Solo Trader",
+      "direction": "long",
+      "confidence": 40,
+      "backtest": {
+        "signals": 28,
+        "win_rate": 60.7,
+        "mean_r": 0.032,
+        "max_r": 0.51,
+        "min_r": -0.21,
+        "total_r": 0.9
+      }
+    },
+    {
+      "title": "[GitHub] AnthonWinther/Trading_bot",
+      "direction": "long",
+      "confidence": 32,
+      "backtest": {
+        "signals": 412,
+        "win_rate": 52.2,
+        "mean_r": 0.0,
+        "max_r": 0.6,
+        "min_r": -0.5,
+        "total_r": 0.1
+      }
+    },
+    {
+      "title": "The RSI + EMA + VWAP strategy is a good example of how combining complementary f",
+      "direction": "long",
+      "confidence": 24,
+      "backtest": {
+        "signals": 412,
+        "win_rate": 52.2,
+        "mean_r": 0.0,
+        "max_r": 0.6,
+        "min_r": -0.5,
+        "total_r": 0.1
+      }
+    }
+  ]
+}

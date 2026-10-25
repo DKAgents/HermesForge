@@ -31,3 +31,6 @@ Only take a candle reversal pattern as valid when both RSI and stochastics are i
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C149-rsi-vs-stochastics-volatility-comparison|RSI vs. Stochastics Volatility Comparison]]

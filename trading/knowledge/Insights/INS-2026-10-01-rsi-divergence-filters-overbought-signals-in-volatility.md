@@ -33,4 +33,5 @@ In volatile markets, only enter reversal trades when RSI is at extreme levels (N
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[C149-rsi-vs-stochastics-volatility-comparison|RSI vs. Stochastics Volatility Comparison]]
 - [[EN036-rsi-divergence-confirmation|RSI Divergence Confirmation]]
