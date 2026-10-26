@@ -1,0 +1,73 @@
+{
+  "cycle": 0,
+  "candidates": 5,
+  "backtested": 5,
+  "viable": 5,
+  "results": [
+    {
+      "title": "[Robot Wealth] Resourcing a Triangulated Stat Arb Operation as a Solo Trader",
+      "direction": "long",
+      "confidence": 40,
+      "backtest": {
+        "signals": 36,
+        "win_rate": 36.1,
+        "mean_r": -0.033,
+        "max_r": 0.28,
+        "min_r": -0.35,
+        "total_r": -1.2
+      }
+    },
+    {
+      "title": "[Quantifiable Edges] SPX is About to Enter an Incredibly Bullish Seasonal Period",
+      "direction": "long",
+      "confidence": 24,
+      "backtest": {
+        "signals": 36,
+        "win_rate": 36.1,
+        "mean_r": -0.033,
+        "max_r": 0.28,
+        "min_r": -0.35,
+        "total_r": -1.2
+      }
+    },
+    {
+      "title": "STOP CHASING BREAKOUTS. UNDERSTAND LIQUIDITY.\n\nPrice can sweep a high or low bef",
+      "direction": "long",
+      "confidence": 40,
+      "backtest": {
+        "signals": 76,
+        "win_rate": 26.3,
+        "mean_r": -0.068,
+        "max_r": 0.28,
+        "min_r": -0.41,
+        "total_r": -5.1
+      }
+    },
+    {
+      "title": "[GitHub] AnthonWinther/Trading_bot",
+      "direction": "long",
+      "confidence": 32,
+      "backtest": {
+        "signals": 338,
+        "win_rate": 34.9,
+        "mean_r": -0.059,
+        "max_r": 0.35,
+        "min_r": -0.89,
+        "total_r": -19.9
+      }
+    },
+    {
+      "title": "[GitHub] potekhinskill/Ladder-Dragon",
+      "direction": "long",
+      "confidence": 24,
+      "backtest": {
+        "signals": 52,
+        "win_rate": 23.1,
+        "mean_r": -0.377,
+        "max_r": 3.0,
+        "min_r": -1.0,
+        "total_r": -19.6
+      }
+    }
+  ]
+}
