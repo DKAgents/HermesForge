@@ -1,10 +1,17 @@
 [
   {
-    "book": "trading-book-ingestion",
-    "anchor_index_size": 2,
-    "notes_processed": 2,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "Insights",
+    "anchor_index_size": 665,
+    "notes_processed": 986,
+    "notes_linked": 1,
+    "total_links_added": 1,
+    "sample": [
+      {
+        "note": "INS-2026-10-27-exits-matter-more-stop-placement-rules-edge.md",
+        "links": [
+          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+        ]
+      }
+    ]
   }
 ]
