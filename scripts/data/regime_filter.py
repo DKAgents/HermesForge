@@ -202,6 +202,18 @@ def _get_close(path, as_of=None, n_tail=None):
     return df["close"]
 
 
+def _get_macro_series(column, as_of=None):
+    """Read a specific column from macro.parquet (kept fresh by fetch_macro.py).
+    Returns (series, path) or (None, None)."""
+    path = MARKET_DATA_DIR / "macro.parquet"
+    if not path.exists():
+        return None, None
+    df = _load_parquet_as_of(path, as_of=as_of, columns=[column])
+    if df is None or column not in df.columns or df.empty:
+        return None, None
+    return df[column], path
+
+
 def _last_date(path):
     """Return the last date in a parquet file (Timestamp) or None."""
     # Try close column projection first (fast), then fall back to any columns.
@@ -300,16 +312,22 @@ def _compute_vix(as_of=None):
 # Component: DXY
 # --------------------------------------------------------------------------- #
 def _compute_dxy(as_of=None):
-    # Try DXY.parquet first, then DX-Y.NYB.parquet
-    path = MARKET_DATA_DIR / "DXY.parquet"
-    if not path.exists():
-        path = MARKET_DATA_DIR / "DX-Y.NYB.parquet"
     result = {
         "current": 0.0, "trend": "unknown", "change_5d": 0.0,
         "regime": "neutral", "available": False, "score": 0.5,
         "freshness": "unavailable", "slope_20d": 0.0,
     }
-    s = _get_close(path, as_of=as_of)
+    # Prefer macro.parquet (kept fresh by fetch_macro.py), then the legacy
+    # individual DXY.parquet / DX-Y.NYB.parquet files.
+    s = None
+    path = None
+    if (MARKET_DATA_DIR / "macro.parquet").exists():
+        s, path = _get_macro_series("DXY", as_of=as_of)
+    if s is None:
+        path = MARKET_DATA_DIR / "DXY.parquet"
+        if not path.exists():
+            path = MARKET_DATA_DIR / "DX-Y.NYB.parquet"
+        s = _get_close(path, as_of=as_of)
     if s is None:
         return result
     current = float(s.iloc[-1])
@@ -341,15 +359,21 @@ def _compute_dxy(as_of=None):
 # Component: Yields (TNX)
 # --------------------------------------------------------------------------- #
 def _compute_yields(as_of=None):
-    # Try TNX.parquet first, then ^TNX.parquet
-    path = MARKET_DATA_DIR / "TNX.parquet"
-    if not path.exists():
-        path = MARKET_DATA_DIR / "^TNX.parquet"
     result = {
         "t10y": 0.0, "t10y_trend": "flat", "yield_curve_status": "partial_data",
         "available": False, "score": 0.5, "freshness": "unavailable",
     }
-    s = _get_close(path, as_of=as_of)
+    # Prefer macro.parquet (TNX_10Y, kept fresh by fetch_macro.py), then the
+    # legacy individual TNX.parquet / ^TNX.parquet files.
+    s = None
+    path = None
+    if (MARKET_DATA_DIR / "macro.parquet").exists():
+        s, path = _get_macro_series("TNX_10Y", as_of=as_of)
+    if s is None:
+        path = MARKET_DATA_DIR / "TNX.parquet"
+        if not path.exists():
+            path = MARKET_DATA_DIR / "^TNX.parquet"
+        s = _get_close(path, as_of=as_of)
     if s is None:
         return result
     t10 = float(s.iloc[-1])

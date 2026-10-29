@@ -52,7 +52,7 @@ STATE_FILE   = INDEX_DIR / 'discovery_state.json'
 
 OPENROUTER_URL = os.environ.get('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1').rstrip('/') + '/chat/completions'
 LLM_MODEL    = 'deepseek/deepseek-v4-flash'
-MAX_TOKENS   = 2000
+MAX_TOKENS   = 4000
 DEDUP_SIMILARITY_THRESHOLD = 0.85  # skip if existing insight is this similar to new one
 ACTIONABILITY_MIN = 3              # write to vault only if score >= this
 
@@ -79,8 +79,14 @@ def llm_call(messages: list[dict], max_tokens: int = MAX_TOKENS) -> str:
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
             data = json.loads(r.read())
-            content = data["choices"][0]["message"]["content"]
+            msg = data["choices"][0]["message"]
+            content = msg.get("content")
             if content is None:
+                # Reasoning model (deepseek-v4-flash) can leave content empty when
+                # its reasoning tokens consume the max_tokens budget. Retry once
+                # with a larger budget before giving up.
+                if max_tokens < 8000:
+                    return llm_call(messages, max_tokens=max_tokens * 2)
                 return "ERROR: LLM returned null content"
             return content
     except Exception as e:
