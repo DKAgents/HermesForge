@@ -31,6 +31,13 @@ from hyperliquid.exchange import Exchange
 from hyperliquid.info import Info
 from hyperliquid.utils import constants
 
+# Defense-in-depth: import the hard size cap from the risk manager (single source
+# of truth) so the executor enforces it even if a caller skips check_trade().
+try:
+    from live_risk_manager import MAX_POSITION_SIZE_USD as HARD_SIZE_CAP_USD
+except ImportError:
+    HARD_SIZE_CAP_USD = 500.0   # conservative fallback if risk manager is unavailable
+
 logger = logging.getLogger("live_executor")
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -85,9 +92,11 @@ class LiveExecutor:
         if self._exchange is not None:
             return True
 
-        if self._check_kill_switch():
-            logger.warning("Kill switch active — live trading blocked")
-            return False
+        # NOTE: the kill switch is deliberately NOT checked here. _init_exchange() is
+        # also called by read-only paths (get_positions, get_account_value) and by
+        # close_position(). Blocking init on the kill switch would make it impossible to
+        # FLATTEN positions once paused — which is backwards. Only open_position() checks
+        # the kill switch (it must never block closing).
 
         # ── Agent mode (preferred) ──
         agent_key = os.environ.get("HYPERLIQUID_AGENT_KEY", "")
@@ -190,6 +199,14 @@ class LiveExecutor:
         Returns:
             ExecutionResult with success, filled_price, order_id, or error.
         """
+        # Defense-in-depth: enforce the hard size cap independently of the caller's
+        # risk check, so no code path can open a position above the platform limit.
+        if size_usd > HARD_SIZE_CAP_USD:
+            return ExecutionResult(
+                success=False,
+                error=f"Size ${size_usd:.0f} exceeds hard cap ${HARD_SIZE_CAP_USD:.0f}",
+            )
+
         if not self._init_exchange():
             return ExecutionResult(success=False, error="Exchange not initialized")
 
@@ -217,10 +234,37 @@ class LiveExecutor:
         sz = round(size_usd / mid_price, 4)
         limit_px = round(limit_px, 2 if mid_price > 1 else 4)
 
+        # Protective stop price (computed up-front so the stop can be placed right after fill).
+        stop_price = None
+        if stop_loss_pct and stop_loss_pct > 0:
+            stop_price = mid_price * (1 - stop_loss_pct) if is_buy else mid_price * (1 + stop_loss_pct)
+            stop_price = round(stop_price, 2 if mid_price > 1 else 4)
+
         logger.info(
             f"Opening {direction} {coin}: size=${size_usd:.0f} ({sz} coins) "
             f"@ limit={limit_px} (mid={mid_price}, slip={self.slippage:.1%})"
         )
+
+        def _success(oid_val: str) -> ExecutionResult:
+            """Place the protective stop first; flatten the position if the stop
+            cannot be placed (fail-closed — never hold an unprotected position)."""
+            if stop_price is not None and not self._place_stop_loss(coin, is_buy, sz, stop_price):
+                try:
+                    # market_close derives the close direction + aggressive slippage itself.
+                    self._exchange.market_close(coin, sz)
+                except Exception:
+                    pass
+                return ExecutionResult(
+                    success=False,
+                    error="Opened but stop-loss placement failed — position flattened",
+                )
+            return ExecutionResult(
+                success=True,
+                order_id=oid_val or "",
+                filled_price=mid_price,
+                filled_size=sz,
+                details={"coin": coin, "direction": direction, "size_usd": size_usd},
+            )
 
         for attempt in range(MAX_RETRIES):
             try:
@@ -243,25 +287,14 @@ class LiveExecutor:
                     status = result.get("status", "")
                     if status == "ok" or "resting" in str(result.get("response", "")):
                         oid = str(result.get("response", {}).get("data", {}).get("statuses", [{}])[0].get("oid", "")) if isinstance(result.get("response"), dict) else ""
-                        return ExecutionResult(
-                            success=True,
-                            order_id=oid or str(result.get("oid", "")),
-                            filled_price=mid_price,
-                            filled_size=sz,
-                            details={"coin": coin, "direction": direction, "size_usd": size_usd},
-                        )
+                        return _success(oid or str(result.get("oid", "")))
 
                 # Try alternate response format
                 if isinstance(result, list) and len(result) > 0:
                     r = result[0]
                     if isinstance(r, dict) and r.get("status") == "ok":
                         oid = str(r.get("response", {}).get("data", {}).get("statuses", [{}])[0].get("oid", ""))
-                        return ExecutionResult(
-                            success=True,
-                            order_id=oid or str(r.get("oid", "")),
-                            filled_price=mid_price,
-                            filled_size=sz,
-                        )
+                        return _success(oid or str(r.get("oid", "")))
 
                 logger.warning(f"Unexpected order response: {result}")
                 if attempt < MAX_RETRIES - 1:
@@ -281,6 +314,29 @@ class LiveExecutor:
 
         return ExecutionResult(success=False, error="Max retries exceeded")
 
+    def _place_stop_loss(self, coin: str, is_buy: bool, sz: float, stop_price: float) -> bool:
+        """Place a reduce-only stop-loss trigger order. Returns True on success.
+
+        The stop is always the opposite side of the entry (sell to close a long) and
+        reduce-only, so it can only ever reduce risk, never open a new position.
+        """
+        try:
+            # OrderType is {"limit": ...} | {"trigger": {...}} — a stop is a trigger order.
+            order_type = {"trigger": {"triggerPx": stop_price, "isMarket": True, "tpsl": "sl"}}
+            self._exchange.order(
+                name=coin,
+                is_buy=(not is_buy),
+                sz=sz,
+                limit_px=stop_price,
+                order_type=order_type,
+                reduce_only=True,
+            )
+            logger.info(f"Stop-loss placed: {coin} trigger={stop_price} (reduce-only)")
+            return True
+        except Exception as e:
+            logger.error(f"Stop-loss placement failed for {coin}: {e}")
+            return False
+
     def close_position(self, coin: str) -> ExecutionResult:
         """
         Close an existing position on Hyperliquid (market close).
@@ -294,8 +350,8 @@ class LiveExecutor:
         if not self._init_exchange():
             return ExecutionResult(success=False, error="Exchange not initialized")
 
-        if self._check_kill_switch():
-            return ExecutionResult(success=False, error="Kill switch active")
+        # NOTE: the kill switch deliberately does NOT block close_position(). You must
+        # always be able to flatten risk, even (especially) when trading is paused.
         
         positions = self.get_positions()
         pos = next((p for p in positions if p["coin"] == coin), None)

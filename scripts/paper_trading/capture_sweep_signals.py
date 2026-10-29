@@ -89,6 +89,11 @@ try:
 except ImportError:
     pass
 
+# Explicit, deliberate live-trading gate: even with --live and importable modules,
+# live execution additionally requires LIVE_TRADING_ENABLED=true (or 1/yes) in the
+# environment. This is a second, auditable switch so "go live" can never be accidental.
+_LIVE_TRADING_ENABLED = os.environ.get("LIVE_TRADING_ENABLED", "").strip().lower() in ("true", "1", "yes")
+
 STRATEGY_ID = "STR-Q-liquidity-sweep"
 EXAMPLE_ACCOUNT_SIZE = 100_000
 
@@ -475,7 +480,7 @@ def _process_sweeps(sweeps: list, symbol: str, asset_type: str, dry_run: bool, s
             _post_str_q_alert(trade_dict, sweep)
 
             # US-162: Live execution — only for APPROVED crypto signals
-            if live_mode and _LIVE_ENABLED and asset_type == "crypto":
+            if live_mode and _LIVE_ENABLED and _LIVE_TRADING_ENABLED and asset_type == "crypto":
                 jev_tier = trade_dict.get("jev_tier", "marginal")
                 if jev_tier == "approved":
                     size_usd = EXAMPLE_ACCOUNT_SIZE * float(trade_dict["position_size_pct"]) / 100
