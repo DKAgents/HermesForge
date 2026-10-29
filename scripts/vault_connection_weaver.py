@@ -359,7 +359,7 @@ def load_openrouter_key() -> str:
 
 def llm_evaluate(seed_note: str, seed_summary: str,
                  candidate_path: str, candidate_summary: str,
-                 api_key: str, model: str = "deepseek/deepseek-v4-pro") -> dict:
+                 api_key: str, model: str = "deepseek/deepseek-v4-pro-0813") -> dict:
     """Send candidate pair to LLM for scoring."""
     import urllib.request
 
@@ -606,8 +606,8 @@ def main():
     parser.add_argument("--health", default=None, help="Health dashboard path")
     parser.add_argument("--priority-dirs", default=None, help="Comma-separated priority dirs")
     parser.add_argument("--commit", action="store_true", help="Git commit after linking")
-    parser.add_argument("--model", default="deepseek/deepseek-v4-pro",
-                        help="LLM model for evaluation (default: T2 v4-pro)")
+    parser.add_argument("--model", default="deepseek/deepseek-v4-pro-0813",
+                        help="LLM model for evaluation (default: T2 v4-pro-0813)")
     args = parser.parse_args()
 
     vault = resolve_vault(args.vault)

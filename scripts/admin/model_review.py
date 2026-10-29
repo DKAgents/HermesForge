@@ -28,11 +28,11 @@ HOME = pathlib.Path.home()
 CRON_JOBS_FILE = HOME / ".hermes" / "cron" / "jobs.json"
 ADR_PATH = HOME / "HermesForge" / "03-ADRs" / "ADR-001-Model-Routing-Strategy.md"
 
-# Tier reference — synced from ADR-001 (last updated 2026-08-25)
+# Tier reference — synced from ADR-001 (last updated 2026-10-29)
 TIER_MODELS = {
     "T1": "anthropic/claude-opus-4.8",
-    "T2": "deepseek/deepseek-v4-pro",
-    "T3": "deepseek/deepseek-v4-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4-flash-0731",
     "T4": "google/gemini-2.0-flash-001",
 }
 
