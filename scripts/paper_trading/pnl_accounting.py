@@ -107,6 +107,13 @@ def _adversarial_cost_drag(entry_price: float, stop_price: float,
     so the caller treats the trade as unscoreable.
     `round_trip_bps` None -> DEFAULT_ROUND_TRIP_BPS.
     """
+    # Self-guard: non-positive prices cannot produce a meaningful risk distance.
+    # Return +inf (unscoreable) instead of risking ZeroDivisionError / negative
+    # risk. Consistent with the existing degenerate-stop sentinel and the
+    # callers' math.isfinite(...) guards in _paper_r. (US-167)
+    if entry_price <= 0 or stop_price <= 0:
+        return float("inf")
+
     if round_trip_bps is None:
         round_trip_bps = DEFAULT_ROUND_TRIP_BPS
     risk_pct = abs(entry_price - stop_price) / entry_price
