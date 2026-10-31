@@ -56,3 +56,5 @@ code/forge-loop/Discovery/
 code/forge-loop/Maintenance/
 trading/knowledge/Insights/
 scripts/gauntlet/polymarket_macro.json
+# US-158: system-doctor findings queue (append-only runtime state; not source)
+cache/system-doctor/
