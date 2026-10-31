@@ -33,5 +33,6 @@ Trader should overlay P&F trailing stop methodology onto pivot point systems: af
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

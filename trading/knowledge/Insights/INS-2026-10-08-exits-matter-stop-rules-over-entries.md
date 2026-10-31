@@ -33,4 +33,5 @@ Place a trailing stop order at the pivot point low before acting on a buy signal
 **reveals_sequence** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[C245-stop-order|Stop Order]]

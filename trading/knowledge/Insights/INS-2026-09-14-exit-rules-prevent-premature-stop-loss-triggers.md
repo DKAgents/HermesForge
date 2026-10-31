@@ -31,3 +31,6 @@ Apply delayed entry rules (e.g., avoid first 30 minutes, wait until late in the 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

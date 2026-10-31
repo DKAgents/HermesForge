@@ -31,3 +31,6 @@ After entering via the EN071 pivot-point buy stop rule, a trader should immediat
 ## Connection Type
 
 **reveals_sequence** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

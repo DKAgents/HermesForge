@@ -33,4 +33,5 @@ When a pivot point breakout entry is triggered (per EN071), replace the static i
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

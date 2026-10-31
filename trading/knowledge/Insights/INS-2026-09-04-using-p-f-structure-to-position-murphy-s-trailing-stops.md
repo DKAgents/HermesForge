@@ -33,4 +33,5 @@ After entering on an EN071 pivot-point buy signal, abandon the static intraday p
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

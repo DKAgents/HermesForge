@@ -33,5 +33,6 @@ Once a pivot-point buy is triggered and initial stop is set below the day's low,
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[C243-market-order|Market Order]]
 - [[C245-stop-order|Stop Order]]
