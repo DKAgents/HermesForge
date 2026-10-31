@@ -10,4 +10,5 @@ source /root/.hermes/.env 2>/dev/null
 export $(grep -E '^[A-Z_]+=' /root/.hermes/.env | sed 's/=.*//' 2>/dev/null) 2>/dev/null || true
 
 # Run sweep capture (crypto only when stocks closed, both when stocks open)
-python3 scripts/paper_trading/capture_sweep_signals.py 2>&1
+PYTHONBIN="$(/root/HermesForge/scripts/system_doctor/resolve_python.sh)"
+"$PYTHONBIN" scripts/paper_trading/capture_sweep_signals.py 2>&1

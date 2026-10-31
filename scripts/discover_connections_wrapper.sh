@@ -7,6 +7,7 @@ set -euo pipefail
 
 VAULT_ROOT="/root/HermesForge"
 SCRIPT="$VAULT_ROOT/scripts/discover_connections.py"
+PYTHONBIN="$(/root/HermesForge/scripts/system_doctor/resolve_python.sh)"
 
 # Count .md files modified in last 24h (exclude .obsidian/.git)
 CHANGED=$(find "$VAULT_ROOT" -name "*.md" -mmin -1440 \
@@ -21,4 +22,4 @@ if [ "$CHANGED" -eq 0 ]; then
 fi
 
 echo "=== Connection Discovery: $CHANGED vault files changed in last 24h ==="
-python3 "$SCRIPT"
+"$PYTHONBIN" "$SCRIPT"

@@ -6,16 +6,17 @@
 
 set -euo pipefail
 cd /root/HermesForge
+PYTHONBIN="$(/root/HermesForge/scripts/system_doctor/resolve_python.sh)"
 
 # Run trade monitor
-MONITOR_OUT=$(python3 scripts/paper_trading/trade_monitor.py 2>&1) || {
+MONITOR_OUT=$("$PYTHONBIN" scripts/paper_trading/trade_monitor.py 2>&1) || {
     echo "🔴 Trade Monitor crashed"
     echo "$MONITOR_OUT"
     exit 0
 }
 
 # Pipe through JEV triage
-TRIAGE_RESULT=$(echo "$MONITOR_OUT" | python3 scripts/monitoring/jev_cron_triage.py --cron-name "trade-monitor-60m" 2>&1)
+TRIAGE_RESULT=$(echo "$MONITOR_OUT" | "$PYTHONBIN" scripts/monitoring/jev_cron_triage.py --cron-name "trade-monitor-60m" 2>&1)
 TRIAGE_EXIT=$?
 
 case $TRIAGE_EXIT in
