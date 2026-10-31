@@ -1,15 +1,16 @@
 ---
-id: ADR-002
+id: ADR-007
 type: adr
-status: proposed
+status: accepted
 created: 2026-10-29
 deciders: [human]
 tags: [adr, self-healing, autonomy, trading-safety, risk-ladder, aegis]
 topic: adrs
 confidence: medium
+has_quotes: false
+source: HermesForge ADR
 ---
-
-# ADR-002: Self-Healing System with Trading-Safety Boundary
+# ADR-007: Self-Healing System with Trading-Safety Boundary
 
 ## Context
 
@@ -69,6 +70,31 @@ The entire loop collapses to a periodic digest: "auto-fixed N things (listed);
 M things need sign-off (why + what happens if deferred); 0 anomalies in the
 trading boundary." The human approves the rare Tier-2 exception and nothing else.
 
+### Autonomy boundary (binding — refined 2026-10-31)
+
+Per principal direction "be involved less, delegate more," the Tier-0/1/2 ladder
+above expands into an explicit two-sided boundary across the full operating
+surface:
+
+**Fully autonomous (orchestrator acts, no human sign-off; surfaced in the digest):**
+- Swarm routing end-to-end: orchestrator → architect → coder → risk-guardian,
+  without human steering prompts.
+- T1 (Opus) escalation for non-live triggers (#1–5, #7, #9 of ADR-001) — flagged
+  and dispatched by the orchestrator, logged, no approval wait.
+- ADR drafting + committing; vault index dedup/prune/maintenance; cron fixes;
+  model-tier assignments (Tier 0–1 equivalents).
+
+**Human-gated (final say, never auto):**
+- The go-live and first real-money fill; turn-on of `LIVE_TRADING_ENABLED`.
+- Kill-switch and position-size-cap changes; secrets/key rotation.
+- `--force` / safety-floor (`>20%`) overrides.
+- Anything touching live money or broker/exchange API (Tier 2).
+
+The pre-live execution audit (ADR-001 trigger #11) straddles the line: its
+*dispatch and execution* are autonomous (the orchestrator runs the Opus audit of
+the live-execution path and reports findings), but the *go-live decision* that
+audit informs remains human-gated.
+
 ## Sequencing
 
 1. **Phase 0** — trading-pipeline hardening audit against the real-money bar.
@@ -86,3 +112,12 @@ trading boundary." The human approves the rare Tier-2 exception and nothing else
   what was *not* inspected).
 - Risks: over-automation of a Tier-2 item. Mitigated by the approval ladder and
   the fact that the trading boundary is read-only to automation.
+
+## Amendments
+
+- **2026-10-31** — finalized (`proposed` → `accepted`); renumbered `ADR-002` →
+  `ADR-007` (resolving the id collision with ADR-002-Paper-Trading-First);
+  added the binding "Autonomy boundary" section, expanding Tier-0/1/2 into an
+  explicit Autonomous vs Human-gated split and placing the pre-live audit
+  dispatch (ADR-001 trigger #11) on the autonomous side with a human-gated
+  go-live decision, per principal direction "be involved less, delegate more."
