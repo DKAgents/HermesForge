@@ -2,7 +2,7 @@
 type: moc
 topic: decisions
 created: 2026-07-30
-updated: 2026-07-30
+updated: 2026-10-31
 tags: [moc, adr, decisions, navigation]
 confidence: high
 has_quotes: false
@@ -28,4 +28,5 @@ SORT date DESC
 - [[ADR-004-Phase1-Validation-Framework]]
 - [[ADR-005-Stage-Based-Model-Floors-and-Red-Team]]
 - [[ADR-006-Council-of-Experts-Held]]
+- [[ADR-007-Self-Healing-System]]
 - [[STRATEGIES-MOC]]
