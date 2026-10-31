@@ -313,6 +313,19 @@ def _update_data_manifest(key: str, value: str) -> None:
             f.write(f"{key}: {value}\n")
 
 
+def _commit_data_manifest() -> None:
+    """Commit data-manifest.md via the shared path-scoped, race-safe helper."""
+    ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    msg = f"aegis: {ts} — data-manifest status update"
+    r = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "scripts" / "git_commit_paths.py"),
+         "--repo", str(REPO_ROOT), "--message", msg,
+         "--path", "reports/campaigns/2026-09-aegis-rebuild/data-manifest.md"],
+        capture_output=True, text=True, cwd=str(REPO_ROOT),
+    )
+    print((r.stdout + r.stderr).strip())
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -349,6 +362,9 @@ def main():
 
     else:
         print(__doc__)
+
+    if "--snapshot" in sys.argv or "--restore-drill" in sys.argv:
+        _commit_data_manifest()
 
 
 if __name__ == "__main__":
