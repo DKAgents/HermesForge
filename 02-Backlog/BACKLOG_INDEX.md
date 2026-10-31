@@ -74,6 +74,11 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-119 | EPIC-009 | Real-time market event monitoring (liquidation webhook) | Medium | None |
 | US-120 | EPIC-009 | Advanced options strategies (iron condors, straddles, calendars) | Medium | IV rank data source |
 | US-121 | EPIC-004 | STR-Q position size re-evaluation (1% → conditional) | Blocked | ≥200 stable OOS trades + principal-signed ADR |
+| US-164 | EPIC-014 | PNL accounting consolidation (v1/v2/swing → one shared module) | P1 | None |
+| US-165 | EPIC-014 | Dynamic venue-correct fees (replace static VENUE_COSTS, fail-closed) | P0 | US-164 |
+| US-166 | EPIC-014 | Fix `_apply_taker_fee` direction-blindness | P1 | US-164 |
+| US-167 | EPIC-014 | `_adversarial_cost_drag` self-guard | P2 | None |
+| US-168 | EPIC-014 | Full bar-level hostile-fill re-simulation (install pyarrow) | P1 | US-165 |
 
 ---
 
@@ -133,7 +138,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-144
+- **Next Story Number:** US-169
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
