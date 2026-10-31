@@ -42,6 +42,9 @@ from detect_liquidity_sweeps import CONFIRMATION_BARS
 
 # ── Config ───────────────────────────────────────────────────────────────────────
 TAKER_FEE_BPS = 10           # 0.1% = 10 bps per fill (entry + exit = 0.2% round-trip)
+# Round 3 (adversarial penalty): an uncosted paper R is charged the full hostile
+# taker round trip (entry + exit). Matches the swing hostile_fills.py fallback.
+ROUND_TRIP_BPS = 2 * TAKER_FEE_BPS  # 20 bps
 MAX_BARS_HELD = 15           # 75 minutes at 5m resolution
 LOOKBACK_BARS = 1000          # ~3.5 days of 5m bars — covers recent STR-Q
 STRATEGY_ID = "STR-Q-liquidity-sweep"
@@ -356,14 +359,34 @@ def _append_report(record: dict, dry_run: bool = False, existing_keys: set = Non
     return True
 
 
+def _adversarial_cost_drag(entry_price: float, stop_price: float) -> float:
+    """Cost drag (R units) for the adversarial 20-bps taker round trip.
+
+    cost_drag_R = ROUND_TRIP_BPS / 10000 / risk_pct.
+    Returns float('inf') for a degenerate stop (risk_pct < MIN_RISK_PCT) so the
+    caller treats the trade as unscoreable.
+    """
+    risk_pct = abs(entry_price - stop_price) / entry_price
+    if risk_pct < MIN_RISK_PCT:
+        return float("inf")
+    return (ROUND_TRIP_BPS / 10000.0) / risk_pct
+
+
 def _paper_r(trade: dict) -> tuple:
     """Return (value, costed) for the paper model's R-multiple.
 
     Prefer the cost-adjusted `gauntlet_r` when present and finite -> (value, True).
-    The raw `r_multiple` is always uncosted (no taker fee, no slippage) and is
-    NEVER returned as a value — it is flagged uncosted so it stays out of every
-    aggregate.
+
+    Round 3: port the swing cost-drag fallback. A closed STR-Q trade with a
+    missing gauntlet_r is NOT silently dropped to (None, False) — that left the
+    paper denominator far smaller than the hostile denominator. Its raw
+    `r_multiple` is real, just uncosted, so it is charged the adversarial 20-bps
+    taker round trip. entry_price <= 0 / stop_price <= 0 is rejected up front.
+    time_zombie_cleanup (r=0, forced cleanup) is excluded as a non-outcome.
     """
+    if trade.get("exit_reason", "") == "time_zombie_cleanup":
+        return (None, False)
+
     gauntlet = trade.get("gauntlet_r", "")
     if gauntlet not in ("", None):
         try:
@@ -372,7 +395,32 @@ def _paper_r(trade: dict) -> tuple:
                 return (v, True)
         except (ValueError, TypeError):
             pass
-    return (None, False)
+
+    r_str = trade.get("r_multiple", "")
+    if r_str in ("", None):
+        return (None, False)
+    try:
+        gross = float(r_str)
+    except (ValueError, TypeError):
+        return (None, False)
+    if not math.isfinite(gross):
+        return (None, False)
+
+    try:
+        entry = float(trade.get("entry_price", 0))
+        stop = float(trade.get("stop_price", 0))
+    except (ValueError, TypeError):
+        return (None, False)
+    if entry <= 0 or stop <= 0:
+        return (None, False)
+
+    cost_drag = _adversarial_cost_drag(entry, stop)
+    if not math.isfinite(cost_drag):
+        return (None, False)
+    adversarial_r = gross - cost_drag
+    if not math.isfinite(adversarial_r):
+        return (None, False)
+    return (round(adversarial_r, 6), True)
 
 
 # ── Signal dedup with journal reconciliation ──────────────────────────────
@@ -425,13 +473,16 @@ def _close_outcome(row: dict) -> tuple:
 
 
 def _reconcile_signal_dedup(strq_trades: list) -> tuple:
-    """Dedup STR-Q input on signal_id, reconciling divergent close rows vs journal.
+    """Dedup STR-Q input on signal_id, validating every closed signal_id against
+    the journal's authoritative close.
 
-    For each signal_id with multiple closed rows whose close outcomes DIVERGE, the
-    first-row-by-order is NOT trusted. Instead we reconcile against the journal's
-    authoritative close and keep the CSV row that matches it. A group that cannot
-    be reconciled (no journal close, or no matching CSV row) is QUARANTINED —
-    excluded from the aggregate and flagged explicitly.
+    Round 3: EVERY closed signal_id is validated — not just multi-row divergent
+    groups. A closed signal_id is kept only when its CSV close outcome EXACTLY
+    matches the journal close (exit_reason AND r_multiple), and the first
+    matching row is kept (duplicate rows share the same outcome). Any divergence
+    (reason mismatch, r_multiple mismatch) or a missing journal close is
+    QUARANTINED — never silently arbitrated by row order or by a reason-only
+    fallback.
 
     Returns (deduped_list, quarantined_count, quarantine_lines).
     """
@@ -451,42 +502,32 @@ def _reconcile_signal_dedup(strq_trades: list) -> tuple:
     quarantine_lines = []
     for sid in order:
         rows = groups[sid]
-        if len(rows) == 1:
-            out.append(rows[0])
-            continue
-
         closed_rows = [r for r in rows if r.get("status") == "closed"]
-        # <=1 actual close: no conflicting close outcome — keep-first is safe.
-        if len(closed_rows) <= 1:
+        if not closed_rows:
+            # Nothing closed for this signal_id — nothing to reconcile.
             out.append(rows[0])
             continue
 
-        outcomes = {_close_outcome(r) for r in closed_rows}
-        if len(outcomes) == 1:
-            # all closed rows agree — dedup is safe as-is.
-            out.append(rows[0])
-            continue
-
-        # Diverge → reconcile against the authoritative journal close.
         auth = closes.get(sid)
         if auth is None:
             quarantined += 1
+            outcomes = sorted(map(str, {_close_outcome(r) for r in closed_rows}))
             quarantine_lines.append(
-                f"{sid}: no journal close; divergent outcomes {sorted(map(str, outcomes))}")
+                f"{sid}: no journal close; {len(closed_rows)} closed CSV row(s) {outcomes}")
             continue
         a_reason, a_rm = auth
 
-        # Prefer an exact outcome match; fall back to a reason-only match.
-        matches = [r for r in closed_rows if _close_outcome(r) == (a_reason, round(a_rm, 3))]
-        if not matches:
-            matches = [r for r in closed_rows if r.get("exit_reason", "") == a_reason]
-        if not matches:
+        # Exact match only: same exit_reason AND same r_multiple (3 dp). Any
+        # reason-match ambiguity or r_multiple divergence → quarantine.
+        exact = [r for r in closed_rows
+                 if _close_outcome(r) == (a_reason, round(a_rm, 3))]
+        if not exact:
             quarantined += 1
+            outcomes = sorted(map(str, {_close_outcome(r) for r in closed_rows}))
             quarantine_lines.append(
-                f"{sid}: journal says ({a_reason},{a_rm}) unmatched by CSV "
-                f"{sorted(map(str, outcomes))}")
+                f"{sid}: journal says ({a_reason},{a_rm}) unmatched by CSV {outcomes}")
             continue
-        out.append(matches[0])
+        out.append(exact[0])
 
     return out, quarantined, quarantine_lines
 

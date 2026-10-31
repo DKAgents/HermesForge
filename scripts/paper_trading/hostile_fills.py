@@ -33,7 +33,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 import trade_log
 from trade_id import generate_short_id
-from cost_adjuster import compute_cost_drag
+from cost_adjuster import MIN_RISK_PCT
 
 # ── Config ──────────────────────────────────────────────────────────────────────
 
@@ -241,6 +241,26 @@ def check_exit_hostile(
 
 # ── R-multiple computation ──────────────────────────────────────────────────
 
+# Round 3 (adversarial penalty): an uncosted paper R is charged the full hostile
+# taker round trip — TAKER_FEE_BPS on entry AND exit = 20 bps. The prior
+# compute_cost_drag used the ~2bps stock / ~12bps crypto venue model, which was
+# trivially favorable and let uncosted trades through almost unpenalized.
+ROUND_TRIP_BPS = 2 * TAKER_FEE_BPS  # 20 bps
+
+
+def _adversarial_cost_drag(entry_price: float, stop_price: float) -> float:
+    """Cost drag (R units) for the adversarial taker round trip.
+
+    cost_drag_R = ROUND_TRIP_BPS / 10000 / risk_pct.
+    Returns float('inf') for a degenerate stop (risk_pct < MIN_RISK_PCT) so the
+    caller treats the trade as unscoreable.
+    """
+    risk_pct = abs(entry_price - stop_price) / entry_price
+    if risk_pct < MIN_RISK_PCT:
+        return float("inf")
+    return (ROUND_TRIP_BPS / 10000.0) / risk_pct
+
+
 def _compute_r(paper_entry: float, paper_stop: float, direction: str,
                hostile_entry_price: float, exit_price: float) -> float:
     """R = direction_pnl(hostile_entry, hostile_exit) / setup_risk(paper).
@@ -297,13 +317,19 @@ def _paper_r(trade: dict) -> tuple:
     Prefer the cost-adjusted `gauntlet_r` (already charged venue slippage/fees)
     when present and finite -> (value, True).
 
-    SWING regression fix (Round 2): a closed swing trade whose `gauntlet_r` is
-    missing is NOT silently dropped to None. Its raw `r_multiple` is still real,
-    just uncosted — so we charge the venue cost drag (cost_adjuster VENUE_COSTS)
-    against it to yield an adversarial-but-real R. Only a trade with no scoreable
-    price data (missing r_multiple, or a degenerate/zero stop that makes the cost
-    drag infinite) returns (None, False).
+    Round 3 fixes:
+      * time_zombie_cleanup (r=0) is a forced cleanup, not a real trade outcome
+        -> excluded from the scored / win-rate populations as (None, False).
+      * entry_price <= 0 or stop_price <= 0 is REJECTED (None, False) BEFORE any
+        cost-drag computation — it must not fall through to a zero cost drag and
+        return an uncosted R.
+      * a closed swing trade whose gauntlet_r is missing is charged the
+        adversarial 20-bps taker round trip (ROUND_TRIP_BPS), not the ~2bps
+        venue model.
     """
+    if trade.get("exit_reason", "") == "time_zombie_cleanup":
+        return (None, False)
+
     gauntlet = trade.get("gauntlet_r", "")
     if gauntlet not in ("", None):
         try:
@@ -313,7 +339,7 @@ def _paper_r(trade: dict) -> tuple:
         except (ValueError, TypeError):
             pass
 
-    # Fall back: charge the venue cost drag against the raw r_multiple.
+    # Fall back: charge the adversarial taker round trip against the raw r_multiple.
     r_str = trade.get("r_multiple", "")
     if r_str in ("", None):
         return (None, False)
@@ -330,7 +356,11 @@ def _paper_r(trade: dict) -> tuple:
     except (ValueError, TypeError):
         return (None, False)
 
-    cost_drag = compute_cost_drag(entry, stop, trade.get("asset_class", "stock"))
+    # Reject non-positive prices BEFORE cost-drag computation.
+    if entry <= 0 or stop <= 0:
+        return (None, False)
+
+    cost_drag = _adversarial_cost_drag(entry, stop)
     if not math.isfinite(cost_drag):
         return (None, False)  # degenerate stop — genuinely unscoreable
     adversarial_r = gross - cost_drag
