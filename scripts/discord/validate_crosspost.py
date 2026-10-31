@@ -11,18 +11,34 @@ Usage: echo '{"content":"...","embeds":[...]}' | python3 validate_crosspost.py C
 
 import sys
 import json
+import re
 
-# Per-channel template requirements
+# Per-channel template requirements.
+# A marker value of "*trade-attribution*" means the message must carry a trade
+# identifier: either a "🔖 Trade ID:" label (setup) OR a short-id back-link like
+# [BTC-P-0727A](https://discord.com/channels/...) (exit/lifecycle alert).
+# "[GAUNTLET]" is intentionally REMOVED — the principal's 2026-10-31 decision
+# strips the "[GAUNTLET]" prefix and version strings from the setup template.
+TRADE_ATTRIBUTION = "*trade-attribution*"
+
 RULES = {
-    "1528555538848153640": ["Trade ID:", "[GAUNTLET]"],   # stock-setups
-    "1528555885310513213": ["Trade ID:", "[GAUNTLET]"],   # crypto-setups
+    "1528555538848153640": [TRADE_ATTRIBUTION],           # stock-setups
+    "1528555885310513213": [TRADE_ATTRIBUTION],           # crypto-setups
     "1532020053548208328": ["# Daily Market Briefing"],   # daily-market-briefing
     "1533332485641998386": [None],   # strategy-status — any real content OK, but must pass blacklist
     "1534834809451450409": [None],   # strategy-research
     "1537225420120793088": [None],   # paper-trading
-    "1540951134200402071": ["Trade ID:", "[GAUNTLET]"],   # day-trade-crypto
-    "1540951208028803142": ["Trade ID:", "[GAUNTLET]"],   # day-trade-stocks
+    "1540951134200402071": [TRADE_ATTRIBUTION],           # day-trade-crypto
+    "1540951208028803142": [TRADE_ATTRIBUTION],           # day-trade-stocks
 }
+
+# A short-id back-link: [TICKER-STRAT-MMDDS](https://discord.com/channels/...)
+SHORT_ID_LINK_RE = re.compile(r"\[[A-Z0-9]{1,12}-[A-Z]-\d{4}[A-Z]\]\(")
+
+
+def _has_trade_attribution(text: str) -> bool:
+    """Setup has "Trade ID:"; exit/lifecycle alert has a short-id back-link."""
+    return ("Trade ID:" in text) or bool(SHORT_ID_LINK_RE.search(text))
 
 # Global blacklist: messages matching any of these patterns are NEVER forwarded
 GLOBAL_BLACKLIST = [
@@ -62,7 +78,11 @@ def validate(msg: dict, channel_id: str) -> bool:
 
     # Specific markers must all be present
     for marker in markers:
-        if marker not in text:
+        if marker == TRADE_ATTRIBUTION:
+            ok = _has_trade_attribution(text)
+        else:
+            ok = marker in text
+        if not ok:
             return False
     return True
 
