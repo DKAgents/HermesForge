@@ -32,29 +32,11 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "paper_trading"))
 from trade_id import generate_short_id, make_discord_url, get_strategy_code
 import trade_log
 
-
-# ── Gauntlet G3 net R estimate (for embed fields) ──────────────────────────
-def _estimated_net_r_embed(signal_dict: dict) -> str:
-    """Short net R string for embed inline field display."""
-    try:
-        entry = float(signal_dict.get("entry_price", 0))
-        stop = float(signal_dict.get("stop_price", 0))
-        target = float(signal_dict.get("target_price", 0))
-    except (ValueError, TypeError):
-        return "N/A"
-    if entry <= 0 or stop <= 0:
-        return "N/A"
-    risk_pct = abs(entry - stop) / entry
-    if risk_pct <= 0:
-        return "N/A"
-    ac = signal_dict.get("asset_class", signal_dict.get("publish_channel", "crypto"))
-    venue_cost_bps = 2.0 if ac == "stock" else 12.0
-    cost_drag_r = (venue_cost_bps / 10000.0) / risk_pct
-    reward = abs(target - entry)
-    risk = abs(entry - stop)
-    gross_rr = reward / risk if risk else 0
-    net_rr = gross_rr - cost_drag_r
-    return f"{net_rr:+.2f}R"
+# Publisher-owned single template/crosspost module (H architecture).
+# All message formatting and crosspost decisions now live in publisher_templates.
+from publisher_templates import build_setup_embed as _pt_build_setup_embed
+from publisher_templates import crosspost_message as _pt_crosspost_message
+from publisher_templates import build_report_embed as _pt_build_report_embed
 
 logger = logging.getLogger(__name__)
 
@@ -231,208 +213,13 @@ def _fmt_price(p):
         return f"${p:.2f}"
 
 
-# ── Per-strategy confluence explanation ─────────────────────────────────────
-
-def _get_confluence(signal_dict: dict) -> str:
-    """Return a human-readable explanation of how the strategy's indicators
-    confluence to support this trade setup."""
-    sid = signal_dict.get("strategy_id", "")
-    direction = signal_dict.get("direction", "long")
-
-    if "STR-B" in sid:
-        return (
-            "**MACD Divergence confluence:**\n"
-            "\u2022 Price makes a new swing high but MACD makes a lower high \u2192 momentum is waning (the divergence)\n"
-            "\u2022 MACD line crosses below signal line \u2192 entry trigger confirms the reversal\n"
-            "\u2022 Maturity gate: MACD stayed above zero for 15+ bars \u2192 trend is mature, ripe for reversal\n"
-            f"\u2022 RSI {'near 70 (overbought)' if direction == 'short' else 'near 30 (oversold)'} \u2192 confirms exhausted sentiment\n"
-            "\u2022 ATR-based stop \u2192 volatility-adjusted risk, not a fixed percentage"
-        )
-    elif "STR-Q" in sid:
-        level_type = signal_dict.get("level_type", "unknown")
-        quality = signal_dict.get("quality_score", 0)
-        sweep_dir = signal_dict.get("sweep_direction", "")
-        return (
-            "**Liquidity Sweep confluence:**\n"
-            f"\u2022 Price swept {level_type} level then reversed \u2192 institutional liquidity grab confirmed\n"
-            f"\u2022 Sweep direction: {sweep_dir} \u2192 alignment with trade direction\n"
-            f"\u2022 Quality score: {quality}/100 \u2192 data-driven scoring (level type weighted)\n"
-            "\u2022 Stop behind sweep wick \u2192 tight risk, minimal adverse excursion\n"
-            "\u2022 3R target \u2192 favorable risk-reward ratio\n"
-            "\u2022 5-minute intraday execution \u2192 precise timing, post-sweep entry"
-        )
-    elif "STR-R" in sid:
-        jaw = signal_dict.get("alligator_jaw", 0)
-        teeth = signal_dict.get("alligator_teeth", 0)
-        lips = signal_dict.get("alligator_lips", 0)
-        direction = signal_dict.get("direction", "long")
-        fan_order = "Lips > Teeth > Jaw" if direction == "long" else "Lips < Teeth < Jaw"
-        return (
-            "**Williams Alligator confluence:**\n"
-            f"\u2022 Alligator lines fanning in {fan_order} \u2192 trend awakening confirmed\n"
-            f"\u2022 Jaw (SMMA 13)={jaw:.2f}, Teeth (SMMA 8)={teeth:.2f}, Lips (SMMA 5)={lips:.2f}\n"
-            "\u2022 Lines were sleeping (tangled) within last 5 bars \u2192 catching the awakening, not a mature trend\n"
-            "\u2022 Lines are spreading (gap increasing) \u2192 momentum is building\n"
-            "\u2022 Price in front of Alligator's mouth (beyond Lips) \u2192 trend is real\n"
-            "\u2022 1.5 ATR stop, 3R target \u2192 volatility-adjusted risk with favorable R:R"
-        )
-    elif "STR-P" in sid:
-        mom = signal_dict.get("factor_mom12_1", 0)
-        liq = signal_dict.get("factor_liquid", 0)
-        pm = signal_dict.get("factor_pricemom", 0)
-        composite = signal_dict.get("composite_score", 0)
-        rank = signal_dict.get("rank", "?")
-        return (
-            "**Cross-Sectional Factor confluence:**\n"
-            f"\u2022 MOM12_1 = {mom:+.2f} \u2192 12-month momentum ranking, persistent trend signal\n"
-            f"\u2022 LIQUID = ${liq/1e6:.0f}M \u2192 high dollar volume = institutional interest & liquidity\n"
-            f"\u2022 PRICEMOM = {pm:+.2f} \u2192 price relative to SMA200, trend confirmation\n"
-            f"\u2022 Composite score = {composite:+.2f}, ranked #{rank}/42 \u2192 top/bottom quintile selection\n"
-            "\u2022 ATR(14)-based stop (1.5x) \u2192 volatility-adjusted risk for ranging regime"
-        )
-    elif "STR-I" in sid:
-        mom = signal_dict.get("momentum", 0)
-        threshold = signal_dict.get("entry_threshold", 0.20)
-        atr_mult = signal_dict.get("atr_multiplier", 2.0)
-        lookback = signal_dict.get("lookback", 10)
-        return (
-            "**AdaptiveTrend confluence:**\n"
-            f"\u2022 Momentum ({lookback}-bar) = {mom:+.1%} \u2192 exceeds +/-{threshold:.0%} entry threshold\n"
-            "\u2022 Price above/below SMA200 \u2192 trend filter confirms direction\n"
-            f"\u2022 ATR(14) trailing stop at {atr_mult:.1f}x \u2192 adaptive risk that ratchets with the trend\n"
-            "\u2022 RSI context \u2192 identifies overbought/oversold conditions at entry\n"
-            "\u2022 Time stop at 120 bars \u2192 prevents capital lockup in sideways drift"
-        )
-    elif "STR-A" in sid:
-        return (
-            "**MA Pullback + Fibonacci confluence:**\n"
-            "\u2022 Price pulls back to MA50 \u2192 mean reversion within an established trend\n"
-            "\u2022 MA50 above MA200 \u2192 trend alignment confirms bullish bias\n"
-            "\u2022 Price enters Fibonacci 38-62% retracement zone \u2192 natural support area\n"
-            "\u2022 Fibonacci extensions (127.2%, 161.8%) \u2192 projected target levels\n"
-            "\u2022 RSI near 30/50 \u2192 oversold or neutral, room to bounce\n"
-            "\u2022 Volume profile \u2192 high-volume nodes act as support/resistance"
-        )
-    elif "STR-C" in sid:
-        vr = signal_dict.get("volume_ratio", 0)
-        return (
-            "**Breakout + Volume confluence:**\n"
-            "\u2022 Price breaks above 20-bar high \u2192 breakout from established range\n"
-            f"\u2022 Volume = {vr:.1f}x average \u2192 institutional participation confirms the breakout\n"
-            "\u2022 20-bar high/low channel \u2192 defines the volatility range that was broken\n"
-            "\u2022 Prior 20-bar high becomes new support \u2192 role reversal for stop placement\n"
-            "\u2022 Breakout candle highlighted \u2192 the specific bar that triggered the signal"
-        )
-    elif "STR-D" in sid:
-        age = signal_dict.get("level_age_bars", 0)
-        depth = signal_dict.get("touch_depth_pct", 0)
-        return (
-            "**S/R Role Reversal confluence:**\n"
-            "\u2022 Prior resistance level (max high 60 bars back, excluding recent 20) \u2192 established ceiling\n"
-            "\u2022 Price pulls back to the level \u2192 tests whether old resistance holds as new support\n"
-            "\u2022 Close above the level \u2192 two-bar reclaim confirms support\n"
-            f"\u2022 Level age: {age} bars \u2192 older levels carry more structural weight\n"
-            f"\u2022 Touch depth: {depth:.2f}% \u2192 precision of the pullback to the level\n"
-            "\u2022 ATR(14) stop below support \u2192 gives the level one ATR of breathing room\n"
-            "\u2022 Target = next resistance above \u2192 the next ceiling from prior 100 bars"
-        )
-    return ""
-
-
 # ── Embed formatting ──────────────────────────────────────────────────────────
+# (Per-strategy confluence text now lives in publisher_templates._get_confluence.)
 
 def format_signal_embed(signal_dict: dict, color: int, short_id: str = "") -> dict:
-    """Format a signal as a Discord embed JSON object."""
-    ticker = signal_dict["ticker"]
-    direction = signal_dict.get("direction", "long")
-    direction_label = direction.capitalize()
-    entry = signal_dict["entry_price"]
-    stop = signal_dict["stop_price"]
-    target = signal_dict["target_price"]
-    strategy_name = signal_dict.get("strategy_name", "Strategy")
-    version = signal_dict.get("strategy_version", "1.0")
-    publish_channel = signal_dict.get("publish_channel", "stocks")
-
-    tv_url = _tradingview_link(ticker, publish_channel)
-
-    entry_str = _fmt_price(entry)
-    stop_pct = abs(entry - stop) / entry * 100 if entry else 0
-    stop_str = _fmt_price(stop)
-    target_str = _fmt_price(target)
-    risk = abs(entry - stop)
-    reward = abs(target - entry)
-    rr = reward / risk if risk else 0.0
-
-    # Regime
-    regime = signal_dict.get("regime", "unknown")
-    regime_label = regime.capitalize() if regime != "unknown" else "Unknown"
-    benchmark = signal_dict.get("regime_benchmark", "")
-    adx = signal_dict.get("regime_adx", "")
-    regime_str = regime_label
-    extras = []
-    if benchmark:
-        extras.append(benchmark)
-    if adx:
-        extras.append(f"ADX {adx}")
-    if extras:
-        regime_str += f" ({', '.join(extras)})"
-
-    # Quality tier + key conditions
-    tier_tag, met_ratio, conditions = get_quality_tier(signal_dict)
-    conditions_text = "\n".join(f"• {c}" for c in conditions)
-
-    # Status
-    is_live = signal_dict.get("is_live", False)
-    status_str = "LIVE" if is_live else "WATCH"
-
-    # Trade ID line
-    id_line = f" | 🔖 Trade ID: `{short_id}`" if short_id else ""
-
-    # Build embed fields
-    fields = [
-        {"name": "📍 Entry", "value": entry_str, "inline": True},
-        {"name": "🛑 Stop", "value": f"{stop_str} ({stop_pct:.1f}% risk)", "inline": True},
-        {"name": "🎯 Target", "value": target_str, "inline": True},
-        {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
-        {"name": "Net R (after costs)", "value": _estimated_net_r_embed(signal_dict), "inline": True},
-        {"name": "Regime", "value": regime_str, "inline": True},
-        {"name": "Confidence", "value": f"{tier_tag} ({met_ratio})", "inline": True},
-        {"name": "Key Conditions", "value": conditions_text, "inline": False},
-        {"name": "Indicator Confluence", "value": _get_confluence(signal_dict), "inline": False},
-    ]
-
-    embed = {
-        "title": f"📊 [GAUNTLET] {strategy_name} v{version}",
-        "description": f"**{ticker}** | {direction_label} | Daily | [TradingView Chart]({tv_url}){id_line}",
-        "color": color,
-        "fields": fields,
-        "footer": {"text": "HermesForge Gauntlet • Pessimistic fills + cost-adjusted returns"},
-        "timestamp": now_pt().isoformat(),
-    }
-
-    # ── Options recommendations (stocks only) ─────────────────────────────
-    # Fetch live options chain and suggest single-leg, debit spread, and
-    # credit spread strategies aligned with the signal's entry/stop/target.
-    if publish_channel == "stocks" and entry and stop and target:
-        try:
-            from options_recommender import (
-                get_options_recommendations,
-                format_options_embed,
-            )
-            recs = get_options_recommendations(
-                ticker, direction, entry, stop, target
-            )
-            options_text = format_options_embed(recs)
-            if options_text and "No liquid options" not in options_text:
-                embed["fields"].append({
-                    "name": "📉 Options Ideas",
-                    "value": options_text[:1024],  # Discord field value limit
-                    "inline": False,
-                })
-        except Exception as e:
-            logger.debug(f"Options rec failed for {ticker}: {e}")
-
-    return embed
+    """Format a signal as a Discord embed (delegates to the Publisher's single
+    template module — build_setup_embed applies the tight, templatized layout)."""
+    return _pt_build_setup_embed(signal_dict, color=color, short_id=short_id)
 
 
 # ── Centralized publisher ────────────────────────────────────────────────────
@@ -504,24 +291,15 @@ def publish_performance_report(dry_run: bool = False, crosspost: bool = True) ->
     if not report_text:
         return {"status": "error", "error": "Report produced empty output"}
 
-    # ── Build embed ──
-    color = _get_day_color()
-    embed = {
-        "title": "📈 Paper Trading Performance Report",
-        "description": report_text,
-        "color": color,
-        "footer": {
-            "text": f"HemesForge Gauntlet • Paper Trading • Crossposted to follower servers"
-        },
-        "timestamp": now_pt().isoformat(),
-    }
+    # ── Build embed (Publisher-owned single report template, D structure) ──
+    payload = _pt_build_report_embed(report_text)
+    embed = payload["embeds"][0]
 
     # ── Post to paper-trading channel ──
     if dry_run:
         return {"status": "ok", "message_id": "dry_run",
                 "channel_id": DISCORD_PAPER_TRADING_CHANNEL, "embed": embed}
 
-    payload = {"embeds": [embed]}
     result = _post_to_discord(DISCORD_PAPER_TRADING_CHANNEL, payload, crosspost=crosspost)
     return {**result, "channel_id": DISCORD_PAPER_TRADING_CHANNEL}
 
@@ -652,110 +430,13 @@ def publish_signal(signal_dict: dict, asset_class: str,
     return {**result, "channel_id": channel_id, "chart_path": chart_path}
 
 
-# ── G3 fill field builder ────────────────────────────────────────────────────
-
-def _build_g3_fill_field(signal_dict: dict) -> dict:
-    """Build embed field showing G3 fill simulation results if available."""
-    pessimistic_slip = signal_dict.get("gauntlet_pessimistic_slip")
-    
-    if pessimistic_slip is not None:
-        slip_str = f"{pessimistic_slip:.1f} bps"
-        book_mid = signal_dict.get("gauntlet_book_mid")
-        if book_mid:
-            slip_str += f" (mid: ${book_mid:,.2f})"
-        return {"name": "⚡ G3 Fill", "value": f"Sim: {slip_str}", "inline": True}
-    
-    return {"name": "⚡ G3 Fill", "value": "N/A", "inline": True}
-
-
 # ── STR-Q sweep embed builder ────────────────────────────────────────────────
-# Builds a standardized embed for STR-Q sweep signals using the same field
-# template as daily signals, then passes it to publish_signal().
+# (G3 fill field + sweep layout now live in publisher_templates.build_setup_embed.)
 
 def build_sweep_embed(signal_dict: dict) -> dict:
-    """Build a standardized embed for STR-Q sweep signals.
-
-    This produces the same field structure as format_signal_embed(),
-    ensuring template consistency between daily and intraday posts.
-    The embed is stored in signal_dict['_pre_built_embed'] and then
-    passed to publish_signal() which handles chart + posting.
-    """
-    ticker = signal_dict["ticker"]
-    direction = signal_dict.get("direction", "long")
-    direction_label = "LONG" if direction == "long" else "SHORT"
-    entry = signal_dict["entry_price"]
-    stop = signal_dict["stop_price"]
-    target = signal_dict["target_price"]
-
-    # Confidence tier (already computed by capture_sweep_signals.py)
-    tier = signal_dict.get("confidence_tier", "C")
-    conf_label = signal_dict.get("confidence_label", "Low")
-    conditions_text = signal_dict.get("conditions_text", "• See sweep details below")
-
-    # Sweep details
-    level_type = signal_dict.get("level_type", "unknown")
-    quality_score = signal_dict.get("quality_score", 0)
-    penetration_atr = signal_dict.get("penetration_atr", 0)
-    wick_ratio = signal_dict.get("wick_ratio", 0)
-    volume_surge = signal_dict.get("volume_surge", 0)
-    level_price = signal_dict.get("level_price", 0)
-    confirmation = signal_dict.get("confirmation", "confirmed")
-
-    # Price formatting
-    def _fmt(p):
-        if abs(p) < 1.0: return f"${p:.6f}"
-        elif abs(p) < 100.0: return f"${p:.4f}"
-        else: return f"${p:,.2f}"
-
-    risk = abs(entry - stop)
-    reward = abs(target - entry)
-    rr = reward / risk if risk > 0 else 0
-    stop_pct = (risk / entry * 100) if entry else 0
-
-    direction_emoji = "🟢" if direction == "long" else "🔴"
-    short_id = signal_dict.get("short_id", "")
-    id_str = f" | 🔖 Trade ID: `{short_id}`" if short_id else ""
-
-    # Build the standardized embed — same field order as daily signals
-    embed = {
-        "title": f"📊 [GAUNTLET] STR-Q Liquidity Sweep — {ticker}",
-        "description": (
-            f"{direction_emoji} **{direction_label}** | Intraday 5m | "
-            f"Sweep: {signal_dict.get('sweep_direction', direction)} at **{level_type}**{id_str}\n"
-            f"Quality: **{quality_score}/100** | Confirmation: {confirmation}"
-        ),
-        "color": _get_day_color(),
-        "fields": [
-            {"name": "📍 Entry", "value": _fmt(entry), "inline": True},
-            {"name": "🛑 Stop", "value": f"{_fmt(stop)} ({stop_pct:.1f}% risk)", "inline": True},
-            {"name": "🎯 Target", "value": _fmt(target), "inline": True},
-            {"name": "⚖️ R:R", "value": f"{rr:.1f}:1", "inline": True},
-            _build_g3_fill_field(signal_dict),
-            {"name": "Confidence", "value": f"{tier} ({conf_label})", "inline": True},
-            {"name": "⏱️ Time Stop", "value": "75 min (15 bars)", "inline": True},
-            {"name": "Key Conditions", "value": conditions_text, "inline": False},
-            {"name": "Sweep Details", "value": (
-                f"• Penetration: {penetration_atr:.2f} ATR\n"
-                f"• Wick ratio: {wick_ratio:.2f}\n"
-                f"• Volume surge: {volume_surge:.2f}x\n"
-                f"• Level: {_fmt(level_price)}\n"
-                f"• Quality score: {quality_score}/100"
-            ), "inline": False},
-            {"name": "Indicator Confluence", "value": (
-                "**Liquidity Sweep confluence:**\n"
-                f"• Price swept {level_type} level then reversed → institutional liquidity grab confirmed\n"
-                f"• Sweep direction: {signal_dict.get('sweep_direction', direction)} → alignment with trade direction\n"
-                f"• Quality score: {quality_score}/100 → data-driven scoring (level type weighted)\n"
-                f"• Stop behind sweep wick → tight risk, minimal adverse excursion\n"
-                f"• 3R target → favorable risk-reward ratio\n"
-                f"• 5-minute intraday execution → precise timing, post-sweep entry"
-            ), "inline": False},
-        ],
-        "footer": {"text": "HermesForge Gauntlet • STR-Q Intraday • Pessimistic fills + cost-adjusted"},
-        "timestamp": now_pt().isoformat(),
-    }
-
-    return embed
+    """Build a standardized embed for STR-Q sweep signals (delegates to the
+    Publisher's single template module — build_setup_embed detects STR-Q)."""
+    return _pt_build_setup_embed(signal_dict)
 
 
 def format_daily_header(asset_class: str, regime_data: dict, signal_count: int,
@@ -847,12 +528,9 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
     if "id" in response:
         msg_id = response["id"]
         if crosspost:
-            wx = _get_crossposter(channel_id)
-            if wx:
-                webhook_payload = dict(payload)
-                wx.post(webhook_payload)
-            else:
-                _crosspost_message(channel_id, msg_id)
+            # Single cross-post path (re-uploads the chart; records dedup).
+            _pt_crosspost_message(payload, channel_id, chart_path=chart_path,
+                                  source_message_id=msg_id)
         return {"status": "ok", "message_id": msg_id, "http_code": http_code}
     
     # Discord error response
@@ -860,25 +538,6 @@ def _post_to_discord(channel_id: str, payload: dict, chart_path: str | None = No
     error_msg = response.get("message", "Unknown")
     return {"status": "error", "http_code": http_code, 
             "discord_code": error_code, "discord_message": error_msg}
-
-
-def _crosspost_message(channel_id: str, message_id: str) -> dict:
-    """Crosspost (publish) a message from an announcement channel."""
-    url = f"{API_BASE}/channels/{channel_id}/messages/{message_id}/crosspost"
-    cmd = [
-        "curl", "-s", "-X", "POST",
-        "-H", f"Authorization: Bot {DISCORD_BOT_TOKEN}",
-        url,
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
-    try:
-        response = json.loads(result.stdout)
-        if "id" in response:
-            return {"status": "ok", "message_id": response["id"]}
-        else:
-            return {"status": "error", "response": result.stdout[:200]}
-    except (json.JSONDecodeError, KeyError):
-        return {"status": "error", "response": result.stdout[:200]}
 
 
 def post_embed_signal(signal_dict: dict, chart_path: str, channel_id: str,
