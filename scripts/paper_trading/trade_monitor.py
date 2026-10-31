@@ -38,6 +38,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "discord"))
 from timezone_utils import now_pt
 import trade_log
 from trade_id import make_discord_url, make_discord_link
+# Publisher-owned single exit-message template + crosspost path (H architecture)
+from publisher_templates import build_exit_message, crosspost_message
 
 # ── Load ~/.hermes/.env if present (cron shells may not pre-source it) ────────
 _env_file = pathlib.Path.home() / ".hermes" / ".env"
@@ -270,6 +272,10 @@ def _post_alert(channel_id: str, content: str, dry_run: bool = False) -> dict:
             response = json.loads(result.stdout)
             if "id" in response:
                 time.sleep(1)  # rate limit safety
+                # Exits/lifecycle alerts MUST cross-post (2026-10-31 final decision).
+                # Standalone (no threading) — the back-link is already in content.
+                crosspost_message({"content": content}, channel_id,
+                                  source_message_id=response["id"])
                 return {"status": "ok", "message_id": response["id"]}
             elif "retry_after" in response:
                 retry_after = response.get("retry_after", 1.0)
@@ -285,57 +291,13 @@ def _post_alert(channel_id: str, content: str, dry_run: bool = False) -> dict:
 
 
 def _format_alert(event_type: str, trade: dict, exit_info: dict = None) -> str:
-    """
-    Format a brief alert message with hyperlinked trade ID.
-
-    Event types: ENTRY, STOP, TARGET, TIME
-    """
-    short_id = trade.get("short_id", "?")
-    ticker = trade.get("ticker", "?")
-    direction = trade.get("direction", "?").upper()
-    channel_id = trade.get("discord_channel_id", "")
-    message_id = trade.get("discord_message_id", "")
-
-    # Build the hyperlink
-    if channel_id and message_id:
-        link = make_discord_link(short_id, channel_id, message_id)
-    else:
-        link = f"`{short_id}`"
-
-    def _fmt_price(p):
-        p = float(p)
-        if abs(p) < 1.0:
-            return f"${p:.6f}"
-        elif abs(p) < 100.0:
-            return f"${p:.4f}"
-        else:
-            return f"${p:,.2f}"
-
-    if event_type == "ENTRY":
-        entry_price = float(trade["entry_price"])
-        return f"🟢 **ENTRY** | {link} | {ticker} {direction} entered at {_fmt_price(entry_price)}"
-
-    elif event_type == "STOP":
-        exit_price = exit_info["exit_price"]
-        r_mult = _compute_r(trade, exit_price)
-        return f"🛑 **STOP** | {link} | {ticker} {direction} stopped at {_fmt_price(exit_price)} ({r_mult:+.1f}R)"
-
-    elif event_type == "TARGET":
-        exit_price = exit_info["exit_price"]
-        r_mult = _compute_r(trade, exit_price)
-        return f"🎯 **TARGET** | {link} | {ticker} {direction} target hit at {_fmt_price(exit_price)} ({r_mult:+.1f}R)"
-
-    elif event_type == "TIME":
-        exit_price = exit_info["exit_price"]
-        r_mult = _compute_r(trade, exit_price)
-        bars = exit_info.get("bars_held", "?")
-        return f"⏱️ **TIME STOP** | {link} | {ticker} {direction} time stop at {_fmt_price(exit_price)} ({r_mult:+.1f}R, {bars} bars)"
-
-    return f"❓ **UNKNOWN** | {link} | {ticker} {direction}"
+    """Format a lifecycle alert (ENTRY/STOP/TARGET/TIME) — delegates to the
+    Publisher's single exit-message template (build_exit_message)."""
+    return build_exit_message(trade, exit_info=exit_info, event_type=event_type)
 
 
 def _compute_r(trade: dict, exit_price: float) -> float:
-    """Compute R-multiple for a trade at a given exit price."""
+    """Compute R-multiple for a trade at a given exit price (kept for callers)."""
     entry = float(trade["entry_price"])
     stop = float(trade["stop_price"])
     risk = abs(entry - stop)

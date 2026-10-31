@@ -61,6 +61,8 @@ from timezone_utils import now_pt
 
 # Centralized publisher (ensures chart + TradingView + consistent template + routing)
 from embed_publisher import publish_signal, build_sweep_embed
+# Publisher-owned single exit-message template + crosspost path (H architecture)
+from publisher_templates import build_exit_message, crosspost_message
 
 # G3 execution realism: live L2 fill simulation
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "gauntlet"))
@@ -630,49 +632,24 @@ def capture(dry_run: bool = False, include_stocks: bool = True, include_crypto: 
 def _post_exit_alert(trade: dict, exit_reason: str, exit_price: float,
                      r_multiple: float, bars_held: int = 0) -> bool:
     """Post a STOP/TARGET/TIME exit alert to the trade's Discord channel.
-    
-    Uses the same format as trade_monitor.py for consistency.
+
+    Uses the Publisher's single exit-message template (build_exit_message) for
+    consistency with trade_monitor.py, then cross-posts it (2026-10-31 final
+    decision: exits MUST cross-post; standalone, no threading).
     Returns True if alert was posted, False if skipped (no channel_id)."""
     channel_id = trade.get("discord_channel_id", "").strip()
-    message_id = trade.get("discord_message_id", "").strip()
-    short_id = trade.get("short_id", "").strip()
-    ticker = trade.get("ticker", "?")
-    direction = trade.get("direction", "long").upper()
-    
     if not channel_id:
         return False
-    
-    # Build hyperlink
-    if channel_id and message_id and short_id:
-        link = make_discord_link(short_id, channel_id, message_id)
-    else:
-        link = f"`{short_id}`"
-    
-    def _fmt_price(p):
-        p = float(p)
-        if abs(p) < 1.0:
-            return f"${p:.6f}"
-        elif abs(p) < 100.0:
-            return f"${p:.4f}"
-        else:
-            return f"${p:,.2f}"
-    
+
+    event_type = {"stop": "STOP", "target": "TARGET", "time": "TIME"}.get(exit_reason, "TIME")
+    exit_info = {"exit_price": exit_price, "r_multiple": r_multiple, "bars_held": bars_held}
+    alert = build_exit_message(trade, exit_info=exit_info, event_type=event_type)
+
     token = os.environ.get("DISCORD_BOT_TOKEN", "")
     if not token:
         return False
-    
-    if exit_reason == "stop":
-        emoji = "🛑"
-        body = f"stopped at {_fmt_price(exit_price)}"
-    elif exit_reason == "target":
-        emoji = "🎯"
-        body = f"target hit at {_fmt_price(exit_price)}"
-    else:
-        emoji = "⏱️"
-        body = f"time stop at {_fmt_price(exit_price)} ({bars_held} bars)"
-    
-    alert = f"{emoji} **{exit_reason.upper()}** | {link} | {ticker} {direction} {body} ({r_multiple:+.1f}R)"
-    
+
+    short_id = trade.get("short_id", "").strip()
     url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
     try:
         import subprocess
@@ -686,7 +663,10 @@ def _post_exit_alert(trade: dict, exit_reason: str, exit_price: float,
         )
         response = json.loads(result.stdout)
         if "id" in response:
-            print(f"  POSTED: {short_id} {exit_reason.upper()} alert → channel {channel_id}")
+            print(f"  POSTED: {short_id} {event_type} alert → channel {channel_id}")
+            # Cross-post the exit (standalone; back-link already in alert text).
+            crosspost_message({"content": alert}, channel_id,
+                              source_message_id=response["id"])
             return True
     except Exception as e:
         print(f"  Alert post failed for {short_id}: {e}")
