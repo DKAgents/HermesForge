@@ -122,7 +122,7 @@ def post_daily_briefing():
     if HEATMAPS["correlation"].exists():
         _post_via_discord_bot(
             CHANNEL_DAILY_BRIEFING,
-            "📊 **Cross-Asset Correlation Heatmap** — Current regime snapshot",
+            "# Daily Market Briefing\n📊 **Cross-Asset Correlation Heatmap** — Current regime snapshot",
             str(HEATMAPS["correlation"]),
         )
     
@@ -130,7 +130,7 @@ def post_daily_briefing():
     if HEATMAPS["sector_rotation"].exists():
         _post_via_discord_bot(
             CHANNEL_DAILY_BRIEFING,
-            "📊 **Sector Rotation Heatmap** — Leading/lagging sectors vs SPY",
+            "# Daily Market Briefing\n📊 **Sector Rotation Heatmap** — Leading/lagging sectors vs SPY",
             str(HEATMAPS["sector_rotation"]),
         )
 
