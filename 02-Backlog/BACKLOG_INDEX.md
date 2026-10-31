@@ -30,6 +30,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | [[EPIC-012-AlpacaPaperTrading\|EPIC-012]] | Backlog | Alpaca paper trading integration | US-077 to US-080 |
 | [[EPIC-013-ClosedLoopImprovements\|EPIC-013]] | In Progress | Closed-loop self-improvement, research pipeline, publishing | US-081 to US-088, US-090, US-092 |
 | [[EPIC-014-TechDebt\|EPIC-014]] | Backlog | Known bugs, infrastructure quirks, and workarounds | US-091, US-094 to US-100 |
+| [[EPIC-015-Autonomy\|EPIC-015]] | Backlog | Autonomous self-healing (ADR-007): detection loop, Forge Loop tick, T1 auto-escalation, digest, sign-off queue, dep standardization | US-158 to US-163 |
 
 ---
 
