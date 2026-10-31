@@ -29,9 +29,11 @@ import pandas as pd
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 import trade_log
 from trade_id import generate_short_id
+from cost_adjuster import compute_cost_drag
 
 # ── Config ──────────────────────────────────────────────────────────────────────
 
@@ -292,10 +294,15 @@ def _append_report(record: dict) -> None:
 def _paper_r(trade: dict) -> tuple:
     """Return (value, costed) for the paper model's R-multiple.
 
-    Prefer the cost-adjusted `gauntlet_r` when present and finite -> (value, True).
-    The raw `r_multiple` is always uncosted (no taker fee, no slippage) and is
-    NEVER returned as a value — it is flagged uncosted so it stays out of every
-    aggregate.
+    Prefer the cost-adjusted `gauntlet_r` (already charged venue slippage/fees)
+    when present and finite -> (value, True).
+
+    SWING regression fix (Round 2): a closed swing trade whose `gauntlet_r` is
+    missing is NOT silently dropped to None. Its raw `r_multiple` is still real,
+    just uncosted — so we charge the venue cost drag (cost_adjuster VENUE_COSTS)
+    against it to yield an adversarial-but-real R. Only a trade with no scoreable
+    price data (missing r_multiple, or a degenerate/zero stop that makes the cost
+    drag infinite) returns (None, False).
     """
     gauntlet = trade.get("gauntlet_r", "")
     if gauntlet not in ("", None):
@@ -305,7 +312,31 @@ def _paper_r(trade: dict) -> tuple:
                 return (v, True)
         except (ValueError, TypeError):
             pass
-    return (None, False)
+
+    # Fall back: charge the venue cost drag against the raw r_multiple.
+    r_str = trade.get("r_multiple", "")
+    if r_str in ("", None):
+        return (None, False)
+    try:
+        gross = float(r_str)
+    except (ValueError, TypeError):
+        return (None, False)
+    if not math.isfinite(gross):
+        return (None, False)
+
+    try:
+        entry = float(trade.get("entry_price", 0))
+        stop = float(trade.get("stop_price", 0))
+    except (ValueError, TypeError):
+        return (None, False)
+
+    cost_drag = compute_cost_drag(entry, stop, trade.get("asset_class", "stock"))
+    if not math.isfinite(cost_drag):
+        return (None, False)  # degenerate stop — genuinely unscoreable
+    adversarial_r = gross - cost_drag
+    if not math.isfinite(adversarial_r):
+        return (None, False)
+    return (round(adversarial_r, 6), True)
 
 
 # ── Main comparison loop ────────────────────────────────────────────────────

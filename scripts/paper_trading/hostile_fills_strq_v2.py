@@ -35,6 +35,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 
 import trade_log
+import trade_journal
 from intraday_provider import get_intraday_candles
 from detect_liquidity_sweeps import CONFIRMATION_BARS
 
@@ -374,6 +375,122 @@ def _paper_r(trade: dict) -> tuple:
     return (None, False)
 
 
+# ── Signal dedup with journal reconciliation ──────────────────────────────
+def _authoritative_close() -> dict:
+    """Return {signal_id: (exit_reason, r_multiple_float)} from the journal.
+
+    The append-only journal (US-123) is the source of truth; trades.csv is a
+    derived projection. Every signal_id has at most one 'close' event (duplicate
+    close is refused by the journal), so a journal close is the single
+    authoritative outcome used to reconcile divergent CSV close rows.
+    """
+    closes = {}
+    if not trade_journal.JOURNAL_PATH.exists():
+        return closes
+    with open(trade_journal.JOURNAL_PATH, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                ev = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if ev.get("type") != "close":
+                continue
+            sig = ev.get("signal_id", "")
+            if not sig:
+                continue
+            data = ev.get("data", {})
+            try:
+                rm = float(data.get("r_multiple", 0.0))
+            except (ValueError, TypeError):
+                rm = 0.0
+            closes[sig] = (data.get("exit_reason", ""), rm)
+    return closes
+
+
+def _close_outcome(row: dict) -> tuple:
+    """Close-outcome signature of a closed CSV row: (exit_reason, rounded r_multiple).
+
+    Two rows agree iff this signature is identical — float noise in exit_price /
+    gauntlet_r is ignored, but a real divergence (target vs stop, or conflicting
+    r_multiple) is caught.
+    """
+    try:
+        rm = round(float(row.get("r_multiple", "")), 3)
+    except (ValueError, TypeError):
+        rm = None
+    return (row.get("exit_reason", ""), rm)
+
+
+def _reconcile_signal_dedup(strq_trades: list) -> tuple:
+    """Dedup STR-Q input on signal_id, reconciling divergent close rows vs journal.
+
+    For each signal_id with multiple closed rows whose close outcomes DIVERGE, the
+    first-row-by-order is NOT trusted. Instead we reconcile against the journal's
+    authoritative close and keep the CSV row that matches it. A group that cannot
+    be reconciled (no journal close, or no matching CSV row) is QUARANTINED —
+    excluded from the aggregate and flagged explicitly.
+
+    Returns (deduped_list, quarantined_count, quarantine_lines).
+    """
+    groups = {}
+    order = []
+    for r in strq_trades:
+        sid = r.get("signal_id", "")
+        if sid not in groups:
+            groups[sid] = []
+            order.append(sid)
+        groups[sid].append(r)
+
+    closes = _authoritative_close()
+
+    out = []
+    quarantined = 0
+    quarantine_lines = []
+    for sid in order:
+        rows = groups[sid]
+        if len(rows) == 1:
+            out.append(rows[0])
+            continue
+
+        closed_rows = [r for r in rows if r.get("status") == "closed"]
+        # <=1 actual close: no conflicting close outcome — keep-first is safe.
+        if len(closed_rows) <= 1:
+            out.append(rows[0])
+            continue
+
+        outcomes = {_close_outcome(r) for r in closed_rows}
+        if len(outcomes) == 1:
+            # all closed rows agree — dedup is safe as-is.
+            out.append(rows[0])
+            continue
+
+        # Diverge → reconcile against the authoritative journal close.
+        auth = closes.get(sid)
+        if auth is None:
+            quarantined += 1
+            quarantine_lines.append(
+                f"{sid}: no journal close; divergent outcomes {sorted(map(str, outcomes))}")
+            continue
+        a_reason, a_rm = auth
+
+        # Prefer an exact outcome match; fall back to a reason-only match.
+        matches = [r for r in closed_rows if _close_outcome(r) == (a_reason, round(a_rm, 3))]
+        if not matches:
+            matches = [r for r in closed_rows if r.get("exit_reason", "") == a_reason]
+        if not matches:
+            quarantined += 1
+            quarantine_lines.append(
+                f"{sid}: journal says ({a_reason},{a_rm}) unmatched by CSV "
+                f"{sorted(map(str, outcomes))}")
+            continue
+        out.append(matches[0])
+
+    return out, quarantined, quarantine_lines
+
+
 # ── Main comparison loop ───────────────────────────────────────────────
 def run(dry_run: bool = False, crypto_only: bool = False,
         stocks_only: bool = False, force: bool = False) -> dict:
@@ -395,6 +512,9 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         "hostile_wins": 0,
         "paper_uncosted_count": 0,
         "outlier_excluded": 0,
+        "quarantined": 0,
+        "paper_scored": 0,
+        "hostile_scored": 0,
     }
 
     # Force: clear existing report
@@ -411,14 +531,12 @@ def run(dry_run: bool = False, crypto_only: bool = False,
     # that discriminates intraday fills.
     all_rows = trade_log._read_all_rows()
     strq_trades = [r for r in all_rows if r.get("strategy_id") == STRATEGY_ID]
-    _seen_signal = set()
-    _deduped = []
-    for _r in strq_trades:
-        _sid = _r.get("signal_id", "")
-        if not _sid or _sid not in _seen_signal:
-            _seen_signal.add(_sid)
-            _deduped.append(_r)
-    strq_trades = _deduped
+    # Fix 1 (Round 2): reconcile divergent signal_id close rows against the journal;
+    # quarantine unreconcilable groups — never silently keep-first by row order.
+    strq_trades, quarantined, quarantine_lines = _reconcile_signal_dedup(strq_trades)
+    summary["quarantined"] = quarantined
+    for line in quarantine_lines:
+        print(f"  [QUARANTINE] {line}")
 
     # ── Pre-load bars per ticker (batch — avoids per-trade fetch) ──
     unique_tickers = set()
@@ -539,12 +657,14 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 summary["outlier_excluded"] += 1
             else:
                 if paper_costed:
+                    summary["paper_scored"] += 1
                     summary["paper_r_sum"] += paper_r
                     if paper_r > 0:
                         summary["paper_wins"] += 1
                 else:
                     summary["paper_uncosted_count"] += 1
                 if hostile_r is not None:
+                    summary["hostile_scored"] += 1
                     summary["hostile_r_sum"] += hostile_r
                     if hostile_r > 0:
                         summary["hostile_wins"] += 1
@@ -623,10 +743,19 @@ def main():
     print(f"  Hostile R sum:         {summary['hostile_r_sum']:.2f}")
     print(f"  Paper uncosted count:  {summary['paper_uncosted_count']}")
     print(f"  Outlier excluded:      {summary['outlier_excluded']}")
-    paper_win_rate = (summary["paper_wins"] / n * 100) if n > 0 else 0.0
-    hostile_win_rate = (summary["hostile_wins"] / n * 100) if n > 0 else 0.0
-    print(f"  Paper win rate:        {paper_win_rate:.1f}%")
-    print(f"  Hostile win rate:      {hostile_win_rate:.1f}%")
+    print(f"  Quarantined:           {summary['quarantined']}")
+    paper_scored = summary["paper_scored"]
+    hostile_scored = summary["hostile_scored"]
+    if paper_scored > 0:
+        paper_win_rate = summary["paper_wins"] / paper_scored * 100
+        print(f"  Paper win rate:        {paper_win_rate:.1f}%  ({summary['paper_wins']}/{paper_scored} scored)")
+    else:
+        print(f"  Paper win rate:        n/a  ({paper_scored} costed-paper trades scored)")
+    if hostile_scored > 0:
+        hostile_win_rate = summary["hostile_wins"] / hostile_scored * 100
+        print(f"  Hostile win rate:      {hostile_win_rate:.1f}%  ({summary['hostile_wins']}/{hostile_scored} scored)")
+    else:
+        print(f"  Hostile win rate:      n/a  ({hostile_scored} hostile trades scored)")
     print(f"  Errors:                {summary['errors']}")
     for e in summary["error_details"][:10]:
         print(f"    ERROR: {e}")
