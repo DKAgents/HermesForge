@@ -253,8 +253,8 @@ def _build_g3_fill_field(signal_dict: dict) -> dict:
         book_mid = signal_dict.get("gauntlet_book_mid")
         if book_mid:
             slip_str += f" (mid: ${book_mid:,.2f})"
-        return {"name": "\u26a1 G3 Fill", "value": f"Sim: {slip_str}", "inline": True}
-    return {"name": "\u26a1 G3 Fill", "value": "N/A", "inline": True}
+        return {"name": "Est. slippage", "value": f"Sim: {slip_str}", "inline": True}
+    return {"name": "Est. slippage", "value": "N/A", "inline": True}
 
 
 # ── SETUP EMBED (single tight template; swing + intraday) ─────────────────────
