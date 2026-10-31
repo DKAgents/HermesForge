@@ -201,6 +201,8 @@ def _simulate_portfolio_managed(closed_rows: list) -> dict:
     # Calculate R values
     accepted_r = sum(_get_r(r) for r in accepted)
     rejected_r = sum(_get_r(r) for r in rejected)
+    accepted_wins = sum(1 for r in accepted if _get_r(r) > 0)
+    accepted_win_rate = (accepted_wins / len(accepted) * 100) if accepted else 0.0
 
     # By strategy
     accepted_by_strategy = {}
@@ -220,6 +222,7 @@ def _simulate_portfolio_managed(closed_rows: list) -> dict:
         "rejected_count": len(rejected),
         "accepted_r": accepted_r,
         "rejected_r": rejected_r,
+        "accepted_win_rate": accepted_win_rate,
         "accepted_by_strategy": accepted_by_strategy,
         "rejected_by_strategy": rejected_by_strategy,
         "rejected_reasons": rejected_reasons,
@@ -263,17 +266,7 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             continue
         closed_rows.append(r)
 
-    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=since_hours)
-    recent_closed = []
-    for r in closed_rows:
-        try:
-            exit_dt = datetime.datetime.fromisoformat(r["exit_date"])
-        except (ValueError, TypeError):
-            continue
-        if exit_dt >= cutoff:
-            recent_closed.append(r)
-
-    # PNL lookback windows: 1 week and 1 month (for trend analysis)
+    # PNL lookback windows: 1 week and 1 month
     now = datetime.datetime.utcnow()
     week_cutoff = now - datetime.timedelta(days=7)
     month_cutoff = now - datetime.timedelta(days=30)
@@ -289,191 +282,63 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
         if exit_dt >= month_cutoff:
             month_closed.append(r)
 
+    def _total(rlist):
+        return sum(_get_r(r) for r in rlist)
+
     lines = ["📈 **Paper Trading Performance Report**\n"]
 
-    # --- Open positions ---
+    # ── 1. Managed-portfolio performance (LEAD) ──
+    total_r = _total(closed_rows)
+    unmanaged_rpt = (total_r / len(closed_rows)) if closed_rows else 0.0
+    lines.append("**Managed-Portfolio Performance**")
+    if closed_rows and len(closed_rows) >= 10:
+        sim = _simulate_portfolio_managed(closed_rows)
+    else:
+        sim = {"error": "insufficient closed trades (<10)"}
+
+    if "error" in sim:
+        lines.append(f"  Unmanaged: {len(closed_rows)} trades, {total_r:+.2f}R")
+        lines.append("  _(Managed view needs ≥10 closed trades)_")
+    else:
+        ac_count = sim["accepted_count"]
+        rej_count = sim["rejected_count"]
+        total_count = ac_count + rej_count
+        ac_r = sim["accepted_r"]
+        managed_rpt = (ac_r / ac_count) if ac_count else 0.0
+        lines.append(f"  Managed: {ac_count}/{total_count} trades, {ac_r:+.2f}R, "
+                     f"{sim['accepted_win_rate']:.0f}% win")
+        lines.append(f"  Unmanaged: {len(closed_rows)} trades, {total_r:+.2f}R")
+        lines.append(f"  R/trade: {managed_rpt:+.2f}R managed vs {unmanaged_rpt:+.2f}R unmanaged")
+    lines.append("")
+
+    # ── 2. Pessimistic R (cost-adjusted), R total FIRST on every line ──
+    lines.append("**Pessimistic R** _(worst-case L2 fills, cost-adjusted)_")
+    lines.append(f"  7d:  {_total(week_closed):+.2f}R  ({len(week_closed)} trades)")
+    lines.append(f"  30d: {_total(month_closed):+.2f}R  ({len(month_closed)} trades)")
+
+    by_class = {}
+    for r in closed_rows:
+        by_class.setdefault(r.get("asset_class", "unknown"), []).append(r)
+    class_parts = [f"{ac} {_total(trades):+.2f}R" for ac, trades in sorted(by_class.items())]
+    lines.append(f"  By asset class:  {' · '.join(class_parts) if class_parts else 'none'}")
+
+    by_strategy = {}
+    for r in closed_rows:
+        by_strategy.setdefault(r["strategy_id"], []).append(r)
+    lines.append("  By strategy (highest R first):")
+    for sid, trades in sorted(by_strategy.items(), key=lambda kv: -_total(kv[1])):
+        lines.append(f"    {sid} {_total(trades):+.2f}R ({len(trades)})")
+    lines.append("")
+
+    # ── 3. Open positions (brief) ──
     total_heat = sum(float(r.get("position_size_pct", 0) or 0) for r in open_rows)
-    lines.append(f"**Open Positions:** {len(open_rows)} (aggregate heat: {total_heat:.2f}%)")
+    lines.append(f"**Open Positions:** {len(open_rows)} open · {total_heat:.1f}% heat")
     if open_rows:
         by_strategy = {}
         for r in open_rows:
             by_strategy.setdefault(r["strategy_id"], []).append(r)
         for sid, trades in by_strategy.items():
-            lines.append(f"  • {sid}: {len(trades)} open ({', '.join(t['ticker'] for t in trades)})")
-    lines.append("")
-
-    # --- Recently closed ---
-    lines.append(f"**Closed (last {since_hours}h):** {len(recent_closed)}")
-    if recent_closed:
-        wins = [r for r in recent_closed if _get_r(r) > 0]
-        win_rate = len(wins) / len(recent_closed) * 100
-        avg_r = sum(_get_r(r) for r in recent_closed) / len(recent_closed)
-        lines.append(f"  Win rate: {win_rate:.0f}% ({len(wins)}/{len(recent_closed)}) | Avg R: {avg_r:+.2f}")
-
-        best = max(recent_closed, key=lambda r: _get_r(r))
-        worst = min(recent_closed, key=lambda r: _get_r(r))
-        lines.append(f"  Best: {best['ticker']} ({best['strategy_id']}) {float(best['r_multiple']):+.2f}R (gauntlet: {_get_r(best):+.2f}R)")
-        lines.append(f"  Worst: {worst['ticker']} ({worst['strategy_id']}) {float(worst['r_multiple']):+.2f}R (gauntlet: {_get_r(worst):+.2f}R)")
-    lines.append("")
-
-    # --- PNL trend (1-week + 1-month lookback) ---
-    lines.append("**PNL Trend (lookback):**")
-    lines.extend(_build_pnl_section(week_closed, "Last 7 days"))
-    lines.extend(_build_pnl_section(month_closed, "Last 30 days"))
-    lines.append("")
-
-    # --- Running totals since gauntlet go-live ---
-    cutover_str = since_date.isoformat()
-    lines.append(f"**Running Totals (since {cutover_str} — gauntlet go-live):**")
-    if skipped_pre_gauntlet:
-        lines.append(f"  _(+{skipped_pre_gauntlet} pre-gauntlet trades excluded)_")
-    lines.append("")
-    lines.append("**Optimistic R** _(cost-adjusted fills — mid-price minus typical slippage + venue costs, ~12 bps crypto / ~2 bps stocks):_")
-    by_strategy_all = {}
-    if not closed_rows:
-        lines.append("  No closed trades yet.")
-    else:
-        # Overall summary
-        all_r = [_get_r(r) for r in closed_rows]
-        total_r = sum(all_r)
-        wins = [r for r in all_r if r > 0]
-        wr = len(wins) / len(all_r) * 100
-        avg_r = total_r / len(all_r)
-        # Max drawdown (running peak-to-trough on cumulative R)
-        peak = 0.0
-        cum = 0.0
-        max_dd = 0.0
-        for r in all_r:
-            cum += r
-            if cum > peak:
-                peak = cum
-            dd = peak - cum
-            if dd > max_dd:
-                max_dd = dd
-        lines.append(f"  Total: {len(closed_rows)} trades, {wr:.0f}% win, {total_r:+.2f}R realized, avg {avg_r:+.3f}R, max DD {max_dd:.2f}R")
-        lines.append("")
-        lines.append(f"  **{_hostile_strq_r_str()}** _(worst-case L2 order-book fill — simulates market order absorption against actual order book depth)_")
-
-        # By strategy
-        lines.append("")
-        lines.append("**By Strategy:**")
-        by_strategy_all = {}
-        for r in closed_rows:
-            by_strategy_all.setdefault(r["strategy_id"], []).append(r)
-        for sid, trades in sorted(by_strategy_all.items()):
-            r_vals = [_get_r(t) for t in trades]
-            t_wins = [v for v in r_vals if v > 0]
-            t_wr = len(t_wins) / len(r_vals) * 100
-            t_avg = sum(r_vals) / len(r_vals)
-            t_total = sum(r_vals)
-            lines.append(f"  • {sid}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R, avg {t_avg:+.3f}R")
-
-        # By asset class
-        lines.append("")
-        lines.append("**By Asset Class:**")
-        by_class = {}
-        for r in closed_rows:
-            by_class.setdefault(r.get("asset_class", "unknown"), []).append(r)
-        for ac, trades in sorted(by_class.items()):
-            r_vals = [_get_r(t) for t in trades]
-            t_wins = [v for v in r_vals if v > 0]
-            t_wr = len(t_wins) / len(r_vals) * 100
-            t_total = sum(r_vals)
-            lines.append(f"  • {ac}: {len(trades)} trades, {t_wr:.0f}% win, {t_total:+.2f}R")
-
-    # --- Portfolio-Managed Simulation ---
-    if closed_rows and len(closed_rows) >= 10:
-        lines.append("")
-        lines.append("**📊 Portfolio-Managed View** _(simulated: same trades, gated by portfolio risk limits):_")
-        sim = _simulate_portfolio_managed(closed_rows)
-        if "error" in sim:
-            lines.append(f"  Simulation unavailable: {sim['error']}")
-        else:
-            limits = sim["limits"]
-            lines.append(f"  Limits: {limits['max_positions']} concurrent positions, {limits['max_heat_pct']}% max heat, "
-                        f"{limits['max_same_sector']} per sector, {limits['max_same_asset_class']} per asset class")
-            lines.append("")
-            ac_r = sim["accepted_r"]
-            rej_r = sim["rejected_r"]
-            ac_count = sim["accepted_count"]
-            rej_count = sim["rejected_count"]
-            total_count = ac_count + rej_count
-            lines.append(f"  Accepted: {ac_count}/{total_count} trades ({ac_count/total_count*100:.0f}%), {ac_r:+.2f}R")
-            lines.append(f"  Rejected: {rej_count}/{total_count} trades ({rej_count/total_count*100:.0f}%), {rej_r:+.2f}R")
-            lines.append(f"  Peak heat: {sim['peak_heat']}%  |  Peak positions: {sim['peak_positions']}")
-            lines.append("")
-            # Rejection reasons
-            if sim["rejected_reasons"]:
-                lines.append("  **Rejection reasons:**")
-                for reason, count in sorted(sim["rejected_reasons"].items(), key=lambda x: -x[1]):
-                    lines.append(f"    • {reason}: {count} trades")
-            # Bottleneck strategies
-            if sim["bottleneck"]:
-                lines.append("  **Most rejected strategies:**")
-                for sid, count in sim["bottleneck"]:
-                    lines.append(f"    • {sid}: {count} rejected")
-
-        lines.append("")
-        lines.append("**📈 Portfolio Impact — Managed vs Unmanaged:**")
-        if "error" in sim:
-            lines.append("  Simulation unavailable")
-        else:
-            lines.append(f"  Unmanaged: {len(closed_rows)} trades, {sum(_get_r(r) for r in closed_rows):+.2f}R")
-            lines.append(f"  Managed:   {sim['accepted_count']} trades, {sim['accepted_r']:+.2f}R")
-            # Efficiency: R per trade
-            unmanaged_rpt = sum(_get_r(r) for r in closed_rows) / len(closed_rows) if closed_rows else 0
-            managed_rpt = sim['accepted_r'] / sim['accepted_count'] if sim['accepted_count'] else 0
-            lines.append(f"  R/trade:   {managed_rpt:+.3f}R managed vs {unmanaged_rpt:+.3f}R unmanaged")
-            lines.append(f"  Efficiency gain: managed trades average {managed_rpt - unmanaged_rpt:+.3f}R more per trade")
-            lines.append(f"  Total R given up: {sim['rejected_r']:+.2f}R across {sim['rejected_count']} rejected trades")
-            lines.append(f"  _(Portfolio limits: {limits['max_positions']} pos, {limits['max_heat_pct']}% heat, "
-                        f"{limits['max_same_sector']} sector, {limits['max_same_asset_class']} asset class)_")
-        # End of managed section
-
-    # --- Strategy correlation (need 5+ closed trades per strategy) ---
-    if closed_rows and len(by_strategy_all) >= 2:
-        lines.append("")
-        lines.append("**Strategy Correlation (closed trades, overlap periods):**")
-        # Check if any strategies tend to draw down at the same time
-        import datetime as dt
-        strategy_drawdowns = {}
-        for sid, trades in by_strategy_all.items():
-            if len(trades) < 3:
-                continue
-            # Compute worst drawdown period for this strategy
-            r_seq = [(t.get("exit_date", ""), _get_r(t)) for t in trades]
-            r_seq.sort(key=lambda x: x[0])
-            peak, cum, worst_dd, worst_start, worst_end = 0, 0, 0, "", ""
-            for d, r in r_seq:
-                cum += r
-                if cum > peak:
-                    peak = cum
-                dd = peak - cum
-                if dd > worst_dd:
-                    worst_dd = dd
-                    worst_start = d
-                    worst_end = d
-            strategy_drawdowns[sid] = {"worst_dd": worst_dd, "dd_start": worst_start[:10], "dd_end": worst_end[:10]}
-
-        # Check for overlapping drawdown periods
-        overlap_found = False
-        sids = list(strategy_drawdowns.keys())
-        for i in range(len(sids)):
-            for j in range(i + 1, len(sids)):
-                a, b = strategy_drawdowns[sids[i]], strategy_drawdowns[sids[j]]
-                # Simple overlap: same month
-                a_month = a["dd_start"][:7]
-                b_month = b["dd_start"][:7]
-                if a_month and b_month and a_month == b_month:
-                    overlap_found = True
-                    lines.append(f"  ⚠️ {sids[i]} and {sids[j]} both hit worst drawdown in {a_month}")
-        if not overlap_found:
-            lines.append("  No overlapping drawdown periods detected between strategies.")
-        lines.append(f"  _{len(strategy_drawdowns)} strategies with 3+ closed trades analyzed._")
-
-    if len(closed_rows) < 10:
-        lines.append("")
-        lines.append(f"_Note: only {len(closed_rows)} closed trades total -- sample size too small for reliable conclusions._")
+            lines.append(f"  {sid}: {len(trades)} ({', '.join(t['ticker'] for t in trades)})")
 
     return "\n".join(lines)
 
