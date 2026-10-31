@@ -14,7 +14,7 @@ Usage:
     python3 embed_vault.py --stats            # show collection stats
 """
 
-import sys, re, json, argparse, hashlib
+import sys, re, json, argparse, hashlib, os
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -31,6 +31,12 @@ CHROMA_DIR  = Path('/root/.hermes/vault_index/chroma')
 MODEL_NAME  = 'all-MiniLM-L6-v2'
 COLLECTION  = 'vault_notes'
 BATCH_SIZE  = 64
+# Prune scope = VAULT_ROOT umbrella prefix (NOT the current walk-dir list).
+# The reorg renamed dirs (07-Risk -> trading/risk, 08-Knowledge ->
+# trading/knowledge), so old entries point under dirs no longer walked. A
+# trailing os.sep guards prefix false-positives (e.g. /root/HermesForge2).
+PRUNE_SCOPE = str(VAULT_ROOT) + os.sep
+PRUNE_SAFETY_FLOOR = 0.20   # abort prune if orphans exceed 20% of entries
 
 
 def get_collection():
@@ -184,11 +190,44 @@ def show_stats(col):
     print(f"Store: {CHROMA_DIR}")
 
 
+def prune_stale(col, scope_prefix, dry_run=False, force_prune=False):
+    """Delete embeddings whose metadata['filepath'] is under scope_prefix and
+    whose file no longer exists on disk. Uses the Chroma collection API only
+    (no raw SQL). Returns list of deleted filepaths."""
+    data = col.get(include=["metadatas"])
+    ids = data.get("ids", [])
+    metas = data.get("metadatas", []) or []
+    orphans = []
+    for i, meta in enumerate(metas):
+        if not meta:
+            continue
+        fp = meta.get("filepath", "")
+        if not fp.startswith(scope_prefix):
+            continue
+        if not os.path.exists(fp):
+            orphans.append(ids[i])
+    if orphans and not dry_run:
+        total = len(ids)
+        if not force_prune and len(orphans) > PRUNE_SAFETY_FLOOR * total:
+            pct = 100.0 * len(orphans) / total if total else 0.0
+            print(f"WARNING: prune would remove {len(orphans)} orphan entries "
+                  f"({pct:.1f}% of {total}) which exceeds the "
+                  f"{PRUNE_SAFETY_FLOOR*100:.0f}% safety floor. "
+                  f"Aborting — re-run with --force-prune to confirm bulk prune.")
+            return []
+        for i in range(0, len(orphans), 256):
+            col.delete(ids=orphans[i:i + 256])
+    return orphans
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--book', default='', help='Embed only this book slug')
     parser.add_argument('--force', action='store_true')
     parser.add_argument('--stats', action='store_true')
+    parser.add_argument('--dry-run', action='store_true', help='Prune listing only, delete nothing')
+    parser.add_argument('--no-prune', action='store_true', help='Skip pruning entirely')
+    parser.add_argument('--force-prune', action='store_true', help='Bypass prune safety floor for bulk prune')
     args = parser.parse_args()
 
     CHROMA_DIR.mkdir(parents=True, exist_ok=True)
@@ -217,6 +256,14 @@ def main():
         slug = f"vault-{vdir.name.lower()}"
         n = embed_book(col, model, vdir, force=args.force)
         total += n
+
+    # Single-book/partial runs must not bulk-delete entries for directories not
+    # walked this run, so skip the global VAULT_ROOT prune unless --book is off.
+    if not args.no_prune and not args.book:
+        orphans = prune_stale(col, PRUNE_SCOPE, dry_run=args.dry_run, force_prune=args.force_prune)
+        print(f"\nPruned {len(orphans)} stale embeddings" + (" (DRY RUN)" if args.dry_run else ""))
+        for fp in orphans:
+            print(f"  - {fp}")
 
     elapsed = (datetime.now(timezone.utc) - t0).total_seconds()
     print(f"\nDone. {total} notes embedded in {elapsed:.1f}s")

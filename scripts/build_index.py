@@ -13,7 +13,7 @@ Usage:
     python3 build_index.py --stats            # show index stats only
 """
 
-import sqlite3, sys, re, json, hashlib, argparse
+import sqlite3, sys, re, json, hashlib, argparse, os
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -28,6 +28,12 @@ VAULT_DIRS  = [                          # additional vault sections to index
 ]
 INDEX_DIR   = Path('/root/.hermes/vault_index')
 INDEX_PATH  = INDEX_DIR / 'vault.db'
+# Prune scope = VAULT_ROOT umbrella prefix (NOT the current walk-dir list).
+# The reorg renamed dirs (07-Risk -> trading/risk, 08-Knowledge ->
+# trading/knowledge), so old entries point under dirs no longer walked. A
+# trailing os.sep guards prefix false-positives (e.g. /root/HermesForge2).
+PRUNE_SCOPE = str(VAULT_ROOT) + os.sep
+PRUNE_SAFETY_FLOOR = 0.20   # abort prune if orphans exceed 20% of entries
 
 
 def get_db() -> sqlite3.Connection:
@@ -235,11 +241,46 @@ def show_stats(conn: sqlite3.Connection):
     print(f"\nIndex location: {INDEX_PATH}")
 
 
+def prune_missing(conn, scope_prefix, dry_run=False, force_prune=False):
+    """Delete index rows under scope_prefix whose filepath no longer exists
+    on disk. Returns list of (id, filepath) of pruned entries. The notes_ad
+    DELETE trigger already removes the matching row from notes_fts, so no
+    manual FTS cleanup is needed."""
+    rows = conn.execute("SELECT id, filepath FROM notes").fetchall()
+    orphans = []
+    for r in rows:
+        fp = r["filepath"]
+        if not fp.startswith(scope_prefix):
+            continue
+        if not os.path.exists(fp):
+            orphans.append((r["id"], fp))
+    if orphans and not dry_run:
+        total = len(rows)
+        if not force_prune and len(orphans) > PRUNE_SAFETY_FLOOR * total:
+            pct = 100.0 * len(orphans) / total if total else 0.0
+            print(f"WARNING: prune would remove {len(orphans)} orphan entries "
+                  f"({pct:.1f}% of {total}) which exceeds the "
+                  f"{PRUNE_SAFETY_FLOOR*100:.0f}% safety floor. "
+                  f"Aborting — re-run with --force-prune to confirm bulk prune.")
+            return []
+        ids = [o[0] for o in orphans]
+        for i in range(0, len(ids), 500):
+            chunk = ids[i:i + 500]
+            conn.execute(
+                "DELETE FROM notes WHERE id IN (%s)" % ",".join("?" * len(chunk)),
+                chunk,
+            )
+    return orphans
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--book', help='Index only this book slug')
     parser.add_argument('--force', action='store_true', help='Force re-index all')
     parser.add_argument('--stats', action='store_true', help='Show stats only')
+    parser.add_argument('--dry-run', action='store_true', help='Prune listing only, delete nothing')
+    parser.add_argument('--no-prune', action='store_true', help='Skip pruning entirely')
+    parser.add_argument('--force-prune', action='store_true', help='Bypass prune safety floor for bulk prune')
     args = parser.parse_args()
 
     conn = get_db()
@@ -277,6 +318,14 @@ def main():
         if indexed:
             print(f"  vault/{vdir.name}: {indexed} notes indexed/updated")
         total_indexed += indexed
+
+    # Single-book/partial runs must not bulk-delete entries for directories not
+    # walked this run, so skip the global VAULT_ROOT prune unless --book is off.
+    if not args.no_prune and not args.book:
+        orphans = prune_missing(conn, PRUNE_SCOPE, dry_run=args.dry_run, force_prune=args.force_prune)
+        print(f"\nPruned {len(orphans)} stale entries" + (" (DRY RUN)" if args.dry_run else ""))
+        for _id, fp in orphans:
+            print(f"  - {fp}")
 
     # Update meta
     conn.execute("INSERT OR REPLACE INTO index_meta VALUES ('last_indexed', ?)",
