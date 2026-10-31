@@ -386,6 +386,23 @@ def main():
     log_path, _ = write_run_log(summary, args.dry_run)
     print(f"\n  Log written: {log_path}")
 
+    # ── Step 8: Git commit (path-scoped, idempotent, race-safe) ──
+    if not args.dry_run:
+        commit_rel = [str(d.relative_to(VAULT_ROOT)) for d in VAULT_DIRS if d.exists()]
+        commit_rel.append("scripts/wikilink_report.json")
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        commit_msg = (f"vault-maintenance: {ts} — "
+                      f"frontmatter normalization + wikilinks ({args.scope} scope)")
+        cmd = [sys.executable, str(SCRIPTS_DIR / "git_commit_paths.py"),
+               "--repo", str(VAULT_ROOT), "--message", commit_msg]
+        for p in commit_rel:
+            cmd += ["--path", p]
+        r = subprocess.run(cmd, capture_output=True, text=True, cwd=str(VAULT_ROOT))
+        print((r.stdout + r.stderr).strip())
+        steps.append({'step': 'git_commit',
+                      'status': 'ok' if r.returncode == 0 else 'error',
+                      'output': (r.stdout + r.stderr).strip()[-500:]})
+
     # Purge old cron output (35-day retention — US-133, aligns with snapshot horizon)
     cron_out = Path.home() / ".hermes" / "cron" / "output"
     if cron_out.exists():

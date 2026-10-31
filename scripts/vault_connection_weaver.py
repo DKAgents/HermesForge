@@ -696,6 +696,7 @@ def main():
         "discoveries": [],
     }
     all_scores = []
+    written_files = set()
 
     # ── Process each seed note ──
     for seed in seeds:
@@ -732,6 +733,7 @@ def main():
                         seed_path, target_name, link_text, dry_run=args.dry_run
                     )
                     if success:
+                        written_files.add(seed)
                         run_report["connections_created"] += 1
                         run_report["discoveries"].append({
                             "seed": seed,
@@ -768,6 +770,7 @@ def main():
                     seed_path, target_name, link_text, dry_run=args.dry_run
                 )
                 if success:
+                    written_files.add(seed)
                     run_report["connections_created"] += 1
                     run_report["discoveries"].append({
                         "seed": seed,
@@ -846,35 +849,19 @@ def main():
     # is passed. On 0-connection runs use a path-scoped commit so a concurrent
     # pipeline's unrelated staged changes are not swept into this commit.
     if args.commit and not args.dry_run:
-        try:
-            health_rel = "trading/knowledge/Connection-Health.md"
-            if run_report["connections_created"] > 0:
-                subprocess.run(["git", "add", "-A"], cwd=str(vault), check=True)
-                subprocess.run(
-                    ["git", "commit", "-m",
-                     f"vault-weaver: {run_report['connections_created']} connections created "
-                     f"(run {state['total_runs']})"],
-                    cwd=str(vault), check=True, capture_output=True
-                )
-                print(f"✅ Git committed: {run_report['connections_created']} connections")
-            else:
-                # Health-only run: commit just the dashboard, leave other work alone.
-                diff = subprocess.run(
-                    ["git", "diff", "--quiet", "--", health_rel], cwd=str(vault)
-                )
-                if diff.returncode == 0:
-                    print("✅ No changes to commit (tree already clean)")
-                else:
-                    subprocess.run(
-                        ["git", "commit", "-m",
-                         f"vault-weaver: health dashboard update "
-                         f"(run {state['total_runs']}, 0 connections)",
-                         "--", health_rel],
-                        cwd=str(vault), check=True, capture_output=True
-                    )
-                    print("✅ Git committed: health dashboard update (0 connections)")
-        except Exception as e:
-            print(f"⚠️ Git commit failed: {e}")
+        written = sorted(written_files)
+        written.append(str(health_path.relative_to(vault)))
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        if run_report["connections_created"] > 0:
+            msg = f"vault-weaver: {ts} — {run_report['connections_created']} connections created (run {state['total_runs']})"
+        else:
+            msg = f"vault-weaver: {ts} — health dashboard update (run {state['total_runs']}, 0 connections)"
+        cmd = [sys.executable, str(SCRIPT_DIR / "git_commit_paths.py"),
+               "--repo", str(vault), "--message", msg]
+        for p in written:
+            cmd += ["--path", p]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        print((r.stdout + r.stderr).strip())
 
 
 if __name__ == "__main__":
