@@ -19,7 +19,6 @@ Usage:
 
 import sys
 import json
-import math
 import argparse
 import pathlib
 import time as time_mod
@@ -33,7 +32,16 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 import trade_log
 from trade_id import generate_short_id
-from cost_adjuster import MIN_RISK_PCT
+from pnl_accounting import (
+    _apply_taker_fee,
+    _compute_r,
+    _adversarial_cost_drag,
+    _paper_r,
+    _worst_print,
+    _trades_through,
+    _bar_touches,
+    DEGENERATE_RISK_FLOOR,
+)
 
 # ── Config ──────────────────────────────────────────────────────────────────────
 
@@ -81,40 +89,6 @@ def _load_bars_since(ticker: str, entry_date_str: str, asset_class: str = "stock
     return df
 
 
-# ── Hostile fill rules ───────────────────────────────────────────────────────
-
-def _apply_taker_fee(price: float, is_entry: bool = True) -> float:
-    """Deduct taker fee from fill price. Returns effective price after fee."""
-    # Fee reduces proceeds: sell lower, buy higher
-    fee_rate = TAKER_FEE_BPS / 10_000
-    return round(price * (1 + fee_rate), 6)  # always costs the trader
-
-
-def _worst_print(bar: pd.Series, direction: str) -> float:
-    """Return worst bar print for the given direction (simulates stop slippage)."""
-    # For a long (stop = sell): worst = low of bar
-    # For a short (stop = buy to cover): worst = high of bar
-    if direction == "long":
-        return float(bar["low"])
-    return float(bar["high"])
-
-
-def _trades_through(bar: pd.Series, level: float, side: str) -> bool:
-    """Check if bar trades THROUGH (not just touches) a level.
-    For a buy limit (long entry / short target): bar's low must be strictly below level.
-    For a sell limit (short entry / long target): bar's high must be strictly above level.
-    """
-    if side == "buy":  # we want to buy — price must drop through our bid
-        return float(bar["low"]) < level
-    else:  # we want to sell — price must rise through our ask
-        return float(bar["high"]) > level
-
-
-def _bar_touches(bar: pd.Series, level: float) -> bool:
-    """Check if bar's range touches a level (for stop triggers)."""
-    return float(bar["low"]) <= level <= float(bar["high"])
-
-
 # ── Hostile entry check ─────────────────────────────────────────────────────
 
 def check_entry_hostile(
@@ -154,7 +128,7 @@ def check_entry_hostile(
         if _trades_through(row, entry_price, side):
             # Fill at next bar's open (t+1 open for the first bar, open of whichever bar)
             fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, is_entry=True)
+            fill_price = _apply_taker_fee(fill_price, is_entry=True, taker_bps=TAKER_FEE_BPS)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -203,7 +177,7 @@ def check_exit_hostile(
         # Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -215,7 +189,7 @@ def check_exit_hostile(
         # Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -227,7 +201,7 @@ def check_exit_hostile(
         # Time stop
         if offset >= max_bars:
             exit_price = float(row["close"])
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "time",
@@ -237,45 +211,6 @@ def check_exit_hostile(
             }
 
     return {"action": "still_open"}
-
-
-# ── R-multiple computation ──────────────────────────────────────────────────
-
-# Round 3 (adversarial penalty): an uncosted paper R is charged the full hostile
-# taker round trip — TAKER_FEE_BPS on entry AND exit = 20 bps. The prior
-# compute_cost_drag used the ~2bps stock / ~12bps crypto venue model, which was
-# trivially favorable and let uncosted trades through almost unpenalized.
-ROUND_TRIP_BPS = 2 * TAKER_FEE_BPS  # 20 bps
-
-
-def _adversarial_cost_drag(entry_price: float, stop_price: float) -> float:
-    """Cost drag (R units) for the adversarial taker round trip.
-
-    cost_drag_R = ROUND_TRIP_BPS / 10000 / risk_pct.
-    Returns float('inf') for a degenerate stop (risk_pct < MIN_RISK_PCT) so the
-    caller treats the trade as unscoreable.
-    """
-    risk_pct = abs(entry_price - stop_price) / entry_price
-    if risk_pct < MIN_RISK_PCT:
-        return float("inf")
-    return (ROUND_TRIP_BPS / 10000.0) / risk_pct
-
-
-def _compute_r(paper_entry: float, paper_stop: float, direction: str,
-               hostile_entry_price: float, exit_price: float) -> float:
-    """R = direction_pnl(hostile_entry, hostile_exit) / setup_risk(paper).
-
-    Entry slippage (already fee'd hostile fill vs paper close) is charged in the
-    numerator only. Risk is fixed by the trade setup: |paper_entry - paper_stop|,
-    never the slipped entry.
-    """
-    risk = abs(paper_entry - paper_stop)
-    if risk <= 0:
-        return 0.0
-    if direction == "long":
-        return (exit_price - hostile_entry_price) / risk
-    else:
-        return (hostile_entry_price - exit_price) / risk
 
 
 # ── Report writing ──────────────────────────────────────────────────────────
@@ -309,64 +244,6 @@ def _append_report(record: dict) -> None:
 
     with open(REPORT_PATH, "a") as f:
         f.write(json.dumps(record, default=str) + "\n")
-
-
-def _paper_r(trade: dict) -> tuple:
-    """Return (value, costed) for the paper model's R-multiple.
-
-    Prefer the cost-adjusted `gauntlet_r` (already charged venue slippage/fees)
-    when present and finite -> (value, True).
-
-    Round 3 fixes:
-      * time_zombie_cleanup (r=0) is a forced cleanup, not a real trade outcome
-        -> excluded from the scored / win-rate populations as (None, False).
-      * entry_price <= 0 or stop_price <= 0 is REJECTED (None, False) BEFORE any
-        cost-drag computation — it must not fall through to a zero cost drag and
-        return an uncosted R.
-      * a closed swing trade whose gauntlet_r is missing is charged the
-        adversarial 20-bps taker round trip (ROUND_TRIP_BPS), not the ~2bps
-        venue model.
-    """
-    if trade.get("exit_reason", "") == "time_zombie_cleanup":
-        return (None, False)
-
-    gauntlet = trade.get("gauntlet_r", "")
-    if gauntlet not in ("", None):
-        try:
-            v = float(gauntlet)
-            if math.isfinite(v):
-                return (v, True)
-        except (ValueError, TypeError):
-            pass
-
-    # Fall back: charge the adversarial taker round trip against the raw r_multiple.
-    r_str = trade.get("r_multiple", "")
-    if r_str in ("", None):
-        return (None, False)
-    try:
-        gross = float(r_str)
-    except (ValueError, TypeError):
-        return (None, False)
-    if not math.isfinite(gross):
-        return (None, False)
-
-    try:
-        entry = float(trade.get("entry_price", 0))
-        stop = float(trade.get("stop_price", 0))
-    except (ValueError, TypeError):
-        return (None, False)
-
-    # Reject non-positive prices BEFORE cost-drag computation.
-    if entry <= 0 or stop <= 0:
-        return (None, False)
-
-    cost_drag = _adversarial_cost_drag(entry, stop)
-    if not math.isfinite(cost_drag):
-        return (None, False)  # degenerate stop — genuinely unscoreable
-    adversarial_r = gross - cost_drag
-    if not math.isfinite(adversarial_r):
-        return (None, False)
-    return (round(adversarial_r, 6), True)
 
 
 # ── Main comparison loop ────────────────────────────────────────────────────

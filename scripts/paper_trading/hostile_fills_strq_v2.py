@@ -24,7 +24,6 @@ Usage:
 
 import sys
 import json
-import math
 import argparse
 import pathlib
 import datetime
@@ -35,82 +34,30 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 
 import trade_log
-import trade_journal
 from intraday_provider import get_intraday_candles
 from detect_liquidity_sweeps import CONFIRMATION_BARS
+from pnl_accounting import (
+    _apply_taker_fee,
+    _compute_r,
+    _adversarial_cost_drag,
+    _paper_r,
+    _worst_print,
+    _trades_through,
+    _bar_touches,
+    _authoritative_close,
+    _close_outcome,
+    _reconcile_signal_dedup,
+    DEGENERATE_RISK_FLOOR,
+)
 
 
 # ── Config ───────────────────────────────────────────────────────────────────────
 TAKER_FEE_BPS = 10           # 0.1% = 10 bps per fill (entry + exit = 0.2% round-trip)
-# Round 3 (adversarial penalty): an uncosted paper R is charged the full hostile
-# taker round trip (entry + exit). Matches the swing hostile_fills.py fallback.
-ROUND_TRIP_BPS = 2 * TAKER_FEE_BPS  # 20 bps
 MAX_BARS_HELD = 15           # 75 minutes at 5m resolution
 LOOKBACK_BARS = 1000          # ~3.5 days of 5m bars — covers recent STR-Q
 STRATEGY_ID = "STR-Q-liquidity-sweep"
-# Defect 5: degenerate-stop outlier floor (0.10%). setup_risk_pct below this is an
-# un-scoreable trade (near-zero risk distance) — excluded from aggregate R /
-# win-rate math, raw fill row still written. 0.10% keeps the bulk of STR-Q fills
-# (typical stop ~0.35%) while killing the +43/-105 high-R artifacts. Distinct from
-# cost_adjuster.MIN_RISK_PCT (0.5%), which would exclude most STR-Q trades.
-MIN_RISK_PCT = 0.001
 ENTRY_MODE = "limit"         # V2: fill at signal price, not bar open (baseline: "market")
 REPORT_PATH = pathlib.Path(__file__).parent / "hostile_fill_report_strq_v2.jsonl"
-
-
-# ── Core helpers ──────────────────────────────────────────────────────────────────
-def _apply_taker_fee(price: float, is_entry: bool = True) -> float:
-    """Deduct taker fee from fill price. Returns effective price after fee.
-
-    Fee always costs the trader: entry pays slightly more, exit receives slightly less.
-    """
-    fee_rate = TAKER_FEE_BPS / 10_000
-    return round(price * (1 + fee_rate), 6)
-
-
-def _worst_print(bar: pd.Series, direction: str) -> float:
-    """Return worst bar print for the given direction (simulates stop slippage).
-
-    For a long (stop = sell): worst = low of bar.
-    For a short (stop = buy to cover): worst = high of bar.
-    """
-    if direction == "long":
-        return float(bar["low"])
-    return float(bar["high"])
-
-
-def _trades_through(bar: pd.Series, level: float, side: str) -> bool:
-    """Check if bar trades THROUGH a level (not just touches).
-
-    For a buy limit (long entry / short target): bar's low must be strictly below level.
-    For a sell limit (short entry / long target): bar's high must be strictly above level.
-    """
-    if side == "buy":
-        return float(bar["low"]) < level
-    else:
-        return float(bar["high"]) > level
-
-
-def _bar_touches(bar: pd.Series, level: float) -> bool:
-    """Check if bar's range touches a level (used for stop triggers)."""
-    return float(bar["low"]) <= level <= float(bar["high"])
-
-
-def _compute_r(paper_entry: float, paper_stop: float, direction: str,
-               hostile_entry_price: float, exit_price: float) -> float:
-    """R = direction_pnl(hostile_entry, hostile_exit) / setup_risk(paper).
-
-    Entry slippage (already fee'd hostile fill vs paper close) is charged in the
-    numerator only. Risk is fixed by the trade setup: |paper_entry - paper_stop|,
-    never the slipped entry.
-    """
-    risk = abs(paper_entry - paper_stop)
-    if risk <= 0:
-        return 0.0
-    if direction == "long":
-        return (exit_price - hostile_entry_price) / risk
-    else:
-        return (hostile_entry_price - exit_price) / risk
 
 
 # ── Data loading ───────────────────────────────────────────────────────────────
@@ -202,7 +149,7 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
 
         # V2: True limit order — fill at signal price, not bar open
         if _trades_through(row, entry_price, side):
-            fill_price = _apply_taker_fee(entry_price, is_entry=True)
+            fill_price = _apply_taker_fee(entry_price, is_entry=True, taker_bps=TAKER_FEE_BPS)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -251,7 +198,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 1. Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -263,7 +210,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 2. Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -275,7 +222,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 3. Time stop: fill at worst print
         if bars_held >= MAX_BARS_HELD:
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False)
+            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "time",
@@ -357,179 +304,6 @@ def _append_report(record: dict, dry_run: bool = False, existing_keys: set = Non
         f.write(json.dumps(record, default=str) + "\n")
     existing_keys.add(key)
     return True
-
-
-def _adversarial_cost_drag(entry_price: float, stop_price: float) -> float:
-    """Cost drag (R units) for the adversarial 20-bps taker round trip.
-
-    cost_drag_R = ROUND_TRIP_BPS / 10000 / risk_pct.
-    Returns float('inf') for a degenerate stop (risk_pct < MIN_RISK_PCT) so the
-    caller treats the trade as unscoreable.
-    """
-    risk_pct = abs(entry_price - stop_price) / entry_price
-    if risk_pct < MIN_RISK_PCT:
-        return float("inf")
-    return (ROUND_TRIP_BPS / 10000.0) / risk_pct
-
-
-def _paper_r(trade: dict) -> tuple:
-    """Return (value, costed) for the paper model's R-multiple.
-
-    Prefer the cost-adjusted `gauntlet_r` when present and finite -> (value, True).
-
-    Round 3: port the swing cost-drag fallback. A closed STR-Q trade with a
-    missing gauntlet_r is NOT silently dropped to (None, False) — that left the
-    paper denominator far smaller than the hostile denominator. Its raw
-    `r_multiple` is real, just uncosted, so it is charged the adversarial 20-bps
-    taker round trip. entry_price <= 0 / stop_price <= 0 is rejected up front.
-    time_zombie_cleanup (r=0, forced cleanup) is excluded as a non-outcome.
-    """
-    if trade.get("exit_reason", "") == "time_zombie_cleanup":
-        return (None, False)
-
-    gauntlet = trade.get("gauntlet_r", "")
-    if gauntlet not in ("", None):
-        try:
-            v = float(gauntlet)
-            if math.isfinite(v):
-                return (v, True)
-        except (ValueError, TypeError):
-            pass
-
-    r_str = trade.get("r_multiple", "")
-    if r_str in ("", None):
-        return (None, False)
-    try:
-        gross = float(r_str)
-    except (ValueError, TypeError):
-        return (None, False)
-    if not math.isfinite(gross):
-        return (None, False)
-
-    try:
-        entry = float(trade.get("entry_price", 0))
-        stop = float(trade.get("stop_price", 0))
-    except (ValueError, TypeError):
-        return (None, False)
-    if entry <= 0 or stop <= 0:
-        return (None, False)
-
-    cost_drag = _adversarial_cost_drag(entry, stop)
-    if not math.isfinite(cost_drag):
-        return (None, False)
-    adversarial_r = gross - cost_drag
-    if not math.isfinite(adversarial_r):
-        return (None, False)
-    return (round(adversarial_r, 6), True)
-
-
-# ── Signal dedup with journal reconciliation ──────────────────────────────
-def _authoritative_close() -> dict:
-    """Return {signal_id: (exit_reason, r_multiple_float)} from the journal.
-
-    The append-only journal (US-123) is the source of truth; trades.csv is a
-    derived projection. Every signal_id has at most one 'close' event (duplicate
-    close is refused by the journal), so a journal close is the single
-    authoritative outcome used to reconcile divergent CSV close rows.
-    """
-    closes = {}
-    if not trade_journal.JOURNAL_PATH.exists():
-        return closes
-    with open(trade_journal.JOURNAL_PATH, "r") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                ev = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if ev.get("type") != "close":
-                continue
-            sig = ev.get("signal_id", "")
-            if not sig:
-                continue
-            data = ev.get("data", {})
-            try:
-                rm = float(data.get("r_multiple", 0.0))
-            except (ValueError, TypeError):
-                rm = 0.0
-            closes[sig] = (data.get("exit_reason", ""), rm)
-    return closes
-
-
-def _close_outcome(row: dict) -> tuple:
-    """Close-outcome signature of a closed CSV row: (exit_reason, rounded r_multiple).
-
-    Two rows agree iff this signature is identical — float noise in exit_price /
-    gauntlet_r is ignored, but a real divergence (target vs stop, or conflicting
-    r_multiple) is caught.
-    """
-    try:
-        rm = round(float(row.get("r_multiple", "")), 3)
-    except (ValueError, TypeError):
-        rm = None
-    return (row.get("exit_reason", ""), rm)
-
-
-def _reconcile_signal_dedup(strq_trades: list) -> tuple:
-    """Dedup STR-Q input on signal_id, validating every closed signal_id against
-    the journal's authoritative close.
-
-    Round 3: EVERY closed signal_id is validated — not just multi-row divergent
-    groups. A closed signal_id is kept only when its CSV close outcome EXACTLY
-    matches the journal close (exit_reason AND r_multiple), and the first
-    matching row is kept (duplicate rows share the same outcome). Any divergence
-    (reason mismatch, r_multiple mismatch) or a missing journal close is
-    QUARANTINED — never silently arbitrated by row order or by a reason-only
-    fallback.
-
-    Returns (deduped_list, quarantined_count, quarantine_lines).
-    """
-    groups = {}
-    order = []
-    for r in strq_trades:
-        sid = r.get("signal_id", "")
-        if sid not in groups:
-            groups[sid] = []
-            order.append(sid)
-        groups[sid].append(r)
-
-    closes = _authoritative_close()
-
-    out = []
-    quarantined = 0
-    quarantine_lines = []
-    for sid in order:
-        rows = groups[sid]
-        closed_rows = [r for r in rows if r.get("status") == "closed"]
-        if not closed_rows:
-            # Nothing closed for this signal_id — nothing to reconcile.
-            out.append(rows[0])
-            continue
-
-        auth = closes.get(sid)
-        if auth is None:
-            quarantined += 1
-            outcomes = sorted(map(str, {_close_outcome(r) for r in closed_rows}))
-            quarantine_lines.append(
-                f"{sid}: no journal close; {len(closed_rows)} closed CSV row(s) {outcomes}")
-            continue
-        a_reason, a_rm = auth
-
-        # Exact match only: same exit_reason AND same r_multiple (3 dp). Any
-        # reason-match ambiguity or r_multiple divergence → quarantine.
-        exact = [r for r in closed_rows
-                 if _close_outcome(r) == (a_reason, round(a_rm, 3))]
-        if not exact:
-            quarantined += 1
-            outcomes = sorted(map(str, {_close_outcome(r) for r in closed_rows}))
-            quarantine_lines.append(
-                f"{sid}: journal says ({a_reason},{a_rm}) unmatched by CSV {outcomes}")
-            continue
-        out.append(exact[0])
-
-    return out, quarantined, quarantine_lines
 
 
 # ── Main comparison loop ───────────────────────────────────────────────
@@ -662,7 +436,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
             paper_entry = float(trade["entry_price"])
             paper_stop = float(trade["stop_price"])
             setup_risk_pct = abs(paper_entry - paper_stop) / paper_entry if paper_entry > 0 else 0.0
-            degenerate = setup_risk_pct < MIN_RISK_PCT
+            degenerate = setup_risk_pct < DEGENERATE_RISK_FLOOR
             hostile_r = _compute_r(
                 paper_entry=paper_entry,
                 paper_stop=paper_stop,
@@ -693,7 +467,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
             summary["closed"] += 1
 
             # Accumulate aggregate stats — costed paper R only; degenerate-stop
-            # outliers (setup risk < MIN_RISK_PCT) excluded from every aggregate.
+            # outliers (setup risk < DEGENERATE_RISK_FLOOR) excluded from every aggregate.
             if degenerate:
                 summary["outlier_excluded"] += 1
             else:
