@@ -10,14 +10,16 @@ synthesis belong to the orchestrator/cron layer (out of scope).
 Fail-closed (5.2): if findings.state.json is missing or stale (older than
 STALE_WINDOW), it reports "doctor did not complete" — never "0 findings".
 
-Stdlib only: json, pathlib, datetime, re, sys.
+Stdlib only: json, pathlib, datetime, hashlib, tempfile, sys.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import sys
+import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -25,6 +27,7 @@ HF_ROOT = Path(os.environ.get("HERMESFORGE_ROOT", "/root/HermesForge"))
 CACHE_DIR = Path(os.environ.get("SYSTEM_DOCTOR_CACHE", f"{HF_ROOT}/cache/system-doctor"))
 FINDINGS_JSONL = CACHE_DIR / "findings.jsonl"
 STATE_JSON = CACHE_DIR / "findings.state.json"
+DIGEST_STATE_JSON = CACHE_DIR / "digest.state.json"
 
 STALE_WINDOW = timedelta(hours=24)  # doctor runs at 06:00; digest at 07:00
 
@@ -70,6 +73,70 @@ def load_state() -> dict | None:
         return json.loads(STATE_JSON.read_text())
     except json.JSONDecodeError:
         return None
+
+
+# --------------------------------------------------------------------------
+# Digest suppression (US-161 D2 / "[SILENT]") — change detection over open
+# findings. The snapshot captures exactly the four change triggers the spec
+# defines: new open, newly resolved, new Tier-2, doctor_self verdict change.
+# Count/evidence/timestamp drift is deliberately NOT a trigger, so the digest
+# stays silent between genuinely new events.
+# --------------------------------------------------------------------------
+def _open_snapshot(findings: list[dict]) -> list[dict]:
+    """Canonical, order-stable snapshot of open findings for comparison."""
+    entries = []
+    for f in findings:
+        if f.get("status") != "open":
+            continue
+        e = {
+            "id": f.get("id"),
+            "status": f.get("status"),
+            "risk_tier": f.get("risk_tier"),
+            "category": f.get("category"),
+        }
+        if f.get("category") == "doctor_self":
+            # doctor_self "verdict" == its summary text; capture it so a
+            # same-id verdict change is still detected.
+            e["summary"] = f.get("summary")
+        entries.append(e)
+    entries.sort(key=lambda x: (str(x.get("id")) or ""))
+    return entries
+
+
+def _snapshot_signature(entries: list[dict]) -> str:
+    payload = json.dumps(entries, sort_keys=True, separators=(",", ":"),
+                         ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def load_digest_state() -> dict | None:
+    if not DIGEST_STATE_JSON.exists():
+        return None
+    try:
+        return json.loads(DIGEST_STATE_JSON.read_text())
+    except json.JSONDecodeError:
+        return None
+
+
+def write_digest_state(entries: list[dict]) -> None:
+    """Persist the last-digested snapshot (atomic write convention)."""
+    obj = {
+        "last_digest_ts": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "signature": _snapshot_signature(entries),
+        "open_findings": entries,
+    }
+    DIGEST_STATE_JSON.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=str(DIGEST_STATE_JSON.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w") as fh:
+            json.dump(obj, fh, ensure_ascii=False, indent=2)
+        os.replace(tmp, DIGEST_STATE_JSON)
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
 
 
 def render() -> str:
@@ -177,7 +244,27 @@ def _consequence(f: dict) -> str:
 
 
 def main() -> int:
+    # Fail-closed: absent/stale scan state always renders (never suppressed) —
+    # "doctor did not complete" must fire every cycle until it recovers.
+    state = load_state()
+    last_scan = _iso_parse(state.get("last_full_scan_ts")) if state else None
+    if (state is None or last_scan is None
+            or (datetime.now(timezone.utc) - last_scan) > STALE_WINDOW):
+        print(render())
+        return 0
+
+    # Suppression gate: identical open-findings snapshot since last digest
+    # -> [SILENT] emit nothing and do NOT update state.
+    findings = load_findings()
+    snapshot = _open_snapshot(findings)
+    signature = _snapshot_signature(snapshot)
+    prev = load_digest_state()
+    if prev and prev.get("signature") == signature:
+        return 0
+
+    # Change (or first run): render AND persist the new snapshot.
     print(render())
+    write_digest_state(snapshot)
     return 0
 
 
