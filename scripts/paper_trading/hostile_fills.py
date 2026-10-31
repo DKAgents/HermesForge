@@ -32,6 +32,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 import trade_log
 from trade_id import generate_short_id
+import fee_source
 from pnl_accounting import (
     _apply_taker_fee,
     _compute_r,
@@ -45,7 +46,6 @@ from pnl_accounting import (
 
 # ── Config ──────────────────────────────────────────────────────────────────────
 
-TAKER_FEE_BPS = 10          # 0.1% = 10 bps per fill (entry + exit = 0.2% round-trip)
 MAX_BARS_HELD = {
     "STR-A-ma-pullback-fibonacci": 8,
     "STR-B-macd-histogram-divergence": 8,
@@ -109,6 +109,7 @@ def check_entry_hostile(
     entry_price = float(trade["entry_price"])
     direction = trade["direction"]
     side = "buy" if direction == "long" else "sell"
+    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "stock"))
 
     # Find the signal bar (bar t). If we can't find it, use bar 0.
     # For daily signals, entry_date = the signal bar's date.
@@ -128,7 +129,7 @@ def check_entry_hostile(
         if _trades_through(row, entry_price, side):
             # Fill at next bar's open (t+1 open for the first bar, open of whichever bar)
             fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=TAKER_FEE_BPS)
+            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=taker_bps)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -167,6 +168,7 @@ def check_exit_hostile(
     target_price = float(trade["target_price"])
     strategy_id = trade["strategy_id"]
     max_bars = MAX_BARS_HELD.get(strategy_id, 21)
+    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "stock"))
 
     stop_side = "sell" if direction == "long" else "buy"
     target_side = "sell" if direction == "long" else "buy"
@@ -177,7 +179,7 @@ def check_exit_hostile(
         # Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -189,7 +191,7 @@ def check_exit_hostile(
         # Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -201,7 +203,7 @@ def check_exit_hostile(
         # Time stop
         if offset >= max_bars:
             exit_price = float(row["close"])
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "time",
@@ -421,7 +423,7 @@ def run(
         hostile_entry = check_entry_hostile(trade, bars)
         if not hostile_entry["filled"]:
             # Hostile never entered — skip exit check
-            paper_r, paper_costed = _paper_r(trade)
+            paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -451,7 +453,7 @@ def run(
         exit_result = check_exit_hostile(trade, bars)
 
         if exit_result["action"] == "closed":
-            paper_r, paper_costed = _paper_r(trade)
+            paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             hostile_r = _compute_r(
                 paper_entry=float(trade["entry_price"]),
                 paper_stop=float(trade["stop_price"]),
@@ -480,7 +482,7 @@ def run(
             summary["entered_closed"] += 1
         else:
             summary["entered_open"] += 1
-            paper_r, paper_costed = _paper_r(trade)
+            paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -529,7 +531,7 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"Hostile Fill Model — {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
-    print(f"  Taker fee: {TAKER_FEE_BPS/100:.1f}% per fill")
+    print(f"  Taker fee: {fee_source.get_taker_bps('crypto'):.2f} bps crypto / {fee_source.get_taker_bps('stock'):.2f} bps stock per fill")
     print(f"  Entry rule: t+1 open or later, trade-through required")
     print(f"  Stop rule: worst print on crossing bar")
     print(f"  Target rule: trade-through required (limit)")

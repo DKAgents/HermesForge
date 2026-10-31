@@ -32,10 +32,12 @@ import pandas as pd
 REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 import trade_log
 from intraday_provider import get_intraday_candles
 from detect_liquidity_sweeps import CONFIRMATION_BARS
+import fee_source
 from pnl_accounting import (
     _apply_taker_fee,
     _compute_r,
@@ -52,7 +54,6 @@ from pnl_accounting import (
 
 
 # ── Config ───────────────────────────────────────────────────────────────────────
-TAKER_FEE_BPS = 10           # 0.1% = 10 bps per fill (entry + exit = 0.2% round-trip)
 MAX_BARS_HELD = 15           # 75 minutes at 5m resolution
 LOOKBACK_BARS = 1000          # ~3.5 days of 5m bars — covers recent STR-Q
 STRATEGY_ID = "STR-Q-liquidity-sweep"
@@ -127,6 +128,7 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
     entry_price = float(trade["entry_price"])
     direction = trade["direction"]
     side = "buy" if direction == "long" else "sell"
+    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "crypto"))
 
     signal_bar_idx = _find_signal_bar(bars, trade["entry_date"])
     if signal_bar_idx is None:
@@ -149,7 +151,7 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
         # Limit order: must trade through entry_price
         if _trades_through(row, entry_price, side):
             fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=TAKER_FEE_BPS)
+            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=taker_bps)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -185,6 +187,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
     direction = trade["direction"]
     stop_price = float(trade["stop_price"])
     target_price = float(trade["target_price"])
+    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "crypto"))
 
     stop_side = "sell" if direction == "long" else "buy"
     target_side = "sell" if direction == "long" else "buy"
@@ -198,7 +201,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 1. Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -210,7 +213,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 2. Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -222,7 +225,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 3. Time stop: fill at worst print
         if bars_held >= MAX_BARS_HELD:
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "time",
@@ -432,7 +435,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         exit_result = check_exit_hostile(hostile_trade, bars, entry_bar_idx)
 
         if exit_result["action"] == "closed":
-            paper_r, paper_costed = _paper_r(trade)
+            paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             paper_entry = float(trade["entry_price"])
             paper_stop = float(trade["stop_price"])
             setup_risk_pct = abs(paper_entry - paper_stop) / paper_entry if paper_entry > 0 else 0.0
@@ -486,7 +489,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
 
         else:
             # Still open — no exit trigger hit yet
-            paper_r_open, paper_costed_open = _paper_r(trade)
+            paper_r_open, paper_costed_open = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             record = {
                 "trade_id": trade_id,
                 "ticker": ticker,
@@ -532,7 +535,7 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"STR-Q Hostile Fill Model — {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
-    print(f"  Taker fee: {TAKER_FEE_BPS/100:.1f}% per fill")
+    print(f"  Taker fee: {fee_source.get_taker_bps('crypto'):.2f} bps per fill")
     print(f"  Entry rule: t+1 open or later, trade-through required")
     print(f"  Stop rule: worst print on crossing bar")
     print(f"  Target rule: trade-through required (limit)")

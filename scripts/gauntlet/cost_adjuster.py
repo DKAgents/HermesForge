@@ -7,24 +7,16 @@ Importable by pipeline modules (capture_signals, portfolio_publish, alert_publis
 trade_monitor, performance_report).
 
 Usage:
-    from cost_adjuster import adjust_trade, VENUE_COSTS, compute_cost_drag
+    from cost_adjuster import adjust_trade, compute_cost_drag
 
     result = adjust_trade(entry_price, stop_price, exit_price, direction, asset_class)
     # result['gauntlet_r'] is the cost-adjusted R-multiple
 """
 
 from dataclasses import dataclass
-from typing import Optional, Dict
+from typing import Optional
 
-# ── Venue cost models (PROP-001, validated via G0/G3) ──────────────────────
-
-VENUE_COSTS: Dict[str, float] = {
-    "stock": 2.0,    # zero commission + spread/slippage, no funding
-    "crypto": 12.0,  # 9.0 taker fees (4.5+4.5) + 2.5 slippage + 0.5 funding
-}
-
-DEFAULT_COST = 12.0  # conservative: assume crypto perps if asset_class unknown
-
+from fee_source import get_round_trip_bps  # US-165: single fee-table owner
 
 # ── Risk controls ────────────────────────────────────────────────────
 MIN_RISK_PCT = 0.005          # 0.5% — trades with tighter stops are noise
@@ -50,7 +42,7 @@ def compute_cost_drag(entry_price: float, stop_price: float,
     if risk_pct < MIN_RISK_PCT:
         return float('inf')
 
-    venue_cost_bps = VENUE_COSTS.get(asset_class or "", DEFAULT_COST)
+    venue_cost_bps = get_round_trip_bps(asset_class or "")
     return (venue_cost_bps / 10000.0) / risk_pct
 
 
@@ -85,8 +77,8 @@ def adjust_trade(entry_price: float, stop_price: float,
 
     Returns AdjustedTrade with gauntlet_r = gross_r - cost_drag_r.
     """
-    venue = asset_class if asset_class in VENUE_COSTS else "crypto"
-    venue_cost_bps = VENUE_COSTS.get(venue, DEFAULT_COST)
+    venue = "stock" if asset_class == "stock" else "crypto"
+    venue_cost_bps = get_round_trip_bps(venue)
 
     risk_pct = abs(entry_price - stop_price) / entry_price if entry_price > 0 else 0
     cost_drag_r = compute_cost_drag(entry_price, stop_price, asset_class)
