@@ -19,6 +19,7 @@ Usage:
 
 import sys
 import json
+import math
 import argparse
 import pathlib
 import time as time_mod
@@ -238,17 +239,21 @@ def check_exit_hostile(
 
 # ── R-multiple computation ──────────────────────────────────────────────────
 
-def _compute_r(trade: dict, exit_price: float) -> float:
-    entry = float(trade["entry_price"])
-    stop = float(trade["stop_price"])
-    risk = abs(entry - stop)
+def _compute_r(paper_entry: float, paper_stop: float, direction: str,
+               hostile_entry_price: float, exit_price: float) -> float:
+    """R = direction_pnl(hostile_entry, hostile_exit) / setup_risk(paper).
+
+    Entry slippage (already fee'd hostile fill vs paper close) is charged in the
+    numerator only. Risk is fixed by the trade setup: |paper_entry - paper_stop|,
+    never the slipped entry.
+    """
+    risk = abs(paper_entry - paper_stop)
     if risk <= 0:
         return 0.0
-    direction = trade.get("direction", "long")
     if direction == "long":
-        return (exit_price - entry) / risk
+        return (exit_price - hostile_entry_price) / risk
     else:
-        return (entry - exit_price) / risk
+        return (hostile_entry_price - exit_price) / risk
 
 
 # ── Report writing ──────────────────────────────────────────────────────────
@@ -284,15 +289,23 @@ def _append_report(record: dict) -> None:
         f.write(json.dumps(record, default=str) + "\n")
 
 
-def _paper_r(trade: dict) -> float | None:
-    """Get the R-multiple from the paper model's trades.csv."""
-    r_str = trade.get("r_multiple", "")
-    if r_str and r_str != "":
+def _paper_r(trade: dict) -> tuple:
+    """Return (value, costed) for the paper model's R-multiple.
+
+    Prefer the cost-adjusted `gauntlet_r` when present and finite -> (value, True).
+    The raw `r_multiple` is always uncosted (no taker fee, no slippage) and is
+    NEVER returned as a value — it is flagged uncosted so it stays out of every
+    aggregate.
+    """
+    gauntlet = trade.get("gauntlet_r", "")
+    if gauntlet not in ("", None):
         try:
-            return float(r_str)
+            v = float(gauntlet)
+            if math.isfinite(v):
+                return (v, True)
         except (ValueError, TypeError):
             pass
-    return None
+    return (None, False)
 
 
 # ── Main comparison loop ────────────────────────────────────────────────────
@@ -470,6 +483,7 @@ def run(
         hostile_entry = check_entry_hostile(trade, bars)
         if not hostile_entry["filled"]:
             # Hostile never entered — skip exit check
+            paper_r, paper_costed = _paper_r(trade)
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -482,7 +496,8 @@ def run(
                 "hostile_fill_bar": None,
                 "hostile_fill_date": None,
                 "hostile_fill_reason": hostile_entry["fill_reason"],
-                "paper_r": _paper_r(trade),
+                "paper_r": paper_r,
+                "paper_r_uncosted": not paper_costed,
                 "hostile_r": None,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
@@ -493,13 +508,18 @@ def run(
 
         hostile_entry_price = hostile_entry["fill_price"]
 
-        # Create a modified trade dict with hostile entry for R calc
-        hostile_trade = {**trade, "entry_price": hostile_entry_price}
-
-        exit_result = check_exit_hostile(hostile_trade, bars)
+        # Exit check reads stop/target/direction only — pass the original trade.
+        # Entry slippage is charged inside _compute_r via hostile_entry_price.
+        exit_result = check_exit_hostile(trade, bars)
 
         if exit_result["action"] == "closed":
-            hostile_r = _compute_r(hostile_trade, exit_result["exit_price"])
+            paper_r, paper_costed = _paper_r(trade)
+            hostile_r = _compute_r(
+                paper_entry=float(trade["entry_price"]),
+                paper_stop=float(trade["stop_price"]),
+                direction=trade["direction"],
+                hostile_entry_price=hostile_entry_price,
+                exit_price=exit_result["exit_price"])
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -514,13 +534,15 @@ def run(
                 "paper_exit_reason": trade.get("exit_reason", ""),
                 "hostile_exit_reason": exit_result["exit_reason"],
                 "hostile_bars_held": exit_result["bars_held"],
-                "paper_r": _paper_r(trade),
+                "paper_r": paper_r,
+                "paper_r_uncosted": not paper_costed,
                 "hostile_r": round(hostile_r, 4),
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             summary["entered_closed"] += 1
         else:
             summary["entered_open"] += 1
+            paper_r, paper_costed = _paper_r(trade)
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -535,7 +557,8 @@ def run(
                 "paper_exit_reason": None,
                 "hostile_exit_reason": "still_open",
                 "hostile_bars_held": None,
-                "paper_r": _paper_r(trade),
+                "paper_r": paper_r,
+                "paper_r_uncosted": not paper_costed,
                 "hostile_r": None,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }

@@ -24,6 +24,7 @@ Usage:
 
 import sys
 import json
+import math
 import argparse
 import pathlib
 import datetime
@@ -35,6 +36,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 
 import trade_log
 from intraday_provider import get_intraday_candles
+from detect_liquidity_sweeps import CONFIRMATION_BARS
 
 
 # ── Config ───────────────────────────────────────────────────────────────────────
@@ -42,6 +44,12 @@ TAKER_FEE_BPS = 10           # 0.1% = 10 bps per fill (entry + exit = 0.2% round
 MAX_BARS_HELD = 15           # 75 minutes at 5m resolution
 LOOKBACK_BARS = 1000          # ~3.5 days of 5m bars — covers recent STR-Q
 STRATEGY_ID = "STR-Q-liquidity-sweep"
+# Defect 5: degenerate-stop outlier floor (0.10%). setup_risk_pct below this is an
+# un-scoreable trade (near-zero risk distance) — excluded from aggregate R /
+# win-rate math, raw fill row still written. 0.10% keeps the bulk of STR-Q fills
+# (typical stop ~0.35%) while killing the +43/-105 high-R artifacts. Distinct from
+# cost_adjuster.MIN_RISK_PCT (0.5%), which would exclude most STR-Q trades.
+MIN_RISK_PCT = 0.001
 ENTRY_MODE = "limit"         # V2: fill at signal price, not bar open (baseline: "market")
 REPORT_PATH = pathlib.Path(__file__).parent / "hostile_fill_report_strq_v2.jsonl"
 
@@ -85,16 +93,20 @@ def _bar_touches(bar: pd.Series, level: float) -> bool:
 
 
 def _compute_r(paper_entry: float, paper_stop: float, direction: str,
-               exit_price: float) -> float:
-    """Compute R-multiple using paper entry+stop for risk, realized exit for P&L.
-    Hostile entry slippage affects P&L direction but risk is fixed by trade setup."""
+               hostile_entry_price: float, exit_price: float) -> float:
+    """R = direction_pnl(hostile_entry, hostile_exit) / setup_risk(paper).
+
+    Entry slippage (already fee'd hostile fill vs paper close) is charged in the
+    numerator only. Risk is fixed by the trade setup: |paper_entry - paper_stop|,
+    never the slipped entry.
+    """
     risk = abs(paper_entry - paper_stop)
     if risk <= 0:
         return 0.0
     if direction == "long":
-        return (exit_price - paper_entry) / risk
+        return (exit_price - hostile_entry_price) / risk
     else:
-        return (paper_entry - exit_price) / risk
+        return (hostile_entry_price - exit_price) / risk
 
 
 # ── Data loading ───────────────────────────────────────────────────────────────
@@ -177,9 +189,11 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
             "fill_reason": "signal bar not in cached data (outside 300-bar window)",
         }
 
-    # Scan bars from t+1 onward
+    # Scan bars from signal_bar + 1 + CONFIRMATION_BARS onward. A sweep at bar i
+    # is only KNOWABLE as confirmed after i + CONFIRMATION_BARS has closed; the
+    # earliest realistic fill is one bar later: i + 1 + CONFIRMATION_BARS.
     for _, row in bars.iterrows():
-        if row["bar_idx"] <= signal_bar_idx:
+        if row["bar_idx"] < signal_bar_idx + 1 + CONFIRMATION_BARS:
             continue
 
         # V2: True limit order — fill at signal price, not bar open
@@ -271,7 +285,12 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
 
 # ── Report writing ───────────────────────────────────────────────────────
 def _read_existing_keys() -> set:
-    """Read existing trade_id|stage keys from report file for dedup."""
+    """Read existing signal_id|stage keys from report file for dedup.
+
+    signal_id is the true intraday trade identity (carries the HHMM suffix).
+    trade_id is date-truncated and collapses up to 26 same-day sweeps, so it
+    cannot be the dedup key.
+    """
     keys = set()
     if REPORT_PATH.exists():
         try:
@@ -282,7 +301,7 @@ def _read_existing_keys() -> set:
                         continue
                     try:
                         r = json.loads(line)
-                        keys.add(f"{r.get('trade_id','')}|{r.get('stage','')}")
+                        keys.add(f"{r.get('signal_id','')}|{r.get('stage','')}")
                     except json.JSONDecodeError:
                         pass
         except Exception:
@@ -291,11 +310,13 @@ def _read_existing_keys() -> set:
 
 
 def _append_report(record: dict, dry_run: bool = False, existing_keys: set = None) -> bool:
-    """Append one comparison record to hostile_fill_port_strq.jsonl.
+    """Append one comparison record to the hostile STR-Q report (JSONL).
 
-    Deduplicates on (trade_id, stage).
+    Deduplicates on (signal_id, stage). signal_id is the true intraday trade
+    identity; `stage` preserves the legit skip -> open_entry -> closed transition
+    trail across cron re-runs.
     If dry_run=True, only logs what would be written.
-    existing_keys: pre-loaded set of 'trade_id|stage' keys (avoids re-reading file).
+    existing_keys: pre-loaded set of 'signal_id|stage' keys (avoids re-reading file).
 
     Returns True if the record was written (or would be), False if skipped.
     """
@@ -312,35 +333,45 @@ def _append_report(record: dict, dry_run: bool = False, existing_keys: set = Non
                             continue
                         try:
                             existing = json.loads(line)
-                            key = f"{existing.get('trade_id', '')}|{existing.get('stage', '')}"
+                            key = f"{existing.get('signal_id', '')}|{existing.get('stage', '')}"
                             existing_keys.add(key)
                         except json.JSONDecodeError:
                             pass
             except Exception:
                 pass
 
-    key = f"{record.get('trade_id', '')}|{record.get('stage', '')}"
+    key = f"{record.get('signal_id', '')}|{record.get('stage', '')}"
     if key in existing_keys:
         return False
 
     if dry_run:
         print(f"  [DRY-RUN] Would write: {key}")
+        existing_keys.add(key)
         return True
 
     with open(REPORT_PATH, "a") as f:
         f.write(json.dumps(record, default=str) + "\n")
+    existing_keys.add(key)
     return True
 
 
-def _paper_r(trade: dict) -> float | None:
-    """Get the R-multiple from the paper model's trades.csv."""
-    r_str = trade.get("r_multiple", "")
-    if r_str and r_str != "":
+def _paper_r(trade: dict) -> tuple:
+    """Return (value, costed) for the paper model's R-multiple.
+
+    Prefer the cost-adjusted `gauntlet_r` when present and finite -> (value, True).
+    The raw `r_multiple` is always uncosted (no taker fee, no slippage) and is
+    NEVER returned as a value — it is flagged uncosted so it stays out of every
+    aggregate.
+    """
+    gauntlet = trade.get("gauntlet_r", "")
+    if gauntlet not in ("", None):
         try:
-            return float(r_str)
+            v = float(gauntlet)
+            if math.isfinite(v):
+                return (v, True)
         except (ValueError, TypeError):
             pass
-    return None
+    return (None, False)
 
 
 # ── Main comparison loop ───────────────────────────────────────────────
@@ -362,6 +393,8 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         "hostile_r_sum": 0.0,
         "paper_wins": 0,
         "hostile_wins": 0,
+        "paper_uncosted_count": 0,
+        "outlier_excluded": 0,
     }
 
     # Force: clear existing report
@@ -372,9 +405,20 @@ def run(dry_run: bool = False, crypto_only: bool = False,
     # Pre-load existing keys for O(1) dedup (avoids re-reading file per record)
     existing_keys = _read_existing_keys() if not force else set()
 
-    # Load all STR-Q trades
+    # Load all STR-Q trades and dedup input on signal_id (the true intraday
+    # identity). trade_id is date-truncated (HHMM dropped) and collapses up to
+    # 26 same-day sweeps; signal_id carries the HHMM suffix and is the only key
+    # that discriminates intraday fills.
     all_rows = trade_log._read_all_rows()
     strq_trades = [r for r in all_rows if r.get("strategy_id") == STRATEGY_ID]
+    _seen_signal = set()
+    _deduped = []
+    for _r in strq_trades:
+        _sid = _r.get("signal_id", "")
+        if not _sid or _sid not in _seen_signal:
+            _seen_signal.add(_sid)
+            _deduped.append(_r)
+    strq_trades = _deduped
 
     # ── Pre-load bars per ticker (batch — avoids per-trade fetch) ──
     unique_tickers = set()
@@ -428,6 +472,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "strategy_id": STRATEGY_ID,
                 "stage": "skip",
                 "entry_date": entry_date,
+                "signal_id": trade.get("signal_id", ""),
                 "paper_entry_price": float(trade["entry_price"]),
                 "hostile_entry_price": None,
                 "hostile_fill_bar": None,
@@ -454,10 +499,16 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         exit_result = check_exit_hostile(hostile_trade, bars, entry_bar_idx)
 
         if exit_result["action"] == "closed":
+            paper_r, paper_costed = _paper_r(trade)
+            paper_entry = float(trade["entry_price"])
+            paper_stop = float(trade["stop_price"])
+            setup_risk_pct = abs(paper_entry - paper_stop) / paper_entry if paper_entry > 0 else 0.0
+            degenerate = setup_risk_pct < MIN_RISK_PCT
             hostile_r = _compute_r(
-                paper_entry=float(trade["entry_price"]),
-                paper_stop=float(trade["stop_price"]),
+                paper_entry=paper_entry,
+                paper_stop=paper_stop,
                 direction=trade["direction"],
+                hostile_entry_price=hostile_entry_price,
                 exit_price=exit_result["exit_price"])
             record = {
                 "trade_id": trade_id,
@@ -466,6 +517,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "strategy_id": STRATEGY_ID,
                 "stage": "closed",
                 "entry_date": entry_date,
+                "signal_id": trade.get("signal_id", ""),
                 "paper_entry_price": float(trade["entry_price"]),
                 "hostile_entry_price": hostile_entry_price,
                 "paper_exit_price": float(trade.get("exit_price", 0)) if paper_closed else None,
@@ -473,25 +525,33 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "paper_exit_reason": trade.get("exit_reason", ""),
                 "hostile_exit_reason": exit_result["exit_reason"],
                 "hostile_bars_held": exit_result["bars_held"],
-                "paper_r": _paper_r(trade),
+                "paper_r": paper_r,
+                "paper_r_uncosted": not paper_costed,
                 "hostile_r": round(hostile_r, 4),
+                "outlier_excluded": degenerate,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             summary["closed"] += 1
 
-            # Accumulate aggregate stats
-            paper_r = _paper_r(trade)
-            if paper_r is not None:
-                summary["paper_r_sum"] += paper_r
-                if paper_r > 0:
-                    summary["paper_wins"] += 1
-            if hostile_r is not None:
-                summary["hostile_r_sum"] += hostile_r
-                if hostile_r > 0:
-                    summary["hostile_wins"] += 1
+            # Accumulate aggregate stats — costed paper R only; degenerate-stop
+            # outliers (setup risk < MIN_RISK_PCT) excluded from every aggregate.
+            if degenerate:
+                summary["outlier_excluded"] += 1
+            else:
+                if paper_costed:
+                    summary["paper_r_sum"] += paper_r
+                    if paper_r > 0:
+                        summary["paper_wins"] += 1
+                else:
+                    summary["paper_uncosted_count"] += 1
+                if hostile_r is not None:
+                    summary["hostile_r_sum"] += hostile_r
+                    if hostile_r > 0:
+                        summary["hostile_wins"] += 1
 
         else:
             # Still open — no exit trigger hit yet
+            paper_r_open, paper_costed_open = _paper_r(trade)
             record = {
                 "trade_id": trade_id,
                 "ticker": ticker,
@@ -499,6 +559,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "strategy_id": STRATEGY_ID,
                 "stage": "open_entry",
                 "entry_date": entry_date,
+                "signal_id": trade.get("signal_id", ""),
                 "paper_entry_price": float(trade["entry_price"]),
                 "hostile_entry_price": hostile_entry_price,
                 "paper_exit_price": None,
@@ -506,7 +567,8 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "paper_exit_reason": None,
                 "hostile_exit_reason": "still_open",
                 "hostile_bars_held": None,
-                "paper_r": _paper_r(trade),
+                "paper_r": paper_r_open,
+                "paper_r_uncosted": not paper_costed_open,
                 "hostile_r": None,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
@@ -559,6 +621,8 @@ def main():
     print(f"  Records written:       {summary['records_written']}")
     print(f"  Paper R sum:           {summary['paper_r_sum']:.2f}")
     print(f"  Hostile R sum:         {summary['hostile_r_sum']:.2f}")
+    print(f"  Paper uncosted count:  {summary['paper_uncosted_count']}")
+    print(f"  Outlier excluded:      {summary['outlier_excluded']}")
     paper_win_rate = (summary["paper_wins"] / n * 100) if n > 0 else 0.0
     hostile_win_rate = (summary["hostile_wins"] / n * 100) if n > 0 else 0.0
     print(f"  Paper win rate:        {paper_win_rate:.1f}%")
