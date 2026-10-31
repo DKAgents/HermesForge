@@ -149,7 +149,7 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
 
         # V2: True limit order — fill at signal price, not bar open
         if _trades_through(row, entry_price, side):
-            fill_price = _apply_taker_fee(entry_price, is_entry=True, taker_bps=TAKER_FEE_BPS)
+            fill_price = _apply_taker_fee(entry_price, direction, is_entry=True, taker_bps=TAKER_FEE_BPS)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -198,7 +198,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 1. Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -210,7 +210,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 2. Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -222,7 +222,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
         # 3. Time stop: fill at worst print
         if bars_held >= MAX_BARS_HELD:
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "time",

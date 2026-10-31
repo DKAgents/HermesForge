@@ -43,15 +43,17 @@ DEFAULT_ROUND_TRIP_BPS = 20.0
 
 # ── Core helpers ────────────────────────────────────────────────────────────
 
-def _apply_taker_fee(price: float, is_entry: bool = True,
-                     taker_bps: float = 10.0) -> float:
-    """Deduct taker fee from fill price. Returns effective price after fee.
-
-    Fee always costs the trader: entry pays slightly more, exit receives
-    slightly less. (US-166 threads `direction` so the sell leg is adverse.)
+def _apply_taker_fee(price: float, direction: str, is_entry: bool,
+                     taker_bps: float) -> float:
+    """Adverse per-leg taker fee. buy leg: price*(1+fee) (costs more to buy);
+    sell leg: price*(1-fee) (nets less to sell). US-166 fix.
+    side = 'buy' iff (direction == 'long') == is_entry  (entry<>exit flips the side).
     """
+    side = "buy" if (direction == "long") == is_entry else "sell"
     fee_rate = taker_bps / 10_000
-    return round(price * (1 + fee_rate), 6)
+    if side == "buy":
+        return round(price * (1 + fee_rate), 6)
+    return round(price * (1 - fee_rate), 6)
 
 
 def _worst_print(bar, direction: str) -> float:

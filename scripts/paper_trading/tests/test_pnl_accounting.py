@@ -55,6 +55,60 @@ def test_cost_drag_degenerate_still_inf():
     assert _adversarial_cost_drag(100.0, 99.999) == float("inf")
 
 
+# ---------------------------------------------------------------------------
+# US-166: taker-fee direction
+# ---------------------------------------------------------------------------
+
+def test_buy_leg_is_adverse():
+    # long entry and short exit-cover are BUY legs: cost more than raw price
+    assert _apply_taker_fee(100.0, "long", True, 10.0) > 100.0
+    assert _apply_taker_fee(100.0, "short", False, 10.0) > 100.0
+    assert abs(_apply_taker_fee(100.0, "long", True, 10.0) - 100.1) < 1e-9
+
+
+def test_sell_leg_is_adverse():
+    # long exit and short entry are SELL legs: net LESS than raw price
+    assert _apply_taker_fee(100.0, "long", False, 10.0) < 100.0
+    assert _apply_taker_fee(100.0, "short", True, 10.0) < 100.0
+    assert abs(_apply_taker_fee(100.0, "short", True, 10.0) - 99.9) < 1e-9
+
+
+def test_long_round_trip_pays_full_adverse_fee():
+    taker = 10.0
+    entry = _apply_taker_fee(100.0, "long", True, taker)   # buy: 100.1
+    exitp = _apply_taker_fee(105.0, "long", False, taker)  # sell: 105 * 0.999
+    assert abs(entry - 100.0 * (1 + taker / 10000)) < 1e-9
+    assert abs(exitp - 105.0 * (1 - taker / 10000)) < 1e-9
+
+
+def test_short_round_trip_pays_full_adverse_fee():
+    taker = 10.0
+    entry = _apply_taker_fee(100.0, "short", True, taker)  # sell: 100 * 0.999
+    exitp = _apply_taker_fee(95.0, "short", False, taker)  # buy: 95 * 1.001
+    assert abs(entry - 100.0 * (1 - taker / 10000)) < 1e-9
+    assert abs(exitp - 95.0 * (1 + taker / 10000)) < 1e-9
+
+
+def test_long_and_short_round_trips_charge_equal_total_fee():
+    """A long round trip and a short round trip each pay exactly 2 * taker_bps
+    in adverse fees — the old direction-blind (favorable sell-leg) path is gone."""
+    taker = 10.0
+
+    # Flat round trip (buy then sell the same price): gross 0, fee = 2 * 10 bps.
+    l_entry = _apply_taker_fee(100.0, "long", True, taker)   # buy: 100.1
+    l_exit = _apply_taker_fee(100.0, "long", False, taker)   # sell: 99.9
+    long_fee = l_entry - l_exit                              # 0.2 == 20 bps
+
+    s_entry = _apply_taker_fee(100.0, "short", True, taker)  # sell: 99.9
+    s_exit = _apply_taker_fee(100.0, "short", False, taker)  # buy: 100.1
+    short_fee = s_exit - s_entry                             # 0.2 == 20 bps
+
+    assert abs(long_fee - 0.2) < 1e-9
+    assert abs(short_fee - 0.2) < 1e-9
+    # Both directions pay the SAME total adverse fee.
+    assert abs(long_fee - short_fee) < 1e-12
+
+
 if __name__ == "__main__":
     import inspect
     for name, fn in sorted(list(globals().items())):

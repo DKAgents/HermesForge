@@ -128,7 +128,7 @@ def check_entry_hostile(
         if _trades_through(row, entry_price, side):
             # Fill at next bar's open (t+1 open for the first bar, open of whichever bar)
             fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, is_entry=True, taker_bps=TAKER_FEE_BPS)
+            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=TAKER_FEE_BPS)
             return {
                 "filled": True,
                 "fill_price": fill_price,
@@ -177,7 +177,7 @@ def check_exit_hostile(
         # Stop: worst print on the crossing bar
         if _bar_touches(row, stop_price):
             exit_price = _worst_print(row, direction)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "stop",
@@ -189,7 +189,7 @@ def check_exit_hostile(
         # Target: limit fill — only if bar trades through
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -201,7 +201,7 @@ def check_exit_hostile(
         # Time stop
         if offset >= max_bars:
             exit_price = float(row["close"])
-            exit_price = _apply_taker_fee(exit_price, is_entry=False, taker_bps=TAKER_FEE_BPS)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=TAKER_FEE_BPS)
             return {
                 "action": "closed",
                 "exit_reason": "time",
