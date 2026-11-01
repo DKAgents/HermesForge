@@ -31,3 +31,6 @@ Before executing an EN071 pivot-point buy signal, define and place the C245 stop
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

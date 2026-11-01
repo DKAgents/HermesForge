@@ -31,3 +31,6 @@ When a pivot point buy signal fires, immediately pair it with a stop order and f
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

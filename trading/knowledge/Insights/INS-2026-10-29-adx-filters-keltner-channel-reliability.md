@@ -31,3 +31,6 @@ Traders should use ADX > 25 to favor Keltner breakout trades and ADX < 20 to fav
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]

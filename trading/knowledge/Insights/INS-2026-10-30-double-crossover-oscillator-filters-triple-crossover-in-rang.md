@@ -31,3 +31,6 @@ Traders should apply the triple crossover method only when the double-crossover 
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[INS-2026-09-14-double-crossover-as-oscillator-filter|Double crossover as oscillator filter]]
