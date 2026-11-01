@@ -36,9 +36,11 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation" / "scanners"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "discord"))
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
 from fetch_data import load_all as load_all_stocks
 from fetch_crypto_data import load_all as load_all_crypto
+from fee_source import get_round_trip_bps as _get_round_trip_bps
 
 # ── Strategy Registry ────────────────────────────────────────────────────────
 # Each strategy entry: module path, scan function name, parameter grid
@@ -273,10 +275,11 @@ OPTIMIZATION_SAMPLE = [
 CRYPTO_OPTIMIZATION_SAMPLE = ["BTC", "ETH", "SOL", "AVAX", "LINK", "DOGE", "ARB", "OP", "SUI", "BNB"]
 
 # ── Transaction Cost Model ────────────────────────────────────────────────────
-# Realistic costs for retail trading
-SPREAD_BPS = 5.0       # 5 basis points spread (0.05%)
-COMMISSION_BPS = 1.0   # 1 basis point commission (0.01%)
-# Total round-trip cost: 2 * (spread + commission) = 12bp = 0.12%
+# Costs are sourced from fee_source.py (single owner, US-165), NOT hardcoded here.
+# All-in round-trip bps: crypto 12 bp (2×4.5 taker + 2.5 slip + 0.5 funding),
+#                        stock   3 bp (2×1.0 taker + 1.0 slip + 0.0 funding).
+# Prior hardcoded values (crypto 5 bp, stock 12 bp) under-charged crypto and
+# over-charged stock — fixed in US-172.
 
 # ── Statistical Significance ──────────────────────────────────────────────────
 BOOTSTRAP_SAMPLES = 5000
@@ -292,8 +295,9 @@ def apply_costs(signal: dict, asset_class: str = "stock") -> dict:
       - Exit: pay spread/2 + commission
       - Gap risk: if the next bar opens beyond the stop, use open instead of stop
 
-    For stocks: spread = 5bp, commission = 1bp
-    For crypto: spread = 2bp (more liquid), commission = 0.5bp
+    Round-trip cost is sourced from fee_source.get_round_trip_bps(asset_class):
+      - crypto: 12 bp round trip (2×4.5 taker + 2.5 slip + 0.5 funding)
+      - stock:   3 bp round trip (2×1.0 taker + 1.0 slip)
     """
     entry = float(signal.get("entry_price", 0))
     stop = float(signal.get("stop_price", 0))
@@ -308,11 +312,10 @@ def apply_costs(signal: dict, asset_class: str = "stock") -> dict:
     if risk == 0:
         return signal
 
-    # Cost varies by asset class
-    if asset_class == "crypto":
-        total_cost_pct = (2 + 0.5) * 2 / 10000  # 5bp round trip
-    else:
-        total_cost_pct = (5 + 1) * 2 / 10000   # 12bp round trip
+    # Venue cost from fee_source.py (single owner, US-165). US-172: replaced the
+    # hardcoded crypto 5bp / stock 12bp with the corrected all-in round-trip.
+    round_trip_bps = _get_round_trip_bps(asset_class)
+    total_cost_pct = round_trip_bps / 10000
 
     # Dollar cost = entry * total_cost_pct
     dollar_cost = entry * total_cost_pct
@@ -787,10 +790,9 @@ def run_all_strategies(quick: bool = False, verbose: bool = True) -> dict:
 
     # Transaction cost summary
     print("\n" + "-" * 70)
-    print("Transaction Cost Model:")
-    print(f"  Stocks:  {SPREAD_BPS}bp spread + {COMMISSION_BPS}bp commission = "
-          f"{(SPREAD_BPS + COMMISSION_BPS) * 2}bp round-trip")
-    print(f"  Crypto:  2bp spread + 0.5bp commission = 5bp round-trip")
+    print("Transaction Cost Model (fee_source.py):")
+    print(f"  Stocks:  {_get_round_trip_bps('stock'):.0f}bp round-trip (2×1.0 taker + 1.0 slip)")
+    print(f"  Crypto:  {_get_round_trip_bps('crypto'):.0f}bp round-trip (2×4.5 taker + 2.5 slip + 0.5 funding)")
     print(f"  Gap risk: applied (next bar open if it gaps past stop)")
     print("-" * 70)
 
