@@ -1,7 +1,7 @@
 ---
 id: STR-20260719-ma-pullback-fibonacci-entry
 type: strategy
-status: active
+status: deprecated
 asset_class: stocks
 trade_style: swing
 timeframe: daily
@@ -11,6 +11,8 @@ confidence: medium
 publish_enabled: false
 publish_channel: stocks
 promoted_date: 2026-09-20
+deprecated_date: 2026-11-01
+deprecated_reason: "No backtest + no completed paper trade at promotion; promoted without evidence. Retired per US-171 (see cache/backtester_reevaluation_report.md)."
 evidence_links:
   - C050-secondary-trend-retracement-range
   - N085-fibonacci-percentage-retracements-38-50-62
