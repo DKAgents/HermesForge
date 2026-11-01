@@ -480,8 +480,10 @@ if __name__ == "__main__":
             result = run_phase1a(stock_symbols, "stock")
             
             if len(result) > 0:
-                out_path = Path(__file__).parent.parent.parent / "scripts" / "validation" / "results" / "STR-R-stocks-phase1a.csv"
-                result.to_csv(out_path, index=False)
+                import sys as _sys
+                _sys.path.insert(0, str(Path(__file__).parent.parent))
+                from fill_convention import write_phase1a
+                out_path = write_phase1a(result, Path(__file__).parent.parent / "results", "STR-R")
                 print(f"\nResults saved to {out_path}")
     elif args.dry_run:
         # Scan latest cached data

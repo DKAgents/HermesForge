@@ -65,18 +65,77 @@ BOOTSTRAP_SEED = 42
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
+def _shim_legacy_close_entry(df: pd.DataFrame) -> pd.DataFrame:
+    """Re-rate a legacy close-entry CSV through apply_next_open_entry (US-173).
+
+    The backward-compatibility bridge of §1.4: given a pre-US-173 CSV whose
+    entry_price is the signal-bar CLOSE, this loads each ticker's cached OHLC
+    bars and re-rates entry to open[signal+1], charging the adverse drift.
+    Rows whose ticker data are unavailable fall back to the original close-entry
+    R but are stamped `lookahead_shim=False` so the residue is visible.
+    """
+    cache = {}
+    out_rows = []
+
+    for _, row in df.iterrows():
+        sig = row.to_dict()
+        direction = str(sig.get("direction", "long"))
+        sym = sig.get("symbol") or sig.get("ticker")
+
+        bars = None
+        if sym and sym not in cache:
+            p = _MARKET_DATA_DIR / f"{sym}.parquet"
+            try:
+                b = pd.read_parquet(p)
+                if "Date" in b.columns:
+                    b = b.set_index("Date")
+                if not isinstance(b.index, pd.DatetimeIndex):
+                    b.index = pd.to_datetime(b.index)
+                cache[sym] = b
+            except Exception:
+                cache[sym] = None
+        if sym in cache:
+            bars = cache[sym]
+
+        if bars is not None:
+            sig = apply_next_open_entry(sig, bars, direction)
+            sig.setdefault("lookahead_shim", True)
+        else:
+            sig["fill_convention"] = FILL_CONVENTION
+            sig["lookahead_shim"] = False
+            sig["entry_drift_r"] = float("nan")
+        out_rows.append(sig)
+
+    return pd.DataFrame(out_rows)
+
+
 def load_trades(strategy_id):
-    """Load Phase 1A CSV. Returns sorted DataFrame or None."""
-    fname = f"{strategy_id}-stocks-phase1a.csv"
-    fpath = os.path.join(RESULTS_DIR, fname)
+    """Load Phase 1A CSV. Returns sorted DataFrame or None.
 
-    if not os.path.isfile(fpath):
-        return None
+    US-173: prefers the versioned `-v4` (next-open) CSV. Any CSV lacking the
+    `fill_convention` column is a legacy close-entry backtest and is REFUSED
+    (fail-closed) unless `--shim-legacy-close-entry` is set, in which case it is
+    re-rated through the fill_convention shim. Historic close-entry numbers are
+    never silently re-scored under a next-open model (§1.4 pt3).
+    """
+    candidates = [
+        versioned_phase1a_name(strategy_id),      # STR-X-stocks-phase1a-v4.csv
+        f"{strategy_id}-stocks-phase1a.csv",      # legacy unversioned
+    ]
+    df = None
+    fname_used = None
+    for fname in candidates:
+        fpath = os.path.join(RESULTS_DIR, fname)
+        if os.path.isfile(fpath):
+            try:
+                df = pd.read_csv(fpath, parse_dates=["date"])
+            except Exception as e:
+                print(f"  WARN: {fpath} failed to parse: {e}")
+                return None
+            fname_used = fname
+            break
 
-    try:
-        df = pd.read_csv(fpath, parse_dates=["date"])
-    except Exception as e:
-        print(f"  WARN: {fpath} failed to parse: {e}")
+    if df is None:
         return None
 
     if df.empty or len(df) < 2:  # header-only
@@ -86,6 +145,20 @@ def load_trades(strategy_id):
     df = df.dropna(subset=["r_multiple", "date"])
     if df.empty:
         return None
+
+    # US-173 fill-convention gate (fail-closed).
+    if "fill_convention" not in df.columns:
+        if not SHIM_LEGACY_CLOSE_ENTRY:
+            raise RuntimeError(
+                f"REFUSING to score legacy close-entry CSV '{fname_used}' for "
+                f"{strategy_id}: missing 'fill_convention' column. This is a "
+                f"pre-US-173 close-entry backtest and must not be silently "
+                f"re-scored under a next-open fill model it was never tested on "
+                f"(§1.4 pt3). Re-run the scanner to emit '{PHASE1A_VERSION}' "
+                f"(next-open), or pass --shim-legacy-close-entry to re-rate via "
+                f"the fill_convention shim."
+            )
+        df = _shim_legacy_close_entry(df)
 
     # Sort chronologically by entry date
     df = df.sort_values("date").reset_index(drop=True)
@@ -359,6 +432,7 @@ def main():
     report_lines.append("# US-114 Walk-Forward Validation Report")
     report_lines.append(f"**Generated:** {pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d %H:%M %Z')}")
     report_lines.append(f"**Job:** 19-strategy scan | IS=60% | OOS=40% | Bootstrap + t-test")
+    report_lines.append(f"**Fill convention:** {FILL_CONVENTION} (US-173)")
     report_lines.append("")
     report_lines.append("## Summary Table")
     report_lines.append("")
@@ -471,4 +545,15 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="US-114 walk-forward validation")
+    ap.add_argument("--shim-legacy-close-entry", action="store_true",
+                    help="Re-rate legacy close-entry CSVs (missing "
+                         "fill_convention) via the fill_convention shim instead "
+                         "of refusing them (US-173).")
+    args = ap.parse_args()
+    if args.shim_legacy_close_entry:
+        SHIM_LEGACY_CLOSE_ENTRY = True
+        print("[US-173] --shim-legacy-close-entry set: legacy CSVs will be "
+              "re-rated to next-open via fill_convention.apply_next_open_entry.")
     main()

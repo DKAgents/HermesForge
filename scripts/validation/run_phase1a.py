@@ -32,6 +32,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 
 from fetch_data import load_all, fetch_all
 from universe import get_universe
+from fill_convention import add_fill_convention, versioned_phase1a_name, FILL_CONVENTION
 from scanners.scanner_a_ma_pullback import scan as scan_a
 from scanners.scanner_b_macd_divergence import scan as scan_b
 from scanners.scanner_c_breakout_volume import scan as scan_c
@@ -81,8 +82,9 @@ def run_scanner(strategy_key: str, data: dict[str, pd.DataFrame]) -> pd.DataFram
         return pd.DataFrame()
     results = pd.DataFrame(all_signals)
     results["strategy_id"] = strategy_id
+    results = add_fill_convention(results)  # US-173: stamp fill convention
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = RESULTS_DIR / f"{strategy_id}-phase1a.csv"
+    out_path = RESULTS_DIR / versioned_phase1a_name(strategy_id)
     results.to_csv(out_path, index=False)
     print(f"  Saved {len(results)} signals → {out_path.name}")
     return results
@@ -181,6 +183,7 @@ def write_report(summaries: list[dict]):
     lines = [
         "# Phase 1A Results Summary",
         f"Generated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}",
+        f"Fill convention: {FILL_CONVENTION} (US-173)",
         "",
         "## Classification Criteria (ADR-004)",
         f"- **Kill**: < {KILL_SIGNALS_PER_YEAR} signals/year OR avg R < {KILL_AVG_R} (frictionless)",
@@ -278,8 +281,9 @@ def run_external_scanner(scanner_path: str, data: dict, strategy_id: str) -> pd.
         return pd.DataFrame()
     results = pd.DataFrame(all_signals)
     results["strategy_id"] = strategy_id
+    results = add_fill_convention(results)  # US-173: stamp fill convention
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = RESULTS_DIR / f"{strategy_id}-phase1a.csv"
+    out_path = RESULTS_DIR / versioned_phase1a_name(strategy_id)
     results.to_csv(out_path, index=False)
     print(f"  Saved {len(results)} signals -> {out_path.name}")
     return results

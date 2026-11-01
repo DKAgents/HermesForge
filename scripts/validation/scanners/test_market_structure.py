@@ -236,46 +236,54 @@ class TestComputePullbackEntry(unittest.TestCase):
         # support=95, bar signal+3 has low=94 -> entry=95, entry_idx=signal+3.
         df = self._df()
         set_bar(df, self.SIGNAL_IDX + 3, opn=100.0, high=100.0, low=94.0, close=95.5)
-        entry_price, entry_idx = ms.compute_pullback_entry(
+        entry_price, entry_idx, filled = ms.compute_pullback_entry(
             df, signal_idx=self.SIGNAL_IDX, direction="long", max_wait_bars=5,
-            pivot_distance=5, ema_span=20, fallback="signal")
+            pivot_distance=5, ema_span=20, fallback="next_open")
         self.assertAlmostEqual(entry_price, 95.0, places=6)
         self.assertEqual(entry_idx, self.SIGNAL_IDX + 3)
+        self.assertTrue(filled, "limit touch must set filled_limit=True")
 
     def test_t11_pullback_gap_fill_long(self):
         # bar signal+3 opens at 93 (below support 95) -> fill at open 93.
         df = self._df()
         set_bar(df, self.SIGNAL_IDX + 3, opn=93.0, high=94.0, low=92.0, close=93.5)
-        entry_price, entry_idx = ms.compute_pullback_entry(
+        entry_price, entry_idx, filled = ms.compute_pullback_entry(
             df, signal_idx=self.SIGNAL_IDX, direction="long", max_wait_bars=5,
-            pivot_distance=5, ema_span=20, fallback="signal")
+            pivot_distance=5, ema_span=20, fallback="next_open")
         self.assertAlmostEqual(entry_price, 93.0, places=6,
                                msg="gap-below-limit must fill at the open")
         self.assertEqual(entry_idx, self.SIGNAL_IDX + 3)
+        self.assertTrue(filled, "gap-below-limit must set filled_limit=True")
 
     def test_t12_pullback_no_touch_fallback_signal(self):
-        # No pullback touch -> fallback="signal" -> (close[signal], signal).
+        # No pullback touch -> fallback="next_open" -> (open[signal+1], signal+1).
+        # US-173: the market fallback fills at the NEXT bar's open, never the
+        # signal close.
         df = self._df()
-        entry_price, entry_idx = ms.compute_pullback_entry(
+        entry_price, entry_idx, filled = ms.compute_pullback_entry(
             df, signal_idx=self.SIGNAL_IDX, direction="long", max_wait_bars=5,
-            pivot_distance=5, ema_span=20, fallback="signal")
-        self.assertEqual(entry_idx, self.SIGNAL_IDX)
-        self.assertAlmostEqual(entry_price, float(df["close"].iloc[self.SIGNAL_IDX]),
+            pivot_distance=5, ema_span=20, fallback="next_open")
+        self.assertEqual(entry_idx, self.SIGNAL_IDX + 1)
+        self.assertAlmostEqual(entry_price, float(df["open"].iloc[self.SIGNAL_IDX + 1]),
                                places=6)
+        self.assertFalse(filled, "market fallback must set filled_limit=False")
 
     def test_t13_pullback_no_touch_fallback_window_end(self):
-        # No touch -> fallback="window_end" -> (close[signal+5], signal+5).
+        # No touch -> fallback="window_end" -> (open[signal+max_wait+1], signal+max_wait+1).
+        # US-173: the +1 shift keeps the fill at a NEXT bar's open after the wait
+        # window closes out, never a close inside the window.
         max_wait = 5
         n = self.SIGNAL_IDX + max_wait + 5
         df = self._df(n=n)
-        entry_price, entry_idx = ms.compute_pullback_entry(
+        entry_price, entry_idx, filled = ms.compute_pullback_entry(
             df, signal_idx=self.SIGNAL_IDX, direction="long",
             max_wait_bars=max_wait, pivot_distance=5, ema_span=20,
             fallback="window_end")
-        self.assertEqual(entry_idx, self.SIGNAL_IDX + max_wait)
+        self.assertEqual(entry_idx, self.SIGNAL_IDX + max_wait + 1)
         self.assertAlmostEqual(entry_price,
-                              float(df["close"].iloc[self.SIGNAL_IDX + max_wait]),
+                              float(df["open"].iloc[self.SIGNAL_IDX + max_wait + 1]),
                               places=6)
+        self.assertFalse(filled, "window_end fallback must set filled_limit=False")
 
 
 class TestComputeStructureTrade(unittest.TestCase):
@@ -300,7 +308,7 @@ class TestComputeStructureTrade(unittest.TestCase):
         atr = const_atr(len(df), 2.0)
         trade = ms.compute_structure_trade(
             df, signal_idx=30, direction="long", max_wait_bars=5, min_rr=1.5,
-            max_atr=2.0, atr=atr, pivot_distance=5, entry_fallback="signal")
+            max_atr=2.0, atr=atr, pivot_distance=5, entry_fallback="next_open")
         self.assertIsNotNone(trade, "happy path must produce a trade dict")
         for key in ("entry_price", "entry_idx", "stop_price", "target_price",
                     "risk", "rr", "entry_type", "decision_idx"):
@@ -324,7 +332,7 @@ class TestComputeStructureTrade(unittest.TestCase):
         atr = const_atr(n, 1.0)
         trade = ms.compute_structure_trade(
             df, signal_idx=30, direction="long", max_wait_bars=5, min_rr=1.5,
-            max_atr=2.0, atr=atr, pivot_distance=5, entry_fallback="signal")
+            max_atr=2.0, atr=atr, pivot_distance=5, entry_fallback="next_open")
         self.assertIsNone(trade, "no valid target must yield None")
 
 
@@ -355,7 +363,7 @@ class TestLookAheadRegression(unittest.TestCase):
         trade_a = ms.compute_structure_trade(
             df, signal_idx=signal_idx, direction="long", max_wait_bars=5,
             min_rr=1.5, max_atr=2.0, atr=None, pivot_distance=5,
-            entry_fallback="signal")
+            entry_fallback="next_open")
 
         rng = np.random.default_rng(99)
         n_ext = 50
@@ -371,7 +379,7 @@ class TestLookAheadRegression(unittest.TestCase):
         trade_b = ms.compute_structure_trade(
             df_ext, signal_idx=signal_idx, direction="long", max_wait_bars=5,
             min_rr=1.5, max_atr=2.0, atr=None, pivot_distance=5,
-            entry_fallback="signal")
+            entry_fallback="next_open")
         self.assertEqual(trade_a, trade_b,
                          "decision at signal_idx=100 must not depend on far-future bars")
 
@@ -416,9 +424,9 @@ class TestLookAheadRegression(unittest.TestCase):
 
         # Baseline: add a pullback touch at 33 (low=94 <= support 95) -> fill 95.
         set_bar(df_base, 33, opn=base, high=base, low=94.0, close=95.5)
-        ep_base, ei_base = ms.compute_pullback_entry(
+        ep_base, ei_base, _ = ms.compute_pullback_entry(
             df_base, signal_idx=signal_idx, direction="long", max_wait_bars=5,
-            pivot_distance=5, ema_span=20, fallback="signal")
+            pivot_distance=5, ema_span=20, fallback="next_open")
         self.assertAlmostEqual(ep_base, 95.0, places=6)
         self.assertEqual(ei_base, 33)
 
@@ -437,9 +445,9 @@ class TestLookAheadRegression(unittest.TestCase):
         # Re-assert the touch at 33 (the loop above may have raised it to 96).
         set_bar(df_ext, 33, opn=base, high=base, low=94.0, close=95.5)
 
-        ep_ext, ei_ext = ms.compute_pullback_entry(
+        ep_ext, ei_ext, _ = ms.compute_pullback_entry(
             df_ext, signal_idx=signal_idx, direction="long", max_wait_bars=5,
-            pivot_distance=5, ema_span=20, fallback="signal")
+            pivot_distance=5, ema_span=20, fallback="next_open")
         # The new 90 low is NOT confirmed at signal_idx=30 (confirms at 37), so
         # it must NOT be used as the *support level*: support stays 95 and the
         # fill price is 95 (NOT 90). The fill timing does change: bar 32's deep
@@ -492,10 +500,13 @@ class TestPropertyInvariants(unittest.TestCase):
                     trade = ms.compute_structure_trade(
                         df, signal_idx=sidx, direction=direction,
                         max_wait_bars=5, min_rr=1.5, max_atr=2.0, atr=None,
-                        pivot_distance=5, entry_fallback="signal")
+                        pivot_distance=5, entry_fallback="next_open")
                     if trade is not None:
-                        self.assertGreaterEqual(trade["decision_idx"],
-                                                trade["entry_idx"])
+                        # US-173: decision_idx is never BEFORE the signal bar.
+                        # For a pullback it equals entry_idx; for a next-open
+                        # market fallback it is frozen at signal_idx (so it may
+                        # be < entry_idx — that is deliberate, not a leak).
+                        self.assertGreaterEqual(trade["decision_idx"], sidx)
                         self.assertGreater(trade["risk"], 0)
 
     def test_p2_stop_correct_side_and_positive_risk(self):

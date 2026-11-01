@@ -56,9 +56,27 @@ def add_fill_convention(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def versioned_phase1a_name(strategy_id: str, asset_class: str = "stock") -> str:
+def versioned_phase1a_name(strategy_id: str, asset_class: str = "stocks") -> str:
     """Canonical versioned results filename, e.g. 'STR-T-stocks-phase1a-v4.csv'."""
     return f"{strategy_id}-{asset_class}-phase1a-{PHASE1A_VERSION}.csv"
+
+
+def write_phase1a(results_df: pd.DataFrame, results_dir, strategy_id: str,
+                  asset_class: str = "stocks"):
+    """Stamp fill-convention columns and write a versioned phase1a CSV.
+
+    Single owner of the next-open CSV emission used by every scanner's
+    __main__/run_phase1a block and the master runner. Never overwrites a legacy
+    close-entry CSV in place (§1.4 pt1 "no silent data loss").
+    Returns the written Path.
+    """
+    import pathlib
+    out_dir = pathlib.Path(results_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamped = add_fill_convention(results_df)
+    out_path = out_dir / versioned_phase1a_name(strategy_id, asset_class)
+    stamped.to_csv(out_path, index=False)
+    return out_path
 
 
 def apply_next_open_entry(signal: dict, df: pd.DataFrame, direction: str) -> dict:
