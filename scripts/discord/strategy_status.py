@@ -183,29 +183,29 @@ STRATEGIES = [
     {
         "id": "STR-R",
         "name": "Williams Alligator Trend",
-        "status": "LIVE",
+        "status": "DEMOTED",
         "description": "Bill Williams' Alligator — SMMA(13/8/5) Jaw/Teeth/Lips. Enters on awakening from sleep. Phase 1A: 35.7% WR, +0.242R, PF 1.44.",
         "regimes": ["trending"],
         "edge": "Trend awakening detection via SMMA fan",
     },
     {"id": "STR-S", "name": "Elliott Wave Corrective", "status": "KILLED", "description": "5-wave impulse + A-B-C correction at 38-61.8% retracement. KILLED: US-114 v2 — no edge after look-ahead fix removal (p=0.069, avg R=0.077).", "regimes": ["trending"], "edge": "Post-correction trend resumption (FAILED US-114 re-validation)"},
-    {"id": "STR-T", "name": "Head & Shoulders Reversal", "status": "LIVE", "description": "Classic 3-peak reversal, neckline break entry. Phase 1A: 63.6% WR, +0.248R, PF 1.99.", "regimes": ["reversal"], "edge": "Chart pattern reversal"},
-    {"id": "STR-U", "name": "Double Top/Bottom", "status": "LIVE", "description": "Two peaks/troughs within 3% tolerance, confirmation break. Phase 1A: 62.8% WR, +0.165R, PF 1.70.", "regimes": ["reversal"], "edge": "Double extreme reversal"},
-    {"id": "STR-V", "name": "Triangle Breakout", "status": "LIVE", "description": "Symmetrical/ascending/descending, volume-confirmed breakout. Phase 1A: 56.3% WR, +0.240R, PF 1.68.", "regimes": ["trending"], "edge": "Contraction breakout"},
-    {"id": "STR-W", "name": "Flags & Pennants", "status": "LIVE", "description": "Mast + consolidation continuation, breakout resumes trend. Phase 1A: 54.8% WR, +0.154R, PF 1.41.", "regimes": ["trending"], "edge": "Continuation pattern"},
-    {"id": "STR-X", "name": "Parabolic SAR", "status": "LIVE", "description": "Pure mechanical stop-and-reverse, SAR flip signals. Phase 1A: 50.5% WR, +0.275R, PF 1.64.", "regimes": ["all"], "edge": "Mechanical SAR flip"},
-    {"id": "STR-Y", "name": "ADX/DMI Directional", "status": "LIVE", "description": "DI cross with ADX>22 trend filter, 1.0 ATR stop. v2.0 (US-114 sweep optimized): OOS avg R=0.294, PF=1.46, p<0.0001. Original p=0.066 was false negative from suboptimal defaults (ADX=25, stop=2.0 ATR).", "regimes": ["trending"], "edge": "Directional movement cross"},
-    {"id": "STR-Z", "name": "Stochastic Oscillator", "status": "LIVE", "description": "%K/%D cross in oversold/overbought zones. Phase 1A: 44.7% WR, +0.222R, PF 1.43.", "regimes": ["ranging"], "edge": "Oscillator mean reversion"},
-    {"id": "STR-AA", "name": "Williams %R", "status": "LIVE", "description": "%R crossing above -80 (oversold exit). Phase 1A: 43.3% WR, +0.205R, PF 1.39.", "regimes": ["ranging"], "edge": "Momentum oscillator"},
-    {"id": "STR-AB", "name": "OBV Divergence", "status": "LIVE", "description": "Price lower low + OBV higher low = bullish divergence. Phase 1A: 53.0% WR, +0.251R, PF 1.72.", "regimes": ["reversal"], "edge": "Volume-price divergence"},
-    {"id": "STR-AC", "name": "CCI Oscillator", "status": "LIVE", "description": "CCI crossing above -100 (oversold exit). Phase 1A: 44.1% WR, +0.229R, PF 1.44.", "regimes": ["ranging"], "edge": "Channel index mean reversion"},
-    {"id": "STR-AD", "name": "Keltner Channel", "status": "LIVE", "description": "EMA20 ± 2×ATR breakout, stop at EMA. Phase 1A: 52.6% WR, +0.306R, PF 1.73.", "regimes": ["trending"], "edge": "Volatility channel breakout"},
-    {"id": "STR-AE", "name": "4-Week Rule (Donchian)", "status": "LIVE", "description": "20-day high/low channel breakout, simplest trend system. Phase 1A: 57.5% WR, +0.194R, PF 1.72.", "regimes": ["trending"], "edge": "Channel breakout"},
-    {"id": "STR-AF", "name": "Candlestick Reversal", "status": "LIVE", "description": "Hammer, Morning Star, Piercing, 3 White Soldiers, etc. Phase 1A: 42.2% WR, +0.164R, PF 1.29.", "regimes": ["reversal"], "edge": "Candle pattern reversal"},
-    {"id": "STR-AG", "name": "Wedge Breakout", "status": "LIVE", "description": "Rising/falling wedge contraction, breakout entry. Phase 1A: 57.2% WR, +0.279R, PF 1.81.", "regimes": ["reversal"], "edge": "Wedge breakout"},
+    {"id": "STR-T", "name": "Head & Shoulders Reversal", "status": "DEMOTED", "description": "Classic 3-peak reversal, neckline break entry. Phase 1A: 63.6% WR, +0.248R, PF 1.99.", "regimes": ["reversal"], "edge": "Chart pattern reversal"},
+    {"id": "STR-U", "name": "Double Top/Bottom", "status": "DEMOTED", "description": "Two peaks/troughs within 3% tolerance, confirmation break. Phase 1A: 62.8% WR, +0.165R, PF 1.70.", "regimes": ["reversal"], "edge": "Double extreme reversal"},
+    {"id": "STR-V", "name": "Triangle Breakout", "status": "DEMOTED", "description": "Symmetrical/ascending/descending, volume-confirmed breakout. Phase 1A: 56.3% WR, +0.240R, PF 1.68.", "regimes": ["trending"], "edge": "Contraction breakout"},
+    {"id": "STR-W", "name": "Flags & Pennants", "status": "DEMOTED", "description": "Mast + consolidation continuation, breakout resumes trend. Phase 1A: 54.8% WR, +0.154R, PF 1.41.", "regimes": ["trending"], "edge": "Continuation pattern"},
+    {"id": "STR-X", "name": "Parabolic SAR", "status": "DEMOTED", "description": "Pure mechanical stop-and-reverse, SAR flip signals. Phase 1A: 50.5% WR, +0.275R, PF 1.64.", "regimes": ["all"], "edge": "Mechanical SAR flip"},
+    {"id": "STR-Y", "name": "ADX/DMI Directional", "status": "DEMOTED", "description": "DI cross with ADX>22 trend filter, 1.0 ATR stop. v2.0 (US-114 sweep optimized): OOS avg R=0.294, PF=1.46, p<0.0001. Original p=0.066 was false negative from suboptimal defaults (ADX=25, stop=2.0 ATR).", "regimes": ["trending"], "edge": "Directional movement cross"},
+    {"id": "STR-Z", "name": "Stochastic Oscillator", "status": "DEMOTED", "description": "%K/%D cross in oversold/overbought zones. Phase 1A: 44.7% WR, +0.222R, PF 1.43.", "regimes": ["ranging"], "edge": "Oscillator mean reversion"},
+    {"id": "STR-AA", "name": "Williams %R", "status": "DEMOTED", "description": "%R crossing above -80 (oversold exit). Phase 1A: 43.3% WR, +0.205R, PF 1.39.", "regimes": ["ranging"], "edge": "Momentum oscillator"},
+    {"id": "STR-AB", "name": "OBV Divergence", "status": "DEMOTED", "description": "Price lower low + OBV higher low = bullish divergence. Phase 1A: 53.0% WR, +0.251R, PF 1.72.", "regimes": ["reversal"], "edge": "Volume-price divergence"},
+    {"id": "STR-AC", "name": "CCI Oscillator", "status": "DEMOTED", "description": "CCI crossing above -100 (oversold exit). Phase 1A: 44.1% WR, +0.229R, PF 1.44.", "regimes": ["ranging"], "edge": "Channel index mean reversion"},
+    {"id": "STR-AD", "name": "Keltner Channel", "status": "DEMOTED", "description": "EMA20 ± 2×ATR breakout, stop at EMA. Phase 1A: 52.6% WR, +0.306R, PF 1.73.", "regimes": ["trending"], "edge": "Volatility channel breakout"},
+    {"id": "STR-AE", "name": "4-Week Rule (Donchian)", "status": "DEMOTED", "description": "20-day high/low channel breakout, simplest trend system. Phase 1A: 57.5% WR, +0.194R, PF 1.72.", "regimes": ["trending"], "edge": "Channel breakout"},
+    {"id": "STR-AF", "name": "Candlestick Reversal", "status": "DEMOTED", "description": "Hammer, Morning Star, Piercing, 3 White Soldiers, etc. Phase 1A: 42.2% WR, +0.164R, PF 1.29.", "regimes": ["reversal"], "edge": "Candle pattern reversal"},
+    {"id": "STR-AG", "name": "Wedge Breakout", "status": "DEMOTED", "description": "Rising/falling wedge contraction, breakout entry. Phase 1A: 57.2% WR, +0.279R, PF 1.81.", "regimes": ["reversal"], "edge": "Wedge breakout"},
     {"id": "STR-AH", "name": "Island Reversal", "status": "KILLED", "description": "Gap up then gap down (or vice versa) with isolated price island. KILLED: US-114 — survivorship bias artifact (84% time exits, beta not edge).", "regimes": ["reversal"], "edge": "Gap island reversal (survivorship bias artifact)"},
     {"id": "STR-AI", "name": "Seasonal Tendency", "status": "KILLED", "description": "Enter months with >60% historical positive return rate. KILLED: US-114 — OOS p=0.163, structural breakdown (2023: 93% WR → 2026: 35% WR), November alone = 44% of total R. Parameter tuning cannot fix seasonal instability.", "regimes": ["all"], "edge": "Calendar seasonal (FAILED US-114 — structural breakdown)"},
-    {"id": "STR-AJ", "name": "Intermarket Rotation", "status": "LIVE", "description": "Long stocks when DXY falling + yields falling (risk-on). Phase 1A: 54.9% WR, +0.463R, PF 2.16.", "regimes": ["trending"], "edge": "Macro intermarket"},
+    {"id": "STR-AJ", "name": "Intermarket Rotation", "status": "DEMOTED", "description": "Long stocks when DXY falling + yields falling (risk-on). Phase 1A: 54.9% WR, +0.463R, PF 2.16.", "regimes": ["trending"], "edge": "Macro intermarket"},
 ]
 
 # ── Research Pipeline Strategies ──────────────────────────────────────────────
@@ -295,6 +295,7 @@ def _build_research_strategies() -> list:
 STATUS_EMOJI = {
     "LIVE": "🟢",
     "WATCH": "🟡",
+    "DEMOTED": "🟠",
     "KILLED": "🔴",
     "CANDIDATE": "🔬",
 }
@@ -302,6 +303,7 @@ STATUS_EMOJI = {
 STATUS_COLOR = {
     "LIVE": 0x3fb950,     # green
     "WATCH": 0xe3b341,    # yellow/gold
+    "DEMOTED": 0xf08941,  # orange — no claimable edge (frictionless eval)
     "KILLED": 0xf85149,   # red
     "CANDIDATE": 0xa371f7, # purple
 }
@@ -349,6 +351,7 @@ def format_strategy_dashboard() -> dict:
     manual = STRATEGIES
     manual_live = [s for s in manual if s["status"] == "LIVE"]
     manual_watch = [s for s in manual if s["status"] == "WATCH"]
+    manual_demoted = [s for s in manual if s["status"] == "DEMOTED"]
     manual_killed = [s for s in manual if s["status"] == "KILLED"]
 
     # Research strategies
@@ -365,7 +368,9 @@ def format_strategy_dashboard() -> dict:
         "inline": False,
     })
 
-    for status, label in [("LIVE", "LIVE"), ("WATCH", "WATCH"), ("KILLED", "KILLED")]:
+    for status, label in [("LIVE", "LIVE"), ("WATCH", "WATCH"),
+                          ("DEMOTED", "DEMOTED (no claimable edge — frictionless eval)"),
+                          ("KILLED", "KILLED")]:
         field = _format_group(manual, status, label)
         if field:
             fields.append(field)
@@ -411,7 +416,8 @@ def format_strategy_dashboard() -> dict:
         "description": (
             f"**{total_strategies} strategies** ({len(manual)} manual + {len(research_strategies)} research) | "
             f"🟢 {len(manual_live)} live | 🟡 {len(manual_watch)} watch | "
-            f"🔴 {len(manual_killed)} killed | 🔬 {len(research_candidates)} candidates\n"
+            f"🟠 {len(manual_demoted)} demoted | 🔴 {len(manual_killed)} killed | "
+            f"🔬 {len(research_candidates)} candidates\n"
             f"Last updated: {dt.strftime('%Y-%m-%d %H:%M %Z')}"
         ),
         "color": 0x58a6ff,

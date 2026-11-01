@@ -73,52 +73,52 @@ STRATEGY_REGISTRY = {
     "STR-Q": {"name": "Liquidity Sweep Reversal", "asset": "stock", "status": "LIVE",
               "regime_best": ["all"], "regime_avoid": [],
               "base_risk": 1.0, "type": "reversal"},
-    "STR-R": {"name": "Williams Alligator Trend", "asset": "stock", "status": "LIVE",
+    "STR-R": {"name": "Williams Alligator Trend", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "trend_following"},
-    "STR-T": {"name": "Head & Shoulders Reversal", "asset": "stock", "status": "LIVE",
+    "STR-T": {"name": "Head & Shoulders Reversal", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["neutral", "caution"], "regime_avoid": ["risk_on"],
               "base_risk": 1.0, "type": "reversal"},
-    "STR-U": {"name": "Double Top/Bottom", "asset": "stock", "status": "LIVE",
+    "STR-U": {"name": "Double Top/Bottom", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["neutral", "caution"], "regime_avoid": ["risk_on"],
               "base_risk": 1.0, "type": "reversal"},
-    "STR-V": {"name": "Triangle Breakout", "asset": "stock", "status": "LIVE",
+    "STR-V": {"name": "Triangle Breakout", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "breakout"},
-    "STR-W": {"name": "Flags & Pennants", "asset": "stock", "status": "LIVE",
+    "STR-W": {"name": "Flags & Pennants", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "breakout"},
-    "STR-X": {"name": "Parabolic SAR", "asset": "stock", "status": "LIVE",
+    "STR-X": {"name": "Parabolic SAR", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "trend_following"},
-    "STR-Y": {"name": "ADX/DMI Directional", "asset": "stock", "status": "LIVE",
+    "STR-Y": {"name": "ADX/DMI Directional", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "trend_following"},
-    "STR-Z": {"name": "Stochastic Oscillator", "asset": "stock", "status": "LIVE",
+    "STR-Z": {"name": "Stochastic Oscillator", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["neutral", "diversified"], "regime_avoid": ["risk_on"],
               "base_risk": 1.0, "type": "mean_reversion"},
-    "STR-AA": {"name": "Williams %R", "asset": "stock", "status": "LIVE",
+    "STR-AA": {"name": "Williams %R", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["neutral", "diversified"], "regime_avoid": ["risk_on"],
                "base_risk": 1.0, "type": "mean_reversion"},
-    "STR-AB": {"name": "OBV Divergence", "asset": "stock", "status": "LIVE",
+    "STR-AB": {"name": "OBV Divergence", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["neutral", "caution"], "regime_avoid": ["risk_on"],
                "base_risk": 1.0, "type": "divergence"},
-    "STR-AC": {"name": "CCI Oscillator", "asset": "stock", "status": "LIVE",
+    "STR-AC": {"name": "CCI Oscillator", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["neutral", "diversified"], "regime_avoid": ["risk_on"],
                "base_risk": 1.0, "type": "mean_reversion"},
-    "STR-AD": {"name": "Keltner Channel", "asset": "stock", "status": "LIVE",
+    "STR-AD": {"name": "Keltner Channel", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
                "base_risk": 1.0, "type": "breakout"},
-    "STR-AE": {"name": "4-Week Rule (Donchian)", "asset": "stock", "status": "LIVE",
+    "STR-AE": {"name": "4-Week Rule (Donchian)", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
                "base_risk": 1.0, "type": "breakout"},
-    "STR-AF": {"name": "Candlestick Reversal", "asset": "stock", "status": "LIVE",
+    "STR-AF": {"name": "Candlestick Reversal", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["neutral", "diversified", "caution"], "regime_avoid": [],
                "base_risk": 1.0, "type": "reversal"},
-    "STR-AG": {"name": "Wedge Breakout", "asset": "stock", "status": "LIVE",
+    "STR-AG": {"name": "Wedge Breakout", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["neutral", "caution"], "regime_avoid": ["risk_on"],
                "base_risk": 1.0, "type": "reversal"},
-    "STR-AJ": {"name": "Intermarket Rotation", "asset": "stock", "status": "LIVE",
+    "STR-AJ": {"name": "Intermarket Rotation", "asset": "stock", "status": "DEMOTED",
                "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
                "base_risk": 1.0, "type": "macro"},
     # Autonomous-pipeline deployed 2026-08-18 (Phase 1A positive, WATCH risk).
@@ -269,11 +269,16 @@ def get_strategy_directives() -> dict:
     directives = {}
     
     for strat_id, strat_info in STRATEGY_REGISTRY.items():
-        if strat_info["status"] == "KILLED":
+        if strat_info["status"] in ("KILLED", "DEMOTED"):
+            if strat_info["status"] == "DEMOTED":
+                reason = ("no claimable edge (frictionless eval) — "
+                          "see cache/backtester_reevaluation_report.md")
+            else:
+                reason = "Strategy KILLED — do not run"
             directives[strat_id] = {
                 "action": "skip",
                 "risk_multiplier": 0.0,
-                "reason": f"Strategy KILLED — do not run",
+                "reason": reason,
             }
             continue
         
