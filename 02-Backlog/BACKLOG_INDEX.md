@@ -79,6 +79,13 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-166 | EPIC-014 | Fix `_apply_taker_fee` direction-blindness | P1 | US-164 |
 | US-167 | EPIC-014 | `_adversarial_cost_drag` self-guard | P2 | None |
 | US-168 | EPIC-014 | Full bar-level hostile-fill re-simulation (install pyarrow) | P1 | US-165 |
+| US-169 | EPIC-014 | Regenerate STR-Q ledger + rewire report to corrected accounting | P0 | None |
+| US-170 | EPIC-014 | Demote 16 chart-pattern "LIVE" strategies (frictionless edge) | P0 | None |
+| US-171 | EPIC-014 | Retire STR-A + reconcile Active/KILLED | P1 | None |
+| US-172 | EPIC-014 | Fix crypto cost in walk_forward.py (5→12 bps) | P1 | None |
+| US-173 | EPIC-014 | Fix look-ahead close-entry in discovery backtests | P1 | None |
+| US-174 | EPIC-014 | Make G3 fill-realism a mandatory promotion gate | P0 | None |
+| US-175 | EPIC-014 | STR-B realistic-fill re-backtest (sole survivor) | P1 | US-172 |
 
 ---
 
@@ -138,7 +145,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-169
+- **Next Story Number:** US-176
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
