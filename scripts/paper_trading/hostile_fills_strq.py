@@ -50,6 +50,8 @@ from pnl_accounting import (
     _close_outcome,
     _reconcile_signal_dedup,
     DEGENERATE_RISK_FLOOR,
+    widen_stop,
+    STOP_WIDEN_FACTOR,
 )
 
 
@@ -127,8 +129,7 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
     """
     entry_price = float(trade["entry_price"])
     direction = trade["direction"]
-    side = "buy" if direction == "long" else "sell"
-    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "crypto"))
+    maker_bps = fee_source.get_maker_bps(trade.get("asset_class", "crypto"))
 
     signal_bar_idx = _find_signal_bar(bars, trade["entry_date"])
     if signal_bar_idx is None:
@@ -148,16 +149,19 @@ def check_entry_hostile(trade: dict, bars: pd.DataFrame) -> dict:
         if row["bar_idx"] < signal_bar_idx + 1 + CONFIRMATION_BARS:
             continue
 
-        # Limit order: must trade through entry_price
-        if _trades_through(row, entry_price, side):
-            fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=taker_bps)
+        # US-180: resting limit at the swept level — fill (as MAKER) when price
+        # trades back to the level, never chase trade-through. `taker_bps` here
+        # is really the per-leg bps (maker for a limit fill).
+        if _bar_touches(row, entry_price):
+            fill_price = _apply_taker_fee(float(entry_price), direction, is_entry=True, taker_bps=maker_bps)
             return {
                 "filled": True,
                 "fill_price": fill_price,
                 "fill_bar_idx": int(row["bar_idx"]),
                 "fill_bar_date": str(row["date"])[:16],
-                "fill_reason": f"trade-through at bar {row['bar_idx']}",
+                "fill_reason": "limit fill at swept level",
+                "fill_mode": "limit",
+                "fee_bps": maker_bps,
             }
 
     return {
@@ -188,6 +192,7 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
     stop_price = float(trade["stop_price"])
     target_price = float(trade["target_price"])
     taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "crypto"))
+    maker_bps = fee_source.get_maker_bps(trade.get("asset_class", "crypto"))
 
     stop_side = "sell" if direction == "long" else "buy"
     target_side = "sell" if direction == "long" else "buy"
@@ -210,10 +215,10 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
                 "bars_held": bars_held,
             }
 
-        # 2. Target: limit fill — only if bar trades through
+        # 2. Target: limit fill — only if bar trades through (maker = resting limit)
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=maker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -427,8 +432,13 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         hostile_entry_price = entry_result["fill_price"]
         entry_bar_idx = entry_result["fill_bar_idx"]
 
-        # Build a trade dict with hostile entry price for R-computation
-        hostile_trade = {**trade, "entry_price": hostile_entry_price}
+        paper_entry = float(trade["entry_price"])
+        paper_stop = float(trade["stop_price"])
+        # US-180: widen the stop by STOP_WIDEN_FACTOR before modeling the exit.
+        widened_stop = widen_stop(paper_entry, paper_stop, trade["direction"], STOP_WIDEN_FACTOR)
+
+        # Build a trade dict with hostile entry price + widened stop for R-computation
+        hostile_trade = {**trade, "entry_price": hostile_entry_price, "stop_price": widened_stop}
 
         paper_closed = trade.get("status", "") == "closed"
 
@@ -436,13 +446,13 @@ def run(dry_run: bool = False, crypto_only: bool = False,
 
         if exit_result["action"] == "closed":
             paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
-            paper_entry = float(trade["entry_price"])
-            paper_stop = float(trade["stop_price"])
-            setup_risk_pct = abs(paper_entry - paper_stop) / paper_entry if paper_entry > 0 else 0.0
+            # Degenerate check uses the WIDENED stop so scoreability matches the
+            # risk actually modeled (US-180 §2.4).
+            setup_risk_pct = abs(paper_entry - widened_stop) / paper_entry if paper_entry > 0 else 0.0
             degenerate = setup_risk_pct < DEGENERATE_RISK_FLOOR
             hostile_r = _compute_r(
                 paper_entry=paper_entry,
-                paper_stop=paper_stop,
+                paper_stop=widened_stop,
                 direction=trade["direction"],
                 hostile_entry_price=hostile_entry_price,
                 exit_price=exit_result["exit_price"])

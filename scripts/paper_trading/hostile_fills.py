@@ -42,6 +42,8 @@ from pnl_accounting import (
     _trades_through,
     _bar_touches,
     DEGENERATE_RISK_FLOOR,
+    widen_stop,
+    STOP_WIDEN_FACTOR,
 )
 
 # ── Config ──────────────────────────────────────────────────────────────────────
@@ -108,8 +110,7 @@ def check_entry_hostile(
     """
     entry_price = float(trade["entry_price"])
     direction = trade["direction"]
-    side = "buy" if direction == "long" else "sell"
-    taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "stock"))
+    maker_bps = fee_source.get_maker_bps(trade.get("asset_class", "stock"))
 
     # Find the signal bar (bar t). If we can't find it, use bar 0.
     # For daily signals, entry_date = the signal bar's date.
@@ -125,17 +126,19 @@ def check_entry_hostile(
         if row["bar_idx"] < signal_bar_idx + 1:
             continue
 
-        # Limit order: must trade through entry_price
-        if _trades_through(row, entry_price, side):
-            # Fill at next bar's open (t+1 open for the first bar, open of whichever bar)
-            fill_price = float(row["open"])
-            fill_price = _apply_taker_fee(fill_price, direction, is_entry=True, taker_bps=taker_bps)
+        # US-180: resting limit at the swept level — fill (as MAKER) when price
+        # trades back to the level, never chase trade-through. `taker_bps` here
+        # is really the per-leg bps (maker for a limit fill).
+        if _bar_touches(row, entry_price):
+            fill_price = _apply_taker_fee(entry_price, direction, is_entry=True, taker_bps=maker_bps)
             return {
                 "filled": True,
                 "fill_price": fill_price,
                 "fill_bar_idx": row["bar_idx"],
                 "fill_bar_date": str(row["date"])[:10],
-                "fill_reason": f"trade-through at bar {row['bar_idx']}",
+                "fill_reason": "limit fill at swept level",
+                "fill_mode": "limit",
+                "fee_bps": maker_bps,
             }
 
     return {
@@ -169,6 +172,7 @@ def check_exit_hostile(
     strategy_id = trade["strategy_id"]
     max_bars = MAX_BARS_HELD.get(strategy_id, 21)
     taker_bps = fee_source.get_taker_bps(trade.get("asset_class", "stock"))
+    maker_bps = fee_source.get_maker_bps(trade.get("asset_class", "stock"))
 
     stop_side = "sell" if direction == "long" else "buy"
     target_side = "sell" if direction == "long" else "buy"
@@ -188,10 +192,10 @@ def check_exit_hostile(
                 "bars_held": offset,
             }
 
-        # Target: limit fill — only if bar trades through
+        # Target: limit fill — only if bar trades through (maker = resting limit)
         if _trades_through(row, target_price, target_side):
             exit_price = float(target_price)
-            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=taker_bps)
+            exit_price = _apply_taker_fee(exit_price, direction, is_entry=False, taker_bps=maker_bps)
             return {
                 "action": "closed",
                 "exit_reason": "target",
@@ -448,15 +452,20 @@ def run(
 
         hostile_entry_price = hostile_entry["fill_price"]
 
-        # Exit check reads stop/target/direction only — pass the original trade.
-        # Entry slippage is charged inside _compute_r via hostile_entry_price.
-        exit_result = check_exit_hostile(trade, bars)
+        paper_entry = float(trade["entry_price"])
+        paper_stop = float(trade["stop_price"])
+        # US-180: widen the stop by STOP_WIDEN_FACTOR before modeling the exit.
+        widened_stop = widen_stop(paper_entry, paper_stop, trade["direction"], STOP_WIDEN_FACTOR)
+
+        # Exit check reads stop/target/direction — pass a trade with the widened
+        # stop. Entry slippage is charged inside _compute_r via hostile_entry_price.
+        exit_result = check_exit_hostile({**trade, "stop_price": widened_stop}, bars)
 
         if exit_result["action"] == "closed":
             paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
             hostile_r = _compute_r(
-                paper_entry=float(trade["entry_price"]),
-                paper_stop=float(trade["stop_price"]),
+                paper_entry=paper_entry,
+                paper_stop=widened_stop,
                 direction=trade["direction"],
                 hostile_entry_price=hostile_entry_price,
                 exit_price=exit_result["exit_price"])
