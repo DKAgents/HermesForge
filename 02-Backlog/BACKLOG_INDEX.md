@@ -31,6 +31,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | [[EPIC-013-ClosedLoopImprovements\|EPIC-013]] | In Progress | Closed-loop self-improvement, research pipeline, publishing | US-081 to US-088, US-090, US-092 |
 | [[EPIC-014-TechDebt\|EPIC-014]] | Backlog | Known bugs, infrastructure quirks, and workarounds | US-091, US-094 to US-100 |
 | [[EPIC-015-Autonomy\|EPIC-015]] | Backlog | Autonomous self-healing (ADR-007): detection loop, Forge Loop tick, T1 auto-escalation, digest, sign-off queue, dep standardization | US-158 to US-163 |
+| [[EPIC-016-Refactor-Alpha-Pipeline\|EPIC-016]] | Backlog | Replace retail TA signal class with persistent edges + fix execution drag | US-179 to US-183 |
 
 ---
 
@@ -89,6 +90,11 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-176 | EPIC-014 | Regrade STR-Y (ADX/DMI) through the gate, not blanket-demote | P1 | None |
 | US-177 | EPIC-014 | Hyperliquid as source of truth for all crypto history (forward) | P1 | None |
 | US-178 | EPIC-014 | Gate auto-sync process to path-scoped commits | P2 | None |
+| US-179 | EPIC-016 | Funding/basis carry (delta-neutral crypto) — Tier-1 alpha | P0 | None |
+| US-180 | EPIC-016 | Execution-layer drag fix (stops/entries/exits) | P0 | None |
+| US-181 | EPIC-016 | Vol/VRP with vol-of-vol timing | P1 | None |
+| US-182 | EPIC-016 | Cost-aware cross-sectional momentum | P1 | None |
+| US-183 | EPIC-016 | Harden the validation harness | P1 | None |
 
 ---
 
@@ -148,7 +154,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-179
+- **Next Story Number:** US-184
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
