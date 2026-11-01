@@ -236,7 +236,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False,
 
         # LONG: risk-on trigger AND price above 50-day SMA
         if close > sma_v:
-            entry_price = close
+            if i + 1 >= len(df_a):
+                continue  # US-173: signal on last bar -> no next-open fill
+            entry_price = float(df_a["open"].iloc[i + 1])  # US-173: next-open, never the signal close
             stop_price = entry_price - STOP_ATR_MULT * atr
             risk = entry_price - stop_price
             if risk <= 0:
@@ -260,7 +262,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False,
             })
         # SHORT: risk-off trigger AND price below 50-day SMA
         elif not long_only and close < sma_v:
-            entry_price = close
+            if i + 1 >= len(df_a):
+                continue  # US-173: signal on last bar -> no next-open fill
+            entry_price = float(df_a["open"].iloc[i + 1])  # US-173: next-open, never the signal close
             stop_price = entry_price + STOP_ATR_MULT * atr
             risk = stop_price - entry_price
             if risk <= 0:

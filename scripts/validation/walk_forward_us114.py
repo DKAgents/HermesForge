@@ -18,12 +18,30 @@ Run: python3 ~/HermesForge/scripts/validation/walk_forward_us114.py
 
 import os
 import sys
+import pathlib
 import warnings
 import numpy as np
 import pandas as pd
 from scipy import stats as sp_stats
 
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+# US-173 fill-convention import (same package dir).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from fill_convention import (  # noqa: E402
+    FILL_CONVENTION,
+    PHASE1A_VERSION,
+    apply_next_open_entry,
+    versioned_phase1a_name,
+)
+
+# --shim-legacy-close-entry flag: when True, permit scoring a legacy close-entry
+# CSV by re-rating each trade through apply_next_open_entry. Default is False =
+# REFUSE (fail-closed) — a legacy CSV lacking `fill_convention` must never be
+# silently re-scored under a next-open model it was never tested on (§1.4 pt3).
+SHIM_LEGACY_CLOSE_ENTRY = False
+
+_MARKET_DATA_DIR = pathlib.Path.home() / ".hermes" / "market_data"
 
 # ── Config ──────────────────────────────────────────────────────────────────
 RESULTS_DIR = os.path.expanduser("~/HermesForge/scripts/validation/results")

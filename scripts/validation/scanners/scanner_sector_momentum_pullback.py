@@ -28,7 +28,7 @@ Signal Rules:
     - ATR% of price <= MAX_ATR_PCT
 
   Risk/reward & exit (forward-scan, max MAX_BARS_HELD bars):
-    - entry  = close[i]
+    - entry  = open[i+1]  (next-open; US-173)
     - stop   = min(MA20[i], low[i]) - STOP_BUFFER_ATR * ATR(i)   (below 20MA)
     - target = entry + MIN_RR * risk
     - exit 'target' / 'stop' / 'time'
@@ -331,6 +331,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list:
     min_start = max(MA_TREND_SLOW, ATR_PERIOD, VOL_AVG_PERIOD, MA_PULLBACK) + 1
     close_arr = close.values
     low_arr = low.values
+    open_arr = df["open"].values
     ma10_arr = ma10.values
     ma20_arr = ma20.values
     ma50_arr = ma50.values
@@ -366,7 +367,9 @@ def scan(df: pd.DataFrame, ticker: str) -> list:
         if vol_arr[i] >= VOL_CONTRACTION * vol_avg_arr[i]:
             continue
 
-        entry_price = close_arr[i]
+        if i + 1 >= n:
+            continue  # US-173: signal on last bar -> no next-open fill
+        entry_price = open_arr[i + 1]  # US-173: next-open, never the signal close
         stop_price = min(ma20_arr[i], low_arr[i]) - STOP_BUFFER_ATR * atr_arr[i]
         risk = entry_price - stop_price
         if risk <= 0 or risk / entry_price < 0.003:

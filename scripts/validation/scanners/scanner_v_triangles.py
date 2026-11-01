@@ -74,6 +74,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
+    opn = df["open"].values
     has_vol = "volume" in df.columns
     vol = df["volume"].values if has_vol else np.ones(n)
     avg_vol = pd.Series(vol).rolling(20).mean().values
@@ -133,10 +134,12 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         vol_ok = (v >= VOLUME_MULT * av) if (has_vol and av > 0) else True
 
         c = close[brk_idx]
+        if brk_idx + 1 >= n:
+            continue  # US-173: breakout bar is the last bar -> no next-open fill
 
         # breakout ABOVE upper line → long
         if c > upper_at_end and vol_ok:
-            entry = c
+            entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
             stop = lower_at_end
             risk = entry - stop
             if risk <= 0:
@@ -153,7 +156,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
 
         # breakout BELOW lower line → short
         if (not long_only) and c < lower_at_end and vol_ok:
-            entry = c
+            entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
             stop = upper_at_end
             risk = stop - entry
             if risk <= 0:

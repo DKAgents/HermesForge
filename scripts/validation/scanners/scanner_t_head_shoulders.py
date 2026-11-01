@@ -9,11 +9,11 @@ left/right peaks (shoulders) are roughly equal (within 3% tolerance). The
 neckline is the line connecting the two troughs between the shoulders.
 
 Signal rules:
-  Regular H&S (bearish): entry on close below neckline.
+  Regular H&S (bearish): entry at next-bar open after a close below neckline.
     Stop: 1 ATR beyond the head (above).
     Target: head height (head - neckline at head) projected down from the
             neckline at the breakout bar.
-  Inverse H&S (bullish): entry on close above neckline.
+  Inverse H&S (bullish): entry at next-bar open after a close above neckline.
     Stop: 1 ATR beyond the head (below).
     Target: head height projected up from the neckline at the breakout bar.
   Long-only for stocks.
@@ -69,6 +69,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
+    opn = df["open"].values
     signals = []
 
     def make(idx, direction, entry, stop, target, st):
@@ -120,7 +121,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         for j in range(R_idx + PIVOT_DISTANCE, min(R_idx + ENTRY_SEARCH_WINDOW, n)):
             nl = neckline(j)
             if close[j] < nl:
-                entry = close[j]
+                if j + 1 >= n:
+                    break  # signal on last bar: no next-bar open to fill on
+                entry = opn[j + 1]  # US-173: next-open, never the signal close
                 stop = Hp + STOP_ATR_MULT * atr.iloc[j]
                 risk = stop - entry
                 if risk <= 0:
@@ -162,7 +165,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         for j in range(R_idx + PIVOT_DISTANCE, min(R_idx + ENTRY_SEARCH_WINDOW, n)):
             nl = neckline(j)
             if close[j] > nl:
-                entry = close[j]
+                if j + 1 >= n:
+                    break  # signal on last bar: no next-bar open to fill on
+                entry = opn[j + 1]  # US-173: next-open, never the signal close
                 stop = Hp - STOP_ATR_MULT * atr.iloc[j]
                 risk = entry - stop
                 if risk <= 0:

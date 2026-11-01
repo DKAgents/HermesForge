@@ -9,7 +9,7 @@ Shared, look-ahead-free module that the 11 indicator-based LIVE scanners
 target from market structure rather than fixed ATR multiples and a fixed 3R.
 
 Three primitives:
-    compute_pullback_entry  -> (entry_price, entry_idx)
+    compute_pullback_entry  -> (entry_price, entry_idx, filled_limit)
     compute_structure_stop   -> stop_price
     compute_natural_target   -> target_price | None
 
@@ -26,8 +26,9 @@ Look-ahead discipline (US-114 lesson, centralised here):
       level via a resting limit order; reading low[j]/high[j] for j > signal_idx
       is the natural passage of time, not look-ahead (same convention as every
       scanner's _walk_forward_exit).
-    * Stop/target use decision_idx = entry_idx >= signal_idx, strictly stricter
-      (more pivots confirmed) than using signal_idx.
+    * Stop/target use decision_idx: entry_idx for a resting-limit (pullback)
+      fill, signal_idx for a next-open market fill (US-173 — stop/target are
+      frozen at signal time for a market entry, never read from the fill bar).
 
 This module does NOT size positions, execute trades, touch exchanges, or
 choose leverage (SOUL.md hard rules). It returns price levels only.
@@ -173,13 +174,25 @@ def _entry_fallback(
     max_wait_bars: int,
     fallback: str,
 ) -> tuple[float, int]:
-    """Market fallback when no pullback touch occurs within the wait window."""
+    """Market fallback when no pullback touch occurs within the wait window.
+
+    US-173: a daily-bar market entry is only actionable at the NEXT bar's open
+    (open[signal_idx + 1]), never the signal-bar close. The signal is knowable
+    only at close[signal_idx]; pricing the fill at that very close is the
+    look-ahead bug this fallback existed to eliminate. The returned index is
+    now the FILL bar index (>= signal_idx + 1) in the normal case.
+    """
     n = len(df)
     if fallback == "window_end":
-        j = min(signal_idx + max_wait_bars, n - 1)
-        return float(df["close"].iloc[j]), j
-    # default "signal": retroactive market entry at signal-bar close.
-    return float(df["close"].iloc[signal_idx]), signal_idx
+        j = min(signal_idx + max_wait_bars + 1, n - 1)
+        return float(df["open"].iloc[j]), j
+    # default "next_open": market entry at the next bar's open.
+    j = signal_idx + 1
+    if j >= n:
+        # Last-bar guard: there is no next bar to fill on, so fall back to the
+        # signal close (degenerate edge case only).
+        return float(df["close"].iloc[signal_idx]), signal_idx
+    return float(df["open"].iloc[j]), j
 
 
 def compute_pullback_entry(
@@ -189,8 +202,8 @@ def compute_pullback_entry(
     max_wait_bars: int = DEFAULT_MAX_WAIT_BARS,
     pivot_distance: int = PIVOT_DISTANCE,
     ema_span: int = DEFAULT_EMA_SPAN,
-    fallback: str = "signal",
-) -> tuple[float, int]:
+    fallback: str = "next_open",
+) -> tuple[float, int, bool]:
     """Wait up to max_wait_bars for a pullback to confirmed support, fill limit.
 
     The support level is chosen ONLY from pivots confirmed at signal_idx and the
@@ -206,8 +219,14 @@ def compute_pullback_entry(
     Limit-fill refinement: if bar opens beyond the level (gap), fill at the
     open (better price) rather than the limit.
 
-    Returns (entry_price, entry_idx). Always returns a valid entry; never None.
-    Fallback ("signal" | "window_end") is used when no touch occurs in window.
+    Returns the 3-tuple (entry_price, entry_idx, filled_limit):
+      - entry_idx is the FILL bar index (>= signal_idx for a resting-limit
+        fill, == signal_idx + 1 for a next-open market fallback).
+      - filled_limit is True iff a resting limit actually captured the fill
+        within the wait window (False for the market fallback). The caller
+        uses this flag (US-173) instead of the old `entry_idx > signal_idx`
+        heuristic, which broke once the market fallback also advanced the index.
+    Fallback ("next_open" | "window_end") is used when no touch occurs.
     """
     if direction not in ("long", "short"):
         raise ValueError(f"direction must be 'long' or 'short', got {direction!r}")
@@ -238,7 +257,8 @@ def compute_pullback_entry(
             if float(ema.iloc[signal_idx]) > float(ema.iloc[signal_idx - 1]):
                 levels.append(ema_val)
         if not levels:
-            return _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+            p, i = _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+            return p, i, False
         support = max(levels)  # nearest below close (closest to price)
     else:  # short — mirror
         sh = _confirmed_pivots(
@@ -252,7 +272,8 @@ def compute_pullback_entry(
             if float(ema.iloc[signal_idx]) < float(ema.iloc[signal_idx - 1]):
                 levels.append(ema_val)
         if not levels:
-            return _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+            p, i = _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+            return p, i, False
         support = min(levels)  # nearest above close (closest to price)
 
     # --- Wait for the pullback touch (resting limit order) ---
@@ -261,18 +282,19 @@ def compute_pullback_entry(
         if direction == "long":
             o = float(open_.iloc[j])
             if o <= support:
-                return o, j  # gapped below limit -> fill open (better for buyer)
+                return o, j, True  # gapped below limit -> fill open (better for buyer)
             if float(low.iloc[j]) <= support:
-                return support, j  # touched limit -> fill at limit
+                return support, j, True  # touched limit -> fill at limit
         else:
             o = float(open_.iloc[j])
             if o >= support:
-                return o, j  # gapped above limit -> fill open (better for seller)
+                return o, j, True  # gapped above limit -> fill open (better for seller)
             if float(high.iloc[j]) >= support:
-                return support, j  # touched limit -> fill at limit
+                return support, j, True  # touched limit -> fill at limit
 
-    # --- No touch within window -> market fallback ---
-    return _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+    # --- No touch within window -> market fallback (not a limit fill) ---
+    p, i = _entry_fallback(df, signal_idx, max_wait_bars, fallback)
+    return p, i, False
 
 
 # ---------------------------------------------------------------------------
@@ -424,14 +446,14 @@ def compute_structure_trade(
     max_atr: float = DEFAULT_MAX_ATR,
     atr: pd.Series | None = None,
     pivot_distance: int = PIVOT_DISTANCE,
-    entry_fallback: str = "signal",
+    entry_fallback: str = "next_open",
 ) -> Optional[dict]:
     """Wire the three primitives in look-ahead-safe order. Returns dict | None.
 
-    1. entry_price, entry_idx = compute_pullback_entry(...)   # may advance idx
-    2. decision_idx = entry_idx
-    3. stop_price  = compute_structure_stop(decision_idx=entry_idx, ...)
-    4. target_price = compute_natural_target(decision_idx=entry_idx, ...)
+    1. entry_price, entry_idx, filled_limit = compute_pullback_entry(...)
+    2. decision_idx = entry_idx if filled_limit else signal_idx (see US-173 note)
+    3. stop_price  = compute_structure_stop(decision_idx=decision_idx, ...)
+    4. target_price = compute_natural_target(decision_idx=decision_idx, ...)
     5. if target_price is None: return None (skip - no valid R:R)
     6. risk = |entry - stop|; if risk <= 0: return None
        final_rr = |target - entry| / risk; if final_rr < min_rr: return None
@@ -444,7 +466,7 @@ def compute_structure_trade(
     if direction not in ("long", "short"):
         raise ValueError(f"direction must be 'long' or 'short', got {direction!r}")
 
-    entry_price, entry_idx = compute_pullback_entry(
+    entry_price, entry_idx, filled_limit = compute_pullback_entry(
         df,
         signal_idx=signal_idx,
         direction=direction,
@@ -452,11 +474,20 @@ def compute_structure_trade(
         pivot_distance=pivot_distance,
         fallback=entry_fallback,
     )
-    # entry_type: pullback if the limit actually filled within the window,
-    # else market (the signal-close fallback filled at the signal bar).
-    entry_type = "pullback" if entry_idx > signal_idx else "market"
+    # entry_type: pullback iff the resting limit actually filled within the
+    # window. US-173: the old `entry_idx > signal_idx` heuristic broke once the
+    # market fallback also advanced the fill index (next-open), so this now uses
+    # the explicit filled_limit flag returned by compute_pullback_entry.
+    entry_type = "pullback" if filled_limit else "market"
 
-    decision_idx = entry_idx  # stricter than signal_idx (more pivots confirmed)
+    # US-173 decision_idx freeze (deliberate non-change): for a MARKET entry the
+    # stop/target are chosen at signal time, NOT at the next-open fill bar.
+    # Freezing decision_idx at signal_idx is MORE conservative than reading the
+    # fill bar (which would let the fill bar's pivots leak into the stop/target)
+    # and matches the pre-US-173 behaviour where the market fallback returned
+    # entry_idx == signal_idx. Do NOT "fix" this back to entry_idx — for the
+    # market path entry_idx is now signal_idx + 1 and must not drive decisions.
+    decision_idx = entry_idx if filled_limit else signal_idx
 
     stop_price = compute_structure_stop(
         df,

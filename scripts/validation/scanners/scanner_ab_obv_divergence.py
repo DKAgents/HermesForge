@@ -12,7 +12,7 @@ Compute OBV (cumulative volume where up days add volume, down days subtract).
   SHORT: price makes a higher high but OBV makes a lower high (bearish divergence).
          Entry on the bar where price closes below the prior swing high.
 
-  Entry on confirmation bar close.
+  Entry at the next bar's open after the confirmation-bar close (US-173).
   Stop: 1.5 ATR(14) below the divergence low (long) / above the divergence high (short).
   Target: 3R.
   Time stop: 20 bars.
@@ -104,6 +104,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close_arr = close.values.astype(float)
     low_arr = low.values.astype(float)
     high_arr = high.values.astype(float)
+    open_arr = df["open"].values.astype(float)
     obv_arr = obv.values.astype(float)
     atr_arr = atr.values.astype(float)
 
@@ -154,7 +155,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 break
         if entry_idx is None:
             continue
-        entry_price = close_arr[entry_idx]
+        if entry_idx + 1 >= len(df):
+            continue  # US-173: signal on last bar -> no next-open fill
+        entry_price = open_arr[entry_idx + 1]  # US-173: next-open, never the signal close
         # Stop 1.5 ATR below the divergence low
         stop_price = p2_low - STOP_ATR_MULT * atr_arr[p2_idx]
         risk = entry_price - stop_price
@@ -206,7 +209,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                     break
             if entry_idx is None:
                 continue
-            entry_price = close_arr[entry_idx]
+            if entry_idx + 1 >= len(df):
+                continue  # US-173: signal on last bar -> no next-open fill
+            entry_price = open_arr[entry_idx + 1]  # US-173: next-open, never the signal close
             stop_price = p2_high + STOP_ATR_MULT * atr_arr[p2_idx]
             risk = stop_price - entry_price
             if risk <= 0:

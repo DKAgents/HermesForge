@@ -65,6 +65,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
+    opn = df["open"].values
     signals = []
 
     def make(idx, direction, entry, stop, target, st):
@@ -105,7 +106,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         # is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
         for j in range(p2_idx + PIVOT_DISTANCE, min(p2_idx + ENTRY_SEARCH_WINDOW, n)):
             if close[j] < trough_p:
-                entry = close[j]
+                if j + 1 >= n:
+                    break  # signal on last bar: no next-bar open to fill on
+                entry = opn[j + 1]  # US-173: next-open, never the signal close
                 stop = max(p1, p2) + STOP_ATR_MULT * atr.iloc[j]
                 risk = stop - entry
                 if risk <= 0:
@@ -138,7 +141,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         # is confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
         for j in range(t2_idx + PIVOT_DISTANCE, min(t2_idx + ENTRY_SEARCH_WINDOW, n)):
             if close[j] > peak_p:
-                entry = close[j]
+                if j + 1 >= n:
+                    break  # signal on last bar: no next-bar open to fill on
+                entry = opn[j + 1]  # US-173: next-open, never the signal close
                 stop = min(t1, t2) - STOP_ATR_MULT * atr.iloc[j]
                 risk = entry - stop
                 if risk <= 0:

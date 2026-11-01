@@ -66,6 +66,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
+    opn = df["open"].values
     signals = []
 
     def make(idx, direction, entry, stop, target, st):
@@ -162,10 +163,12 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             if brk_idx >= n:
                 continue
             c = close[brk_idx]
+            if brk_idx + 1 >= n:
+                continue  # US-173: breakout bar is the last bar -> no next-open fill
 
             if direction == "long":
                 if c > upper:
-                    entry = c
+                    entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
                     stop = lower - STOP_ATR_MULT * atr.iloc[brk_idx]
                     risk = entry - stop
                     if risk <= 0:
@@ -175,7 +178,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                     make(brk_idx, "long", entry, stop, target, st)
             else:
                 if c < lower:
-                    entry = c
+                    entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
                     stop = upper + STOP_ATR_MULT * atr.iloc[brk_idx]
                     risk = stop - entry
                     if risk <= 0:

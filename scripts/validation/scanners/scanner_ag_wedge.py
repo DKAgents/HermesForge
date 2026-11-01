@@ -70,6 +70,7 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
     close = df["close"].values
     high = df["high"].values
     low = df["low"].values
+    opn = df["open"].values
     signals = []
 
     def make(idx, direction, entry, stop, target, st):
@@ -124,11 +125,13 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
         if brk_idx >= n:
             continue
         c = close[brk_idx]
+        if brk_idx + 1 >= n:
+            continue  # US-173: breakout bar is the last bar -> no next-open fill
 
         if rising:
-            # bearish: entry on close below lower line
+            # bearish: entry at next-bar open after a close below lower line
             if (not long_only) and c < lower_at_end:
-                entry = c
+                entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
                 stop = np.max(high[start:end + 1])  # wedge high
                 risk = stop - entry
                 if risk <= 0:
@@ -137,9 +140,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 make(brk_idx, "short", entry, stop, target, "rising_wedge_short")
 
         if falling:
-            # bullish: entry on close above upper line
+            # bullish: entry at next-bar open after a close above upper line
             if c > upper_at_end:
-                entry = c
+                entry = opn[brk_idx + 1]  # US-173: next-open, never the breakout close
                 stop = np.min(low[start:end + 1])  # wedge low
                 risk = entry - stop
                 if risk <= 0:

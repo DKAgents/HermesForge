@@ -27,7 +27,7 @@ Signal Rules:
     - Regime gate: contango_active[i] == True
 
   Risk/reward & exit (forward-scan from entry bar, max MAX_BARS_HELD bars):
-    - entry  = close[i]
+    - entry  = open[i+1]  (next-open; US-173)
     - stop   = min(low[i], 20-SMA[i]) - STOP_BUFFER_ATR * ATR(i)   (below 20MA)
     - target = entry + MIN_RR * risk
     - exit 'target' / 'stop' / 'time'
@@ -195,6 +195,7 @@ def scan(df: pd.DataFrame, ticker: str) -> list:
     close_arr = close.values
     high_arr = high.values
     low_arr = low.values
+    open_arr = df["open"].values
     ma50_arr = ma50.values
     atr_arr = atr.values
     vol_arr = volume.values if volume is not None else None
@@ -223,7 +224,9 @@ def scan(df: pd.DataFrame, ticker: str) -> list:
         if vol_arr[i] < 1.2 * vol_avg_arr[i]:
             continue
 
-        entry_price = close_arr[i]
+        if i + 1 >= n:
+            continue  # US-173: signal on last bar -> no next-open fill
+        entry_price = open_arr[i + 1]  # US-173: next-open, never the signal close
         stop_price = min(low_arr[i], ma50_arr[i]) - STOP_BUFFER_ATR * atr_arr[i]
         risk = entry_price - stop_price
         if risk <= 0 or risk / entry_price < 0.003:

@@ -137,7 +137,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
             # confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
             for j in range(c_idx + PIVOT_DISTANCE, min(c_idx + ENTRY_SEARCH_WINDOW, n)):
                 if df["close"].values[j] > b_price:
-                    entry = df["close"].values[j]
+                    if j + 1 >= n:
+                        break  # signal on last bar: no next-bar open to fill on
+                    entry = df["open"].values[j + 1]  # US-173: next-open, never the signal close
                     stop = c_price - STOP_ATR_MULT * atr.iloc[j]
                     risk = entry - stop
                     if risk <= 0:
@@ -192,7 +194,9 @@ def scan(df: pd.DataFrame, ticker: str, long_only: bool = False) -> list:
                 # confirmed by find_peaks(distance=PIVOT_DISTANCE) before entry.
                 for j in range(c_idx + PIVOT_DISTANCE, min(c_idx + ENTRY_SEARCH_WINDOW, n)):
                     if df["close"].values[j] < b_price:
-                        entry = df["close"].values[j]
+                        if j + 1 >= n:
+                            break  # signal on last bar: no next-bar open to fill on
+                        entry = df["open"].values[j + 1]  # US-173: next-open, never the signal close
                         stop = c_price + STOP_ATR_MULT * atr.iloc[j]
                         risk = stop - entry
                         if risk <= 0:
