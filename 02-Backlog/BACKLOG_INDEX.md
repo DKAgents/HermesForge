@@ -96,6 +96,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-182 | EPIC-016 | Cost-aware cross-sectional momentum | P1 | None |
 | US-183 | EPIC-016 | Harden the validation harness | P1 | None |
 | US-184 | EPIC-014 | Serialize/route the background git writers (no add -A, no push, lock) | P1 | None |
+| US-185 | EPIC-016 | Funding carry: full-universe executable + fix sizing/basis/kill | P0 | US-179 |
 
 ---
 
@@ -155,7 +156,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-185
+- **Next Story Number:** US-186
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
