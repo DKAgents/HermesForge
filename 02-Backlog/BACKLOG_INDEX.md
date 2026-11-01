@@ -86,6 +86,9 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-173 | EPIC-014 | Fix look-ahead close-entry in discovery backtests | P1 | None |
 | US-174 | EPIC-014 | Make G3 fill-realism a mandatory promotion gate | P0 | None |
 | US-175 | EPIC-014 | STR-B realistic-fill re-backtest (sole survivor) | P1 | US-172 |
+| US-176 | EPIC-014 | Regrade STR-Y (ADX/DMI) through the gate, not blanket-demote | P1 | None |
+| US-177 | EPIC-014 | Hyperliquid as source of truth for all crypto history (forward) | P1 | None |
+| US-178 | EPIC-014 | Gate auto-sync process to path-scoped commits | P2 | None |
 
 ---
 
@@ -145,7 +148,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-176
+- **Next Story Number:** US-179
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
