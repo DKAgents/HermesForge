@@ -113,7 +113,8 @@ def append_bars(conn: sqlite3.Connection, ticker: str, timeframe: str,
     partial)."""
     if not bars:
         return 0
-    ticker = ticker.upper()
+    # Ticker is matched EXACTLY as canonical (Hyperliquid coin names are
+    # case-sensitive: kBONK != KBONK). The universe holds the canonical case.
     rows = []
     for b in bars:
         rows.append((
@@ -140,7 +141,7 @@ def upsert_state(conn: sqlite3.Connection, ticker: str, timeframe: str,
     conn.execute(
         "INSERT OR REPLACE INTO ingest_state (ticker, timeframe, last_ts, last_run) "
         "VALUES (?,?,?,?)",
-        (ticker.upper(), timeframe, int(last_ts), last_run),
+        (ticker, timeframe, int(last_ts), last_run),
     )
     conn.commit()
 
@@ -150,7 +151,7 @@ def last_ts(conn: sqlite3.Connection, ticker: str, timeframe: str) -> int | None
     ingested)."""
     row = conn.execute(
         "SELECT MAX(ts) FROM bars WHERE ticker=? AND timeframe=?",
-        (ticker.upper(), timeframe),
+        (ticker, timeframe),
     ).fetchone()
     return row[0] if row and row[0] is not None else None
 
@@ -161,10 +162,10 @@ def coverage(conn: sqlite3.Connection, ticker: str, timeframe: str) -> dict:
     min_ts is a pre-store gap."""
     row = conn.execute(
         "SELECT MIN(ts), MAX(ts), COUNT(*) FROM bars WHERE ticker=? AND timeframe=?",
-        (ticker.upper(), timeframe),
+        (ticker, timeframe),
     ).fetchone()
     return {
-        "ticker": ticker.upper(),
+        "ticker": ticker,
         "timeframe": timeframe,
         "min_ts": row[0],
         "max_ts": row[1],
@@ -176,7 +177,7 @@ def _read_bars(conn: sqlite3.Connection, ticker: str, timeframe: str,
                start_ts: int | None = None, end_ts: int | None = None) -> pd.DataFrame:
     """Read store rows for (ticker, timeframe) in [start_ts, end_ts) ascending."""
     where = ["ticker = ?", "timeframe = ?"]
-    params: list = [ticker.upper(), timeframe]
+    params: list = [ticker, timeframe]
     if start_ts is not None:
         where.append("ts >= ?")
         params.append(int(start_ts))
@@ -218,7 +219,6 @@ def load_bars(ticker: str, timeframe: str, start_ts: int, end_ts: int,
 
     Never fabricates, never silently mixes venues across an overlapping range.
     """
-    ticker = ticker.upper()
     start_ts = int(start_ts)
     end_ts = int(end_ts)
 

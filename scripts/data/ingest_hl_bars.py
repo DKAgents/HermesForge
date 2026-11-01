@@ -66,7 +66,7 @@ def fetch_candles(ticker: str, interval: str, start_ms: int,
     payload = {
         "type": "candleSnapshot",
         "req": {
-            "coin": ticker.upper(),
+            "coin": ticker,  # exact canonical case (HL coin names case-sensitive)
             "interval": interval,
             "startTime": int(start_ms),
             "endTime": int(end_ms),
@@ -111,26 +111,19 @@ def fetch_candles(ticker: str, interval: str, start_ms: int,
 
 def _fetch_window(ticker: str, interval: str, start_ms: int,
                   end_ms: int) -> list[dict]:
-    """Paginate candleSnapshot across [start_ms, end_ms], walking the cursor
-    back whenever the earliest returned bar is still newer than start_ms
-    (Hyperliquid returns up to ~5000 bars per call; overlap is deduped by ts).
-    Returns bars merged + sorted ascending."""
-    merged: dict[int, dict] = {}
-    cursor_end = end_ms
-    while True:
-        page = fetch_candles(ticker, interval, start_ms, cursor_end)
-        if not page:
-            break
-        earliest = min(b["ts"] for b in page)
-        for b in page:
-            if start_ms <= b["ts"] < end_ms:
-                merged[b["ts"]] = b
-        if earliest <= start_ms:
-            break
-        new_end = earliest  # walk back to cover the still-ungapped low end
-        if new_end >= cursor_end:
-            break  # no progress — avoid infinite loop
-        cursor_end = new_end
+    """Return bars in [start_ms, end_ms) ascending. A single candleSnapshot
+    call returns Hyperliquid's ENTIRE retained floor (~17.5 days for 5m) in one
+    response regardless of startTime, so no pagination is needed for the
+    18-day first-run seed — and for incremental (subsequent) runs the window is
+    only ~1 day. A walk-back would issue a redundant second request that
+    doubles burst load and trips Hyperliquid's rate limiter (observed 500s).
+
+    The window filter is still applied here so the store never records bars
+    outside the incremental window."""
+    page = fetch_candles(ticker, interval, start_ms, end_ms)
+    merged: dict[int, dict] = {
+        b["ts"]: b for b in page if start_ms <= b["ts"] < end_ms
+    }
     return [merged[ts] for ts in sorted(merged)]
 
 
@@ -152,7 +145,7 @@ def ingest_ticker(conn, ticker: str, timeframe: str) -> dict:
     Never mutates state on a fetch failure (append only after a full successful
     page)."""
     start_ms, end_ms = incremental_window(conn, ticker, timeframe)
-    ticker = ticker.upper()
+    # ticker kept as exact canonical case (HL coin names are case-sensitive).
     try:
         bars = _fetch_window(ticker, timeframe, start_ms, end_ms)
     except Exception as e:
@@ -215,6 +208,23 @@ def ingest_timeframe(timeframe: str, universe: list, dry_run: bool = False) -> d
                 total_new += res.get("new_bars", 0)
         if i < len(universe) - 1:
             time.sleep(SLEEP_BETWEEN_TICKERS)
+
+    # Second-chance pass: re-attempt any failed ticker after a cooldown (a
+    # 35-ticker seed bursts Hyperliquid and its rate limiter most often 500s
+    # the last few alphabetically-odd tickers; they self-heal on a quiet retry).
+    if not dry_run and errors:
+        time.sleep(RETRY_BACKOFF_BASE * 2)  # moment of quiet before retry
+        for t in list(errors):
+            conn = hl_bar_store.open_store(timeframe)
+            try:
+                res = ingest_ticker(conn, t, timeframe)
+            finally:
+                conn.close()
+            if res.get("ok"):
+                errors.remove(t)
+                total_new += res.get("new_bars", 0)
+            time.sleep(SLEEP_BETWEEN_TICKERS)
+
     return {"timeframe": timeframe, "ok": len(errors) == 0,
             "errors": errors, "new_bars": total_new, "tickers": len(universe),
             "results": results}

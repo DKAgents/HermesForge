@@ -90,7 +90,7 @@ def fetch_okx_bars(ticker: str, timeframe: str, start_ms: int,
     NOTE: OKX `history-candles` returns newest-first; `after=<ts>` pages to
     older bars (verified live). `ts` here is epoch ms (bar open), aligned to
     the store's convention (bar open time = Hyperliquid 't')."""
-    inst_id = HL_TO_OKX.get(ticker.upper())
+    inst_id = HL_TO_OKX.get(ticker)
     if inst_id is None:
         return _EMPTY.copy()
 
