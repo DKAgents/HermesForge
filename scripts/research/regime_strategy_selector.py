@@ -19,6 +19,7 @@ Usage:
 """
 
 import sys
+import re
 import json
 import argparse
 import pathlib
@@ -28,6 +29,19 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "data"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+# US-174: reuse the single owner of the "positive G3 gate record" text check
+# (and the linked gate-artifact resolver) so the selector's defense-in-depth
+# gate can never drift from validate_strategy.py's note gate.
+from validate_strategy import _positive_realistic_r, _gate_artifact_ok, extract_wikilinks
+
+# US-174: directories searched for a strategy's G3 gate record. The record is
+# written by g3_gate.promote_strategy() into the strategy note frontmatter.
+_G3_STRATEGY_DIRS = [
+    REPO_ROOT / "trading" / "strategies",
+    REPO_ROOT / "trading" / "knowledge",
+]
 
 # Strategy registry — all known strategies and their characteristics
 STRATEGY_REGISTRY = {
@@ -148,6 +162,49 @@ STRATEGY_REGISTRY = {
                        "regime_best": ["neutral", "caution", "risk_off"], "regime_avoid": ["risk_on"],
                        "base_risk": 0.25, "type": "mean_reversion"},
 }
+
+
+def _note_matches_strategy(text: str, strategy_id: str) -> bool:
+    """True if a note's frontmatter keys this note to `strategy_id`.
+
+    Matches `strategy_id:` (or `id:`) exactly, or as a dotted prefix with a `-`
+    boundary (e.g. registry key ``STR-VIXC`` ↔ note ``strategy_id:
+    STR-VIXC-vix-contango-breakout``). Tolerates the stray leading `|` seen on
+    some autonomous-pipeline frontmatter.
+    """
+    for line in text.splitlines():
+        m = re.match(r'^\s*\|?\s*(strategy_id|id):\s*\|?\s*(.*)', line)
+        if not m:
+            continue
+        val = m.group(2).strip()
+        if val == strategy_id or val.startswith(strategy_id + "-"):
+            return True
+    return False
+
+
+def _has_valid_g3_gate(strategy_id: str) -> bool:
+    """True only if a valid (positive) G3 fill-realism gate record is on file.
+
+    Fail-closed: returns False on any ambiguity — no matching note, missing gate
+    record, or a record whose realistic edge is non-positive. A promotion gate
+    artifact is either the note's own ``g3_passed`` / ``g3_realistic_mean_r``
+    frontmatter field, or a linked note recording the same.
+    """
+    for d in _G3_STRATEGY_DIRS:
+        if not d.exists():
+            continue
+        for f in d.rglob("*.md"):
+            try:
+                text = f.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+            if not _note_matches_strategy(text, strategy_id):
+                continue
+            if _positive_realistic_r(text):
+                return True
+            if _gate_artifact_ok(extract_wikilinks(text)):
+                return True
+    return False
 
 
 def _safe_call(fn, *args, **kwargs):
@@ -279,6 +336,24 @@ def get_strategy_directives() -> dict:
                 "action": "skip",
                 "risk_multiplier": 0.0,
                 "reason": reason,
+            }
+            continue
+        
+        # US-174 defense-in-depth: a LIVE/WATCH strategy with no valid G3
+        # fill-realism gate on file is coerced to suppress (fail-closed), so a
+        # stale registry entry cannot trade even if its note lost the gate
+        # out-of-band. Never emitted LIVE/WATCH without a positive gate record.
+        if not _has_valid_g3_gate(strat_id):
+            directives[strat_id] = {
+                "action": "suppress",
+                "risk_multiplier": 0.0,
+                "reason": "no valid G3 fill-realism gate on file",
+                "filter_conditions": [],
+                "strategy_name": strat_info["name"],
+                "strategy_status": strat_info["status"],
+                "strategy_type": strat_info["type"],
+                "base_risk": strat_info["base_risk"],
+                "adjusted_risk": 0.0,
             }
             continue
         
@@ -425,8 +500,10 @@ def _build_summary(posture: str, directives: dict, regime: dict) -> str:
         names = [d["strategy_name"] for d in suppressed]
         lines.append(f"Suppressed: {', '.join(names)}")
     
-    lines.append(f"Active: {len(active)} strategies | Adjusted risk range: "
-                 f"{min(d['adjusted_risk'] for d in active):.2f}%-{max(d['adjusted_risk'] for d in active):.2f}%")
+    lines.append(f"Active: {len(active)} strategies" +
+                 (f" | Adjusted risk range: "
+                  f"{min(d['adjusted_risk'] for d in active):.2f}%-"
+                  f"{max(d['adjusted_risk'] for d in active):.2f}%" if active else ""))
     
     return "\n".join(lines)
 

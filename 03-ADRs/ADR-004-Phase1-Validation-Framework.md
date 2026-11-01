@@ -102,6 +102,20 @@ The original framework was stocks-first with crypto deferred. As strategies were
 - STR-D was tested in Phase 1A on stocks (WATCH) but never walk-forward validated → must be validated.
 - STR-L has insufficient signals for walk-forward → retains WATCH status with explicit note.
 
+## Amendment 2 — Fill-Realism Promotion Gate (US-174, 2026-11-01)
+
+### Context
+The framework validated edge on frictionless/optimistic fills, and strategies promoted to LIVE/WATCH on thin frictionless out-of-sample edges later collapsed to ≤ 0 once realistic/pessimistic fills were charged (STR-Q and the 16-chart-pattern block). Promotion needs a fail-closed gate that requires the edge to survive realistic/pessimistic fills before any LIVE/WATCH status is recorded.
+
+### Decision
+
+| Rule | Definition |
+|---|---|
+| **Promotion pre-condition** | No strategy is promoted to LIVE or WATCH unless its OOS edge is positive under realistic fills: realistic mean R > 0, pessimistic PF > 1.0, realistic ≥ 60% of optimistic, n ≥ 10. |
+| **Enforcement point** | validate_strategy.py (note gate, exit 1) + a pre-promotion assert (g3_gate.assert_g3_gate). Fail-closed; a non-positive realistic edge REJECTS promotion. |
+| **Fill models** | Intraday crypto → execution_sim REALISTIC/PESSIMISTIC (L2). Daily-bar swing → next-open entry (US-173) + fee_source round-trip + worst-print stops / trade-through targets. |
+| **Consequence of retro-audit** | Any LIVE/WATCH strategy that fails this gate on re-evaluation is demoted to Hypothesis with a "no claimable edge under realistic fills" note (the 16 chart-pattern block and the thin crypto-factor edges are expected to fail it). |
+
 ## Related Decisions
 - ADR-002: Paper Trading First (superseded by this more structured framework)
 - ADR-003: Strategy Schema (strategies being validated)

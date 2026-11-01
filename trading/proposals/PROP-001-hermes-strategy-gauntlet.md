@@ -107,6 +107,8 @@ L1–L3 invariance suite + perp-specific leaks (funding lag, OI/depth lag, 24/7 
 Replay fills against L2: optimistic (mid) / realistic (queue-aware) / pessimistic (always taker + adverse selection). Accrue funding hourly.
 
 > **Pass** — realistic ≥ 60% of optimistic avg R · pessimistic PF > 1.0 · slippage monotonic in clip size
+>
+> **G3 is MANDATORY and fail-closed for promotion.** A strategy cannot be promoted to LIVE/WATCH unless its realistic-fill mean R > 0 AND pessimistic PF > 1.0 (and realistic ≥ 60% of optimistic). A strategy with a non-positive realistic edge is REJECTED ("no claimable edge under realistic fills"), never flagged-through.
 
 ### G4 · Combinatorial purged cross-validation
 CPCV: N=12 groups, k=2 test groups → C(12,2)=66 splits, 11 reconstructed paths. Purge by holding horizon, embargo after. Stationary block bootstrap.

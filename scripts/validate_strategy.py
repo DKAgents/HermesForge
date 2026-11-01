@@ -68,6 +68,59 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
     return fm, body
 
 
+# US-174 G3 fill-realism gate: frontmatter fields written by
+# g3_gate.promote_strategy() into a strategy note when promotion passes.
+G3_FM_FIELDS = ("g3_passed", "g3_realistic_mean_r", "g3_pessimistic_pf")
+
+_G3_VAULT_DIRS = [
+    VAULT_ROOT / 'trading/knowledge',
+    VAULT_ROOT / 'trading/strategies',
+    VAULT_ROOT / '03-ADRs',
+    VAULT_ROOT / '05-Proposals',
+]
+
+
+def _resolve_note_file(stem: str) -> Path | None:
+    """Resolve a wikilink stem to an existing vault note path, else None."""
+    for d in _G3_VAULT_DIRS:
+        if d.exists():
+            for f in d.rglob('*.md'):
+                if f.stem == stem:
+                    return f
+    return None
+
+
+def _positive_realistic_r(text: str) -> bool:
+    """True if the note text records a positive realistic mean R (or g3_passed true)."""
+    fm = {}
+    for line in text.splitlines():
+        kv = re.match(r'^(g3_passed|g3_realistic_mean_r|g3_pessimistic_pf):\s*(.*)', line)
+        if kv:
+            fm[kv.group(1)] = kv.group(2).strip()
+    if fm.get('g3_passed', '').lower() == 'true':
+        return True
+    try:
+        return float(fm.get('g3_realistic_mean_r', '0')) > 0
+    except (ValueError, TypeError):
+        return False
+
+
+def _gate_artifact_ok(ev_links: list[str]) -> bool:
+    """True if any Supporting-Evidence wikilink resolves to a note recording a
+    positive G3 fill-realism gate (g3_passed / g3_realistic_mean_r)."""
+    for link in ev_links:
+        stem = link.split('#')[0].strip()
+        path = _resolve_note_file(stem)
+        if path is None:
+            continue
+        try:
+            if _positive_realistic_r(path.read_text(encoding='utf-8', errors='replace')):
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def collect_vault_note_stems() -> set[str]:
     """Return set of all vault note stems (filename without .md) for wikilink validation."""
     stems = set()
@@ -173,6 +226,7 @@ def validate_file(path: Path, vault_stems: set[str]) -> dict:
 
     # ── Supporting Evidence: requires ≥1 valid wikilink ──────────────────────
     evidence_text = extract_section(body, '## Supporting Evidence')
+    real_links = []
     if not evidence_text:
         errors.append('## Supporting Evidence section is empty')
     else:
@@ -198,6 +252,22 @@ def validate_file(path: Path, vault_stems: set[str]) -> dict:
         warnings.append(f"Strategy is deprecated but lives in '{parent}/', should be in Deprecated/")
     elif expected_status in ('hypothesis',) and parent not in ('Hypotheses', 'Active'):
         warnings.append(f"Strategy status is '{expected_status}' but lives in '{parent}/'")
+
+    # ── US-174 G3 fill-realism gate (MANDATORY and fail-closed) ─────────────
+    # A strategy claiming `status: validated` (the only status eligible for
+    # LIVE/WATCH prominence) MUST record a positive G3 fill-realism gate: either
+    # g3_passed / g3_realistic_mean_r in its own frontmatter, or a Supporting
+    # Evidence wikilink to a gate-artifact note recording the same. A missing or
+    # non-positive gate REJECTS the promotion ("no claimable edge under realistic
+    # fills") — it is never flag-only.
+    if fm and fm.get('status') == 'validated':
+        gate_ok = _positive_realistic_r(text) or _gate_artifact_ok(real_links)
+        if not gate_ok:
+            errors.append(
+                'no claimable edge under realistic fills — status "validated" '
+                'requires a passing G3 fill-realism gate (g3_passed: true / '
+                'g3_realistic_mean_r > 0) in frontmatter or a linked gate-artifact note'
+            )
 
     # ── Determine pass/fail ──────────────────────────────────────────────────
     status = 'pass' if not errors else 'fail'
