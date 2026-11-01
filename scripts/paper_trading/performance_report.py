@@ -85,17 +85,23 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
 
 
 def _hostile_strq_r_str() -> str:
-    """Read cumulative hostile STR-Q R from the hostile fill jsonl file,
-    filtered to post-gauntlet entries only (>= 2026-09-14).
-    Returns a formatted string with sum, record count, and date range.
-    Returns 'Pessimistic R: unavailable' on error."""
+    """Read cumulative CORRECTED bar-level hostile STR-Q R from the jsonl ledger.
+
+    Filtered to post-gauntlet entries (>= 2026-09-14) and EXCLUDING degenerate-stop
+    outliers (outlier_excluded=True), matching the US-168 v3 "scored" population
+    whose corrected net R is −8,447 R (cache/backtester_fidelity_report_v3.md).
+
+    Returns a formatted string with sum, scored count, win rate, and date range.
+    Returns 'Pessimistic R: unavailable' on error or empty.
+    """
     try:
         import json, pathlib
         jsonl = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
         if not jsonl.exists():
-            return "Pessimistic R: unavailable"
+            return "Pessimistic R: unavailable (no ledger)"
         total = 0.0
         count = 0
+        wins = 0
         mindate = ""
         maxdate = ""
         with open(jsonl) as f:
@@ -104,12 +110,17 @@ def _hostile_strq_r_str() -> str:
                 hr = r.get("hostile_r")
                 if hr is None:
                     continue
+                # Exclude degenerate-stop outliers (not part of the scored set).
+                if r.get("outlier_excluded"):
+                    continue
                 d = (r.get("entry_date") or "")[:10]
                 # Only include post-gauntlet entries
                 if d < "2026-09-14":
                     continue
                 total += float(hr)
                 count += 1
+                if float(hr) > 0:
+                    wins += 1
                 if d:
                     if not mindate or d < mindate:
                         mindate = d
@@ -117,10 +128,11 @@ def _hostile_strq_r_str() -> str:
                         maxdate = d
         if count == 0:
             return "Pessimistic R: unavailable"
-        return (f"Pessimistic R (worst-case L2 order-book fills): {total:+.0f}R"
-                f" on {count} rows, {mindate} to {maxdate}")
-    except Exception:
-        return "Pessimistic R: unavailable"
+        wr = wins / count * 100
+        return (f"STR-Q bar-level (corrected hostile fills): {total:+.0f}R "
+                f"on {count} scored trades, {wr:.1f}% win, {mindate} to {maxdate}")
+    except Exception as e:
+        return f"Pessimistic R: unavailable ({e})"
 
 
 def _simulate_portfolio_managed(closed_rows: list) -> dict:
@@ -309,25 +321,12 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
                      f"{sim['accepted_win_rate']:.0f}% win")
         lines.append(f"  Unmanaged: {len(closed_rows)} trades, {total_r:+.2f}R")
         lines.append(f"  R/trade: {managed_rpt:+.2f}R managed vs {unmanaged_rpt:+.2f}R unmanaged")
+        lines.append("  _(paper-layer, optimistic fills — see Pessimistic R below for corrected bar-level R)_")
     lines.append("")
 
-    # ── 2. Pessimistic R (cost-adjusted), R total FIRST on every line ──
-    lines.append("**Pessimistic R** _(worst-case L2 fills, cost-adjusted)_")
-    lines.append(f"  7d:  {_total(week_closed):+.2f}R  ({len(week_closed)} trades)")
-    lines.append(f"  30d: {_total(month_closed):+.2f}R  ({len(month_closed)} trades)")
-
-    by_class = {}
-    for r in closed_rows:
-        by_class.setdefault(r.get("asset_class", "unknown"), []).append(r)
-    class_parts = [f"{ac} {_total(trades):+.2f}R" for ac, trades in sorted(by_class.items())]
-    lines.append(f"  By asset class:  {' · '.join(class_parts) if class_parts else 'none'}")
-
-    by_strategy = {}
-    for r in closed_rows:
-        by_strategy.setdefault(r["strategy_id"], []).append(r)
-    lines.append("  By strategy (highest R first):")
-    for sid, trades in sorted(by_strategy.items(), key=lambda kv: -_total(kv[1])):
-        lines.append(f"    {sid} {_total(trades):+.2f}R ({len(trades)})")
+    # ── 2. Pessimistic R (bar-level hostile fills, CORRECTED) — R first ──
+    lines.append("**Pessimistic R** _(bar-level hostile fills, corrected)_")
+    lines.append(f"  {_hostile_strq_r_str()}")
     lines.append("")
 
     # ── 3. Open positions (brief) ──
