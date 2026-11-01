@@ -57,3 +57,8 @@ code/forge-loop/Maintenance/
 scripts/gauntlet/polymarket_macro.json
 # US-158: system-doctor findings queue (append-only runtime state; not source)
 cache/system-doctor/
+
+# git-hygiene: never commit backups or scratch (auto-sync git add -A swept these once)
+*.bak
+*.bak.*
+cache/
