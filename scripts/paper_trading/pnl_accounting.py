@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 pnl_accounting.py — shared PnL-accounting primitives for the hostile paper fill
-models (swing, STR-Q v1, STR-Q v2).
+models (swing, STR-Q).
 
 Single source of truth for taker-fee application, R-multiple computation,
 adversarial cost drag, paper-R fallback, and STR-Q signal-dedup / journal
-reconciliation. The three hostile_fills*.py files import from here (no local
+reconciliation. The hostile_fills*.py files import from here (no local
 duplicated definitions).
 
-Consolidated from hostile_fills.py / hostile_fills_strq.py /
-hostile_fills_strq_v2.py (US-164). Behavior-preserving except the deliberate
+Consolidated from hostile_fills.py / hostile_fills_strq.py (US-164).
+Behavior-preserving except the deliberate
 DEGENERATE_RISK_FLOOR reconciliation (swing 0.5% -> 0.10%) flagged in the
 round-4 architect spec §5.
 """
@@ -39,6 +39,11 @@ DEGENERATE_RISK_FLOOR = 0.001     # 0.10%
 # explicit fee value. US-164 placeholder only (matches the former 20 bps);
 # US-165 call sites pass the dynamic fee_source value through.
 DEFAULT_ROUND_TRIP_BPS = 20.0
+
+# US-180: default stop-widening factor. Widening the stop lowers fee-per-R
+# WITHOUT increasing notional risk (the dollar-risk cap lives in the sizer,
+# outside this module). Sensitivity set for validation = {1.5, 2.0, 3.0}.
+STOP_WIDEN_FACTOR = 2.0
 
 
 # ── Core helpers ────────────────────────────────────────────────────────────
@@ -98,6 +103,24 @@ def _compute_r(paper_entry: float, paper_stop: float, direction: str,
         return (exit_price - hostile_entry_price) / risk
     else:
         return (hostile_entry_price - exit_price) / risk
+
+
+def widen_stop(entry: float, stop: float, direction: str, factor: float) -> float:
+    """Widen the stop distance by `factor` (>= 1.0) away from entry (US-180).
+
+    long  -> entry - |entry - stop| * factor   (lower the stop)
+    short -> entry + |entry - stop| * factor   (raise the stop)
+    Never shrinks a stop. Guard: entry<=0 or stop<=0 or factor<1.0 or unknown
+    direction -> return `stop` unchanged.
+    """
+    if entry <= 0 or stop <= 0 or factor < 1.0:
+        return stop
+    distance = abs(entry - stop) * factor
+    if direction == "long":
+        return entry - distance
+    if direction == "short":
+        return entry + distance
+    return stop
 
 
 def _adversarial_cost_drag(entry_price: float, stop_price: float,
