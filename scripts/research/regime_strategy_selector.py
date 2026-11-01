@@ -105,7 +105,12 @@ STRATEGY_REGISTRY = {
     "STR-X": {"name": "Parabolic SAR", "asset": "stock", "status": "DEMOTED",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "trend_following"},
-    "STR-Y": {"name": "ADX/DMI Directional", "asset": "stock", "status": "DEMOTED",
+    # US-176: STR-Y is NOT a blanket-demoted chart pattern. US-114's sweep found
+    # positive OOS edge (avg R=0.294, PF=1.46, p<0.0001) but "left it blocked"
+    # without a G3 fill-realism gate record. Mark PENDING_G3 (pending G3
+    # re-evaluation): the US-174 fail-closed gate suppresses it at runtime until
+    # a valid G3 record exists. Not LIVE, not blanket-demoted.
+    "STR-Y": {"name": "ADX/DMI Directional", "asset": "stock", "status": "PENDING_G3",
               "regime_best": ["risk_on", "neutral"], "regime_avoid": ["risk_off"],
               "base_risk": 1.0, "type": "trend_following"},
     "STR-Z": {"name": "Stochastic Oscillator", "asset": "stock", "status": "DEMOTED",

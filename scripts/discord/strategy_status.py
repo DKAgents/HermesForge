@@ -194,7 +194,7 @@ STRATEGIES = [
     {"id": "STR-V", "name": "Triangle Breakout", "status": "DEMOTED", "description": "Symmetrical/ascending/descending, volume-confirmed breakout. Phase 1A: 56.3% WR, +0.240R, PF 1.68.", "regimes": ["trending"], "edge": "Contraction breakout"},
     {"id": "STR-W", "name": "Flags & Pennants", "status": "DEMOTED", "description": "Mast + consolidation continuation, breakout resumes trend. Phase 1A: 54.8% WR, +0.154R, PF 1.41.", "regimes": ["trending"], "edge": "Continuation pattern"},
     {"id": "STR-X", "name": "Parabolic SAR", "status": "DEMOTED", "description": "Pure mechanical stop-and-reverse, SAR flip signals. Phase 1A: 50.5% WR, +0.275R, PF 1.64.", "regimes": ["all"], "edge": "Mechanical SAR flip"},
-    {"id": "STR-Y", "name": "ADX/DMI Directional", "status": "DEMOTED", "description": "DI cross with ADX>22 trend filter, 1.0 ATR stop. v2.0 (US-114 sweep optimized): OOS avg R=0.294, PF=1.46, p<0.0001. Original p=0.066 was false negative from suboptimal defaults (ADX=25, stop=2.0 ATR).", "regimes": ["trending"], "edge": "Directional movement cross"},
+    {"id": "STR-Y", "name": "ADX/DMI Directional", "status": "PENDING_G3", "description": "DI cross with ADX>22 trend filter, 1.0 ATR stop. v2.0 (US-114 sweep optimized): OOS avg R=0.294, PF=1.46, p<0.0001. Original p=0.066 was false negative from suboptimal defaults (ADX=25, stop=2.0 ATR). US-176: pending G3 fill-realism re-evaluation (not blanket-demoted).", "regimes": ["trending"], "edge": "Directional movement cross"},
     {"id": "STR-Z", "name": "Stochastic Oscillator", "status": "DEMOTED", "description": "%K/%D cross in oversold/overbought zones. Phase 1A: 44.7% WR, +0.222R, PF 1.43.", "regimes": ["ranging"], "edge": "Oscillator mean reversion"},
     {"id": "STR-AA", "name": "Williams %R", "status": "DEMOTED", "description": "%R crossing above -80 (oversold exit). Phase 1A: 43.3% WR, +0.205R, PF 1.39.", "regimes": ["ranging"], "edge": "Momentum oscillator"},
     {"id": "STR-AB", "name": "OBV Divergence", "status": "DEMOTED", "description": "Price lower low + OBV higher low = bullish divergence. Phase 1A: 53.0% WR, +0.251R, PF 1.72.", "regimes": ["reversal"], "edge": "Volume-price divergence"},
@@ -298,6 +298,7 @@ STATUS_EMOJI = {
     "DEMOTED": "🟠",
     "KILLED": "🔴",
     "CANDIDATE": "🔬",
+    "PENDING_G3": "⏳",
 }
 
 STATUS_COLOR = {
@@ -306,6 +307,7 @@ STATUS_COLOR = {
     "DEMOTED": 0xf08941,  # orange — no claimable edge (frictionless eval)
     "KILLED": 0xf85149,   # red
     "CANDIDATE": 0xa371f7, # purple
+    "PENDING_G3": 0x58a6ff,  # blue — pending G3 fill-realism re-evaluation
 }
 
 
@@ -353,6 +355,7 @@ def format_strategy_dashboard() -> dict:
     manual_watch = [s for s in manual if s["status"] == "WATCH"]
     manual_demoted = [s for s in manual if s["status"] == "DEMOTED"]
     manual_killed = [s for s in manual if s["status"] == "KILLED"]
+    manual_pending_g3 = [s for s in manual if s["status"] == "PENDING_G3"]
 
     # Research strategies
     research_candidates = [s for s in research_strategies if s["status"] == "CANDIDATE"]
@@ -369,6 +372,7 @@ def format_strategy_dashboard() -> dict:
     })
 
     for status, label in [("LIVE", "LIVE"), ("WATCH", "WATCH"),
+                          ("PENDING_G3", "PENDING G3 RE-EVAL"),
                           ("DEMOTED", "DEMOTED (no claimable edge — frictionless eval)"),
                           ("KILLED", "KILLED")]:
         field = _format_group(manual, status, label)
@@ -416,6 +420,7 @@ def format_strategy_dashboard() -> dict:
         "description": (
             f"**{total_strategies} strategies** ({len(manual)} manual + {len(research_strategies)} research) | "
             f"🟢 {len(manual_live)} live | 🟡 {len(manual_watch)} watch | "
+            f"⏳ {len(manual_pending_g3)} pending G3 | "
             f"🟠 {len(manual_demoted)} demoted | 🔴 {len(manual_killed)} killed | "
             f"🔬 {len(research_candidates)} candidates\n"
             f"Last updated: {dt.strftime('%Y-%m-%d %H:%M %Z')}"
