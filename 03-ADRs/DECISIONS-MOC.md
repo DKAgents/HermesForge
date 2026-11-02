@@ -2,7 +2,7 @@
 type: moc
 topic: decisions
 created: 2026-07-30
-updated: 2026-10-31
+updated: 2026-11-02
 tags: [moc, adr, decisions, navigation]
 confidence: high
 has_quotes: false
@@ -29,4 +29,8 @@ SORT date DESC
 - [[ADR-005-Stage-Based-Model-Floors-and-Red-Team]]
 - [[ADR-006-Council-of-Experts-Held]]
 - [[ADR-007-Self-Healing-System]]
+- [[ADR-008-G1-Size-Relative-Capacity-Power-Floor]]
+- [[ADR-009-G0-Maker-Taker-Cost-Model]]
+- [[ADR-010-G7-Paper-Hostile-Fill]]
+- [[ADR-011-Venue-Adapter-Interface]]
 - [[STRATEGIES-MOC]]
