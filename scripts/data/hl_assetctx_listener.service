@@ -1,0 +1,36 @@
+# US-199 — Persistent Hyperliquid assetCtxs listener (systemd unit).
+#
+# A websocket listener CANNOT be a cron job (cron exits; the ws must stay open).
+# This unit keeps the listener alive with Restart=always + the in-process
+# reconnect/backoff/backfill loop.
+#
+# Install:
+#   sudo cp scripts/data/hl_assetctx_listener.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now hl_assetctx_listener
+# Inspect:
+#   sudo systemctl status hl_assetctx_listener
+#   journalctl -u hl_assetctx_listener -f
+#
+# The interpreter is the canonical Forge trading venv (US-193); the listener
+# needs `websockets` + `requests` + sqlite (stdlib).
+[Unit]
+Description=HermesForge Hyperliquid assetCtxs persistent listener (US-199)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/root/.hermes/venv/bin/python3 /root/HermesForge/scripts/data/hl_assetctx_listener.py
+WorkingDirectory=/root/HermesForge/scripts/data
+User=root
+# Not a live-trading process: it only READS and persists market data to the
+# assetctx store. LIVE_TRADING_ENABLED is irrelevant and stays off.
+Restart=always
+RestartSec=3
+# Cap the in-process reconnect backoff at 30s (already in code); systemd adds a
+# final safety net if the process itself dies.
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target

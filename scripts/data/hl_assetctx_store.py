@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import sqlite3
 import pathlib
+import time
 
 import pandas as pd
 
@@ -56,11 +57,26 @@ CREATE TABLE IF NOT EXISTS asset_ctx (
     day_ntl_vlm   REAL,               -- assetCtxs.dayNtlVlm  (USD notional, 24h) [US-186]
     day_base_vlm  REAL,               -- assetCtxs.dayBaseVlm (base volume, 24h)  [US-186]
     prev_day_px   REAL,               -- assetCtxs.prevDayPx                        [US-186]
+    source        TEXT    NOT NULL DEFAULT 'poll',  -- 'ws'|'poll'|'backfill' [US-199]
     PRIMARY KEY (coin, time)
 ) WITHOUT ROWID;
 
 CREATE INDEX IF NOT EXISTS idx_assetctx_coin_time ON asset_ctx (coin, time);
+
+-- US-199 gap ledger: recorded only when BOTH transports (stream + REST backfill)
+-- fail for a window. NEVER a fabricated data row; downstream reads the hole as
+-- "no observation".
+CREATE TABLE IF NOT EXISTS assetctx_gaps (
+    coin      TEXT    NOT NULL,
+    gap_start INTEGER NOT NULL,
+    gap_end   INTEGER NOT NULL,
+    detected  INTEGER NOT NULL,
+    PRIMARY KEY (coin, gap_start)
+);
 """
+
+# Allowed `source` provenance values written to asset_ctx.source (US-199).
+SOURCES = ("ws", "poll", "backfill")
 
 
 def db_path() -> pathlib.Path:
@@ -89,35 +105,44 @@ _NEW_COLUMNS = ("day_ntl_vlm", "day_base_vlm", "prev_day_px")
 
 
 def _migrate_columns(conn: sqlite3.Connection) -> None:
-    """Add missing US-186 columns to an existing asset_ctx table (idempotent;
-    no-op for fresh DBs that already carry them in _SCHEMA)."""
+    """Add missing US-186 columns and the US-199 `source` provenance column to an
+    existing asset_ctx table (idempotent; no-op for fresh DBs that already carry
+    them in _SCHEMA)."""
     cols = {r[1] for r in conn.execute("PRAGMA table_info(asset_ctx)")}
     for col in _NEW_COLUMNS:
         if col not in cols:
             conn.execute(f"ALTER TABLE asset_ctx ADD COLUMN {col} REAL")
+    # US-199: source provenance (NOT NULL requires a DEFAULT for the migration).
+    if "source" not in cols:
+        conn.execute(
+            "ALTER TABLE asset_ctx ADD COLUMN source TEXT NOT NULL DEFAULT 'poll'"
+        )
 
 
-def append_snapshot(conn: sqlite3.Connection, rows: list[dict]) -> int:
+def append_snapshot(conn: sqlite3.Connection, rows: list[dict],
+                    source: str = "poll") -> int:
     """INSERT OR IGNORE keyed (coin, time). rows = [{coin:str, time:int ms,
     mark_px:float|None, oracle_px:float|None, funding:float|None,
     premium:float|None, open_interest:float|None, day_ntl_vlm:float|None,
-    day_base_vlm:float|None, prev_day_px:float|None}]. Idempotent:
-    re-snapshotting the same (coin,time) inserts 0. Commit inside; rollback on
-    error (atomic). Returns count of NEW rows."""
-    if not rows:
-        return 0
+    day_base_vlm:float|None, prev_day_px:float|None}]. ``source`` tags the whole
+    batch with its transport provenance ('ws' | 'poll' | 'backfill'; US-199).
+    Idempotent: re-snapshotting the same (coin,time) inserts 0. Commit inside;
+    rollback on error (atomic). Returns count of NEW rows."""
+    if rows:
+        if source not in SOURCES:
+            source = "poll"  # fail-closed: unknown provenance -> poll
     tuples = [
         (str(r["coin"]), int(r["time"]), _f(r.get("mark_px")),
          _f(r.get("oracle_px")), _f(r.get("funding")),
          _f(r.get("premium")), _f(r.get("open_interest")),
          _f(r.get("day_ntl_vlm")), _f(r.get("day_base_vlm")),
-         _f(r.get("prev_day_px")))
+         _f(r.get("prev_day_px")), source)
         for r in rows
     ]
     sql = ("INSERT OR IGNORE INTO asset_ctx "
            "(coin, time, mark_px, oracle_px, funding, premium, open_interest, "
-           "day_ntl_vlm, day_base_vlm, prev_day_px) "
-           "VALUES (?,?,?,?,?,?,?,?,?,?)")
+           "day_ntl_vlm, day_base_vlm, prev_day_px, source) "
+           "VALUES (?,?,?,?,?,?,?,?,?,?,?)")
     try:
         cur = conn.executemany(sql, tuples)
         conn.commit()
@@ -125,6 +150,22 @@ def append_snapshot(conn: sqlite3.Connection, rows: list[dict]) -> int:
     except Exception:
         conn.rollback()
         raise
+
+
+def record_gap(conn: sqlite3.Connection, coin: str, gap_start: int,
+               gap_end: int, detected: int | None = None) -> None:
+    """Record a data gap in assetctx_gaps (US-199). Idempotent on
+    (coin, gap_start). A gap is written ONLY when both transports fail for a
+    window — never a fabricated data row. ``detected`` is the ms epoch the gap
+    was first noticed (default now)."""
+    if detected is None:
+        detected = int(time.time() * 1000)
+    conn.execute(
+        "INSERT OR IGNORE INTO assetctx_gaps (coin, gap_start, gap_end, detected) "
+        "VALUES (?,?,?,?)",
+        (str(coin), int(gap_start), int(gap_end), int(detected)),
+    )
+    conn.commit()
 
 
 def _f(v):
