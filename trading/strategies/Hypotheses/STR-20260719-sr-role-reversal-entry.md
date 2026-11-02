@@ -37,7 +37,8 @@ scanner_module: scanner_d_sr_reversal
 scanner_alias: scan_d
 
 strategy_id: STR-D-sr-role-reversal
-scanner_alias: scan_d---
+scanner_alias: scan_d
+---
 # Support/Resistance Role-Reversal Entry
 
 ## Thesis

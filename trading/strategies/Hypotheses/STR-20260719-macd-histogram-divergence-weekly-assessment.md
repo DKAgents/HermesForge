@@ -39,7 +39,8 @@ scanner_module: scanner_b_macd_divergence
 scanner_alias: scan_b
 
 strategy_id: STR-B-macd-histogram-divergence
-scanner_alias: scan_b---
+scanner_alias: scan_b
+---
 # MACD Histogram Divergence with Weekly Trend Assessment
 
 ## Thesis

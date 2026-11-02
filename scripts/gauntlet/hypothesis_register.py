@@ -26,10 +26,10 @@ from typing import Any, Dict, List, Optional
 
 # US-191: hard signal-class intake gate (fast-fail retail-TA / chart-pattern /
 # ICT-SMC BEFORE G0). Reject at registration time, not skill-prior-only.
-try:
-    from signal_class import intake_verdict as _signal_intake  # same dir
-except ImportError:  # pragma: no cover - robust when imported elsewhere
-    _signal_intake = None
+# FAIL-CLOSED: the import is unconditional — if signal_class cannot be
+# imported, this module fails to load and register() is unavailable, so intake
+# can never silently bypass the gate on an ImportError.
+from signal_class import intake_verdict as _signal_intake  # same dir
 
 
 HYPOTHESES_FILE = os.path.join(
@@ -492,17 +492,17 @@ def register(entry: Dict[str, Any]) -> Dict[str, Any]:
 
     # US-191: hard signal-class intake gate — reject retail-TA / chart-pattern /
     # ICT-SMC BEFORE G0. Enforcement at registration, not skill-prior-only.
-    if _signal_intake is not None:
-        desc = entry.get("description") or entry.get("entry_logic") or ""
-        prims = entry.get("primitives") or []
-        verdict = _signal_intake(hypothesis_id=hypothesis_id,
-                                 description=desc,
-                                 primitives=prims)
-        if not verdict["admitted"]:
-            raise ValueError(
-                f"Hypothesis '{hypothesis_id}' rejected at intake (before G0): "
-                f"{verdict['reason']} (signal_class='{verdict['signal_class']}')"
-            )
+    # Fail-closed: the gate always runs (the import is unconditional above).
+    desc = entry.get("description") or entry.get("entry_logic") or ""
+    prims = entry.get("primitives") or []
+    verdict = _signal_intake(hypothesis_id=hypothesis_id,
+                             description=desc,
+                             primitives=prims)
+    if not verdict["admitted"]:
+        raise ValueError(
+            f"Hypothesis '{hypothesis_id}' rejected at intake (before G0): "
+            f"{verdict['reason']} (signal_class='{verdict['signal_class']}')"
+        )
 
     holding_class = entry.get("holding_class", "")
     allowed = {"scalp", "day", "swing", "position"}

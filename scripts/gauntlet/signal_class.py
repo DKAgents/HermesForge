@@ -23,6 +23,14 @@ inside "mean-reversion". Keyword phrases are deliberately SPECIFIC so that
 systematic/macro/factor strategies (term-structure, funding carry,
 cross-sectional, capitulation, supply-crunch, skew) are not mis-tagged.
 
+Generic single-word tokens (e.g. "imbalance", "flag", "wedge", "hammer",
+"engulf") are NOT listed on their own: they over-match mundane prose
+("order-flow imbalance", "set a data-quality flag", "hammer out") and
+false-block structural/systematic edges. Each is replaced by an unambiguous
+phrase ("bull flag", "rising wedge", "hammer candle", "bullish engulfing",
+"outside day reversal", ...) so that only a genuine retail-TA / chart-pattern /
+ICT-SMC NAME matches.
+
 Usage:
     from signal_class import classify, is_blocked, intake_verdict, BLOCKED_CLASSES
 """
@@ -46,16 +54,21 @@ _ICT_SMC_KEYWORDS = (
     "liquidity sweep", "liquidity grab", "liquidity-sweep", "sweep reversal",
     "stop hunt", "stop-hunt", "order block", "orderblock", "fair value gap",
     "fvg", "smart money", "breaker block", "market structure shift",
-    "imbalance", "judas swing", "induced liquidity", "equal highs",
+    "judas swing", "induced liquidity", "equal highs",
     "equal lows", "sweep of",
 )
 
 _CHART_PATTERN_KEYWORDS = (
     "head and shoulder", "head & shoulder", "double top", "double bottom",
-    "triple top", "triple bottom", "triangle breakout", "wedge",
-    "flag", "pennant", "candlestick", "candle pattern", "hammer",
-    "engulf", "engulfing", "outside day", "outside bar", "elliott",
-    "morning star", "doji", "chart pattern", "neckline", "key reversal",
+    "triple top", "triple bottom", "triangle breakout",
+    "rising wedge", "falling wedge", "wedge pattern",
+    "bull flag", "bear flag", "flag pattern",
+    "pennant", "candlestick", "candle pattern",
+    "hammer candle", "hammer candlestick", "hammer pattern", "inverted hammer",
+    "bullish engulfing", "bearish engulfing", "engulfing pattern",
+    "outside day reversal", "outside day key reversal", "outside bar reversal",
+    "elliott", "morning star", "doji", "chart pattern", "neckline",
+    "key reversal",
 )
 
 _RETAIL_TA_KEYWORDS = (
