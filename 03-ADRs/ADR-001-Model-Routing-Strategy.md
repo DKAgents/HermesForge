@@ -92,7 +92,7 @@ points as automation volume increases.
 | **orchestrator** | T2 | T2 | Active platform-build phase — force T2 |
 | **architect** | T2 | T2 | Active platform-build phase — force T2 |
 | **coder** | T2 | T2 | Active platform-build phase — force T2 |
-| **researcher** | T3 | T3 | Escalate to T2 only if quality insufficient |
+| **researcher** | T2 | T2 | Hypothesis-generation runs T2; the profile has no `config.yaml` so it inherits the global default (`deepseek-v4-pro-0813`). Operational research may drop to T3 if a profile config is later introduced. |
 | **backtester** | T3 | T3 | Escalate to T2 for final synthesis only |
 | **trading** | T3 | T3 | Escalate to T2 for complex analysis |
 | **product-owner** | T3 | T4 | T3 default, T4 acceptable for formatting |
@@ -236,6 +236,7 @@ Do NOT use it as primary routing — it's opaque and inconsistent.
 
 ## Change Log
 
+- **2026-11-02**: Reconciled researcher tier documentation with reality (US-218). ADR-001 and the researcher profile doc previously documented the researcher as T3, but the researcher Hermes profile has no `config.yaml` and therefore inherits the global default `deepseek/deepseek-v4-pro-0813` (T2). Hypothesis-generation is now documented as T2 to match. Documentation-only no-op — no cost delta, since the researcher was already billing at T2.
 - **2026-10-31**: Added T1 escalation trigger #11 (pre-live execution audit) — a one-off Opus audit of the live-execution path (executor, risk manager, position sizing, stop-loss submission, kill switch, `LIVE_TRADING_ENABLED` gate) against the ADR-007 invariant list before the first real-money fill. Rationale: no existing trigger covered independent verification of the execution code itself (only counterparty onboarding, #10), and go-live is the highest-stakes decision the fleet faces. Estimated cost: one invocation at ~$0.30-0.50.
 - **2026-10-29**: T2/T3 point-release upgrade + T1 trigger refresh. A/B eval (5 representative tasks) confirmed newer DeepSeek point-releases are materially better at near-identical cost: T2 `deepseek-v4-pro-0813` (agentic 41.3 vs 26.3, coding 68.8 vs 59.4, input 25% cheaper) and T3 `deepseek-v4-flash-0731` (agentic 41.0 vs 22.2, coding 69.1 vs 56.2). Global default switched to `-0813`; 15 cron jobs switched to `-0731` (with `--reasoning-effort low` to cap the reasoning-token cost of the new default-enabled reasoning). T1 triggers: stale path fixed (`08-Knowledge/T1-Escalations` → `trading/knowledge/T1-Escalations`), trigger #5 count refreshed (1,900 → 2,900 notes), and a standing false-negative audit added to the model-review cron so a silent T2 underperformance cannot go undetected. T1 remains a safety valve, not a tier.
 - **2026-10-04**: Quarterly T1 review completed (early, 13 days ahead of Oct 17 deadline). Zero T1 calls in 2.5 months — triggers are appropriately restrictive. $55.37 saved via T3 migration ($5.72/month actual spend). 91% of all calls on T3, 9% on T2. All triggers kept, model assignments unchanged. Next review: 2027-01-17.

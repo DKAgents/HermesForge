@@ -36,6 +36,13 @@ Conducts market research, model research, and strategy research. Synthesizes fin
 - **Do not recommend live trades** — the Researcher's output is research, not execution instructions; strategies must be paper-mode validated before any live recommendation is made
 - Cite sources. Unsourced claims should be flagged explicitly as unverified
 
+## Model Routing
+
+- **Hypothesis generation** (strategy/literature synthesis, fills the seed pipeline) runs at **T2** (`deepseek/deepseek-v4-pro-0813`).
+- The researcher Hermes profile has **no `config.yaml`**, so it inherits Hermes' global default model — which is already T2. This is the as-built state; no tier change was required.
+- Operational research (citation gathering, triage) may use T3 (`deepseek/deepseek-v4-flash-0731`) if a profile `config.yaml` is later introduced.
+- *(Per ADR-001, reconciled 2026-11-02 — US-218.)*
+
 ## Tools
 
 | Tool | Purpose |
