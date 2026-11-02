@@ -18,11 +18,47 @@ from typing import Dict, List, Optional, Union
 import numpy as np
 import pandas as pd
 
+from fee_source import get_maker_bps, get_taker_bps  # single fee table (US-165)
+
 # Default cost parameters (Hyperliquid base perp tier)
 TAKER_FEE_BPS = 9.0  # round-trip taker (0.045% * 2)
 DEFAULT_SLIPPAGE_BPS = 2.5  # default taker slippage at small size
 FUNDING_OVERHEAD_BPS = 2.0  # estimated funding rate overhead
 GROSS_MULTIPLIER = 4.0  # gross capture needed = cost * multiplier
+
+# ── Maker/taker split (ADR-009 / US-208) ──────────────────────────────────────
+# Maker fills are NOT guaranteed and are adversely selected when they DO trade
+# through, so a maker label buys almost no discount until G3 demonstrates
+# passive fills. Binding defaults (flagged/tunable):
+MAKER_FILL_PROB = 0.35              # P(a posted maker order rests & fills passively)
+MAKER_ADVERSE_SELECTION_BPS = 1.5   # expected adverse move conditioned on a fill
+
+
+def _round_trip_fee_bps(execution_mode: str, maker_demonstrated: bool,
+                        fill_prob: float = MAKER_FILL_PROB,
+                        adverse_selection_bps: float = MAKER_ADVERSE_SELECTION_BPS) -> float:
+    """Round-trip fee bps for the requested execution mode.
+
+    taker -> TAKER_FEE_BPS (9.0), unchanged.
+
+    maker (demonstrated at G3) -> the fill-probability-blended per-leg cost,
+    doubled for two legs:
+
+        effective_per_leg = fill_prob * (maker_bps + adverse_selection_bps)
+                            + (1 - fill_prob) * taker_bps
+        round_trip        = 2 * effective_per_leg
+
+    maker (NOT yet demonstrated) -> taker cost (FAIL-CLOSED labeling, ADR-009
+    §1): a self-declared maker label is screened at taker cost until G3 shows
+    passive fills on real L2 book data.
+    """
+    if execution_mode == "maker" and maker_demonstrated:
+        maker_bps = get_maker_bps("crypto")
+        taker_bps = get_taker_bps("crypto")
+        per_leg = (fill_prob * (maker_bps + adverse_selection_bps)
+                   + (1.0 - fill_prob) * taker_bps)
+        return 2.0 * per_leg
+    return TAKER_FEE_BPS
 
 
 def _load_parquet(path: str) -> pd.DataFrame:
@@ -88,6 +124,10 @@ def screen(
     slippage_bps: Optional[float] = None,
     funding_bps: Optional[float] = None,
     gross_multiplier: Optional[float] = None,
+    execution_mode: str = "taker",
+    maker_demonstrated: bool = False,
+    fill_prob: Optional[float] = None,
+    adverse_selection_bps: Optional[float] = None,
 ) -> Dict:
     """
     Run G0 cost screen for a symbol given raw close prices.
@@ -99,6 +139,13 @@ def screen(
         slippage_bps: override estimated slippage (default: DEFAULT_SLIPPAGE_BPS)
         funding_bps: override funding overhead (default: FUNDING_OVERHEAD_BPS)
         gross_multiplier: override multiplier (default: GROSS_MULTIPLIER)
+        execution_mode: 'taker' or 'maker' (default 'taker')
+        maker_demonstrated: whether G3 demonstrated passive fills on real L2 data.
+            Maker labeling is FAIL-CLOSED: unless True, a 'maker' label is priced
+            at taker cost (ADR-009 §1).
+        fill_prob: override maker fill probability (default MAKER_FILL_PROB)
+        adverse_selection_bps: override maker adverse-selection penalty
+            (default MAKER_ADVERSE_SELECTION_BPS)
 
     Returns:
         Dict with screen results including passes/fail and explanation.
@@ -106,6 +153,12 @@ def screen(
     slippage = slippage_bps if slippage_bps is not None else DEFAULT_SLIPPAGE_BPS
     funding = funding_bps if funding_bps is not None else FUNDING_OVERHEAD_BPS
     multiplier = gross_multiplier if gross_multiplier is not None else GROSS_MULTIPLIER
+    fill_prob = fill_prob if fill_prob is not None else MAKER_FILL_PROB
+    adv_sel = adverse_selection_bps if adverse_selection_bps is not None else MAKER_ADVERSE_SELECTION_BPS
+
+    fee_bps = _round_trip_fee_bps(execution_mode, maker_demonstrated,
+                                  fill_prob=fill_prob, adverse_selection_bps=adv_sel)
+    fee_mode = "maker-blended" if (execution_mode == "maker" and maker_demonstrated) else "taker"
 
     arr = np.asarray(close_prices, dtype=float)
     arr = arr[~np.isnan(arr)]
@@ -114,11 +167,14 @@ def screen(
         return {
             "symbol": symbol,
             "median_abs_move_bps": 0.0,
-            "all_in_cost_bps": TAKER_FEE_BPS + slippage + funding,
-            "gross_capture_needed_bps": (TAKER_FEE_BPS + slippage + funding) * multiplier,
+            "all_in_cost_bps": fee_bps + slippage + funding,
+            "gross_capture_needed_bps": (fee_bps + slippage + funding) * multiplier,
             "passes": False,
             "explanation": f"{symbol}: insufficient data ({len(arr)} bars) for G0 screen",
-            "fee_bps": TAKER_FEE_BPS,
+            "fee_bps": fee_bps,
+            "fee_mode": fee_mode,
+            "execution_mode": execution_mode,
+            "maker_demonstrated": maker_demonstrated,
             "slippage_bps": slippage,
             "funding_bps": funding,
             "multiplier": multiplier,
@@ -127,7 +183,7 @@ def screen(
     moves = np.abs(np.diff(arr)) / arr[:-1] * 10000
     median_move = float(np.median(moves))
 
-    all_in = TAKER_FEE_BPS + slippage + funding
+    all_in = fee_bps + slippage + funding
     gross_needed = all_in * multiplier
     passes = median_move >= gross_needed
 
@@ -141,7 +197,7 @@ def screen(
         explanation = (
             f"{symbol}: median move {median_move:.1f} bps < "
             f"gross capture needed {gross_needed:.1f} bps — "
-            f"all-in cost {all_in:.1f} bps (fees {TAKER_FEE_BPS:.1f} + "
+            f"all-in cost {all_in:.1f} bps (fees {fee_bps:.1f} + "
             f"slippage {slippage:.1f} + funding {funding:.1f}) "
             f"× {multiplier:.0f}x requires {gross_needed:.1f} bps capture"
         )
@@ -153,7 +209,10 @@ def screen(
         "gross_capture_needed_bps": gross_needed,
         "passes": passes,
         "explanation": explanation,
-        "fee_bps": TAKER_FEE_BPS,
+        "fee_bps": fee_bps,
+        "fee_mode": fee_mode,
+        "execution_mode": execution_mode,
+        "maker_demonstrated": maker_demonstrated,
         "slippage_bps": slippage,
         "funding_bps": funding,
         "multiplier": multiplier,
@@ -166,6 +225,9 @@ def screen_from_parquet(
     entry_mode: str = "taker",
     slippage_bps: Optional[float] = None,
     funding_bps: Optional[float] = None,
+    maker_demonstrated: bool = False,
+    fill_prob: Optional[float] = None,
+    adverse_selection_bps: Optional[float] = None,
 ) -> Dict:
     """
     Load a parquet OHLCV file and run G0 screen.
@@ -173,9 +235,13 @@ def screen_from_parquet(
     Args:
         parquet_path: path to .parquet file
         timeframe_minutes: bar interval (auto-detected if None)
-        entry_mode: 'taker' or 'maker' (affects fee model — currently taker only)
+        entry_mode: 'taker' or 'maker' (maker cost is FAIL-CLOSED unless
+            maker_demonstrated=True, ADR-009)
         slippage_bps: override slippage
         funding_bps: override funding
+        maker_demonstrated: whether G3 demonstrated passive fills on real L2 data
+        fill_prob: override maker fill probability
+        adverse_selection_bps: override maker adverse-selection penalty
 
     Returns:
         Screen result dict including passes/fail.
@@ -189,7 +255,10 @@ def screen_from_parquet(
         symbol = str(df["symbol"].iloc[0])
 
     close_prices = df["close"].dropna().values
-    return screen(symbol, close_prices, slippage_bps=slippage_bps, funding_bps=funding_bps)
+    return screen(symbol, close_prices, slippage_bps=slippage_bps,
+                  funding_bps=funding_bps, execution_mode=entry_mode,
+                  maker_demonstrated=maker_demonstrated, fill_prob=fill_prob,
+                  adverse_selection_bps=adverse_selection_bps)
 
 
 def batch_screen(
@@ -199,6 +268,10 @@ def batch_screen(
     slippage_bps: Optional[float] = None,
     funding_bps: Optional[float] = None,
     min_bars: int = 20,
+    entry_mode: str = "taker",
+    maker_demonstrated: bool = False,
+    fill_prob: Optional[float] = None,
+    adverse_selection_bps: Optional[float] = None,
 ) -> List[Dict]:
     """
     Run G0 screen on all parquet files in a directory.
@@ -237,6 +310,10 @@ def batch_screen(
                 close_prices,
                 slippage_bps=slippage_bps,
                 funding_bps=funding_bps,
+                execution_mode=entry_mode,
+                maker_demonstrated=maker_demonstrated,
+                fill_prob=fill_prob,
+                adverse_selection_bps=adverse_selection_bps,
             )
             result["file"] = fpath
             result["n_bars"] = len(df)
