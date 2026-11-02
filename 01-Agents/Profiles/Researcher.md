@@ -38,10 +38,9 @@ Conducts market research, model research, and strategy research. Synthesizes fin
 
 ## Model Routing
 
-- **Hypothesis generation** (strategy/literature synthesis, fills the seed pipeline) runs at **T2** (`deepseek/deepseek-v4-pro-0813`).
-- The researcher Hermes profile has **no `config.yaml`**, so it inherits Hermes' global default model — which is already T2. This is the as-built state; no tier change was required.
-- Operational research (citation gathering, triage) may use T3 (`deepseek/deepseek-v4-flash-0731`) if a profile `config.yaml` is later introduced.
-- *(Per ADR-001, reconciled 2026-11-02 — US-218.)*
+- **Hypothesis generation** (strategy/literature synthesis, fills the seed pipeline) runs at **T2** (`deepseek/deepseek-v4-pro-0813`) — hard floor. Dispatch with an explicit T2 model override; do not fall back to the profile default.
+- The researcher Hermes profile now has a **`config.yaml`** pinning the default to **T3** (`deepseek/deepseek-v4-flash-0731`, provider `openrouter`) for operational research (citation gathering, triage, market scanning).
+- *(Per ADR-001 — US-218 hypothesis-gen T2 floor; US-220 T3 operational default.)*
 
 ## Tools
 
