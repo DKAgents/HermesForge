@@ -1,5 +1,6 @@
 """
-Tests for hypothesis_register.py — HR1 through HR8.
+Tests for hypothesis_register.py — HR1 through HR8 (legacy) + US-202 intake
+validation (HI1 through HI6).
 """
 
 import sys
@@ -9,12 +10,11 @@ import shutil
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-import json
 import pytest
 
 # We need to patch the HYPOTHESES_FILE to a temp location for testing.
 # Import the module and override.
-import hypothesis_register as hr_mod
+import hypothesis_register as hr_mod  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
@@ -27,18 +27,33 @@ def temp_hypotheses_file(monkeypatch):
     shutil.rmtree(tmpdir, ignore_errors=True)
 
 
+def _full_entry(hid="TEST-H01", **overrides):
+    """A complete, valid US-202 frontmatter (all 14 required fields)."""
+    entry = {
+        "hypothesis_id": hid,
+        "source": "human",
+        "venue": "hyperliquid",
+        "instruments": ["BTC", "ETH"],
+        "horizon": "4h-48h",
+        "entry_logic": "Enter when the funding-carry signal is extreme.",
+        "exit_logic": "Exit on convergence or a 1x ATR stop.",
+        "expected_gross_edge_bps": 15.0,
+        "cost_hurdle_bps": 45.0,
+        "data_dependencies": ["hl:fundingHistory"],
+        "counterparty": "Late retail longs accepting negative funding carry.",
+        "execution_mode": "taker",
+        "falsification_criteria": "Sharpe < 0.5 over 100 trades",
+        "primitives": ["funding_z", "oi_trend"],
+        "description": "Test hypothesis for unit tests.",
+        "tier": "T2",
+        "timeframe": "5m",
+    }
+    entry.update(overrides)
+    return entry
+
+
 def _make_hypothesis(hid="TEST-H01"):
-    """Create a minimal hypothesis entry for testing."""
-    return hr_mod.register(
-        hypothesis_id=hid,
-        description="Test hypothesis for unit tests.",
-        falsification_criteria="Sharpe < 0.5 over 100 trades",
-        expected_effect_size_bps=15.0,
-        tier="T2",
-        venue="hyperliquid",
-        timeframe="5m",
-        primitives=["momentum", "volume"],
-    )
+    return hr_mod.register(_full_entry(hid))
 
 
 # ---------------------------------------------------------------------------
@@ -50,13 +65,17 @@ def test_HR1_register_creates_entry():
     assert entry["hypothesis_id"] == "HYP-11"
     assert entry["description"] == "Test hypothesis for unit tests."
     assert entry["falsification_criteria"] == "Sharpe < 0.5 over 100 trades"
-    assert entry["expected_effect_size_bps"] == 15.0
+    assert entry["expected_gross_edge_bps"] == 15.0
     assert entry["tier"] == "T2"
     assert entry["venue"] == "hyperliquid"
     assert entry["timeframe"] == "5m"
-    assert "momentum" in entry["primitives"]
-    assert "volume" in entry["primitives"]
-    assert "registered_at" in entry
+    assert entry["horizon"] == "4h-48h"
+    assert entry["source"] == "human"
+    assert entry["execution_mode"] == "taker"
+    assert "counterparty" in entry
+    assert "BTC" in entry["instruments"]
+    assert "funding_z" in entry["primitives"]
+    assert entry["registered_at"]
     assert entry["status"] == "registered"
     assert entry["trials"] == []
 
@@ -74,16 +93,7 @@ def test_HR2_duplicate_id_refused():
     _make_hypothesis("HYP-DUP1")
 
     with pytest.raises(ValueError, match="already registered"):
-        hr_mod.register(
-            hypothesis_id="HYP-DUP1",
-            description="Duplicate attempt",
-            falsification_criteria="Should fail",
-            expected_effect_size_bps=10.0,
-            tier="T1",
-            venue="hyperliquid",
-            timeframe="1h",
-            primitives=["test"],
-        )
+        hr_mod.register(_full_entry("HYP-DUP1"))
 
 
 # ---------------------------------------------------------------------------
@@ -91,7 +101,6 @@ def test_HR2_duplicate_id_refused():
 # ---------------------------------------------------------------------------
 
 def test_HR3_list_all_returns_entries():
-    # Start with clean temp file (fixture handles this)
     _make_hypothesis("HYP-A")
     _make_hypothesis("HYP-B")
     _make_hypothesis("HYP-C")
@@ -131,34 +140,24 @@ def test_HR5_get_returns_none_for_missing():
 # ---------------------------------------------------------------------------
 
 def test_HR6_pre_register_from_seed_pool_creates_10():
-    # Start with clean temp file (fixture handles this)
     registered = hr_mod.pre_register_from_seed_pool()
     assert len(registered) == 10, f"Expected 10, got {len(registered)}"
 
-    # All should be HYP-01 through HYP-10
     ids = sorted([e["hypothesis_id"] for e in registered])
     expected = [f"HYP-{i:02d}" for i in range(1, 11)]
     assert ids == expected, f"Got IDs: {ids}"
 
-    # Each should have all required fields
-    for entry in registered:
-        assert "hypothesis_id" in entry
-        assert "description" in entry
-        assert "falsification_criteria" in entry
-        assert "expected_effect_size_bps" in entry
-        assert "tier" in entry
-        assert "venue" in entry
-        assert "timeframe" in entry
-        assert "primitives" in entry
-        assert "registered_at" in entry
-        assert "trials" in entry
-        assert entry["status"] == "registered"
-        assert isinstance(entry["primitives"], list)
-        assert len(entry["primitives"]) > 0
+    # Each seed-pool entry must already satisfy validate_frontmatter (no
+    # regression — the full 14-field corpus still registers).
+    for entry in hr_mod.SEED_POOL:
+        ok, errors = hr_mod.validate_frontmatter(entry)
+        assert ok, f"{entry['hypothesis_id']} fails frontmatter: {errors}"
 
-    # Verify with list_all
-    all_entries = hr_mod.list_all()
-    assert len(all_entries) == 10
+    # Each registered entry carries the canonical fields.
+    for entry in registered:
+        assert entry["status"] == "registered"
+        assert "counterparty" in entry and entry["counterparty"]
+        assert entry["venue"] == "hyperliquid"
 
     # Running again should register 0 new entries
     registered2 = hr_mod.pre_register_from_seed_pool()
@@ -177,7 +176,6 @@ def test_HR7_link_trial_updates_entry():
     entry = hr_mod.get("HYP-LINK")
     assert "TRIAL-001" in entry["trials"]
 
-    # Link another trial
     hr_mod.link_trial("HYP-LINK", "TRIAL-002")
     entry = hr_mod.get("HYP-LINK")
     assert "TRIAL-001" in entry["trials"]
@@ -201,35 +199,78 @@ def test_HR7_link_trial_updates_entry():
 def test_HR8_entry_has_all_required_fields():
     entry = _make_hypothesis("HYP-FULL")
 
-    required_fields = [
-        "hypothesis_id",
-        "description",
-        "falsification_criteria",
-        "expected_effect_size_bps",
-        "tier",
-        "venue",
-        "timeframe",
-        "primitives",
-        "registered_at",
-        "trials",
-        "status",
-    ]
-
-    for field in required_fields:
+    for field in ["hypothesis_id", "description", "falsification_criteria",
+                  "expected_gross_edge_bps", "tier", "venue", "timeframe",
+                  "primitives", "registered_at", "trials", "status",
+                  "source", "instruments", "horizon", "entry_logic",
+                  "exit_logic", "cost_hurdle_bps", "data_dependencies",
+                  "counterparty", "execution_mode"]:
         assert field in entry, f"Missing required field: {field}"
 
-    # Type checks
-    assert isinstance(entry["hypothesis_id"], str)
-    assert isinstance(entry["description"], str)
-    assert isinstance(entry["expected_effect_size_bps"], (int, float))
+    assert isinstance(entry["expected_gross_edge_bps"], (int, float))
     assert isinstance(entry["primitives"], list)
     assert isinstance(entry["trials"], list)
-    assert isinstance(entry["status"], str)
+    assert len(entry["counterparty"]) > 0
 
-    # Non-empty strings for key fields
-    assert len(entry["hypothesis_id"]) > 0
-    assert len(entry["description"]) > 0
-    assert len(entry["falsification_criteria"]) > 0
-    assert len(entry["tier"]) > 0
-    assert len(entry["venue"]) > 0
-    assert len(entry["timeframe"]) > 0
+
+# ---------------------------------------------------------------------------
+# US-202 — intake validation (HI1..HI6)
+# ---------------------------------------------------------------------------
+
+def test_HI1_missing_counterparty_rejected_and_writes_nothing():
+    before = hr_mod.list_all()
+    seed = _full_entry("HYP-NO-CPTY")
+    del seed["counterparty"]
+
+    with pytest.raises(ValueError, match="counterparty"):
+        hr_mod.register(seed)
+
+    # Writes NOTHING (rejected at intake, not a later gate).
+    after = hr_mod.list_all()
+    assert len(after) == len(before)
+    assert hr_mod.get("HYP-NO-CPTY") is None
+
+
+def test_HI2_web_source_empty_counterparty_rejected():
+    seed = _full_entry("HYP-WEB-EMPTY", source="web", counterparty="")
+    ok, errors = hr_mod.validate_frontmatter(seed)
+    assert not ok
+    assert any("counterparty" in e for e in errors)
+
+
+def test_HI3_validate_frontmatter_reports_per_field_reasons():
+    # A seed missing several fields surfaces every defect (not a bare boolean).
+    seed = {}
+    ok, errors = hr_mod.validate_frontmatter(seed)
+    assert not ok
+    missing = [e for e in errors if e.startswith("missing required field")]
+    assert len(missing) == 14  # all 14 fields absent
+
+
+def test_HI4_reject_invalid_enum_and_venue_and_numeric():
+    seed = _full_entry("HYP-BAD")
+    bad = dict(seed, source="telegram", execution_mode="market",
+               venue="binance", expected_gross_edge_bps=float("nan"),
+               cost_hurdle_bps="a lot", instruments=[])
+    ok, errors = hr_mod.validate_frontmatter(bad)
+    assert not ok
+    joined = "; ".join(errors)
+    assert "source must be one of" in joined
+    assert "execution_mode must be one of" in joined
+    assert "venue must be 'hyperliquid'" in joined
+    assert "'expected_gross_edge_bps' must be a finite number" in joined
+    assert "'cost_hurdle_bps' must be a finite number" in joined
+    assert "instruments" in joined
+
+
+def test_HI5_full_seed_pool_entries_pass_validation():
+    # No regression: every pre-authored seed passes the new contract.
+    for entry in hr_mod.SEED_POOL:
+        ok, errors = hr_mod.validate_frontmatter(entry)
+        assert ok, f"{entry['hypothesis_id']}: {errors}"
+
+
+def test_HI6_full_14_field_entry_registers():
+    entry = _make_hypothesis("HYP-OK14")
+    assert entry["status"] == "registered"
+    assert hr_mod.get("HYP-OK14") is not None
