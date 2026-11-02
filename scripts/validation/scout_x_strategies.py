@@ -14,6 +14,9 @@ import os
 import re
 import subprocess
 import sys
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -250,6 +253,83 @@ def get_next_hyp_id(counter: list[int]) -> str:
     return f"HYP-{counter[0]}"
 
 
+# ── US-205: preferred academic sources (SSRN + arXiv q-fin) ──────────────
+# These are PRIMARY seed sources; X is demoted to secondary and gated on a
+# counterparty answer below. Untrusted web content is summarized only — never
+# executed. Provenance is recorded via `source` on every candidate.
+
+ARXIV_QFIN_QUERIES = [
+    "cryptocurrency funding rate momentum",
+    "cross-sectional momentum crypto",
+    "market microstructure liquidity",
+    "cryptocurrency listing effect returns",
+]
+
+SSRN_QUERIES = [
+    "crypto funding rate momentum trading",
+    "cryptocurrency liquidity market making",
+]
+
+
+def _fetch_arxiv_qfin(query: str, max_results: int = 3) -> list[dict]:
+    """Fetch arXiv q-fin papers for a query. Fail-open: returns [] on error."""
+    try:
+        encoded = urllib.parse.quote(query)
+        url = (f"http://export.arxiv.org/api/query?search_query=all:{encoded}"
+               f"+AND+cat:q-fin*&start=0&max_results={max_results}"
+               f"&sortBy=submittedDate&sortOrder=descending")
+        req = urllib.request.Request(url, headers={'User-Agent': 'HermesForge/1.0'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            xml_data = r.read()
+        root = ET.fromstring(xml_data)
+        ns = {'atom': 'http://www.w3.org/2005/Atom'}
+        results = []
+        for entry in root.findall('atom:entry', ns)[:max_results]:
+            title = (entry.findtext('atom:title', '', ns) or '').strip()
+            summary = (entry.findtext('atom:summary', '', ns) or '').strip()[:600]
+            link = entry.find('atom:id', ns)
+            url = link.text.strip() if link is not None and link.text else ''
+            if url:
+                results.append({"title": f"[arXiv] {title[:100]}", "url": url,
+                                "snippet": summary, "source": "arXiv"})
+        return results
+    except Exception:
+        return []
+
+
+def _fetch_ssrn(query: str, max_results: int = 3) -> list[dict]:
+    """Best-effort SSRN search (HTML). Fail-open: returns [] on any error."""
+    try:
+        encoded = urllib.parse.quote(query)
+        url = (f"https://papers.ssrn.com/sol3/results.cfm"
+               f"?txtKey_Words={encoded}")
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            html = r.read().decode("utf-8", "ignore")
+        results = []
+        seen = set()
+        for m in re.finditer(r'/sol3/papers\.cfm\?abstract_id=(\d+)[^>]*>(.*?)</a>', html):
+            aid = m.group(1)
+            if aid in seen:
+                continue
+            title = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+            if not title:
+                continue
+            seen.add(aid)
+            results.append({
+                "title": f"[SSRN] {title[:100]}",
+                "url": f"https://papers.ssrn.com/sol3/papers.cfm?abstract_id={aid}",
+                "snippet": title,
+                "source": "SSRN",
+            })
+            if len(results) >= max_results:
+                break
+        return results
+    except Exception:
+        return []
+
+
 def write_hyp_note(candidate: dict, hyp_id: str) -> Path:
     """Write a Hypothesis note to the vault."""
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -272,6 +352,8 @@ def write_hyp_note(candidate: dict, hyp_id: str) -> Path:
     if pf:
         results_block += f"- Reported profit factor: {pf}\n"
 
+    source_kind = candidate.get("source", "X")
+    counterparty = (candidate.get("counterparty") or "").strip() or "TBD"
     content = f"""---
 id: STR-{today}-{slug}
 type: strategy
@@ -283,10 +365,11 @@ timeframe: {tf}
 confidence: low
 last_reviewed: {today}
 hypothesis_id: {hyp_id}
-source: "@{candidate.get('username', 'unknown')}"
+source: "{source_kind}"
 source_url: "{candidate.get('url', '')}"
 scout_score: {candidate.get('score', 0)}
 scout_date: {today}
+counterparty: "{counterparty}"
 gates_passed: []
 eligible_assets: []
 ---
@@ -397,6 +480,17 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
                         print(f"    ✅ Deep-read: {post_id}")
             print()
 
+    # Phase 0.5 (US-205): preferred academic sources (SSRN + arXiv q-fin)
+    # are PRIMARY. Fetched and surfaced as seeds with source provenance;
+    # they carry no counterparty gate (academic sources are trusted as is).
+    academic_papers = []
+    for query in ARXIV_QFIN_QUERIES[:2]:
+        academic_papers.extend(_fetch_arxiv_qfin(query, max_results=3))
+    for query in SSRN_QUERIES[:2]:
+        academic_papers.extend(_fetch_ssrn(query, max_results=3))
+    if academic_papers:
+        print(f"  [US-205] Academic seeds (SSRN/arXiv): {len(academic_papers)} primary")
+
     # Phase 1: Search + score from snippets
     all_tweets = []  # (tweet_dict, query)
 
@@ -476,7 +570,9 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
             spec = extract_strategy_spec(full_text)
             hyp_id = get_next_hyp_id(hyp_counter)
 
-            # Build candidate
+            # Build candidate (X is a social source — provenance recorded)
+            counterparty = (tweet.get("counterparty") or full.get("counterparty")
+                            or "").strip()
             candidate = {
                 "score": full_score or score,
                 "title": spec.get("entry", [full_text[:80]])[0][:80] if spec.get("entry") else full_text[:80],
@@ -486,10 +582,18 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
                 "thesis": full_text[:300],
                 "spec": spec,
                 "hyp_id": hyp_id,
+                "source": "X",
+                "counterparty": counterparty,
             }
 
+            # US-205: X/social-mined ideas must carry a counterparty answer
+            # to enter. Without one the seed is rejected at intake (not written).
             if full_score >= AUTO_HYP_THRESHOLD or score >= AUTO_HYP_THRESHOLD:
-                if not dry_run and len(candidates) < max_candidates:
+                if not counterparty:
+                    candidate["file"] = "(rejected: no counterparty answer)"
+                    print(f"    ⛔ Rejected (us-205): X seed {post_id} has no "
+                          f"counterparty answer")
+                elif not dry_run and len(candidates) < max_candidates:
                     filepath = write_hyp_note(candidate, hyp_id)
                     candidate["file"] = str(filepath)
                     print(f"    ✅ Auto-HYP: {hyp_id} → {filepath.name}")
@@ -500,6 +604,31 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
 
         if len(candidates) >= max_candidates:
             break
+
+    # US-205: append academic (SSRN/arXiv) seeds as primary candidates.
+    # They carry source provenance and are exempt from the counterparty gate.
+    for paper in academic_papers:
+        hyp_id = get_next_hyp_id(hyp_counter)
+        acad = {
+            "score": 0,
+            "title": (paper.get("title") or "academic-seed")[:120],
+            "username": paper.get("source", "academic"),
+            "url": paper.get("url", ""),
+            "source_text": paper.get("snippet", ""),
+            "thesis": (paper.get("snippet") or "")[:300],
+            "spec": {"entry": [], "exit": [], "results": {},
+                     "timeframe": None, "instruments": []},
+            "hyp_id": hyp_id,
+            "source": paper.get("source", "academic"),
+            "counterparty": "TBD",
+        }
+        if not dry_run and len(candidates) < max_candidates:
+            filepath = write_hyp_note(acad, hyp_id)
+            acad["file"] = str(filepath)
+            print(f"    ✅ Academic seed: {hyp_id} → {filepath.name}")
+        else:
+            acad["file"] = "(dry-run, not written)"
+        candidates.append(acad)
 
     # Phase 3: Write report
     print(f"\n  📝 Candidates: {len(candidates)}")

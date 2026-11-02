@@ -182,7 +182,8 @@ def _search_xurl(query: str, max_results: int) -> list[dict]:
             if isinstance(t, dict):
                 url = t.get("url", f"https://x.com/i/status/{t.get('id', '')}")
                 text = t.get("text", t.get("full_text", ""))[:300]
-                results.append({"title": text[:80], "url": url, "snippet": text})
+                results.append({"title": text[:80], "url": url,
+                                "snippet": text, "source": "X"})
             if len(results) >= max_results:
                 break
         return results
@@ -239,12 +240,15 @@ def _fetch_rss_feed(name: str, url: str, max_items: int = 3) -> list[dict]:
 
 
 # ── arXiv q-fin Fetcher ──────────────────────────────────────────────────
+# US-205: prefer arXiv q-fin as a primary source. Queries biased toward the
+# crypto mechanisms the Gauntlet can actually test (funding, momentum,
+# liquidity, listing effects).
 ARXIV_QUERIES = [
-    "quantitative trading strategy",
+    "cryptocurrency funding rate momentum",
     "statistical arbitrage",
-    "machine learning trading",
-    "factor investing",
     "market microstructure strategy",
+    "cross-sectional momentum crypto",
+    "cryptocurrency listing effect returns",
 ]
 
 def _fetch_arxiv(query: str, max_results: int = 3) -> list[dict]:
@@ -270,6 +274,51 @@ def _fetch_arxiv(query: str, max_results: int = 3) -> list[dict]:
                     "snippet": summary,
                     "source": "arXiv",
                 })
+        return results
+    except Exception:
+        return []
+
+
+# ── SSRN Fetcher (US-205: preferred academic source) ───────────────────
+# SSRN has no clean public JSON API; we use a best-effort HTML search and
+# fail-open to [] on any block/parse error (untrusted web content is never
+# executed, only summarized). Provenance is tagged with source="SSRN".
+SSRN_QUERIES = [
+    "crypto funding rate momentum trading",
+    "cryptocurrency liquidity market making",
+    "listing effect abnormal returns crypto",
+    "crypto momentum factor cross-section",
+]
+
+def _fetch_ssrn(query: str, max_results: int = 3) -> list[dict]:
+    """Best-effort SSRN search (HTML). Fail-open: returns [] on any error."""
+    try:
+        encoded = urllib.parse.quote(query)
+        url = (f"https://papers.ssrn.com/sol3/results.cfm"
+               f"?txtKey_Words={encoded}")
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; HermesForge/1.0)'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            html = r.read().decode("utf-8", "ignore")
+        results = []
+        seen = set()
+        for m in re.finditer(
+                r'/sol3/papers\.cfm\?abstract_id=(\d+)[^>]*>(.*?)</a>', html):
+            aid = m.group(1)
+            if aid in seen:
+                continue
+            title = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+            if not title:
+                continue
+            seen.add(aid)
+            results.append({
+                "title": f"[SSRN] {title[:100]}",
+                "url": f"https://papers.ssrn.com/sol3/papers.cfm?abstract_id={aid}",
+                "snippet": title,
+                "source": "SSRN",
+            })
+            if len(results) >= max_results:
+                break
         return results
     except Exception:
         return []
@@ -707,10 +756,25 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
     all_candidates = []
     seen_urls = set()
     
-    for query in queries:
-        print(f"  [X] Searching: {query[:60]}...")
-        results = search_x(query, max_results=6)
-        print(f"    → {len(results)} results")
+    # US-205: preferred sources are academic (SSRN + arXiv q-fin) FIRST.
+    # Social (X / Reddit) is demoted to a secondary seed source and each
+    # social-mined candidate carries a counter_party gate at extraction.
+    #
+    # ── SSRN (primary) ──
+    for query in SSRN_QUERIES[:2]:
+        print(f"  [SSRN] {query[:60]}...")
+        results = _fetch_ssrn(query, max_results=3)
+        print(f"    → {len(results)} papers")
+        for r in results:
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
+    # ── arXiv q-fin (primary) ──
+    for query in ARXIV_QUERIES[:2]:  # 2 queries per cycle to stay fast
+        print(f"  [arXiv] {query[:60]}...")
+        results = _fetch_arxiv(query, max_results=2)
+        print(f"    → {len(results)} papers")
         for r in results:
             if r["url"] not in seen_urls:
                 seen_urls.add(r["url"])
@@ -726,16 +790,6 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
                 seen_urls.add(r["url"])
                 all_candidates.append(r)
     
-    # ── arXiv ──
-    for query in ARXIV_QUERIES[:2]:  # 2 queries per cycle to stay fast
-        print(f"  [arXiv] {query[:60]}...")
-        results = _fetch_arxiv(query, max_results=2)
-        print(f"    → {len(results)} papers")
-        for r in results:
-            if r["url"] not in seen_urls:
-                seen_urls.add(r["url"])
-                all_candidates.append(r)
-    
     # ── GitHub ──
     for query in GITHUB_QUERIES:
         print(f"  [GitHub] {query[:60]}...")
@@ -746,7 +800,7 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
                 seen_urls.add(r["url"])
                 all_candidates.append(r)
     
-    # ── Reddit ──
+    # ── Reddit (social, secondary) ──
     print(f"  [Reddit] r/algotrading...")
     reddit_results = _fetch_reddit(max_results=3)
     print(f"    → {len(reddit_results)} posts")
@@ -755,23 +809,52 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
             seen_urls.add(r["url"])
             all_candidates.append(r)
     
+    # ── X (social, secondary) ──
+    for query in queries:
+        print(f"  [X] Searching: {query[:60]}...")
+        results = search_x(query, max_results=6)
+        print(f"    → {len(results)} results")
+        for r in results:
+            if r["url"] not in seen_urls:
+                seen_urls.add(r["url"])
+                all_candidates.append(r)
+    
     # US-156: JEV relevance pre-filter — score and filter before expensive extraction
     raw_count = len(all_candidates)
     if raw_count > 0:
         all_candidates = jev_score_snippets(all_candidates, min_relevance=0.25)
         print(f"  JEV filter: {raw_count} → {len(all_candidates)} relevant snippets")
     
+    # US-205: social-mined sources carry a counterparty gate. Social seeds
+    # (X / Reddit) must carry a non-empty `counterparty` answer (US-202
+    # frontmatter) to enter; academic sources (SSRN / arXiv) have no such
+    # gate. Provenance is recorded per seed via `source`.
+    SOCIAL_SOURCES = {"X", "Reddit"}
+
     # Extract rules from filtered candidates
     candidates_with_rules = []
+    rejected_social = 0
     for r in all_candidates:
+        src = r.get("source", "")
+        is_social = src in SOCIAL_SOURCES
+        # Social seeds without a counterparty answer are rejected at intake.
+        if is_social and not (r.get("counterparty") or "").strip():
+            rejected_social += 1
+            continue
         rules = extract_trading_rules(r.get("snippet", ""))
         if not rules:
             continue
+        rules["source"] = src or "unknown"
         rules["source_url"] = r.get("url", "")
         rules["source_title"] = (r.get("title", "") or "")[:120]
         rules["jev_score"] = r.get("jev_score", 0)
+        if is_social:
+            rules["counterparty"] = r.get("counterparty")
         candidates_with_rules.append(rules)
     
+    if rejected_social:
+        print(f"  [US-205] Rejected {rejected_social} social seed(s) without "
+              f"counterparty answer")
     print(f"\n  Candidates with extractable rules: {len(candidates_with_rules)}")
     
     # Backtest top candidates (up to 5 per cycle to stay fast)
