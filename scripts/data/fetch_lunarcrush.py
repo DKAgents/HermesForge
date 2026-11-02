@@ -117,6 +117,7 @@ def fetch_coin_data(coin: str) -> dict:
         data = resp.get("data", {})
         return {
             "symbol": coin.upper(),
+            "source": "lunarcrush",
             "galaxy_score": data.get("galaxy_score"),
             "alt_rank": data.get("alt_rank"),
             "price": data.get("price"),
@@ -128,7 +129,7 @@ def fetch_coin_data(coin: str) -> dict:
             "market_cap_rank": data.get("market_cap_rank"),
         }
     except Exception as e:
-        return {"symbol": coin.upper(), "error": str(e)}
+        return {"symbol": coin.upper(), "source": "lunarcrush", "error": str(e)}
 
 
 def fetch_stock_data(symbol: str) -> dict:
@@ -138,6 +139,7 @@ def fetch_stock_data(symbol: str) -> dict:
         data = resp.get("data", {})
         return {
             "symbol": symbol,
+            "source": "lunarcrush",
             "price": data.get("price"),
             "percent_change_24h": data.get("percent_change_24h"),
             "volume_24h": data.get("volume_24h"),
@@ -145,7 +147,7 @@ def fetch_stock_data(symbol: str) -> dict:
             "market_cap_rank": data.get("market_cap_rank"),
         }
     except Exception as e:
-        return {"symbol": symbol, "error": str(e)}
+        return {"symbol": symbol, "source": "lunarcrush", "error": str(e)}
 
 
 def fetch_topic_data(topic: str) -> dict:
@@ -171,6 +173,7 @@ def fetch_topic_data(topic: str) -> dict:
         
         return {
             "topic": topic,
+            "source": "lunarcrush",
             "topic_rank": data.get("topic_rank"),
             "trend": data.get("trend"),
             "total_posts": total_posts,
@@ -184,7 +187,7 @@ def fetch_topic_data(topic: str) -> dict:
             "news_count": types_count.get("news", 0),
         }
     except Exception as e:
-        return {"topic": topic, "error": str(e)}
+        return {"topic": topic, "source": "lunarcrush", "error": str(e)}
 
 
 def collect_crypto_snapshot(coins: list = None) -> pd.DataFrame:
