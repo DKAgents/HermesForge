@@ -126,6 +126,22 @@ def test_unknown_asset_class_defaults_to_crypto():
     assert get_taker_bps("") == 4.5
 
 
+def test_option_asset_class_us181_f4():
+    # Deribit options (US-181 F4): taker 3bps, slip 1bp, no rebate, no funding.
+    _reset_cache()
+    orig = fee_source.fetch_hyperliquid_base_fees
+    fee_source.fetch_hyperliquid_base_fees = lambda *a, **k: {"taker_bps": 4.5, "maker_bps": 1.5}
+    try:
+        costs = get_venue_costs()["option"]
+    finally:
+        fee_source.fetch_hyperliquid_base_fees = orig
+    assert costs == {"taker_bps": 3.0, "maker_bps": 0.0,
+                     "slippage_bps": 1.0, "funding_bps": 0.0}
+    # option round-trip = 2*3 + 1 + 0 = 7.0 (distinct from crypto 12.0 / stock 3.0)
+    assert get_round_trip_bps("option") == 7.0
+    assert get_taker_bps("option") == 3.0
+
+
 if __name__ == "__main__":
     import inspect
     for name, fn in sorted(list(globals().items())):

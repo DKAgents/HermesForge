@@ -27,10 +27,16 @@ FEE_CACHE_TTL_SECONDS = 6 * 3600        # 6 hours — schedule changes are rare
 # Fail-closed fallback = the base-tier schedule values (MOST expensive tier).
 # Same cost as the prior assumption, so a fetch failure can never make fees
 # look cheaper. crypto all-in round-trip = 2*4.5 taker + 2.5 slip + 0.5 funding.
+# "option" = Deribit options (US-181 F4): taker ~0.03% of underlying, ~1bp
+# straddle bid-ask slip, NO maker rebate credited (fail-closed: taker) and NO
+# funding. Static (not HL-fetched) exactly like "stock" — a venue assumption,
+# not a schedule read.
 FAIL_CLOSED_FALLBACK = {
     "crypto": {"taker_bps": 4.5, "maker_bps": 1.5,
                "slippage_bps": 2.5, "funding_bps": 0.5},
     "stock":  {"taker_bps": 1.0, "maker_bps": 0.0,
+               "slippage_bps": 1.0, "funding_bps": 0.0},
+    "option": {"taker_bps": 3.0, "maker_bps": 0.0,
                "slippage_bps": 1.0, "funding_bps": 0.0},
 }
 
@@ -105,8 +111,10 @@ def get_venue_costs() -> dict:
         "funding_bps": crypto_floor["funding_bps"],
     }
     # Stock commission is a broker assumption (IBKR Pro tiered), not a
-    # Hyperliquid value — always static.
-    costs = {"crypto": crypto, "stock": dict(FAIL_CLOSED_FALLBACK["stock"])}
+    # Hyperliquid value — always static. "option" (Deribit) is likewise a
+    # static venue assumption, never HL-fetched (US-181 F4).
+    costs = {"crypto": crypto, "stock": dict(FAIL_CLOSED_FALLBACK["stock"]),
+             "option": dict(FAIL_CLOSED_FALLBACK["option"])}
     _cache_state["fees"] = costs
     _cache_state["ts"] = now
     return costs
@@ -114,6 +122,8 @@ def get_venue_costs() -> dict:
 
 def _costs_for(asset_class: str) -> dict:
     costs = get_venue_costs()
+    if asset_class == "option":
+        return costs["option"]
     if asset_class == "stock":
         return costs["stock"]
     return costs["crypto"]   # crypto is the conservative default for unknown
