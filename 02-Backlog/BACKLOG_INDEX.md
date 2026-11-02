@@ -32,6 +32,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | [[EPIC-014-TechDebt\|EPIC-014]] | Backlog | Known bugs, infrastructure quirks, and workarounds | US-091, US-094 to US-100 |
 | [[EPIC-015-Autonomy\|EPIC-015]] | Backlog | Autonomous self-healing (ADR-007): detection loop, Forge Loop tick, T1 auto-escalation, digest, sign-off queue, dep standardization | US-158 to US-163 |
 | [[EPIC-016-Refactor-Alpha-Pipeline\|EPIC-016]] | Backlog | Replace retail TA signal class with persistent edges + fix execution drag | US-179 to US-183 |
+| [[EPIC-017-Gauntlet-Pipeline-Productionization\|EPIC-017]] | Backlog | Stabilize ops + data depth + hypothesis intake + gate recalc + feedback loop + compute rebalance (HL venue) | US-190 to US-219 |
 
 ---
 
@@ -101,6 +102,36 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-187 | EPIC-016 | Options IV surface | P1 | US-181 |
 | US-188 | EPIC-016 | Cross-venue basis feed | P1 | US-185 |
 | US-189 | EPIC-016 | Fix 1d bar ingestion gaps (bars_1d.db + OKX 1d casing) | P1 | US-182 |
+| US-190 | EPIC-017 | Consolidated per-gate funnel table (weekly, Strategy Status) | P0 | None |
+| US-191 | EPIC-017 | Stop STR-Q + block retail-TA/ICT-SMC class at intake (fast-fail pre-G0) | P0 | None |
+| US-192 | EPIC-017 | Root-cause + fix failing crons (Signal Scanner streak=29, Capture, F&G, Digest) | P0 | None |
+| US-193 | EPIC-017 | Collapse to single Python env for cron wrappers (kill interpreter drift) | P0 | None |
+| US-194 | EPIC-017 | Cron watchdog verifies artifacts + alerts on streak≥2 | P0 | None |
+| US-195 | EPIC-017 | Data-freshness rule voids stale gate results | P0 | None |
+| US-196 | EPIC-017 | Log swarm (ad-hoc) spend alongside cron spend | P0 | None |
+| US-197 | EPIC-017 | Stop purging 5m bars; retain all going forward | P1 | None |
+| US-198 | EPIC-017 | Backfill 5m history (HL S3 archive, cap $20; OKX proxy fallback) | P1 | None |
+| US-199 | EPIC-017 | Persistent websocket listener for metaAndAssetCtxs | P1 | None |
+| US-200 | EPIC-017 | Confirm LunarCrush tier; add daily sentiment if free | P1 | None |
+| US-201 | EPIC-017 | Data inventory note (feed depth/SLA → hypotheses enabled) | P1 | None |
+| US-202 | EPIC-017 | Required hypothesis frontmatter incl. counterparty | P1 | None |
+| US-203 | EPIC-017 | Universe filter: Hyperliquid-only instruments | P1 | None |
+| US-204 | EPIC-017 | Horizon preference 4h–7d (5m needs 4× cost argument) | P1 | None |
+| US-205 | EPIC-017 | Preferred web sources SSRN/arXiv over social | P1 | None |
+| US-206 | EPIC-017 | Dedupe seeds against ledger (by mechanism) | P1 | None |
+| US-207 | EPIC-017 | G1 recalibration: size-relative capacity + power floor (ADR) | P1 | US-207 ADR |
+| US-208 | EPIC-017 | G0: model maker vs taker separately (ADR) | P1 | US-208 ADR |
+| US-209 | EPIC-017 | G7: forward validation on paper with Hostile Fill model (ADR) | P1 | None |
+| US-210 | EPIC-017 | Re-run G1-died strategies under new G1 | P2 | US-207 |
+| US-211 | EPIC-017 | Xsmom BTC-residualized (pre-registered) | P1 | None |
+| US-212 | EPIC-017 | HYP-01 funding-extreme unwind at swing horizon | P1 | None |
+| US-213 | EPIC-017 | HYP-10 new-listing drift (monthly re-test) | P2 | None |
+| US-214 | EPIC-017 | 288-cell conditional-edge grid (after Phase 0–1) | P2 | Phase 0–1 |
+| US-215 | EPIC-017 | Generation crons query the trials ledger | P1 | None |
+| US-216 | EPIC-017 | Post-mortem note per failed strategy | P1 | None |
+| US-217 | EPIC-017 | Cut Auto-Crosspost + Vault Weaver spend ≥50% | P2 | None |
+| US-218 | EPIC-017 | Researcher hypothesis-generation to T2 + cost report | P2 | None |
+| US-219 | EPIC-017 | Venue adapter interface (design/ADR; keep Hyperliquid wired, no live) | P1 | Human approval |
 
 ---
 
@@ -159,8 +190,8 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Completed (September 2026):** US-142, US-143
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
-- **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-190
+- **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014, EPIC-016, EPIC-017
+- **Next Story Number:** US-220
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
