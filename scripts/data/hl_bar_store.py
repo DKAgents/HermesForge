@@ -11,9 +11,10 @@ Design (per architect_us177_spec.md):
     blocked the prior full-window re-simulation (US-168).
   * `INSERT OR IGNORE` on PRIMARY KEY (ticker, timeframe, ts) gives atomic,
     idempotent append for free (re-fetching an overlapping window inserts 0).
-  * `bars` table is pure Hyperliquid by construction. The `source` label is
-    added only by `load_bars()` (unified reader) when the OKX proxy fills a
-    pre-store gap.
+  * `bars` table defaults to Hyperliquid (source='hyperliquid'). A US-198
+    backfill may also persist OKX-proxy bars for the pre-store history gap,
+    each labeled source='okx_proxy'. The unified reader `load_bars()` still
+    falls back to the OKX proxy (labeled) for any REMAINING un-backfilled gap.
 
 Retention policy (US-197): the store is APPEND-ONLY and UNBOUNDED. There is
 deliberately NO purge / delete / trim path anywhere in this module or the
@@ -82,6 +83,7 @@ CREATE TABLE IF NOT EXISTS bars (
     close     REAL    NOT NULL,
     volume    REAL    NOT NULL,          -- base-asset volume (= HL 'v')
     trades    INTEGER,                   -- (= HL 'n'); nullable, kept for realism
+    source    TEXT    NOT NULL DEFAULT 'hyperliquid',  -- 'hyperliquid' | 'okx_proxy' (US-198)
     PRIMARY KEY (ticker, timeframe, ts)
 ) WITHOUT ROWID;
 
@@ -109,25 +111,38 @@ def db_path(timeframe: str) -> pathlib.Path:
 
 def open_store(timeframe: str) -> sqlite3.Connection:
     """Open (create if absent) the timeframe DB; apply PRAGMAs; run schema DDL
-    + secondary index idempotently. Returns a connection in WAL mode."""
+    + secondary index idempotently; run the US-198 `source` column migration
+    for pre-existing DBs. Returns a connection in WAL mode."""
     path = db_path(timeframe)
     path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(path))
     for pragma in PRAGMAS:
         conn.execute(pragma)
     conn.executescript(_SCHEMA)
+    _migrate_source_column(conn)
     conn.commit()
     return conn
 
 
+def _migrate_source_column(conn: sqlite3.Connection) -> None:
+    """Idempotent US-198 migration: add `source` (default 'hyperliquid') to a
+    `bars` table created before the column existed. No-op if already present."""
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(bars)").fetchall()}
+    if "source" not in cols:
+        conn.execute(
+            "ALTER TABLE bars ADD COLUMN source TEXT NOT NULL DEFAULT 'hyperliquid'")
+
+
 def append_bars(conn: sqlite3.Connection, ticker: str, timeframe: str,
-                bars: list[dict]) -> int:
+                bars: list[dict], source: BarSource | str = BarSource.HYPERLIQUID) -> int:
     """INSERT OR IGNORE each bar keyed on (ticker, timeframe, ts). Dedup-safe:
-    re-fetching an overlapping window inserts 0 for existing keys. Returns the
-    count of NEW rows. Commits inside; rolls back on error (atomic — never
-    partial)."""
+    re-fetching an overlapping window inserts 0 for existing keys. `source`
+    labels the row's venue ('hyperliquid' default, or 'okx_proxy' for a US-198
+    proxy backfill). Returns the count of NEW rows. Commits inside; rolls back
+    on error (atomic — never partial)."""
     if not bars:
         return 0
+    src = source.value if isinstance(source, BarSource) else str(source)
     # Ticker is matched EXACTLY as canonical (Hyperliquid coin names are
     # case-sensitive: kBONK != KBONK). The universe holds the canonical case.
     rows = []
@@ -137,10 +152,11 @@ def append_bars(conn: sqlite3.Connection, ticker: str, timeframe: str,
             float(b["open"]), float(b["high"]), float(b["low"]), float(b["close"]),
             float(b["volume"]),
             int(b["trades"]) if b.get("trades") is not None else None,
+            src,
         ))
     sql = ("INSERT OR IGNORE INTO bars "
-           "(ticker, timeframe, ts, open, high, low, close, volume, trades) "
-           "VALUES (?,?,?,?,?,?,?,?,?)")
+           "(ticker, timeframe, ts, open, high, low, close, volume, trades, source) "
+           "VALUES (?,?,?,?,?,?,?,?,?,?)")
     try:
         cur = conn.executemany(sql, rows)
         conn.commit()
@@ -199,20 +215,21 @@ def _read_bars(conn: sqlite3.Connection, ticker: str, timeframe: str,
     if end_ts is not None:
         where.append("ts < ?")
         params.append(int(end_ts))
-    sql = ("SELECT ts, open, high, low, close, volume, trades FROM bars "
+    sql = ("SELECT ts, open, high, low, close, volume, trades, source FROM bars "
            "WHERE " + " AND ".join(where) + " ORDER BY ts ASC")
     df = pd.read_sql_query(sql, conn, params=params)
     if df.empty:
         df = pd.DataFrame(columns=["ts", "open", "high", "low", "close",
-                                   "volume", "trades"])
+                                   "volume", "trades", "source"])
     return df.reset_index(drop=True)
 
 
 def read_bars(ticker: str, timeframe: str, start_ts: int | None = None,
               end_ts: int | None = None) -> pd.DataFrame:
     """Read store rows for (ticker, timeframe) in [start_ts, end_ts) ascending.
-    No source column (store is pure Hyperliquid by construction). Returns
-    DataFrame[ts, open, high, low, close, volume, trades]."""
+    Returns DataFrame[ts, open, high, low, close, volume, trades, source]; the
+    `source` column is 'hyperliquid' for same-venue bars and 'okx_proxy' for a
+    persisted US-198 proxy backfill (self-describing, never implicit)."""
     conn = open_store(timeframe)
     try:
         return _read_bars(conn, ticker, timeframe, start_ts, end_ts)
@@ -244,7 +261,8 @@ def load_bars(ticker: str, timeframe: str, start_ts: int, end_ts: int,
     finally:
         conn.close()
 
-    store["source"] = BarSource.HYPERLIQUID.value
+    # `source` now rides the store rows directly (US-198): 'hyperliquid' for
+    # same-venue bars, 'okx_proxy' for any persisted backfill. No overwrite.
     frames = [store]
 
     if allow_proxy:
