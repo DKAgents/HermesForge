@@ -33,6 +33,8 @@ When commodity prices plunge, place sell-stop alerts on commodity-exporter equit
 **adds_condition** — Actionability score: 4/5
 
 ## Related
+- [[INS-2026-09-18-10-50-crossover-reduces-whipsaws-with-lag-trade-off]] — See INS-2026-09-18-10-50-crossover-reduces-whipsaws-with-lag-trade-off for lag and stop-loss implications
+
 - [[N036-exponentially-smoothed-moving-average]] — See N036 for alternative MA calculation that may alter crossover timing
 
 - [[EN027-5-and-20-day-moving-average-crossover]] — See EN027-5-and-20-day-moving-average-crossover for alternative MA crossover parameters
