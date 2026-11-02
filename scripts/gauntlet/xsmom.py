@@ -328,7 +328,11 @@ def simulate_xsmom(close_panel: pd.DataFrame, btc_close: pd.Series,
         return pd.DataFrame(), empty, {"n_rebalances": 0, "avg_turnover": 0.0,
                                        "avg_gross_w": 0.0, "names_observed": 0}
 
-    ts = close_panel.index.to_numpy()
+    ts_idx = close_panel.index
+    if isinstance(ts_idx, pd.DatetimeIndex):
+        ts = ts_idx.astype("datetime64[ms]").astype("int64").to_numpy()
+    else:
+        ts = np.asarray(ts_idx, dtype="int64")
     C = close_panel.to_numpy(dtype=float).T          # (N, T)
     btc = btc_close.reindex(close_panel.index).to_numpy(dtype=float)
 
