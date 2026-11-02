@@ -1,12 +1,4 @@
 ---
-topic: strategies
-confidence: high
-has_quotes: false
-tags: []
-source: HermesForge Strategies
-created: 2026-08-24
----
----
 id: STR-20260728-adaptive-trend
 type: strategy
 status: live
@@ -36,12 +28,10 @@ updated: 2026-07-28
 tags: [strategy, hypothesis, momentum, trend-following, atr, trailing-stop, crypto, 6h, bidirectional]
 topic: strategies
 has_quotes: false
-source: HermesForge Strategies
 scanner_module: scanner_i_adaptive_trend
 scanner_alias: scan_i
-
 strategy_id: STR-I-adaptive-trend
-scanner_alias: scan_i---
+---
 
 # AdaptiveTrend — Systematic Momentum + ATR Trailing Stop on 6-Hour Bars
 
