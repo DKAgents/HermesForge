@@ -15,6 +15,14 @@ Design (per architect_us177_spec.md):
     added only by `load_bars()` (unified reader) when the OKX proxy fills a
     pre-store gap.
 
+Retention policy (US-197): the store is APPEND-ONLY and UNBOUNDED. There is
+deliberately NO purge / delete / trim path anywhere in this module or the
+ingest pipeline — bars are retained going forward and bounded only by disk.
+The ~17-day figure that appears in older notes is Hyperliquid's OWN
+candleSnapshot retention floor (the API only serves ~17 days of 5m history),
+NOT a store-side purge. The store itself accumulates every bar it has ever
+ingested (INSERT OR IGNORE never deletes). See DISK_GROWTH_ESTIMATE_* below.
+
 Store location: ~/.hermes/market_data/hl_bars/  (outside the git repo).
 
 Import direction is one-way and acyclic:
@@ -40,6 +48,13 @@ if str(_MODULE_DIR) not in sys.path:
     sys.path.insert(0, str(_MODULE_DIR))
 
 STORE_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "hl_bars"
+
+# Retention / disk-growth baseline (US-197): 5m at 288 bars/ticker/day × 35
+# tickers ≈ 10,080 bars/day ≈ 3.68M bars/year; ~100 bytes/row (WITHOUT ROWID +
+# index) ≈ 0.4 GB/year. 15m/1h/4h add ≤ 1/3 of that if ever enabled. There is
+# NO purge; this is purely an unbounded-growth planning figure for US-201.
+DISK_GROWTH_ESTIMATE_BARS_PER_DAY = 10_080
+DISK_GROWTH_ESTIMATE_BYTES_PER_YEAR = 400 * 1024 * 1024  # ~0.4 GB
 
 # timeframe -> db filename (normalize the Hyperliquid interval token).
 TIMEFRAME_FILES = {
