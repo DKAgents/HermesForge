@@ -53,3 +53,9 @@ STR-B-macd-histogram-divergence_AAPL_2026-09-28,STR-B-macd-histogram-divergence,
 STR-B-macd-histogram-divergence_CL_2026-09-29,STR-B-macd-histogram-divergence,CL,2026-09-29,2026-10-01T07:50:41.000147,stocks
 STR-B-macd-histogram-divergence_CMS_2026-10-01,STR-B-macd-histogram-divergence,CMS,2026-10-01,2026-10-02T07:53:59.868001,stocks
 STR-B-macd-histogram-divergence_CPT_2026-09-30,STR-B-macd-histogram-divergence,CPT,2026-09-30,2026-10-02T07:53:59.868129,stocks
+STR-I-adaptive-trend_ALLE_2026-10-29,STR-I-adaptive-trend,ALLE,2026-10-29,2026-11-01T18:22:53.604374,stocks
+STR-I-adaptive-trend_CRL_2026-10-27,STR-I-adaptive-trend,CRL,2026-10-27,2026-11-01T18:22:53.604519,stocks
+STR-I-adaptive-trend_DOW_2026-10-26,STR-I-adaptive-trend,DOW,2026-10-26,2026-11-01T18:22:53.604638,stocks
+STR-I-adaptive-trend_IT_2026-10-23,STR-I-adaptive-trend,IT,2026-10-23,2026-11-01T18:22:53.604750,stocks
+STR-I-adaptive-trend_LMT_2026-10-26,STR-I-adaptive-trend,LMT,2026-10-26,2026-11-01T18:22:53.604849,stocks
+STR-B-macd-histogram-divergence_HCA_2026-10-26,STR-B-macd-histogram-divergence,HCA,2026-10-26,2026-11-01T18:22:53.604972,stocks

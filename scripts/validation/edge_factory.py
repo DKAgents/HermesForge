@@ -30,6 +30,15 @@ HYP_DIR = PROJECT_ROOT / "trading/strategies" / "Hypotheses"
 RESULTS_DIR = PROJECT_ROOT / "code" / "forge-loop" / "edge-factory-results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
+# US-215: generation-time ledger prior. Every proposed seed is checked against
+# the trials/post-mortem ledger BEFORE backtest/rank, so a mechanism that
+# already failed G4/G5 is rejected (unless a pre-registered variant argument
+# is present) and a mechanism that passed G3+ stays biased in.
+_GAUNTLET_DIR = str(PROJECT_ROOT / "scripts" / "gauntlet")
+if _GAUNTLET_DIR not in sys.path:
+    sys.path.insert(0, _GAUNTLET_DIR)
+from ledger_prior import prior_for  # noqa: E402
+
 # ── X Search Queries (rotated per cycle to maximize diversity) ────────────
 SEARCH_QUERIES_ALL = [
     "profitable trading strategy setup rules entry stop target",
@@ -744,6 +753,25 @@ def quick_backtest(rules: dict, ticker: str = "BTC") -> dict:
 
 
 # ── Main Pipeline ────────────────────────────────────────────────────────
+
+def _prior_for_candidate(rules: dict):
+    """US-215 ledger prior for an extracted edge-factory candidate.
+
+    Maps the extracted rules (entry_conditions + indicators as ``primitives``,
+    source_title + snippet as ``description``) onto ledger_prior.prior_for so a
+    mechanism that already failed G4/G5 is caught even under a differently
+    worded source snippet (re-skin), and a mechanism that passed G3+ and stands
+    in Active/Live is biased in. Returns the ``Prior`` verdict.
+    """
+    primitives = [str(x) for x in rules.get("entry_conditions", [])]
+    primitives += [str(x) for x in rules.get("indicators", [])]
+    description = " ".join(str(x) for x in [
+        rules.get("source_title", ""),
+        rules.get("snippet", ""),
+    ])
+    return prior_for({"primitives": primitives, "description": description})
+
+
 def run_edge_factory(cycle_index: int = 0) -> dict:
     """Run one cycle of edge discovery."""
     print(f"🏭 Edge Factory — Cycle {cycle_index}")
@@ -847,6 +875,7 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
         rules["source"] = src or "unknown"
         rules["source_url"] = r.get("url", "")
         rules["source_title"] = (r.get("title", "") or "")[:120]
+        rules["snippet"] = r.get("snippet", "")
         rules["jev_score"] = r.get("jev_score", 0)
         if is_social:
             rules["counterparty"] = r.get("counterparty")
@@ -856,10 +885,37 @@ def run_edge_factory(cycle_index: int = 0) -> dict:
         print(f"  [US-205] Rejected {rejected_social} social seed(s) without "
               f"counterparty answer")
     print(f"\n  Candidates with extractable rules: {len(candidates_with_rules)}")
-    
+
+    # US-215: query the generation ledger prior BEFORE proposing/backtesting.
+    # A mechanism that already failed G4/G5 is dropped here (requires a
+    # pre-registered variant argument to proceed — none is supplied by this
+    # discovery path); a G3+ pass stays biased in.
+    gated_candidates = []
+    prior_avoided = 0
+    prior_preferred = 0
+    for rules in candidates_with_rules:
+        prior = _prior_for_candidate(rules)
+        rules["prior_verdict"] = prior.verdict
+        rules["prior_gate"] = prior.gate
+        rules["prior_reason"] = prior.reason
+        if prior.verdict == "avoid":
+            prior_avoided += 1
+            print(f"  ⛔ [US-215] Rejected — mechanism already failed "
+                  f"{prior.gate}: {(rules.get('source_title') or '')[:50]}")
+            continue
+        if prior.verdict == "prefer":
+            prior_preferred += 1
+        gated_candidates.append(rules)
+    if prior_avoided:
+        print(f"  [US-215] Prior: rejected {prior_avoided} G4/G5-failed "
+              f"mechanism(s); {prior_preferred} standing G3+ mechanism(s)")
+    else:
+        print(f"  [US-215] Prior: no G4/G5 rejections; "
+              f"{prior_preferred} standing G3+ mechanism(s)")
+
     # Backtest top candidates (up to 5 per cycle to stay fast)
     backtested = []
-    for rules in candidates_with_rules[:5]:
+    for rules in gated_candidates[:5]:
         ticker = "BTC"  # Default, could be inferred from snippet
         bt = quick_backtest(rules, ticker)
         rules["backtest"] = bt

@@ -44,6 +44,15 @@ HYP_DIR = PROJECT_ROOT / "trading/strategies" / "Hypotheses"
 FORGE_DIR = PROJECT_ROOT / "code" / "forge-loop"
 SOURCES_SCRIPT = Path("/root/.hermes/skills/research/grounded-citations/scripts/sources.py")
 
+# US-215: generation-time ledger prior. Every proposed seed (X full-read or
+# academic seed) is checked against the trials/post-mortem ledger BEFORE a HYP
+# note is written, so a mechanism that already failed G4/G5 is rejected unless a
+# pre-registered variant argument is present.
+_GAUNTLET_DIR = str(PROJECT_ROOT / "scripts" / "gauntlet")
+if _GAUNTLET_DIR not in sys.path:
+    sys.path.insert(0, _GAUNTLET_DIR)
+from ledger_prior import prior_for  # noqa: E402
+
 # ── Scoring ─────────────────────────────────────────────────────────────
 
 ENTRY_KEYWORDS = [
@@ -448,6 +457,31 @@ def write_scout_report(candidates: list[dict], queries_run: int, total_read: int
     return filepath
 
 
+def _prior_for_candidate(candidate: dict) -> dict:
+    """US-215 ledger prior for a scout candidate (X full-read or academic seed).
+
+    Maps the candidate's extracted spec (entry/exit sentences as ``primitives``)
+    and title+thesis+source_text as ``description`` onto ledger_prior.prior_for.
+    Returns a small dict so the caller can reject a G4/G5-failed mechanism
+    before writing a HYP note.
+    """
+    spec = candidate.get("spec", {})
+    primitives = [str(x) for x in spec.get("entry", [])]
+    primitives += [str(x) for x in spec.get("exit", [])]
+    description = " ".join(str(x) for x in [
+        candidate.get("title", ""),
+        candidate.get("thesis", ""),
+        candidate.get("source_text", ""),
+    ])
+    prior = prior_for({"primitives": primitives, "description": description})
+    return {
+        "verdict": prior.verdict,
+        "gate": prior.gate,
+        "reason": prior.reason,
+        "requires_variant": prior.requires_variant,
+    }
+
+
 # ── Main ─────────────────────────────────────────────────────────────────
 
 def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
@@ -586,6 +620,22 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
                 "counterparty": counterparty,
             }
 
+            # US-215: query the generation ledger prior BEFORE proposing. A
+            # mechanism that already failed G4/G5 is rejected unless it carries
+            # a pre-registered variant argument.
+            prior = _prior_for_candidate(candidate)
+            candidate["prior_verdict"] = prior["verdict"]
+            candidate["prior_gate"] = prior["gate"]
+            candidate["prior_reason"] = prior["reason"]
+            if prior["verdict"] == "avoid":
+                candidate["file"] = f"(rejected: prior {prior['gate']} failure)"
+                print(f"    ⛔ Rejected (us-215): mechanism already failed "
+                      f"{prior['gate']} — needs pre-registered variant")
+                candidates.append(candidate)
+                if len(candidates) >= max_candidates:
+                    break
+                continue
+
             # US-205: X/social-mined ideas must carry a counterparty answer
             # to enter. Without one the seed is rejected at intake (not written).
             if full_score >= AUTO_HYP_THRESHOLD or score >= AUTO_HYP_THRESHOLD:
@@ -622,6 +672,19 @@ def main(dry_run: bool = False, max_candidates: int = MAX_CANDIDATES,
             "source": paper.get("source", "academic"),
             "counterparty": "TBD",
         }
+        # US-215: academic seeds are ALSO subject to the ledger prior (an
+        # arXiv/SSRN paper re-deriving a G4/G5-failed mechanism is the same
+        # mechanism under an academic label).
+        prior = _prior_for_candidate(acad)
+        acad["prior_verdict"] = prior["verdict"]
+        acad["prior_gate"] = prior["gate"]
+        acad["prior_reason"] = prior["reason"]
+        if prior["verdict"] == "avoid":
+            acad["file"] = f"(rejected: prior {prior['gate']} failure)"
+            print(f"    ⛔ Rejected (us-215): mechanism already failed "
+                  f"{prior['gate']} — needs pre-registered variant")
+            candidates.append(acad)
+            continue
         if not dry_run and len(candidates) < max_candidates:
             filepath = write_hyp_note(acad, hyp_id)
             acad["file"] = str(filepath)
