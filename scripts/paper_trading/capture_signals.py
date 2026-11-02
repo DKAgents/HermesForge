@@ -33,6 +33,15 @@ sys.path.insert(0, str(REPO_ROOT / "scripts" / "validation"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "paper_trading"))
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
 
+# US-191: hard signal-class intake gate (fast-fail retail-TA/chart-pattern/
+# ICT-SMC BEFORE any scan). Enforced at discovery time, not skill-prior-only.
+try:
+    from signal_class import intake_verdict as _signal_intake
+    _SIGNAL_CLASS_GATE = True
+except ImportError:
+    _signal_intake = None  # type: ignore[assignment]
+    _SIGNAL_CLASS_GATE = False
+
 # G3: per-asset eligibility + position management
 try:
     from asset_eligibility import is_eligible
@@ -237,6 +246,21 @@ def _discover_strategies(vault_root: str = ".") -> dict:
             print(f"  ⚠️  {f.stem}: scanner_alias={alias} not found in _SCANNER_ALIASES — skipping")
             continue
 
+        # US-191: hard intake gate — reject retail-TA / chart-pattern / ICT-SMC
+        # BEFORE scanning (code-level, not skill-prior-only).
+        if _SIGNAL_CLASS_GATE and _signal_intake is not None:
+            verdict = _signal_intake(
+                strategy_id=strategy_id,
+                name=fm.get("core_idea", ""),
+                core_idea=fm.get("core_idea", ""),
+                description=fm.get("description", ""),
+                tags=fm.get("tags", []),
+            )
+            if not verdict["admitted"]:
+                print(f"  🚫  {f.stem}: blocked signal class "
+                      f"'{verdict['signal_class']}' (US-191) — skipping")
+                continue
+
         active[strategy_id] = scan_fn
 
         # Track batch-mode strategies
@@ -259,6 +283,22 @@ if not PAPER_STRATEGIES:
         "STR-LOWCORR-lowcorr-regime":     scan_lowcorr,
     }
     BATCH_STRATEGIES = {"STR-LOWCORR-lowcorr-regime"}
+
+    # US-191: the fallback must not re-introduce retail-TA / chart-pattern /
+    # ICT-SMC strategies when frontmatter discovery is empty. Gate it the same
+    # way (defense-in-depth — the fallback was the de-facto rotation and still
+    # listed STR-A/STR-B/STR-D).
+    if _SIGNAL_CLASS_GATE and _signal_intake is not None:
+        _gated = {
+            sid: fn for sid, fn in PAPER_STRATEGIES.items()
+            if _signal_intake(strategy_id=sid)["admitted"]
+        }
+        if set(_gated) != set(PAPER_STRATEGIES):
+            _dropped = sorted(set(PAPER_STRATEGIES) - set(_gated))
+            print(f"[US-191] fallback rotation gated — dropped "
+                  f"{_dropped}; remaining {sorted(_gated)}")
+        PAPER_STRATEGIES = _gated
+        BATCH_STRATEGIES = {s for s in BATCH_STRATEGIES if s in _gated}
 
 EXAMPLE_ACCOUNT_SIZE = 100_000  # matches scripts/discord/config.py convention
 

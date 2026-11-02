@@ -876,9 +876,28 @@ def main():
         print(f"  Checked {exit_result['checked']} open trades, closed {exit_result['closed']}")
     
     # Capture new signals
-    summary = capture(dry_run=args.dry_run, include_stocks=include_stocks,
-                        include_crypto=include_crypto, jev_off=args.jev_off,
-                        jev_shadow=args.jev_shadow, live_mode=args.live)
+    # US-191: hard intake gate — STR-Q is an ICT-SMC liquidity-sweep strategy,
+    # which carries a negative prior and is fast-failed before any new capture.
+    try:
+        sys.path.insert(0, str(REPO_ROOT / "scripts" / "gauntlet"))
+        from signal_class import intake_verdict as _sweep_intake
+    except ImportError:
+        _sweep_intake = None
+    summary = None
+    if _sweep_intake is not None:
+        _v = _sweep_intake(strategy_id="STR-Q-liquidity-sweep",
+                           name="Liquidity Sweep Reversal",
+                           description="Institutional stop-loss sweep detection; "
+                                       "enters after price sweeps a liquidity level and reverses")
+        if not _v["admitted"]:
+            print(f"\n  🚫  STR-Q BLOCKED (US-191): {_v['signal_class']} — {_v['reason']}")
+            summary = {"scanned": 0, "signals_found": 0, "opened": 0,
+                       "skipped_already_open": 0, "errors": 0,
+                       "blocked_signal_class": True}
+    if summary is None:
+        summary = capture(dry_run=args.dry_run, include_stocks=include_stocks,
+                          include_crypto=include_crypto, jev_off=args.jev_off,
+                          jev_shadow=args.jev_shadow, live_mode=args.live)
     
     print(f"\n{'='*50}")
     print(f"SUMMARY: {summary['scanned']} scanned, {summary['signals_found']} sweeps found, "
