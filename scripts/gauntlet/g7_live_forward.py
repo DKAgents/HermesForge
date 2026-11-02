@@ -5,6 +5,14 @@ G7 Live Forward Performance Gate
 US-147: Formalizes live paper-trading performance as the G7 gate.
 Wraps live_performance_tracker.py (US-112) with pass/fail criteria.
 
+US-209 / ADR-010: the realised series a G7 candidate is scored against is the
+HOSTILE FILL (bar-level realistic) model, not the optimistic paper ledger, until
+a human explicitly approves a live venue (LIVE_TRADING_ENABLED). The thresholds
+are unchanged; only the source of truth for the realised R / trade count
+changes. Hostile Fill = taker-side fills, worst-print stops, trade-through-only
+targets, dynamic fail-closed fees (the same engine as the G3 pessimistic /
+hostile_fills*.py PnL path).
+
 G7 PASS conditions (all must be true):
   1. At least MIN_LIVE_TRADES live trades executed
   2. Live win rate within ±1.5σ of backtest expected win rate
@@ -19,6 +27,7 @@ Usage:
 """
 
 import sys
+import os
 import json
 import csv
 import argparse
@@ -51,6 +60,20 @@ BACKTEST_EXPECTATIONS = {
 
 TRADES_LOG = Path("/root/HermesForge/scripts/paper_trading/trades_log.csv")
 
+# ── US-209 / ADR-010: Hostile Fill forward source ─────────────────────────────
+# Until a human approves a live venue, G7 forward validation is scored on the
+# bar-level realistic (Hostile Fill) model, never the optimistic paper ledger.
+# The moment LIVE_TRADING_ENABLED is set (human-gated, ADR-002 / ADR-007), the
+# source switches to the real live-capture ledger. There is NO optimistic
+# fallback — paper-hostile is the only forward instrument until go-live.
+HOSTILE_FILL_REPORT = Path("/root/HermesForge/scripts/paper_trading/hostile_fill_report.jsonl")
+_LIVE_TRADING_ENABLED = os.environ.get("LIVE_TRADING_ENABLED", "").strip().lower() in ("true", "1", "yes")
+
+
+def fill_source() -> str:
+    """Human-readable label for the current forward-validation fill source."""
+    return "live-capture ledger" if _LIVE_TRADING_ENABLED else "hostile (bar-level realistic)"
+
 
 @dataclass
 class G7Verdict:
@@ -69,7 +92,12 @@ class G7Verdict:
 
 
 def load_live_trades(strategy_id: Optional[str] = None) -> list[dict]:
-    """Load closed trades from trades_log.csv."""
+    """Load closed trades from trades_log.csv (the optimistic paper ledger).
+
+    US-209: this is the SOURCE only once a live venue has been human-approved
+    (LIVE_TRADING_ENABLED). Until then G7 forward validation scores on
+    load_hostile_trades() instead (bar-level realistic fills).
+    """
     if not TRADES_LOG.exists():
         return []
     trades = []
@@ -80,6 +108,58 @@ def load_live_trades(strategy_id: Optional[str] = None) -> list[dict]:
                     continue
                 trades.append(row)
     return trades
+
+
+def load_hostile_trades(strategy_id: Optional[str] = None) -> list[dict]:
+    """Load closed trades scored under the HOSTILE FILL (bar-level realistic)
+    model from hostile_fill_report.jsonl.
+
+    Each returned row carries r_multiple = hostile_r (taker-side fill, worst-print
+    stop, trade-through-only target, dynamic fail-closed fees) and exit_date from
+    the fill record's entry_date. Records with no computed hostile_r (never
+    filled / still open) do NOT contribute — a strategy must produce a
+    bar-realistic edge, not just an optimistic one (ADR-010).
+    """
+    if not HOSTILE_FILL_REPORT.exists():
+        return []
+    trades = []
+    with open(HOSTILE_FILL_REPORT, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if r.get("stage") != "closed":
+                continue
+            if strategy_id and r.get("strategy_id") != strategy_id:
+                continue
+            hr = r.get("hostile_r")
+            if hr is None:
+                continue
+            try:
+                r_multiple = float(hr)
+            except (ValueError, TypeError):
+                continue
+            trades.append({
+                "strategy_id": r.get("strategy_id", ""),
+                "r_multiple": r_multiple,
+                "exit_date": r.get("entry_date", ""),
+            })
+    return trades
+
+
+def load_forward_trades(strategy_id: Optional[str] = None) -> list[dict]:
+    """G7 forward-validation trade source (ADR-010 / US-209).
+
+    Hostile Fill (bar-level realistic) until a live venue is human-approved;
+    the real live-capture ledger afterwards. No optimistic fallback.
+    """
+    if _LIVE_TRADING_ENABLED:
+        return load_live_trades(strategy_id)
+    return load_hostile_trades(strategy_id)
 
 
 def compute_live_stats(trades: list[dict]) -> dict:
@@ -223,8 +303,11 @@ def check_g7(strategy_id: str, live_stats: dict,
 
 
 def check_all_active() -> dict[str, G7Verdict]:
-    """Run G7 on all strategies with backtest expectations."""
-    all_trades = load_live_trades()
+    """Run G7 on all strategies with backtest expectations.
+
+    US-209: scores on the HOSTILE FILL model until a live venue is approved.
+    """
+    all_trades = load_forward_trades()
     results = {}
 
     for strategy_id in BACKTEST_EXPECTATIONS:
@@ -239,6 +322,8 @@ def check_all_active() -> dict[str, G7Verdict]:
 def format_report(results: dict[str, G7Verdict]) -> str:
     """Human-readable G7 report."""
     lines = ["# G7 Live Forward Performance", "",
+             f"Fill source: {fill_source()} (live venue "
+             f"{'APPROVED' if _LIVE_TRADING_ENABLED else 'NOT approved'})",
              f"Min trades: {MIN_LIVE_TRADES}, Sigma window: ±{SIGMA_WINDOW}σ, "
              f"Divergence fail: >{DIVERGENCE_SIGMA}σ",
              ""]
@@ -275,7 +360,7 @@ def main():
     args = parser.parse_args()
 
     if args.strategy:
-        trades = load_live_trades(args.strategy)
+        trades = load_forward_trades(args.strategy)
         live_stats = compute_live_stats(trades)
         verdict = check_g7(args.strategy, live_stats)
         results = {args.strategy: verdict}
@@ -283,9 +368,11 @@ def main():
         results = check_all_active()
 
     if args.json:
-        output = {}
+        output = {"fill_source": fill_source(),
+                  "live_venue_approved": _LIVE_TRADING_ENABLED,
+                  "strategies": {}}
         for sid, v in results.items():
-            output[sid] = {
+            output["strategies"][sid] = {
                 "passed": v.passed,
                 "live_trades": v.live_trades,
                 "live_win_rate": v.live_win_rate,
