@@ -33,5 +33,6 @@ Before executing a pivot point signal, calculate the stop distance and adjust po
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[R231-pivot-point-signal-strength-by-time-of-day|Pivot Point Signal Strength by Time of Day]]

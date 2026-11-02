@@ -33,5 +33,6 @@ Before placing the pivot point buy stop per EN071, calculate the distance from e
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[RG020-protective-sell-stops-on-point-and-figure-charts|Protective Sell Stops on Point and Figure Charts]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

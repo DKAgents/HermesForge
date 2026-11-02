@@ -33,4 +33,5 @@ When taking a pivot point buy signal, immediately measure the distance from entr
 **confirms_risk_rule** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -31,3 +31,6 @@ When price retraces to the 33-67% Fibonacci zone (C050), check ADX first: if ADX
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-01-adx-regime-determines-keltner-trend-vs-mean-reversion-use|ADX Regime Determines Keltner Trend vs. Mean-Reversion Use]]

@@ -33,6 +33,7 @@ After a pivot point buy signal executes, do not keep the stop fixed at the initi
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

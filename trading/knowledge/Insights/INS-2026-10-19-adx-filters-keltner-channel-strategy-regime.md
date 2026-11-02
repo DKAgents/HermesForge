@@ -33,4 +33,5 @@ A trader should filter Keltner channel trades by ADX: use breakout entries above
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-11-01-adx-regime-determines-keltner-trend-vs-mean-reversion-use|ADX Regime Determines Keltner Trend vs. Mean-Reversion Use]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

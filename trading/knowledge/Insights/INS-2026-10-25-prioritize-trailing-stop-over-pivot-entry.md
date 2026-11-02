@@ -33,5 +33,6 @@ Allocate more backtesting effort to trailing stop parameters (e.g., distance fro
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

@@ -33,5 +33,6 @@ When executing EN071 pivot point longs, always verify that the prescribed stop (
 **contradicts_assumption** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[C336-support-level|Support Level]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

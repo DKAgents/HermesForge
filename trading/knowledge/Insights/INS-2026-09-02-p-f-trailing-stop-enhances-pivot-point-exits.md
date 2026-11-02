@@ -33,6 +33,7 @@ After taking a long entry per EN071's pivot point rules, replace the static prot
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]
 - [[C245-stop-order|Stop Order]]

@@ -33,6 +33,7 @@ Before placing the pivot point buy stop per EN071, calculate position size using
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[C245-stop-order|Stop Order]]

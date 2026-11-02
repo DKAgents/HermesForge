@@ -33,6 +33,7 @@ After a pivot point buy signal from EN071 is triggered, use the current day's lo
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 
 ## Related

@@ -33,6 +33,7 @@ Before executing either pivot point entry variant in EN071, calculate the distan
 **resolves_conflict** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[RG022-pf-stop-placement-rule|P&F Stop Placement Rule]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

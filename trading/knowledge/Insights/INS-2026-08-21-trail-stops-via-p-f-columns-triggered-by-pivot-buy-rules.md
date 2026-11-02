@@ -33,6 +33,7 @@ After a pivot point buy signal (EN071) initiates a long, transition from the ini
 **reveals_sequence** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
 - [[C243-market-order|Market Order]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

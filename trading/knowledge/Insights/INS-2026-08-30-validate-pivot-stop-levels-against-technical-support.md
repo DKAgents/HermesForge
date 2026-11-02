@@ -33,5 +33,6 @@ Before entering a pivot point buy signal, verify today's low (or open for late e
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[C336-support-level|Support Level]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

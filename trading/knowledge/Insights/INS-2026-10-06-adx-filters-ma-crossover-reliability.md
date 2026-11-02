@@ -33,5 +33,6 @@ Only trade MA crossover signals when ADX is above 25 (strong trend) and avoid th
 **creates_filter** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-11-01-adx-regime-determines-keltner-trend-vs-mean-reversion-use|ADX Regime Determines Keltner Trend vs. Mean-Reversion Use]]
 - [[INS-2026-10-07-secondary-trend-retracement-zone-entry-filter|Secondary trend retracement zone entry filter]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

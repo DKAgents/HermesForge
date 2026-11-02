@@ -33,4 +33,5 @@ Before executing a pivot point buy signal, measure the risk distance to the requ
 **creates_filter** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]

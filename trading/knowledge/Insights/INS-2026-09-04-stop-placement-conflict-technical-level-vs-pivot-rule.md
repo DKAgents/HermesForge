@@ -33,5 +33,6 @@ Before taking a pivot point buy signal from EN071, verify the protective stop pl
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-10-10-exits-matter-trail-stops-after-pivot-point-buy-signals|Exits matter: trail stops after pivot-point buy signals]]
 - [[C336-support-level|Support Level]]
 - [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
