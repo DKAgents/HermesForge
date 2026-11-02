@@ -1,0 +1,23 @@
+# HermesForge canonical trading dependency set (US-193).
+#
+# This is the SINGLE source-of-truth list for the cron/trading interpreter.
+# Every cron .sh wrapper resolves its interpreter via resolve_python.sh, which
+# must verify THIS exact set imports (see resolve_python.sh FULL_DEPS_IMPORT).
+#
+# Do NOT add ad-hoc deps to individual wrappers; add them here and re-provision
+# with:  scripts/system_doctor/provision_trading_env.py
+#
+# The parquet engine (pyarrow) is REQUIRED — pandas to_parquet/read_parquet fail
+# without it, which was the root cause of the Daily Signal Scanner streak=29 and
+# the F&G / Paper-Capture failures (US-192).
+
+numpy
+pandas
+scipy
+mplfinance
+six
+scikit-learn
+yfinance
+pyarrow
+PyYAML
+requests

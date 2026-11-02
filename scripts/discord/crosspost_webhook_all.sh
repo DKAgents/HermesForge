@@ -22,10 +22,14 @@ set -a; source /root/.hermes/.env; set +a
 
 REPO_DISCORD="/root/HermesForge/scripts/discord"
 
+# US-193: single source-of-truth interpreter (never bare python3 — the tools
+# python has no third-party deps). publisher_templates needs pandas/matplotlib.
+PYTHONBIN="$(/root/HermesForge/scripts/system_doctor/resolve_python.sh)"
+
 DRY_RUN=""
 if [ "${1:-}" = "--dry-run" ]; then
     DRY_RUN="--dry-run"
 fi
 
-python3 "${REPO_DISCORD}/publisher_templates.py" --forward-all ${DRY_RUN}
+"$PYTHONBIN" "${REPO_DISCORD}/publisher_templates.py" --forward-all ${DRY_RUN}
 exit $?

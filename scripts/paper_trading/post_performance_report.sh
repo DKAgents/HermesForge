@@ -7,7 +7,10 @@ cd /root/HermesForge
 # Source secrets
 source /root/.hermes/.env 2>/dev/null
 
-python3 -c "
+# US-193: single source-of-truth interpreter (never bare python3).
+PYTHONBIN="$(/root/HermesForge/scripts/system_doctor/resolve_python.sh)"
+
+"$PYTHONBIN" -c "
 from discord.embed_publisher import publish_performance_report
 result = publish_performance_report(crosspost=True)
 status = result.get('status', 'error')
