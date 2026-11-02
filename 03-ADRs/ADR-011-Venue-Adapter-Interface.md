@@ -1,7 +1,7 @@
 ---
 id: ADR-011
 type: adr
-status: proposed
+status: accepted
 created: 2026-11-02
 revised: 2026-11-02
 deciders: [architect]

@@ -1,7 +1,7 @@
 ---
 id: ADR-010
 type: adr
-status: proposed
+status: accepted
 created: 2026-11-02
 deciders: [architect]
 tags: [adr, gauntlet, gate-g7, forward-validation, hostile-fill]
