@@ -3,6 +3,7 @@ id: ADR-008
 type: adr
 status: proposed
 created: 2026-11-02
+revised: 2026-11-02
 deciders: [architect]
 tags: [adr, gauntlet, gate-g1, size-relative, statistical-power]
 topic: adrs
@@ -16,6 +17,13 @@ source: HermesForge ADR
 **proposed** — records the G1 threshold change BEFORE it takes effect.
 No running gate code is altered by this ADR; the change is binding only after
 human approval and path-scoped implementation (US-207).
+
+**Revision 2 (2026-11-02) — response to risk-guardian admission-bar rejection:**
+the power floor as originally drafted could (a) admit a strategy on fewer trades
+than the old fixed `≥200` rule, (b) anchor `μ_R` to a *self-declared* bps edge
+rather than a measured one, and (c) silently drop the `≥15`-symbol
+cross-sectional-independence floor. All three are closed below (§2, §3, §4).
+Details in "Risk-Guardian Objections Closed".
 
 ## Context
 
@@ -49,9 +57,9 @@ each is an independent, binding threshold change.
 
 ## Decision
 
-### 1. Size-relative capacity check (replaces the $250k / $50k / ≥15-symbol floors)
+### 1. Size-relative capacity check (replaces the $250k / $50k floors)
 
-Drop the three fixed minimums entirely. In their place, G1 requires that the
+Drop the two fixed *notional* minimums. In their place, G1 requires that the
 strategy's **planned maximum single-order notional at the $10K capital stage**
 be no larger than a size-relative fraction of the **top-5 depth within 10 bps**
 on the side the order will consume.
@@ -79,58 +87,118 @@ Definitions (binding):
 - `SIZE_RELATIVE_CAP` — the allowed market-impact clip, a tunable default in the
   range **0.01 (1%) to 0.02 (2%)**, defaulting to **0.015 (1.5%)**.
 
-The ≥15-symbol requirement is absorbed into the signal-power floor (§2): symbol
-count is no longer a standalone gate, it is a property reported on the scan.
-
-### 2. Statistical-power floor (replaces the fixed ≥200-signal rule)
+### 2. Statistical-power floor, floored by a hard MIN_SAMPLE_FLOOR
 
 Replace the flat 200 with a minimum sample `N_min` sufficient to detect the
-strategy's expected effect size at a fixed significance and power:
+strategy's measured effect size at a fixed significance and power:
 
     N_min = ceil( (z_{1-α/2} + z_{1-β})² · (σ_R / μ_R)² )
 
 where
 
-- `μ_R` = the strategy's expected effect size expressed as mean R-multiple per
-  trade (converted from the pre-registered `expected gross edge bps` via the
-  strategy's risk unit; see US-202 frontmatter `expected_gross_edge_bps`).
-- `σ_R` = per-trade standard deviation of R, taken from the strategy's backtest
-  R distribution (or, if unavailable pre-backtest, a conservative prior —
-  flag `power_sigma_source=prior`).
+- `μ_R` = the strategy's **measured** expected effect size, expressed as the
+  **mean R-multiple per trade of a prior backtest / ledger trial** (see §3 — it
+  is read from data, never self-declared).
+- `σ_R` = the **standard deviation of that same measured R distribution** (same
+  source as `μ_R`; no separate prior is permitted).
 - `α = 0.05` (two-sided), `β = 0.20` (power 0.80) — tunable defaults.
 
-    pass_power = (signal_count >= N_min)
+The power floor alone is **not** the admission rule. G1's pass condition is a
+**hard conjunction** of the power floor and a fixed statistical minimum sample
+size, so a large claimed `μ_R` can never lower the bar below what the old fixed
+rule already required:
 
-`N_min` is computed per-candidate from its OWN stated effect size, never a
-constant. A candidate that pre-registers a small edge is required to produce a
-proportionally larger sample. If `μ_R <= 0` (no claimed positive edge), the
-candidate fails G1 immediately (cannot compute a positive power floor → reject).
+    pass_power = ( signal_count >= max(N_min, MIN_SAMPLE_FLOOR) )
+
+- `MIN_SAMPLE_FLOOR` = **200** (binding default). This is the old `≥200`-signal
+  floor preserved verbatim as a hard lower bound. Because `N_min` is combined via
+  `max(...)`, the power-based floor can only ever **raise** the requirement for
+  thin-edge candidates (`N_min > 200`) and can **never** admit a strategy on
+  fewer than 200 trades. The power floor is a one-directional tightening, not a
+  loosening.
+
+If `μ_R <= 0` (no measured positive edge), the candidate fails G1 immediately
+(cannot compute a positive power floor → reject).
 
 Retirement / G5 (DSR/PBO) remain unchanged; they still consume the resulting N.
+
+### 3. μ_R and σ_R are MEASURED, never self-declared (binding)
+
+Neither `μ_R` nor `σ_R` may come from the proposer's declared edge (the US-202
+frontmatter `expected_gross_edge_bps` is **not** a valid source). Both must be
+read from a **prior backtest / trials-ledger R distribution** for the same
+hypothesis under the **same `param_hash` and `universe_hash`**:
+
+- `μ_R` = `mean(R_1 … R_n)` of the per-trade R-multiples recorded for that
+  hypothesis in the trials ledger (`data/gauntlet/trials.jsonl`) or the most
+  recent backtest's R-teacher series.
+- `σ_R` = `std(R_1 … R_n)` of that same series.
+
+If no prior backtest R distribution exists for the hypothesis (same param hash +
+universe hash), G1 **fails closed** with reason `mu_R_unmeasured`. A candidate
+cannot be admitted on an edge it has declared but not yet produced in a backtest.
+This removes the bps→R conversion entirely (the old A3 hazard); the edge is read
+directly as measured R, so there is no risk-unit/stop-convention distortion.
+
+### 4. Breadth minimum RESTORED (≥ 15 symbols, or an explicit size-justified replacement)
+
+The `≥15`-symbol requirement is **not** absorbed into the power floor. It is
+restored as a **standalone hard gate**, because cross-sectional independence is
+a property of *how many distinct symbols* produced the signal sample and cannot
+be proxied by aggregate `signal_count` (200 signals on 2 symbols is not 200
+independent observations — it is 2, heavily autocorrelated).
+
+    pass_breadth = ( distinct_symbols >= MIN_BREADTH_SYMBOLS )
+
+- `MIN_BREADTH_SYMBOLS` = **15** (binding default).
+
+The only way to relax it is an **explicit, size-justified replacement** authored
+and human-approved as its own decision record: the proposer must state the
+reduced symbol count, the economic reason the strategy genuinely needs fewer
+symbols, and how cross-sectional dependence is instead bounded (e.g., a
+single-instrument strategy citing BTC/USD as a deep, OI-diverse name, with a
+documented autocorrelation/clustering correction applied to the power floor).
+Absent that approved record, the floor is 15. It is never dropped silently.
 
 ## Rationale
 
 - Size-relative capacity ties the gate to the ACTUAL deployment size (the $10K
   stage), which is the point of a staged pipeline. An absolute $250k floor is a
   proxy for "tradeable at institutional size," which is not our objective.
-- A power floor ties the signal rule to the strategy's OWN claim. Under-powered
-  passes (too few signals for a thin edge) are the classic overfit/mirage
-  failure mode; this makes "enough evidence" a function of "what you claim to
-  have," which is exactly what pre-registration (US-202) enables.
+- A power floor ties the signal rule to the strategy's OWN **measured** edge.
+  Under-powered passes (too few signals for a thin edge) are the classic
+  overfit/mirage failure mode; this makes "enough evidence" a function of "what
+  you can **demonstrate**," not "what you claim."
+- Folding `MIN_SAMPLE_FLOOR` and the breadth floor back in keeps the power floor
+  a **strict tightening** of the old flat rule, so the recalibration can only
+  raise the admission bar, never lower it.
 
 ## Consequences
 
 **Positive:** candidates that are genuinely tradeable at $10K stop failing on
-irrelevant absolute floors; thin-edge candidates are forced to either claim a
-small effect (and produce a large sample) or be rejected.
+irrelevant absolute notional floors; thin-edge candidates are forced to either
+produce a measured large sample or be rejected; the sample-size and breadth
+floors the old rule encoded are preserved as hard lower bounds.
 
-**Negative / trade-offs:** the power floor is only as honest as `σ_R` and the
-bps→R conversion; a bad risk-unit conversion can distort `N_min` (mitigation:
-`risk_usd` is already required to be re-derived and stated per promotion record,
-ADR-referenced US-185 §3.3).
+**Negative / trade-offs:** the power floor is only as honest as the measured
+R distribution feeding `μ_R`/`σ_R`; a strategy with a short, noisy backtest
+history fails closed (`mu_R_unmeasured`) rather than being admitted on a prior.
+That is intentional — G1 is now *evidence-gated*, not *declaration-gated*.
 
 **Risks:** `SIZE_RELATIVE_CAP` at 1.5% is a default, not a derived optimum —
 flagged for sensitivity (0.01 / 0.015 / 0.02) in US-210 re-runs.
+
+## Risk-Guardian Objections Closed
+
+1. **"Power floor can admit fewer than 200 trades."** Closed by
+   `pass_power = signal_count >= max(N_min, MIN_SAMPLE_FLOOR)` with
+   `MIN_SAMPLE_FLOOR = 200`. The power term can only *increase* the required N.
+2. **"μ_R is self-declared."** Closed by §3: `μ_R`/`σ_R` are read only from a
+   prior backtest / trials-ledger R distribution (same `param_hash` +
+   `universe_hash`), and G1 fails closed (`mu_R_unmeasured`) without one.
+3. **"≥15-symbol breadth silently dropped."** Closed by §4: breadth is
+   reinstated as a standalone hard gate (`MIN_BREADTH_SYMBOLS = 15`); any
+   relaxation requires an explicit, separately human-approved size justification.
 
 ## Assumptions & Open Questions (explicit)
 
@@ -139,13 +207,17 @@ flagged for sensitivity (0.01 / 0.015 / 0.02) in US-210 re-runs.
   is the desired behavior rather than requiring a default sizing.
 - A2 `SIZE_RELATIVE_CAP=0.015` is a placeholder within the stated 1–2% band.
   Sensitivity must be run before treating it as final (US-210).
-- A3 The bps→R conversion for `μ_R` needs a canonical definition (which risk
-  unit, which stop convention). OPEN — propose a single shared conversion helper
-  shared with G0/G5 so the edge is not double-counted across gates.
-- A4 `σ_R` pre-backtest prior value is unspecified. OPEN — needs a default (e.g.
-  2.0 R) or a requirement that G1 only runs with a backtest R distribution.
+- A3 (resolved) The prior OPEN bps→R conversion for `μ_R` is removed by §3; the
+  edge is read directly as measured R. No shared conversion helper is needed.
+- A4 (resolved) The prior OPEN `σ_R` "pre-backtest prior" is removed by §3; G1
+  requires a measured R distribution and fails closed without one.
 - A5 α/β (0.05 / 0.80) are conventional defaults; whether a one-sided test is
   appropriate for a directional edge claim is an open statistical question.
+- A6 `MIN_SAMPLE_FLOOR=200` is carried from the old rule unchanged; whether it
+  should eventually be expressed as a statistical minimum (e.g. a floor on the
+  effective number of independent observations after breadth/autocorrelation
+  correction) instead of the literal trade count is OPEN — do not change it
+  without a separate decision record.
 
 ## Review Date
 Revisit after US-210 re-run under the recalibrated G1 (2026-12-02).
