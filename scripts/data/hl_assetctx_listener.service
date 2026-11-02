@@ -18,6 +18,9 @@
 Description=HermesForge Hyperliquid assetCtxs persistent listener (US-199)
 After=network-online.target
 Wants=network-online.target
+# Disable the start-limit rate limiter so Restart=always can restart the
+# listener indefinitely without systemd eventually giving up.
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
@@ -30,7 +33,6 @@ Restart=always
 RestartSec=3
 # Cap the in-process reconnect backoff at 30s (already in code); systemd adds a
 # final safety net if the process itself dies.
-StartLimitIntervalSec=0
 
 [Install]
 WantedBy=multi-user.target
