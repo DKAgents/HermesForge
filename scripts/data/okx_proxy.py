@@ -95,6 +95,10 @@ def fetch_okx_bars(ticker: str, timeframe: str, start_ms: int,
         return _EMPTY.copy()
 
     bar = timeframe if timeframe else DEFAULT_BAR
+    # OKX `bar` is case-sensitive: the day+ intervals are UPPER ('1D'), while
+    # Hyperliquid/store use lowercase ('1d'). Normalize to OKX casing.
+    if bar == "1d":
+        bar = "1D"
     start_ms = int(start_ms)
     end_ms = int(end_ms)
 

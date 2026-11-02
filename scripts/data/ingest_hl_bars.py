@@ -10,8 +10,8 @@ Design (per architect_us177_spec.md):
   * Universe is imported from hermes_config.universe CRYPTO_UNIVERSE — the
     single source of truth (never re-listed).
   * 5m is the mandatory trading resolution (STR-Q intraday; the 17-day
-    retention-cliff interval). 1d is intentionally EXCLUDED (already ingested
-    deep by fetch_crypto_data.py).
+    retention-cliff interval). 1d is the daily resolution (lower-frequency
+    backtests, e.g. cross-sectional momentum).
   * Incremental + idempotent: high-water-mark window with a 2-bar overlap to
     catch late/finalized tails; append via INSERT OR IGNORE dedups re-fetched
     overlaps to zero new rows.
@@ -43,7 +43,7 @@ from hermes_config.universe import CRYPTO_UNIVERSE  # noqa: E402
 
 HYPERLIQUID_INFO_URL = "https://api.hyperliquid.xyz/info"
 
-INGEST_TIMEFRAMES = ["5m"]                  # trading resolution; extendable
+INGEST_TIMEFRAMES = ["5m", "1d"]            # 5m trading + 1d daily resolution
 FIRST_RUN_LOOKBACK_DAYS = 18                # seed slightly beyond ~17d retention
 INCREMENTAL_OVERLAP_MS = 2 * 5 * 60 * 1000  # 2 bars overlap (late/finalized tail)
 SLEEP_BETWEEN_TICKERS = 0.2                 # polite rate pacing (existing convention)
