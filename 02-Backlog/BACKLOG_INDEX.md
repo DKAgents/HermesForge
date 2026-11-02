@@ -100,6 +100,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-186 | EPIC-016 | Liquidation + open-interest positioning feed | P0 | US-185 |
 | US-187 | EPIC-016 | Options IV surface | P1 | US-181 |
 | US-188 | EPIC-016 | Cross-venue basis feed | P1 | US-185 |
+| US-189 | EPIC-016 | Fix 1d bar ingestion gaps (bars_1d.db + OKX 1d casing) | P1 | US-182 |
 
 ---
 
@@ -159,7 +160,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014
-- **Next Story Number:** US-189
+- **Next Story Number:** US-190
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
