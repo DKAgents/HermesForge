@@ -71,8 +71,9 @@ def test_g4_failed_mechanism_is_avoided(temp_priors):
 
 
 def test_g5_failed_mechanism_is_avoided(temp_priors):
-    _write_postmortem(temp_priors / "PostMortems", "funding-carry-directional", "G5")
-    prior = lp.prior_for({"primitives": ["funding_carry"], "description": ""})
+    _write_postmortem(temp_priors / "PostMortems", "funding-carry", "G5")
+    prior = lp.prior_for({"primitives": ["funding_carry"],
+                          "description": "funding carry directional fade"})
     assert prior.verdict == "avoid"
     assert prior.gate == "G5"
 
@@ -104,11 +105,22 @@ def test_unrelated_mechanism_is_neutral(temp_priors):
 
 
 def test_g3_failure_is_not_avoided(temp_priors):
-    # A G3 (execution-realism) post-mortem is NOT in AVOID_GATES; it must fall
-    # through to neutral (or prefer), never "avoid".
+    # A G3 (execution-realism) post-mortem is NOT in AVOID_GATES, and its
+    # signal class (systematic) is NOT blocked, so it must fall through to
+    # neutral (or prefer) — never "avoid".
+    _write_postmortem(temp_priors / "PostMortems",
+                      "funding-carry-directional", "G3")
+    prior = lp.prior_for({"description": "funding carry directional fade"})
+    assert prior.verdict in ("neutral", "prefer")
+
+
+def test_g3_liquidity_sweep_is_avoided_via_blocked_class(temp_priors):
+    # A liquidity-sweep seed is avoided at the US-191 intake gate (blocked
+    # signal class ict-smc) regardless of the post-mortem gate being G3.
     _write_postmortem(temp_priors / "PostMortems", "liquidity-sweep", "G3")
     prior = lp.prior_for({"description": "liquidity sweep reversal"})
-    assert prior.verdict in ("neutral", "prefer")
+    assert prior.verdict == "avoid"
+    assert prior.gate == "G0"
 
 
 # ── Real repo integration (the canonical US-216 G4 record) ───────────────
