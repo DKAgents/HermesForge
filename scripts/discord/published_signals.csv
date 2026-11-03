@@ -59,3 +59,7 @@ STR-I-adaptive-trend_DOW_2026-10-26,STR-I-adaptive-trend,DOW,2026-10-26,2026-11-
 STR-I-adaptive-trend_IT_2026-10-23,STR-I-adaptive-trend,IT,2026-10-23,2026-11-01T18:22:53.604750,stocks
 STR-I-adaptive-trend_LMT_2026-10-26,STR-I-adaptive-trend,LMT,2026-10-26,2026-11-01T18:22:53.604849,stocks
 STR-B-macd-histogram-divergence_HCA_2026-10-26,STR-B-macd-histogram-divergence,HCA,2026-10-26,2026-11-01T18:22:53.604972,stocks
+STR-I-adaptive-trend_CVNA_2026-11-02,STR-I-adaptive-trend,CVNA,2026-11-02,2026-11-03T06:53:58.184599,stocks
+STR-I-adaptive-trend_EFX_2026-11-02,STR-I-adaptive-trend,EFX,2026-11-02,2026-11-03T06:53:58.184798,stocks
+STR-I-adaptive-trend_GEN_2026-10-30,STR-I-adaptive-trend,GEN,2026-10-30,2026-11-03T06:53:58.184914,stocks
+STR-B-macd-histogram-divergence_VRSN_2026-10-30,STR-B-macd-histogram-divergence,VRSN,2026-10-30,2026-11-03T06:53:58.185049,stocks
