@@ -10,8 +10,11 @@ expected_gross_edge_bps: claimed positive (via high-OI filter); measured, not as
 cost_hurdle_bps: 45 (single-leg 4x taker)
 data_dependencies: HL 1d bars (~4y, 31 coins) + OI history (HL funding/metaAndAssetCtxs store)
 counterparty: the leveraged crowd at crowded (extreme-OI) positioning, forced to unwind when the move starts — their forced exit is the exit liquidity.
+topic: general
+confidence: high
+has_quotes: true
+tags: []
 ---
-
 # HYP-16 — High-OI expansion + trend-following (coach-derived)
 
 ## Claim (verbatim intent)

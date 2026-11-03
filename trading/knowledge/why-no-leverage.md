@@ -4,8 +4,9 @@ topic: leverage
 tags: [leverage, risk, expectancy, friction, gauntlet]
 created: 2026-11-02
 source: human Q+A
+confidence: high
+has_quotes: false
 ---
-
 # Why no leverage (reference)
 
 ## Core principle

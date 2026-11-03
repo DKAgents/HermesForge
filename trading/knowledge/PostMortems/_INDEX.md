@@ -5,8 +5,9 @@ created: 2026-11-02
 updated: 2026-11-02
 tags: [moc, postmortem, feedback, generation]
 source: postmortem
+confidence: high
+has_quotes: false
 ---
-
 # Post-Mortem Index (US-216)
 
 One-paragraph post-mortem per failed strategy/class. Each note records the
