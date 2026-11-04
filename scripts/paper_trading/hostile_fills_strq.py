@@ -243,75 +243,118 @@ def check_exit_hostile(trade: dict, bars: pd.DataFrame, entry_bar_idx: int) -> d
 
 
 # ── Report writing ───────────────────────────────────────────────────────
-def _read_existing_keys() -> set:
-    """Read existing signal_id|stage keys from report file for dedup.
+# US-225: stage-authoritative ledger — one authoritative row per signal_id.
+# A non-skip stage (open_entry/closed) SUPERSEDES an earlier "skip"; a "closed"
+# SUPERSEDES an "open_entry". A genuine no-fill skip (bars present, no
+# trade-through) with no higher-stage sibling is preserved as-is.
 
-    signal_id is the true intraday trade identity (carries the HHMM suffix).
-    trade_id is date-truncated and collapses up to 26 same-day sweeps, so it
-    cannot be the dedup key.
+_STAGE_RANK = {"skip": 0, "open_entry": 1, "closed": 2}
+
+
+def _supersedes(cur: dict, new: dict) -> bool:
+    """True if `new` should replace `cur` (strictly higher stage, or same-stage
+    tie broken by newer timestamp_utc)."""
+    nr = _STAGE_RANK.get(new.get("stage"), -1)
+    cr = _STAGE_RANK.get(cur.get("stage"), -1)
+    if nr != cr:
+        return nr > cr
+    return (new.get("timestamp_utc") or "") >= (cur.get("timestamp_utc") or "")
+
+
+def _load_existing(path: pathlib.Path = REPORT_PATH) -> dict:
+    """Read existing ledger rows into an authoritative {signal_id: row} map.
+
+    Collapses stale duplicates (skip superseded by closed/open_entry; open_entry
+    superseded by closed) so a re-load is itself a prune. Identity insertion
+    order is preserved (py3.7+ dict semantics).
     """
-    keys = set()
-    if REPORT_PATH.exists():
-        try:
-            with open(REPORT_PATH) as f:
-                for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
-                    try:
-                        r = json.loads(line)
-                        keys.add(f"{r.get('signal_id','')}|{r.get('stage','')}")
-                    except json.JSONDecodeError:
-                        pass
-        except Exception:
-            pass
-    return keys
-
-
-def _append_report(record: dict, dry_run: bool = False, existing_keys: set = None) -> bool:
-    """Append one comparison record to the hostile STR-Q report (JSONL).
-
-    Deduplicates on (signal_id, stage). signal_id is the true intraday trade
-    identity; `stage` preserves the legit skip -> open_entry -> closed transition
-    trail across cron re-runs.
-    If dry_run=True, only logs what would be written.
-    existing_keys: pre-loaded set of 'signal_id|stage' keys (avoids re-reading file).
-
-    Returns True if the record was written (or would be), False if skipped.
-    """
-    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-    if existing_keys is None:
-        existing_keys = set()
-        if REPORT_PATH.exists():
+    by_key = {}
+    if not path.exists():
+        return by_key
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
             try:
-                with open(REPORT_PATH, "r") as f:
-                    for line in f:
-                        line = line.strip()
-                        if not line:
-                            continue
-                        try:
-                            existing = json.loads(line)
-                            key = f"{existing.get('signal_id', '')}|{existing.get('stage', '')}"
-                            existing_keys.add(key)
-                        except json.JSONDecodeError:
-                            pass
-            except Exception:
-                pass
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            k = r.get("signal_id", "")
+            if not k:
+                continue
+            cur = by_key.get(k)
+            if cur is None or _supersedes(cur, r):
+                by_key[k] = r
+    return by_key
 
-    key = f"{record.get('signal_id', '')}|{record.get('stage', '')}"
-    if key in existing_keys:
+
+def _write_atomic(by_key: dict, path: pathlib.Path, prev_count: int) -> None:
+    """Atomically write the authoritative ledger (one row per identity).
+
+    Refuses a >20% row drop against `prev_count` (mirrors trade_log's guard so a
+    buggy collapse can never wipe the ledger).
+    """
+    import os
+    rows = [by_key[k] for k in by_key]
+    if prev_count > 50 and len(rows) < prev_count * 0.8:
+        raise ValueError(
+            f"REFUSED: {path.name} would shrink {prev_count}->{len(rows)} rows. "
+            f"Original file preserved."
+        )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    try:
+        with open(tmp, "w") as f:
+            for r in rows:
+                f.write(json.dumps(r, default=str) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(str(tmp), str(path))
+    except Exception:
+        tmp.unlink(missing_ok=True)
+        raise
+
+
+def _merge_record(record: dict, by_key: dict, dry_run: bool = False) -> bool:
+    """Merge one record into the authoritative map, superseding lower-stage rows.
+
+    A non-skip stage (open_entry/closed) replaces an earlier "skip"; a "closed"
+    replaces an "open_entry". Re-writing the SAME stage is a dedup no-op (no
+    timestamp churn). Returns True if the record was added/superseded, False if
+    it was itself superseded or already present.
+    """
+    k = record.get("signal_id", "")
+    if not k:
         return False
-
-    if dry_run:
-        print(f"  [DRY-RUN] Would write: {key}")
-        existing_keys.add(key)
+    cur = by_key.get(k)
+    if cur is None:
+        if dry_run:
+            print(f"  [DRY-RUN] Would write: {k}|{record.get('stage')}")
+        by_key[k] = record
         return True
-
-    with open(REPORT_PATH, "a") as f:
-        f.write(json.dumps(record, default=str) + "\n")
-    existing_keys.add(key)
+    if cur.get("stage") == record.get("stage"):
+        return False
+    if not _supersedes(cur, record):
+        return False
+    if dry_run:
+        print(f"  [DRY-RUN] Would supersede {cur.get('stage')}->{record.get('stage')}: {k}")
+    by_key[k] = record
     return True
+
+
+def prune_stale_skips(path: pathlib.Path = REPORT_PATH) -> int:
+    """US-225 idempotent one-time prune: collapse each signal_id to ONE
+    authoritative row (highest stage) and atomically rewrite. Returns the count
+    of superseded (stale) rows removed."""
+    prev = 0
+    if path.exists():
+        with open(path) as f:
+            prev = sum(1 for _ in f)
+    by_key = _load_existing(path)
+    removed = max(0, prev - len(by_key))
+    _write_atomic(by_key, path, prev)
+    return removed
 
 
 # ── Main comparison loop ───────────────────────────────────────────────
@@ -340,13 +383,16 @@ def run(dry_run: bool = False, crypto_only: bool = False,
         "hostile_scored": 0,
     }
 
-    # Force: clear existing report
-    if force and REPORT_PATH.exists():
-        REPORT_PATH.unlink()
-        print("  (force: cleared existing report)")
-
-    # Pre-load existing keys for O(1) dedup (avoids re-reading file per record)
-    existing_keys = _read_existing_keys() if not force else set()
+    # US-225: load the authoritative ledger (one row per signal_id) and merge
+    # new records in-memory, superseding lower-stage rows. --force starts from
+    # an empty ledger for a full rescore.
+    prev_count = 0
+    if REPORT_PATH.exists():
+        with open(REPORT_PATH) as f:
+            prev_count = sum(1 for _ in f)
+    if force:
+        print("  (force: cleared existing report — full rescore)")
+    by_key = _load_existing(REPORT_PATH) if not force else {}
 
     # Load all STR-Q trades and dedup input on signal_id (the true intraday
     # identity). trade_id is date-truncated (HHMM dropped) and collapses up to
@@ -423,7 +469,7 @@ def run(dry_run: bool = False, crypto_only: bool = False,
                 "hostile_r": None,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
-            if _append_report(record, dry_run=dry_run, existing_keys=existing_keys):
+            if _merge_record(record, by_key, dry_run=dry_run):
                 summary["records_written"] += 1
             summary["skipped"] += 1
             continue
@@ -522,8 +568,13 @@ def run(dry_run: bool = False, crypto_only: bool = False,
             }
             summary["open_entry"] += 1
 
-        if _append_report(record, dry_run=dry_run, existing_keys=existing_keys):
+        if _merge_record(record, by_key, dry_run=dry_run):
             summary["records_written"] += 1
+
+    # US-225: write the authoritative ledger once (one stage-authoritative row
+    # per signal_id). Dry-run never touches the file.
+    if not dry_run:
+        _write_atomic(by_key, REPORT_PATH, prev_count)
 
     return summary
 
@@ -541,7 +592,15 @@ def main():
                     help="Only process stock trades")
     ap.add_argument("--force", action="store_true",
                     help="Clear report file before run (full rescore, bypass dedup)")
+    ap.add_argument("--prune", action="store_true",
+                    help="Idempotent one-time prune (US-225): collapse each signal_id "
+                         "to one authoritative stage row and exit.")
     args = ap.parse_args()
+
+    if args.prune:
+        removed = prune_stale_skips(REPORT_PATH)
+        print(f"  [PRUNE] removed {removed} stale (superseded) rows from {REPORT_PATH.name}")
+        return
 
     print(f"\n{'='*60}")
     print(f"STR-Q Hostile Fill Model — {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
