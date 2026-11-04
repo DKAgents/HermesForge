@@ -297,9 +297,12 @@ def _write_atomic(by_key: dict, path: pathlib.Path, prev_count: int) -> None:
     """
     import os
     rows = [by_key[k] for k in by_key]
-    if prev_count > 50 and len(rows) < prev_count * 0.8:
+    # US-225: a stage-authoritative collapse legitimately removes superseded rows
+    # (skip->closed, open->closed), so a %-drop guard is wrong here. The one
+    # catastrophic failure worth refusing is wiping a non-empty ledger to empty.
+    if prev_count > 10 and len(rows) == 0:
         raise ValueError(
-            f"REFUSED: {path.name} would shrink {prev_count}->{len(rows)} rows. "
+            f"REFUSED: {path.name} would be wiped {prev_count}->0 rows. "
             f"Original file preserved."
         )
     path.parent.mkdir(parents=True, exist_ok=True)
