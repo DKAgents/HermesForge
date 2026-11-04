@@ -176,26 +176,43 @@ def resolve_fill_realistic(closed_rows: list[dict]) -> dict:
         gauntlet_total += _get_r(row)
         gauntlet_count += 1
 
-        # Primary resolution.
+        # Primary resolution (US-224): prefer the persisted authoritative
+        # hostile_r already backfilled onto trades.csv. This is, by construction,
+        # the same closed-stage/non-null/latest-wins value (outlier rows left
+        # empty during backfill). Fall back to the jsonls only when empty, so the
+        # report decouples from the ledgers over time.
         hr_row = None
-        if sid == STR_Q_STRATEGY:
-            hr_row = strq_map.get(key)
-        elif sid in SWING_STRATEGIES:
-            hr_row = swing_map.get(key)
-        # else: strategy has no bar-level hostile ledger -> no fill-realistic R.
+        value = None
+        entry_date = ""
+        csv_hr = row.get("hostile_r", "")
+        if csv_hr not in (None, "", "None"):
+            try:
+                value = float(csv_hr)
+            except (ValueError, TypeError):
+                value = None
+            if value is not None:
+                entry_date = (row.get("entry_date") or "")[:10]
 
-        if hr_row is None or hr_row.get("outlier_excluded"):
-            unscored_count += 1
-            continue
+        if value is None:
+            if sid == STR_Q_STRATEGY:
+                hr_row = strq_map.get(key)
+            elif sid in SWING_STRATEGIES:
+                hr_row = swing_map.get(key)
+            # else: strategy has no bar-level hostile ledger -> no fill-realistic R.
+
+            if hr_row is None or hr_row.get("outlier_excluded"):
+                unscored_count += 1
+                continue
+            value = float(hr_row["hostile_r"])
+            entry_date = (hr_row.get("entry_date") or "")[:10]
 
         ck = (sid, key)
         if ck in per_trade_map:
             # Cross-ledger overlap for the same canonical key — must be impossible
             # (strategy sets are disjoint); abort loudly rather than double-count.
             raise AssertionError(f"duplicate hostile resolution across ledgers: {ck}")
-        value = float(hr_row["hostile_r"])
         per_trade_map[ck] = value
-        scored.append((sid, value, (hr_row.get("entry_date") or "")[:10]))
+        scored.append((sid, value, entry_date))
 
     total_r = sum(v for _, v, _ in scored)
     wins = sum(1 for _, v, _ in scored if v > 0)

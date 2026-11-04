@@ -44,6 +44,7 @@ FIELDS = [
     "fear_greed",
     "gauntlet_r",
     "cost_drag_r",
+    "hostile_r",  # US-224: bar-level fill-realistic R (authoritative, backfilled)
 ]
 
 
