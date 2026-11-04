@@ -138,6 +138,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-223 | EPIC-017 | Rewire performance report to lead with fill-realistic R | P1 | None |
 | US-224 | EPIC-017 | Persist authoritative hostile_r onto trades.csv | P1 | None |
 | US-225 | EPIC-017 | Stage-authoritative hostile jsonls (prune stale skip rows) | P2 | None |
+| US-226 | EPIC-017 | Dedup trades.csv duplicate signal_id rows at source | P1 | None |
 
 ---
 
@@ -197,7 +198,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014, EPIC-016, EPIC-017
-- **Next Story Number:** US-226
+- **Next Story Number:** US-227
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
