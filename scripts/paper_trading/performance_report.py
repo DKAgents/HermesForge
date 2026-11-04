@@ -12,6 +12,7 @@ Usage:
 """
 
 import sys
+import json
 import argparse
 import pathlib
 import datetime
@@ -21,6 +22,32 @@ import trade_log
 
 # ── Gauntlet go-live: first date trades were captured with cost-adjusted fills ──
 GAUNTLET_CUTOVER = datetime.date(2026, 9, 14)
+
+# ── R source-of-truth (US-223) ──────────────────────────────────────────────
+# Bar-level hostile-fill ledgers (the ONLY fill-realistic R sources). Two are
+# authoritative; the frozen v2 STR-Q ledger and the .bak.us169 backup are never
+# read (lu-02: v1 is the authoritative scoreboard).
+STR_Q_STRATEGY = "STR-Q-liquidity-sweep"
+# The six swing strategies covered by hostile_fills.py (daily bars).
+SWING_STRATEGIES = {
+    "STR-VIXC-vix-contango-breakout",
+    "STR-B-macd-histogram-divergence",
+    "STR-A-ma-pullback-fibonacci",
+    "STR-I-adaptive-trend",
+    "STR-D-sr-role-reversal",
+    "STR-DEBASEMENT-treasury-buyback",
+}
+STRQ_LEDGER = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
+SWING_LEDGER = pathlib.Path(__file__).parent / "hostile_fill_report.jsonl"
+
+# Join keys per strategy: STR-Q uses signal_id (unique intraday identity), the
+# six swing strategies use trade_id (daily, signal_id == trade_id).
+def _join_key(strategy_id: str, row: dict) -> str:
+    if strategy_id == STR_Q_STRATEGY:
+        return row.get("signal_id", "")
+    if strategy_id in SWING_STRATEGIES:
+        return row.get("trade_id", "")
+    return ""
 
 
 def _rows() -> list[dict]:
@@ -84,55 +111,174 @@ def _build_pnl_section(closed_rows: list[dict], label: str) -> list[str]:
     return lines
 
 
-def _hostile_strq_r_str() -> str:
-    """Read cumulative CORRECTED bar-level hostile STR-Q R from the jsonl ledger.
+def _load_hostile_ledger(path: pathlib.Path, key_field: str) -> dict:
+    """Read a hostile-fill jsonl into a canonical scored map {key: row}.
 
-    Filtered to post-gauntlet entries (>= 2026-09-14) and EXCLUDING degenerate-stop
-    outliers (outlier_excluded=True), matching the US-168 v3 "scored" population
-    whose corrected net R is −8,447 R (cache/backtester_fidelity_report_v3.md).
-
-    Returns a formatted string with sum, scored count, win rate, and date range.
-    Returns 'Pessimistic R: unavailable' on error or empty.
+    Canonical row = the `closed` stage row with a non-null `hostile_r`; on
+    multiple such rows the latest `timestamp_utc` wins. skip/open/entry rows
+    (hostile_r is None) contribute no scored entry. The frozen v2 and the
+    .bak.us169 backup are NEVER read because they are never passed here.
     """
-    try:
-        import json, pathlib
-        jsonl = pathlib.Path(__file__).parent / "hostile_fill_report_strq.jsonl"
-        if not jsonl.exists():
-            return "Pessimistic R: unavailable (no ledger)"
-        total = 0.0
-        count = 0
-        wins = 0
-        mindate = ""
-        maxdate = ""
-        with open(jsonl) as f:
-            for line in f:
+    canonical = {}
+    if not path.exists():
+        return canonical
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
                 r = json.loads(line)
-                hr = r.get("hostile_r")
-                if hr is None:
-                    continue
-                # Exclude degenerate-stop outliers (not part of the scored set).
-                if r.get("outlier_excluded"):
-                    continue
-                d = (r.get("entry_date") or "")[:10]
-                # Only include post-gauntlet entries
-                if d < "2026-09-14":
-                    continue
-                total += float(hr)
-                count += 1
-                if float(hr) > 0:
-                    wins += 1
-                if d:
-                    if not mindate or d < mindate:
-                        mindate = d
-                    if not maxdate or d > maxdate:
-                        maxdate = d
-        if count == 0:
-            return "Pessimistic R: unavailable"
-        wr = wins / count * 100
-        return (f"STR-Q bar-level (corrected hostile fills): {total:+.0f}R "
-                f"on {count} scored trades, {wr:.1f}% win, {mindate} to {maxdate}")
-    except Exception as e:
-        return f"Pessimistic R: unavailable ({e})"
+            except json.JSONDecodeError:
+                continue
+            if r.get("stage") != "closed":
+                continue
+            if r.get("hostile_r") is None:
+                continue
+            key = r.get(key_field, "")
+            if not key:
+                continue
+            cur = canonical.get(key)
+            if cur is None or (r.get("timestamp_utc") or "") >= (cur.get("timestamp_utc") or ""):
+                canonical[key] = r
+    return canonical
+
+
+def resolve_fill_realistic(closed_rows: list[dict]) -> dict:
+    """Single R source-of-truth (US-223).
+
+    Primary: bar-level hostile_r from the two ACTIVE hostile-fill ledgers —
+    STR-Q joined on signal_id, the six swing strategies on trade_id. This is
+    the ONLY value permitted as the headline. outlier_excluded rows and trades
+    with no joinable hostile_r (skip/open stage, purged bars) are NOT scored:
+    they are counted in `unscored_count`, never silently filled with gauntlet_r.
+
+    Secondary: gauntlet_r (cost-adjusted but close-fill — NOT fill-realistic),
+    summed separately for the labelled reference line.
+
+    Returns {summary, per_trade_map}. Raises AssertionError if a (strategy, key)
+    resolves in both active ledgers (cross-ledger overlap must not happen).
+    """
+    strq_map = _load_hostile_ledger(STRQ_LEDGER, "signal_id")
+    swing_map = _load_hostile_ledger(SWING_LEDGER, "trade_id")
+
+    per_trade_map = {}          # (strategy_id, key) -> hostile_r float
+    scored = []                 # list of (strategy_id, hostile_r, entry_date)
+    unscored_count = 0
+    gauntlet_total = 0.0
+    gauntlet_count = 0
+
+    for row in closed_rows:
+        sid = row.get("strategy_id", "")
+        key = _join_key(sid, row)
+
+        # Secondary (gauntlet_r / raw r_multiple) — always computed, never the headline.
+        gauntlet_total += _get_r(row)
+        gauntlet_count += 1
+
+        # Primary resolution.
+        hr_row = None
+        if sid == STR_Q_STRATEGY:
+            hr_row = strq_map.get(key)
+        elif sid in SWING_STRATEGIES:
+            hr_row = swing_map.get(key)
+        # else: strategy has no bar-level hostile ledger -> no fill-realistic R.
+
+        if hr_row is None or hr_row.get("outlier_excluded"):
+            unscored_count += 1
+            continue
+
+        ck = (sid, key)
+        if ck in per_trade_map:
+            # Cross-ledger overlap for the same canonical key — must be impossible
+            # (strategy sets are disjoint); abort loudly rather than double-count.
+            raise AssertionError(f"duplicate hostile resolution across ledgers: {ck}")
+        value = float(hr_row["hostile_r"])
+        per_trade_map[ck] = value
+        scored.append((sid, value, (hr_row.get("entry_date") or "")[:10]))
+
+    total_r = sum(v for _, v, _ in scored)
+    wins = sum(1 for _, v, _ in scored if v > 0)
+    dates = [d for _, _, d in scored if d]
+
+    by_strategy = {}
+    for sid, v, _ in scored:
+        s = by_strategy.setdefault(sid, {"total_r": 0.0, "count": 0, "wins": 0})
+        s["total_r"] += v
+        s["count"] += 1
+        if v > 0:
+            s["wins"] += 1
+
+    summary = {
+        "available": len(scored) > 0,
+        "total_r": total_r,
+        "scored_count": len(scored),
+        "wins": wins,
+        "win_rate": (wins / len(scored) * 100) if scored else 0.0,
+        "min_entry_date": min(dates) if dates else "",
+        "max_entry_date": max(dates) if dates else "",
+        "unscored_count": unscored_count,
+        "closed_count": len(closed_rows),
+        "gauntlet_total": gauntlet_total,
+        "gauntlet_count": gauntlet_count,
+        "by_strategy": by_strategy,
+    }
+    return {"summary": summary, "per_trade_map": per_trade_map}
+
+
+def _emit_fill_realistic_headline(resolution: dict) -> list[str]:
+    """Render the fill-realistic R headline from the PRIMARY resolution ONLY.
+
+    This emitter reads ONLY the fill-realistic summary fields. It accepts the
+    gauntlet (secondary) value nowhere in its signature/path — the optimistic
+    number is emitted by _emit_gauntlet_secondary instead. This is the fail-closed
+    guard: absence of fill-realistic data yields an explicit "unavailable" line,
+    never a gauntlet_r fallback in the headline.
+    """
+    s = resolution["summary"]
+    lines = ["**Fill-Realistic R** _(bar-level hostile fills — source of truth)_"]
+    if not s["available"]:
+        lines.append("  Fill-realistic R: unavailable for this window")
+        reason = "no bar-level hostile ledger rows resolvable for this window (no ledger / all-skip / purged bars)"
+        lines.append(f"  _({reason})_")
+        return lines
+
+    noc = (f" ({s['min_entry_date']} to {s['max_entry_date']}, post-retention only)"
+           if s["min_entry_date"] else "")
+    lines.append(
+        f"  {s['total_r']:+.2f}R on {s['scored_count']} fill-realistic trades{noc}, "
+        f"{s['win_rate']:.1f}% win"
+    )
+    if s["unscored_count"]:
+        lines.append(
+            f"  _({s['scored_count']} fill-realistic trades of {s['closed_count']} closed; "
+            f"{s['unscored_count']} have no re-derivable bar-level R)_"
+        )
+    # Coverage provenance note (mandatory narrative, US-223 spec §2.2).
+    # Verified US-223 Q3: the swing daily-bar source (~/.hermes/market_data/*.parquet,
+    # incl. crypto/) is INTACT back to 2018 — the swing span IS re-derivable and
+    # genuinely broader. STR-Q's 5m bars were purged (US-189), so its bar-level
+    # history is recoverable only within the 5m retention window.
+    lines.append("  _(swing daily-bar source intact → swing span re-derivable; STR-Q 5m pre-purge history unrecoverable — US-189)_")
+    for sid in sorted(s["by_strategy"]):
+        st = s["by_strategy"][sid]
+        pct = (st["wins"] / st["count"] * 100) if st["count"] else 0.0
+        lines.append(f"    {sid}: {st['total_r']:+.2f}R on {st['count']}, {pct:.0f}% win")
+    return lines
+
+
+def _emit_gauntlet_secondary(resolution: dict) -> list[str]:
+    """Render the demoted cost-adjusted (close-fill) reference line.
+
+    guantlet_r = gross_r − fee_drag; fills at signal close; no bar-level
+    fill-timing correction. This is NOT fill-realistic and is labelled as such.
+    """
+    s = resolution["summary"]
+    lines = [
+        "**Cost-adjusted only** _(NOT fill-realistic — paper/close-fill, no bar-level fill-timing)_",
+        f"  gauntlet_r: {s['gauntlet_total']:+.2f}R on {s['gauntlet_count']} closed trades (reference only)",
+    ]
+    return lines
 
 
 def _simulate_portfolio_managed(closed_rows: list) -> dict:
@@ -299,10 +445,20 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
 
     lines = ["📈 **Paper Trading Performance Report**\n"]
 
-    # ── 1. Managed-portfolio performance (LEAD) ──
-    total_r = _total(closed_rows)
+    # ── 1. Fill-realistic R (HEADLINE — bar-level hostile fills) ──
+    # US-223: resolve the single R source-of-truth and lead with it. The
+    # optimistic gauntlet_r is demoted to a labeled reference line (§2) and is
+    # structurally incapable of appearing in this headline slot.
+    resolution = resolve_fill_realistic(closed_rows)
+    lines.extend(_emit_fill_realistic_headline(resolution))
+    lines.append("")
+
+    # ── 2. Cost-adjusted only (NOT fill-realistic) — demoted reference ──
+    lines.extend(_emit_gauntlet_secondary(resolution))
+
+    total_r = _total(closed_rows)  # gauntlet_r-based Managed/Unmanaged (secondary)
     unmanaged_rpt = (total_r / len(closed_rows)) if closed_rows else 0.0
-    lines.append("**Managed-Portfolio Performance**")
+    lines.append("  **Managed-Portfolio view** _(cost-adjusted, NOT fill-realistic)_")
     if closed_rows and len(closed_rows) >= 10:
         sim = _simulate_portfolio_managed(closed_rows)
     else:
@@ -321,12 +477,6 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
                      f"{sim['accepted_win_rate']:.0f}% win")
         lines.append(f"  Unmanaged: {len(closed_rows)} trades, {total_r:+.2f}R")
         lines.append(f"  R/trade: {managed_rpt:+.2f}R managed vs {unmanaged_rpt:+.2f}R unmanaged")
-        lines.append("  _(paper-layer, optimistic fills — see Pessimistic R below for corrected bar-level R)_")
-    lines.append("")
-
-    # ── 2. Pessimistic R (bar-level hostile fills, CORRECTED) — R first ──
-    lines.append("**Pessimistic R** _(bar-level hostile fills, corrected)_")
-    lines.append(f"  {_hostile_strq_r_str()}")
     lines.append("")
 
     # ── 3. Open positions (brief) ──
