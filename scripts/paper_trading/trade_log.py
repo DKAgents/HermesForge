@@ -72,7 +72,7 @@ def _read_all_rows() -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def _write_all_rows(rows: list[dict]) -> None:
+def _write_all_rows(rows: list[dict], allow_shrink: bool = False) -> None:
     """Atomic write: temp file → validate → rename.
     
     NEVER truncates the original file before the new write is confirmed.
@@ -80,7 +80,24 @@ def _write_all_rows(rows: list[dict]) -> None:
     On failure: raises ValueError, leaves original file untouched.
     """
     import shutil, os
-    
+
+    # US-226 Gate 0: append-unique by signal_id — refuse to write any duplicate
+    # signal_id row. signal_id is the immutable trade identity (never reused);
+    # a duplicate here indicates a caller re-opened an identical signal instead
+    # of the write bug being contained at read time.
+    _seen_sig_ids: set = set()
+    for _r in rows:
+        _sig = (_r.get("signal_id") or "").strip()
+        if not _sig:
+            continue
+        if _sig in _seen_sig_ids:
+            raise ValueError(
+                f"REFUSED: duplicate signal_id '{_sig}' would be written to "
+                f"trades.csv — signal_id must be append-unique (US-226). "
+                f"Original file preserved. Investigate the caller."
+            )
+        _seen_sig_ids.add(_sig)
+
     prev_count = 0
     if LOG_PATH.exists():
         try:
@@ -89,7 +106,7 @@ def _write_all_rows(rows: list[dict]) -> None:
             prev_count = 0
     
     # � Gate 1: refuse to write if row count dropped >20% and >50 rows
-    if prev_count > 50 and len(rows) < prev_count * 0.8:
+    if not allow_shrink and prev_count > 50 and len(rows) < prev_count * 0.8:
         raise ValueError(
             f"REFUSED: trades.csv would shrink {prev_count}→{len(rows)} rows "
             f"({(1 - len(rows)/prev_count)*100:.0f}% drop). "
@@ -223,6 +240,81 @@ def update_entry_status(trade_id: str, entry_status: str) -> None:
             pass
 
 
+def _signal_id_exists(signal_id: str) -> bool:
+    """True if any row already carries this signal_id.
+
+    US-226: signal_id is the immutable trade identity and must be append-unique.
+    Enforcing this at open-time is the root-cause fix for the duplicate rows
+    that STR-Q's 20-min sweep re-detection window used to create.
+    """
+    if not signal_id:
+        return False
+    normalized = signal_id.strip()
+    for row in _read_all_rows():
+        if (row.get("signal_id") or "").strip() == normalized:
+            return True
+    return False
+
+
+def dedupe_trades_csv() -> dict:
+    """US-226: one-time, idempotent dedup of trades.csv by signal_id.
+
+    For duplicates, keep the authoritative row:
+      - "closed" is authoritative over "open" (a completed trade beats a
+        re-entry on the same signal_id);
+      - among equal status, keep the LAST row in file order (most recently
+        written, matching replay()/_dedupe_rows "last wins" semantics).
+
+    Unique rows are preserved exactly. Rows with empty signal_id are refused
+    (they cannot be resolved to an identity). Returns a summary dict and only
+    rewrites the file when it actually removed duplicates (idempotent).
+    """
+    rows = _read_all_rows()
+    before = len(rows)
+
+    auth: dict = {}       # signal_id -> authoritative row
+    order: list = []      # first-seen signal_id order (preserves file order)
+    dup_ids: set = set()
+
+    for r in rows:
+        sig = (r.get("signal_id") or "").strip()
+        if not sig:
+            raise ValueError(
+                "REFUSED: trades.csv contains a row with empty signal_id — "
+                "cannot resolve an identity for dedup (US-226)."
+            )
+        if sig not in auth:
+            auth[sig] = r
+            order.append(sig)
+            continue
+        dup_ids.add(sig)
+        prev = auth[sig]
+        # Closed is authoritative over open. Equal status -> latest (this row).
+        if prev.get("status") == "closed" and r.get("status") != "closed":
+            continue  # keep the already-closed row
+        auth[sig] = r
+
+    deduped = [auth[s] for s in order]
+    after = len(deduped)
+    removed = before - after
+
+    # Invariant: append-unique by signal_id now holds.
+    sigs = [(r.get("signal_id") or "").strip() for r in deduped]
+    assert len(sigs) == len(set(sigs)), "dedupe_trades_csv produced duplicate signal_ids"
+
+    if removed > 0:
+        # Deliberate, verified shrink: bypass the >20% shell for this one-time
+        # operation. The uniqueness guard in _write_all_rows still applies.
+        _write_all_rows(deduped, allow_shrink=True)
+
+    return {
+        "before": before,
+        "after": after,
+        "removed": removed,
+        "duplicate_signal_ids": len(dup_ids),
+    }
+
+
 def open_trade(trade_dict: dict) -> str:
     """
     Append a new open trade row. trade_dict should contain at least:
@@ -249,6 +341,16 @@ def open_trade(trade_dict: dict) -> str:
     row["trade_id"] = trade_id
     row["status"] = "open"
     row["entry_status"] = trade_dict.get("entry_status", "pending")
+
+    # US-226: append-unique by signal_id — refuse to open a signal_id that already
+    # exists. This is the root-cause guard: STR-Q re-detecting the same sweep
+    # across cron cycles (after a quick close) previously appended a duplicate.
+    signal_id = row.get("signal_id", "")
+    if _signal_id_exists(signal_id):
+        raise ValueError(
+            f"signal_id already exists: {signal_id} — refusing duplicate "
+            f"(append-unique by signal_id, US-226)"
+        )
 
     with open(LOG_PATH, "a", newline="") as f:
         csv.DictWriter(f, fieldnames=FIELDS).writerow(row)
@@ -393,5 +495,14 @@ def _test():
 if __name__ == "__main__":
     if "--test" in sys.argv:
         _test()
+    elif "--dedup" in sys.argv:
+        result = dedupe_trades_csv()
+        print("dedupe_trades_csv (US-226):")
+        print(f"  before: {result['before']} rows")
+        print(f"  after:  {result['after']} rows")
+        print(f"  removed: {result['removed']} rows "
+              f"({result['duplicate_signal_ids']} duplicate signal_ids)")
+        if result["removed"] == 0:
+            print("  (idempotent — trades.csv already append-unique by signal_id)")
     else:
         print(__doc__)
