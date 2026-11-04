@@ -134,6 +134,7 @@ This index tracks all epics and user stories for the HermesForge Trading System.
 | US-219 | EPIC-017 | Venue adapter interface (design/ADR; keep Hyperliquid wired, no live) | P1 | Human approval |
 | US-220 | EPIC-017 | Enforce model-tier routing (fix T3-labeled billing-at-T2 leak) | P0 | None |
 | US-221 | EPIC-017 | Route delegate_task subagents by profile tier (delegation.backends) | P1 | ADR-012 |
+| US-222 | EPIC-017 | Record-reverse-engineering builder + breaker harness | P1 | None |
 
 ---
 
@@ -193,7 +194,7 @@ These items are known but have not been promoted to user stories yet. They shoul
 - **Epics Done:** EPIC-007 (Strategy Validation), EPIC-010 (Auto Paper Trading)
 - **In Progress:** EPIC-001 (Foundation), EPIC-002 (Research), EPIC-005 (Forge Loop), EPIC-013 (Closed Loop)
 - **Backlog / Not Started:** EPIC-003, EPIC-004, EPIC-006, EPIC-008, EPIC-011, EPIC-012, EPIC-014, EPIC-016, EPIC-017
-- **Next Story Number:** US-222
+- **Next Story Number:** US-223
 - **Going-forward rule:** All new initiatives, bug fixes, and infrastructure work must be assigned a US-XXX number and tracked in this index before implementation begins.
 
 ---
