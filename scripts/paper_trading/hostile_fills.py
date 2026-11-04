@@ -361,6 +361,7 @@ def run(
         "records_written": 0,
         "errors": 0,
         "error_details": [],
+        "outlier_excluded": 0,
     }
 
     # US-225: load the authoritative ledger (one row per trade_id) and merge new
@@ -444,6 +445,7 @@ def run(
                 "hostile_fill_reason": hostile_entry["fill_reason"],
                 "paper_r": None,  # not exited yet in paper model either
                 "hostile_r": None,
+                "outlier_excluded": False,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             summary["pending_filled"] += 1
@@ -463,6 +465,7 @@ def run(
                 "hostile_fill_reason": hostile_entry["fill_reason"],
                 "paper_r": None,
                 "hostile_r": None,
+                "outlier_excluded": False,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             summary["pending_skipped"] += 1
@@ -536,6 +539,7 @@ def run(
                 "paper_r": paper_r,
                 "paper_r_uncosted": not paper_costed,
                 "hostile_r": None,
+                "outlier_excluded": False,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             if _merge_record(record, by_key, dry_run=dry_run):
@@ -555,12 +559,18 @@ def run(
 
         if exit_result["action"] == "closed":
             paper_r, paper_costed = _paper_r(trade, round_trip_bps=fee_source.get_round_trip_bps(asset_class))
+            # Degenerate check uses the WIDENED stop so scoreability matches the
+            # risk actually modeled (US-180 §2.4). Mirrors STR-Q exactly.
+            setup_risk_pct = abs(paper_entry - widened_stop) / paper_entry if paper_entry > 0 else 0.0
+            degenerate = setup_risk_pct < DEGENERATE_RISK_FLOOR
             hostile_r = _compute_r(
                 paper_entry=paper_entry,
                 paper_stop=widened_stop,
                 direction=trade["direction"],
                 hostile_entry_price=hostile_entry_price,
                 exit_price=exit_result["exit_price"])
+            if degenerate:
+                summary["outlier_excluded"] += 1
             record = {
                 "trade_id": trade["trade_id"],
                 "ticker": ticker,
@@ -578,6 +588,7 @@ def run(
                 "paper_r": paper_r,
                 "paper_r_uncosted": not paper_costed,
                 "hostile_r": round(hostile_r, 4),
+                "outlier_excluded": degenerate,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
             summary["entered_closed"] += 1
@@ -601,6 +612,7 @@ def run(
                 "paper_r": paper_r,
                 "paper_r_uncosted": not paper_costed,
                 "hostile_r": None,
+                "outlier_excluded": False,
                 "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             }
 
@@ -667,6 +679,7 @@ def main():
     print(f"  Hostile still open:   {summary['entered_open']}")
     print(f"  Records written:      {summary['records_written']}")
     print(f"  Errors:               {summary['errors']}")
+    print(f"  Outlier excluded:     {summary['outlier_excluded']}")
     for e in summary["error_details"][:10]:
         print(f"    ERROR: {e}")
     if summary.get("dry_run"):
