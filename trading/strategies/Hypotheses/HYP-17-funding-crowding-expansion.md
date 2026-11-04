@@ -10,8 +10,11 @@ expected_gross_edge_bps: claimed positive (crowding -> big move); measured, not 
 cost_hurdle_bps: 45 (single-leg 4x taker)
 data_dependencies: HL funding store (~400d, 35 coins) + HL 1d bars (~4y, 31 coins) + OKX mark proxy
 counterparty: the crowded side forced to unwind when positioning becomes extreme — their forced exit is the move.
+topic: general
+confidence: high
+has_quotes: false
+tags: []
 ---
-
 # HYP-17 — Crowding (extreme funding) predicts big moves (proxy for the coach's OI claim)
 
 ## Why a proxy

@@ -31,3 +31,6 @@ Before acting on an EN071 pivot-point long signal, define the initial protective
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

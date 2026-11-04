@@ -31,3 +31,6 @@ A trader should refuse entry on any pattern breakout occurring on light volume, 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-03-flag-pennant-breakout-volume-divergence-dictates-stop-tighte|Flag/Pennant Breakout Volume Divergence Dictates Stop Tightening]]
