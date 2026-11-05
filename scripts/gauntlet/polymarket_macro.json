@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-04T12:30:57.391264+00:00",
+  "updated": "2026-11-05T12:30:55.521210+00:00",
   "markets": [
     {
       "label": "Federal Reserve rate cut",
       "markets": [
         {
           "name": "Fed rate cut by...?",
-          "yes_pct": 8.6,
-          "no_pct": 91.5,
+          "yes_pct": 8.4,
+          "no_pct": 91.6,
           "volume": 8900.0
         },
         {
@@ -42,8 +42,8 @@
       "markets": [
         {
           "name": "Japan recession in 2026?",
-          "yes_pct": 9.0,
-          "no_pct": 91.0,
+          "yes_pct": 12.5,
+          "no_pct": 87.5,
           "volume": 4300.0
         },
         {
@@ -54,8 +54,8 @@
         },
         {
           "name": "US recession by end of 2026?",
-          "yes_pct": 5.5,
-          "no_pct": 94.5,
+          "yes_pct": 4.5,
+          "no_pct": 95.5,
           "volume": 2400000.0
         }
       ],
@@ -67,32 +67,32 @@
         {
           "name": "October Inflation US - Annual",
           "yes_pct": 1.4,
-          "no_pct": 98.6,
-          "volume": 3100.0
+          "no_pct": 98.7,
+          "volume": 3500.0
         },
         {
-          "name": "October Inflation China - Annual",
+          "name": "South Africa Annual Inflation 2026",
           "yes_pct": 0.4,
-          "no_pct": 99.7,
-          "volume": 3000.0
-        },
-        {
-          "name": "Mexico Annual Inflation 2026",
-          "yes_pct": 12.5,
-          "no_pct": 87.5,
-          "volume": 27300.0
+          "no_pct": 99.6,
+          "volume": 3800.0
         },
         {
           "name": "South Korea Annual Inflation 2026",
-          "yes_pct": 6.3,
-          "no_pct": 93.7,
-          "volume": 12900.0
+          "yes_pct": 7.0,
+          "no_pct": 93.0,
+          "volume": 13100.0
         },
         {
-          "name": "Core CPI YoY - October 2026",
-          "yes_pct": 90.5,
-          "no_pct": 9.5,
-          "volume": 15900.0
+          "name": "Canada Annual Inflation 2026",
+          "yes_pct": 16.6,
+          "no_pct": 83.4,
+          "volume": 20700.0
+        },
+        {
+          "name": "October Inflation China - Annual",
+          "yes_pct": 0.1,
+          "no_pct": 99.9,
+          "volume": 3100.0
         }
       ],
       "count": 5
@@ -101,41 +101,41 @@
       "label": "S&P 500 price",
       "markets": [
         {
-          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
-          "yes_pct": 85.0,
-          "no_pct": 15.0,
-          "volume": 212700.0
-        },
-        {
           "name": "What will S&P 500 (SPX) hit by end of December?",
-          "yes_pct": 7.0,
-          "no_pct": 93.0,
+          "yes_pct": 4.6,
+          "no_pct": 95.4,
           "volume": 9300.0
         },
         {
+          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
+          "yes_pct": 86.5,
+          "no_pct": 13.5,
+          "volume": 214800.0
+        },
+        {
           "name": "What will S&P 500 (SPX) close at end of 2026?",
-          "yes_pct": 21.5,
-          "no_pct": 78.5,
+          "yes_pct": 21.0,
+          "no_pct": 79.0,
           "volume": 3600.0
         },
         {
           "name": "Which companies added to S&P 500 in Q4 2026?",
-          "yes_pct": 26.5,
-          "no_pct": 73.5,
+          "yes_pct": 28.0,
+          "no_pct": 72.0,
           "volume": 2000.0
-        },
-        {
-          "name": "SpaceX IPO: Officially added to S&P 500 by...?",
-          "yes_pct": 50.0,
-          "no_pct": 50.0,
-          "volume": 0.0
         }
       ],
-      "count": 5
+      "count": 4
     },
     {
       "label": "Bitcoin price",
       "markets": [
+        {
+          "name": "Bitcoin price on November 4?",
+          "yes_pct": 0.0,
+          "no_pct": 100.0,
+          "volume": 44400.0
+        },
         {
           "name": "Bitcoin Price - July 15, 5PM ET",
           "yes_pct": 0.0,
@@ -149,22 +149,16 @@
           "volume": 146000.0
         },
         {
-          "name": "Bitcoin price on November 4?",
-          "yes_pct": 58.5,
-          "no_pct": 41.5,
-          "volume": 14300.0
-        },
-        {
-          "name": "Bitcoin price on November 3?",
-          "yes_pct": 0.0,
-          "no_pct": 100.0,
-          "volume": 29100.0
-        },
-        {
           "name": "Bitcoin price on November 5?",
-          "yes_pct": 39.5,
-          "no_pct": 60.5,
-          "volume": 181.0
+          "yes_pct": 43.5,
+          "no_pct": 56.5,
+          "volume": 7600.0
+        },
+        {
+          "name": "Bitcoin price on November 6?",
+          "yes_pct": 1.2,
+          "no_pct": 98.8,
+          "volume": 2900.0
         }
       ],
       "count": 5
@@ -210,8 +204,8 @@
       "markets": [
         {
           "name": "How low will 5-year Treasury yield get before 2027?",
-          "yes_pct": 17.5,
-          "no_pct": 82.5,
+          "yes_pct": 18.1,
+          "no_pct": 82.0,
           "volume": 26600.0
         },
         {
@@ -221,22 +215,22 @@
           "volume": 165800.0
         },
         {
-          "name": "How low will 10-year Treasury yield get before 2027?",
-          "yes_pct": 2.5,
-          "no_pct": 97.5,
-          "volume": 41600.0
+          "name": "How low will 30-year Treasury yield get before 2027?",
+          "yes_pct": 27.5,
+          "no_pct": 72.5,
+          "volume": 31700.0
         },
         {
-          "name": "How high will 5-year Treasury yield go before 2027?",
-          "yes_pct": 100.0,
-          "no_pct": 0.0,
-          "volume": 2700.0
+          "name": "How low will 10-year Treasury yield get in November?",
+          "yes_pct": 40.0,
+          "no_pct": 60.0,
+          "volume": 124.0
         },
         {
           "name": "How high will 2-year Treasury yield go before 2027?",
-          "yes_pct": 8.0,
-          "no_pct": 92.0,
-          "volume": 3400.0
+          "yes_pct": 3.6,
+          "no_pct": 96.4,
+          "volume": 4600.0
         }
       ],
       "count": 5
