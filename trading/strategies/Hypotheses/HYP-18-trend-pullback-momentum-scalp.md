@@ -10,8 +10,11 @@ expected_gross_edge_bps: claimed high-probability; measured, not assumed
 cost_hurdle_bps: 45 (single-leg 4x taker)
 data_dependencies: HL 5m bars (persistent store, US-197)
 counterparty: NONE IDENTIFIABLE — a trend+pullback timing signal has no structural loser on the other side (the spread-earning maker is not structurally losing to a discretionary scalper). This is itself the reason for the negative prior.
+topic: general
+confidence: high
+has_quotes: false
+tags: []
 ---
-
 # HYP-18 — Trend + pullback + momentum scalping (M5)
 
 ## Provenance & prior
