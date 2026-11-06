@@ -31,3 +31,6 @@ Traders should treat every pivot-point entry as an exit-management trigger: plac
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[RG023-pf-trailing-stop-adjustment|P&F Trailing Stop Adjustment]]

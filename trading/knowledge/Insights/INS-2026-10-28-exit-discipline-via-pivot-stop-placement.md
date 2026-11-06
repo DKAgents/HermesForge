@@ -33,4 +33,5 @@ When a pivot-point buy signal fires per EN071, immediately set the stop loss at 
 **adds_condition** — Actionability score: 4/5
 
 ## Related Notes
+- [[EN071-pivot-point-buy-signal-rules|Pivot Point Buy Signal Rules]]
 - [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

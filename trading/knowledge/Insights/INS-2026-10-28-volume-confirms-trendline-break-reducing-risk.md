@@ -31,3 +31,6 @@ When a trendline is broken, do not enter until the two-day rule is satisfied AND
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[R003-volume-confirms-the-trend|Volume Confirms the Trend]]

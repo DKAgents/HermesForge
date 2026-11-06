@@ -31,3 +31,6 @@ On a breakout above resistance, if volume is below average or declining, treat i
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[N013-volume-as-a-filter-for-false-breakouts|Volume as a Filter for False Breakouts]]

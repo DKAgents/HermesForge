@@ -31,3 +31,6 @@ When entering a trade based on a support/resistance flip, place your stop-loss j
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

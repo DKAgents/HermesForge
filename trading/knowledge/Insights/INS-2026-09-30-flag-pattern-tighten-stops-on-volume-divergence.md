@@ -31,3 +31,6 @@ Traders should tighten stop-losses when volume diverges from price in a trend, a
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N013-volume-as-a-filter-for-false-breakouts|Volume as a Filter for False Breakouts]]

@@ -31,3 +31,6 @@ When shorting into a downtrend that has just broken prior support, set the stop-
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

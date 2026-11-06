@@ -31,3 +31,6 @@ A trader should determine the weekly trend using a 40-week moving average or wee
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-04-weekly-price-channel-as-filter-for-daily-macd-stoch|Weekly Price Channel as Filter for Daily MACD/Stoch]]

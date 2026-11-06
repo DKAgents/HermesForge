@@ -33,4 +33,5 @@ When ADX is rising, take long entries on Keltner Channel pullbacks that retrace 
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-10-24-adx-filter-for-keltner-channel-pullback-entries|ADX filter for Keltner channel pullback entries]]

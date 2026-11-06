@@ -30,3 +30,6 @@ Before each entry, mark the nearest S/R level from these rules—old support abo
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

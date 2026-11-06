@@ -31,3 +31,6 @@ When trading flag/pennant patterns, only act on breakouts confirmed by heavy vol
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[N013-volume-as-a-filter-for-false-breakouts|Volume as a Filter for False Breakouts]]

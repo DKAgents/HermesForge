@@ -31,3 +31,6 @@ Check ADX slope first: if ADX is rising, enter on pullbacks to the Keltner middl
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

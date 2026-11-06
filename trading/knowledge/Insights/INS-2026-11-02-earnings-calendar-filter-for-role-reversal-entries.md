@@ -31,3 +31,6 @@ Before taking any role-reversal trade (support-turned-resistance or speedline br
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

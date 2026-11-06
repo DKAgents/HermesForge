@@ -31,3 +31,6 @@ Before trading an MA crossover or Keltner breakout, check ADX; if ADX is rising/
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

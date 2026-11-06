@@ -30,3 +30,6 @@ In a downtrend, wait for a rally into a gap that coincides with a former support
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

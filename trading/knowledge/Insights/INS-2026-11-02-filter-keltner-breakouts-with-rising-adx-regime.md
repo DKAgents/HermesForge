@@ -31,3 +31,6 @@ Use rising ADX as a regime filter before taking Keltner Channel breakout signals
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

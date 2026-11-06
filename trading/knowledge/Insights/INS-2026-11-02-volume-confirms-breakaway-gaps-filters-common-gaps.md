@@ -31,3 +31,6 @@ When a gap occurs at a consolidation boundary, check volume before acting: if vo
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N150-price-gaps-types|Price Gaps Types]]

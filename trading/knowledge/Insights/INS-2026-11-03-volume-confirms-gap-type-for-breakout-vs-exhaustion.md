@@ -31,3 +31,6 @@ When a gap occurs, compare its volume to recent averages. If volume is significa
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N150-price-gaps-types|Price Gaps Types]]

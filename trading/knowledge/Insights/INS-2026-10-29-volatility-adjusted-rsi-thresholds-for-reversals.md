@@ -30,3 +30,6 @@ A trader should replace fixed RSI overbought/oversold levels with volatility-nor
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C124-bollinger-band-width-as-volatility-measure|Bollinger Band Width as Volatility Measure]]

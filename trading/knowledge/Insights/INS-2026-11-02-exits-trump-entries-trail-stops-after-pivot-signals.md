@@ -33,4 +33,5 @@ Before acting on an EN071 pivot-point long signal, define the initial protective
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[RG020-protective-sell-stops-on-point-and-figure-charts|Protective Sell Stops on Point and Figure Charts]]
 - [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]

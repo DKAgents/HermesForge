@@ -31,3 +31,6 @@ If a flag or pennant breakout lacks volume confirmation, tighten stops to breake
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[N013-volume-as-a-filter-for-false-breakouts|Volume as a Filter for False Breakouts]]

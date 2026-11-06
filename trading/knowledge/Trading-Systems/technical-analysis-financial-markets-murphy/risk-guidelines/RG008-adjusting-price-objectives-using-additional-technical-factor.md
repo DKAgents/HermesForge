@@ -27,6 +27,7 @@ Price objectives from pattern measurements should be adjusted based on other tec
 > "The most skillful technical analysts are those who learn to blend all of those tools together properly." — John J. Murphy
 
 ## Related Notes
+- [[INS-2026-11-05-gap-and-prior-support-levels-determine-stop-distance-and-siz|Gap and Prior Support Levels Determine Stop Distance and Size]]
 - [[C336-support-level|Support Level]]
 - [[C334-resistance-level|Resistance Level]]
 

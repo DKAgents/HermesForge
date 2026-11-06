@@ -33,6 +33,7 @@ When trading a flag or pennant continuation pattern, monitor volume trend; if vo
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[N013-volume-as-a-filter-for-false-breakouts|Volume as a Filter for False Breakouts]]
 - [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]
 - [[INS-2026-10-07-volume-divergence-tightens-stop-on-flag-pennant-trades|Volume divergence tightens stop on flag/pennant trades]]
 - [[N136-pennant-continuation-pattern|Pennant Continuation Pattern]]

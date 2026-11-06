@@ -32,4 +32,5 @@ In an uptrend, only enter on pullbacks that reach the Fibonacci 38.2%-61.8% retr
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]
 - [[INS-2026-10-15-fibonacci-40-60-retracement-zone-for-pullback-entries|Fibonacci 40-60% retracement zone for pullback entries]]

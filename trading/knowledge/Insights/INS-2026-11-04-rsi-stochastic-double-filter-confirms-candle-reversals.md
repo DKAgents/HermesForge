@@ -31,3 +31,7 @@ Before acting on a bullish reversal candle, require RSI below 30; for a bearish 
 ## Connection Type
 
 **creates_filter** — Actionability score: 5/5
+
+## Related Notes
+- [[N083-bullish-reversal-candle-pattern-library|Bullish Reversal Candle Pattern Library]]
+- [[N084-bearish-reversal-candle-pattern-library|Bearish Reversal Candle Pattern Library]]

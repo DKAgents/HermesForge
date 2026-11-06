@@ -31,3 +31,7 @@ Only trade Keltner Channel pullbacks when ADX is rising, and use the channel ban
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-24-adx-filter-for-keltner-channel-pullback-entries|ADX filter for Keltner channel pullback entries]]
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

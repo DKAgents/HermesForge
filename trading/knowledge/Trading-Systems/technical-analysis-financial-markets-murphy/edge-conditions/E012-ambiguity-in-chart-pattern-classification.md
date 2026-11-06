@@ -25,7 +25,7 @@ Chart patterns do not always behave as expected. Triangles are usually continuat
 > "The treatment of all chart patterns deals of necessity with general tendencies as opposed to rigid rules. There are always exceptions." — John J. Murphy
 
 ## Related Notes
-_None identified_
+- [[STR-chart-pattern-class|Chart-Pattern Class (16 strategies) — Post-Mortem]]
 
 ---
 _Source: Technical Analysis of the Financial Markets — Unknown_

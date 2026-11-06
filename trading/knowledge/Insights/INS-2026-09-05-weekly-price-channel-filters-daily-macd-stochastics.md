@@ -33,4 +33,5 @@ Define the weekly trend with a price channel (e.g., 4-week high-low breakout) an
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-11-04-weekly-price-channel-as-filter-for-daily-macd-stoch|Weekly Price Channel as Filter for Daily MACD/Stoch]]
 - [[C130-the-weekly-rule-price-channel-as-trend-following-alternative|The Weekly Rule (Price Channel) as Trend-Following Alternative]]
