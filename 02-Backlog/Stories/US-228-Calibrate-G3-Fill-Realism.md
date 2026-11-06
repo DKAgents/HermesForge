@@ -33,8 +33,12 @@ data, NOT to loosen the gates.
 
 L2 book history lives in `s3://hyperliquid-archive/market_data/{date}/{hour}/
 l2Book/{coin}.lz4` (currently SCP-blocked from this AWS account — see session
-notes). Unblocking options: a non-AWS mirror / HF L2 dataset, or forward L2
-accumulation. Flag if none is available; do NOT fabricate fill data.
+notes). NON-AWS PATH FOUND (2026-11-06): Ironflow API `/v1/trades` + `/v1/fills`
+expose tick-level fills with maker/taker role + fee + execution price, ~12 months
+rolling — actual execution data is a MORE direct calibration source than book
+depth (no "walk the book" modeling needed). Kaggle `datastore90/hyperliquid-
+historical-data` also carries L2 snapshots. Prefer Ironflow fills; flag if
+unavailable. Do NOT fabricate fill data.
 
 ## Acceptance Criteria
 
