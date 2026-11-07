@@ -513,7 +513,7 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
         closed_rows.append(r)
 
     # PNL lookback windows: 1 week and 1 month
-    now = datetime.datetime.utcnow()
+    now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
     week_cutoff = now - datetime.timedelta(days=7)
     month_cutoff = now - datetime.timedelta(days=30)
     week_closed = []
