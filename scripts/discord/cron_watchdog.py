@@ -92,7 +92,8 @@ def _post_discord(content: str) -> bool:
         f"https://discord.com/api/v10/channels/{ALERT_CHANNEL_ID}/messages",
         data=payload,
         headers={"Authorization": f"Bot {token}",
-                 "Content-Type": "application/json"},
+                 "Content-Type": "application/json",
+                 "User-Agent": "HermesForge/1.0 (cron_watchdog)"},
     )
     try:
         with urllib.request.urlopen(req, timeout=10):
