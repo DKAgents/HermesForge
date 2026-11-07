@@ -555,18 +555,54 @@ def main() -> int:
               "venue": "deribit", "universe": CURRENCIES, "leverage": "none",
               "live": "off", "no_lookahead": True,
               "per_currency": {}}
+
+    tail = {}
     for c in CURRENCIES:
+        r = per_currency[c]
         result["per_currency"][c] = {}
         for lbl in ["weekly", "monthly"]:
-            r = per_currency[c][lbl]
+            rr = r[lbl]
             result["per_currency"][c][lbl] = {
-                "n_all": r["n_all"], "n_gated": r["n_gated"],
-                "vrp_gross_all": r["vrp_gross_all"],
-                "vrp_gross_gated": r["vrp_gross_gated"],
-                "vrp_by_year": r["vrp_by_year"],
-                "tiers": {t: {k: v for k, v in r["tiers"][t].items()}
-                          if False else r["tiers"][t] for t in r["tiers"]},
+                "n_all": rr["n_all"], "n_gated": rr["n_gated"],
+                "vrp_gross_all": rr["vrp_gross_all"],
+                "vrp_gross_gated": rr["vrp_gross_gated"],
+                "vrp_by_year": rr["vrp_by_year"],
+                "vrp_gated_by_year": rr["vrp_gated_by_year"],
+                "tiers": rr["tiers"],
             }
+        # tail / conditional matrix on the weekly (primary) horizon
+        tr = r["weekly"]["trades"].sort_values("entry_day")
+        dvol = build_dvol_series(load_dvol_daily(c))
+        years = (tr["entry_day"].max() - tr["entry_day"].min()) / 86_400_000 / 365.0
+        gated = (tr["calm"] == True).to_numpy()
+        tail[c] = {"n": int(len(tr)), "years": round(years, 2),
+                   "conditional_matrix": conditional_matrix(tr, dvol, 5)}
+        for tl in ["maker", "taker", "taker_stress"]:
+            bps = net_pnl_bps(tr, tl)
+            tot = float(np.nansum(bps)); tot_g = float(np.nansum(bps[gated]))
+            cum = np.cumsum(np.nan_to_num(bps))
+            worst = int(np.argmin(bps))
+            sharpe = _sharpe(bps[bps == bps], per_year=52.0)  # ~52 weekly trades/yr
+            tail[c][tl] = {
+                "total_bps": round(tot, 1), "annual_bps": round(tot / years, 1),
+                "gated_total_bps": round(tot_g, 1),
+                "gated_annual_bps": round(tot_g / years, 1),
+                "max_dd_equity_pct": round(_max_drawdown(cum) * 100, 1),
+                "worst_trade_bps": round(float(bps[worst]), 1),
+                "worst_trade_day": int(tr["entry_day"].iloc[worst]),
+                "sharpe_annualized": round(sharpe, 3),
+            }
+    result["tail"] = tail
+    result["verdict"] = (
+        "NOT HARVESTABLE as pre-registered. BTC weekly VRP is thin-positive "
+        "(+2.3pp ungated) but (a) the pre-registered vol-of-vol gate (enter low/"
+        "decaying DVOL) is EMPIRICALLY BACKWARDS — net-R is positive only in "
+        "ELEVATED DVOL and negative in calm DVOL on both BTC and ETH; (b) a single "
+        "vol-spike week gives back >1yr of premium (BTC worst trade ~-17.5% "
+        "notional vs ~+15.7%/yr ungated maker); (c) ETH is negative in every "
+        "config; (d) the VRP decays (+7.4 -> +3.1 -> +0.5pp by year). Fails G0 "
+        "cost-first + the tail test; not diversifying vs carry (both eat the "
+        "same vol-spike tail).")
 
     print("\n=== VERDICT (summary of gated net-R clears cost?) ===")
     verdict_lines = []
