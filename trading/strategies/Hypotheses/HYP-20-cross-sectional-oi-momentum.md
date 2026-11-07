@@ -12,8 +12,9 @@ data_dependencies: HF OI dataset (~/.hermes/market_data/hl_oi_hf/, hourly OI+mar
 counterparty: cross-sectional — the relative-value repricing of capital flows across the perp complex; no single named loser (diversified relative-value)
 topic: general
 confidence: medium
+has_quotes: false
+tags: []
 ---
-
 # HYP-20 — Cross-sectional positioning momentum (OI, + funding)
 
 ## Motivation (why this, why now)

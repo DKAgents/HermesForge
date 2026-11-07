@@ -10,8 +10,11 @@ expected_gross_edge_bps: claimed positive (LOW/HD anecdote); measured, not assum
 cost_hurdle_bps: 45 (single-leg 4x taker)
 data_dependencies: HL 1d bars (~4y, 31 coins)
 counterparty: NONE IDENTIFIABLE — a mean-reversion oscillator trader has no structural loser on the other side; the spread-earning maker is not structurally losing to a discretionary timing rule.
+topic: general
+confidence: high
+has_quotes: false
+tags: []
 ---
-
 # HYP-19 — EUFEARIA-pro mean-reversion oscillator extremes (daily)
 
 ## Source & decode

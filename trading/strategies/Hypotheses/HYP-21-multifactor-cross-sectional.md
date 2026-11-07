@@ -12,8 +12,9 @@ data_dependencies: HF OI dataset (~/.hermes/market_data/hl_oi_hf/); funding stor
 counterparty: cross-sectional relative-value repricing across the perp complex
 topic: general
 confidence: medium
+has_quotes: false
+tags: []
 ---
-
 # HYP-21 — Multi-factor cross-sectional positioning composite
 
 ## Motivation

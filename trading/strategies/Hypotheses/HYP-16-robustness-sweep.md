@@ -4,8 +4,12 @@ hypothesis_id: HYP-16
 purpose: robustness sweep (confirm-or-refute the null, NOT a hunt for success)
 committed_before_run: true
 date: 2026-11-06
+topic: general
+confidence: high
+has_quotes: false
+tags: []
+source: HermesForge Strategies
 ---
-
 # HYP-16 robustness sweep (pre-registered)
 
 ## Purpose
