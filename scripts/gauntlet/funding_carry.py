@@ -151,6 +151,40 @@ def cost_clears(mean_apr: float, cost_bps: float = CARRY_ROUND_TRIP_BPS,
     return mean_apr * (hold_hours / HOURS_PER_YEAR) >= cost_bps / 1e4
 
 
+# ── Delta-neutral sustained-funding gate (US-229; HYP-28/29 pre-registered) ──
+def delta_neutral_gate(series: pd.DataFrame,
+                       window: int = FUNDING_WINDOW_HOURS) -> dict:
+    """EXACT HYP-28/29 delta-neutral entry gate (short-perp / long-spot).
+
+    Entry requires BOTH, over the trailing `window` HOURLY observations:
+      G1  rolling mean funding APR >= FUNDING_SUSTAIN_FLOOR_APR (8%/yr)
+      G2  >= FUNDING_POSITIVE_FRACTION (75%) of window hours strictly positive
+
+    This is the PRE-REGISTERED HYP-28 gate (mean APR >= 8% AND >= 75% hours
+    positive) — deliberately does NOT apply the directional-form S3/S4 hurdles
+    (current-sign and cost_clears); the MAKER-ONLY cost is realized at PnL time,
+    not at the gate. Exit is when this gate CLEARS (returns gated=False).
+
+    Returns {gated, mean_apr (signed), positive_fraction, reasons}.
+    """
+    reasons: list[str] = []
+    if series is None or len(series) < window:
+        return {"gated": False, "mean_apr": 0.0, "positive_fraction": 0.0,
+                "reasons": [f"insufficient history: need >= {window} hourly rows"]}
+    win = series["funding_rate"].astype(float).iloc[-window:]
+    mean_apr = hourly_to_apr(float(win.mean()))
+    positive_fraction = float((win > 0).mean())
+    g1 = mean_apr >= FUNDING_SUSTAIN_FLOOR_APR
+    g2 = positive_fraction >= FUNDING_POSITIVE_FRACTION
+    if not g1:
+        reasons.append(f"G1 mean APR {mean_apr:.4f} < {FUNDING_SUSTAIN_FLOOR_APR:.2f}")
+    if not g2:
+        reasons.append(f"G2 positive fraction {positive_fraction:.2f} "
+                       f"< {FUNDING_POSITIVE_FRACTION:.2f}")
+    return {"gated": g1 and g2, "mean_apr": mean_apr,
+            "positive_fraction": positive_fraction, "reasons": reasons}
+
+
 # ── Directional risk model (§1.4) ────────────────────────────────────────────
 DIRECTIONAL_STOP_BPS = 200.0   # naked-short/-long hard stop distance (2%) [tunable]
 DIRECTIONAL_LAMBDA = 0.5       # funding must exceed λ × realized vol       [tunable]
@@ -306,15 +340,23 @@ def parse_spot_snapshot(spot_meta: dict, spot_ctxs: list[dict]) -> dict:
 
 # ── Execution-form dispatch (§1.3) ───────────────────────────────────────────
 def dispatch_execution_form(funding_sign: float, spot: dict | None = None,
-                            in_universe: bool = True, delisted: bool = False) -> str:
+                            in_universe: bool = True, delisted: bool = False,
+                            coin: str | None = None) -> str:
     """Returns one of 'skip' / 'delta_neutral' / 'directional_short' /
     'directional_long'.
 
-    funding_sign>0 & spot available (and ENABLE_DELTA_NEUTRAL) -> delta_neutral
-    funding_sign>0 & no spot -> directional_short   (naked short perp)
+    funding_sign>0 & spot available & coin in DELTA_NEUTRAL_UNIVERSE
+        (and ENABLE_DELTA_NEUTRAL) -> delta_neutral
+    funding_sign>0 & (no spot / non-major) -> directional_short (naked short perp)
     funding_sign<0            -> directional_long   (naked long perp; no spot
                                                       short exists for majors)
     funding_sign==0 / delisted -> skip
+
+    US-229: delta_neutral is dispatched ONLY for the liquid-spot majors
+    (DELTA_NEUTRAL_UNIVERSE = BTC/ETH/SOL). `coin` is the canonical perp name;
+    when omitted (backward-compatible callers), delta_neutral is never
+    dispatched (coin not a major) — preserving the directional short-perp form
+    as the load-bearing construction for the full universe.
 
     `in_universe` is accepted for spec-fidelity but is intentionally UNUSED —
     the full universe is every non-delisted perp, so in-universe restriction no
@@ -324,7 +366,8 @@ def dispatch_execution_form(funding_sign: float, spot: dict | None = None,
     if delisted:
         return "skip"
     if funding_sign > 0:
-        if ENABLE_DELTA_NEUTRAL and isinstance(spot, dict) and spot.get("available"):
+        if (ENABLE_DELTA_NEUTRAL and coin in DELTA_NEUTRAL_UNIVERSE
+                and isinstance(spot, dict) and spot.get("available")):
             return "delta_neutral"
         return "directional_short"
     if funding_sign < 0:
@@ -339,14 +382,42 @@ GROSS_NOTIONAL_CAP = 1.0      # notional <= 1× capital (NO leverage)  [F2 GATED
 OI_CAPACITY_FRAC = 0.02       # notional <= 2% of coin open interest [unchanged]
 DELTA_CAP = 0.05              # |net delta|/notional <= 5% (else ineligible) [kept]
 
-# Delta-neutral GATING (principal-locked F2): the delta-neutral form (long spot/
-# short perp) is BUILT but GATED OFF by default. NO leverage (2× notional from
-# the original spec §3.3 F2) is enabled until the DIRECTIONAL form proves
-# profitable in paper through the G3 gate. The directional short-perp is the
-# LOAD-BEARING form (1× notional, no leverage).
-ENABLE_DELTA_NEUTRAL = False     # flip ONLY after G3 proof of the directional form
-DN_GROSS_NOTIONAL_CAP = 1.0      # delta-neutral cap when enabled = 1× (still no
-                                 # leverage; 2× is a later, separately-signed risk)
+# Delta-neutral ENABLING (US-229): the delta-neutral form (long spot / short
+# perp) is now ENABLED for the liquid-spot majors only, after HYP-28 (~15-21%
+# unlevered APR, funding-true) and HYP-29 (survives G3 fill-realism at MAKER
+# fills — ~10-12% conservative — with ~$24.5M capacity). PAPER-FORWARD ONLY:
+# LIVE_TRADING_ENABLED stays OFF; no promotion. MAKER-ONLY (binding): taker is
+# decisively net-negative, so a taker fill must be IMPOSSIBLE, not discouraged.
+ENABLE_DELTA_NEUTRAL = True
+DN_GROSS_NOTIONAL_CAP = 1.0      # delta-neutral cap = 1× (NO leverage; 2× is a
+                                 # later, separately-signed risk)
+# Liquid-spot majors ONLY — the HYP-28/29 universe. Delta-neutral is dispatched
+# for these coins and NOTHING else (dispatch_execution_form enforces membership).
+DELTA_NEUTRAL_UNIVERSE = ("BTC", "ETH", "SOL")
+
+# ── MAKER-ONLY execution guard (US-229, binding) ────────────────────────────
+EXECUTION_MAKER = "maker"
+EXECUTION_TAKER = "taker"
+_EXECUTION_TYPES = (EXECUTION_MAKER, EXECUTION_TAKER)
+
+
+def assert_maker_only(execution_type: str, execution_form: str) -> None:
+    """Hard guard: the delta-neutral form may ONLY execute as maker/post-only.
+
+    HYP-29 established taker execution is decisively net-negative (−7% to −14%
+    APR), so a taker fill on either leg must be IMPOSSIBLE — this RAISES
+    (fail-closed) on any non-maker request, rather than merely discouraging it.
+    """
+    if execution_type not in _EXECUTION_TYPES:
+        raise ValueError(
+            f"REFUSED: unknown execution_type={execution_type!r} — must be "
+            f"one of {_EXECUTION_TYPES}")
+    if execution_form == "delta_neutral" and execution_type != EXECUTION_MAKER:
+        raise ValueError(
+            "REFUSED: delta-neutral funding carry is MAKER-ONLY (US-229). "
+            f"execution_type={execution_type!r} — BOTH legs must be post-only/"
+            "maker; a taker fill is impossible by construction (HYP-29: taker "
+            "is decisively net-negative).")
 
 
 def gross_cap(capital: float, execution_form: str) -> float:
@@ -559,7 +630,7 @@ def simulate_carry(funding: pd.DataFrame, basis_real: pd.DataFrame | None = None
             if direction is None:
                 continue
 
-            form = dispatch_execution_form(float(direction), spot)
+            form = dispatch_execution_form(float(direction), spot, coin=coin)
             if form == "skip":
                 continue
 

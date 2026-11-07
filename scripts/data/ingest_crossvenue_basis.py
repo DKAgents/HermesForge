@@ -31,6 +31,7 @@ import requests
 import basis_store
 import hl_funding_store
 import hl_assetctx_store
+import spot_basis_store
 
 _THIS_DIR = pathlib.Path(__file__).resolve().parent
 if str(_THIS_DIR) not in sys.path:
@@ -157,6 +158,17 @@ def _latest_hl_mark(coin: str) -> float | None:
         return None
 
 
+def _latest_hl_oracle(coin: str) -> float | None:
+    """Latest HL perp oracle price (assetCtxs oraclePx) — the spot-basis oracle."""
+    df = hl_assetctx_store.read_basis(coin)
+    if df.empty or df["oracle_px"].iloc[-1] is None:
+        return None
+    try:
+        return float(df["oracle_px"].iloc[-1])
+    except (IndexError, ValueError):
+        return None
+
+
 def ingest_coin(conn, coin: str, inst_id: str, dry_run: bool) -> dict:
     # 1. OKX funding backfill / incremental
     okf_last = basis_store.last_ts(conn, "okx_funding", inst_id)
@@ -204,6 +216,19 @@ def ingest_coin(conn, coin: str, inst_id: str, dry_run: bool) -> dict:
     new_basis = basis_store.append_basis(
         conn, [basis_row]) if basis_row else 0
 
+    # US-229 spot-basis accumulation: real OKX last vs HL oracle (the UNMEASURED
+    # hedge input). Accumulate going forward so the delta-neutral hedge stops
+    # being proxied by the oracle over the paper-forward window. spot_basis_bps
+    # is COMPUTED inside the store (never caller-supplied, never silently
+    # credited as a fill).
+    spot_row = None
+    if ticker is not None and ticker.get("last") is not None:
+        oracle = _latest_hl_oracle(coin)
+        if oracle is not None:
+            spot_row = {"coin": coin, "time": ticker["ts"],
+                        "spot_px": ticker["last"], "oracle_px": oracle}
+    new_spot = spot_basis_store.append_spot_basis(conn, [spot_row]) if spot_row else 0
+
     iso = datetime.now(timezone.utc).isoformat()
     if funding_rows:
         basis_store.upsert_state(conn, "okx_funding", inst_id,
@@ -215,7 +240,8 @@ def ingest_coin(conn, coin: str, inst_id: str, dry_run: bool) -> dict:
 
     return {"coin": coin, "ok": True, "new_funding": new_funding,
             "new_ticker": new_ticker, "new_basis": new_basis,
-            "basis_computed": basis_row is not None}
+            "new_spot": new_spot, "basis_computed": basis_row is not None,
+            "spot_computed": spot_row is not None}
 
 
 def main() -> int:
@@ -250,7 +276,8 @@ def main() -> int:
             else:
                 print(f"  {coin}: new_funding={res['new_funding']}, "
                       f"new_ticker={res['new_ticker']}, "
-                      f"new_basis={res['new_basis']}")
+                      f"new_basis={res['new_basis']}, "
+                      f"new_spot={res['new_spot']}")
             if i < len(pairs) - 1:
                 time.sleep(SLEEP_BETWEEN_COINS)
     finally:

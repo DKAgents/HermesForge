@@ -110,14 +110,54 @@ def test_directional_hurdle_and_gate():
     assert g["hurdle_apr"] == 0.25 and g["reason"]
 
 
-# ── dispatch (§1.3) ──────────────────────────────────────────────────────────
+# ── dispatch (§1.3 / US-229) ─────────────────────────────────────────────────
 def test_dispatch_execution_form():
     assert fc.dispatch_execution_form(0.01) == "directional_short"
     assert fc.dispatch_execution_form(-0.01) == "directional_long"
     assert fc.dispatch_execution_form(0.0) == "skip"
     assert fc.dispatch_execution_form(0.01, delisted=True) == "skip"
-    # spot available does NOT flip to delta_neutral while gated (default off).
+    # No coin -> not a liquid-spot major -> directional_short (never delta-neutral).
     assert fc.dispatch_execution_form(0.01, {"available": True}) == "directional_short"
+    # US-229: delta_neutral is ENABLED but ONLY for the liquid-spot majors.
+    assert fc.ENABLE_DELTA_NEUTRAL is True
+    assert fc.dispatch_execution_form(0.01, {"available": True}, coin="BTC") == "delta_neutral"
+    assert fc.dispatch_execution_form(0.01, {"available": True}, coin="ETH") == "delta_neutral"
+    assert fc.dispatch_execution_form(0.01, {"available": True}, coin="SOL") == "delta_neutral"
+    # A non-major with liquid spot is NOT dispatched delta-neutral.
+    assert fc.dispatch_execution_form(0.01, {"available": True}, coin="DOGE") == "directional_short"
+    # A major WITHOUT spot falls back to directional_short.
+    assert fc.dispatch_execution_form(0.01, {"available": False}, coin="BTC") == "directional_short"
+
+
+def test_maker_only_guard():
+    # maker allowed for delta-neutral.
+    fc.assert_maker_only(fc.EXECUTION_MAKER, "delta_neutral")
+    # taker on delta-neutral -> hard refusal (fail-closed).
+    for bad in (fc.EXECUTION_TAKER, "post_only", ""):
+        try:
+            fc.assert_maker_only(bad, "delta_neutral")
+            assert False, f"should refuse execution_type={bad!r}"
+        except ValueError as e:
+            assert "MAKER-ONLY" in str(e) or "unknown execution_type" in str(e)
+    # directional forms are not maker-restricted by this guard.
+    fc.assert_maker_only(fc.EXECUTION_MAKER, "directional_short")
+
+
+def test_delta_neutral_gate():
+    hourly = fc.apr_to_hourly(0.13)
+    g = fc.delta_neutral_gate(_series([hourly] * 24))
+    assert g["gated"] is True
+    assert g["positive_fraction"] == 1.0
+    # mean below the 8% floor -> not gated.
+    low = fc.apr_to_hourly(0.05)
+    assert fc.delta_neutral_gate(_series([low] * 24))["gated"] is False
+    # high mean but <75% positive -> not gated.
+    mixed = [fc.apr_to_hourly(0.40)] * 17 + [0.0] * 7
+    gm = fc.delta_neutral_gate(_series(mixed))
+    assert gm["gated"] is False
+    assert gm["positive_fraction"] < fc.FUNDING_POSITIVE_FRACTION
+    # insufficient history -> not gated.
+    assert fc.delta_neutral_gate(_series([hourly] * 5))["gated"] is False
 
 
 # ── spot resolver (§1.2) ─────────────────────────────────────────────────────
@@ -237,24 +277,20 @@ def test_simulate_carry_directional_stop_does_not_fire_without_move():
 def test_simulate_carry_real_basis_kill_fires_not_premium():
     # Real mark-oracle basis widens +60bp from entry -> basis_widen fires; the
     # premium column (now ignored) stays flat -> proves the call site is re-sourced.
+    # US-229: delta_neutral is ENABLED by default but dispatched only for the
+    # liquid-spot majors -> the coin MUST be a major (params["coin"]="BTC").
     hourly = fc.apr_to_hourly(0.30)
-    # Enable the delta-neutral form for this test via an explicit monkeypatch of
-    # the (default-off) flag, so the basis branch is exercised.
-    old = fc.ENABLE_DELTA_NEUTRAL
-    fc.ENABLE_DELTA_NEUTRAL = True
-    try:
-        spot = {"available": True, "spot_name": "UBTC"}
-        rates = [hourly] * 60
-        times = list(range(60))
-        # basis_bps widens from 0 -> +60bp at t=30; premium stays 0 throughout.
-        basis_bps = [0.0] * 30 + [60.0] * 30
-        basis_real = pd.DataFrame({"time": times, "mark_px": [100.0] * 60,
-                                   "oracle_px": [100.0] * 60,
-                                   "basis_bps": basis_bps})
-        funding = _series(rates, [0.0] * 60)
-        eps = fc.simulate_carry(funding, basis_real=basis_real, spot=spot)
-    finally:
-        fc.ENABLE_DELTA_NEUTRAL = old
+    spot = {"available": True, "spot_name": "UBTC"}
+    rates = [hourly] * 60
+    times = list(range(60))
+    # basis_bps widens from 0 -> +60bp at t=30; premium stays 0 throughout.
+    basis_bps = [0.0] * 30 + [60.0] * 30
+    basis_real = pd.DataFrame({"time": times, "mark_px": [100.0] * 60,
+                               "oracle_px": [100.0] * 60,
+                               "basis_bps": basis_bps})
+    funding = _series(rates, [0.0] * 60)
+    eps = fc.simulate_carry(funding, basis_real=basis_real, spot=spot,
+                            params={"coin": "BTC"})
     assert not eps.empty
     assert eps["execution_form"].iloc[-1] == "delta_neutral"
     assert "basis_widen" in eps["exit_reason"].tolist()
