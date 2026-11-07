@@ -413,6 +413,77 @@ def _simulate_portfolio_managed(closed_rows: list) -> dict:
     }
 
 
+def _emit_funding_carry_section() -> list[str]:
+    """Render the paper-forward funding-carry (STR-FNDCARRY) status (US-230).
+
+    Reads open positions + closed episodes from the carry module's OWN
+    functions (read_ledger / load_state) — never re-parses the jsonl/state
+    files separately. The funding-vs-basis SPLIT is preserved: the headline is
+    funding-only (net_funding), and basis_pnl is flagged separately (US-179),
+    never folded into the headline.
+    """
+    try:
+        import funding_carry_paper as fcp
+    except ImportError:
+        # Carry module unavailable -> omit the section entirely rather than
+        # risk corrupting the existing report.
+        return []
+
+    state = fcp.load_state()
+    episodes = [r for r in fcp.read_ledger() if r.get("type") == "episode"]
+    open_positions = state.get("open", {}) or {}
+
+    header = "**Funding Carry (STR-FNDCARRY)** _(maker-only, delta-neutral, paper-forward)_"
+
+    if not episodes and not open_positions:
+        # One quiet line rather than dropping the section (US-230 AC).
+        return [header, "  STR-FNDCARRY: no episodes yet — accumulating"]
+
+    lines = [header]
+
+    # Open carry positions (coin + entry).
+    if open_positions:
+        pos_lines = []
+        for coin in sorted(open_positions):
+            p = open_positions[coin]
+            tid = p.get("trade_id", "?")
+            et = p.get("entry_ts")
+            if et:
+                entry = datetime.datetime.fromtimestamp(
+                    et / 1000, datetime.timezone.utc).strftime("%Y-%m-%d")
+            else:
+                entry = "?"
+            pos_lines.append(f"{coin} ({tid}, since {entry})")
+        lines.append("  Open: " + ", ".join(pos_lines))
+    else:
+        lines.append("  Open: none")
+
+    # Closed episodes — funding-only headline, basis flagged separately.
+    if episodes:
+        total_net_funding = sum(float(r.get("net_funding") or 0.0) for r in episodes)
+        basis_vals = [float(r["basis_pnl"]) for r in episodes
+                      if r.get("basis_pnl") is not None]
+        basis_has = bool(basis_vals)
+        lines.append(
+            f"  Closed: {len(episodes)} episode(s), net_funding "
+            f"{total_net_funding:+.2f} USD (HEADLINE, funding-only)"
+        )
+        if basis_has:
+            lines.append(
+                f"  _basis_pnl: {sum(basis_vals):+.2f} USD "
+                f"(flagged separately — not in headline)_"
+            )
+        for r in episodes:
+            nf = float(r.get("net_funding") or 0.0)
+            bp = r.get("basis_pnl")
+            bp_str = f"{float(bp):+.2f}" if bp is not None else "n/a"
+            lines.append(f"    {r.get('trade_id')}: net_funding {nf:+.2f} USD · basis {bp_str}")
+    else:
+        lines.append("  Closed: none")
+
+    return lines
+
+
 def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str:
     rows = _dedupe_rows(_rows())
     open_rows = [r for r in rows if r["status"] == "open"]
@@ -505,6 +576,10 @@ def build_report(since_hours: int = 24, since_date: datetime.date = None) -> str
             by_strategy.setdefault(r["strategy_id"], []).append(r)
         for sid, trades in by_strategy.items():
             lines.append(f"  {sid}: {len(trades)} ({', '.join(t['ticker'] for t in trades)})")
+
+    # ── 4. Funding Carry (STR-FNDCARRY) — ADDITIVE (US-230) ──
+    lines.append("")
+    lines.extend(_emit_funding_carry_section())
 
     return "\n".join(lines)
 
