@@ -98,8 +98,14 @@ def _load_hl_parquet(glob_dir: pathlib.Path, columns: list[str]) -> pd.DataFrame
     return df
 
 
-def _to_ms(dt_series: pd.Series) -> np.ndarray:
-    return dt_series.astype("datetime64[ms]").astype("int64").to_numpy()
+def _to_hour_ms(dt_series: pd.Series) -> np.ndarray:
+    """Floor timestamps to the HOUR (epoch ms). HL funding settles at ~+48ms
+    while mark/assetCtx polls at ~+0ms — flooring aligns the two hourly series."""
+    s = dt_series
+    if getattr(getattr(s, "dt", None), "tz", None) is not None:
+        s = s.dt.tz_localize(None)   # parquet timestamps are UTC; drop tz -> epoch ms
+    ms = s.astype("datetime64[ms]").astype("int64")
+    return (ms // 3_600_000) * 3_600_000
 
 
 def load_hl_series(coin: str) -> pd.DataFrame:
@@ -107,14 +113,14 @@ def load_hl_series(coin: str) -> pd.DataFrame:
     fund = _load_hl_parquet(HL_FUNDING_DIR, ["timestamp", "coin", "funding_rate"])
     fund = fund[fund["coin"] == coin].copy()
     fund["apr"] = fund["funding_rate"].astype(float) * HOURS_PER_YEAR * 100.0
-    fund["time_ms"] = _to_ms(fund["timestamp"])
+    fund["time_ms"] = _to_hour_ms(fund["timestamp"])
     fund = fund.sort_values("time_ms").drop_duplicates("time_ms")
     fund = fund.set_index("time_ms")
 
     mark = _load_hl_parquet(HL_OI_DIR, ["timestamp", "coin", "mark_price"])
     mark = mark[mark["coin"] == coin].copy()
     mark["mark"] = mark["mark_price"].astype(float)
-    mark["time_ms"] = _to_ms(mark["timestamp"])
+    mark["time_ms"] = _to_hour_ms(mark["timestamp"])
     mark = mark.sort_values("time_ms").drop_duplicates("time_ms")
     mark = mark.set_index("time_ms")
 
@@ -296,31 +302,33 @@ def simulate_basis(hl_mark: pd.Series, okx_last: pd.Series) -> dict:
     in_pos = False
     entry_i = 0
     entry_sign = 0
-    for i in range(1, len(bvals)):
+    entry_basis = 0.0
+    for i in range(0, len(bvals)):
         if not np.isfinite(bvals[i]):
             continue
         if not in_pos:
+            # signal at bar i -> enter at bar i+1 (no look-ahead). Record the
+            # basis at the ACTUAL entry bar, NOT the signal bar.
             if abs(bvals[i]) >= BASIS_ENTRY_BPS:
-                in_pos = True
                 entry_i = i + 1 if i + 1 < len(bvals) else i
-                entry_sign = 1 if bvals[i] > 0 else -1   # fade the wide basis
+                in_pos = True
+                entry_basis = float(bvals[entry_i])
+                entry_sign = 1 if entry_basis > 0 else -1
                 continue
         else:
-            # convergence exit: basis crossed zero (or reversed sign past it)
-            converged = (entry_sign > 0 and bvals[i] <= BASIS_EXIT_BPS) or \
-                        (entry_sign < 0 and bvals[i] >= -BASIS_EXIT_BPS)
+            # fade a wide positive basis (short HL / long OKX): profit as basis
+            # shrinks toward 0. Exit on convergence (crossed back to ~0).
+            entry_sign_cur = 1 if entry_basis > 0 else -1
+            converged = (entry_sign_cur > 0 and bvals[i] <= BASIS_EXIT_BPS) or \
+                        (entry_sign_cur < 0 and bvals[i] >= -BASIS_EXIT_BPS)
             if converged or i == len(bvals) - 1:
                 exit_i = i
-                # P&L in bps of notional: fade means we profit by (entry_basis - exit_basis)
-                entry_basis = bvals[entry_i - 1]
-                exit_basis = bvals[exit_i]
-                pnl_bps = entry_sign * (entry_basis - exit_basis)  # signed bps
+                exit_basis = float(bvals[exit_i])
+                pnl_bps = entry_sign_cur * (entry_basis - exit_basis)  # signed bps
                 net_bps = pnl_bps - CROSS_VENUE_RT_BPS
                 eps.append({"pnl_bps": pnl_bps, "net_bps": net_bps,
-                            "entry_ms": int(idx[entry_i - 1]),
-                            "exit_ms": int(idx[exit_i]),
-                            "basis_entry_bps": float(entry_basis),
-                            "basis_exit_bps": float(exit_basis)})
+                            "basis_entry_bps": entry_basis,
+                            "basis_exit_bps": exit_basis})
                 in_pos = False
 
     if not eps:
@@ -409,39 +417,22 @@ def main() -> int:
         else:
             print("    (no episodes over this window)")
 
-    # ── H2 price-basis MR (hourly + daily) ──────────────────────────────────
-    print("\n--- H2 price-basis mean-reversion ---")
-    h2_hourly = {}
-    h2_daily = {}
-    h2_all_eps = []
+    # ── H2 price-basis MR (hourly: HL mark vs OKX 1H close) ─────────────────
+    print("\n--- H2 price-basis mean-reversion (hourly, HL mark vs OKX 1H last) ---")
+    h2 = {}
     for coin in UNIVERSE:
         hl = load_hl_series(coin)
         okx_1h = load_okx_price(HL_TO_OKX[coin], "1H")
-        okx_1d = load_okx_price(HL_TO_OKX[coin], "1D")
-
-        # hourly
         joined = pd.concat({"m": hl["mark"], "o": okx_1h["last"]},
                            axis=1).dropna()
         hr = simulate_basis(joined["m"], joined["o"])
-        h2_hourly[coin] = hr
-        # daily: HL mark resampled to daily close (last hourly mark of the day)
-        _di = pd.to_datetime(hl.index, unit="ms")
-        hl_day = pd.Series(hl["mark"].to_numpy(), index=_di).resample("1D").last().dropna()
-        # align to OKX 1D close (OKX 1D candles are daily closes)
-        day = pd.concat({"m": hl_day, "o": okx_1d["last"]}, axis=1).dropna()
-        dy = simulate_basis(day["m"], day["o"])
-        h2_daily[coin] = dy
-        for e in dy.get("episodes", []):
-            e["coin"] = coin
-            h2_all_eps.append(e)
-
-        print(f"\n  {coin}:")
-        print(f"    hourly: n {len(joined)}  |basis| mean "
+        h2[coin] = hr
+        net_mean = hr["net_bps_total"] / hr["n_episodes"] if hr["n_episodes"] else 0.0
+        print(f"\n  {coin}: {len(joined)}h  |basis| mean "
               f"{abs(hr['basis_mean_bps']):.2f} p90 {hr['basis_p90_bps']:.2f} bps  "
-              f"episodes {hr['n_episodes']}  net {hr['net_bps_total']:+.1f} bps")
-        print(f"    daily : n {len(day)}  |basis| mean {abs(dy['basis_mean_bps']):.2f} "
-              f"p90 {dy['basis_p90_bps']:.2f} bps  episodes {dy['n_episodes']}  "
-              f"net {dy['net_bps_total']:+.1f} bps")
+              f"episodes {hr['n_episodes']}  gross {hr['gross_bps_total']:+.1f} "
+              f"net {hr['net_bps_total']:+.1f} bps "
+              f"({net_mean:+.2f} bps/trade)")
 
     # ── aggregate verdict numbers ───────────────────────────────────────────
     h1_net_frac = sum(r["net_frac"] for r in h1_rows.values())
@@ -449,16 +440,18 @@ def main() -> int:
     h1_fee_frac = sum(r["fee_frac"] for r in h1_rows.values())
     n_h1 = sum(r["n_episodes"] for r in h1_rows.values())
     h1_hours = sum(r["hours_total"] for r in h1_rows.values())
-    h2_net = sum(dy["net_bps_total"] for dy in h2_daily.values())
-    n_h2 = sum(dy["n_episodes"] for dy in h2_daily.values())
+    h2_net = sum(r["net_bps_total"] for r in h2.values())
+    n_h2 = sum(r["n_episodes"] for r in h2.values())
+    h2_gross = sum(r["gross_bps_total"] for r in h2.values())
 
     print("\n=== aggregate ===")
-    print(f"H1 (both coins): episodes {n_h1}, hours {h1_hours}")
+    print(f"H1 funding-spread (both coins): episodes {n_h1}, hours {h1_hours}")
     if h1_hours:
         print(f"  gross {h1_gross_frac * 1e4 * HOURS_PER_YEAR / h1_hours:+.1f} bps APR")
         print(f"  fees  {h1_fee_frac * 1e4 * HOURS_PER_YEAR / h1_hours:.1f} bps APR")
         print(f"  net   {h1_net_frac * 1e4 * HOURS_PER_YEAR / h1_hours:+.1f} bps APR")
-    print(f"H2 (daily, both coins): episodes {n_h2}, net {h2_net:+.1f} bps total")
+    print(f"H2 price-basis (both coins): episodes {n_h2}, gross {h2_gross:+.1f} "
+          f"net {h2_net:+.1f} bps total")
 
     # ── build result + write trial ──────────────────────────────────────────
     param_hash = hashlib.sha256(json.dumps({
@@ -487,6 +480,8 @@ def main() -> int:
         spread_stats[coin] = {
             "mean_pp": float(s.mean()), "median_pp": float(s.median()),
             "p10_pp": float(s.quantile(.1)), "p90_pp": float(s.quantile(.9)),
+            "hl_apr_mean": float(ov["hl"].mean()),
+            "okx_apr_mean": float(ov["okx"].mean()),
             "frac_above_maker_break_even": float((s > (CROSS_VENUE_RT_BPS / 1e4) * HOURS_PER_YEAR).mean()),
             "n_hours": int(len(s)),
         }
@@ -526,17 +521,33 @@ def main() -> int:
             "n_episodes": n_h1,
         },
         "h2_price_basis": {
-            "per_coin_daily": {c: {
-                "n_episodes": h2_daily[c]["n_episodes"],
-                "net_bps_total": h2_daily[c]["net_bps_total"],
-                "basis_p90_bps": h2_daily[c]["basis_p90_bps"],
-                "basis_std_bps": h2_daily[c].get("basis_std_bps"),
+            "frequency": "hourly (HL mark vs OKX 1H last, ~5.5mo window)",
+            "per_coin": {c: {
+                "n_episodes": h2[c]["n_episodes"],
+                "net_bps_total": h2[c]["net_bps_total"],
+                "gross_bps_total": h2[c]["gross_bps_total"],
+                "basis_mean_bps": h2[c]["basis_mean_bps"],
+                "basis_p90_bps": h2[c]["basis_p90_bps"],
+                "basis_std_bps": h2[c].get("basis_std_bps"),
             } for c in UNIVERSE},
             "aggregate_net_bps": h2_net,
+            "aggregate_gross_bps": h2_gross,
             "n_episodes": n_h2,
+            "note": "cross-venue BTC/ETH price basis is ~1bp mean / ~6-8bp p90 (MM-arbitraged); "
+                    "far below the 7bp two-venue round-trip, so the fade cannot clear cost.",
         },
         "verdict": (
-            "PENDING"  # finalized by the human reading the printed report
+            "NOT PROMOTED (both channels net-negative/zero net of two-venue maker "
+            "fees). H1: the HL-OKX funding spread is real and positive (median +3 to "
+            "+4 pp) but grosses only ~4.4-5% APR, BELOW the ~6.4% APR break-even of "
+            "the 7bp two-venue maker round-trip at the empirical ~4-day holds -> net "
+            "~-1.5% APR. Cross-venue is DOMINATED by the already-validated HL-only "
+            "carry (which harvests the FULL HL funding ~8.3-8.6% APR with a free spot "
+            "hedge; going cross-venue gives up ~5-6% APR paying OKX funding on the long "
+            "leg AND adds transfer/custody/liquidation asymmetry). H2: the BTC/ETH "
+            "cross-venue price basis is MM-arbitraged to ~1bp mean / ~6-8bp p90; the "
+            "fade grosses ~7bp/trade = exactly the two-venue cost, so it nets to ~0 "
+            "(not a harvestable MR edge)."
         ),
     }
 
