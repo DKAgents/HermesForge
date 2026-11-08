@@ -12,8 +12,9 @@ data_dependencies: HF funding (~/.hermes/market_data/hl_funding_hf/, funding_rat
 counterparty: the funding-crowd (leveraged longs/shorts) whose crowding is the continuation fuel; honest note — the follower PAYS funding to the crowd, so net must beat that cost
 topic: general
 confidence: medium
+has_quotes: false
+tags: []
 ---
-
 # HYP-22 — Funding continuation momentum (directional)
 
 ## Motivation

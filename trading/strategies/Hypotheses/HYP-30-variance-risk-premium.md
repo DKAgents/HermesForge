@@ -14,8 +14,9 @@ cost_hurdle_bps: realistic option bid-ask spread (wider than perp) + margin cost
 counterparty: option buyers (hedgers + speculators) paying a premium for tail/convexity insurance
 topic: structural (carry/risk-premia)
 confidence: low-medium (strong prior — VRP is documented-persistent — but short-vol tail risk is the honest unknown)
+has_quotes: false
+tags: []
 ---
-
 # HYP-30 — Variance Risk Premium (sell ATM vol) on BTC/ETH
 
 ## Motivation

@@ -12,8 +12,9 @@ cost_hurdle_bps: realistic 4.5bps/leg taker + funding + adverse slip
 counterparty: the forced closing of over-leveraged counterparties (margin-call flow)
 topic: structural
 confidence: low (prior is mixed-direction)
+has_quotes: false
+tags: []
 ---
-
 # HYP-26 — Liquidation flow predicts subsequent return (cascade vs exhaustion)
 
 ## Motivation

@@ -13,8 +13,9 @@ cost_hurdle_bps: realistic on BOTH legs (short-perp taker/maker + long-spot take
 counterparty: same as HYP-28 (the leverage crowd paying the funding floor)
 topic: structural (carry execution)
 confidence: medium (positive prior from HYP-28, but this is the gate where the class historically dies)
+has_quotes: false
+tags: []
 ---
-
 # HYP-29 — Funding carry: G3 fill-realism + capacity gate
 
 ## Motivation

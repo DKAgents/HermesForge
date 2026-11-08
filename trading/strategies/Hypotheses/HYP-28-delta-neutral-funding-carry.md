@@ -12,8 +12,9 @@ cost_hurdle_bps: MAKER fills both legs (0.015%/leg per the cost model); taker is
 counterparty: leveraged longs paying the funding premium to hold leverage without hedging
 topic: structural (carry)
 confidence: low-medium (flagship prior, but skill warns it "lies too" — funding vs basis must be decomposed)
+has_quotes: false
+tags: []
 ---
-
 # HYP-28 — Delta-neutral funding carry (cash-and-carry) on liquid-spot majors
 
 ## Motivation

@@ -12,8 +12,9 @@ data_dependencies: HF OI/mark (~/.hermes/market_data/hl_oi_hf/); funding as char
 counterparty: none claimed — this is a METHODOLOGY test (does the target ratio itself contribute edge), not a strategy candidate
 topic: general
 confidence: low (prior is invariance)
+has_quotes: false
+tags: []
 ---
-
 # HYP-23 — R:R target ratio does NOT change net expectancy
 
 ## Claim being tested

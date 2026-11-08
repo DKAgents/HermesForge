@@ -12,8 +12,9 @@ data_dependencies: HF OI/mark (~/.hermes/market_data/hl_oi_hf_clean/ for cleaned
 counterparty: none claimed (methodology-combination test)
 topic: general
 confidence: low
+has_quotes: false
+tags: []
 ---
-
 # HYP-24 — momentum x wide-target x regime (combined)
 
 ## Motivation

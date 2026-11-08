@@ -12,8 +12,9 @@ data_dependencies: HF OI/mark (~/.hermes/market_data/hl_oi_hf/); funding (~/.her
 counterparty: the forced/unwilling holders of decaying coins (catch-the-falling-knife buyers of names in persistent decline)
 topic: general
 confidence: low-medium
+has_quotes: false
+tags: []
 ---
-
 # HYP-25 — Short-side continuation (short the decaying losers), gated on shortability
 
 ## Motivation

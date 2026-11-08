@@ -12,8 +12,9 @@ cost_hurdle_bps: realistic 4.5bps/leg taker + adverse slip (funding is negligibl
 counterparty: over-leveraged longs being force-closed into a falling tape (and vice-versa)
 topic: structural
 confidence: low
+has_quotes: false
+tags: []
 ---
-
 # HYP-27 — Intraday liquidation cascade (sub-daily continuation)
 
 ## Motivation
