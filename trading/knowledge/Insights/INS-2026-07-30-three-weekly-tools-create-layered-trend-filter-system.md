@@ -36,6 +36,8 @@ A trader should require alignment across all three weekly indicators — channel
 - [[INS-2026-08-11-three-layer-weekly-confirmation-system-for-daily-entry-signa|Three-Layer Weekly Confirmation System for Daily Entry Signals]]
 
 ## Related
+- [[EN023-trendline-break-confirmation-of-major-trend-change]] — See EN023-trendline-break-confirmation-of-major-trend-change for trendline breaks as an additional weekly trend-change filter.
+
 - [[C050-secondary-trend-retracement-range]] — See C050 for retracement ranges that affect weekly filter reliability
 
 - [[C366-secondary-trends]] — See C366-secondary-trends for theoretical basis of weekly timeframe confirmation
