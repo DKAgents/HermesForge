@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-11-08T11:48:25Z
+updated: 2026-11-08T19:49:31Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,27 +9,27 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 2080 |
-| Connections created | 1 | 371 |
-| Review queue | 625 | 625 |
-| Avg score | 1.0 | — |
+| Notes examined | 5 | 2085 |
+| Connections created | 0 | 371 |
+| Review queue | 626 | 626 |
+| Avg score | 3.4 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~6717
-- Total notes: 3098
-- Avg degree per note: 2.168
-- Notes with links: 1422 (45.9%)
-- Orphan notes (no links): 1676 (54.1%)
+- Total notes: 3107
+- Avg degree per note: 2.162
+- Notes with links: 1422 (45.8%)
+- Orphan notes (no links): 1685 (54.2%)
 
 ## Weakly Connected Areas
 - `cache` — 11 notes, avg degree 0.0
 - `reports` — 7 notes, avg degree 0.0
-- `reports/backtester` — 24 notes, avg degree 0.0
+- `reports/backtester` — 27 notes, avg degree 0.0
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 - `code/forge-loop` — 44 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-11-08T11:48:25Z)
-- **trading/knowledge/Insights/INS-2026-07-30-three-weekly-tools-create-layered-trend-filter-system.md** → **trading/knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/EN023-trendline-break-confirmation-of-major-trend-change.md** (score 4.0): Note A assembles weekly timeframe trend-confirmation tools, while Note B adds long-term trendline breaks as another major trend-change confirmation that can be layered into that filter system.
+## Recent Discoveries (last run: 2026-11-08T19:49:31Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 308: Created 1 connections from 5 notes. Avg score: 4.4.
