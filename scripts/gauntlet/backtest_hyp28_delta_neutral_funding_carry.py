@@ -12,12 +12,15 @@ Pre-registered operationalization (FIXED — no post-hoc tuning):
     oracle_price proxy (flagged as such — HL has no spot-price history endpoint;
     oracle is the CEX-weighted median, the executable hedge for the majors).
   * H1 FUNDING component: net funding received on the short-perp leg (funding > 0
-    -> shorts receive), minus MAKER fees (0.015%/leg) on BOTH legs. Net-positive?
+    -> shorts receive), minus MAKER fees on BOTH legs (perp maker 1.5 bps +
+    spot maker 4.0 bps; C-6 spot-correction). Net-positive?
   * H2 BASIS decomposition (load-bearing "it lies too" check): SEPARATE the
     funding P&L from the basis (mark-oracle drift) P&L. Quote each separately.
     A "funding carry" whose net is majority BASIS is a basis trade, not funding.
-  * Cost: MAKER both legs (0.015%/leg = 1.5 bps -> 6 bps round trip) primary;
-    report TAKER (0.045%/leg = 4.5 bps -> 18 bps round trip) separately.
+  * Cost: MAKER both legs — short PERP at perp maker (0.015% = 1.5 bps) + long
+    SPOT at spot maker (0.040% = 4.0 bps) -> 11 bps round trip (C-6: the spot
+    hedge is charged spot, NOT perp). Report TAKER (perp 0.045% + spot 0.070%
+    -> 23 bps round trip) separately.
   * No leverage: unlevered return on notional (notional = 1x capital).
 
 Position P&L decomposition (delta-neutral, per unit notional):
@@ -25,7 +28,7 @@ Position P&L decomposition (delta-neutral, per unit notional):
   * BASIS    = (entry_basis_bps - exit_basis_bps) / 1e4    [mark-oracle drift]
                basis_bps = (mark_price - oracle_price)/oracle_price * 1e4
                (short-perp + long-spot P&L = -(delta basis): wins if basis narrows)
-  * FEES     = round-trip maker (6 bps) or taker (18 bps), charged ONCE/episode
+  * FEES     = round-trip maker (11 bps) or taker (23 bps), charged ONCE/episode
 
 No look-ahead: the gate at hour t uses ONLY funding up to and including t; entry
 at t, funding accrues from t+1. The mark/oracle basis is read at entry/exit only
@@ -76,14 +79,18 @@ GATE_WINDOW_HOURS = 24                     # rolling window (hourly observations
 HOURS_PER_YEAR = 8760
 SAMPLE_START = "2023-06-08"                # first hourly-funding settlement
 
-# MAKER / TAKER per-leg: % -> fraction. fee_source returns bps (fail-closed base
-# tier: maker 1.5 bps, taker 4.5 bps), matching the HYP-28 0.015%/0.045% per leg.
-MAKER_BPS_PER_LEG = 1.5
-TAKER_BPS_PER_LEG = 4.5
-N_LEGS = 2                                  # short perp + long spot
+# MAKER / TAKER per-leg from fee_source (single fee table). C-6 correction: the
+# SPOT hedge leg charges the SPOT base tier (maker 4.0 / taker 7.0 bps), NOT the
+# perp tier (maker 1.5 / taker 4.5). Round trip = 2 sides x (perp fee + spot fee):
+#   MAKER = 2*(1.5 + 4.0) = 11 bps   (was 6  — both legs charged at perp maker)
+#   TAKER = 2*(4.5 + 7.0) = 23 bps   (was 18 — both legs charged at perp taker)
+PERP_MAKER_BPS = get_maker_bps("crypto")   # 1.5
+PERP_TAKER_BPS = get_taker_bps("crypto")   # 4.5
+SPOT_MAKER_BPS = get_maker_bps("spot")     # 4.0 (C-6)
+SPOT_TAKER_BPS = get_taker_bps("spot")     # 7.0 (C-6)
 N_SIDES = 2                                 # entry + exit
-MAKER_ROUND_TRIP_BPS = MAKER_BPS_PER_LEG * N_LEGS * N_SIDES   # 6 bps
-TAKER_ROUND_TRIP_BPS = TAKER_BPS_PER_LEG * N_LEGS * N_SIDES   # 18 bps
+MAKER_ROUND_TRIP_BPS = (PERP_MAKER_BPS + SPOT_MAKER_BPS) * N_SIDES   # 11 bps
+TAKER_ROUND_TRIP_BPS = (PERP_TAKER_BPS + SPOT_TAKER_BPS) * N_SIDES   # 23 bps
 
 
 def _load_funding() -> pd.DataFrame:

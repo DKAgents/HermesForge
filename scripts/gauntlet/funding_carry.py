@@ -47,6 +47,7 @@ if str(_THIS_DIR) not in sys.path:
     sys.path.insert(0, str(_THIS_DIR))
 
 from g3_gate import MIN_TRADES, EDGE_DECAY_FLOOR  # noqa: E402  (reuse exact thresholds)
+from fee_source import get_maker_bps, get_taker_bps  # noqa: E402  (single fee table)
 
 # ── Unit normalization (canonical APR) ──────────────────────────────────────
 HOURS_PER_YEAR = 8760
@@ -139,15 +140,41 @@ def funding_window_signal(series: pd.DataFrame, sign: int = 1) -> dict:
 
 # ── Cost gate (§1.6.3) ──────────────────────────────────────────────────────
 MIN_HOLD_HOURS = 168               # 1 week minimum amortization hold   [tunable]
-CARRY_ROUND_TRIP_BPS = 24.0        # conservative two-leg taker (2 x 12 bps)
-MAKER_ROUND_TRIP_BPS = 12.0        # both legs limit/maker (US-180 path)
+# Two-leg (short perp + long spot) delta-neutral round-trip cost. C-6 correction:
+# the SPOT hedge leg charges the SPOT base tier (maker 4.0 / taker 7.0 bps),
+# NOT the perp tier (maker 1.5 / taker 4.5). Spot has no funding (only perps
+# accrue it). All-in per leg = 2*fee + slip + (perp-only funding):
+#   perp maker  = 2*1.5 + 2.5 + 0.5 = 6.0    perp taker = 2*4.5 + 2.5 + 0.5 = 12.0
+#   spot maker  = 2*4.0 + 2.5       = 10.5   spot taker = 2*7.0 + 2.5       = 16.5
+#   MAKER two-leg = 6.0 + 10.5 = 16.5   (was 12.0 — spot charged at perp maker)
+#   TAKER two-leg = 12.0 + 16.5 = 28.5  (was 24.0 — spot charged at perp taker)
+_PERP_MAKER_BPS = get_maker_bps("crypto")
+_PERP_TAKER_BPS = get_taker_bps("crypto")
+_SPOT_MAKER_BPS = get_maker_bps("spot")
+_SPOT_TAKER_BPS = get_taker_bps("spot")
+_SLIP_BPS = 2.5
+_FUNDING_BPS = 0.5                  # perp-leg funding overhead only (spot = 0)
+
+
+def _leg_round_trip(fee_bps: float, has_funding: bool) -> float:
+    """One leg's all-in round-trip = 2*fee + slip + (funding if perp)."""
+    return 2.0 * fee_bps + _SLIP_BPS + (_FUNDING_BPS if has_funding else 0.0)
+
+
+PERP_MAKER_RT = _leg_round_trip(_PERP_MAKER_BPS, True)
+PERP_TAKER_RT = _leg_round_trip(_PERP_TAKER_BPS, True)
+SPOT_MAKER_RT = _leg_round_trip(_SPOT_MAKER_BPS, False)
+SPOT_TAKER_RT = _leg_round_trip(_SPOT_TAKER_BPS, False)
+
+MAKER_ROUND_TRIP_BPS = PERP_MAKER_RT + SPOT_MAKER_RT     # both legs maker (16.5)
+CARRY_ROUND_TRIP_BPS = PERP_TAKER_RT + SPOT_TAKER_RT     # two-leg taker (28.5)
 
 
 def cost_clears(mean_apr: float, cost_bps: float = CARRY_ROUND_TRIP_BPS,
                 hold_hours: float = MIN_HOLD_HOURS) -> bool:
     """mean_apr * (hold_hours/8760) >= cost_bps/1e4 — the carry must clear its
-    two-leg friction over the minimum hold. Break-even APR (taker 24bps, 1wk) =
-    12.5%/yr; (maker 12bps, 1wk) = 6.3%/yr."""
+    two-leg friction over the minimum hold. Break-even APR (taker 28.5bps, 1wk)
+    = 14.9%/yr; (maker 16.5bps, 1wk) = 8.6%/yr (both legs spot-corrected, C-6)."""
     return mean_apr * (hold_hours / HOURS_PER_YEAR) >= cost_bps / 1e4
 
 
@@ -768,8 +795,9 @@ def carry_g3_record(episodes: pd.DataFrame) -> dict:
 
     cost assumptions (fee-basis explicit, per §1.6.3):
       optimistic  = gross funding (zero execution cost)   [diagnostic only]
-      realistic   = maker-fill cost (12 bps)              [the US-180 path]
-      pessimistic = taker-fill cost (24 bps) + basis-gap on the kill exit
+      realistic   = maker-fill cost (16.5 bps, both legs spot-corrected C-6)
+      pessimistic = taker-fill cost (28.5 bps, both legs spot-corrected C-6)
+                    + basis-gap on the kill exit
                     (exit basis widened by +1 tick = 1 bp beyond KILL_BASIS_BPS)
 
     Returns {n, optimistic_mean_r, realistic_mean_r, pessimistic_pf, passed,

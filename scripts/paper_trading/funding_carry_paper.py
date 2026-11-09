@@ -52,6 +52,7 @@ import funding_carry as fc                                # noqa: E402
 import hl_funding_store                                    # noqa: E402
 import hl_assetctx_store                                   # noqa: E402
 import spot_basis_store                                    # noqa: E402
+from fee_source import carry_round_trip_fee_bps            # noqa: E402
 
 # ── Constants (paper-forward) ────────────────────────────────────────────────
 STRATEGY_ID = "STR-FNDCARRY"
@@ -62,9 +63,11 @@ EXECUTION_TYPE = fc.EXECUTION_MAKER                        # binding maker-only
 # No leverage: paper notional == paper capital (1x; return is on notional).
 PAPER_NOTIONAL_USD = 100_000.0
 
-# Maker fill cost, round-trip BOTH legs: fee_source crypto maker = 1.5 bps/leg,
-# 2 legs (perp + spot) x 2 sides (entry + exit) = 6 bps. (HYP-29 MAKER_RT_BPS.)
-DELTA_NEUTRAL_MAKER_RT_BPS = 6.0
+# Maker fill cost, round-trip BOTH legs (C-6 correction). The spot hedge leg
+# charges the SPOT base tier (maker 4.0 bps), NOT the perp tier (maker 1.5):
+#   round_trip = 2 sides x (perp maker 1.5 + spot maker 4.0) = 11.0 bps.
+# (Previously 6.0 bps — the buggy model charged BOTH legs at perp 1.5.)
+DELTA_NEUTRAL_MAKER_RT_BPS = carry_round_trip_fee_bps("maker")
 
 # Spot ask/bid spread is an ASSUMED input (NO L2 spot book is held — HYP-29
 # caveat). FLAGGED and never silently credited as a fill. Per-coin RT spread

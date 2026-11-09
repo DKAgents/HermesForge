@@ -16,8 +16,9 @@ Pre-registered operationalization (FIXED):
                       BID (full round-trip spread on the hedge); perp short at
                       BID, cover at ASK (full round-trip spread on the perp leg).
                       Maker fee.
-      - pessimistic = taker + adverse: taker fee (4.5 bps/leg) PLUS the full
-                      round-trip spread on BOTH legs at a wider (stressed) level.
+      - pessimistic = taker + adverse: taker fee (perp 4.5 + spot 7.0 bps/leg,
+                      C-6 spot-corrected) PLUS the full round-trip spread on
+                      BOTH legs at a wider (stressed) level.
   * The load-bearing check is the HEDGE leg: does the spot round-trip spread
     (buy ask / sell bid), paid ~48-59 times/yr, eat the ~15-21% headline?
   * CAPACITY: notional ceiling before the funding floor compresses, via a
@@ -63,6 +64,7 @@ for _p in (_THIS_DIR, str(_THIS_DIR.parent), str(_THIS_DIR.parent / "data")):
         sys.path.insert(0, str(_p))
 
 import trials_ledger as ledger                              # noqa: E402
+from fee_source import get_maker_bps, get_taker_bps         # noqa: E402
 
 # ── Data locations ──────────────────────────────────────────────────────────
 FUNDING_DIR = pathlib.Path.home() / ".hermes" / "market_data" / "hl_funding_hf"
@@ -76,13 +78,18 @@ GATE_WINDOW_HOURS = 24
 HOURS_PER_YEAR = 8760
 SAMPLE_START = "2023-06-08"
 
-# Fee schedule (fee_source base tier; fail-closed): maker 1.5, taker 4.5 bps/leg.
-MAKER_BPS_PER_LEG = 1.5
-TAKER_BPS_PER_LEG = 4.5
-N_LEGS = 2                                  # short perp + long spot
+# Fee schedule (fee_source single fee table). C-6 correction: the SPOT hedge leg
+# charges the SPOT base tier (maker 4.0 / taker 7.0 bps), NOT the perp tier
+# (maker 1.5 / taker 4.5). Round trip = 2 sides x (perp fee + spot fee):
+#   MAKER = 2*(1.5 + 4.0) = 11 bps   (was 6  — both legs charged at perp maker)
+#   TAKER = 2*(4.5 + 7.0) = 23 bps   (was 18 — both legs charged at perp taker)
+PERP_MAKER_BPS = get_maker_bps("crypto")   # 1.5
+PERP_TAKER_BPS = get_taker_bps("crypto")   # 4.5
+SPOT_MAKER_BPS = get_maker_bps("spot")     # 4.0 (C-6)
+SPOT_TAKER_BPS = get_taker_bps("spot")     # 7.0 (C-6)
 N_SIDES = 2                                 # entry + exit
-MAKER_RT_BPS = MAKER_BPS_PER_LEG * N_LEGS * N_SIDES   # 6 bps
-TAKER_RT_BPS = TAKER_BPS_PER_LEG * N_LEGS * N_SIDES   # 18 bps
+MAKER_RT_BPS = (PERP_MAKER_BPS + SPOT_MAKER_BPS) * N_SIDES   # 11 bps
+TAKER_RT_BPS = (PERP_TAKER_BPS + SPOT_TAKER_BPS) * N_SIDES   # 23 bps
 
 # SPOT half-spread assumptions (bps) — FLAGGED, no L2 book held.
 SPOT_HALF_REALISTIC = {"BTC": 2.5, "ETH": 2.5, "SOL": 5.0}
