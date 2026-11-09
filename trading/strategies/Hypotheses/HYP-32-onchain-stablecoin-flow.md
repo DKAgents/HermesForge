@@ -13,8 +13,9 @@ cost_hurdle_bps: realistic taker + funding (slow weekly signal, low turnover)
 counterparty: the capital rotating into/out of crypto (stablecoin minters + TVL providers)
 topic: structural (flow/macro)
 confidence: low (untested class; macro flow is correlated-with-price, not obviously causal or leading)
+has_quotes: false
+tags: []
 ---
-
 # HYP-32 — On-chain/stablecoin flow predicts subsequent price
 
 ## Motivation

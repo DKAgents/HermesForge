@@ -1,3 +1,11 @@
+---
+topic: general
+confidence: high
+has_quotes: true
+tags: []
+source: HermesForge Strategies
+created: 2026-11-09
+---
 # HYP-34 — Order-flow imbalance (CVD) — phase 1a
 
 **Verdict: NOT a taker edge. Positive gross, negative net after cost — exactly the prior.**

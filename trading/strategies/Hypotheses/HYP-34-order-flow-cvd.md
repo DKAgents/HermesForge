@@ -12,8 +12,9 @@ cost_hurdle_bps: realistic taker + funding (intraday turnover is the binding cos
 counterparty: the passive/maker side providing liquidity to aggressive flow
 topic: microstructure
 confidence: low-medium (order-flow imbalance is a documented short-horizon predictor, but it is crowded + cost-sensitive)
+has_quotes: false
+tags: []
 ---
-
 # HYP-34 — Order-flow imbalance (CVD) predicts short-horizon continuation
 
 ## Motivation

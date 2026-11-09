@@ -12,8 +12,9 @@ cost_hurdle_bps: realistic taker + funding
 counterparty: the over-positioned retail crowd (fade them)
 topic: positioning (contrarian)
 confidence: low-medium (contrarian positioning is a documented edge, but likely partly arbitraged + may be data-gated)
+has_quotes: false
+tags: []
 ---
-
 # HYP-33 — Crowd long/short ratio (contrarian positioning)
 
 ## Motivation

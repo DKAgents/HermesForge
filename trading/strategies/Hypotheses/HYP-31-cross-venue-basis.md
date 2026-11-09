@@ -12,8 +12,9 @@ cost_hurdle_bps: maker on BOTH venues + cross-venue risk (transfer/custody/liqui
 counterparty: the venue-specific funding demand (HL's leverage crowd vs OKX's)
 topic: structural (carry)
 confidence: low-medium (same mechanism as the validated HL carry, but cross-venue adds a hedge/transfer risk not yet priced)
+has_quotes: false
+tags: []
 ---
-
 # HYP-31 — Cross-venue funding spread + price basis (HL vs OKX)
 
 ## Motivation
