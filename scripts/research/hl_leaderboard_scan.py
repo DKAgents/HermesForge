@@ -31,10 +31,18 @@ Screener (ranks by consistency, NOT raw PnL):
     profit factor, max drawdown (as fraction of peak equity),
     freak-day concentration, sample size (log trade count).
 
+Gain-harvesting blind spot (US-232 extension):
+  Realized closedPnl alone is inflated by "gain harvesting" (realize small
+  winners, hold losers OPEN). For every screened trader this also pulls the live
+  clearinghouseState and adds unrealized_pnl + true_performance
+  (= realized closedPnl + current unrealized) + a gain_harvester flag, then
+  re-ranks on true_performance and reports genuine-vs-harvester per trader.
+
 Storage (idempotent + resumable + rate-limit aware):
   <dir>/leaderboard_raw.json      raw leaderboard GET
   <dir>/leaderboard.json          normalized rows
   <dir>/fills/<address>.json      merged fills per trader (atomic writes)
+  <dir>/clearinghouse/<address>.json  live clearinghouseState per trader
   <dir>/screener.json             ranked screener output
   <dir>/checkpoint.json           resumable progress
   default dir = ~/.hermes/market_data/hl_copytrade/ (override with --data-dir)
@@ -76,6 +84,19 @@ MAX_FILLS = 10000       # per-trader fill cap (empirical per-page cap is 2000)
 FILL_PAGE = 2000        # observed per-request fill cap
 REQUEST_DELAY_S = 0.4   # politeness delay between /info POSTs
 RATE_LIMIT_BACKOFF_S = 10.0
+
+# ----------------------------------------------------------------------------
+# Gain-harvesting blind-spot (US-232 extension) constants
+#
+# The realized-only screener is inflated by "gain harvesting": a trader realizes
+# many small winners (positive closedPnl) while holding losers OPEN, so the open
+# unrealized loss never shows up in the closedPnl series. We pull the live
+# clearinghouseState to surface the hidden open-position drag.
+# ----------------------------------------------------------------------------
+GH_MIN_WINS = 20              # minimum winning closes for the ratio signature to apply
+GH_WIN_LOSS_RATIO = 10.0      # wins/losses >= this = "extreme win/loss" signature
+GH_UNREALIZED_DRAG = 0.20     # |unrealized loss| >= this fraction of realized closedPnl
+GH_MIN_UNREALIZED_ABS = 100.0 # $ floor so trivial noise is never flagged
 
 
 def _log(msg: str) -> None:
@@ -232,6 +253,108 @@ def fetch_fills(address: str, max_fills: int = MAX_FILLS) -> list:
     return fills
 
 
+def fetch_clearinghouse_state(address: str) -> dict | None:
+    """POST clearinghouseState for a trader's LIVE open positions + margin.
+
+    Returns the parsed dict on success, or None (never fabricates). This is the
+    gain-harvesting blind-spot: closedPnl never shows a held loser, but the live
+    clearinghouse state exposes unrealized PnL on open positions.
+    """
+    for attempt in range(4):
+        try:
+            r = requests.post(
+                INFO_URL,
+                json={"type": "clearinghouseState", "user": address},
+                headers=HEADERS,
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            _log(f"    clearinghouseState network error (attempt {attempt+1}): {e}")
+            time.sleep(RATE_LIMIT_BACKOFF_S)
+            continue
+        if r.status_code == 429 or r.status_code >= 500:
+            _log(f"    clearinghouseState {r.status_code} (attempt {attempt+1}), backing off")
+            time.sleep(RATE_LIMIT_BACKOFF_S * (attempt + 1))
+            continue
+        if r.status_code != 200:
+            _log(f"    clearinghouseState HTTP {r.status_code}: {r.text[:200]}")
+            return None
+        try:
+            data = r.json()
+        except ValueError:
+            _log(f"    clearinghouseState non-JSON: {r.text[:200]}")
+            return None
+        if isinstance(data, dict) and "marginSummary" in data:
+            return data
+        _log(f"    clearinghouseState unexpected response: {str(data)[:200]}")
+        return None
+    return None
+
+
+def _position_unrealized(pos: dict) -> float:
+    """Unrealized PnL of one assetPosition entry (oneWay or twoWay)."""
+    if not isinstance(pos, dict):
+        return 0.0
+    ptype = pos.get("type")
+    inner = pos.get("position") or {}
+    if ptype == "oneWay":
+        return _float(inner.get("unrealizedPnl"))
+    if ptype == "twoWay":
+        long_ = inner.get("long") or {}
+        short_ = inner.get("short") or {}
+        return _float(long_.get("unrealizedPnl")) + _float(short_.get("unrealizedPnl"))
+    return 0.0
+
+
+def compute_unrealized(state: dict | None) -> dict:
+    """Extract current open-position unrealized PnL + margin/notional summary.
+
+    Returns None-valued fields when the state is unavailable so downstream code
+    never fabricates a position or PnL number it did not observe.
+    """
+    if not state:
+        return {
+            "unrealized_pnl": 0.0,
+            "open_positions": None,
+            "total_ntl": None,
+            "total_margin_used": None,
+            "account_value_current": None,
+            "state_available": False,
+        }
+    ms = state.get("marginSummary") or {}
+    positions = state.get("assetPositions") or []
+    upnl = sum(_position_unrealized(p) for p in positions if isinstance(p, dict))
+    return {
+        "unrealized_pnl": upnl,
+        "open_positions": len(positions),
+        "total_ntl": _float(ms.get("totalNtlPos")),
+        "total_margin_used": _float(ms.get("totalMarginUsed")),
+        "account_value_current": _float(ms.get("accountValue")),
+        "state_available": True,
+    }
+
+
+def detect_gain_harvest(realized: float, unrealized: float, win_count: int, loss_count: int) -> tuple[bool, list[str]]:
+    """Flag the gain-harvesting signature (realized-positive, held losses hidden).
+
+    Two signatures (union):
+      1. open positions deeply negative — realized > 0 but the live unrealized
+         PnL is a material drag on it (the "hold the loser open" tell).
+      2. extreme win/loss ratio — many winners vs very few losers (many tiny
+         wins vs few losses), i.e. the classic "bank small winners, never book
+         the loser" fingerprint.
+
+    Returns (flag, reasons). Reasons are surfaced so a human can audit, not
+    blindly trust, the flag.
+    """
+    reasons: list[str] = []
+    if realized > 0 and unrealized < 0 and (-unrealized) >= max(GH_MIN_UNREALIZED_ABS, GH_UNREALIZED_DRAG * realized):
+        reasons.append("unrealized_deeply_negative")
+    if win_count >= GH_MIN_WINS and loss_count >= 1 and (win_count / loss_count) >= GH_WIN_LOSS_RATIO:
+        reasons.append("extreme_win_loss_ratio")
+    return bool(reasons), reasons
+
+
 def _daily_pnl(fills: list) -> list:
     """Sum closedPnl per UTC day -> list of (day, pnl)."""
     by_day: dict = {}
@@ -249,6 +372,8 @@ def compute_metrics(fills: list, roi_all: float, roi_30d: float) -> dict:
     """Consistency metrics from the closedPnl series (NOT raw PnL)."""
     closed = [_float(f.get("closedPnl")) for f in fills if _float(f.get("closedPnl")) != 0.0]
     trades = len(closed)
+    win_count = sum(1 for p in closed if p > 0)
+    loss_count = sum(1 for p in closed if p < 0)
 
     gross_profit = sum(p for p in closed if p > 0)
     gross_loss = -sum(p for p in closed if p < 0)
@@ -279,6 +404,8 @@ def compute_metrics(fills: list, roi_all: float, roi_30d: float) -> dict:
 
     return {
         "trades": trades,
+        "win_count": win_count,
+        "loss_count": loss_count,
         "days_active": len(daily),
         "history_span_days": history_span_days,
         "net_pnl": sum(closed),
@@ -388,8 +515,9 @@ def main() -> int:
 
     _atomic_write_json(checkpoint_path, checkpoint)
 
-    # 3) screen + rank
-    _log("[3/4] Screening + ranking by consistency")
+    # 3) screen + rank + live unrealized (gain-harvest blind spot)
+    _log("[3/5] Screening + ranking (realized consistency + live unrealized PnL)")
+    clearinghouse_dir = data_dir / "clearinghouse"
     screened = []
     for row in top:
         addr = row["ethAddress"]
@@ -426,48 +554,103 @@ def main() -> int:
         m["passed"] = all(gates.values())
         if m["passed"]:
             m["score"] = consistency_score(m)
+
+        # --- live clearinghouse state: expose open-position unrealized PnL ---
+        cpath = clearinghouse_dir / f"{addr}.json"
+        state = None
+        if not args.force and cpath.exists():
+            try:
+                state = json.loads(cpath.read_text())
+                if not isinstance(state, dict):
+                    state = None
+            except (ValueError, OSError):
+                state = None
+        if state is None and not args.no_fetch:
+            state = fetch_clearinghouse_state(addr)
+            if state is not None:
+                _atomic_write_json(cpath, state)
+            time.sleep(REQUEST_DELAY_S)
+
+        u = compute_unrealized(state)
+        true_perf = m["net_pnl"] + u["unrealized_pnl"]
+        gh_flag, gh_reasons = detect_gain_harvest(
+            m["net_pnl"], u["unrealized_pnl"], m["win_count"], m["loss_count"])
+
+        m.update({
+            "unrealized_pnl": u["unrealized_pnl"],
+            "open_positions": u["open_positions"],
+            "total_ntl": u["total_ntl"],
+            "total_margin_used": u["total_margin_used"],
+            "account_value_current": u["account_value_current"],
+            "state_available": u["state_available"],
+            "true_performance": true_perf,
+            "gain_harvester": gh_flag,
+            "gain_harvest_reasons": gh_reasons,
+        })
         screened.append(m)
 
-    screened.sort(key=lambda x: (x["passed"], x["score"]), reverse=True)
+    # 4) re-rank on TRUE performance (realized + unrealized); keep the realized-only
+    #    consistency score for reference, and preserve the original realized-only
+    #    ordering so we can audit who the blind spot was inflating.
+    original_ranking = sorted(screened, key=lambda x: (x["passed"], x["score"]), reverse=True)
+    original_top10 = [s for s in original_ranking if s["passed"]][:10]
+    reranked = sorted(screened, key=lambda x: (x["passed"], x["true_performance"]), reverse=True)
+
     _atomic_write_json(screener_path, {
         "fetchedAt": int(time.time() * 1000),
+        "ranking_metric": "true_performance (realized closedPnl + current unrealized PnL)",
         "constants": {
             "MIN_ROI_ALL": MIN_ROI_ALL,
             "MIN_ROI_30D": MIN_ROI_30D,
             "MIN_TRADES": MIN_TRADES,
             "MIN_DAYS": MIN_DAYS,
             "FREAK_DAY_MAX": FREAK_DAY_MAX,
+            "GH_MIN_WINS": GH_MIN_WINS,
+            "GH_WIN_LOSS_RATIO": GH_WIN_LOSS_RATIO,
+            "GH_UNREALIZED_DRAG": GH_UNREALIZED_DRAG,
+            "GH_MIN_UNREALIZED_ABS": GH_MIN_UNREALIZED_ABS,
         },
-        "ranked": screened,
+        "ranked": reranked,
     })
 
-    # 4) emit top-10
-    _log("[4/4] Ranked top-10 (consistency, NOT raw PnL)")
-    top10 = [s for s in screened if s["passed"]][:10]
+    # 5) emit re-ranked top-10 + gain-harvest audit
+    _log("[4/5] Re-ranked top-10 by TRUE performance (realized + unrealized)")
+    top10 = [s for s in reranked if s["passed"]][:10]
     _log("")
-    _log(f"{'#':>2}  {'address':<44} {'roi_all':>8} {'roi_30d':>8} {'trades':>7} "
-         f"{'days':>5} {'pf':>6} {'DDsev':>6} {'score':>6}")
+    _log(f"{'#':>2}  {'address':<44} {'realized':>12} {'unrealized':>12} "
+         f"{'true':>12}  flag")
     for rank, s in enumerate(top10, 1):
-        pf = "inf" if s["profit_factor"] == float("inf") else f"{s['profit_factor']:.2f}"
-        _log(f"{rank:>2}  {s['ethAddress']:<44} {s['roi_all']*100:>7.1f}% "
-             f"{s['roi_30d']*100:>7.1f}% {s['trades']:>7} {s['days_active']:>5} "
-             f"{pf:>6} {s['drawdown_severity']*100:>5.0f}% {s['score']:.3f}")
+        gh = "GAIN-HARVESTER" if s["gain_harvester"] else "genuine"
+        _log(f"{rank:>2}  {s['ethAddress']:<44} {s['net_pnl']:>12.1f} "
+             f"{s['unrealized_pnl']:>12.1f} {s['true_performance']:>12.1f}  {gh}")
+        if s["gain_harvest_reasons"]:
+            _log(f"       {'':>44} reasons={s['gain_harvest_reasons']}  "
+                 f"wins={s['win_count']} losses={s['loss_count']} open={s['open_positions']}")
 
     if not top10:
         _log("      (no traders passed all consistency gates)")
-        _log("      top-5 by score (gates NOT all passed):")
-        for rank, s in enumerate(screened[:5], 1):
-            pf = "inf" if s["profit_factor"] == float("inf") else f"{s['profit_factor']:.2f}"
+        _log("      top-5 by true performance (gates NOT all passed):")
+        for rank, s in enumerate(reranked[:5], 1):
             failed = [k for k, v in s["gates"].items() if not v]
-            _log(f"        {rank}. {s['ethAddress']} roi_all={s['roi_all']*100:.0f}% "
-                 f"roi_30d={s['roi_30d']*100:.1f}% trades={s['trades']} "
-                 f"days={s['days_active']} pf={pf} score={s['score']:.3f} fail={failed}")
+            _log(f"        {rank}. {s['ethAddress']} realized={s['net_pnl']:.0f} "
+                 f"true={s['true_performance']:.0f} fail={failed}")
 
     _log("")
+    _log("[5/5] Original top-10 (realized-only) gain-harvest audit")
+    _log(f"{'address':<44} {'realized':>12} {'unrealized':>12} {'true':>12}  verdict")
+    for s in original_top10:
+        verdict = "GAIN-HARVESTER" if s["gain_harvester"] else "genuine"
+        _log(f"{s['ethAddress']:<44} {s['net_pnl']:>12.1f} {s['unrealized_pnl']:>12.1f} "
+             f"{s['true_performance']:>12.1f}  {verdict}")
+
+    n_gh = sum(1 for s in screened if s["gain_harvester"])
+    _log("")
     _log(f"Passed gates: {sum(1 for s in screened if s['passed'])}/{len(screened)}")
-    _log(f"Stored: leaderboard -> {lb_path}")
-    _log(f"        fills       -> {fills_dir}/ (n={len(checkpoint)})")
-    _log(f"        screener    -> {screener_path}")
+    _log(f"Gain-harvesters flagged: {n_gh}/{len(screened)}")
+    _log(f"Stored: leaderboard    -> {lb_path}")
+    _log(f"        fills          -> {fills_dir}/ (n={len(checkpoint)})")
+    _log(f"        clearinghouse  -> {clearinghouse_dir}/")
+    _log(f"        screener       -> {screener_path}")
     return 0
 
 
