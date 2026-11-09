@@ -118,6 +118,28 @@ def _load_key() -> str | None:
     return None
 
 
+# Server-time budget tracker (free key: 300 s of query time per hour). We pace
+# ourselves against the cumulative ``stats.elapsed_ms`` the API reports, and wait
+# for the hour boundary when the budget is exhausted (QUERY_BUDGET_EXCEEDED).
+_BUDGET_S = 285.0           # leave ~5% headroom under the 300 s free-key budget
+_server_ms: list[float] = [0.0]
+_hour_key: list[str | None] = [None]
+
+
+def _seconds_to_hour_end() -> float:
+    n = datetime.now(timezone.utc)
+    return 3600.0 - (n.minute * 60 + n.second + n.microsecond / 1e6)
+
+
+def _maybe_wait_for_budget() -> None:
+    hk = datetime.now(timezone.utc).strftime("%Y%m%d%H")
+    if _hour_key[0] != hk:
+        _hour_key[0] = hk
+        _server_ms[0] = 0.0
+    if _server_ms[0] / 1000.0 >= _BUDGET_S:
+        time.sleep(_seconds_to_hour_end())
+
+
 def _query(sql: str, key: str | None, timeout: int = 60) -> dict:
     req = urllib.request.Request(
         API,
@@ -130,9 +152,12 @@ def _query(sql: str, key: str | None, timeout: int = 60) -> dict:
     )
     last_err: Exception | None = None
     for attempt in range(MAX_RETRIES):
+        _maybe_wait_for_budget()
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return json.loads(resp.read())
+                r = json.loads(resp.read())
+                _server_ms[0] += float(r.get("stats", {}).get("elapsed_ms", 0.0))
+                return r
         except urllib.error.HTTPError as e:
             body = ""
             try:
@@ -144,6 +169,11 @@ def _query(sql: str, key: str | None, timeout: int = 60) -> dict:
                 ra = e.headers.get("Retry-After")
                 wait = float(ra) if ra and ra.isdigit() else min(30 * (attempt + 1), 120)
                 time.sleep(wait)
+                last_err = e
+                continue
+            # 402 QUERY_BUDGET_EXCEEDED -> wait for the hourly reset, then retry.
+            if e.code == 402 and "QUERY_BUDGET_EXCEEDED" in body:
+                time.sleep(_seconds_to_hour_end())
                 last_err = e
                 continue
             raise FillsIngestError(
@@ -267,13 +297,17 @@ def pull_day(scope: str, day: str, markets: list[str] | None,
         first = True    # skip keyset on the window's first query
         last_ts = w0s
         last_oid = -1
+        last_tid = -1
         while True:
+            # keyset on the UNIQUE (ts, oid, tid) triple. oid alone is NOT unique
+            # (one order's partial fills share oid); tid breaks that tie.
             curs = "" if first else (
-                f" AND (ts > '{last_ts}' OR (ts = '{last_ts}' AND oid > {last_oid}))")
+                f" AND (ts > '{last_ts}' OR (ts = '{last_ts}' AND oid > {last_oid}) "
+                f"OR (ts = '{last_ts}' AND oid = {last_oid} AND tid > {last_tid}))")
             sql = (
                 f"SELECT {cols_sql} FROM hl.fills "
                 f"WHERE ts >= '{w0s}' AND ts < '{w1s}'{in_clause}{curs} "
-                f"ORDER BY ts, oid LIMIT {ROWS_PER_QUERY}"
+                f"ORDER BY ts, oid, tid LIMIT {ROWS_PER_QUERY}"
             )
             elapsed = time.monotonic() - last_q
             if elapsed < spacing:
@@ -286,6 +320,7 @@ def pull_day(scope: str, day: str, markets: list[str] | None,
                 rows.append(dict(zip(COLS, rec)))
             last_ts = batch[-1][0]          # ts arrives as a 'YYYY-MM-DD ...' string
             last_oid = batch[-1][COLS.index("oid")]
+            last_tid = batch[-1][COLS.index("tid")]
             first = False
             if len(batch) < ROWS_PER_QUERY:
                 break
@@ -313,7 +348,9 @@ def write_day(scope: str, day: str, rows: list[dict]) -> None:
     if not rows:
         return
     df = pd.DataFrame(rows)
-    df["ts"] = pd.to_datetime(df["ts"], unit="ms", utc=True).astype("datetime64[us, UTC]")
+    # ts arrives as a 'YYYY-MM-DD HH:MM:SS.ffffff' string (EventDateTime64(6), UTC)
+    df["ts"] = (pd.to_datetime(df["ts"], errors="coerce")
+                .dt.tz_localize("UTC").astype("datetime64[us, UTC]"))
     for c in ("price", "size", "notional", "fee", "realized_pnl"):
         df[c] = pd.to_numeric(df[c], errors="coerce")
     for c in ("oid", "tid", "block"):
