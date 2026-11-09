@@ -1,0 +1,82 @@
+{
+  "construction": "wallet_cohort_cot_first_look",
+  "venue": "hyperliquid",
+  "universe": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "leverage": "none",
+  "live": "off",
+  "no_lookahead": true,
+  "label_window": [
+    "2026-10-10",
+    "2026-10-24"
+  ],
+  "signal_start": "2026-10-25",
+  "label_counts": {
+    "n_labeled_wallets": 106992,
+    "n_skilled": 2212,
+    "n_unskilled": 12372,
+    "n_neutral": 21651,
+    "n_unlabeled": 70757,
+    "signal_days": [
+      "2026-10-25",
+      "2026-10-26",
+      "2026-10-27",
+      "2026-10-28",
+      "2026-10-29",
+      "2026-10-30",
+      "2026-10-31",
+      "2026-11-01",
+      "2026-11-02",
+      "2026-11-03",
+      "2026-11-04",
+      "2026-11-05",
+      "2026-11-06",
+      "2026-11-07",
+      "2026-11-08",
+      "2026-11-09"
+    ],
+    "n_signal_obs_total": 45
+  },
+  "first_look": {
+    "follow_skilled": {
+      "n": 45,
+      "n_long": 23,
+      "n_short": 22,
+      "ic_pearson": -0.0787,
+      "ic_spearman": -0.1712,
+      "mean_fwd_ret_bps_signpos": -19.7,
+      "net_pnl_bps": -1021.47,
+      "net_pnl_per_obs_bps": -22.7,
+      "mde_sharpe_dsr": 1.6431,
+      "mde_ic": 0.4175
+    },
+    "fade_unskilled": {
+      "n": 45,
+      "n_long": 21,
+      "n_short": 24,
+      "ic_pearson": -0.1043,
+      "ic_spearman": -0.1063,
+      "mean_fwd_ret_bps_signpos": -19.5,
+      "net_pnl_bps": -1012.31,
+      "net_pnl_per_obs_bps": -22.5,
+      "mde_sharpe_dsr": 1.6431,
+      "mde_ic": 0.4175
+    },
+    "combined": {
+      "n": 45,
+      "n_long": 21,
+      "n_short": 24,
+      "ic_pearson": 0.0225,
+      "ic_spearman": -0.0103,
+      "mean_fwd_ret_bps_signpos": 9.75,
+      "net_pnl_bps": 303.53,
+      "net_pnl_per_obs_bps": 6.75,
+      "mde_sharpe_dsr": 1.6431,
+      "mde_ic": 0.4175
+    }
+  },
+  "verdict": "PRELIMINARY machinery validation on 16 signal days (free key ~30d window). Skill persistence + cohort-stable signal CANNOT be established this short; see the 90-day Explorer run."
+}

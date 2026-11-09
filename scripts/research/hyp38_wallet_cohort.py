@@ -95,34 +95,42 @@ def pull_wallet_daily(force: bool = False) -> pd.DataFrame:
     cols_sql = ", ".join(WALLET_COLS)
     in_clause = ", ".join(f"'{m}'" for m in MARKETS)
     rows: list[dict] = []
-    # day range: pull the full reachable window (label + signal days).
-    day = LABEL_START
-    last_day = "2026-11-09"
-    cursor = (LABEL_START, "", "")   # (day, address, market)
-    pages = 0
-    while day <= last_day:
-        # rediscover per-day cursor: (day, address, market) keyset asc
-        d, addr, mkt = cursor
-        cond = (
-            f"WHERE market IN ({in_clause}) AND day >= '{LABEL_START}' "
-            f"AND day <= '{last_day}' "
-            f"AND (day > '{d}' OR (day = '{d}' AND address > '{addr}') "
-            f"OR (day = '{d}' AND address = '{addr}' AND market > '{mkt}'))"
-        )
-        sql = (f"SELECT {cols_sql} FROM hl.wallet_daily {cond} "
-               f"ORDER BY day, address, market LIMIT 1000")
-        r = query(sql)
-        batch = r.get("rows", [])
-        pages += 1
-        if not batch:
-            break
-        for rec in batch:
-            rows.append(dict(zip(WALLET_COLS, rec)))
-        last = batch[-1]
-        day = last[0]
-        cursor = (last[0], last[1], last[2])
-        if pages % 100 == 0:
-            print(f"[pull] ... {len(rows)} rows ({pages} pages)")
+
+    # day-granule: pull per-day (each single-day query scans a ~1-day partition
+    # and is ~8ms; the cross-day ORDER BY keyset is ~296ms/query and burns the
+    # 300 s/hour free-key budget). Iterate each day, keyset-paginate (address,
+    # market) WITHIN the day.
+    import datetime as _dt
+    d0 = _dt.date.fromisoformat(LABEL_START)
+    d1 = _dt.date.fromisoformat("2026-11-09")
+    days = []
+    cur = d0
+    while cur <= d1:
+        days.append(cur.isoformat())
+        cur += _dt.timedelta(days=1)
+
+    for day in days:
+        addr, mkt = "", ""
+        while True:
+            cond = (
+                f"WHERE market IN ({in_clause}) AND day = '{day}' "
+                f"AND (address > '{addr}' "
+                f"OR (address = '{addr}' AND market > '{mkt}'))"
+            )
+            sql = (f"SELECT {cols_sql} FROM hl.wallet_daily {cond} "
+                   f"ORDER BY address, market LIMIT 1000")
+            r = query(sql)
+            batch = r.get("rows", [])
+            if not batch:
+                break
+            for rec in batch:
+                rows.append(dict(zip(WALLET_COLS, rec)))
+            last = batch[-1]
+            addr, mkt = last[1], last[2]
+            if len(batch) < 1000:
+                break
+        if len(days) > 1:
+            print(f"[pull] {day}: cumulative {len(rows)} rows")
 
     df = pd.DataFrame(rows)
     for c in ("fills", "maker_fills", "taker_fills",
@@ -135,7 +143,7 @@ def pull_wallet_daily(force: bool = False) -> pd.DataFrame:
     tmp = CACHE_PATH.with_suffix(".parquet.tmp")
     df.to_parquet(tmp, index=False)
     tmp.replace(CACHE_PATH)
-    print(f"[pull] pulled+cached {len(df)} rows over {pages} pages")
+    print(f"[pull] pulled+cached {len(df)} rows over {len(days)} days")
     return df
 
 
@@ -219,8 +227,7 @@ def run_first_look(df: pd.DataFrame, labels: pd.DataFrame) -> dict:
     sig = df[(df["day"] >= SIGNAL_START)].copy()
     sig["coin"] = sig["market"].str.replace("-PERP", "", regex=False)
 
-    def _mark(row):
-        a = row["address"]
+    def _mark(a):
         if a in skilled:
             return "skilled"
         if a in unskilled:
