@@ -40,8 +40,8 @@ Storage (idempotent + resumable + rate-limit aware):
   default dir = ~/.hermes/market_data/hl_copytrade/ (override with --data-dir)
 
 Usage:
-    python3 hl_leaderboard_scan.py                 # top-100, fetch + screen, print top-10
-    python3 hl_leaderboard_scan.py --top 50        # top-50 traders
+    python3 hl_leaderboard_scan.py                 # top-50/window, fetch + screen, print top-10
+    python3 hl_leaderboard_scan.py --top 50        # top-50 per window (allTime + 30d)
     python3 hl_leaderboard_scan.py --force         # re-fetch fills (ignore existing)
     python3 hl_leaderboard_scan.py --no-fetch      # screen from already-stored fills only
 """
@@ -70,6 +70,7 @@ DEFAULT_DIR = Path.home() / ".hermes" / "market_data" / "hl_copytrade"
 MIN_ROI_ALL = 0.05      # all-time ROI bar (5%)
 MIN_ROI_30D = 0.0       # still-active bar (recent month ROI strictly positive)
 MIN_TRADES = 50         # minimum closed fills for a meaningful sample
+MIN_DAYS = 7            # minimum distinct trading days (excludes 1-day HFT flukes)
 FREAK_DAY_MAX = 0.50    # max single-day |pnl| share of gross |pnl| to pass gate
 MAX_FILLS = 10000       # per-trader fill cap (empirical per-page cap is 2000)
 FILL_PAGE = 2000        # observed per-request fill cap
@@ -253,7 +254,7 @@ def compute_metrics(fills: list, roi_all: float, roi_30d: float) -> dict:
     gross_loss = -sum(p for p in closed if p < 0)
     profit_factor = (gross_profit / gross_loss) if gross_loss > 0 else float("inf")
 
-    # daily equity curve -> max drawdown as fraction of peak
+    # daily equity curve -> max drawdown in $, and "severity" relative to profits
     daily = _daily_pnl(fills)
     equity = 0.0
     peak = 0.0
@@ -261,9 +262,11 @@ def compute_metrics(fills: list, roi_all: float, roi_30d: float) -> dict:
     for _, pnl in daily:
         equity += pnl
         peak = max(peak, equity)
-        dd = peak - equity
-        if peak > 0:
-            max_dd = max(max_dd, dd / peak)
+        max_dd = max(max_dd, peak - equity)
+    # drawdown severity = worst drawdown as a fraction of total gross profit
+    # (how much of your winnings did the worst drawdown eat; lower = more consistent)
+    drawdown_severity = (max_dd / gross_profit) if gross_profit > 0 else 1.0
+    drawdown_severity = _clamp(drawdown_severity, 0.0, 1.0)
 
     # freak-day concentration: max single-day |pnl| / gross |pnl|
     daily_pnls = [p for _, p in daily]
@@ -271,14 +274,19 @@ def compute_metrics(fills: list, roi_all: float, roi_30d: float) -> dict:
     max_day = max((abs(p) for p in daily_pnls), default=0.0)
     freak_day_share = (max_day / gross_daily) if gross_daily > 0 else 1.0
 
+    times = [_float(f.get("time")) for f in fills if _float(f.get("time")) > 0]
+    history_span_days = (max(times) - min(times)) / 86400000.0 if len(times) >= 2 else 0.0
+
     return {
         "trades": trades,
         "days_active": len(daily),
+        "history_span_days": history_span_days,
         "net_pnl": sum(closed),
         "gross_profit": gross_profit,
         "gross_loss": gross_loss,
         "profit_factor": profit_factor,
-        "max_drawdown_frac": max_dd,
+        "max_drawdown": max_dd,
+        "drawdown_severity": drawdown_severity,
         "freak_day_share": freak_day_share,
         "roi_all": roi_all,
         "roi_30d": roi_30d,
@@ -296,7 +304,7 @@ def consistency_score(m: dict) -> float:
     """
     import math
     pf_norm = _clamp(m["profit_factor"], 0.0, 5.0) / 5.0
-    dd_norm = 1.0 - _clamp(m["max_drawdown_frac"], 0.0, 1.0)
+    dd_norm = 1.0 - m["drawdown_severity"]  # severity already clamped 0..1
     freak_norm = 1.0 - _clamp(m["freak_day_share"], 0.0, 1.0)
     sample_norm = _clamp(math.log10(m["trades"] + 1) / math.log10(2000 + 1), 0.0, 1.0)
     return 0.35 * pf_norm + 0.25 * dd_norm + 0.20 * freak_norm + 0.20 * sample_norm
@@ -312,7 +320,7 @@ def _atomic_write_json(path: Path, obj) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--top", type=int, default=100, help="top N traders by all-time PnL (default 100)")
+    ap.add_argument("--top", type=int, default=50, help="top N traders per window (allTime + 30d) (default 50)")
     ap.add_argument("--data-dir", type=str, default=str(DEFAULT_DIR))
     ap.add_argument("--force", action="store_true", help="re-fetch fills even if already stored")
     ap.add_argument("--no-fetch", action="store_true", help="screen from stored fills only (no network fills)")
@@ -334,8 +342,22 @@ def main() -> int:
     _atomic_write_json(lb_path, {"fetchedAt": int(time.time() * 1000), "rows": rows})
     _log(f"      leaderboard rows: {len(rows)}")
 
-    top = rows[: args.top]
-    _log(f"[2/4] Fetching fills for top {len(top)} traders")
+    # candidate pool = union of top-N by all-time PnL and top-N by 30d PnL
+    # (raw all-time PnL alone is dominated by inactive whales + 1-day HFT bots;
+    #  the 30d window surfaces still-active winners worth reverse-engineering).
+    by_all = sorted(rows, key=lambda r: r["pnl_all"], reverse=True)[: args.top]
+    by_30d = sorted(rows, key=lambda r: r["pnl_30d"], reverse=True)[: args.top]
+    pool: dict = {}
+    for r in by_all:
+        pool.setdefault(r["ethAddress"], dict(r, source=["allTime"]))
+    for r in by_30d:
+        if r["ethAddress"] in pool:
+            pool[r["ethAddress"]]["source"].append("30d")
+        else:
+            pool[r["ethAddress"]] = dict(r, source=["30d"])
+    top = list(pool.values())
+    _log(f"[2/4] Candidate pool {len(top)} traders "
+         f"(top-{args.top} allTime PnL ∪ top-{args.top} 30d PnL)")
 
     checkpoint = {}
     if checkpoint_path.exists():
@@ -388,6 +410,7 @@ def main() -> int:
             "pnl_all": row["pnl_all"],
             "pnl_30d": row["pnl_30d"],
             "vlm_all": row["vlm_all"],
+            "source": row.get("source", []),
             "score": 0.0,
             "passed": False,
         })
@@ -396,6 +419,7 @@ def main() -> int:
             "roi_all_bar": m["roi_all"] >= MIN_ROI_ALL,
             "still_active": m["roi_30d"] > MIN_ROI_30D,
             "enough_sample": m["trades"] >= MIN_TRADES,
+            "enough_history": m["days_active"] >= MIN_DAYS,
             "no_freak_day": m["freak_day_share"] <= FREAK_DAY_MAX,
         }
         m["gates"] = gates
@@ -411,6 +435,7 @@ def main() -> int:
             "MIN_ROI_ALL": MIN_ROI_ALL,
             "MIN_ROI_30D": MIN_ROI_30D,
             "MIN_TRADES": MIN_TRADES,
+            "MIN_DAYS": MIN_DAYS,
             "FREAK_DAY_MAX": FREAK_DAY_MAX,
         },
         "ranked": screened,
@@ -421,15 +446,22 @@ def main() -> int:
     top10 = [s for s in screened if s["passed"]][:10]
     _log("")
     _log(f"{'#':>2}  {'address':<44} {'roi_all':>8} {'roi_30d':>8} {'trades':>7} "
-         f"{'pf':>6} {'maxDD':>6} {'score':>6}")
+         f"{'days':>5} {'pf':>6} {'DDsev':>6} {'score':>6}")
     for rank, s in enumerate(top10, 1):
         pf = "inf" if s["profit_factor"] == float("inf") else f"{s['profit_factor']:.2f}"
         _log(f"{rank:>2}  {s['ethAddress']:<44} {s['roi_all']*100:>7.1f}% "
-             f"{s['roi_30d']*100:>7.1f}% {s['trades']:>7} {pf:>6} "
-             f"{s['max_drawdown_frac']*100:>5.1f}% {s['score']:.3f}")
+             f"{s['roi_30d']*100:>7.1f}% {s['trades']:>7} {s['days_active']:>5} "
+             f"{pf:>6} {s['drawdown_severity']*100:>5.0f}% {s['score']:.3f}")
 
     if not top10:
         _log("      (no traders passed all consistency gates)")
+        _log("      top-5 by score (gates NOT all passed):")
+        for rank, s in enumerate(screened[:5], 1):
+            pf = "inf" if s["profit_factor"] == float("inf") else f"{s['profit_factor']:.2f}"
+            failed = [k for k, v in s["gates"].items() if not v]
+            _log(f"        {rank}. {s['ethAddress']} roi_all={s['roi_all']*100:.0f}% "
+                 f"roi_30d={s['roi_30d']*100:.1f}% trades={s['trades']} "
+                 f"days={s['days_active']} pf={pf} score={s['score']:.3f} fail={failed}")
 
     _log("")
     _log(f"Passed gates: {sum(1 for s in screened if s['passed'])}/{len(screened)}")
