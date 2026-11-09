@@ -16,6 +16,10 @@ import math
 from collections import defaultdict
 from typing import Any
 
+# US-06 M-5: MDE reporting wired into run_cpcv's return. Same directory, and
+# mde.py is self-contained (no import back into this module), so no cycle.
+import mde  # noqa: E402  (same-dir module; see sys.path setup in callers)
+
 
 # ── 1. Group splitting ──────────────────────────────────────────────────────
 
@@ -502,6 +506,7 @@ def run_cpcv(
     else:
         sharpe = 0.0
         dsr = 1.0  # no data → cannot reject
+        n_obs = 0
 
     return {
         "splits": splits,
@@ -512,4 +517,21 @@ def run_cpcv(
         "sharpe": round(sharpe, 6) if all_test_trades else 0.0,
         "n_splits": len(splits),
         "n_paths": len(paths),
+        # US-06 M-5: minimum detectable effect wired into the G5 report path so
+        # a null DSR/PBO is reported as "not detected above MDE X" (never
+        # "no edge"). Additive — existing consumers read pbo/dsr/sharpe only.
+        #
+        # HONEST n: MDE is computed on len(trades) — the number of DISTINCT
+        # (assumed non-overlapping) trades the caller supplied — NOT the
+        # 11x-stacked n_obs above (which counts each trade once per CPCV test
+        # fold and would under-state MDE, the exact "overlapping returns
+        # inflate n" error the findings summary flags). The stacked n_obs is
+        # reported separately for transparency.
+        "n_observations": len(trades),
+        "n_observations_stacked": n_obs,
+        "n_trials": n_trials,
+        "mde_sharpe_dsr": round(
+            mde.mde_sharpe_dsr(len(trades), n_trials), 6),
+        "mde_sharpe_single": round(
+            mde.mde_sharpe(len(trades), n_trials), 6),
     }
