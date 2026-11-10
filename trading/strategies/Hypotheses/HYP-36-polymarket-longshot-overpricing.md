@@ -23,8 +23,9 @@ note: |
   already taken (delta-neutral funding carry). Rather than overwrite an existing pre-registration
   (data loss is unacceptable), this is registered as HYP-36 (next free number). If the directive
   intended to renumber the funding carry elsewhere, rename this file in one path-scoped commit.
+has_quotes: false
+tags: []
 ---
-
 # HYP-36 — Polymarket longshot overpricing vs options-implied probabilities
 
 ## Motivation

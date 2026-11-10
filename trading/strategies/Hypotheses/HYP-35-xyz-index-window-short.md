@@ -12,8 +12,9 @@ cost_hurdle_bps: realistic taker + funding + the xyz market's wider HIP-3 spread
 counterparty: the index-perp's arbitrage/marking counterparties in a specific daily window
 topic: structural (intraday calendar window)
 confidence: low (a specific intraday window with 5:1 on a modest sample is exactly the overfit signature; gate is mechanism-identification first)
+has_quotes: false
+tags: []
 ---
-
 # HYP-35 — Short the xyz index-perp in the 13–15 UTC window
 
 ## Motivation

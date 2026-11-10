@@ -15,8 +15,9 @@ counterparty: unlock recipients + front-runners selling into a scheduled supply 
 topic: structural (scheduled fundamental supply event — NOT retail-TA / chart-pattern / ICT-SMC)
 confidence: low-medium (prior literature reports a real median drift, but it is a data-gated, thin-float, small-capacity effect)
 note: renumbered from directive §8. Collision chain: directive label "HYP-31" is taken (cross-venue basis); "HYP-36" is claimed in-flight by a concurrent agent (polymarket longshot overpricing, itself renumbered from a "HYP-28" collision). Assigned next free ID HYP-37.
+has_quotes: false
+tags: []
 ---
-
 # HYP-37 — Token-unlock pre-event drift (short)
 
 ## Motivation

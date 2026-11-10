@@ -24,8 +24,9 @@ note: |
   (crowd long/short ratio, DATA-GATED) and HYP-36 is taken (Polymarket longshot, directive
   HYP-28). Rather than overwrite an existing pre-registration (data loss is unacceptable), this
   is registered as HYP-37 (next free number). Cross-reference: directive §8 HYP-33 == HYP-37.
+has_quotes: false
+tags: []
 ---
-
 # HYP-37 — Time-series trend on majors, volatility-targeted (sleeve alongside carry)
 
 ## Motivation

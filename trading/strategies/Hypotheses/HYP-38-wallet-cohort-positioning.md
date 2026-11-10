@@ -43,8 +43,11 @@ holding_period_note: "The 5-dimension skill rubric intends holding period as a
   is therefore DATA-GATED: pre-registered as a required dimension, explicitly
   deferred to the Explorer-tier raw-fills (90-day) run, and does NOT enter the
   first-look label. Documented, not silently dropped."
+topic: general
+confidence: high
+has_quotes: false
+tags: []
 ---
-
 # HYP-38 — Wallet-cohort positioning (on-chain Commitment of Traders)
 
 ## Motivation
