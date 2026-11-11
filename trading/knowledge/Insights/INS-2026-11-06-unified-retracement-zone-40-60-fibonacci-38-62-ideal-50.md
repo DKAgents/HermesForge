@@ -31,3 +31,7 @@ In an uptrend, wait for a pullback of the prior advance to reach at least 38% an
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[N085-fibonacci-percentage-retracements-38-50-62|Fibonacci Percentage Retracements: 38%, 50%, 62%]]
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

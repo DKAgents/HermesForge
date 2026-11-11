@@ -31,3 +31,6 @@ When the McClellan Oscillator (or similar) signals overbought/oversold in a tren
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

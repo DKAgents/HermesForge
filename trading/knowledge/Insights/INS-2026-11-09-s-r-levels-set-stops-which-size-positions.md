@@ -30,3 +30,7 @@ When shorting at a resistance level from C065 or EN069, measure the distance fro
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-22-s-r-stop-distance-determines-position-size|S/R Stop Distance Determines Position Size]]
+- [[C334-resistance-level|Resistance Level]]

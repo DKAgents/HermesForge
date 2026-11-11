@@ -31,3 +31,8 @@ Wait for a pullback in an uptrend to retrace 50% of the prior advance (within th
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[N084-key-fibonacci-ratios-618-1618-2618-382|Key Fibonacci Ratios: .618, 1.618, 2.618, .382]]
+- [[N085-fibonacci-percentage-retracements-38-50-62|Fibonacci Percentage Retracements: 38%, 50%, 62%]]
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -31,3 +31,6 @@ Only take Keltner/MA-based trend signals when ADX is rising, and in that regime 
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

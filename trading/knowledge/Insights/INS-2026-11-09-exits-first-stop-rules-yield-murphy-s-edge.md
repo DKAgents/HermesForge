@@ -31,3 +31,7 @@ A trader should predefine and mechanically trail stop orders based on price stru
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
+- [[C245-stop-order|Stop Order]]

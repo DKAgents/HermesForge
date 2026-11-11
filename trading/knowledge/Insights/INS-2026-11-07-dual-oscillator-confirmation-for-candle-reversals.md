@@ -31,3 +31,7 @@ Wait for both RSI (above 70 for sell, below 30 for buy) and stochastics to be in
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C149-rsi-vs-stochastics-volatility-comparison|RSI vs. Stochastics Volatility Comparison]]
+- [[N084-bearish-reversal-candle-pattern-library|Bearish Reversal Candle Pattern Library]]

@@ -31,3 +31,6 @@ Only take long Keltner Channel lower-band entries in an uptrend when ADX is risi
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -31,3 +31,7 @@ Traders should predefine stop levels using techniques like P&F trailing stops or
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-10-27-exits-matter-more-stop-placement-rules-edge|Exits matter more: stop placement rules edge]]
+- [[C245-stop-order|Stop Order]]

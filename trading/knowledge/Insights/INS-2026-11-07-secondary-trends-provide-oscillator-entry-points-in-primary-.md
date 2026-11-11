@@ -31,3 +31,6 @@ Traders should combine trend analysis (identify primary uptrend/downtrend) with 
 ## Connection Type
 
 **adds_condition** — Actionability score: 3/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

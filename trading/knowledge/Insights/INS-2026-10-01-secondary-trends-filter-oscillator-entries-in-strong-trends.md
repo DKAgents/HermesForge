@@ -31,3 +31,6 @@ In a strong uptrend, do not short based on overbought oscillator readings; inste
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-07-secondary-trends-provide-oscillator-entry-points-in-primary-|Secondary Trends Provide Oscillator Entry Points in Primary Trend]]

@@ -30,3 +30,6 @@ In a downtrend, short rallies into a former support level that was violated and 
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[C336-support-level|Support Level]]

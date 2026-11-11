@@ -31,3 +31,6 @@ In an uptrend, wait for a pullback to retrace 40-60% of the prior advance, ideal
 ## Connection Type
 
 **creates_filter** — Actionability score: 5/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

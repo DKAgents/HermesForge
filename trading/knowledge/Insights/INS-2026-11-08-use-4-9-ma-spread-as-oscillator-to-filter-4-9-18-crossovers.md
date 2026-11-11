@@ -31,3 +31,6 @@ Before taking a 4-9-18 triple crossover signal, require the 4-9 MA spread to be 
 ## Connection Type
 
 **creates_filter** — Actionability score: 3/5
+
+## Related Notes
+- [[R211-moving-average-crossover-system-tied-to-cycles|Moving Average Crossover System Tied to Cycles]]

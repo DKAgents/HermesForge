@@ -31,3 +31,6 @@ When a gap appears, check the volume surge before acting: trade in the gap direc
 ## Connection Type
 
 **resolves_conflict** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]
