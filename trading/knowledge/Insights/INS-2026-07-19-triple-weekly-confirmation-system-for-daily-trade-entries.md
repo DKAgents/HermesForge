@@ -33,6 +33,8 @@ Before entering on a daily MACD or Stochastics crossover, require alignment acro
 **creates_filter** — Actionability score: 4/5
 
 ## Related
+- [[ADR-002-Paper-Trading-First]] — See ADR-002-Paper-Trading-First for deployment requirements
+
 - [[R012-time-filter-for-trendline-breaks-two-day-rule]] — Apply two-day rule to weekly breakouts for added confirmation
 
 - [[E019-weekly-chart-signals-as-filters-for-short-term-timing]] — See E019 for the principle of weekly filters for short-term timing
