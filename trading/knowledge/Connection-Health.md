@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-11-12T04:09:19Z
+updated: 2026-11-12T12:11:14Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,10 +9,10 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 2135 |
-| Connections created | 1 | 372 |
-| Review queue | 648 | 648 |
-| Avg score | 3.0 | — |
+| Notes examined | 5 | 2140 |
+| Connections created | 0 | 372 |
+| Review queue | 650 | 650 |
+| Avg score | 2.6 | — |
 
 ## Graph Density Signals
 - Total wikilinks in vault: ~6854
@@ -28,8 +28,8 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 - `code/forge-loop` — 44 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-11-12T04:09:19Z)
-- **trading/knowledge/Insights/INS-2026-07-19-triple-weekly-confirmation-system-for-daily-trade-entries.md** → **03-ADRs/ADR-002-Paper-Trading-First.md** (score 4.0): This strategy insight should be tied to the paper-trading-first policy so that any implementation is understood to require backtesting, paper trading, and approvals before live use. Linking them preserves the governance condition during future retrieval.
+## Recent Discoveries (last run: 2026-11-12T12:11:14Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 313: Created 1 connections from 5 notes. Avg score: 4.2.
