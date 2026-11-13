@@ -2,8 +2,11 @@
 type: connection-health
 updated: 2026-11-12T20:13:05Z
 tags: [connection-weaver, knowledge-graph, dashboard]
+topic: general
+confidence: high
+has_quotes: false
+source: unknown
 ---
-
 # Connection Health Dashboard
 
 ## Run Summary
