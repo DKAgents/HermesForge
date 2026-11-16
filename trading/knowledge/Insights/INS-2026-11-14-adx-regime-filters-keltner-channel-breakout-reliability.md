@@ -31,3 +31,7 @@ Only trade Keltner Channel breakouts or secondary-retracement entries when ADX i
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-01-adx-regime-determines-keltner-trend-vs-mean-reversion-use|ADX Regime Determines Keltner Trend vs. Mean-Reversion Use]]
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

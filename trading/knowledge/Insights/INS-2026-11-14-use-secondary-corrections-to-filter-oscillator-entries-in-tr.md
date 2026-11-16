@@ -31,3 +31,6 @@ Do not act on every oscillator signal; wait for a secondary correction in the pr
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

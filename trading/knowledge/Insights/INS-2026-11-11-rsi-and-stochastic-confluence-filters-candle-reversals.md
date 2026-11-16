@@ -31,3 +31,6 @@ Do not act on a candle reversal pattern unless RSI is above 70 (bearish) or belo
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-10-rsi-stochastic-confluence-filter-for-candle-reversal-pattern|RSI-Stochastic Confluence Filter for Candle Reversal Patterns]]

@@ -31,3 +31,6 @@ Only act on oscillator oversold signals when they appear during a secondary corr
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

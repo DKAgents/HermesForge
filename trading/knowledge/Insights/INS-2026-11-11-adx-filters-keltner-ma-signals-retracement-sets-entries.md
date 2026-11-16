@@ -31,3 +31,6 @@ Before taking a Keltner Channel or MA crossover signal, require ADX to be rising
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -30,3 +30,6 @@ In a downtrend, short into prior support-turned-resistance with a stop above tha
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C334-resistance-level|Resistance Level]]

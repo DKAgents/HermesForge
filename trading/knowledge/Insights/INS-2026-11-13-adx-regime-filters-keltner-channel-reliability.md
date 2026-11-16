@@ -31,3 +31,6 @@ Check ADX slope before acting on Keltner/MA signals: when ADX is rising, use Kel
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

@@ -31,3 +31,6 @@ Use technical levels (e.g., P&F columns, pivot point lows) to set initial stops,
 ## Connection Type
 
 **confirms_risk_rule** — Actionability score: 4/5
+
+## Related Notes
+- [[C245-stop-order|Stop Order]]

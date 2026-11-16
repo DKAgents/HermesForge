@@ -31,3 +31,6 @@ Classify each gap by its position in the trend; if it's a breakaway gap and volu
 ## Connection Type
 
 **adds_condition** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-09-07-heavy-volume-confirms-breakaway-gaps-and-island-reversals|Heavy Volume Confirms Breakaway Gaps and Island Reversals]]
