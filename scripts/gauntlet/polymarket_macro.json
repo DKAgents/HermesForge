@@ -1,14 +1,14 @@
 {
-  "updated": "2026-11-15T12:30:27.061867+00:00",
+  "updated": "2026-11-16T12:30:26.664568+00:00",
   "markets": [
     {
       "label": "Federal Reserve rate cut",
       "markets": [
         {
           "name": "Fed rate cut by...?",
-          "yes_pct": 3.2,
-          "no_pct": 96.8,
-          "volume": 10200.0
+          "yes_pct": 3.0,
+          "no_pct": 97.0,
+          "volume": 10700.0
         },
         {
           "name": "Fed rate cut by...?",
@@ -42,8 +42,8 @@
       "markets": [
         {
           "name": "Japan recession in 2026?",
-          "yes_pct": 8.5,
-          "no_pct": 91.5,
+          "yes_pct": 6.0,
+          "no_pct": 94.0,
           "volume": 4300.0
         },
         {
@@ -65,34 +65,34 @@
       "label": "CPI inflation",
       "markets": [
         {
-          "name": "November Inflation US - Annual",
-          "yes_pct": 30.0,
-          "no_pct": 70.0,
-          "volume": 2500.0
-        },
-        {
-          "name": "October Inflation UK - Annual",
-          "yes_pct": 0.2,
-          "no_pct": 99.8,
-          "volume": 4400.0
-        },
-        {
-          "name": "China Annual Inflation 2026",
-          "yes_pct": 52.5,
-          "no_pct": 47.5,
-          "volume": 33600.0
-        },
-        {
-          "name": "Brazil Annual Inflation 2026",
-          "yes_pct": 17.8,
-          "no_pct": 82.2,
-          "volume": 42400.0
-        },
-        {
           "name": "South Africa Annual Inflation 2026",
           "yes_pct": 0.2,
           "no_pct": 99.8,
-          "volume": 4000.0
+          "volume": 4300.0
+        },
+        {
+          "name": "November Inflation US - Annual",
+          "yes_pct": 35.0,
+          "no_pct": 65.0,
+          "volume": 3900.0
+        },
+        {
+          "name": "Core CPI YoY - November 2026",
+          "yes_pct": 4.0,
+          "no_pct": 96.0,
+          "volume": 1000.0
+        },
+        {
+          "name": "Japan Core CPI YoY in 2026",
+          "yes_pct": 0.1,
+          "no_pct": 100.0,
+          "volume": 3100.0
+        },
+        {
+          "name": "November Inflation China - Annual",
+          "yes_pct": 0.4,
+          "no_pct": 99.7,
+          "volume": 661.0
         }
       ],
       "count": 5
@@ -101,28 +101,28 @@
       "label": "S&P 500 price",
       "markets": [
         {
-          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
-          "yes_pct": 93.0,
-          "no_pct": 7.0,
-          "volume": 222500.0
+          "name": "What will S&P 500 (SPX) hit by end of December?",
+          "yes_pct": 5.1,
+          "no_pct": 94.8,
+          "volume": 11100.0
         },
         {
-          "name": "What will S&P 500 (SPX) hit by end of December?",
-          "yes_pct": 4.7,
-          "no_pct": 95.3,
-          "volume": 11100.0
+          "name": "Which companies added to S&P 500 in Q4 2026?",
+          "yes_pct": 19.5,
+          "no_pct": 80.5,
+          "volume": 2000.0
+        },
+        {
+          "name": "Bitcoin vs. Gold vs. S&P 500 in 2026",
+          "yes_pct": 92.0,
+          "no_pct": 8.0,
+          "volume": 222600.0
         },
         {
           "name": "What will S&P 500 (SPX) close at end of 2026?",
           "yes_pct": 25.0,
           "no_pct": 75.0,
           "volume": 3700.0
-        },
-        {
-          "name": "Which companies added to S&P 500 in Q4 2026?",
-          "yes_pct": 20.0,
-          "no_pct": 80.0,
-          "volume": 2000.0
         }
       ],
       "count": 4
@@ -143,22 +143,22 @@
           "volume": 146000.0
         },
         {
-          "name": "Bitcoin price on November 15?",
+          "name": "Bitcoin price on November 16?",
           "yes_pct": 0.1,
-          "no_pct": 100.0,
-          "volume": 9800.0
+          "no_pct": 99.9,
+          "volume": 3900.0
         },
         {
-          "name": "Bitcoin price on November 14?",
+          "name": "Bitcoin price on November 17?",
+          "yes_pct": 0.7,
+          "no_pct": 99.3,
+          "volume": 1700.0
+        },
+        {
+          "name": "Bitcoin price on November 15?",
           "yes_pct": 0.0,
           "no_pct": 100.0,
-          "volume": 9600.0
-        },
-        {
-          "name": "Bitcoin price on November 16?",
-          "yes_pct": 0.4,
-          "no_pct": 99.6,
-          "volume": 3600.0
+          "volume": 9800.0
         }
       ],
       "count": 5
@@ -203,34 +203,34 @@
       "label": "Treasury yield",
       "markets": [
         {
-          "name": "How high will 30-year Treasury yield go before 2027?",
-          "yes_pct": 100.0,
-          "no_pct": 0.0,
-          "volume": 12600.0
-        },
-        {
-          "name": "How low will 5-year Treasury yield get before 2027?",
-          "yes_pct": 9.8,
-          "no_pct": 90.2,
-          "volume": 30500.0
-        },
-        {
           "name": "How high will 10-year Treasury yield go before 2027?",
           "yes_pct": 100.0,
           "no_pct": 0.0,
           "volume": 165800.0
         },
         {
-          "name": "How high will 30-year Treasury yield go in November?",
-          "yes_pct": 43.0,
-          "no_pct": 57.0,
-          "volume": 1500.0
+          "name": "How high will 2-year Treasury yield go before 2027?",
+          "yes_pct": 24.3,
+          "no_pct": 75.7,
+          "volume": 5400.0
         },
         {
-          "name": "How low will 5-year Treasury yield get in November?",
-          "yes_pct": 3.0,
-          "no_pct": 97.0,
-          "volume": 1400.0
+          "name": "How high will 5-year Treasury yield go before 2027?",
+          "yes_pct": 100.0,
+          "no_pct": 0.0,
+          "volume": 2700.0
+        },
+        {
+          "name": "How low will 5-year Treasury yield get before 2027?",
+          "yes_pct": 6.8,
+          "no_pct": 93.2,
+          "volume": 31900.0
+        },
+        {
+          "name": "How high will 30-year Treasury yield go before 2027?",
+          "yes_pct": 100.0,
+          "no_pct": 0.0,
+          "volume": 12600.0
         }
       ],
       "count": 5
