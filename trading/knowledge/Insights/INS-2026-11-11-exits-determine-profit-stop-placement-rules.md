@@ -33,4 +33,5 @@ Use technical levels (e.g., P&F columns, pivot point lows) to set initial stops,
 **confirms_risk_rule** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule|Volume-Confirmed Breakout Stop Placement Rule]]
 - [[C245-stop-order|Stop Order]]

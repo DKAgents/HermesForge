@@ -1,10 +1,35 @@
 [
   {
-    "book": "trading-book-ingestion",
-    "anchor_index_size": 2,
-    "notes_processed": 2,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "Insights",
+    "anchor_index_size": 783,
+    "notes_processed": 1171,
+    "notes_linked": 4,
+    "total_links_added": 4,
+    "sample": [
+      {
+        "note": "INS-2026-11-08-exit-focus-combine-pivot-entry-with-p-f-trailing-stop.md",
+        "links": [
+          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+        ]
+      },
+      {
+        "note": "INS-2026-11-06-exits-define-performance-stop-placement-rules.md",
+        "links": [
+          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+        ]
+      },
+      {
+        "note": "INS-2026-11-16-confluence-filter-rsi-stochastics-confirm-candle-reversals.md",
+        "links": [
+          "INS-2026-09-12-dual-oscillator-extremes-confirm-reversal-patterns"
+        ]
+      },
+      {
+        "note": "INS-2026-11-11-exits-determine-profit-stop-placement-rules.md",
+        "links": [
+          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+        ]
+      }
+    ]
   }
 ]
