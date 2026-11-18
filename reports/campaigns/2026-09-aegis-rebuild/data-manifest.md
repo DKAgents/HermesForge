@@ -1,11 +1,11 @@
-crosspost_state_bytes: 406
-snapshot_last_ok: 2026-11-16 20:00:30 UTC-07:00
-snapshot_last_rows: 39255
-fear_greed_last_ok: 2026-11-16
-fear_greed_last_value: 10 (Extreme Fear)
+crosspost_state_bytes: 244
+snapshot_last_ok: 2026-11-17 20:00:30 UTC-07:00
+snapshot_last_rows: 39256
+fear_greed_last_ok: 2026-11-17
+fear_greed_last_value: 12 (Extreme Fear)
 restore_drill_last_ok: 2026-11-15 01:00:31 UTC-07:00
 restore_drill_last_rows: 9258
-offbox_last_ok: 2026-11-16 20:00:30 UTC-07:00
+offbox_last_ok: 2026-11-17 20:00:30 UTC-07:00
 weaver_tier_test_last_ok: 2026-09-07 22:45 UTC
 weaver_tier_test_t2_connections: 4
 weaver_tier_test_t3_connections: 4
