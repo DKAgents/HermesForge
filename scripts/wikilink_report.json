@@ -1,33 +1,40 @@
 [
   {
-    "book": "Insights",
-    "anchor_index_size": 783,
-    "notes_processed": 1171,
-    "notes_linked": 4,
-    "total_links_added": 4,
+    "book": "knowledge",
+    "anchor_index_size": 1918,
+    "notes_processed": 2449,
+    "notes_linked": 5,
+    "total_links_added": 6,
     "sample": [
       {
-        "note": "INS-2026-11-08-exit-focus-combine-pivot-entry-with-p-f-trailing-stop.md",
+        "note": "INS-2026-11-17-40-60-retracement-confirms-ideal-entry-zone.md",
         "links": [
-          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+          "C050-secondary-trend-retracement-range"
         ]
       },
       {
-        "note": "INS-2026-11-06-exits-define-performance-stop-placement-rules.md",
+        "note": "INS-2026-11-16-adx-regime-filter-for-keltner-retracement-trades.md",
         "links": [
-          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+          "C050-secondary-trend-retracement-range"
         ]
       },
       {
-        "note": "INS-2026-11-16-confluence-filter-rsi-stochastics-confirm-candle-reversals.md",
+        "note": "INS-2026-11-17-adx-regime-filters-keltner-channel-reliability.md",
         "links": [
-          "INS-2026-09-12-dual-oscillator-extremes-confirm-reversal-patterns"
+          "C050-secondary-trend-retracement-range"
         ]
       },
       {
-        "note": "INS-2026-11-11-exits-determine-profit-stop-placement-rules.md",
+        "note": "INS-2026-11-17-oscillator-signals-need-secondary-corrections-in-strong-tren.md",
         "links": [
-          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+          "EN041-oscillator-entry-strategy-in-trending-markets"
+        ]
+      },
+      {
+        "note": "INS-2026-11-17-entry-stops-trigger-protective-trailing-stops-drive-p-l.md",
+        "links": [
+          "C243-market-order",
+          "C245-stop-order"
         ]
       }
     ]
