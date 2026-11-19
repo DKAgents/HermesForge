@@ -36,6 +36,8 @@ When trading a primary-trend pullback per EN041, require the McClellan Oscillato
 - [[INS-2026-08-16-use-breadth-oscillator-to-confirm-secondary-trend-entries|Use Breadth Oscillator to Confirm Secondary Trend Entries]]
 
 ## Related
+- [[R268-technical-analysis-checklist-market-analysis-phase]] — See R268-technical-analysis-checklist-market-analysis-phase for the broader market analysis checklist
+
 - [[R305-oscillators-and-trend-importance]] — See R305 for foundational rule on oscillator use in trending markets
 
 - [[N161-momentum-oscillator-construction]] — See R082 for the base breakout volume rule that this insight conditions with a false-breakout filter.
