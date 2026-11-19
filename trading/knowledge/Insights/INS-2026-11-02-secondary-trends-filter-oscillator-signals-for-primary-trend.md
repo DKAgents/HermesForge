@@ -31,3 +31,6 @@ Before acting on an overbought/oversold reading from the McClellan Oscillator, l
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-18-filter-oscillator-entries-with-secondary-trend-context|Filter Oscillator Entries with Secondary Trend Context]]

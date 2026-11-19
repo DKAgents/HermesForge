@@ -33,4 +33,5 @@ Traders should combine trend analysis (identify primary uptrend/downtrend) with 
 **adds_condition** — Actionability score: 3/5
 
 ## Related Notes
+- [[INS-2026-11-18-filter-oscillator-entries-with-secondary-trend-context|Filter Oscillator Entries with Secondary Trend Context]]
 - [[EN041-oscillator-entry-strategy-in-trending-markets|Oscillator Entry Strategy in Trending Markets]]

@@ -1,42 +1,10 @@
 [
   {
-    "book": "knowledge",
-    "anchor_index_size": 1918,
-    "notes_processed": 2449,
-    "notes_linked": 5,
-    "total_links_added": 6,
-    "sample": [
-      {
-        "note": "INS-2026-11-17-40-60-retracement-confirms-ideal-entry-zone.md",
-        "links": [
-          "C050-secondary-trend-retracement-range"
-        ]
-      },
-      {
-        "note": "INS-2026-11-16-adx-regime-filter-for-keltner-retracement-trades.md",
-        "links": [
-          "C050-secondary-trend-retracement-range"
-        ]
-      },
-      {
-        "note": "INS-2026-11-17-adx-regime-filters-keltner-channel-reliability.md",
-        "links": [
-          "C050-secondary-trend-retracement-range"
-        ]
-      },
-      {
-        "note": "INS-2026-11-17-oscillator-signals-need-secondary-corrections-in-strong-tren.md",
-        "links": [
-          "EN041-oscillator-entry-strategy-in-trending-markets"
-        ]
-      },
-      {
-        "note": "INS-2026-11-17-entry-stops-trigger-protective-trailing-stops-drive-p-l.md",
-        "links": [
-          "C243-market-order",
-          "C245-stop-order"
-        ]
-      }
-    ]
+    "book": "trading-book-ingestion",
+    "anchor_index_size": 2,
+    "notes_processed": 2,
+    "notes_linked": 0,
+    "total_links_added": 0,
+    "sample": []
   }
 ]

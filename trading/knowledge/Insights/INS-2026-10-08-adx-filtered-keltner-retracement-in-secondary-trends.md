@@ -34,3 +34,6 @@ In a high-ADX trend, take longs near the Keltner lower band within the secondary
 
 ## Related
 - [[C048-dows-three-tier-trend-classification]] — See C048 for definition of secondary trend context
+
+## Related Notes
+- [[INS-2026-11-18-filter-oscillator-entries-with-secondary-trend-context|Filter Oscillator Entries with Secondary Trend Context]]
