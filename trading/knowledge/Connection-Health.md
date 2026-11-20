@@ -1,28 +1,25 @@
 ---
 type: connection-health
-updated: 2026-11-19T20:50:30Z
+updated: 2026-11-20T04:52:36Z
 tags: [connection-weaver, knowledge-graph, dashboard]
-topic: general
-confidence: high
-has_quotes: false
-source: unknown
 ---
+
 # Connection Health Dashboard
 
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 2250 |
-| Connections created | 1 | 373 |
-| Review queue | 699 | 699 |
-| Avg score | 1.3 | — |
+| Notes examined | 5 | 2255 |
+| Connections created | 0 | 373 |
+| Review queue | 702 | 702 |
+| Avg score | 2.0 | — |
 
 ## Graph Density Signals
-- Total wikilinks in vault: ~7080
-- Total notes: 3231
-- Avg degree per note: 2.191
-- Notes with links: 1521 (47.1%)
-- Orphan notes (no links): 1710 (52.9%)
+- Total wikilinks in vault: ~7105
+- Total notes: 3239
+- Avg degree per note: 2.194
+- Notes with links: 1528 (47.2%)
+- Orphan notes (no links): 1711 (52.8%)
 
 ## Weakly Connected Areas
 - `cache` — 11 notes, avg degree 0.0
@@ -31,8 +28,8 @@ source: unknown
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 - `code/forge-loop` — 44 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-11-19T20:50:30Z)
-- **trading/knowledge/Insights/INS-2026-07-26-breadth-oscillator-confirms-counter-trend-entry-timing.md** → **trading/knowledge/Trading-Systems/technical-analysis-financial-markets-murphy/rules/R268-technical-analysis-checklist-market-analysis-phase.md** (score 4.0): B provides a broad market-analysis checklist that includes oscillator overbought/oversold evaluation, while A adds a critical condition: oscillators should be faded only in the direction of the primary trend and can be confirmed by breadth oscillators. Linking them enriches the checklist with a non-obvious refinement for counter-trend timing.
+## Recent Discoveries (last run: 2026-11-20T04:52:36Z)
+- (no connections created this run)
 
 ## Reflection Notes
 - Run 325: Created 1 connections from 5 notes. Avg score: 2.2.
