@@ -3,8 +3,8 @@ snapshot_last_ok: 2026-11-21 20:00:31 UTC-07:00
 snapshot_last_rows: 39271
 fear_greed_last_ok: 2026-11-21
 fear_greed_last_value: 12 (Extreme Fear)
-restore_drill_last_ok: 2026-11-15 01:00:31 UTC-07:00
-restore_drill_last_rows: 9258
+restore_drill_last_ok: 2026-11-22 01:00:30 UTC-07:00
+restore_drill_last_rows: 9264
 offbox_last_ok: 2026-11-21 20:00:31 UTC-07:00
 weaver_tier_test_last_ok: 2026-09-07 22:45 UTC
 weaver_tier_test_t2_connections: 4
