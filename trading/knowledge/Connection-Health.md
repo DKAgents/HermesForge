@@ -1,6 +1,6 @@
 ---
 type: connection-health
-updated: 2026-11-24T13:16:11Z
+updated: 2026-11-24T21:17:23Z
 tags: [connection-weaver, knowledge-graph, dashboard]
 ---
 
@@ -9,9 +9,9 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 ## Run Summary
 | Metric | Last Run | Total |
 |--------|----------|-------|
-| Notes examined | 5 | 2320 |
+| Notes examined | 5 | 2325 |
 | Connections created | 0 | 373 |
-| Review queue | 732 | 732 |
+| Review queue | 735 | 735 |
 | Avg score | 2.4 | — |
 
 ## Graph Density Signals
@@ -28,7 +28,7 @@ tags: [connection-weaver, knowledge-graph, dashboard]
 - `reports/campaigns/2026-09-aegis-rebuild` — 9 notes, avg degree 0.0
 - `code/forge-loop` — 44 notes, avg degree 0.0
 
-## Recent Discoveries (last run: 2026-11-24T13:16:11Z)
+## Recent Discoveries (last run: 2026-11-24T21:17:23Z)
 - (no connections created this run)
 
 ## Reflection Notes
