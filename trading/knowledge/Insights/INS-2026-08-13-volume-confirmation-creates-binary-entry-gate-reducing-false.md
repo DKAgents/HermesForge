@@ -31,3 +31,6 @@ A trader should require above-average volume on any pattern breakout before ente
 ## Connection Type
 
 **creates_filter** — Actionability score: 4/5
+
+## Related Notes
+- [[INS-2026-11-23-tighten-stops-on-light-volume-flag-pennant-breakouts|Tighten Stops on Light-Volume Flag/Pennant Breakouts]]
