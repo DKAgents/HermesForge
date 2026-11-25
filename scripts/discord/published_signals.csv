@@ -81,3 +81,7 @@ STR-D-sr-role-reversal_DTE_2026-11-18,STR-D-sr-role-reversal,DTE,2026-11-18,2026
 STR-I-adaptive-trend_AMD_2026-11-19,STR-I-adaptive-trend,AMD,2026-11-19,2026-11-23T06:51:03.115504,stocks
 STR-D-sr-role-reversal_PEG_2026-11-19,STR-D-sr-role-reversal,PEG,2026-11-19,2026-11-23T06:51:03.115627,stocks
 STR-D-sr-role-reversal_TPR_2026-11-16,STR-D-sr-role-reversal,TPR,2026-11-16,2026-11-24T06:49:54.727796,stocks
+STR-B-macd-histogram-divergence_COST_2026-11-20,STR-B-macd-histogram-divergence,COST,2026-11-20,2026-11-25T06:49:08.121691,stocks
+STR-D-sr-role-reversal_TPR_2026-11-23,STR-D-sr-role-reversal,TPR,2026-11-23,2026-11-25T06:49:08.121859,stocks
+STR-D-sr-role-reversal_DTE_2026-11-24,STR-D-sr-role-reversal,DTE,2026-11-24,2026-11-25T06:49:08.121990,stocks
+STR-D-sr-role-reversal_NCLH_2026-11-23,STR-D-sr-role-reversal,NCLH,2026-11-23,2026-11-25T06:49:08.122087,stocks
