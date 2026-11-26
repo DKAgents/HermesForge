@@ -85,3 +85,6 @@ STR-B-macd-histogram-divergence_COST_2026-11-20,STR-B-macd-histogram-divergence,
 STR-D-sr-role-reversal_TPR_2026-11-23,STR-D-sr-role-reversal,TPR,2026-11-23,2026-11-25T06:49:08.121859,stocks
 STR-D-sr-role-reversal_DTE_2026-11-24,STR-D-sr-role-reversal,DTE,2026-11-24,2026-11-25T06:49:08.121990,stocks
 STR-D-sr-role-reversal_NCLH_2026-11-23,STR-D-sr-role-reversal,NCLH,2026-11-23,2026-11-25T06:49:08.122087,stocks
+STR-D-sr-role-reversal_XLU_2026-11-25,STR-D-sr-role-reversal,XLU,2026-11-25,2026-11-26T06:49:08.879013,stocks
+STR-D-sr-role-reversal_AON_2026-11-24,STR-D-sr-role-reversal,AON,2026-11-24,2026-11-26T06:49:08.879152,stocks
+STR-B-macd-histogram-divergence_WELL_2026-11-18,STR-B-macd-histogram-divergence,WELL,2026-11-18,2026-11-26T06:49:08.879228,stocks
