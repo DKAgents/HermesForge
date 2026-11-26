@@ -33,4 +33,5 @@ Only take Keltner Channel breakout or pullback signals when ADX is rising; in a 
 **creates_filter** — Actionability score: 4/5
 
 ## Related Notes
+- [[INS-2026-11-25-adx-filtered-keltner-channel-pullbacks-using-dow-retracement|ADX-Filtered Keltner Channel Pullbacks Using Dow Retracement Range]]
 - [[C050-secondary-trend-retracement-range|Secondary Trend Retracement Range]]

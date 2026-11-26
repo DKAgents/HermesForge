@@ -1,10 +1,29 @@
 [
   {
-    "book": "Strategy-Validation",
-    "anchor_index_size": 1,
-    "notes_processed": 1,
-    "notes_linked": 0,
-    "total_links_added": 0,
-    "sample": []
+    "book": "Insights",
+    "anchor_index_size": 840,
+    "notes_processed": 1250,
+    "notes_linked": 3,
+    "total_links_added": 3,
+    "sample": [
+      {
+        "note": "INS-2026-11-25-exits-matter-stop-placement-rules-operationalize-murphy-s-in.md",
+        "links": [
+          "INS-2026-09-16-volume-confirmed-breakout-stop-placement-rule"
+        ]
+      },
+      {
+        "note": "INS-2026-11-12-adx-filtered-keltner-channels-with-retracement-entries.md",
+        "links": [
+          "INS-2026-11-25-adx-filtered-keltner-channel-pullbacks-using-dow-retracement"
+        ]
+      },
+      {
+        "note": "INS-2026-11-25-adx-filtered-keltner-channel-pullbacks-using-dow-retracement.md",
+        "links": [
+          "INS-2026-10-24-adx-filter-for-keltner-channel-pullback-entries"
+        ]
+      }
+    ]
   }
 ]
