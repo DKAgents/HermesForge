@@ -88,3 +88,8 @@ STR-D-sr-role-reversal_NCLH_2026-11-23,STR-D-sr-role-reversal,NCLH,2026-11-23,20
 STR-D-sr-role-reversal_XLU_2026-11-25,STR-D-sr-role-reversal,XLU,2026-11-25,2026-11-26T06:49:08.879013,stocks
 STR-D-sr-role-reversal_AON_2026-11-24,STR-D-sr-role-reversal,AON,2026-11-24,2026-11-26T06:49:08.879152,stocks
 STR-B-macd-histogram-divergence_WELL_2026-11-18,STR-B-macd-histogram-divergence,WELL,2026-11-18,2026-11-26T06:49:08.879228,stocks
+STR-D-sr-role-reversal_LHX_2026-11-27,STR-D-sr-role-reversal,LHX,2026-11-27,2026-11-27T06:52:00.470138,stocks
+STR-D-sr-role-reversal_REG_2026-11-27,STR-D-sr-role-reversal,REG,2026-11-27,2026-11-27T06:52:00.470295,stocks
+STR-B-macd-histogram-divergence_ENA_2026-11-25,STR-B-macd-histogram-divergence,ENA,2026-11-25,2026-11-27T06:52:30.263214,crypto
+STR-B-macd-histogram-divergence_CRV_2026-11-25,STR-B-macd-histogram-divergence,CRV,2026-11-25,2026-11-27T06:52:30.263346,crypto
+STR-B-macd-histogram-divergence_DOT_2026-11-25,STR-B-macd-histogram-divergence,DOT,2026-11-25,2026-11-27T06:52:30.263443,crypto
